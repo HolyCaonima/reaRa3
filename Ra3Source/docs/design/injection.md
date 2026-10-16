@@ -110,10 +110,10 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `bigtrailersize` | `0x009F6B00` 目录尾标识 | thiscall | 5 | `ra3::io::gameBigTrailerSize` | live verified；仅显式键启用 |
 | `bigstoredsize` | `0x009F5E80` 文件 stored size | stdcall | 7 | `ra3::io::gameBigStoredSize` | live verified；仅显式键启用 |
 | `bigabsoluteoffset` | `0x009F5E90` 文件绝对数据偏移 | stdcall | 6 | `ra3::io::gameBigAbsoluteDataOffset` | live verified；仅显式键启用 |
-| `gametexttable` | `0x00539080` 单个 GameText 排序表查询 | thiscall | 5 | `ra3::text::findGameText(GameStringTable*)` | offline-verified，live pending；仅显式键启用 |
-| `gametextmanager` | `0x0053B500` GameText 三表优先级查询 | thiscall | 6 | `ra3::text::findGameText(GameTextManager*)` | offline-verified，live pending；仅显式键启用 |
-| `bigseek` | `0x009F5E00` BIG 文件 seek | thiscall（6 stack dword） | 6 | `ra3::io::seekGameBigFile` | offline-verified, live pending；仅显式键启用 |
-| `bigclose` | `0x009F5DB0` BIG 文件 close | thiscall | 5 | `ra3::io::closeGameBigFile` | offline-verified, live pending；仅显式键启用；shadow 仅转发 |
+| `gametexttable` | `0x00539080` 单个 GameText 排序表查询 | thiscall | 5 | `ra3::text::findGameText(GameStringTable*)` | live verified；仅显式键启用 |
+| `gametextmanager` | `0x0053B500` GameText 三表优先级查询 | thiscall | 6 | `ra3::text::findGameText(GameTextManager*)` | live verified；仅显式键启用 |
+| `bigseek` | `0x009F5E00` BIG 文件 seek | thiscall（6 stack dword） | 6 | `ra3::io::seekGameBigFile` | live verified；仅显式键启用 |
+| `bigclose` | `0x009F5DB0` BIG 文件 close | thiscall | 5 | `ra3::io::closeGameBigFile` | live replace-only（运行 18，341 次，对局正常）；仅显式键启用；shadow 仅转发 |
 
 上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节
@@ -269,6 +269,8 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 14 | 同运行 13，改用 Release 构建的 DLL | `--wait-window` | 对局中 bigfindentry 2694111、stringlength 309882、pathcompare 348589、bytecompare 257687 次全部由 Ra3Source 处理 | 约 50 秒到主菜单，对局正常运行 |
 | 15 | 32 目标 shadow（Release；6 个 explicitOnly 键全开），进入遭遇战 | `--wait-window` | 28 个目标被调用，全部 0 不一致；bigfindentry 内部的辅助函数如 bigformat 10778341/10778341、bigheadersize 5388212/5388212、bigreadbe64 2689159/2689159、bigentrycount 2696023/2696023、bigtrailersize 2678773/2678773，另 bigabsoluteoffset 7150/7150、bighashpath 4947/4947、bigstoredsize 368/368 | 未被调用的仍是 stringfindlast、bytewiden、utf8decode、utf8encode |
 | 16 | 32 目标 replace（Release），进入遭遇战 | `--wait-window` | bigfindentry 2632470、bigentrycount 2629704、bigabsoluteoffset 7006、bigstoredsize 340 次由 Ra3Source 处理；bigformat 等 6 个辅助函数 0 次（调用者已被替换，改走同一份 C++） | 对局正常运行 |
+| 17 | 35 目标 shadow（Release；新增 gametexttable、gametextmanager、bigseek 显式键），进入遭遇战 | `--wait-window` | 31 个目标被调用，全部 0 不一致；gametexttable 707/707、gametextmanager 673/673、bigseek 3682/3682 | bigclose 未启用（shadow 只转发，无可比较对象） |
+| 18 | 36 目标 replace（Release，含 bigclose），进入遭遇战 | `--wait-window` | gametextmanager 640、gametexttable 290、bigseek 3574、bigclose 341、bigfindentry 2663337 次由 Ra3Source 处理 | 主菜单与遭遇战界面文字正常，对局正常运行；bigclose 的释放由我们的代码经游戏分配器完成 |
 
 运行 8、9 的操作：主菜单点掉离线提示 → Versus → Skirmish → 默认设置（Battlebase
 Beta，单人，阵营随机）→ BEGIN。点击由 `SetCursorPos`/`mouse_event` 发往前台游戏
