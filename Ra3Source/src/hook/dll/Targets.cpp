@@ -3,6 +3,7 @@
 #include <ra3/asset/NameHash.h>
 #include <ra3/common/ByteString.h>
 #include <ra3/common/Crc32.h>
+#include <ra3/common/GameString.h>
 #include <ra3/io/GameBigLayout.h>
 #include <ra3/io/PathCompare.h>
 #include <ra3/io/RefPack.h>
@@ -14,6 +15,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cstdlib>
 #include <cstring>
 #include <filesystem>
 #include <iomanip>
@@ -2259,6 +2261,514 @@ bool __fastcall bigFindClose(
     return true;
 }
 
+// Engine string class (StringBase<char> / StringBase<wchar_t>), 0x004CA440..
+// 0x004CBA60. Shadow mode runs the port first on private copies of the input
+// blocks, then the original, and compares where the string ends up and the
+// header and characters of every block both touched.
+template <typename Function>
+Function gameAddress(std::uintptr_t rva)
+{
+    return reinterpret_cast<Function>(
+        reinterpret_cast<std::uintptr_t>(GetModuleHandleW(nullptr)) + rva);
+}
+
+template <typename Function>
+Function gameImport(std::uintptr_t slotRva)
+{
+    return *gameAddress<const Function*>(slotRva);
+}
+
+template <typename Char>
+struct EngineString;
+
+template <>
+struct EngineString<char> {
+    using String = ra3::common::GameAsciiString;
+    static constexpr std::uintptr_t lockGetter = 0x000CA440;
+    static constexpr std::uintptr_t textSource = 0x007DAB6C;
+};
+
+template <>
+struct EngineString<char16_t> {
+    using String = ra3::common::GameUnicodeString;
+    static constexpr std::uintptr_t lockGetter = 0x000CA490;
+    static constexpr std::uintptr_t textSource = 0x007DAB7C;
+};
+
+template <typename Char>
+using StringOf = typename EngineString<Char>::String;
+
+constexpr std::uintptr_t kLeaveCriticalSectionSlot = 0x007BA1E8;
+constexpr std::uintptr_t kToLowerSlot = 0x007BA4D4;
+constexpr std::uintptr_t kToUpperSlot = 0x007BA4C0;
+constexpr std::uintptr_t kToWideLowerSlot = 0x007BA4C8;
+
+// The class lock object: vtable slot 0 enters with a timeout, the critical
+// section at +8 is left directly.
+void lockEngineStrings(void* lock) noexcept
+{
+    using Enter = void(__thiscall*)(void*, int);
+    (*static_cast<const Enter* const*>(lock))[0](lock, -1);
+}
+
+void unlockEngineStrings(void* lock) noexcept
+{
+    gameImport<void(WINAPI*)(void*)>(kLeaveCriticalSectionSlot)(
+        static_cast<std::uint8_t*>(lock) + 8);
+}
+
+ra3::common::GameStringHeader* allocateEngineString(void*, std::uint32_t size) noexcept
+{
+    return gameAddress<ra3::common::GameStringHeader*(__cdecl*)(
+        std::uint32_t, std::uint32_t, std::uint32_t)>(0x000165A0)(size, 0, 0);
+}
+
+void freeEngineString(void*, ra3::common::GameStringHeader* block) noexcept
+{
+    gameAddress<void(__cdecl*)(void*)>(0x000166B0)(block);
+}
+
+template <typename Char>
+const ra3::common::GameStringSourceVtable* engineTextSource()
+{
+    return gameAddress<const ra3::common::GameStringSourceVtable*>(
+        EngineString<Char>::textSource);
+}
+
+template <typename Char>
+ra3::common::GameStringOps engineStringOps()
+{
+    ra3::common::GameStringOps ops;
+    ops.context = gameAddress<void*(__cdecl*)()>(EngineString<Char>::lockGetter)();
+    ops.lock = &lockEngineStrings;
+    ops.unlock = &unlockEngineStrings;
+    ops.allocate = &allocateEngineString;
+    ops.free = &freeEngineString;
+    ops.textSource = engineTextSource<Char>();
+    return ops;
+}
+
+template <typename Char>
+class StringReplica {
+public:
+    StringReplica() = default;
+    StringReplica(const StringReplica&) = delete;
+    StringReplica& operator=(const StringReplica&) = delete;
+
+    ~StringReplica()
+    {
+        for (std::size_t i = 0; i < count_; ++i) {
+            std::free(blocks_[i].copy);
+        }
+    }
+
+    Char* adopt(const Char* gameData) noexcept
+    {
+        if (gameData == nullptr) {
+            return nullptr;
+        }
+        for (std::size_t i = 0; i < count_; ++i) {
+            if (!blocks_[i].fresh && blocks_[i].gameData == gameData) {
+                return characters(blocks_[i]);
+            }
+        }
+        const ra3::common::GameStringHeader* header = ra3::common::gameStringHeader(gameData);
+        const std::size_t used = header->length + 1u;
+        const std::size_t room = (std::max)(static_cast<std::size_t>(header->capacity), used);
+        auto* copy = static_cast<ra3::common::GameStringHeader*>(
+            std::malloc(sizeof(*header) + room * sizeof(Char)));
+        if (copy == nullptr) {
+            failed_ = true;
+            return nullptr;
+        }
+        std::memcpy(copy, header, sizeof(*header) + used * sizeof(Char));
+        return characters(add({gameData, copy, false, false}));
+    }
+
+    ra3::common::GameStringOps ops() noexcept
+    {
+        ra3::common::GameStringOps ops;
+        ops.context = this;
+        ops.lock = &ignoreLock;
+        ops.unlock = &ignoreLock;
+        ops.allocate = &allocate;
+        ops.free = &release;
+        ops.textSource = engineTextSource<Char>();
+        return ops;
+    }
+
+    bool failed() const { return failed_; }
+
+    // Empty when the game's outcome matches the port's.
+    std::string compare(const Char* portData, const Char* gameData) const
+    {
+        const Block* result = nullptr;
+        for (std::size_t i = 0; i < count_; ++i) {
+            if (portData != nullptr && characters(blocks_[i]) == portData) {
+                result = &blocks_[i];
+            }
+        }
+        if ((portData == nullptr) != (gameData == nullptr) || (portData != nullptr && result == nullptr)) {
+            return portData != nullptr ? "port kept the string, game released it"
+                                       : "port released the string, game kept it";
+        }
+        if (result != nullptr) {
+            bool sameBlock = !result->fresh && result->gameData == gameData;
+            if (result->fresh) {
+                sameBlock = true;
+                for (std::size_t i = 0; i < count_; ++i) {
+                    sameBlock = sameBlock && (blocks_[i].fresh || blocks_[i].gameData != gameData);
+                }
+            }
+            if (!sameBlock) {
+                return result->fresh ? "port reallocated, game reused the block"
+                                     : "port reused the block, game did not";
+            }
+            const ra3::common::GameStringHeader* game = ra3::common::gameStringHeader(gameData);
+            if (std::memcmp(game, result->copy, sizeof(*game)) != 0
+                || std::memcmp(gameData, portData, (game->length + 1u) * sizeof(Char)) != 0) {
+                std::ostringstream detail;
+                detail << "block differs: game rc=" << game->refCount << " len=" << game->length
+                       << " cap=" << game->capacity << " port rc=" << result->copy->refCount
+                       << " len=" << result->copy->length << " cap=" << result->copy->capacity;
+                return detail.str();
+            }
+        }
+        for (std::size_t i = 0; i < count_; ++i) {
+            const Block& block = blocks_[i];
+            if (&block == result || block.fresh || block.freed) {
+                continue;
+            }
+            const std::int32_t game = ra3::common::gameStringHeader(block.gameData)->refCount;
+            if (game != block.copy->refCount) {
+                return "old block rc: game=" + std::to_string(game)
+                    + " port=" + std::to_string(block.copy->refCount);
+            }
+        }
+        return {};
+    }
+
+private:
+    struct Block {
+        const Char* gameData;
+        ra3::common::GameStringHeader* copy;
+        bool fresh;
+        bool freed;
+    };
+
+    static Char* characters(const Block& block) noexcept
+    {
+        return reinterpret_cast<Char*>(block.copy + 1);
+    }
+
+    const Block& add(const Block& block) noexcept
+    {
+        blocks_[count_] = block;
+        return blocks_[count_++];
+    }
+
+    static void ignoreLock(void*) noexcept {}
+
+    static ra3::common::GameStringHeader* allocate(void* context, std::uint32_t size) noexcept
+    {
+        auto* self = static_cast<StringReplica*>(context);
+        auto* copy = static_cast<ra3::common::GameStringHeader*>(std::malloc(size));
+        if (copy == nullptr) {
+            std::abort();
+        }
+        std::memset(copy, 0xCD, size);
+        self->add({nullptr, copy, true, false});
+        return copy;
+    }
+
+    static void release(void* context, ra3::common::GameStringHeader* copy) noexcept
+    {
+        auto* self = static_cast<StringReplica*>(context);
+        for (std::size_t i = 0; i < self->count_; ++i) {
+            if (self->blocks_[i].copy == copy) {
+                self->blocks_[i].freed = true;
+            }
+        }
+    }
+
+    // Each wrapper adopts at most two blocks and the port allocates at most one.
+    std::array<Block, 3> blocks_{};
+    std::size_t count_ = 0;
+    bool failed_ = false;
+};
+
+void recordStringOutcome(const char* key, TargetState& state, const std::string& mismatch)
+{
+    if (mismatch.empty()) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch(key, state, mismatch);
+    }
+}
+
+template <typename Char>
+bool knownTextSource(const void* source)
+{
+    return source == nullptr
+        || *static_cast<const void* const*>(source) == engineTextSource<Char>();
+}
+
+TargetState g_asciiStringCopy;
+TargetState g_asciiStringAssign;
+TargetState g_asciiStringEnsure;
+TargetState g_asciiStringLower;
+TargetState g_asciiStringUpper;
+TargetState g_asciiStringConcat;
+TargetState g_unicodeStringCopy;
+TargetState g_unicodeStringRelease;
+TargetState g_unicodeStringEnsure;
+TargetState g_unicodeStringLower;
+TargetState g_unicodeStringRemoveLast;
+TargetState g_unicodeStringSet;
+TargetState g_unicodeStringConcat;
+
+template <typename Char>
+StringOf<Char>* copyEngineString(
+    const char* key, TargetState& state, StringOf<Char>* self, const StringOf<Char>* other)
+{
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ra3::common::copyGameString(self, other, engineStringOps<Char>());
+    }
+    StringReplica<Char> replica;
+    StringOf<Char> portOther{replica.adopt(other->data)};
+    StringOf<Char> portSelf{nullptr};
+    StringOf<Char>* const ours = ra3::common::copyGameString(&portSelf, &portOther, replica.ops());
+    StringOf<Char>* const game = reinterpret_cast<StringOf<Char>*(__thiscall*)(
+        StringOf<Char>*, const StringOf<Char>*)>(state.original)(self, other);
+    if (replica.failed()) {
+        state.skipped.fetch_add(1, relaxed);
+    } else {
+        std::string mismatch = replica.compare(portSelf.data, self->data);
+        if (mismatch.empty() && (game == self) != (ours == &portSelf)) {
+            mismatch = "return value differs";
+        }
+        recordStringOutcome(key, state, mismatch);
+    }
+    return game;
+}
+
+ra3::common::GameAsciiString* __fastcall asciiStringCopy(
+    ra3::common::GameAsciiString* self, void*, const ra3::common::GameAsciiString* other)
+{
+    return copyEngineString<char>("asciistringcopy", g_asciiStringCopy, self, other);
+}
+
+ra3::common::GameUnicodeString* __fastcall unicodeStringCopy(
+    ra3::common::GameUnicodeString* self, void*, const ra3::common::GameUnicodeString* other)
+{
+    return copyEngineString<char16_t>("unicodestringcopy", g_unicodeStringCopy, self, other);
+}
+
+// 0x004CA9B0.
+void __fastcall asciiStringAssign(
+    ra3::common::GameAsciiString* self, void*, const ra3::common::GameAsciiString* other)
+{
+    TargetState& state = g_asciiStringAssign;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        ra3::common::assignGameString(self, other, engineStringOps<char>());
+        state.matches.fetch_add(1, relaxed);
+        return;
+    }
+    StringReplica<char> replica;
+    ra3::common::GameAsciiString portSelf{replica.adopt(self->data)};
+    ra3::common::GameAsciiString portOther{replica.adopt(other->data)};
+    ra3::common::assignGameString(
+        &portSelf, other == self ? &portSelf : &portOther, replica.ops());
+    reinterpret_cast<void(__thiscall*)(
+        ra3::common::GameAsciiString*, const ra3::common::GameAsciiString*)>(
+        state.original)(self, other);
+    if (replica.failed()) {
+        state.skipped.fetch_add(1, relaxed);
+    } else {
+        recordStringOutcome("asciistringassign", state, replica.compare(portSelf.data, self->data));
+    }
+}
+
+// 0x004CAB60.
+void __fastcall unicodeStringRelease(ra3::common::GameUnicodeString* self, void*)
+{
+    TargetState& state = g_unicodeStringRelease;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        ra3::common::releaseGameString(self, engineStringOps<char16_t>());
+        state.matches.fetch_add(1, relaxed);
+        return;
+    }
+    StringReplica<char16_t> replica;
+    ra3::common::GameUnicodeString portSelf{replica.adopt(self->data)};
+    ra3::common::releaseGameString(&portSelf, replica.ops());
+    reinterpret_cast<void(__thiscall*)(ra3::common::GameUnicodeString*)>(state.original)(self);
+    if (replica.failed()) {
+        state.skipped.fetch_add(1, relaxed);
+    } else {
+        recordStringOutcome("unicodestringrelease", state, replica.compare(portSelf.data, self->data));
+    }
+}
+
+// Runs `port` on the game string in replace mode (handing declined calls to
+// `original`), or on a replica of it in shadow mode before `original`.
+template <typename Char, typename Port, typename Original>
+void runEngineStringMutation(
+    const char* key, TargetState& state, StringOf<Char>* self, Port port, Original original)
+{
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        if (port(self, static_cast<const Char*>(self->data), engineStringOps<Char>())) {
+            state.matches.fetch_add(1, relaxed);
+        } else {
+            state.skipped.fetch_add(1, relaxed);
+            original();
+        }
+        return;
+    }
+    StringReplica<Char> replica;
+    StringOf<Char> portSelf{replica.adopt(self->data)};
+    const bool handled = !replica.failed() && port(&portSelf, static_cast<const Char*>(self->data), replica.ops());
+    original();
+    if (!handled) {
+        state.skipped.fetch_add(1, relaxed);
+    } else {
+        recordStringOutcome(key, state, replica.compare(portSelf.data, self->data));
+    }
+}
+
+template <typename Char>
+void ensureEngineString(
+    const char* key,
+    TargetState& state,
+    StringOf<Char>* self,
+    int needed,
+    std::uint32_t preserve,
+    const void* copySource,
+    const void* catSource)
+{
+    const auto original = [&] {
+        reinterpret_cast<void(__thiscall*)(StringOf<Char>*, int, std::uint32_t, const void*, const void*)>(
+            state.original)(self, needed, preserve, copySource, catSource);
+    };
+    if (state.mode == Mode::shadow
+        && (!knownTextSource<Char>(copySource) || !knownTextSource<Char>(catSource))) {
+        state.calls.fetch_add(1, relaxed);
+        state.skipped.fetch_add(1, relaxed);
+        original();
+        return;
+    }
+    runEngineStringMutation<Char>(key, state, self,
+        [&](StringOf<Char>* string, const Char*, const ra3::common::GameStringOps& ops) {
+            // Only the low byte of the bool argument is read.
+            return ra3::common::ensureUniqueGameString(
+                string, needed, (preserve & 0xFFu) != 0, copySource, catSource, ops);
+        },
+        original);
+}
+
+// 0x004CA710 / 0x004CABA0.
+void __fastcall asciiStringEnsure(ra3::common::GameAsciiString* self, void*, int needed,
+    std::uint32_t preserve, const void* copySource, const void* catSource)
+{
+    ensureEngineString<char>("asciistringensure", g_asciiStringEnsure, self, needed, preserve,
+        copySource, catSource);
+}
+
+void __fastcall unicodeStringEnsure(ra3::common::GameUnicodeString* self, void*, int needed,
+    std::uint32_t preserve, const void* copySource, const void* catSource)
+{
+    ensureEngineString<char16_t>("unicodestringensure", g_unicodeStringEnsure, self, needed,
+        preserve, copySource, catSource);
+}
+
+template <typename Char>
+void mapEngineString(const char* key, TargetState& state, StringOf<Char>* self, std::uintptr_t mapSlot)
+{
+    const auto map = gameImport<ra3::common::GameCharacterMap>(mapSlot);
+    runEngineStringMutation<Char>(key, state, self,
+        [&](StringOf<Char>* string, const Char*, const ra3::common::GameStringOps& ops) {
+            return ra3::common::mapGameString(string, map, ops);
+        },
+        [&] { reinterpret_cast<void(__thiscall*)(StringOf<Char>*)>(state.original)(self); });
+}
+
+// 0x004CAA30 / 0x004CAA80 / 0x004CAF40.
+void __fastcall asciiStringLower(ra3::common::GameAsciiString* self, void*)
+{
+    mapEngineString<char>("asciistringlower", g_asciiStringLower, self, kToLowerSlot);
+}
+
+void __fastcall asciiStringUpper(ra3::common::GameAsciiString* self, void*)
+{
+    mapEngineString<char>("asciistringupper", g_asciiStringUpper, self, kToUpperSlot);
+}
+
+void __fastcall unicodeStringLower(ra3::common::GameUnicodeString* self, void*)
+{
+    mapEngineString<char16_t>("unicodestringlower", g_unicodeStringLower, self, kToWideLowerSlot);
+}
+
+// 0x004CAF90.
+void __fastcall unicodeStringRemoveLast(ra3::common::GameUnicodeString* self, void*)
+{
+    TargetState& state = g_unicodeStringRemoveLast;
+    runEngineStringMutation<char16_t>("unicodestringremovelast", state, self,
+        [](ra3::common::GameUnicodeString* string, const char16_t*,
+            const ra3::common::GameStringOps& ops) {
+            return ra3::common::removeLastGameCharacter(string, ops);
+        },
+        [&] { reinterpret_cast<void(__thiscall*)(ra3::common::GameUnicodeString*)>(state.original)(self); });
+}
+
+// 0x004CB9B0. The original returns early when `text` is the string's own
+// buffer, so the replica must see its own buffer in that case.
+void __fastcall unicodeStringSet(
+    ra3::common::GameUnicodeString* self, void*, const char16_t* text, int length)
+{
+    TargetState& state = g_unicodeStringSet;
+    runEngineStringMutation<char16_t>("unicodestringset", state, self,
+        [&](ra3::common::GameUnicodeString* string, const char16_t* gameData,
+            const ra3::common::GameStringOps& ops) {
+            const char16_t* source = text != nullptr && text == gameData ? string->data : text;
+            return ra3::common::setGameString(string, source, length, ops);
+        },
+        [&] {
+            reinterpret_cast<void(__thiscall*)(ra3::common::GameUnicodeString*, const char16_t*, int)>(
+                state.original)(self, text, length);
+        });
+}
+
+template <typename Char>
+void concatEngineString(
+    const char* key, TargetState& state, StringOf<Char>* self, const Char* text, int length)
+{
+    runEngineStringMutation<Char>(key, state, self,
+        [&](StringOf<Char>* string, const Char*, const ra3::common::GameStringOps& ops) {
+            return ra3::common::concatGameString(string, text, length, ops);
+        },
+        [&] {
+            reinterpret_cast<void(__thiscall*)(StringOf<Char>*, const Char*, int)>(
+                state.original)(self, text, length);
+        });
+}
+
+// 0x004CB6E0 / 0x004CBA00.
+void __fastcall asciiStringConcat(
+    ra3::common::GameAsciiString* self, void*, const char* text, int length)
+{
+    concatEngineString<char>("asciistringconcat", g_asciiStringConcat, self, text, length);
+}
+
+void __fastcall unicodeStringConcat(
+    ra3::common::GameUnicodeString* self, void*, const char16_t* text, int length)
+{
+    concatEngineString<char16_t>("unicodestringconcat", g_unicodeStringConcat, self, text, length);
+}
+
 }  // namespace
 
 const char* modeName(Mode mode)
@@ -2541,6 +3051,58 @@ const std::vector<Target>& targets()
          {0x81, 0xEC, 0x08, 0x01, 0x00, 0x00, 0x53, 0x56,
           0x8B, 0xB4, 0x24, 0x14, 0x01, 0x00, 0x00, 0x33},
          6, reinterpret_cast<void*>(&bigFindNext), &g_bigFindNext, true},
+        {"asciistringcopy", 0x000CA8F0,
+         {0x56, 0x57, 0x8B, 0xF9, 0xE8, 0x47, 0xFB, 0xFF,
+          0xFF, 0x8B, 0xF0, 0x8B, 0x06, 0x8B, 0x10, 0x6A},
+         9, reinterpret_cast<void*>(&asciiStringCopy), &g_asciiStringCopy, true, {4}},
+        {"asciistringassign", 0x000CA9B0,
+         {0x53, 0x55, 0x56, 0x8B, 0xF1, 0xE8, 0x86, 0xFA,
+          0xFF, 0xFF, 0x8B, 0xD8, 0x8B, 0x03, 0x8B, 0x10},
+         5, reinterpret_cast<void*>(&asciiStringAssign), &g_asciiStringAssign, true},
+        {"asciistringensure", 0x000CA710,
+         {0x8B, 0x54, 0x24, 0x04, 0x53, 0x8B, 0xD9, 0x56,
+          0x8B, 0x33, 0x85, 0xF6, 0x74, 0x61, 0x0F, 0xB7},
+         5, reinterpret_cast<void*>(&asciiStringEnsure), &g_asciiStringEnsure, true},
+        {"asciistringlower", 0x000CAA30,
+         {0x56, 0x8B, 0xF1, 0x8B, 0x06, 0x85, 0xC0, 0x74,
+          0x3B, 0x0F, 0xB7, 0x40, 0xFC, 0x57, 0x6A, 0x00},
+         5, reinterpret_cast<void*>(&asciiStringLower), &g_asciiStringLower, true},
+        {"asciistringupper", 0x000CAA80,
+         {0x56, 0x8B, 0xF1, 0x8B, 0x06, 0x85, 0xC0, 0x74,
+          0x3B, 0x0F, 0xB7, 0x40, 0xFC, 0x57, 0x6A, 0x00},
+         5, reinterpret_cast<void*>(&asciiStringUpper), &g_asciiStringUpper, true},
+        {"asciistringconcat", 0x000CB6E0,
+         {0x8B, 0x44, 0x24, 0x08, 0x83, 0xEC, 0x0C, 0x85,
+          0xC0, 0x74, 0x31, 0x8B, 0x11, 0x85, 0xD2, 0x74},
+         7, reinterpret_cast<void*>(&asciiStringConcat), &g_asciiStringConcat, true},
+        {"unicodestringcopy", 0x000CAD90,
+         {0x56, 0x57, 0x8B, 0xF9, 0xE8, 0xF7, 0xF6, 0xFF,
+          0xFF, 0x8B, 0xF0, 0x8B, 0x06, 0x8B, 0x10, 0x6A},
+         9, reinterpret_cast<void*>(&unicodeStringCopy), &g_unicodeStringCopy, true, {4}},
+        {"unicodestringrelease", 0x000CAB60,
+         {0x56, 0x57, 0x8B, 0xF9, 0xE8, 0x27, 0xF9, 0xFF,
+          0xFF, 0x8B, 0xF0, 0x8B, 0x06, 0x8B, 0x10, 0x6A},
+         9, reinterpret_cast<void*>(&unicodeStringRelease), &g_unicodeStringRelease, true, {4}},
+        {"unicodestringensure", 0x000CABA0,
+         {0x8B, 0x54, 0x24, 0x04, 0x53, 0x8B, 0xD9, 0x56,
+          0x8B, 0x33, 0x85, 0xF6, 0x74, 0x66, 0x0F, 0xB7},
+         5, reinterpret_cast<void*>(&unicodeStringEnsure), &g_unicodeStringEnsure, true},
+        {"unicodestringlower", 0x000CAF40,
+         {0x56, 0x8B, 0xF1, 0x8B, 0x06, 0x85, 0xC0, 0x74,
+          0x3C, 0x0F, 0xB7, 0x40, 0xFC, 0x57, 0x6A, 0x00},
+         5, reinterpret_cast<void*>(&unicodeStringLower), &g_unicodeStringLower, true},
+        {"unicodestringremovelast", 0x000CAF90,
+         {0x56, 0x8B, 0xF1, 0x8B, 0x06, 0x85, 0xC0, 0x74,
+          0x29, 0x0F, 0xB7, 0x40, 0xFC, 0x6A, 0x00, 0x6A},
+         5, reinterpret_cast<void*>(&unicodeStringRemoveLast), &g_unicodeStringRemoveLast, true},
+        {"unicodestringset", 0x000CB9B0,
+         {0x8B, 0x01, 0x8B, 0x54, 0x24, 0x04, 0x83, 0xEC,
+          0x0C, 0x85, 0xC0, 0x74, 0x04, 0x3B, 0xD0, 0x74},
+         6, reinterpret_cast<void*>(&unicodeStringSet), &g_unicodeStringSet, true},
+        {"unicodestringconcat", 0x000CBA00,
+         {0x8B, 0x44, 0x24, 0x08, 0x83, 0xEC, 0x0C, 0x85,
+          0xC0, 0x74, 0x31, 0x8B, 0x11, 0x85, 0xD2, 0x74},
+         7, reinterpret_cast<void*>(&unicodeStringConcat), &g_unicodeStringConcat, true},
     };
     return table;
 }

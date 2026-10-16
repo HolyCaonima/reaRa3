@@ -24,7 +24,10 @@
 游戏线程可能正持有堆锁，此时再分配内存会让安装线程永久卡死。
 
 expected bytes 必须覆盖全部 stolen bytes。每个目标固定校验入口前 16 字节，只偷取
-开头若干条完整、位置无关的指令（§4.1）。任何字节不同都会拒绝安装。卸载也要求入口
+开头若干条完整的指令（§4.1）。唯一允许的位置相关指令是目标表 `rel32Offsets` 列出的
+`E8/E9 rel32` call/jmp：安装时确认这些偏移确为 `E8/E9` 且整条指令在 stolen 范围内，
+trampoline 中的副本按原目的地址重算位移（`Hook_RebasesStolenRel32Call` 覆盖）；其他
+相对寻址仍拒绝。任何字节不同都会拒绝安装。卸载也要求入口
 仍然等于本实例写入的补丁，避免覆盖其他工具的改动。
 
 ## 2. SecuROM 边界
@@ -141,6 +144,19 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `bigread` | `0x009F63B0` BIG 文件 read | thiscall（5 stack dword） | 5 | `ra3::io::readGameBigFile` | live verified；仅显式键启用 |
 | `bigfindfirst` | `0x009F65E0` BIG 枚举开始 | thiscall（2 stack dword） | 5 | `ra3::io::initializeGameBigFindState` + `findNextGameBig` | offline-verified, live pending；仅显式键启用 |
 | `bigfindnext` | `0x009F6670` BIG 枚举推进 | thiscall（2 stack dword） | 6 | `ra3::io::findNextGameBig` | offline-verified, live pending；仅显式键启用 |
+| `asciistringcopy` | `0x004CA8F0` `StringBase<char>` 拷贝构造 | thiscall（1 stack dword，EAX=this） | 9（rel32 @4） | `ra3::common::copyGameString` | live verified；仅显式键启用 |
+| `asciistringassign` | `0x004CA9B0` `StringBase<char>` 赋值 | thiscall（1） | 5 | `ra3::common::assignGameString` | live verified；仅显式键启用 |
+| `asciistringensure` | `0x004CA710` `StringBase<char>::ensureUniqueBufferOfSize` | thiscall（4） | 5 | `ra3::common::ensureUniqueGameString` | live verified；仅显式键启用 |
+| `asciistringlower` | `0x004CAA30` `StringBase<char>` 转小写 | thiscall | 5 | `ra3::common::mapGameString` + CRT `tolower` | live verified；仅显式键启用 |
+| `asciistringupper` | `0x004CAA80` `StringBase<char>` 转大写 | thiscall | 5 | `ra3::common::mapGameString` + CRT `toupper` | live verified；仅显式键启用 |
+| `asciistringconcat` | `0x004CB6E0` `StringBase<char>` 追加 (text, length) | thiscall（2） | 7 | `ra3::common::concatGameString` | live verified（空串目标交回原函数）；仅显式键启用 |
+| `unicodestringcopy` | `0x004CAD90` `StringBase<wchar_t>` 拷贝构造 | thiscall（1，EAX=this） | 9（rel32 @4） | `ra3::common::copyGameString` | live verified；仅显式键启用 |
+| `unicodestringrelease` | `0x004CAB60` `StringBase<wchar_t>` 释放 | thiscall | 9（rel32 @4） | `ra3::common::releaseGameString` | live verified；仅显式键启用 |
+| `unicodestringensure` | `0x004CABA0` `StringBase<wchar_t>::ensureUniqueBufferOfSize` | thiscall（4） | 5 | `ra3::common::ensureUniqueGameString` | live verified；仅显式键启用 |
+| `unicodestringlower` | `0x004CAF40` `StringBase<wchar_t>` 转小写 | thiscall | 5 | `ra3::common::mapGameString` + CRT `towlower` | live verified；仅显式键启用 |
+| `unicodestringremovelast` | `0x004CAF90` `StringBase<wchar_t>` 删除末字符 | thiscall | 5 | `ra3::common::removeLastGameCharacter` | live verified；仅显式键启用 |
+| `unicodestringset` | `0x004CB9B0` `StringBase<wchar_t>` 设置 (text, length) | thiscall（2） | 6 | `ra3::common::setGameString` | live verified；仅显式键启用 |
+| `unicodestringconcat` | `0x004CBA00` `StringBase<wchar_t>` 追加 (text, length) | thiscall（2） | 7 | `ra3::common::concatGameString` | live verified；仅显式键启用 |
 
 上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节
@@ -198,6 +214,17 @@ shadow 只比较返回指针，不进入或创建缺失字符串回退。
 转移，再比较返回值和完整后状态，不回写游戏内存；`randominit` 比较三个状态块及
 逻辑基种子。整数 helper 的原函数可能再次经过已安装的 `randomstep` hook，这只产生
 嵌套观测，不会额外推进状态。
+
+引擎字符串类的 13 个目标（`docs/design/game_string.md`）修改共享的引用计数块，均为
+`explicitOnly`。shadow 先把输入块复制到私有副本（锁与分配都用私有 ops），在副本上
+运行移植，再调用原函数，然后比较字符串最终指向的是原块还是新块、结果块的头与字符、
+以及其余输入块的引用计数；不写游戏内存。调用方传入的复制源若不是两个 `{text, length}`
+vtable 之一则 shadow 记为 skipped。replace 绑定游戏自己的类锁（getter
+`0x004CA440`/`0x004CA490`，vtable 槽 0 进入，IAT `LeaveCriticalSection` 离开）、分配
+`0x004165A0`、释放 `0x004166B0`、源 vtable 与 CRT 大小写函数；原函数会转入
+inner-patched 代码的情形（请求超过 0x7FFF 字节、ASCII 空串追加）移植不做任何事并返回
+false，hook 改调原函数并计入 skipped。除两个拷贝构造返回 this 外，原函数的 EAX 是
+`LeaveCriticalSection` 等的残值，调用点扫描中标为“使用”的 EAX 均是先写 AL/AX 的误报。
 
 新增目标：在 `Targets.cpp` 写一个与原函数同 ABI 的 hook（shadow 调原函数并比较，
 replace 只调我们的实现），在表里加一行 `{键, RVA, 前 16 字节, stolen 长度, hook,
@@ -344,6 +371,8 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 26 | 同运行 24，`prepareGameBigFile` 修复后 | `--wait-window` | bigopen 232 次中 67 次不一致，全部只在 +0x14 | 只到主菜单；+0x14 是原函数从不写入的分配器残留 |
 | 27 | 同运行 24，shadow 比较改取游戏的 +0x14 | `--wait-window` | 全部 0 不一致；bigopen 502/502、bigread 725/3725（3000 次成员大于 8 MiB 而 skipped）、bigseek 3725/3725、bigclose 370/370 | 对局 2 分钟正常，无崩溃事件 |
 | 28 | 15 个显式键 replace（Release，含 bigopen、bigread、bigfind*），遭遇战加 Easy AI | `--wait-window` | bigopen 480 次（351 次打开、129 次未找到）、bigread 3676、bigseek 3687、bigclose 354、bigfindentry 2627891、gametextmanager 736 次由 Ra3Source 处理 | 对局 2 分钟正常，无崩溃事件；枚举三目标仍 0 次 |
+| 29 | 全局 shadow 加 13 个字符串显式键 shadow（Release），遭遇战加 Easy AI | `--wait-window` | 13 个字符串目标全部被调用、0 不一致：asciistringcopy 3094060、asciistringensure 645065、asciistringassign 461287、unicodestringrelease 33658 等；asciistringconcat 20480 次中 8528 次是空串目标而 skipped | 对局 2 分钟正常，无崩溃事件 |
+| 30 | 全局 replace 加全部 33 个显式键 replace（共 76 目标，Release），遭遇战加 Easy AI | `--wait-window` | 字符串 13 目标共约 427 万次由 Ra3Source 处理（asciistringcopy 3092434、asciistringensure 625688、asciistringassign 460862、unicodestringrelease 33144）；asciistringconcat 7869 次空串目标交回原函数 | 对局 2 分钟正常，无崩溃事件 |
 
 运行 19 的崩溃点紧跟 `call 0x0056F370`（normalize2）：调用者把 EAX 当作结果指针
 解引用（`mov edx, [eax]`）。原函数按 MSVC 返回结构体的惯例把 `output` 留在 EAX，
