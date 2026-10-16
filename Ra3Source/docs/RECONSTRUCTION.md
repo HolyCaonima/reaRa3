@@ -1,0 +1,93 @@
+# RA3 重建总控文档
+
+这份文档是整个重建工作的操作中枢：目标、路线、模块分工、函数台账协议、并行规则和授权边界。所有 agent（人或 AI）开工前先读这里。
+
+## 1. 目标与路线
+
+把 `ra3_1.0.game`（32 位 PE，带 SecuROM，明文代码在 `.text`）逐步重建成可维护的现代 C++ 源码（Ra3Source）。有两条路线：
+
+- **路线 A — 进程内逐步替换**（参考 Generals 社区的 Thyme/GeneralsGameCode 做法）：从外部启动原版 `ra3_1.0.game`，注入 DLL，一个函数一个函数地用我们的实现替换原函数。每一步都能当场对照原版验证，游戏始终可运行。前提是原版能启动（**用户已确认能进对局**）且能在不触碰 SecuROM 的前提下注入和改写——这一点待 `spike/injection` 研究确认。
+- **路线 B — 独立重写**（参考 OpenSAGE）：不运行原程序，只读游戏数据，自己写引擎。可移植、干净，但要到渲染打通才能看到画面，且没有原版可逐函数对照。
+
+**当前策略**：优先推进对两条路线都必需的**数据层与引擎无关层**（资源、文本、格式解析、平台抽象），同时并行做一次注入可行性研究来决定主路线。不做 SecuROM 脱壳、解密或绕过。
+
+## 2. 规模与现状
+
+- `.text` 共 30,496 个函数、218 万条指令，明文。另有虚表恢复补建的约 11,022 个虚函数（只通过虚表调用、Ghidra 原先漏建），函数台账现共 48,982 行。扣掉第三方（EASTL/OpenSSL/运行库）后，真正要重建的约 **4 万个函数**。
+- SecuROM 只改了零散单条指令：1,212 个函数受影响（入口丢失 653、入口可恢复 119、中间补丁 432、未分类 8）。详见 `docs/analysis/ra3_1.0_overview.md`。
+- `Stext`/`Sdata`/`.securom` 里的约 7,400 个函数是 SecuROM 自身代码，**不在重建范围内**。
+- 已完成并验证：`core`（配置/INI/SkuDef）、`io`（BigArchive/ArchiveSet/RefPack/ReadOnlyFile）。构建零警告，单测 25、数据测试 4、CTest 2 全通过。
+
+## 3. 模块分工
+
+Ra3Source 按子系统分模块，每个模块一个静态库 `ra3_<name>`（别名 `Ra3::<name>`），对外只暴露 `include/` 下的头文件。模块之间只能通过头文件接口依赖，不许直接用别的模块的 .cpp。
+
+| Ra3Source 模块 | 原始 RA3 子树（恢复路径） | Generals 参考路径 | 状态 |
+|---|---|---|---|
+| `core` | Libraries\Source\{ini,string,debug,memorypool} | Code\GameEngine\Source\Common | 已完成 |
+| `io` | lib-packages\RtsBase\…\file、rw::core filesystem | Code\GameEngine\Source\Common\System\ArchiveFile* | 已完成 |
+| `text` | CSF 字符串表 | Code\GameEngine\Source\GameClient\GameText.cpp | 进行中 |
+| `asset` | Libraries\Source\assetmanager、RtsXmlPipeline | Code\GameEngine\Source\Common\System\AssetManager 等 | 设计中 |
+| `common` | GameEngine\common | Code\GameEngine\Source\Common | 规划 |
+| `gamelogic` | GameEngine\gamelogic（127+ 函数已锚定） | Code\GameEngine\Source\GameLogic | 规划 |
+| `gameclient` | GameEngine\gameclient | Code\GameEngine\Source\GameClient | 规划 |
+| `net` | GameEngine\gamenetwork | Code\GameEngine\Source\GameNetwork | 规划 |
+| `render` | GameEngineDevice\W3DDevice、SageRender | Code\GameEngineDevice\W3DDevice | 规划 |
+| `audio` | GameEngineDevice\sageaudiodevice、rw::audio | Code\GameEngineDevice\…Audio | 规划 |
+| `ui` | SageInGameUI、Apt（见导出表） | Code\GameEngine\Source\GameClient\GUI | 规划 |
+| `platform` | Win32/DX9 入口、窗口、输入 | Code\GameEngineDevice\Win32Device | 规划 |
+
+依赖顺序（自底向上）：`core → io → {text, asset} → common → {gamelogic, gameclient, net} → {render, audio, ui} → platform`。
+
+## 4. 函数台账协议
+
+`docs/analysis/ra3_1.0/function_ledger.tsv` 是所有函数的唯一事实来源，37,937 行，由 `tools/analysis/build_function_ledger.py` 生成。列：
+
+`address  name  section  size  source_file  securom  module  owner  status  notes`
+
+- `securom`：`clean` / `inner-patched` / `entry-recoverable` / `entry-lost` / `patched`。
+- `module`：按 `source_file` 猜测；`securom` 表示 SecuROM 自身代码（跳过），`unknown` 表示尚未归属。
+- `status`：`unanalyzed` / `claimed` / `in-progress` / `reversed` / `verified`。
+- `owner`：认领者标识（agent 名或分支名）。
+
+**认领规则**：开工前把要做的函数行 `owner` 填上自己、`status` 置 `claimed`；完成并验证后置 `reversed` 或 `verified`，在 `notes` 里写对应的 Ra3Source 符号。**不要重排行、不要改别人 owner 非空的行。** 重新生成台账会覆盖人工列，所以认领信息最终以提交历史为准；跨 agent 协调时以本文件最新提交为准。
+
+## 5. 并行工作规则
+
+- 每个写代码的 agent 在自己的 git worktree 分支里干活（分支名 `recon/<module>`），完成后由主控合并，避免互相覆盖。
+- 只改自己负责的模块目录和台账里自己认领的行；跨模块需求通过在对方模块头文件里加接口来表达，不直接改对方实现。
+- 每次提交前必须：构建零警告、相关测试全过、能的话对实际游戏数据验证。
+- 游戏目录 `D:\Game\Ra3\Game` 只读，任何情况下不写入、不移动。
+
+## 6. 构建与验证
+
+在 `Ra3Source/` 下（VS2019 自带 CMake 3.19，注意等号写法）：
+
+```
+cmake --preset=win32
+cmake --build build/win32 --config Debug
+cd build/win32 && ctest -C Debug            # 3.19 不支持 --test-dir
+```
+
+CMake 在 `C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin`，需要时加进 PATH。`ra3tool paths|sku|mount|big|find|unpack-check` 可对实际数据做端到端检查。Ghidra 分析用 `tools/ghidra/run_headless.ps1`（需 `GHIDRA_INSTALL_DIR`、`JAVA_HOME`；默认只读）。
+
+## 7. 参考资料与授权边界
+
+EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/references/`（已 gitignore）：
+
+- `work/references/generals` — C&C Generals / Zero Hour 完整引擎源码。RA3 引擎由它演变而来，目录结构基本一致，可作**结构与格式参照**。RA3 改动很大，不能直接照搬。
+- `work/references/modding/Red Alert 3` — RA3 的源 XML、XSD 数据结构定义、着色器、地图库。游戏里的 `.manifest/.bin` 资源流就是从这些 XML 按 XSD 编译来的。
+
+**授权要求**：用户已同意使用这些 GPL 材料。凡是参照 GPL 源码的结构或格式写代码，要写原创实现，并在注释里注明参照来源文件；凡实际拷用了 GPL 代码或数据，Ra3Source 整体必须按兼容 GPL v3 的方式发布。正式的 LICENSE/NOTICE 待首次纳入 GPL 派生内容时补齐。
+
+## 8. 状态板
+
+- [x] core、io 完成并验证
+- [x] 函数台账（48,982 行）、总体报告
+- [x] 引入 GPL 参考
+- [x] 虚表恢复：补建约 11,022 个虚函数，导出 2,977 个虚表清单（docs/analysis/ra3_1.0/vtables.tsv）
+- [ ] text（CSF）模块 — 进行中（子 agent，分支 recon/text）
+- [ ] asset 模块设计 — 进行中（子 agent，docs/design/asset_system.md）
+- [ ] 模块映射文档 — 进行中（子 agent，docs/design/module_map.md）
+- [ ] 注入可行性研究（决定主路线）
+- [ ] 虚函数按虚表归类到 C++ 类（下一步，用 vtables.tsv）
