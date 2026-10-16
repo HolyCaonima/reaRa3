@@ -10,8 +10,12 @@
 #include <ra3/sim/Random.h>
 #include <ra3/text/GameTextLayout.h>
 
+#include <Windows.h>
+
 #include <algorithm>
+#include <array>
 #include <cstring>
+#include <filesystem>
 #include <iomanip>
 #include <limits>
 #include <sstream>
@@ -85,6 +89,11 @@ TargetState g_randomInit;
 TargetState g_logicRandomInt;
 TargetState g_clientRandomInt;
 TargetState g_audioRandomInt;
+TargetState g_bigOpen;
+TargetState g_bigRead;
+TargetState g_bigFindFirst;
+TargetState g_bigFindNext;
+TargetState g_bigFindClose;
 
 // ra3_1.0.game 0x009F72E0: one-shot RefPack decoder, returns the decoded size.
 using DecodeFunction = int(__stdcall*)(std::uint8_t*, const std::uint8_t*);
@@ -1742,6 +1751,489 @@ int __cdecl audioRandomInteger(int low, int high)
         "audiorandomint", g_audioRandomInt, gameAudioRandomState(), low, high, false);
 }
 
+void releaseGameAllocation(void* context, void* allocation);
+
+std::filesystem::path archiveDiskPath(const ra3::io::GameBigArchive* archive)
+{
+    const char* name = archive->archiveName;
+    const char* colon = std::strchr(name, ':');
+    if (colon != nullptr) {
+        name = colon + 1;
+    }
+    while (*name == '/' || *name == '\\') {
+        ++name;
+    }
+    std::array<wchar_t, 32768> module{};
+    const DWORD length = GetModuleFileNameW(
+        nullptr, module.data(), static_cast<DWORD>(module.size()));
+    return std::filesystem::path(std::wstring(module.data(), length)).parent_path()
+        / std::filesystem::path(name).filename();
+}
+
+std::uint32_t readArchiveRange(
+    void* context,
+    const ra3::io::GameBigArchive* archive,
+    std::uint64_t memberOffset,
+    void* destination,
+    std::uint32_t count)
+{
+    if (count == 0) {
+        return 0;
+    }
+    const std::filesystem::path path = archiveDiskPath(archive);
+    const HANDLE handle = CreateFileW(
+        path.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE,
+        nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (handle == INVALID_HANDLE_VALUE) {
+        if (context != nullptr) {
+            *static_cast<bool*>(context) = true;
+        }
+        return 0;
+    }
+    LARGE_INTEGER offset{};
+    offset.QuadPart = static_cast<LONGLONG>(archive->rangeBegin + memberOffset);
+    DWORD actual = 0;
+    const bool ok = SetFilePointerEx(handle, offset, nullptr, FILE_BEGIN) != 0
+        && ReadFile(handle, destination, count, &actual, nullptr) != 0;
+    CloseHandle(handle);
+    if (!ok && context != nullptr) {
+        *static_cast<bool*>(context) = true;
+    }
+    return ok ? actual : 0;
+}
+
+void* allocateGameTagged(
+    ra3::io::GameAllocator* allocator,
+    std::uint32_t size,
+    const char* tag)
+{
+    return reinterpret_cast<void*(__thiscall*)(
+        ra3::io::GameAllocator*, std::uint32_t, const char*, std::uint32_t)>(
+        allocator->vtable->allocateTagged)(allocator, size, tag, 0);
+}
+
+void* allocateGameTemporary(
+    ra3::io::GameAllocator* allocator,
+    std::uint32_t size,
+    const char* tag)
+{
+    return reinterpret_cast<void*(__thiscall*)(
+        ra3::io::GameAllocator*,
+        std::uint32_t,
+        const char*,
+        std::uint32_t,
+        std::uint32_t,
+        std::uint32_t)>(
+        allocator->vtable->allocateTemporary)(
+        allocator, size, tag, 0, 4, 0);
+}
+
+using BigOpenFunction = ra3::io::GameBigFile*(__thiscall*)(
+    ra3::io::GameBigHandler*, const char*, std::uint32_t,
+    ra3::io::GameArchiveFile**);
+
+ra3::io::GameBigFile* __fastcall bigOpen(
+    ra3::io::GameBigHandler* handler,
+    void*,
+    const char* path,
+    std::uint32_t openMode,
+    ra3::io::GameArchiveFile** archiveFileOut)
+{
+    TargetState& state = g_bigOpen;
+    state.calls.fetch_add(1, relaxed);
+    const auto* image = reinterpret_cast<const std::uint8_t*>(
+        GetModuleHandleW(nullptr));
+    const std::uint32_t ownerToken =
+        *reinterpret_cast<const std::uint32_t*>(image + 0x915AC0);
+
+    if (state.mode == Mode::replace) {
+        ra3::io::GameBigFile expected{};
+        bool rangeReadFailed = false;
+        if (!ra3::io::prepareGameBigFile(
+                handler, path, ownerToken, openMode, &readArchiveRange,
+                &rangeReadFailed, &expected)
+            || rangeReadFailed) {
+            return nullptr;
+        }
+        if (archiveFileOut != nullptr) {
+            *archiveFileOut = expected.archive->file;
+        }
+        auto* result = static_cast<ra3::io::GameBigFile*>(
+            allocateGameTagged(
+                handler->allocator, sizeof(expected), "BigFileHandler"));
+        if (result == nullptr) {
+            return nullptr;
+        }
+        *result = expected;
+        state.matches.fetch_add(1, relaxed);
+        return result;
+    }
+
+    ra3::io::GameBigFile* game =
+        reinterpret_cast<BigOpenFunction>(state.original)(
+            handler, path, openMode, archiveFileOut);
+    ra3::io::GameBigFile expected{};
+    bool rangeReadFailed = false;
+    const bool found = ra3::io::prepareGameBigFile(
+        handler, path, ownerToken, openMode, &readArchiveRange, &rangeReadFailed,
+        &expected);
+    if (rangeReadFailed) {
+        state.skipped.fetch_add(1, relaxed);
+    } else if ((!found && game == nullptr)
+        || (found && game != nullptr
+            && std::memcmp(game, &expected, sizeof(expected)) == 0
+            && (archiveFileOut == nullptr
+                || *archiveFileOut == expected.archive->file))) {
+        state.matches.fetch_add(1, relaxed);
+    } else if (found || game != nullptr) {
+        reportMismatch("bigopen", state, "return or 0x40 file state differs");
+    } else {
+        state.skipped.fetch_add(1, relaxed);
+    }
+    return game;
+}
+
+std::uint32_t __fastcall runReplacementInflater(
+    ra3::io::GameRefPackInflater* inflater, void*, std::uint32_t)
+{
+    return ra3::io::runGameRefPackInflater(inflater);
+}
+
+void __fastcall deleteReplacementInflater(
+    ra3::io::GameRefPackInflater* inflater, void*, std::uint32_t flags)
+{
+    ra3::io::GameAllocator* allocator = inflater->allocator;
+    ra3::io::destroyGameRefPackInflater(inflater);
+    if ((flags & 1u) != 0) {
+        releaseGameAllocation(allocator, inflater);
+    }
+}
+
+struct ReplacementInflaterVtable {
+    void* deletingDestructor;
+    void* unknown04;
+    void* unknown08;
+    void* run;
+};
+
+const ReplacementInflaterVtable g_replacementInflaterVtable{
+    reinterpret_cast<void*>(&deleteReplacementInflater),
+    nullptr,
+    nullptr,
+    reinterpret_cast<void*>(&runReplacementInflater)};
+
+using ArchiveSeekFunction = void(__thiscall*)(
+    ra3::io::GameArchiveFile*, void*, std::uint32_t, std::uint32_t,
+    std::uint32_t, std::uint32_t, std::uint32_t);
+using ArchiveReadFunction = std::uint32_t(__thiscall*)(
+    ra3::io::GameArchiveFile*, void*, void*, std::uint32_t,
+    std::uint32_t, std::uint32_t);
+
+using BigReadFunction = std::uint32_t(__thiscall*)(
+    ra3::io::GameBigHandler*, ra3::io::GameBigFile*, void*,
+    std::uint32_t, ra3::io::GameArchiveFile*, void*);
+
+struct GameIoContext {
+    ra3::io::GameBigHandler* handler;
+    ra3::io::GameArchiveFile* archiveFile;
+    void* fileContext;
+};
+
+void gameIoLock(void*, const ra3::io::GameBigArchive* archive)
+{
+    const auto* image = reinterpret_cast<const std::uint8_t*>(
+        GetModuleHandleW(nullptr));
+    const auto acquire = reinterpret_cast<int(__thiscall*)(
+        void*, const std::uint32_t*)>(image + 0x6216A0);
+    const std::uint32_t infinite = 0xFFFFFFFFu;
+    acquire(const_cast<std::uint8_t*>(archive->synchronization.data()), &infinite);
+}
+
+void gameIoUnlock(void*, const ra3::io::GameBigArchive* archive)
+{
+    const auto* image = reinterpret_cast<const std::uint8_t*>(
+        GetModuleHandleW(nullptr));
+    const auto release =
+        reinterpret_cast<int(__fastcall*)(void*)>(image + 0x621760);
+    release(const_cast<std::uint8_t*>(archive->synchronization.data()));
+}
+
+void gameIoSeek(void* opaque, std::uint64_t position)
+{
+    auto* context = static_cast<GameIoContext*>(opaque);
+    reinterpret_cast<ArchiveSeekFunction>(context->archiveFile->vtable->seek)(
+        context->archiveFile, context->fileContext,
+        static_cast<std::uint32_t>(position),
+        static_cast<std::uint32_t>(position >> 32), 0, 0, 0);
+}
+
+std::uint32_t gameIoRead(
+    void* opaque, void* destination, std::uint32_t count)
+{
+    auto* context = static_cast<GameIoContext*>(opaque);
+    return reinterpret_cast<ArchiveReadFunction>(
+        context->archiveFile->vtable->read)(
+        context->archiveFile, context->fileContext, destination, count, 0, 0);
+}
+
+ra3::io::GameRefPackInflater* gameIoCreateInflater(void* opaque)
+{
+    auto* context = static_cast<GameIoContext*>(opaque);
+    auto* inflater = static_cast<ra3::io::GameRefPackInflater*>(
+        allocateGameTagged(
+            context->handler->allocator,
+            sizeof(ra3::io::GameRefPackInflater),
+            "rw::core::codec::RefpackInflate"));
+    ra3::io::initializeGameRefPackInflater(
+        inflater, context->handler->allocator, &g_replacementInflaterVtable);
+    return inflater;
+}
+
+void* gameIoAllocateTemporary(void* opaque, std::uint32_t size)
+{
+    auto* context = static_cast<GameIoContext*>(opaque);
+    return allocateGameTemporary(
+        context->handler->allocator, size,
+        "rw::core::BigHandler::temp Z buf");
+}
+
+std::uint32_t readReplacement(
+    ra3::io::GameBigHandler* handler,
+    ra3::io::GameBigFile* file,
+    void* destination,
+    std::uint32_t count,
+    ra3::io::GameArchiveFile* archiveFile,
+    void* fileContext)
+{
+    GameIoContext context{handler, archiveFile, fileContext};
+    const ra3::io::GameBigIoOps operations{
+        &context, &gameIoLock, &gameIoUnlock, &gameIoSeek, &gameIoRead,
+        &gameIoCreateInflater, &gameIoAllocateTemporary};
+    return ra3::io::readGameBigFile(file, destination, count, operations);
+}
+
+std::uint32_t __fastcall bigRead(
+    ra3::io::GameBigHandler* handler,
+    void*,
+    ra3::io::GameBigFile* file,
+    void* destination,
+    std::uint32_t count,
+    ra3::io::GameArchiveFile* archiveFile,
+    void* fileContext)
+{
+    TargetState& state = g_bigRead;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        const std::uint32_t result = readReplacement(
+            handler, file, destination, count, archiveFile, fileContext);
+        state.matches.fetch_add(1, relaxed);
+        return result;
+    }
+
+    const ra3::io::GameBigFile before = *file;
+    const std::uint32_t game =
+        reinterpret_cast<BigReadFunction>(state.original)(
+            handler, file, destination, count, archiveFile, fileContext);
+    ra3::io::GameBigFile expected = before;
+    ra3::io::applyGameBigReadResult(&expected, game);
+    const bool stable =
+        file->archive == before.archive
+        && file->ownerToken == before.ownerToken
+        && file->openMode == before.openMode
+        && file->unknown14 == before.unknown14
+        && file->dataOffset == before.dataOffset
+        && file->logicalSize == before.logicalSize
+        && file->compressedSize == before.compressedSize;
+    const bool bookkeeping = stable && (before.compressedSize == 0
+        ? file->sourcePosition == expected.sourcePosition
+            && file->logicalPosition == expected.logicalPosition
+            && file->inflater == before.inflater
+            && file->temporaryBuffer == before.temporaryBuffer
+        : file->logicalPosition == expected.logicalPosition
+            && file->sourcePosition >= before.sourcePosition
+            && file->sourcePosition
+                <= before.dataOffset + before.compressedSize);
+    constexpr std::uint64_t maxVerification = 8u * 1024u * 1024u;
+    bool bytes = true;
+    try {
+        if (game != 0 && before.logicalPosition <= maxVerification - game) {
+            const std::uint64_t storedSize = before.compressedSize == 0
+                ? before.logicalSize : before.compressedSize;
+            if (storedSize > maxVerification) {
+                state.skipped.fetch_add(1, relaxed);
+                return game;
+            }
+            std::vector<std::uint8_t> stored(
+                static_cast<std::size_t>(storedSize));
+            if (readArchiveRange(
+                    nullptr, before.archive, before.dataOffset,
+                    stored.data(), static_cast<std::uint32_t>(stored.size()))
+                != stored.size()) {
+                state.skipped.fetch_add(1, relaxed);
+                return game;
+            }
+            if (before.compressedSize == 0) {
+                bytes = std::memcmp(
+                    destination,
+                    stored.data() + static_cast<std::size_t>(
+                        before.sourcePosition - before.dataOffset),
+                    game) == 0;
+            } else {
+                auto decoded = ra3::io::decompressRefPackPrefix(
+                    stored.data(), stored.size(),
+                    static_cast<std::size_t>(before.logicalPosition + game));
+                bytes = decoded
+                    && decoded.value().size() >= before.logicalPosition + game
+                    && std::memcmp(
+                        destination,
+                        decoded.value().data()
+                            + static_cast<std::size_t>(before.logicalPosition),
+                        game) == 0;
+            }
+        } else if (game != 0) {
+            state.skipped.fetch_add(1, relaxed);
+            return game;
+        }
+    } catch (...) {
+        state.skipped.fetch_add(1, relaxed);
+        return game;
+    }
+    if (bookkeeping && bytes) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch("bigread", state, "bookkeeping or returned bytes differ");
+    }
+    return game;
+}
+
+using BigFindFirstFunction = ra3::io::GameBigFindState*(__thiscall*)(
+    ra3::io::GameBigHandler*, const char*, ra3::io::GameBigFindResult*);
+using BigFindNextFunction = bool(__thiscall*)(
+    ra3::io::GameBigHandler*, ra3::io::GameBigFindState*,
+    ra3::io::GameBigFindResult*);
+
+const char* enumerationPattern(const char* pattern)
+{
+    const char* colon = std::strchr(pattern, ':');
+    if (colon == nullptr) {
+        return pattern;
+    }
+    pattern = colon + 1;
+    return (*pattern == '/' || *pattern == '\\') ? pattern + 1 : pattern;
+}
+
+bool equalFindResult(
+    const ra3::io::GameBigFindResult* left,
+    const ra3::io::GameBigFindResult* right)
+{
+    return left->type == right->type && left->size == right->size
+        && std::strcmp(left->name, right->name) == 0;
+}
+
+bool __fastcall bigFindNext(
+    ra3::io::GameBigHandler* handler,
+    void*,
+    ra3::io::GameBigFindState* cursor,
+    ra3::io::GameBigFindResult* result)
+{
+    TargetState& state = g_bigFindNext;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        const bool found = ra3::io::findNextGameBig(cursor, result);
+        state.matches.fetch_add(1, relaxed);
+        return found;
+    }
+    ra3::io::GameBigFindState expected = *cursor;
+    std::array<std::uint8_t, 0x200> expectedBytes{};
+    auto* expectedResult =
+        reinterpret_cast<ra3::io::GameBigFindResult*>(expectedBytes.data());
+    const bool ours = ra3::io::findNextGameBig(&expected, expectedResult);
+    const bool game = reinterpret_cast<BigFindNextFunction>(state.original)(
+        handler, cursor, result);
+    if (game == ours
+        && std::memcmp(cursor, &expected, sizeof(expected)) == 0
+        && (!game || equalFindResult(result, expectedResult))) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch("bigfindnext", state, "cursor or result differs");
+    }
+    return game;
+}
+
+ra3::io::GameBigFindState* __fastcall bigFindFirst(
+    ra3::io::GameBigHandler* handler,
+    void*,
+    const char* pattern,
+    ra3::io::GameBigFindResult* result)
+{
+    TargetState& state = g_bigFindFirst;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        auto* cursor = static_cast<ra3::io::GameBigFindState*>(
+            allocateGameTagged(
+                handler->allocator, sizeof(ra3::io::GameBigFindState),
+                "BigHandler::FindStruct"));
+        if (cursor == nullptr) {
+            return nullptr;
+        }
+        ra3::io::initializeGameBigFindState(
+            cursor, enumerationPattern(pattern), handler->head);
+        if (!ra3::io::findNextGameBig(cursor, result)) {
+            releaseGameAllocation(handler->allocator, cursor);
+            return nullptr;
+        }
+        state.matches.fetch_add(1, relaxed);
+        return cursor;
+    }
+    ra3::io::GameBigFindState expected{};
+    ra3::io::initializeGameBigFindState(
+        &expected, enumerationPattern(pattern), handler->head);
+    std::array<std::uint8_t, 0x200> expectedBytes{};
+    auto* expectedResult =
+        reinterpret_cast<ra3::io::GameBigFindResult*>(expectedBytes.data());
+    const bool ours = ra3::io::findNextGameBig(&expected, expectedResult);
+    auto* game = reinterpret_cast<BigFindFirstFunction>(state.original)(
+        handler, pattern, result);
+    if ((game == nullptr && !ours)
+        || (game != nullptr && ours
+            && std::memcmp(game, &expected, sizeof(expected)) == 0
+            && equalFindResult(result, expectedResult))) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch("bigfindfirst", state, "cursor or first result differs");
+    }
+    return game;
+}
+
+using BigFindCloseFunction = bool(__thiscall*)(
+    ra3::io::GameBigHandler*, ra3::io::GameBigFindState*);
+
+bool __fastcall bigFindClose(
+    ra3::io::GameBigHandler* handler,
+    void*,
+    ra3::io::GameBigFindState* cursor)
+{
+    TargetState& state = g_bigFindClose;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::shadow) {
+        const bool expected = cursor != nullptr;
+        const bool game = reinterpret_cast<BigFindCloseFunction>(
+            state.original)(handler, cursor);
+        if (game == expected) {
+            state.matches.fetch_add(1, relaxed);
+        } else {
+            reportMismatch("bigfindclose", state, "return value differs");
+        }
+        return game;
+    }
+    if (cursor == nullptr) {
+        return false;
+    }
+    releaseGameAllocation(handler->allocator, cursor);
+    state.matches.fetch_add(1, relaxed);
+    return true;
+}
+
 }  // namespace
 
 const char* modeName(Mode mode)
@@ -2004,6 +2496,26 @@ const std::vector<Target>& targets()
          {0x8B, 0x44, 0x24, 0x08, 0x56, 0x57, 0x8B, 0x7C,
           0x24, 0x0C, 0x8B, 0xF0, 0x2B, 0xF7, 0x83, 0xC6},
          5, reinterpret_cast<void*>(&audioRandomInteger), &g_audioRandomInt, true},
+        {"bigfindclose", 0x005F5EB0,
+         {0x8B, 0x44, 0x24, 0x04, 0x85, 0xC0, 0x74, 0x12,
+          0x8B, 0x49, 0x1C, 0x8B, 0x11, 0x6A, 0x00, 0x50},
+         6, reinterpret_cast<void*>(&bigFindClose), &g_bigFindClose, true},
+        {"bigopen", 0x005F5F80,
+         {0x81, 0xEC, 0xC4, 0x01, 0x00, 0x00, 0x53, 0x55,
+          0x56, 0x8B, 0xB4, 0x24, 0xD4, 0x01, 0x00, 0x00},
+         6, reinterpret_cast<void*>(&bigOpen), &g_bigOpen, true},
+        {"bigread", 0x005F63B0,
+         {0x83, 0xEC, 0x0C, 0x53, 0x55, 0x56, 0x8B, 0x74,
+          0x24, 0x1C, 0x8B, 0x2E, 0x57, 0x83, 0xC5, 0x38},
+         5, reinterpret_cast<void*>(&bigRead), &g_bigRead, true},
+        {"bigfindfirst", 0x005F65E0,
+         {0x53, 0x8B, 0x5C, 0x24, 0x08, 0x56, 0x57, 0x6A,
+          0x3A, 0x53, 0x8B, 0xF9, 0xFF, 0x15, 0x20, 0xA5},
+         5, reinterpret_cast<void*>(&bigFindFirst), &g_bigFindFirst, true},
+        {"bigfindnext", 0x005F6670,
+         {0x81, 0xEC, 0x08, 0x01, 0x00, 0x00, 0x53, 0x56,
+          0x8B, 0xB4, 0x24, 0x14, 0x01, 0x00, 0x00, 0x33},
+         6, reinterpret_cast<void*>(&bigFindNext), &g_bigFindNext, true},
     };
     return table;
 }

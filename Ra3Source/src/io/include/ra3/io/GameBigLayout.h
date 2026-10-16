@@ -101,6 +101,55 @@ struct GameBigFile {
     std::uint64_t logicalPosition;
 };
 
+// rw::core::codec::RefpackInflate object used by ra3_1.0.game 0x009F7620.
+// Pointer fields are deliberately kept as pointers: original and replacement
+// Read calls may operate on an object created by the other implementation.
+struct GameRefPackInflater {
+    const void* vtable;
+    std::uint32_t unknown04;
+    GameAllocator* allocator;
+    std::uint8_t initialized;
+    std::array<std::uint8_t, 3> padding0D;
+    std::uint32_t unknown10;
+    std::uint32_t inputRemaining;
+    std::uint32_t outputRemaining;
+    std::uint32_t unknown1C;
+    std::uint64_t outputProduced;
+    const std::uint8_t* inputBegin;
+    std::uint8_t* outputBegin;
+    const std::uint8_t* inputCursor;
+    std::uint8_t* outputCursor;
+    std::uint32_t state;
+    std::uint32_t nextState;
+    std::uint32_t pendingInputBytes;
+    std::uint32_t decodedLength;
+    std::uint32_t runRemaining;
+    std::uint32_t command;
+    std::uint8_t* copyCursor;
+    std::uint8_t* windowBegin;
+    std::uint8_t* windowCursor;
+    std::uint32_t unknown5C;
+    std::uint64_t windowProduced;
+    std::uint32_t windowSize;
+    std::uint32_t status;
+};
+
+// 0x009F5ED0 / 0x009F6670 enumeration cursor and the known result prefix.
+struct GameBigFindState {
+    GameBigArchive* archive;
+    std::int32_t ordinal;
+    std::int32_t recordOrdinal;
+    const std::uint8_t* recordCursor;
+    std::array<char, 0x100> pattern;
+};
+
+struct GameBigFindResult {
+    std::uint32_t type;
+    std::array<std::uint8_t, 0x1C> unknown04;
+    std::uint64_t size;
+    char name[1];
+};
+
 using GameBigRangeRead = std::uint32_t (*)(
     void* context,
     const GameBigArchive* archive,
@@ -112,6 +161,17 @@ struct GameBigReleaseOps {
     void* context = nullptr;
     void (*destroyInflater)(void* context, void* inflater) = nullptr;
     void (*release)(void* context, void* pointer) = nullptr;
+};
+
+struct GameBigIoOps {
+    void* context = nullptr;
+    void (*lock)(void* context, const GameBigArchive* archive) = nullptr;
+    void (*unlock)(void* context, const GameBigArchive* archive) = nullptr;
+    void (*seek)(void* context, std::uint64_t position) = nullptr;
+    std::uint32_t (*read)(
+        void* context, void* destination, std::uint32_t count) = nullptr;
+    GameRefPackInflater* (*createInflater)(void* context) = nullptr;
+    void* (*allocateTemporary)(void* context, std::uint32_t size) = nullptr;
 };
 
 static_assert(sizeof(GameBigSearchEntry) == 0x08);
@@ -136,6 +196,17 @@ static_assert(offsetof(GameBigFile, logicalSize) == 0x20);
 static_assert(offsetof(GameBigFile, compressedSize) == 0x28);
 static_assert(offsetof(GameBigFile, sourcePosition) == 0x30);
 static_assert(offsetof(GameBigFile, logicalPosition) == 0x38);
+static_assert(sizeof(GameRefPackInflater) == 0x70);
+static_assert(offsetof(GameRefPackInflater, inputRemaining) == 0x14);
+static_assert(offsetof(GameRefPackInflater, outputProduced) == 0x20);
+static_assert(offsetof(GameRefPackInflater, state) == 0x38);
+static_assert(offsetof(GameRefPackInflater, windowBegin) == 0x54);
+static_assert(offsetof(GameRefPackInflater, windowProduced) == 0x60);
+static_assert(offsetof(GameRefPackInflater, status) == 0x6C);
+static_assert(sizeof(GameBigFindState) == 0x110);
+static_assert(offsetof(GameBigFindState, pattern) == 0x10);
+static_assert(offsetof(GameBigFindResult, size) == 0x20);
+static_assert(offsetof(GameBigFindResult, name) == 0x28);
 
 // ra3_1.0.game 0x009F6810 / 0x009F6880.
 std::uint32_t readGameBigEndian32(const std::uint8_t* bytes, int width) noexcept;
@@ -181,6 +252,51 @@ void closeGameBigFile(
 // Bookkeeping prediction used by bounded Read shadow verification. `actual`
 // is the number of bytes returned by the archive/decoder.
 void applyGameBigReadResult(GameBigFile* file, std::uint32_t actual) noexcept;
+
+// Layout-compatible state-machine operations for ra3_1.0.game
+// 0x009F75C0 / 0x009F7620 / 0x009F7C50. `vtable` is supplied by the ABI
+// boundary so the same portable implementation works in the DLL and oracles.
+void initializeGameRefPackInflater(
+    GameRefPackInflater* inflater,
+    GameAllocator* allocator,
+    const void* vtable) noexcept;
+void setGameRefPackInput(
+    GameRefPackInflater* inflater,
+    const std::uint8_t* input,
+    std::uint32_t count) noexcept;
+void setGameRefPackOutput(
+    GameRefPackInflater* inflater,
+    std::uint8_t* output,
+    std::uint32_t count) noexcept;
+std::uint32_t processGameRefPackInflater(GameRefPackInflater* inflater) noexcept;
+std::uint32_t runGameRefPackInflater(GameRefPackInflater* inflater) noexcept;
+void destroyGameRefPackInflater(GameRefPackInflater* inflater) noexcept;
+
+// ra3_1.0.game 0x009F6280 / 0x009F63B0. I/O, synchronization and allocation
+// are supplied by the verified ABI boundary or by offline oracle stubs.
+std::uint32_t inflateGameBigRange(
+    GameBigFile* file,
+    void* destination,
+    std::uint32_t destinationCapacity,
+    std::uint32_t wanted,
+    std::uint32_t sourceChunkSize,
+    bool finalFlush,
+    const GameBigIoOps& operations) noexcept;
+std::uint32_t readGameBigFile(
+    GameBigFile* file,
+    void* destination,
+    std::uint32_t count,
+    const GameBigIoOps& operations) noexcept;
+
+// ra3_1.0.game 0x004CE600 / 0x009F5ED0 / 0x009F6670.
+bool matchGameBigPattern(const char* text, const char* pattern) noexcept;
+void initializeGameBigFindState(
+    GameBigFindState* state,
+    const char* pattern,
+    GameBigArchive* firstArchive) noexcept;
+bool findNextGameBig(
+    GameBigFindState* state,
+    GameBigFindResult* result) noexcept;
 
 // ra3_1.0.game 0x009F6B90. Returns the start of an entry record or nullptr.
 const std::uint8_t* findGameBigHashedEntry(

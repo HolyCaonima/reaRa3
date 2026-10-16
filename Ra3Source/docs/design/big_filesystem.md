@@ -192,3 +192,39 @@ destructor/free ABI。Close shadow 只能原样转发（原调用后对象已经
 走已验证释放顺序。Open、Read、InflateRange 和枚举没有达到任务要求的真实压缩档案
 逐字节/完整状态 differential，因此没有挂钩；特别是不能把 `DecodedStream` 的
 Pimpl 当成游戏 0x70-byte inflater。
+
+## 9. 第四轮：Open、Read、inflater 与枚举
+
+`GameRefPackInflater` 现在精确声明为 0x70 字节。`0x009F75C0` 的初始化、
+`0x009F7620` 的 15 状态解码器、`0x009F7C50` 的虚槽包装和 `0x009F7C00`
+的 deleting destructor 均已移植。替换对象的虚表保留 deleting destructor
+`+0x00` 与 run `+0x0C` 两个实际使用的槽。每次 yield 后的字段、相对滑窗指针和
+滑窗内容均与原代码比较，因此结论是 **布局兼容**：原版与重建 Read 创建的对象可由
+对方的 Read/Seek/Close 继续处理。重建对象由已验证的 handler allocator 分配并由
+自己的 deleting destructor 释放，不依赖未验证的全局 new/delete ABI。
+
+`readGameBigFile` 和 `inflateGameBigRange` 通过 `GameBigIoOps` 参数化文件
+seek/read、同步和分配边界。DLL 把它绑定到 bigfs3 已验证的虚表槽和同步函数；
+离线 oracle 把它绑定到只读真实档案字节。
+
+枚举状态为 0x110 字节：archive `+0x00`、ordinal `+0x04`、record ordinal
+`+0x08`、record pointer `+0x0C`、pattern `+0x10`。结果已知前缀中 type 在
+`+0x00`、size 在 `+0x20`、basename 在 `+0x28`。模式匹配器 `0x004CE600`
+区分大小写并支持 `?`/`*`；静态字符串搜索找到 `*.*`、`*.ttf`、`*.ini`、
+`*.fx`、`*.fxo` 和 `mapmetadata_*.manifest`，oracle 另加 `*`。
+
+| 离线范围 | 用例 | 结果 |
+|---|---:|---:|
+| Open，普通/限定路径及双档案优先级 | 887 | 0 mismatch |
+| 0x70 inflater，每次 yield 的完整状态 | Misc.big 210 个压缩成员 | 0 mismatch |
+| Read/Seek，逐成员完整读取 | Misc.big 441 个成员 | 0 mismatch |
+| 压缩成员随机 seek/read（含零长度与越过结尾） | 500 | 0 mismatch |
+| FindFirst/FindNext，7 个模式 | 1071 个结果 | 0 mismatch |
+
+Open、Read、FindFirst、FindNext、FindClose 都是 `explicitOnly` hook。Open shadow
+用栈上 0x40 临时对象计算预期状态；Read shadow 先快照 0x40 状态，并在 8 MiB 上限
+内用独立只读 Win32 handle 与 RefPack 解码器核对返回字节，超限计入 `skipped`；
+枚举 shadow 在 0x110 副本上推进。replace 只通过 bigfs3 已验证的
+allocator/file/sync ABI。状态均为 offline-verified, live pending。
+当前派生 handler 虚表 `0x00BDAF98` 覆盖了三个基类枚举槽，因此这三个基类 hook
+在实机上可能保持 0 次；需要同时观察派生入口后再决定是否另挂目标。

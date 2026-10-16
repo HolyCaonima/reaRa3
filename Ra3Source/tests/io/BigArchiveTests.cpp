@@ -7,6 +7,7 @@
 #include <ra3/io/GameBigLayout.h>
 
 #include <algorithm>
+#include <array>
 #include <cstring>
 #include <vector>
 
@@ -281,4 +282,33 @@ RA3_TEST(GameBigLayout_PreparesAndReleasesFileState)
     ra3::io::closeGameBigFile(&file, operations);
     RA3_CHECK_EQ(counts.destroyed, 2);
     RA3_CHECK_EQ(counts.released, 3);
+}
+
+RA3_TEST(GameBigLayout_EnumeratesWithOriginalWildcardRules)
+{
+    const std::string bytes = buildBig({
+        {"data\\one.ini", "1"},
+        {"data\\two.bin", "22"},
+        {"root.ini", "333"},
+    });
+    const auto* header = reinterpret_cast<const std::uint8_t*>(bytes.data());
+    ra3::io::GameBigArchive archive{};
+    archive.index = {header, header, nullptr};
+    ra3::io::GameBigFindState state{};
+    ra3::io::initializeGameBigFindState(&state, "*.ini", &archive);
+
+    std::array<std::uint8_t, 0x200> resultBytes{};
+    auto* result = reinterpret_cast<ra3::io::GameBigFindResult*>(
+        resultBytes.data());
+    RA3_REQUIRE(ra3::io::findNextGameBig(&state, result));
+    RA3_CHECK_EQ(std::string(result->name), std::string("one.ini"));
+    RA3_CHECK_EQ(result->size, std::uint64_t{1});
+    RA3_REQUIRE(ra3::io::findNextGameBig(&state, result));
+    RA3_CHECK_EQ(std::string(result->name), std::string("root.ini"));
+    RA3_CHECK_EQ(result->size, std::uint64_t{3});
+    RA3_CHECK(!ra3::io::findNextGameBig(&state, result));
+
+    RA3_CHECK(ra3::io::matchGameBigPattern("data/file.ini", "data/*.ini"));
+    RA3_CHECK(ra3::io::matchGameBigPattern("a", "?"));
+    RA3_CHECK(!ra3::io::matchGameBigPattern("data/file.bin", "data/*.ini"));
 }

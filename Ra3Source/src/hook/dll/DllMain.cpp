@@ -77,7 +77,9 @@ void writeSummary()
         }
         std::ostringstream out;
         out << "summary " << target.key << " calls=" << state.calls.load()
-            << " matches=" << state.matches.load() << " mismatches=" << state.mismatches.load();
+            << " matches=" << state.matches.load()
+            << " mismatches=" << state.mismatches.load()
+            << " skipped=" << state.skipped.load();
         const std::uint32_t controlWord = state.firstFpuControlWord.load();
         if (controlWord != 0) {
             out << std::hex << std::uppercase << std::setfill('0')
