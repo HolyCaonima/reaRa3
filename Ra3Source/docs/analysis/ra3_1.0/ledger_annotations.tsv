@@ -21,7 +21,7 @@ address	status	owner	module	notes
 009f6b90	reversed	main	io	BigHandler cluster; ra3::io::BigArchive
 009f6d00	reversed	main	io	BigHandler cluster; ra3::io::BigArchive
 009f7130	reversed	main	io	BigHandler cluster; ra3::io::BigArchive
-009f72e0	reversed	main	io	RefPack one-shot decoder; ra3::io::decompressRefPack
+009f72e0	verified	main	io	RefPack one-shot decoder; ra3::io::decompressRefPack; live shadow 38/38 match, replace 38/38 to main menu (injection.md 5.4)
 009f74f0	reversed	main	io	RefPack size probe; ra3::io::readRefPackHeader
 009f7620	reversed	main	io	rw::core::codec::RefpackInflate (streaming)
 004ce600	reversed	main	core	SkuDef parsing; ra3::SkuDef

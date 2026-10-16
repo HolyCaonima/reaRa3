@@ -96,8 +96,8 @@ RefPack hook 的签名是
 ## 5. 首次真实游戏实验
 
 以下命令只在主 agent 审核代码后执行。PowerShell 当前目录为
-`D:\Game\Ra3\RevRa3-hook\Ra3Source`。配置和 DLL 都在构建目录，游戏安装目录保持
-只读。
+`D:\Game\Ra3\RevRa3\Ra3Source`。配置和 DLL 都在构建目录，游戏安装目录保持
+只读。结果见 5.4。
 
 ### 5.1 shadow
 
@@ -121,11 +121,12 @@ Remove-Item "$env:LOCALAPPDATA\Ra3Source\logs\ra3hook.log" -ErrorAction Silently
 还没读，正好让 RefPack hook 覆盖整个加载过程。等到主菜单再注入，多数解码已经做完。
 
 ```
-build\win32\bin\Debug\ra3inject.exe --name ra3_1.0.game --dll D:\Game\Ra3\RevRa3-hook\Ra3Source\build\win32\bin\Debug\ra3hook.dll --wait-window
+build\win32\bin\Debug\ra3inject.exe --name ra3_1.0.game --dll D:\Game\Ra3\RevRa3\Ra3Source\build\win32\bin\Debug\ra3hook.dll --wait-window
 Get-Content "$env:LOCALAPPDATA\Ra3Source\logs\ra3hook.log" -Wait
 ```
 
-若同名进程不止一个，先运行 `Get-Process ra3_1.0` 查 PID，再把 `--name
+若同名进程不止一个，先运行 `Get-Process ra3_1.0.game` 查 PID（镜像扩展名不是
+`.exe`，进程名保留 `.game`），再把 `--name
 ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW result` 和
 `GetLastError=0`。日志必须显示基址 `0x400000`、发行版时间戳和镜像大小，随后是
 `installed mode=shadow`。进入一次会读取 BIG 压缩成员的正常流程；只接受
@@ -143,6 +144,29 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 补丁只存在于进程内。完全退出游戏即可撤销；不要在已注入进程中覆盖 DLL或重复
 注入。删除构建目录旁的 `ra3hook.ini` 只会阻止下一次安装，不改变游戏文件。若
 注入、保护或游戏行为出现任何异常，退出进程、保存日志并停止路线 A 实验。
+
+### 5.4 结果（2026-10-16，`RA3.exe -win`，英文 SkuDef）
+
+实际游戏命令行：`D:\Game\Ra3\Game\Data\ra3_1.0.game -win -config
+"D:\Game\Ra3\Game\RA3_english_1.0.SkuDef"`。三次注入都报告
+`LoadLibraryW result=0x7be20000 GetLastError=0`，日志首行均为
+`host base=0x400000 timestamp=0x48ef023a image_size=0x26a14f0`，没有出现完整性
+检查拒绝或崩溃。
+
+| 运行 | 模式 | 注入时机 | 到主菜单时的计数 | 结果 |
+|---|---|---|---|---|
+| 1 | shadow | 主菜单之后（按 PID） | `calls=0` | 安装成功；菜单期间不再解码 RefPack |
+| 2 | shadow | `--wait-window`，进程出现约 1 秒 | `calls=38 matches=38 mismatches=0` | 加载期全部调用逐字节一致 |
+| 3 | replace | `--wait-window`，进程出现约 3 秒 | `calls=38 matches=38 mismatches=0` | 原函数不再执行；主菜单正常渲染 |
+
+replace 模式下 `matches` 表示 Ra3Source 解码成功并把结果交给游戏。运行 3 的主菜单
+截图中字体、贴图和菜单框体完整；弹出的 "Failed to connect to servers" 是 GameSpy
+下线后的离线提示，与 hook 无关。
+
+结论：路线 A 在真实进程上成立——注入时机在保护启动阶段之后，`.text` 内联补丁
+未被拒绝，一个已复刻的函数可以整体替换原实现。尚未覆盖：进入对局（地图加载可能
+产生更多 RefPack 调用）；窗口出现前的少量解码可能早于注入，shadow 无法证明覆盖了
+全部调用。
 
 ## 6. 已知风险
 
