@@ -26,7 +26,7 @@ Ra3Source 按子系统分模块，每个模块一个静态库 `ra3_<name>`（别
 |---|---|---|---|
 | `core` | Libraries\Source\{ini,string,debug,memorypool} | Code\GameEngine\Source\Common | 已完成 |
 | `io` | lib-packages\RtsBase\…\file、rw::core filesystem | Code\GameEngine\Source\Common\System\ArchiveFile* | 已完成 |
-| `text` | CSF 字符串表 | Code\GameEngine\Source\GameClient\GameText.cpp | 进行中 |
+| `text` | CSF 字符串表 | Code\GameEngine\Source\GameClient\GameText.cpp | 已完成（实测 10,401 条） |
 | `asset` | Libraries\Source\assetmanager、RtsXmlPipeline | Code\GameEngine\Source\Common\System\AssetManager 等 | 设计中 |
 | `common` | GameEngine\common | Code\GameEngine\Source\Common | 规划 |
 | `gamelogic` | GameEngine\gamelogic（127+ 函数已锚定） | Code\GameEngine\Source\GameLogic | 规划 |
@@ -86,7 +86,7 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [x] 函数台账（48,982 行）、总体报告
 - [x] 引入 GPL 参考
 - [x] 虚表恢复：补建约 11,022 个虚函数，导出 2,977 个虚表清单（docs/analysis/ra3_1.0/vtables.tsv）
-- [ ] text（CSF）模块 — 进行中（子 agent，分支 recon/text）
+- [x] text（CSF）模块 — 已合并进 main，实测 gamestrings.csf 解析出 10,401 条字符串，单测 26、数据测试 5、CTest 2 全通过
 - [ ] asset 模块设计 — 进行中（子 agent，docs/design/asset_system.md）
 - [ ] 模块映射文档 — 进行中（子 agent，docs/design/module_map.md）
 - [ ] 注入可行性研究（决定主路线）
