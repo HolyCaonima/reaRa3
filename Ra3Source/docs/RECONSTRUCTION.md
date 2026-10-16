@@ -108,7 +108,7 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [x] BigHandler 档案文件系统（recon/bigfs，已合并）：全局实例槽 `0x00DEB69C`（`0x004D2490` 分配 0x20 字节派生对象），档案链表、每档案索引与按哈希排序的查找表布局（`ra3/io/GameBigLayout.h`，docs/design/big_filesystem.md）；只读查找 `0x009F6B90`/`0x009F6D00` 移植为在游戏结构上运行的 C++，Unicorn 在真实 Misc.big 目录上 2,207 例 0 不一致（主控复跑 `tools/analysis/ports/verify_big_lookup.py` 与 `bigcheck` 一致）。离线 `BigArchive::find` 改为区分斜杠方向（与游戏一致），`ArchiveSet` 负责把 '/' 规范成 '\'。实机 shadow：bigfindentry 2,632,470/2,632,470、bigfindhash 4,627/4,627；replace 后对局正常。这两个目标只认显式键
 - [x] 模块归属工具 `tools/analysis/attribute_modules.py` → `module_estimates.tsv`：台账/虚表/64 KiB 邻近三级归属，留出验证虚表 4/4、邻近 35/38（92%）；仍未归属 26,050。模块映射已按新台账刷新。asset 的邻近估计（961，留出 1/2）偏粗，慎用
 - [x] 虚表 → 类（recon/vclass，已合并）：没有 RTTI；164 个资源处理器是 5 槽接口（析构 / create / 原位复制 / destroy / 缺失原型解析），分属 3 个模板族（多态 119、单例设置 20、4 字节值 9）加少量特化；`classes.tsv` 3,126 行、805 条候选继承边（启发式）。注意 `vtables.tsv` 是“连续代码指针段”，相邻虚表会被合并（docs/design/class_map.md）
-- [ ] 精确虚表边界：用构造/析构写入点与直接虚调用重新切分 vtables.tsv 的连续段 — 子 agent，分支 recon/vsplit（只读使用 work/ghidra）
+- [x] 精确虚表边界（recon/vsplit，已合并，主控复跑输出逐字节一致）：clean `.text` 的 vptr 写入、立即数引用与数据指针把 2,977 个连续段中的 955 个切开，得 7,442 个候选虚表；164/164 资源处理器恰为 5 槽，BigHandler 基/派生边界吻合；`classes.tsv` 7,442 行、3,721 条候选继承边（启发式）；无 RTTI COL。1,092 段无独立起点证据，41 个 direct-slot 边界可能是表中槽访问（docs/design/class_map.md）
 - [ ] BigHandler 第二层：GameBigFile 生命周期（open/close/seek/read/枚举）、分配器与文件对象 ABI，可无副作用 shadow 的部分挂 hook — 子 agent，分支 recon/bigfs2，work/ghidra_bigfs
 - [ ] 运行时字符串表（GameText）：管理器、内存布局、只读查找移植与 shadow — 子 agent，分支 recon/csf，work/ghidra_csf
 - [ ] hook 移植第二批：数学库（x87/SSE 逐位一致）与 CRC/哈希族 — 子 agent，分支 recon/ports2，work/ghidra_ports2

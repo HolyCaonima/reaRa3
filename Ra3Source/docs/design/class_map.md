@@ -52,11 +52,11 @@ RTTI。[程序][全量]
 ```powershell
 python tools/analysis/split_vtables.py `
   --exe D:\Game\Ra3\Game\Data\ra3_1.0.game `
-  --source-root D:\Game\Ra3\RevRa3-vsplit\Ra3Source
+  --source-root D:\Game\Ra3\RevRa3\Ra3Source
 
 python tools/analysis/recover_classes.py `
   --exe D:\Game\Ra3\Game\Data\ra3_1.0.game `
-  --source-root D:\Game\Ra3\RevRa3-vsplit\Ra3Source
+  --source-root D:\Game\Ra3\RevRa3\Ra3Source
 ```
 
 也可用 `--vtables PATH` 显式选择输入；默认优先读取 `vtables_split.tsv`。
