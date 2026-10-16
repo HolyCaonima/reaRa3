@@ -171,8 +171,8 @@ RefPack hook 的签名是
 ## 5. 首次真实游戏实验
 
 以下命令只在主 agent 审核代码后执行。PowerShell 当前目录为
-`D:\Game\Ra3\RevRa3\Ra3Source`。配置和 DLL 都在构建目录，游戏安装目录保持
-只读。结果见 5.4。
+`D:\Game\Ra3\RevRa3\Ra3Source`，先 `cmake --build build/win32 --config Release`。
+配置和 DLL 都在构建目录，游戏安装目录保持只读。结果见 5.4。
 
 ### 5.1 shadow
 
@@ -180,7 +180,7 @@ RefPack hook 的签名是
 @'
 mode=shadow
 summary_interval_ms=1000
-'@ | Set-Content -Encoding ASCII build\win32\bin\Debug\ra3hook.ini
+'@ | Set-Content -Encoding ASCII build\win32\bin\Release\ra3hook.ini
 
 Remove-Item "$env:LOCALAPPDATA\Ra3Source\logs\ra3hook.log" -ErrorAction SilentlyContinue
 ```
@@ -195,7 +195,7 @@ Remove-Item "$env:LOCALAPPDATA\Ra3Source\logs\ra3hook.log" -ErrorAction Silently
 还没读，正好让 RefPack hook 覆盖整个加载过程。等到主菜单再注入，多数解码已经做完。
 
 ```
-build\win32\bin\Debug\ra3inject.exe --name ra3_1.0.game --dll D:\Game\Ra3\RevRa3\Ra3Source\build\win32\bin\Debug\ra3hook.dll --wait-window
+build\win32\bin\Release\ra3inject.exe --name ra3_1.0.game --dll D:\Game\Ra3\RevRa3\Ra3Source\build\win32\bin\Release\ra3hook.dll --wait-window
 Get-Content "$env:LOCALAPPDATA\Ra3Source\logs\ra3hook.log" -Wait
 ```
 
@@ -243,6 +243,7 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 11 | 四目标 replace，进入遭遇战 | `--wait-window` | 对局中 refpack 58/58；namehash 117452/117452；pathcompare 575667/575667；refpackprobe 549/549 | 四个原函数都不执行，对局正常运行 |
 | 12 | 23 目标 shadow（含显式启用的 bigfind*），进入遭遇战 | `--wait-window` | 对局中 19 个目标被调用，全部 0 不一致；如 bigfindentry 2632470/2632470、pathcompare 762327/762327、stringlength 273450/273450、bytecompare 269853/269853、fnvhash 45230/45230、bigfindhash 4627/4627 | stringfindlast、bytewiden、utf8decode、utf8encode 未被调用 |
 | 13 | 23 目标 replace，进入遭遇战 | `--wait-window` | 对局中 bigfindentry 2694036、pathcompare 763499、stringlength 276354、bytecompare 257685 次全部由 Ra3Source 处理；bigfindhash 0 次（唯一调用者 bigfindentry 已被替换） | 对局正常运行 |
+| 14 | 同运行 13，改用 Release 构建的 DLL | `--wait-window` | 对局中 bigfindentry 2694111、stringlength 309882、pathcompare 348589、bytecompare 257687 次全部由 Ra3Source 处理 | 约 50 秒到主菜单，对局正常运行 |
 
 运行 8、9 的操作：主菜单点掉离线提示 → Versus → Skirmish → 默认设置（Battlebase
 Beta，单人，阵营随机）→ BEGIN。点击由 `SetCursorPos`/`mouse_event` 发往前台游戏
@@ -250,7 +251,8 @@ Beta，单人，阵营随机）→ BEGIN。点击由 `SetCursorPos`/`mouse_event
 尚未就绪，游戏未被注入，结果作废）；注入器现对远程函数解析重试 5 秒。
 
 运行 12、13 的 DLL 是 Debug 构建：bigfindentry 在加载期约 220 万次调用，加载到主菜单
-比只挂四个目标时慢约一倍。运行 13 之前有一次作废：配置脚本与启动命令并行执行，DLL
+要数分钟。Release 构建（`cmake --build build/win32 --config Release`，同样零警告、
+ctest 全过）在运行 14 中约 50 秒到主菜单，此后实机运行默认用 `bin/Release`。运行 13 之前有一次作废：配置脚本与启动命令并行执行，DLL
 读到了上一轮的 shadow 配置（日志显示 `mode=shadow`）；脚本现等待旧进程退出、确认日志
 已删除后才返回，启动必须在它之后。
 
