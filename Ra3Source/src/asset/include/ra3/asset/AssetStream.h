@@ -31,6 +31,12 @@ struct StreamValidation {
     bool totalInstanceDataSizeMatches = false;
 };
 
+// Each of .bin, .relo and .imp starts with the manifest's streamChecksum and is
+// then exactly the concatenation of the assets' chunks, so its length is 4 plus
+// the matching size sum. ra3_1.0.game (ResourceManagerFileStream, 0x004479E0)
+// rejects a member whose checksum differs ("... file is not in synch with
+// manifest!"). Validation decodes only those first 4 bytes, because a 32-bit
+// process cannot hold every decompressed .bin at once.
 std::vector<std::string> enumerateStreamStems(const io::ArchiveSet& archives);
 Result<StreamValidation> validateStreamBundle(
     const io::ArchiveSet& archives, std::string_view stem);

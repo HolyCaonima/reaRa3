@@ -12,6 +12,14 @@
 
 namespace ra3::asset {
 
+// A compiled SAGE stream's .manifest: 48-byte header, assetCount 48-byte
+// entries, then the reference, referenced-manifest, asset-name and
+// source-file buffers, which end exactly at the end of the file. All 257
+// shipped streams are version 6, little-endian and linked.
+//
+// ra3_1.0.game reads it in FullAssetList (0x00495890): it allocates
+// count * 0x30 bytes of entries, sums their three chunk sizes and recursively
+// loads referenced manifests of kind 2. Kind 1 names a dependency stream.
 struct ManifestHeader {
     std::uint8_t isBigEndian = 0;
     std::uint8_t isLinked = 0;
@@ -29,6 +37,10 @@ struct ManifestHeader {
     std::uint32_t sourceFileNameBufferSize = 0;
 };
 
+// The three *Offset members are not stored in the file: each asset's chunk
+// follows the previous asset's chunk, after the member's 4-byte checksum.
+// `flags` is 1 for every GameObject, WeaponTemplate and ArmorTemplate and 0
+// otherwise; its meaning is unknown.
 struct AssetEntry {
     AssetId id;
     std::uint32_t typeHash = 0;
@@ -85,6 +97,9 @@ private:
     std::uint64_t m_importsDataSize = 0;
 };
 
+// "<stem>/cdata/typeId.typeHash.instanceId.instanceHash.cdata"; the game
+// formats the same four values with "%s%08X.%08X.%08X.%08X.cdata" (0x004A64CC)
+// and looks the result up ignoring case.
 std::string cdataPath(std::string_view stem, const AssetEntry& entry);
 
 }  // namespace ra3::asset
