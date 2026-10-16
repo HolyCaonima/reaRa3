@@ -1,0 +1,161 @@
+"""Run one clean ra3_1.0.game leaf function in a CPU emulator.
+
+Differential oracle for C++ ports: the function's own shipped bytes are executed
+on caller-chosen inputs, outside the game process. Only the on-disk images of
+.text, .rdata and .data are mapped; SecuROM sections are never mapped, so any
+access to them (or to anything else unmapped) stops the run with an error.
+.data holds load-time values only: globals initialised at runtime read as their
+on-disk contents, so functions depending on such state are not comparable.
+
+Imported functions are not mapped. A caller may bind an IAT slot to a Python
+stub (cdecl, sees the emulator and returns EAX) with ``bind_import``.
+
+    from emulate import Emulator
+    emu = Emulator()
+    a = emu.alloc(b"Data\\Foo.big\\0")
+    b = emu.alloc(b"data\\foo.BIG\\0")
+    print(emu.call(0x009F3650, [a, b]).eax)
+"""
+
+from __future__ import annotations
+
+import struct
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Callable, Optional, Sequence
+
+import unicorn
+from unicorn import x86_const as r
+
+from disasm import DEFAULT_EXE, Image
+
+MAPPED_SECTIONS = (".text", ".rdata", ".data")
+PAGE = 0x1000
+STACK_BASE = 0x7F000000
+STACK_SIZE = 0x100000
+HEAP_BASE = 0x60000000
+HEAP_SIZE = 0x1000000
+STUB_BASE = 0x7FE00000
+RETURN_SENTINEL = STUB_BASE + 0xFF0
+
+
+@dataclass(frozen=True)
+class CallResult:
+    eax: int
+    edx: int
+    stack_cleanup: int
+
+
+class EmulationError(RuntimeError):
+    pass
+
+
+def _align(value: int, alignment: int = PAGE) -> int:
+    return (value + alignment - 1) & ~(alignment - 1)
+
+
+class Emulator:
+    def __init__(self, exe: Path = DEFAULT_EXE) -> None:
+        self.image = Image(exe)
+        self.uc = unicorn.Uc(unicorn.UC_ARCH_X86, unicorn.UC_MODE_32)
+        for name, rva, size, raw, raw_size in self.image.sections:
+            if name.split("\0")[0] not in MAPPED_SECTIONS:
+                continue
+            start = self.image.base + rva
+            self.uc.mem_map(start, _align(size), unicorn.UC_PROT_READ | unicorn.UC_PROT_WRITE
+                            | unicorn.UC_PROT_EXEC)
+            self.uc.mem_write(start, self.image.data[raw:raw + raw_size])
+        self._initial = {
+            self.image.base + rva: self.image.data[raw:raw + raw_size]
+            for name, rva, _, raw, raw_size in self.image.sections
+            if name.split("\0")[0] == ".data"
+        }
+        self.uc.mem_map(STACK_BASE, STACK_SIZE)
+        self.uc.mem_map(HEAP_BASE, HEAP_SIZE)
+        self.uc.mem_map(STUB_BASE, PAGE, unicorn.UC_PROT_READ | unicorn.UC_PROT_EXEC)
+        self.uc.mem_write(STUB_BASE, b"\xC3" * PAGE)
+        self._heap = HEAP_BASE
+        self._stubs: dict[int, Callable[["Emulator"], int]] = {}
+        self._next_stub = STUB_BASE
+        self._fault: Optional[str] = None
+        self.uc.hook_add(unicorn.UC_HOOK_MEM_UNMAPPED, self._on_unmapped)
+        self.uc.hook_add(unicorn.UC_HOOK_CODE, self._on_stub, begin=STUB_BASE,
+                         end=STUB_BASE + PAGE - 1)
+
+    def _on_unmapped(self, uc, access, address, size, value, data) -> bool:
+        eip = uc.reg_read(r.UC_X86_REG_EIP)
+        self._fault = f"unmapped access 0x{address:08X} (size {size}) at eip 0x{eip:08X}"
+        return False
+
+    def _on_stub(self, uc, address, size, data) -> None:
+        if address == RETURN_SENTINEL:
+            uc.emu_stop()
+            return
+        stub = self._stubs.get(address)
+        if stub is None:
+            self._fault = f"call into unbound stub 0x{address:08X}"
+            uc.emu_stop()
+            return
+        uc.reg_write(r.UC_X86_REG_EAX, stub(self) & 0xFFFFFFFF)
+
+    def bind_import(self, iat_slot: int, stub: Callable[["Emulator"], int]) -> None:
+        address = self._next_stub
+        self._next_stub += 0x10
+        self._stubs[address] = stub
+        self.uc.mem_write(iat_slot, struct.pack("<I", address))
+
+    def stack_arg(self, index: int) -> int:
+        """Argument ``index`` of a cdecl call as seen from inside an import stub."""
+        esp = self.uc.reg_read(r.UC_X86_REG_ESP)
+        return struct.unpack("<I", self.uc.mem_read(esp + 4 + 4 * index, 4))[0]
+
+    def reset_data(self) -> None:
+        for start, image in self._initial.items():
+            self.uc.mem_write(start, image)
+        self._heap = HEAP_BASE
+
+    def alloc(self, data: bytes, alignment: int = 16) -> int:
+        address = _align(self._heap, alignment)
+        if address + max(len(data), 1) > HEAP_BASE + HEAP_SIZE:
+            raise EmulationError("emulator heap exhausted")
+        self.uc.mem_write(address, data)
+        self._heap = address + max(len(data), 1)
+        return address
+
+    def read(self, address: int, size: int) -> bytes:
+        return bytes(self.uc.mem_read(address, size))
+
+    def write(self, address: int, data: bytes) -> None:
+        self.uc.mem_write(address, data)
+
+    def call(self, address: int, stack_args: Sequence[int] = (), *, ecx: int = 0, edx: int = 0,
+             max_instructions: int = 5_000_000) -> CallResult:
+        """Call ``address`` with ``stack_args`` pushed right to left.
+
+        ``stack_cleanup`` is the number of argument bytes the callee popped:
+        0 for cdecl, 4 * stack arguments for stdcall/thiscall.
+        """
+        top = STACK_BASE + STACK_SIZE - 0x100
+        frame = struct.pack(f"<I{len(stack_args)}I", RETURN_SENTINEL,
+                            *[a & 0xFFFFFFFF for a in stack_args])
+        esp = top - len(frame)
+        self.uc.mem_write(esp, frame)
+        for reg, value in ((r.UC_X86_REG_ESP, esp), (r.UC_X86_REG_EBP, 0),
+                           (r.UC_X86_REG_EAX, 0), (r.UC_X86_REG_EBX, 0),
+                           (r.UC_X86_REG_ECX, ecx), (r.UC_X86_REG_EDX, edx),
+                           (r.UC_X86_REG_ESI, 0), (r.UC_X86_REG_EDI, 0)):
+            self.uc.reg_write(reg, value & 0xFFFFFFFF)
+        self._fault = None
+        try:
+            self.uc.emu_start(address, RETURN_SENTINEL, count=max_instructions)
+        except unicorn.UcError as error:
+            raise EmulationError(self._fault or f"0x{address:08X}: {error}") from None
+        if self._fault:
+            raise EmulationError(self._fault)
+        eip = self.uc.reg_read(r.UC_X86_REG_EIP)
+        if eip != RETURN_SENTINEL:
+            raise EmulationError(f"0x{address:08X}: no return within {max_instructions} "
+                                 f"instructions (eip 0x{eip:08X})")
+        cleanup = self.uc.reg_read(r.UC_X86_REG_ESP) - (esp + 4)
+        return CallResult(self.uc.reg_read(r.UC_X86_REG_EAX), self.uc.reg_read(r.UC_X86_REG_EDX),
+                          cleanup)
