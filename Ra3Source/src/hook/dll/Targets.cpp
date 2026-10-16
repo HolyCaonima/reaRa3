@@ -2,9 +2,11 @@
 
 #include <ra3/asset/NameHash.h>
 #include <ra3/common/ByteString.h>
+#include <ra3/common/Crc32.h>
 #include <ra3/io/GameBigLayout.h>
 #include <ra3/io/PathCompare.h>
 #include <ra3/io/RefPack.h>
+#include <ra3/math/Math.h>
 #include <ra3/text/GameTextLayout.h>
 
 #include <algorithm>
@@ -42,6 +44,28 @@ TargetState g_decodeUtf8Advance;
 TargetState g_refPackProbe;
 TargetState g_bigFindHash;
 TargetState g_bigFindEntry;
+TargetState g_maximumFloat;
+TargetState g_clampFloat;
+TargetState g_equalVector3;
+TargetState g_equalVector2Range;
+TargetState g_squaredDistance3;
+TargetState g_minimumFloat;
+TargetState g_approximateLength3;
+TargetState g_colorFromArgb;
+TargetState g_containsPoint2;
+TargetState g_separatePoint2;
+TargetState g_clampOffset68;
+TargetState g_distance3;
+TargetState g_normalizeVector2;
+TargetState g_squaredDistanceOffset38;
+TargetState g_crc32CString;
+TargetState g_scaleVector3;
+TargetState g_transformDirection3;
+
+static_assert(offsetof(TargetState, mode) == 0);
+static_assert(offsetof(TargetState, original) == 4);
+static_assert(sizeof(Mode) == 4 && static_cast<int>(Mode::replace) == 2,
+              "the naked x87 entries compare the mode dword against 2");
 TargetState g_bigReadBe32;
 TargetState g_bigReadBe64;
 TargetState g_bigDetectFormat;
@@ -1031,6 +1055,548 @@ void __fastcall bigClose(
     state.matches.fetch_add(1, relaxed);
 }
 
+std::uint32_t floatBits(float value)
+{
+    std::uint32_t bits = 0;
+    std::memcpy(&bits, &value, sizeof(bits));
+    return bits;
+}
+
+void observeFloatingEntry(
+    TargetState* state, std::uint32_t controlWord, std::uint32_t mxcsr)
+{
+    state->calls.fetch_add(1, relaxed);
+    std::uint32_t expected = 0;
+    if (state->firstFpuControlWord.compare_exchange_strong(
+            expected, controlWord, relaxed, relaxed)) {
+        state->firstMxcsr.store(mxcsr, relaxed);
+    } else if (expected != controlWord) {
+        state->fpuControlWordChanges.fetch_add(1, relaxed);
+    }
+}
+
+void observeFloatingCall(TargetState& state)
+{
+    std::uint16_t controlWord = 0;
+    std::uint32_t mxcsr = 0;
+#if defined(_MSC_VER) && defined(_M_IX86)
+    __asm {
+        fnstcw controlWord
+        stmxcsr mxcsr
+    }
+#endif
+    observeFloatingEntry(&state, controlWord, mxcsr);
+}
+
+void recordExtendedResult(
+    const char* key,
+    TargetState* state,
+    const std::uint8_t* game,
+    const std::uint8_t* ours)
+{
+    if (std::memcmp(game, ours, 10) == 0) {
+        state->matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch(key, *state, "80-bit x87 result differs");
+    }
+}
+
+void recordExtendedReplacement(TargetState* state)
+{
+    state->matches.fetch_add(1, relaxed);
+}
+
+float shadowBinaryFloat(
+    const char* key, TargetState& state, float a, float b,
+    float (*implementation)(float, float))
+{
+    const float ours = implementation(a, b);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const float game = reinterpret_cast<float(__cdecl*)(float, float)>(state.original)(a, b);
+    recordScalar(key, state, floatBits(game), floatBits(ours));
+    return game;
+}
+
+// ra3_1.0.game 0x00504620.
+float __cdecl maximumFloat(float a, float b)
+{
+    TargetState& state = g_maximumFloat;
+    observeFloatingCall(state);
+    return shadowBinaryFloat("floatmax", state, a, b, &ra3::math::maximum);
+}
+
+// ra3_1.0.game 0x00522A30.
+float __cdecl minimumFloat(float a, float b)
+{
+    TargetState& state = g_minimumFloat;
+    observeFloatingCall(state);
+    return shadowBinaryFloat("floatmin", state, a, b, &ra3::math::minimum);
+}
+
+// ra3_1.0.game 0x00504650.
+float __cdecl clampFloat(float value, float lower, float upper)
+{
+    TargetState& state = g_clampFloat;
+    observeFloatingCall(state);
+    const float ours = ra3::math::clamp(value, lower, upper);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const float game = reinterpret_cast<float(__cdecl*)(float, float, float)>(
+        state.original)(value, lower, upper);
+    recordScalar("floatclamp", state, floatBits(game), floatBits(ours));
+    return game;
+}
+
+// ra3_1.0.game 0x00504680.
+bool __cdecl equalVector3(const ra3::math::Vector3* a, const ra3::math::Vector3* b)
+{
+    TargetState& state = g_equalVector3;
+    state.calls.fetch_add(1, relaxed);
+    const bool ours = ra3::math::exactlyEqual(*a, *b);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const bool game = reinterpret_cast<bool(__cdecl*)(
+        const ra3::math::Vector3*, const ra3::math::Vector3*)>(state.original)(a, b);
+    recordScalar("vectorequal3", state, game, ours);
+    return game;
+}
+
+// ra3_1.0.game 0x005046C0.
+bool __cdecl equalVector2Range(
+    const ra3::math::Vector2* first,
+    const ra3::math::Vector2* last,
+    const ra3::math::Vector2* other)
+{
+    TargetState& state = g_equalVector2Range;
+    state.calls.fetch_add(1, relaxed);
+    const bool ours = ra3::math::exactlyEqualVector2Range(first, last, other);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const bool game = reinterpret_cast<bool(__cdecl*)(
+        const ra3::math::Vector2*, const ra3::math::Vector2*,
+        const ra3::math::Vector2*)>(state.original)(first, last, other);
+    recordScalar("vectorrangeequal2", state, game, ours);
+    return game;
+}
+
+using ExtendedVectorPairFunction = float(__cdecl*)(
+    const ra3::math::Vector3&, const ra3::math::Vector3&) noexcept;
+ExtendedVectorPairFunction g_squaredDistanceImplementation = &ra3::math::squaredDistance;
+ExtendedVectorPairFunction g_distanceImplementation = &ra3::math::distance;
+constexpr char squaredDistance3Key[] = "squaredistance3";
+constexpr char distance3Key[] = "distance3";
+
+// ra3_1.0.game 0x005049E0.
+__declspec(naked) float __cdecl squaredDistance3(
+    const ra3::math::Vector3*, const ra3::math::Vector3*)
+{
+    __asm {
+        push ebp
+        mov ebp, esp
+        sub esp, 32
+        fnstcw word ptr [ebp - 8]
+        stmxcsr dword ptr [ebp - 4]
+        movzx eax, word ptr [ebp - 8]
+        push dword ptr [ebp - 4]
+        push eax
+        push offset g_squaredDistance3
+        call observeFloatingEntry
+        add esp, 12
+        cmp dword ptr [g_squaredDistance3], 2
+        je replacePath
+
+        push dword ptr [ebp + 12]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_squaredDistance3 + 4]
+        add esp, 8
+        fstp tbyte ptr [ebp - 20]
+        push dword ptr [ebp + 12]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_squaredDistanceImplementation]
+        add esp, 8
+        fstp tbyte ptr [ebp - 32]
+        lea eax, [ebp - 32]
+        push eax
+        lea eax, [ebp - 20]
+        push eax
+        push offset g_squaredDistance3
+        push offset squaredDistance3Key
+        call recordExtendedResult
+        add esp, 16
+        fld tbyte ptr [ebp - 20]
+        leave
+        ret
+
+    replacePath:
+        push dword ptr [ebp + 12]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_squaredDistanceImplementation]
+        add esp, 8
+        fstp tbyte ptr [ebp - 32]
+        push offset g_squaredDistance3
+        call recordExtendedReplacement
+        add esp, 4
+        fld tbyte ptr [ebp - 32]
+        leave
+        ret
+    }
+}
+
+// ra3_1.0.game 0x00564150.
+__declspec(naked) float __cdecl distance3(
+    const ra3::math::Vector3*, const ra3::math::Vector3*)
+{
+    __asm {
+        push ebp
+        mov ebp, esp
+        sub esp, 32
+        fnstcw word ptr [ebp - 8]
+        stmxcsr dword ptr [ebp - 4]
+        movzx eax, word ptr [ebp - 8]
+        push dword ptr [ebp - 4]
+        push eax
+        push offset g_distance3
+        call observeFloatingEntry
+        add esp, 12
+        cmp dword ptr [g_distance3], 2
+        je replacePath
+
+        push dword ptr [ebp + 12]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_distance3 + 4]
+        add esp, 8
+        fstp tbyte ptr [ebp - 20]
+        push dword ptr [ebp + 12]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_distanceImplementation]
+        add esp, 8
+        fstp tbyte ptr [ebp - 32]
+        lea eax, [ebp - 32]
+        push eax
+        lea eax, [ebp - 20]
+        push eax
+        push offset g_distance3
+        push offset distance3Key
+        call recordExtendedResult
+        add esp, 16
+        fld tbyte ptr [ebp - 20]
+        leave
+        ret
+
+    replacePath:
+        push dword ptr [ebp + 12]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_distanceImplementation]
+        add esp, 8
+        fstp tbyte ptr [ebp - 32]
+        push offset g_distance3
+        call recordExtendedReplacement
+        add esp, 4
+        fld tbyte ptr [ebp - 32]
+        leave
+        ret
+    }
+}
+
+using ExtendedVectorFunction =
+    float(__cdecl*)(const ra3::math::Vector3*) noexcept;
+ExtendedVectorFunction g_approximateLengthImplementation =
+    &ra3::math::approximateLengthExtended;
+constexpr char approximateLengthKey[] = "approximatelength3";
+
+// ra3_1.0.game 0x00523240.
+__declspec(naked) float __cdecl approximateLength3(const ra3::math::Vector3*)
+{
+    __asm {
+        push ebp
+        mov ebp, esp
+        sub esp, 32
+        fnstcw word ptr [ebp - 4]
+        stmxcsr dword ptr [ebp - 8]
+        movzx eax, word ptr [ebp - 4]
+        push dword ptr [ebp - 8]
+        push eax
+        push offset g_approximateLength3
+        call observeFloatingEntry
+        add esp, 12
+        cmp dword ptr [g_approximateLength3], 2
+        je replacePath
+
+        push dword ptr [ebp + 8]
+        call dword ptr [g_approximateLength3 + 4]
+        add esp, 4
+        fstp tbyte ptr [ebp - 20]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_approximateLengthImplementation]
+        add esp, 4
+        fstp tbyte ptr [ebp - 32]
+        lea eax, [ebp - 32]
+        push eax
+        lea eax, [ebp - 20]
+        push eax
+        push offset g_approximateLength3
+        push offset approximateLengthKey
+        call recordExtendedResult
+        add esp, 16
+        fld tbyte ptr [ebp - 20]
+        leave
+        ret
+
+    replacePath:
+        push dword ptr [ebp + 8]
+        call dword ptr [g_approximateLengthImplementation]
+        add esp, 4
+        fstp tbyte ptr [ebp - 32]
+        push offset g_approximateLength3
+        call recordExtendedReplacement
+        add esp, 4
+        fld tbyte ptr [ebp - 32]
+        leave
+        ret
+    }
+}
+
+// ra3_1.0.game 0x005235B0.
+void __cdecl colorFromArgb(ra3::math::Vector4* output, std::uint32_t argb)
+{
+    TargetState& state = g_colorFromArgb;
+    observeFloatingCall(state);
+    const ra3::math::Vector4 ours = ra3::math::colorFromArgb(argb);
+    if (state.mode == Mode::replace) {
+        *output = ours;
+        state.matches.fetch_add(1, relaxed);
+        return;
+    }
+    reinterpret_cast<void(__cdecl*)(ra3::math::Vector4*, std::uint32_t)>(
+        state.original)(output, argb);
+    recordOutput("colorargb", state, output, &ours, sizeof(ours));
+}
+
+// ra3_1.0.game 0x00528BC0.
+bool __cdecl containsPoint2(
+    const ra3::math::Vector2* point,
+    const ra3::math::Vector2* minimum,
+    const ra3::math::Vector2* maximum)
+{
+    TargetState& state = g_containsPoint2;
+    state.calls.fetch_add(1, relaxed);
+    const bool ours = ra3::math::containsInclusive(*point, *minimum, *maximum);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const bool game = reinterpret_cast<bool(__cdecl*)(
+        const ra3::math::Vector2*, const ra3::math::Vector2*,
+        const ra3::math::Vector2*)>(state.original)(point, minimum, maximum);
+    recordScalar("contains2", state, game, ours);
+    return game;
+}
+
+// ra3_1.0.game 0x00528C00.
+void __cdecl separatePoint2(
+    ra3::math::Vector2* a, ra3::math::Vector2* b, float factor)
+{
+    TargetState& state = g_separatePoint2;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        ra3::math::separate(*a, *b, factor);
+        state.matches.fetch_add(1, relaxed);
+        return;
+    }
+    const ra3::math::Vector2 initialA = *a;
+    const ra3::math::Vector2 initialB = *b;
+    ra3::math::Vector2 oursA = initialA;
+    ra3::math::Vector2 oursB = initialB;
+    if (a == b) {
+        ra3::math::separate(oursA, oursA, factor);
+        oursB = oursA;
+    } else {
+        ra3::math::separate(oursA, oursB, factor);
+    }
+    reinterpret_cast<void(__cdecl*)(
+        ra3::math::Vector2*, ra3::math::Vector2*, float)>(state.original)(a, b, factor);
+    const bool equal = std::memcmp(a, &oursA, sizeof(oursA)) == 0
+        && std::memcmp(b, &oursB, sizeof(oursB)) == 0;
+    if (equal) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch("separate2", state, "output differs");
+    }
+}
+
+// ra3_1.0.game 0x0055A9B0.
+void __fastcall clampOffset68(void* object, void*, float lower, float upper)
+{
+    TargetState& state = g_clampOffset68;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        ra3::math::clampFloatAtOffset68(object, lower, upper);
+        state.matches.fetch_add(1, relaxed);
+        return;
+    }
+    std::uint8_t temporary[0x6C]{};
+    std::memcpy(temporary + 0x68, static_cast<const std::uint8_t*>(object) + 0x68, 4);
+    ra3::math::clampFloatAtOffset68(temporary, lower, upper);
+    reinterpret_cast<void(__thiscall*)(void*, float, float)>(
+        state.original)(object, lower, upper);
+    recordOutput(
+        "clampoffset68", state, static_cast<const std::uint8_t*>(object) + 0x68,
+        temporary + 0x68, 4);
+}
+
+// ra3_1.0.game 0x0056F370.
+void __cdecl normalizeVector2(
+    ra3::math::Vector2* output, const ra3::math::Vector2* input)
+{
+    TargetState& state = g_normalizeVector2;
+    observeFloatingCall(state);
+    const ra3::math::Vector2 inputCopy = *input;
+    ra3::math::Vector2 ours{};
+    ra3::math::normalize(inputCopy, ours);
+    if (state.mode == Mode::replace) {
+        *output = ours;
+        state.matches.fetch_add(1, relaxed);
+        return;
+    }
+    reinterpret_cast<void(__cdecl*)(
+        ra3::math::Vector2*, const ra3::math::Vector2*)>(state.original)(output, input);
+    recordOutput("normalize2", state, output, &ours, sizeof(ours));
+}
+
+// ra3_1.0.game 0x006ABCB0.
+using ExtendedOffsetDistanceFunction = float(__fastcall*)(
+    const void*, void*, const ra3::math::Vector3*) noexcept;
+ExtendedOffsetDistanceFunction g_squaredDistanceOffset38Implementation =
+    &ra3::math::squaredDistanceFromOffset38Extended;
+constexpr char squaredDistanceOffset38Key[] = "squaredistanceoffset38";
+
+__declspec(naked) float __fastcall squaredDistanceOffset38(
+    const void*, void*, const ra3::math::Vector3*)
+{
+    __asm {
+        push ebp
+        mov ebp, esp
+        sub esp, 40
+        mov dword ptr [ebp - 12], ecx
+        fnstcw word ptr [ebp - 8]
+        stmxcsr dword ptr [ebp - 4]
+        movzx eax, word ptr [ebp - 8]
+        push dword ptr [ebp - 4]
+        push eax
+        push offset g_squaredDistanceOffset38
+        call observeFloatingEntry
+        add esp, 12
+        cmp dword ptr [g_squaredDistanceOffset38], 2
+        je replacePath
+
+        push dword ptr [ebp + 8]
+        mov ecx, dword ptr [ebp - 12]
+        call dword ptr [g_squaredDistanceOffset38 + 4]
+        fstp tbyte ptr [ebp - 24]
+        push dword ptr [ebp + 8]
+        xor edx, edx
+        mov ecx, dword ptr [ebp - 12]
+        call dword ptr [g_squaredDistanceOffset38Implementation]
+        fstp tbyte ptr [ebp - 40]
+        lea eax, [ebp - 40]
+        push eax
+        lea eax, [ebp - 24]
+        push eax
+        push offset g_squaredDistanceOffset38
+        push offset squaredDistanceOffset38Key
+        call recordExtendedResult
+        add esp, 16
+        fld tbyte ptr [ebp - 24]
+        leave
+        ret 4
+
+    replacePath:
+        push dword ptr [ebp + 8]
+        xor edx, edx
+        mov ecx, dword ptr [ebp - 12]
+        call dword ptr [g_squaredDistanceOffset38Implementation]
+        fstp tbyte ptr [ebp - 40]
+        push offset g_squaredDistanceOffset38
+        call recordExtendedReplacement
+        add esp, 4
+        fld tbyte ptr [ebp - 40]
+        leave
+        ret 4
+    }
+}
+
+// ra3_1.0.game 0x0092A0D0.
+std::uint32_t __cdecl crc32CString(const char* text)
+{
+    TargetState& state = g_crc32CString;
+    state.calls.fetch_add(1, relaxed);
+    const std::uint32_t ours = ra3::common::crc32CString(text);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const std::uint32_t game = reinterpret_cast<std::uint32_t(__cdecl*)(
+        const char*)>(state.original)(text);
+    recordScalar("crc32cstring", state, game, ours);
+    return game;
+}
+
+struct ScaledVectorObject {
+    std::uint8_t unused[0x10];
+    ra3::math::Vector3 value;
+    std::uint8_t padding[0x08];
+    float scale;
+};
+static_assert(offsetof(ScaledVectorObject, scale) == 0x24);
+
+// ra3_1.0.game 0x009814E0.
+void __fastcall scaleVector3(
+    const ScaledVectorObject* object, void*, ra3::math::Vector3* output)
+{
+    TargetState& state = g_scaleVector3;
+    state.calls.fetch_add(1, relaxed);
+    const ra3::math::Vector3 ours = ra3::math::scaled(object->value, object->scale);
+    if (state.mode == Mode::replace) {
+        *output = ours;
+        state.matches.fetch_add(1, relaxed);
+        return;
+    }
+    reinterpret_cast<void(__thiscall*)(
+        const ScaledVectorObject*, ra3::math::Vector3*)>(state.original)(object, output);
+    recordOutput("scalevector3", state, output, &ours, sizeof(ours));
+}
+
+// ra3_1.0.game 0x00994A10.
+void __fastcall transformDirection3(
+    const ra3::math::Matrix3x4* matrix,
+    void*,
+    ra3::math::Vector3* output,
+    const ra3::math::Vector3* input)
+{
+    TargetState& state = g_transformDirection3;
+    state.calls.fetch_add(1, relaxed);
+    const ra3::math::Vector3 inputCopy = *input;
+    const ra3::math::Vector3 ours = ra3::math::transformDirection(*matrix, inputCopy);
+    if (state.mode == Mode::replace) {
+        *output = ours;
+        state.matches.fetch_add(1, relaxed);
+        return;
+    }
+    reinterpret_cast<void(__thiscall*)(
+        const ra3::math::Matrix3x4*, ra3::math::Vector3*,
+        const ra3::math::Vector3*)>(state.original)(matrix, output, input);
+    recordOutput("transformdirection3", state, output, &ours, sizeof(ours));
+}
+
 }  // namespace
 
 const char* modeName(Mode mode)
@@ -1141,6 +1707,74 @@ const std::vector<Target>& targets()
          {0x8B, 0x4C, 0x24, 0x04, 0x8A, 0x01, 0x3C, 0x7F,
           0x77, 0x0D, 0x0F, 0xB6, 0xD0, 0x8D, 0x41, 0x01},
          6, reinterpret_cast<void*>(&decodeUtf8Advance), &g_decodeUtf8Advance},
+        {"floatmax", 0x00104620,
+         {0xF3, 0x0F, 0x10, 0x44, 0x24, 0x04, 0xF3, 0x0F,
+          0x10, 0x4C, 0x24, 0x08, 0x0F, 0x2F, 0xC1, 0x76},
+         6, reinterpret_cast<void*>(&maximumFloat), &g_maximumFloat},
+        {"floatclamp", 0x00104650,
+         {0xF3, 0x0F, 0x10, 0x4C, 0x24, 0x08, 0xF3, 0x0F,
+          0x10, 0x44, 0x24, 0x04, 0x0F, 0x2F, 0xC8, 0x76},
+         6, reinterpret_cast<void*>(&clampFloat), &g_clampFloat},
+        {"vectorequal3", 0x00104680,
+         {0x8B, 0x4C, 0x24, 0x04, 0x8B, 0x54, 0x24, 0x08,
+          0xF3, 0x0F, 0x10, 0x01, 0x0F, 0x2E, 0x02, 0x9F},
+         8, reinterpret_cast<void*>(&equalVector3), &g_equalVector3},
+        {"vectorrangeequal2", 0x001046C0,
+         {0x8B, 0x4C, 0x24, 0x04, 0x56, 0x8B, 0x74, 0x24,
+          0x0C, 0x3B, 0xCE, 0x74, 0x2A, 0x8B, 0x54, 0x24},
+         5, reinterpret_cast<void*>(&equalVector2Range), &g_equalVector2Range},
+        {"squaredistance3", 0x001049E0,
+         {0x8B, 0x44, 0x24, 0x04, 0x8B, 0x4C, 0x24, 0x08,
+          0xD9, 0x00, 0xD8, 0x21, 0xD9, 0x40, 0x04, 0xD8},
+         8, reinterpret_cast<void*>(&squaredDistance3), &g_squaredDistance3},
+        {"floatmin", 0x00122A30,
+         {0xF3, 0x0F, 0x10, 0x44, 0x24, 0x08, 0xF3, 0x0F,
+          0x10, 0x4C, 0x24, 0x04, 0x0F, 0x2F, 0xC1, 0x76},
+         6, reinterpret_cast<void*>(&minimumFloat), &g_minimumFloat},
+        {"approximatelength3", 0x00123240,
+         {0x83, 0xEC, 0x08, 0x8B, 0x44, 0x24, 0x0C, 0xD9,
+          0x00, 0xD9, 0xE1, 0xD9, 0x54, 0x24, 0x04, 0xD9},
+         7, reinterpret_cast<void*>(&approximateLength3), &g_approximateLength3},
+        {"colorargb", 0x001235B0,
+         {0x8B, 0x4C, 0x24, 0x08, 0xF3, 0x0F, 0x10, 0x05,
+          0x54, 0xEF, 0xBD, 0x00, 0x8B, 0xC1, 0xC1, 0xF8},
+         12, reinterpret_cast<void*>(&colorFromArgb), &g_colorFromArgb},
+        {"contains2", 0x00128BC0,
+         {0x8B, 0x44, 0x24, 0x04, 0x8B, 0x4C, 0x24, 0x08,
+          0xF3, 0x0F, 0x10, 0x00, 0x0F, 0x2F, 0x01, 0x72},
+         8, reinterpret_cast<void*>(&containsPoint2), &g_containsPoint2},
+        {"separate2", 0x00128C00,
+         {0x8B, 0x44, 0x24, 0x08, 0x8B, 0x4C, 0x24, 0x04,
+          0xF3, 0x0F, 0x10, 0x19, 0xF3, 0x0F, 0x10, 0x61},
+         8, reinterpret_cast<void*>(&separatePoint2), &g_separatePoint2},
+        {"clampoffset68", 0x0015A9B0,
+         {0xF3, 0x0F, 0x10, 0x41, 0x68, 0xF3, 0x0F, 0x10,
+          0x4C, 0x24, 0x04, 0x0F, 0x2F, 0xC8, 0x77, 0x0B},
+         5, reinterpret_cast<void*>(&clampOffset68), &g_clampOffset68},
+        {"distance3", 0x00164150,
+         {0x8B, 0x44, 0x24, 0x04, 0x8B, 0x4C, 0x24, 0x08,
+          0xD9, 0x00, 0xD8, 0x21, 0xD9, 0x40, 0x04, 0xD8},
+         8, reinterpret_cast<void*>(&distance3), &g_distance3},
+        {"normalize2", 0x0016F370,
+         {0x8B, 0x4C, 0x24, 0x08, 0xF3, 0x0F, 0x10, 0x51,
+          0x04, 0xF3, 0x0F, 0x10, 0x09, 0x0F, 0x28, 0xDA},
+         9, reinterpret_cast<void*>(&normalizeVector2), &g_normalizeVector2},
+        {"squaredistanceoffset38", 0x002ABCB0,
+         {0x8B, 0x44, 0x24, 0x04, 0xD9, 0x41, 0x38, 0xD8,
+          0x20, 0xD9, 0x41, 0x3C, 0xD8, 0x60, 0x04, 0xD9},
+         7, reinterpret_cast<void*>(&squaredDistanceOffset38), &g_squaredDistanceOffset38},
+        {"crc32cstring", 0x0052A0D0,
+         {0x8B, 0x54, 0x24, 0x04, 0x33, 0xC0, 0x85, 0xD2,
+          0x74, 0x28, 0x8A, 0x0A, 0x84, 0xC9, 0x74, 0x22},
+         6, reinterpret_cast<void*>(&crc32CString), &g_crc32CString},
+        {"scalevector3", 0x005814E0,
+         {0x8B, 0x44, 0x24, 0x04, 0x8B, 0x51, 0x10, 0x89,
+          0x10, 0x8B, 0x51, 0x14, 0x89, 0x50, 0x04, 0x8B},
+         7, reinterpret_cast<void*>(&scaleVector3), &g_scaleVector3},
+        {"transformdirection3", 0x00594A10,
+         {0x8B, 0x44, 0x24, 0x08, 0xF3, 0x0F, 0x10, 0x48,
+          0x04, 0xF3, 0x0F, 0x10, 0x40, 0x08, 0xF3, 0x0F},
+         9, reinterpret_cast<void*>(&transformDirection3), &g_transformDirection3},
         {"refpackprobe", 0x005F74F0,
          {0x8B, 0x54, 0x24, 0x04, 0x33, 0xC9, 0x8A, 0x2A,
           0x56, 0x33, 0xC0, 0x8A, 0x4A, 0x01, 0x0F, 0xB7},

@@ -99,6 +99,23 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `utf8decode` | `0x00A282D0` 宽松 UTF-8 解码 | cdecl | 6 | `ra3::common::decodeUtf8` | offline-verified；运行 12/13 未被调用 |
 | `utf8encode` | `0x00A28350` UTF-8 编码 | cdecl | 9 | `ra3::common::encodeUtf8` | offline-verified；运行 12/13 未被调用 |
 | `utf8next` | `0x00A284B0` UTF-8 解码并前移 | cdecl | 6 | `ra3::common::decodeUtf8AndAdvance` | live verified |
+| `floatmax` | `0x00504620` 浮点最大值 | cdecl | 6 | `ra3::math::maximum` | offline-verified, live pending |
+| `floatclamp` | `0x00504650` 浮点夹取 | cdecl | 6 | `ra3::math::clamp` | offline-verified, live pending |
+| `vectorequal3` | `0x00504680` `Vector3` 精确相等 | cdecl | 8 | `ra3::math::exactlyEqual` | offline-verified, live pending |
+| `vectorrangeequal2` | `0x005046C0` `Vector2` 区间精确相等 | cdecl | 5 | `ra3::math::exactlyEqualVector2Range` | offline-verified, live pending |
+| `squaredistance3` | `0x005049E0` `Vector3` 距离平方 | cdecl | 8 | `ra3::math::squaredDistance` | offline-verified（80-bit ST0）, live pending；NaN payload 待实机 |
+| `floatmin` | `0x00522A30` 浮点最小值 | cdecl | 6 | `ra3::math::minimum` | offline-verified, live pending |
+| `approximatelength3` | `0x00523240` `Vector3` 近似长度 | cdecl | 7 | `ra3::math::approximateLength` | offline-verified（80-bit ST0）, live pending；NaN payload 待实机 |
+| `colorargb` | `0x005235B0` ARGB 转 `Vector4` | cdecl | 12 | `ra3::math::colorFromArgb` | offline-verified, live pending |
+| `contains2` | `0x00528BC0` 二维包含测试 | cdecl | 8 | `ra3::math::containsInclusive` | offline-verified, live pending |
+| `separate2` | `0x00528C00` 二维点对分离 | cdecl | 8 | `ra3::math::separate` | offline-verified, live pending |
+| `clampoffset68` | `0x0055A9B0` 对象 `+0x68` 浮点夹取 | thiscall | 5 | `ra3::math::clampFloatAtOffset68` | offline-verified, live pending |
+| `distance3` | `0x00564150` `Vector3` 距离 | cdecl | 8 | `ra3::math::distance` | offline-verified（80-bit ST0）, live pending；NaN payload 待实机 |
+| `normalize2` | `0x0056F370` `Vector2` 归一化 | cdecl | 9 | `ra3::math::normalize` | offline-verified, live pending；NaN payload 待实机 |
+| `squaredistanceoffset38` | `0x006ABCB0` 到对象 `+0x38` 向量的距离平方 | thiscall | 7 | `ra3::math::squaredDistanceFromOffset38` | offline-verified（80-bit ST0）, live pending；NaN payload 待实机 |
+| `crc32cstring` | `0x0092A0D0` 零结尾字节串 CRC-32 | cdecl | 6 | `ra3::common::crc32CString` | offline-verified, live pending |
+| `scalevector3` | `0x009814E0` 对象向量缩放 | thiscall | 7 | `ra3::math::scaled` | offline-verified, live pending |
+| `transformdirection3` | `0x00994A10` `Matrix3x4` 方向变换 | thiscall | 9 | `ra3::math::transformDirection` | offline-verified, live pending；多 NaN payload 待实机 |
 | `bigfindhash` | `0x009F6B90` 单档案哈希表查找 | thiscall | 5 | `ra3::io::findGameBigHashedEntry` | live verified（shadow；replace 时唯一调用者已被替换）; 仅显式键启用 |
 | `bigfindentry` | `0x009F6D00` 单档案路径/序号查找 | thiscall | 7 | `ra3::io::findGameBigEntry` | live verified; 仅显式键启用 |
 | `bigreadbe32` | `0x009F6810` 变宽大端 32 位读取 | cdecl | 7 | `ra3::io::readGameBigEndian32` | live verified |
@@ -118,6 +135,19 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节
 （源串按 `count` 截断求长，目标缓冲可能短于 `count`）。
+
+ports2 的 17 个目标同样逐个用 `disasm.py --hook-only` 复核 expected16、完整指令边界、
+位置无关前缀和函数内后向边。写指针的 shadow 先在临时对象上计算结果，原函数仍是唯一
+写游戏内存的一方；`separate2` 另处理两个输出指针相同的别名情形。
+
+四个直接返回 x87 计算结果的目标不能经过 C++ `float` 临时量：
+`squaredistance3`、`distance3`、`approximatelength3` 和
+`squaredistanceoffset38` 的 naked hook 用两个十字节临时区保存并比较完整 `ST0`。
+shadow 最终重新装入游戏值，replace 重新装入重建值，因此调用者收到的尾数和扩展指数
+均不被单精度舍入。其余 x87 浮点目标返回的是从内存装入的精确单精度值。每个 x87
+目标还在入口采集调用者 CW 与 MXCSR；汇总行的
+`cw=0x.... mxcsr=0x........ cw_changes=N` 给出首次值和后续 CW 变化次数，采集过程
+不修改浮点环境。
 
 `Ra3Source/tools/analysis/disasm.py <VA> --hook-only` 从只读的可执行文件直接给出前 16 字节、
 stolen 长度（≥5 字节的最短整指令前缀）及其是否位置无关、返回形式（`ret` = cdecl，

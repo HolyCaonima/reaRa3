@@ -23,6 +23,9 @@ struct TargetState {
     std::atomic<std::uint64_t> matches{0};
     std::atomic<std::uint64_t> mismatches{0};
     std::atomic<unsigned> reported{0};
+    std::atomic<std::uint32_t> firstFpuControlWord{0};
+    std::atomic<std::uint32_t> firstMxcsr{0};
+    std::atomic<std::uint64_t> fpuControlWordChanges{0};
 };
 
 // A clean .text function of ra3_1.0.game that the DLL can take over. In shadow
