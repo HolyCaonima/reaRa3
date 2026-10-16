@@ -92,5 +92,8 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [x] text（CSF）模块 — 已合并进 main，实测 gamestrings.csf 解析出 10,401 条字符串，单测 26、数据测试 5、CTest 2 全通过
 - [x] asset 模块里程碑 1（四件套读取与资源目录）— 已合并；`ra3tool streams` 2 秒校验 257 组 / 118,232 条资源，0 问题；RefPack 全/前缀解码共用一个实现，14 个档案 5,203 个压缩条目 0 失败；单测 32、数据测试 8 全通过
 - [x] 模块映射文档（docs/design/module_map.md）— 统计基于修正前的台账，待刷新
-- [ ] 注入可行性研究（决定主路线）
-- [ ] 虚函数按虚表归类到 C++ 类（下一步，用 vtables.tsv）
+- [ ] asset 里程碑 2：流式 RefPack、重定位/导入表、全量深度校验 — 子 agent，分支 recon/asset2
+- [ ] 注入可行性研究（决定主路线）：hook 库、注入器、影子/替换模式的 RefPack hook（0x009F72E0），只在自建的假目标进程上测试 — 子 agent，分支 recon/hook；真实游戏实验由主控在审查后执行
+- [ ] 资源类型目录（0x00417220 的全部注册）与实例名哈希算法（用仿真找） — 子 agent，分支 recon/types，独占 Ghidra 工程
+- [ ] 模块归属工具（台账 + 虚表 + 地址邻近，带留出验证）并刷新模块映射 — 子 agent，分支 recon/modmap
+- [ ] 虚函数按虚表归类到 C++ 类（用 vtables.tsv）
