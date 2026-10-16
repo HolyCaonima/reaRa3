@@ -114,10 +114,32 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `gametextmanager` | `0x0053B500` GameText 三表优先级查询 | thiscall | 6 | `ra3::text::findGameText(GameTextManager*)` | live verified；仅显式键启用 |
 | `bigseek` | `0x009F5E00` BIG 文件 seek | thiscall（6 stack dword） | 6 | `ra3::io::seekGameBigFile` | live verified；仅显式键启用 |
 | `bigclose` | `0x009F5DB0` BIG 文件 close | thiscall | 5 | `ra3::io::closeGameBigFile` | live replace-only（运行 18，341 次，对局正常）；仅显式键启用；shadow 仅转发 |
+| `bigfindclose` | `0x009F5EB0` BIG 枚举状态释放 | thiscall | 6 | allocator-backed release | offline-verified, live pending；仅显式键启用 |
+| `bigopen` | `0x009F5F80` BIG 文件 open | thiscall（3 stack dword） | 6 | `ra3::io::prepareGameBigFile` + tagged allocation | offline-verified, live pending；仅显式键启用 |
+| `bigread` | `0x009F63B0` BIG 文件 read | thiscall（5 stack dword） | 5 | `ra3::io::readGameBigFile` | offline-verified, live pending；仅显式键启用 |
+| `bigfindfirst` | `0x009F65E0` BIG 枚举开始 | thiscall（2 stack dword） | 5 | `ra3::io::initializeGameBigFindState` + `findNextGameBig` | offline-verified, live pending；仅显式键启用 |
+| `bigfindnext` | `0x009F6670` BIG 枚举推进 | thiscall（2 stack dword） | 6 | `ra3::io::findNextGameBig` | offline-verified, live pending；仅显式键启用 |
 
 上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节
 （源串按 `count` 截断求长，目标缓冲可能短于 `count`）。
+
+bigfs4 的五个目标同样只认显式键。建议首次 live shadow 配置：
+
+```
+bigopen=shadow
+bigread=shadow
+bigfindfirst=shadow
+bigfindnext=shadow
+bigfindclose=shadow
+```
+
+Open shadow 不分配，只在栈上构造预期 0x40 状态；Read shadow 的额外字节验证使用
+独立只读 handle，限制为 8 MiB，未验证调用记录 `skipped`；FindFirst/FindNext 在
+0x110 状态副本上运行。FindClose shadow 在原调用前预测非空状态的返回值，调用后
+不再访问已释放对象。replace
+使用已验证 allocator/file/sync ABI 和布局兼容的 0x70 inflater。live 应尽早注入，
+进入主菜单和遭遇战，以覆盖压缩与明文成员、加载期 seek/read 以及资源枚举。
 
 `Ra3Source/tools/analysis/disasm.py <VA> --hook-only` 从只读的可执行文件直接给出前 16 字节、
 stolen 长度（≥5 字节的最短整指令前缀）及其是否位置无关、返回形式（`ret` = cdecl，

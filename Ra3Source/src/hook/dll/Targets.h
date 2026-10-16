@@ -22,6 +22,7 @@ struct TargetState {
     std::atomic<std::uint64_t> calls{0};
     std::atomic<std::uint64_t> matches{0};
     std::atomic<std::uint64_t> mismatches{0};
+    std::atomic<std::uint64_t> skipped{0};
     std::atomic<unsigned> reported{0};
 };
 

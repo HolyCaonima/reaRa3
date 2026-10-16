@@ -76,7 +76,9 @@ void writeSummary()
         }
         std::ostringstream out;
         out << "summary " << target.key << " calls=" << state.calls.load()
-            << " matches=" << state.matches.load() << " mismatches=" << state.mismatches.load();
+            << " matches=" << state.matches.load()
+            << " mismatches=" << state.mismatches.load()
+            << " skipped=" << state.skipped.load();
         writeLine(out.str());
     }
 }
