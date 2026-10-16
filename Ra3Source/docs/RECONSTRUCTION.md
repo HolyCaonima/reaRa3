@@ -27,7 +27,7 @@ Ra3Source 按子系统分模块，每个模块一个静态库 `ra3_<name>`（别
 | `core` | Libraries\Source\{ini,string,debug,memorypool} | Code\GameEngine\Source\Common | 已完成 |
 | `io` | lib-packages\RtsBase\…\file、rw::core filesystem | Code\GameEngine\Source\Common\System\ArchiveFile* | 已完成 |
 | `text` | CSF 字符串表 | Code\GameEngine\Source\GameClient\GameText.cpp | 已完成（实测 10,401 条） |
-| `asset` | Libraries\Source\assetmanager、RtsXmlPipeline | Code\GameEngine\Source\Common\System\AssetManager 等 | 设计中 |
+| `asset` | Libraries\Source\assetmanager、RtsXmlPipeline | Code\GameEngine\Source\Common\System\AssetManager 等 | 格式已证实，实现中 |
 | `common` | GameEngine\common | Code\GameEngine\Source\Common | 规划 |
 | `gamelogic` | GameEngine\gamelogic（127+ 函数已锚定） | Code\GameEngine\Source\GameLogic | 规划 |
 | `gameclient` | GameEngine\gameclient | Code\GameEngine\Source\GameClient | 规划 |
@@ -41,7 +41,7 @@ Ra3Source 按子系统分模块，每个模块一个静态库 `ra3_<name>`（别
 
 ## 4. 函数台账协议
 
-`docs/analysis/ra3_1.0/function_ledger.tsv` 是所有函数的唯一事实来源，37,937 行，由 `tools/analysis/build_function_ledger.py` 生成。列：
+`docs/analysis/ra3_1.0/function_ledger.tsv` 是所有函数的唯一事实来源，48,985 行，由 `tools/analysis/build_function_ledger.py` 生成。列：
 
 `address  name  section  size  source_file  securom  module  owner  status  notes`
 
@@ -50,7 +50,9 @@ Ra3Source 按子系统分模块，每个模块一个静态库 `ra3_<name>`（别
 - `status`：`unanalyzed` / `claimed` / `in-progress` / `reversed` / `verified`。
 - `owner`：认领者标识（agent 名或分支名）。
 
-**认领规则**：开工前把要做的函数行 `owner` 填上自己、`status` 置 `claimed`；完成并验证后置 `reversed` 或 `verified`，在 `notes` 里写对应的 Ra3Source 符号。**不要重排行、不要改别人 owner 非空的行。** 重新生成台账会覆盖人工列，所以认领信息最终以提交历史为准；跨 agent 协调时以本文件最新提交为准。
+**人工状态不写在台账里**，而是写在旁边的 `docs/analysis/ra3_1.0/ledger_annotations.tsv`（列 `address status owner module notes`，每个地址一行）。生成脚本把其中非空字段覆盖到台账对应行，所以重新生成不会丢失认领和结论；标注了却找不到函数的地址会在生成时列出。
+
+**认领规则**：开工前在标注文件里给要做的函数加一行，`owner` 填自己、`status` 置 `claimed`；完成并验证后置 `reversed` 或 `verified`，在 `notes` 里写结论和对应的 Ra3Source 符号，然后重新生成台账。**不要改别人 owner 非空的行。** 并行分支各自只追加自己的行，合并时冲突最小。
 
 ## 5. 并行工作规则
 
@@ -83,11 +85,12 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 ## 8. 状态板
 
 - [x] core、io 完成并验证
-- [x] 函数台账（48,982 行）、总体报告
+- [x] 函数台账（48,985 行）、总体报告；人工状态移到 ledger_annotations.tsv，源路径识别 148 → 191 个文件
 - [x] 引入 GPL 参考
+- [x] 资源流格式：清单/重定位/导入/cdata 布局在全部 257 组上校验通过，并与原程序 FullAssetList、ResourceManagerFileStream 对上（docs/design/asset_system.md §3）
 - [x] 虚表恢复：补建约 11,022 个虚函数，导出 2,977 个虚表清单（docs/analysis/ra3_1.0/vtables.tsv）
 - [x] text（CSF）模块 — 已合并进 main，实测 gamestrings.csf 解析出 10,401 条字符串，单测 26、数据测试 5、CTest 2 全通过
-- [ ] asset 模块设计 — 进行中（子 agent，docs/design/asset_system.md）
+- [ ] asset 模块里程碑 1（四件套读取与资源目录）— 实现中（子 agent，分支 recon/asset）
 - [ ] 模块映射文档 — 进行中（子 agent，docs/design/module_map.md）
 - [ ] 注入可行性研究（决定主路线）
 - [ ] 虚函数按虚表归类到 C++ 类（下一步，用 vtables.tsv）

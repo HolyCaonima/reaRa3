@@ -12,6 +12,10 @@ Inputs (produced by the Ghidra scripts in tools/ghidra, kept under work/):
   securom_flow_sites.tsv      site, function, function_entry, ...
   securom_thunk_bodies.tsv    site, function, at_entry, class, linear_instructions, ...
 
+Manual state lives in ledger_annotations.tsv (address, status, owner, module,
+notes) next to the ledger, so regenerating never loses claims or findings.
+Non-empty annotation fields override the generated ones.
+
 Usage:
   python tools/analysis/build_function_ledger.py \
       --inputs work/analysis/ghidra \
@@ -26,15 +30,7 @@ import pathlib
 import re
 import sys
 
-# Functions already reverse-engineered this far (the filesystem / BigHandler /
-# RefpackInflate cluster, plus the SkuDef directive handlers). Keyed by address.
-REVERSED = {
-    "009f5af0", "009f5a80", "009f5db0", "009f5e00", "009f5e90", "009f5ed0",
-    "009f5f40", "009f5f80", "009f63b0", "009f65e0", "009f6670", "009f6810",
-    "009f6910", "009f6990", "009f6a20", "009f6a50", "009f6aa0", "009f6b00",
-    "009f6b90", "009f6d00", "009f7130", "009f72e0", "009f74f0", "009f7620",
-    "009f3650", "004ce600", "004d2490", "004d18f6", "004d1b60",
-}
+ANNOTATION_FIELDS = ("status", "owner", "module", "notes")
 
 SECUROM_BLOCKS = {"Stext", "Sitext", "Srdata", "Sdata", "Sidata", ".securom"}
 
@@ -102,6 +98,22 @@ def load_source_map(path: pathlib.Path) -> dict[str, str]:
     return best
 
 
+def load_annotations(path: pathlib.Path) -> dict[str, dict[str, str]]:
+    """addr(hex, no 0x, lower) -> non-empty annotation fields."""
+    annotations: dict[str, dict[str, str]] = {}
+    if not path.exists():
+        return annotations
+    with path.open(encoding="utf-8") as handle:
+        for row in csv.DictReader(handle, delimiter="\t"):
+            addr = row["address"].strip().lower().removeprefix("0x").zfill(8)
+            if addr in annotations:
+                raise ValueError(f"{path}: duplicate annotation for {addr}")
+            annotations[addr] = {
+                key: row[key].strip() for key in ANNOTATION_FIELDS if (row.get(key) or "").strip()
+            }
+    return annotations
+
+
 def load_securom_status(flow: pathlib.Path, bodies: pathlib.Path):
     """name -> (status, detail). Classifies how a SecuROM patch affects a function."""
     patched = collections.defaultdict(lambda: {"entry": [], "inner": False})
@@ -149,6 +161,11 @@ def main() -> int:
         default="Ra3Source/docs/analysis/ra3_1.0/function_ledger.tsv",
         type=pathlib.Path,
     )
+    parser.add_argument(
+        "--annotations",
+        type=pathlib.Path,
+        help="manual ledger state (default: ledger_annotations.tsv next to --out)",
+    )
     args = parser.parse_args()
 
     functions = args.inputs / "functions.tsv"
@@ -156,6 +173,8 @@ def main() -> int:
         print(f"missing {functions}", file=sys.stderr)
         return 1
 
+    annotations = load_annotations(args.annotations or args.out.parent / "ledger_annotations.tsv")
+    unused = set(annotations)
     source_map = load_source_map(args.inputs / "source_file_functions.tsv")
     securom = load_securom_status(
         args.inputs / "securom_flow_sites.tsv",
@@ -182,11 +201,13 @@ def main() -> int:
             section = row["block"]
             source_file = source_map.get(addr, "")
             sec = securom.get(row["name"], "clean")
-            module = guess_module(source_file, section)
-            status = "reversed" if addr in REVERSED else "unanalyzed"
+            manual = annotations.get(addr, {})
+            unused.discard(addr)
+            module = manual.get("module") or guess_module(source_file, section)
+            status = manual.get("status", "unanalyzed")
             writer.writerow(
                 [row["entry"], row["name"], section, row["size"], source_file,
-                 sec, module, "", status, ""]
+                 sec, module, manual.get("owner", ""), status, manual.get("notes", "")]
             )
             rows += 1
             counts[status] += 1
@@ -194,6 +215,8 @@ def main() -> int:
             securom_counts[sec] += 1
 
     print(f"wrote {rows} rows to {args.out}")
+    if unused:
+        print("annotations without a function:", " ".join(sorted(unused)))
     print("status  :", dict(counts))
     print("securom :", dict(sorted(securom_counts.items(), key=lambda x: -x[1])))
     print("modules :")

@@ -249,7 +249,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004071d1	FUN_004071d1	.text	10		clean	unknown		unanalyzed	
 004071e0	thunk_FUN_0197c290	.text	6		entry-lost	unknown		unanalyzed	
 00407260	thunk_FUN_019805d0	.text	6		entry-lost	unknown		unanalyzed	
-00407266	FUN_00407266	.text	23		clean	unknown		unanalyzed	
+00407266	FUN_00407266	.text	23	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
 00407290	thunk_FUN_019805b0	.text	6		entry-lost	unknown		unanalyzed	
 00407300	FUN_00407300	.text	222		clean	unknown		unanalyzed	
 004073e0	FUN_004073e0	.text	389		clean	unknown		unanalyzed	
@@ -466,7 +466,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0040f910	FUN_0040f910	.text	760		clean	unknown		unanalyzed	
 0040fc10	FUN_0040fc10	.text	681		clean	unknown		unanalyzed	
 0040fec0	FUN_0040fec0	.text	31		inner-patched	unknown		unanalyzed	
-0040ff50	FUN_0040ff50	.text	176		clean	unknown		unanalyzed	
+0040ff50	FUN_0040ff50	.text	176	Libraries\Source\debug\debug_internal.cpp	clean	core		unanalyzed	
 00410000	FUN_00410000	.text	32		clean	unknown		unanalyzed	
 00410020	FUN_00410020	.text	22		clean	unknown		unanalyzed	
 00410040	thunk_FUN_01973d50	.text	6		entry-lost	unknown		unanalyzed	
@@ -497,7 +497,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00411200	FUN_00411200	.text	190		clean	unknown		unanalyzed	
 004112c0	FUN_004112c0	.text	287		clean	unknown		unanalyzed	
 00411400	FUN_00411400	.text	27		clean	unknown		unanalyzed	
-00411440	FUN_00411440	.text	112		clean	unknown		unanalyzed	
+00411440	FUN_00411440	.text	112	Libraries\Source\debug\debug_purecall.cpp	clean	core		unanalyzed	
 004115a0	FUN_004115a0	.text	39		clean	unknown		unanalyzed	
 004115d0	FUN_004115d0	.text	20		clean	unknown		unanalyzed	
 004115f0	FUN_004115f0	.text	34		clean	unknown		unanalyzed	
@@ -531,7 +531,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00413170	FUN_00413170	.text	55		clean	unknown		unanalyzed	
 004131b0	thunk_FUN_0197cd40	.text	6		entry-lost	unknown		unanalyzed	
 00413220	thunk_FUN_019812c0	.text	6		entry-lost	unknown		unanalyzed	
-00413280	FUN_00413280	.text	3222		clean	unknown		unanalyzed	
+00413280	FUN_00413280	.text	3222	Libraries\Source\debug\debug_cmd.cpp	clean	core		unanalyzed	
 00414128	FUN_00414128	.text	26		clean	unknown		unanalyzed	
 00414160	thunk_FUN_01973c60	.text	6		entry-lost	unknown		unanalyzed	
 00414350	FUN_00414350	.text	66		clean	unknown		unanalyzed	
@@ -609,7 +609,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00416be0	FUN_00416be0	.text	106		clean	unknown		unanalyzed	
 00416d40	thunk_FUN_01973bb0	.text	6		entry-lost	unknown		unanalyzed	
 00416dd0	FUN_00416dd0	.text	31		clean	unknown		unanalyzed	
-00416e60	FUN_00416e60	.text	109		clean	unknown		unanalyzed	
+00416e60	FUN_00416e60	.text	109	Libraries\Source\assetmanager\AssetList\PartialAssetList.cpp	clean	asset	main	reversed	"PartialAssetList.cpp:64 ""Patch streams not alllowed to be partial"""
 00416ed0	thunk_FUN_01978aa0	.text	6		entry-lost	unknown		unanalyzed	
 00416f60	FUN_00416f60	.text	74		clean	unknown		unanalyzed	
 00416fb0	FUN_00416fb0	.text	14		clean	unknown		unanalyzed	
@@ -630,7 +630,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004171eb	FUN_004171eb	.text	10		clean	unknown		unanalyzed	
 00417200	thunk_FUN_019811b0	.text	6		entry-lost	unknown		unanalyzed	
 00417206	FUN_00417206	.text	23		clean	unknown		unanalyzed	
-00417220	FUN_00417220	.text	176		clean	unknown		unanalyzed	
+00417220	FUN_00417220	.text	176	Libraries\Source\assetmanager\resourcemanager.cpp	clean	asset	main	reversed	resourcemanager.cpp: registers an asset type handler {vtable, typeId, typeHash}; ~160 static-initializer callers
 00417300	thunk_FUN_01973b60	.text	6		entry-lost	unknown		unanalyzed	
 00417306	FUN_00417306	.text	10		clean	unknown		unanalyzed	
 00417310	FUN_00417310	.text	24		clean	unknown		unanalyzed	
@@ -887,7 +887,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00437646	FUN_00437646	.text	24		clean	unknown		unanalyzed	
 004381ea	FUN_004381ea	.text	11		clean	unknown		unanalyzed	
 004389a0	FUN_004389a0	.text	32		clean	unknown		unanalyzed	
-004389e6	FUN_004389e6	.text	27		clean	unknown		unanalyzed	
+004389e6	FUN_004389e6	.text	27	SageEngine\source\GameEngine\common\StateMachine.cpp	clean	common		unanalyzed	
 00438ac0	FUN_00438ac0	.text	11		clean	unknown		unanalyzed	
 00438b56	FUN_00438b56	.text	27		clean	unknown		unanalyzed	
 00438b90	FUN_00438b90	.text	31		clean	unknown		unanalyzed	
@@ -977,7 +977,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0043c254	FUN_0043c254	.text	11		clean	unknown		unanalyzed	
 0043c3fc	FUN_0043c3fc	.text	10		clean	unknown		unanalyzed	
 0043c510	FUN_0043c510	.text	13		clean	unknown		unanalyzed	
-0043c630	FUN_0043c630	.text	158		clean	unknown		unanalyzed	
+0043c630	FUN_0043c630	.text	158	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset		unanalyzed	
 0043c8aa	FUN_0043c8aa	.text	11		clean	unknown		unanalyzed	
 0043c8b5	FUN_0043c8b5	.text	10		clean	unknown		unanalyzed	
 0043cbd0	FUN_0043cbd0	.text	42		clean	unknown		unanalyzed	
@@ -989,7 +989,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0043d780	thunk_FUN_0197ead0	.text	6		entry-lost	unknown		unanalyzed	
 0043d830	thunk_FUN_01983900	.text	6		entry-lost	unknown		unanalyzed	
 0043df50	thunk_FUN_01db4000	.text	6		entry-lost	unknown		unanalyzed	
-0043e19f	FUN_0043e19f	.text	24		clean	unknown		unanalyzed	
+0043e19f	FUN_0043e19f	.text	24	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
 0043e57c	FUN_0043e57c	.text	11		clean	unknown		unanalyzed	
 0043e630	FUN_0043e630	.text	92		inner-patched	unknown		unanalyzed	
 0043e983	FUN_0043e983	.text	11		clean	unknown		unanalyzed	
@@ -1230,7 +1230,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00447740	thunk_FUN_01976f30	.text	6		entry-lost	unknown		unanalyzed	
 004477b0	thunk_FUN_029d0000	.text	6		entry-lost	unknown		unanalyzed	
 00447870	thunk_FUN_01984510	.text	6		entry-lost	unknown		unanalyzed	
-004479e0	FUN_004479e0	.text	911		clean	unknown		unanalyzed	
+004479e0	FUN_004479e0	.text	911	Libraries\Source\assetmanager\Stream\ResourceManagerFileStream.cpp	clean	asset	main	reversed	ResourceManagerFileStream.cpp: opens .imp/.relo/.bin, compares leading u32 with the manifest stream checksum
 00447d70	FUN_00447d70	.text	86		clean	unknown		unanalyzed	
 00447dd0	thunk_FUN_02830000	.text	6		entry-lost	unknown		unanalyzed	
 00447e30	FUN_00447e30	.text	177		clean	unknown		unanalyzed	
@@ -1259,7 +1259,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0044d836	FUN_0044d836	.text	27		clean	unknown		unanalyzed	
 0044dd66	FUN_0044dd66	.text	25		clean	unknown		unanalyzed	
 0044dd8a	FUN_0044dd8a	.text	11		clean	unknown		unanalyzed	
-0044dda6	FUN_0044dda6	.text	24		clean	unknown		unanalyzed	
+0044dda6	FUN_0044dda6	.text	24	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
 0044e2d1	FUN_0044e2d1	.text	11		clean	unknown		unanalyzed	
 0044e2dc	FUN_0044e2dc	.text	11		clean	unknown		unanalyzed	
 0044ef14	FUN_0044ef14	.text	10		clean	unknown		unanalyzed	
@@ -1440,7 +1440,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0045d960	thunk_FUN_0197c220	.text	6		entry-recoverable	unknown		unanalyzed	
 0045d9f0	thunk_FUN_01980520	.text	6		entry-lost	unknown		unanalyzed	
 0045e570	thunk_FUN_01977f20	.text	6		entry-lost	unknown		unanalyzed	
-0045e9a0	FUN_0045e9a0	.text	158		clean	unknown		unanalyzed	
+0045e9a0	FUN_0045e9a0	.text	158	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset		unanalyzed	
 0045f0f0	thunk_FUN_019808e0	.text	6		entry-lost	unknown		unanalyzed	
 0045f240	thunk_FUN_019782e0	.text	6		entry-lost	unknown		unanalyzed	
 0045f367	FUN_0045f367	.text	55		clean	unknown		unanalyzed	
@@ -1641,7 +1641,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00475d90	FUN_00475d90	.text	170		clean	unknown		unanalyzed	
 00475e3a	FUN_00475e3a	.text	498		clean	unknown		unanalyzed	
 00476af0	thunk_FUN_01973fd0	.text	6		entry-lost	unknown		unanalyzed	
-00477510	FUN_00477510	.text	135		clean	unknown		unanalyzed	
+00477510	FUN_00477510	.text	135	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset		unanalyzed	
 004775a0	FUN_004775a0	.text	56		clean	unknown		unanalyzed	
 004775e0	FUN_004775e0	.text	56		clean	unknown		unanalyzed	
 00477620	FUN_00477620	.text	56		clean	unknown		unanalyzed	
@@ -1657,7 +1657,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004778a0	FUN_004778a0	.text	56		clean	unknown		unanalyzed	
 004778e0	FUN_004778e0	.text	56		clean	unknown		unanalyzed	
 00477920	FUN_00477920	.text	56		clean	unknown		unanalyzed	
-00477a50	FUN_00477a50	.text	135		clean	unknown		unanalyzed	
+00477a50	FUN_00477a50	.text	135	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset		unanalyzed	
 00477ae0	thunk_FUN_01d6c000	.text	6		entry-lost	unknown		unanalyzed	
 00477d90	thunk_FUN_019815f0	.text	6		entry-lost	unknown		unanalyzed	
 00477de0	thunk_FUN_024c0000	.text	6		entry-lost	unknown		unanalyzed	
@@ -1980,7 +1980,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00495544	FUN_00495544	.text	1		clean	unknown		unanalyzed	
 00495545	FUN_00495545	.text	1		clean	unknown		unanalyzed	
 004955b0	thunk_FUN_01db3000	.text	6		entry-lost	unknown		unanalyzed	
-00495890	FUN_00495890	.text	1042	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
+00495890	FUN_00495890	.text	1042	Libraries\Source\assetmanager\AssetList\FullAssetList.cpp	clean	asset	main	reversed	FullAssetList.cpp: reads manifest, allocates count*0x30 entries, sums sizes at +0x20/+0x24/+0x28, recurses into kind-2 referenced manifests
 00495cb0	FUN_00495cb0	.text	32		entry-lost	unknown		unanalyzed	
 00495df0	FUN_00495df0	.text	10		clean	unknown		unanalyzed	
 00498d03	FUN_00498d03	.text	19		clean	unknown		unanalyzed	
@@ -2031,7 +2031,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004a62e0	FUN_004a62e0	.text	288		clean	unknown		unanalyzed	
 004a6410	thunk_FUN_01982c60	.text	6		entry-lost	unknown		unanalyzed	
 004a64b0	FUN_004a64b0	.text	28		clean	unknown		unanalyzed	
-004a64cc	FUN_004a64cc	.text	134		clean	unknown		unanalyzed	
+004a64cc	FUN_004a64cc	.text	134		clean	asset	main	reversed	"resourcemanager.cpp: formats ""%s%08X.%08X.%08X.%08X.cdata"""
 004a6560	FUN_004a6560	.text	83		clean	unknown		unanalyzed	
 004a6c40	FUN_004a6c40	.text	289		clean	unknown		unanalyzed	
 004a6d61	FUN_004a6d61	.text	675		clean	unknown		unanalyzed	
@@ -2224,7 +2224,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004ca660	FUN_004ca660	.text	40		clean	unknown		unanalyzed	
 004ca690	thunk_FUN_01983130	.text	6		entry-lost	unknown		unanalyzed	
 004ca6d0	FUN_004ca6d0	.text	17		entry-lost	unknown		unanalyzed	
-004ca710	FUN_004ca710	.text	472		clean	unknown		unanalyzed	
+004ca710	FUN_004ca710	.text	472	Libraries\Source\string\StringBase.cpp	clean	core		unanalyzed	
 004ca8f0	FUN_004ca8f0	.text	54		clean	unknown		unanalyzed	
 004ca930	FUN_004ca930	.text	63		inner-patched	unknown		unanalyzed	
 004ca970	thunk_FUN_02aa0000	.text	6		entry-lost	unknown		unanalyzed	
@@ -2234,7 +2234,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004caad0	FUN_004caad0	.text	58		clean	unknown		unanalyzed	
 004cab10	FUN_004cab10	.text	74		clean	unknown		unanalyzed	
 004cab60	FUN_004cab60	.text	63		clean	unknown		unanalyzed	
-004caba0	FUN_004caba0	.text	487		clean	unknown		unanalyzed	
+004caba0	FUN_004caba0	.text	487	Libraries\Source\string\StringBase.cpp	clean	core		unanalyzed	
 004cad90	FUN_004cad90	.text	54		clean	unknown		unanalyzed	
 004cadd0	thunk_FUN_0197e490	.text	6		entry-lost	unknown		unanalyzed	
 004cae10	FUN_004cae10	.text	117		inner-patched	unknown		unanalyzed	
@@ -2253,7 +2253,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004cb200	FUN_004cb200	.text	92		clean	unknown		unanalyzed	
 004cb260	FUN_004cb260	.text	14		inner-patched	unknown		unanalyzed	
 004cb280	thunk_FUN_0197e460	.text	6		entry-lost	unknown		unanalyzed	
-004cb2a0	FUN_004cb2a0	.text	246		clean	unknown		unanalyzed	
+004cb2a0	FUN_004cb2a0	.text	246	Libraries\Source\string\UnicodeString.cpp	clean	core		unanalyzed	
 004cb3a0	FUN_004cb3a0	.text	90		clean	unknown		unanalyzed	
 004cb400	FUN_004cb400	.text	85		clean	unknown		unanalyzed	
 004cb460	thunk_FUN_019830e0	.text	6		entry-lost	unknown		unanalyzed	
@@ -2333,10 +2333,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004ce370	AptCIH::GetDisplayListParent	.text	4		clean	unknown		unanalyzed	
 004ce380	FUN_004ce380	.text	77		clean	unknown		unanalyzed	
 004ce3d0	FUN_004ce3d0	.text	40		clean	unknown		unanalyzed	
-004ce400	FUN_004ce400	.text	264		clean	unknown		unanalyzed	
+004ce400	FUN_004ce400	.text	264	lib-packages\RtsBase\0.0-dev\source\file\cmn\MemoryFile.cpp	clean	io		unanalyzed	
 004ce510	FUN_004ce510	.text	27		inner-patched	unknown		unanalyzed	
 004ce5c0	FUN_004ce5c0	.text	50		clean	unknown		unanalyzed	
-004ce600	FUN_004ce600	.text	184		clean	unknown		reversed	
+004ce600	FUN_004ce600	.text	184		clean	core	main	reversed	SkuDef parsing; ra3::SkuDef
 004ce6c0	thunk_FUN_01983410	.text	6		entry-lost	unknown		unanalyzed	
 004ce740	FUN_004ce740	.text	62		clean	unknown		unanalyzed	
 004ce780	thunk_FUN_0197a580	.text	6		entry-lost	unknown		unanalyzed	
@@ -2356,10 +2356,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004ced10	FUN_004ced10	.text	142		clean	unknown		unanalyzed	
 004ceda0	FUN_004ceda0	.text	252		clean	unknown		unanalyzed	
 004ceea0	FUN_004ceea0	.text	21		clean	unknown		unanalyzed	
-004ceec0	FUN_004ceec0	.text	116		clean	unknown		unanalyzed	
-004cef40	FUN_004cef40	.text	109		clean	unknown		unanalyzed	
-004cefb0	FUN_004cefb0	.text	109		clean	unknown		unanalyzed	
-004cf020	FUN_004cf020	.text	109		clean	unknown		unanalyzed	
+004ceec0	FUN_004ceec0	.text	116	lib-packages\RtsBase\0.0-dev\source\file\cmn\RwFileWrapper.cpp	clean	io		unanalyzed	
+004cef40	FUN_004cef40	.text	109	lib-packages\RtsBase\0.0-dev\source\file\cmn\RwFileWrapper.cpp	clean	io		unanalyzed	
+004cefb0	FUN_004cefb0	.text	109	lib-packages\RtsBase\0.0-dev\source\file\cmn\RwFileWrapper.cpp	clean	io		unanalyzed	
+004cf020	FUN_004cf020	.text	109	lib-packages\RtsBase\0.0-dev\source\file\cmn\RwFileWrapper.cpp	clean	io		unanalyzed	
 004cf090	FUN_004cf090	.text	143		clean	unknown		unanalyzed	
 004cf120	FUN_004cf120	.text	9		clean	unknown		unanalyzed	
 004cf129	FUN_004cf129	.text	86		clean	unknown		unanalyzed	
@@ -2428,11 +2428,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004d1750	FUN_004d1750	.text	33		entry-lost	unknown		unanalyzed	
 004d1820	FUN_004d1820	.text	201		clean	unknown		unanalyzed	
 004d18f0	thunk_FUN_01956d80	.text	6		entry-recoverable	unknown		unanalyzed	
+004d18f6	FUN_004d18f6	.text	327		clean	core	main	reversed	SkuDef directive dispatch; ra3::SkuDef
+004d1b60	FUN_004d1b60	.text	487		clean	core	main	reversed	SkuDef add-big directive; ra3::SkuDef / ra3::io::ArchiveSet::mount
 004d1d50	thunk_FUN_01956d50	.text	6		entry-recoverable	unknown		unanalyzed	
 004d1e70	FUN_004d1e70	.text	129		clean	unknown		unanalyzed	
 004d1f00	FUN_004d1f00	.text	16		entry-lost	unknown		unanalyzed	
-004d1f40	FUN_004d1f40	.text	1324		clean	unknown		unanalyzed	
-004d2490	FUN_004d2490	.text	823		clean	unknown		reversed	
+004d1f40	FUN_004d1f40	.text	1324	lib-packages\RtsBase\0.0-dev\source\file\cmn\TextFile.cpp	clean	io		unanalyzed	
+004d2490	FUN_004d2490	.text	823		clean	core	main	reversed	SkuDef parsing; ra3::SkuDef
 004d27d0	thunk_FUN_019531c0	.text	6		entry-recoverable	unknown		unanalyzed	
 004d2960	FUN_004d2960	.text	76		clean	unknown		unanalyzed	
 004d29b0	thunk_FUN_0197a8b0	.text	6		entry-lost	unknown		unanalyzed	
@@ -2560,7 +2562,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004d4cd0	FUN_004d4cd0	.text	27		clean	unknown		unanalyzed	
 004d4cf0	FUN_004d4cf0	.text	191		clean	unknown		unanalyzed	
 004d4db0	FUN_004d4db0	.text	26		clean	unknown		unanalyzed	
-004d4ea0	FUN_004d4ea0	.text	135		clean	unknown		unanalyzed	
+004d4ea0	FUN_004d4ea0	.text	135	SageEngine\source\GameEngine\gamelogic\system\GameLogic.cpp	clean	gamelogic		unanalyzed	
 004d4f30	thunk_FUN_0197e8b0	.text	6		entry-lost	unknown		unanalyzed	
 004d4f50	FUN_004d4f50	.text	46		clean	unknown		unanalyzed	
 004d4f80	thunk_FUN_01983690	.text	6		entry-lost	unknown		unanalyzed	
@@ -2926,7 +2928,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004df790	thunk_FUN_01976db0	.text	6		entry-lost	unknown		unanalyzed	
 004df7c0	FUN_004df7c0	.text	21		inner-patched	unknown		unanalyzed	
 004df8b0	FUN_004df8b0	.text	93		clean	unknown		unanalyzed	
-004df910	FUN_004df910	.text	406		clean	unknown		unanalyzed	
+004df910	FUN_004df910	.text	406	SageEngine\source\GameEngine\gamelogic\system\PauseManager.cpp	clean	gamelogic		unanalyzed	
 004dfab0	FUN_004dfab0	.text	174		clean	unknown		unanalyzed	
 004dfb60	thunk_FUN_02920000	.text	6		entry-lost	unknown		unanalyzed	
 004dfc30	FUN_004dfc30	.text	241		clean	unknown		unanalyzed	
@@ -3187,7 +3189,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004ed8c0	FUN_004ed8c0	.text	30		clean	unknown		unanalyzed	
 004ed8de	FUN_004ed8de	.text	143		clean	unknown		unanalyzed	
 004ed970	FUN_004ed970	.text	77		clean	unknown		unanalyzed	
-004ed9c0	FUN_004ed9c0	.text	382		clean	unknown		unanalyzed	
+004ed9c0	FUN_004ed9c0	.text	382	SageEngine\source\GameEngine\gamelogic\system\GameLogic.cpp	clean	gamelogic		unanalyzed	
 004edb40	FUN_004edb40	.text	282		clean	unknown		unanalyzed	
 004edc60	FUN_004edc60	.text	268		clean	unknown		unanalyzed	
 004edd70	FUN_004edd70	.text	23		inner-patched	unknown		unanalyzed	
@@ -4360,7 +4362,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00528320	FUN_00528320	.text	149		clean	unknown		unanalyzed	
 005283c0	FUN_005283c0	.text	452		clean	unknown		unanalyzed	
 00528590	FUN_00528590	.text	60		clean	unknown		unanalyzed	
-005285d0	FUN_005285d0	.text	282		clean	unknown		unanalyzed	
+005285d0	FUN_005285d0	.text	282	SageEngine\source\GameEngine\gameclient\GameSubTitles.cpp	clean	gameclient		unanalyzed	
 005286f0	FUN_005286f0	.text	149		clean	unknown		unanalyzed	
 00528790	FUN_00528790	.text	287		clean	unknown		unanalyzed	
 005288b0	FUN_005288b0	.text	94		clean	unknown		unanalyzed	
@@ -4568,11 +4570,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0052f980	FUN_0052f980	.text	33		clean	unknown		unanalyzed	
 0052f9b0	FUN_0052f9b0	.text	410		clean	unknown		unanalyzed	
 0052fb50	FUN_0052fb50	.text	390		clean	unknown		unanalyzed	
-0052fce0	FUN_0052fce0	.text	829		inner-patched	unknown		unanalyzed	
+0052fce0	FUN_0052fce0	.text	829	SageEngine\source\GameEngine\gameclient\GameText.cpp	inner-patched	gameclient		unanalyzed	
 00530020	FUN_00530020	.text	15		clean	unknown		unanalyzed	
 0053002f	FUN_0053002f	.text	26		clean	unknown		unanalyzed	
 00530049	FUN_00530049	.text	9		clean	unknown		unanalyzed	
-00530052	FUN_00530052	.text	292		clean	unknown		unanalyzed	
+00530052	FUN_00530052	.text	292	SageEngine\source\GameEngine\gameclient\GameText.cpp	clean	gameclient		unanalyzed	
 00530210	FUN_00530210	.text	57		clean	unknown		unanalyzed	
 00530250	FUN_00530250	.text	138		clean	unknown		unanalyzed	
 005302e0	FUN_005302e0	.text	48		clean	unknown		unanalyzed	
@@ -4618,7 +4620,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00531700	FUN_00531700	.text	164	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 005317b0	FUN_005317b0	.text	94		clean	unknown		unanalyzed	
 00531810	FUN_00531810	.text	94		clean	unknown		unanalyzed	
-00531870	FUN_00531870	.text	695		clean	unknown		unanalyzed	
+00531870	FUN_00531870	.text	695	SageEngine\source\GameEngine\Common\BitFlagsIO.h	clean	common		unanalyzed	
 00531b30	FUN_00531b30	.text	99		clean	unknown		unanalyzed	
 00531ba0	FUN_00531ba0	.text	235		clean	unknown		unanalyzed	
 00531c90	FUN_00531c90	.text	24		clean	unknown		unanalyzed	
@@ -6109,7 +6111,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00573aa0	FUN_00573aa0	.text	56		clean	unknown		unanalyzed	
 00573ae0	FUN_00573ae0	.text	553		clean	unknown		unanalyzed	
 00573d10	FUN_00573d10	.text	532		clean	unknown		unanalyzed	
-00573f30	FUN_00573f30	.text	247		clean	unknown		unanalyzed	
+00573f30	FUN_00573f30	.text	247	SageEngine\source\GameEngineDevice\W3DDevice\GameClient\W3DDisplay.cpp	clean	render		unanalyzed	
 00574030	FUN_00574030	.text	88		clean	unknown		unanalyzed	
 00574090	FUN_00574090	.text	3		clean	unknown		unanalyzed	
 005740a0	FUN_005740a0	.text	781		clean	unknown		unanalyzed	
@@ -6611,7 +6613,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0059b5b0	FUN_0059b5b0	.text	320		clean	unknown		unanalyzed	
 0059b6f0	FUN_0059b6f0	.text	45		clean	unknown		unanalyzed	
 0059b720	FUN_0059b720	.text	405		clean	unknown		unanalyzed	
-0059b8c0	FUN_0059b8c0	.text	186		clean	unknown		unanalyzed	
+0059b8c0	FUN_0059b8c0	.text	186	SageEngine\source\GameEngineDevice\W3DDevice\GameClient\posteffect\PostEffect.cpp	clean	render		unanalyzed	
 0059bba0	FUN_0059bba0	.text	90		clean	unknown		unanalyzed	
 0059bc00	FUN_0059bc00	.text	134		clean	unknown		unanalyzed	
 0059bc90	FUN_0059bc90	.text	110		clean	unknown		unanalyzed	
@@ -6661,7 +6663,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0059ec30	FUN_0059ec30	.text	493		clean	unknown		unanalyzed	
 0059ee30	FUN_0059ee30	.text	772		clean	unknown		unanalyzed	
 0059f150	FUN_0059f150	.text	766		clean	unknown		unanalyzed	
-0059f460	FUN_0059f460	.text	1139		clean	unknown		unanalyzed	
+0059f460	FUN_0059f460	.text	1139	SageEngine\source\GameEngineDevice\W3DDevice\GameClient\WorldHeightMap.cpp	clean	render		unanalyzed	
 0059f8e0	FUN_0059f8e0	.text	370		clean	unknown		unanalyzed	
 0059fa60	FUN_0059fa60	.text	89		clean	unknown		unanalyzed	
 0059fac0	FUN_0059fac0	.text	29		clean	unknown		unanalyzed	
@@ -7065,7 +7067,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005ad750	FUN_005ad750	.text	50		clean	unknown		unanalyzed	
 005ad790	FUN_005ad790	.text	51		clean	unknown		unanalyzed	
 005ad7d0	FUN_005ad7d0	.text	51		clean	unknown		unanalyzed	
-005ad810	FUN_005ad810	.text	389		patched	unknown		unanalyzed	
+005ad810	FUN_005ad810	.text	389	SageEngine\source\GameEngine\common\GameStart.cpp	patched	common		unanalyzed	
 005ada40	FUN_005ada40	.text	93		clean	unknown		unanalyzed	
 005adaa0	FUN_005adaa0	.text	39		clean	unknown		unanalyzed	
 005adad0	FUN_005adad0	.text	386		clean	unknown		unanalyzed	
@@ -7350,7 +7352,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005b9e80	FUN_005b9e80	.text	169		clean	unknown		unanalyzed	
 005b9f30	FUN_005b9f30	.text	135		clean	unknown		unanalyzed	
 005b9f4b	FUN_005b9f4b	.text	103		clean	unknown		unanalyzed	
-005ba020	FUN_005ba020	.text	238		clean	unknown		unanalyzed	
+005ba020	FUN_005ba020	.text	238	SageEngine\source\GameEngine\common\StateMachine.cpp	clean	common		unanalyzed	
 005ba110	FUN_005ba110	.text	211		clean	unknown		unanalyzed	
 005ba1f0	FUN_005ba1f0	.text	30		clean	unknown		unanalyzed	
 005ba210	FUN_005ba210	.text	211		clean	unknown		unanalyzed	
@@ -7488,7 +7490,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005c08c0	FUN_005c08c0	.text	145		clean	unknown		unanalyzed	
 005c0960	FUN_005c0960	.text	215		clean	unknown		unanalyzed	
 005c0a40	FUN_005c0a40	.text	42		clean	unknown		unanalyzed	
-005c0a6a	FUN_005c0a6a	.text	780		clean	unknown		unanalyzed	
+005c0a6a	FUN_005c0a6a	.text	780	SageEngine\source\GameEngine\common\StateMachine.cpp	clean	common		unanalyzed	
 005c0d80	FUN_005c0d80	.text	158		clean	unknown		unanalyzed	
 005c0e20	FUN_005c0e20	.text	40		clean	unknown		unanalyzed	
 005c0e50	FUN_005c0e50	.text	38		clean	unknown		unanalyzed	
@@ -7623,7 +7625,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005c5500	FUN_005c5500	.text	187		clean	unknown		unanalyzed	
 005c55c0	FUN_005c55c0	.text	105		clean	unknown		unanalyzed	
 005c5630	FUN_005c5630	.text	17		clean	unknown		unanalyzed	
-005c5650	FUN_005c5650	.text	1062	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
+005c5650	FUN_005c5650	.text	1062	SageEngine\source\GameEngine\common\GameStart.cpp	clean	common		unanalyzed	
 005c5a90	FUN_005c5a90	.text	196		clean	unknown		unanalyzed	
 005c5b60	FUN_005c5b60	.text	525		clean	unknown		unanalyzed	
 005c5d70	FUN_005c5d70	.text	12		inner-patched	unknown		unanalyzed	
@@ -7761,10 +7763,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005cc580	FUN_005cc580	.text	40		clean	unknown		unanalyzed	
 005cc5b0	FUN_005cc5b0	.text	376		clean	unknown		unanalyzed	
 005cc730	FUN_005cc730	.text	134		clean	unknown		unanalyzed	
-005cc7c0	FUN_005cc7c0	.text	135		clean	unknown		unanalyzed	
-005cc847	FUN_005cc847	.text	2001		clean	unknown		unanalyzed	
+005cc7c0	FUN_005cc7c0	.text	135	SageEngine\source\GameEngine\common\GameStart.cpp	clean	common		unanalyzed	
+005cc847	FUN_005cc847	.text	2001	SageEngine\source\GameEngine\common\GameStart.cpp	clean	common		unanalyzed	
 005cd030	FUN_005cd030	.text	625		clean	unknown		unanalyzed	
-005cd2b0	FUN_005cd2b0	.text	2440		clean	unknown		unanalyzed	
+005cd2b0	FUN_005cd2b0	.text	2440	SageEngine\source\GameEngine\common\GameStart.cpp	clean	common		unanalyzed	
 005cdc50	FUN_005cdc50	.text	453		clean	unknown		unanalyzed	
 005cde20	FUN_005cde20	.text	197		clean	unknown		unanalyzed	
 005cdef0	FUN_005cdef0	.text	85		clean	unknown		unanalyzed	
@@ -7884,7 +7886,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005d3c50	FUN_005d3c50	.text	17		clean	unknown		unanalyzed	
 005d3c70	FUN_005d3c70	.text	17		clean	unknown		unanalyzed	
 005d3e70	FUN_005d3e70	.text	176		clean	unknown		unanalyzed	
-005d3f40	FUN_005d3f40	.text	105		clean	unknown		unanalyzed	
+005d3f40	FUN_005d3f40	.text	105	SageEngine\source\GameEngine\gamenetwork\GameSpy\Thread\PeerThread.cpp	clean	net		unanalyzed	
 005d3fb0	FUN_005d3fb0	.text	31		clean	unknown		unanalyzed	
 005d3fd0	FUN_005d3fd0	.text	58		clean	unknown		unanalyzed	
 005d4010	FUN_005d4010	.text	20		clean	unknown		unanalyzed	
@@ -8049,9 +8051,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005d6ac0	FUN_005d6ac0	.text	195		clean	unknown		unanalyzed	
 005d6b90	FUN_005d6b90	.text	102		clean	unknown		unanalyzed	
 005d6c00	FUN_005d6c00	.text	49		clean	unknown		unanalyzed	
-005d6c40	FUN_005d6c40	.text	132		clean	unknown		unanalyzed	
-005d6cd0	FUN_005d6cd0	.text	132		clean	unknown		unanalyzed	
-005d6d60	FUN_005d6d60	.text	236		clean	unknown		unanalyzed	
+005d6c40	FUN_005d6c40	.text	132	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
+005d6cd0	FUN_005d6cd0	.text	132	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
+005d6d60	FUN_005d6d60	.text	236	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
 005d6e50	FUN_005d6e50	.text	77		clean	unknown		unanalyzed	
 005d6ea0	FUN_005d6ea0	.text	97		clean	unknown		unanalyzed	
 005d6f10	FUN_005d6f10	.text	62		clean	unknown		unanalyzed	
@@ -8265,19 +8267,19 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005dd150	FUN_005dd150	.text	91		clean	unknown		unanalyzed	
 005dd160	FUN_005dd160	.text	184		clean	unknown		unanalyzed	
 005dd170	FUN_005dd170	.text	103		clean	unknown		unanalyzed	
-005dd1e0	FUN_005dd1e0	.text	140		clean	unknown		unanalyzed	
+005dd1e0	FUN_005dd1e0	.text	140	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
 005dd270	FUN_005dd270	.text	27		clean	unknown		unanalyzed	
 005dd284	FUN_005dd284	.text	100		clean	unknown		unanalyzed	
-005dd2f0	FUN_005dd2f0	.text	212		clean	unknown		unanalyzed	
-005dd3d0	FUN_005dd3d0	.text	232		clean	unknown		unanalyzed	
-005dd4c0	FUN_005dd4c0	.text	235		clean	unknown		unanalyzed	
-005dd5b0	FUN_005dd5b0	.text	187		clean	unknown		unanalyzed	
-005dd670	FUN_005dd670	.text	127		clean	unknown		unanalyzed	
-005dd6f0	FUN_005dd6f0	.text	218		clean	unknown		unanalyzed	
+005dd2f0	FUN_005dd2f0	.text	212	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
+005dd3d0	FUN_005dd3d0	.text	232	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
+005dd4c0	FUN_005dd4c0	.text	235	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
+005dd5b0	FUN_005dd5b0	.text	187	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
+005dd670	FUN_005dd670	.text	127	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
+005dd6f0	FUN_005dd6f0	.text	218	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
 005dd7d0	FUN_005dd7d0	.text	66		clean	unknown		unanalyzed	
 005dd7eb	FUN_005dd7eb	.text	136		clean	unknown		unanalyzed	
-005dd8a0	FUN_005dd8a0	.text	270		clean	unknown		unanalyzed	
-005dd9b0	FUN_005dd9b0	.text	165		clean	unknown		unanalyzed	
+005dd8a0	FUN_005dd8a0	.text	270	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
+005dd9b0	FUN_005dd9b0	.text	165	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
 005dda60	FUN_005dda60	.text	111		clean	unknown		unanalyzed	
 005ddad0	FUN_005ddad0	.text	347		clean	unknown		unanalyzed	
 005ddc30	FUN_005ddc30	.text	233		clean	unknown		unanalyzed	
@@ -8521,7 +8523,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005e80c0	FUN_005e80c0	.text	11		clean	unknown		unanalyzed	
 005e80d0	FUN_005e80d0	.text	8		clean	unknown		unanalyzed	
 005e80e0	FUN_005e80e0	.text	123		clean	unknown		unanalyzed	
-005e8170	FUN_005e8170	.text	233		clean	unknown		unanalyzed	
+005e8170	FUN_005e8170	.text	233	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
 005e8260	FUN_005e8260	.text	53		clean	unknown		unanalyzed	
 005e8274	FUN_005e8274	.text	103		clean	unknown		unanalyzed	
 005e8300	FUN_005e8300	.text	30		clean	unknown		unanalyzed	
@@ -8710,7 +8712,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005f1c10	thunk_FUN_004071d1	.text	5		clean	unknown		unanalyzed	
 005f1c15	FUN_005f1c15	.text	96		clean	unknown		unanalyzed	
 005f1c80	FUN_005f1c80	.text	321		clean	unknown		unanalyzed	
-005f1dd0	FUN_005f1dd0	.text	137		clean	unknown		unanalyzed	
+005f1dd0	FUN_005f1dd0	.text	137	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
 005f1e60	FUN_005f1e60	.text	63		clean	unknown		unanalyzed	
 005f2010	FUN_005f2010	.text	40		clean	unknown		unanalyzed	
 005f2038	FUN_005f2038	.text	129		clean	unknown		unanalyzed	
@@ -9354,7 +9356,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0061abf0	FUN_0061abf0	.text	244		clean	unknown		unanalyzed	
 0061acf0	FUN_0061acf0	.text	244		clean	unknown		unanalyzed	
 0061adf0	FUN_0061adf0	.text	112		clean	unknown		unanalyzed	
-0061ae80	FUN_0061ae80	.text	264		clean	unknown		unanalyzed	
+0061ae80	FUN_0061ae80	.text	264	SageEngine\source\GameEngine\gamenetwork\GameSpy\Thread\BuddyThread.cpp	clean	net		unanalyzed	
 0061af90	FUN_0061af90	.text	112		clean	unknown		unanalyzed	
 0061b000	FUN_0061b000	.text	112		clean	unknown		unanalyzed	
 0061b070	FUN_0061b070	.text	77		clean	unknown		unanalyzed	
@@ -13594,7 +13596,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b32c0	FUN_006b32c0	.text	348		clean	unknown		unanalyzed	
 006b3420	FUN_006b3420	.text	106		clean	unknown		unanalyzed	
 006b3490	FUN_006b3490	.text	30		clean	unknown		unanalyzed	
-006b34b0	FUN_006b34b0	.text	327		clean	unknown		unanalyzed	
+006b34b0	FUN_006b34b0	.text	327	SageEngine\source\GameEngine\gamelogic\object\SpecialPower\ActivateModuleSpecialPower.cpp	clean	gamelogic		unanalyzed	
 006b3600	FUN_006b3600	.text	91		clean	unknown		unanalyzed	
 006b3660	FUN_006b3660	.text	286		clean	unknown		unanalyzed	
 006b3780	FUN_006b3780	.text	52		clean	unknown		unanalyzed	
@@ -13634,7 +13636,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b4af0	FUN_006b4af0	.text	410		clean	unknown		unanalyzed	
 006b4c90	FUN_006b4c90	.text	171		clean	unknown		unanalyzed	
 006b4d40	FUN_006b4d40	.text	52		clean	unknown		unanalyzed	
-006b4d80	FUN_006b4d80	.text	298		clean	unknown		unanalyzed	
+006b4d80	FUN_006b4d80	.text	298	SageEngine\source\GameEngine\gamelogic\object\SpecialPower\ToggleStatusSpecialAbilityUpdate.cpp	clean	gamelogic		unanalyzed	
 006b4eb0	FUN_006b4eb0	.text	208	SageEngine\source\GameEngine\gamelogic\object\SpecialPower\WeaponFireSpecialAbilityUpdate.cpp	clean	gamelogic		unanalyzed	
 006b4f80	FUN_006b4f80	.text	19		inner-patched	unknown		unanalyzed	
 006b4fe0	FUN_006b4fe0	.text	110		clean	unknown		unanalyzed	
@@ -15959,8 +15961,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00727950	FUN_00727950	.text	6		clean	unknown		unanalyzed	
 00727960	FUN_00727960	.text	47		clean	unknown		unanalyzed	
 00727990	FUN_00727990	.text	14		clean	unknown		unanalyzed	
-007279a0	FUN_007279a0	.text	107		clean	unknown		unanalyzed	
-00727a10	FUN_00727a10	.text	107		clean	unknown		unanalyzed	
+007279a0	FUN_007279a0	.text	107	SageEngine\source\GameEngine\GameLogic\Object\Contain\OpenContain.h	clean	gamelogic		unanalyzed	
+00727a10	FUN_00727a10	.text	107	SageEngine\source\GameEngine\GameLogic\Object\Contain\OpenContain.h	clean	gamelogic		unanalyzed	
 00727a80	FUN_00727a80	.text	38		clean	unknown		unanalyzed	
 00727ab0	FUN_00727ab0	.text	7		clean	unknown		unanalyzed	
 00727ac0	FUN_00727ac0	.text	14		clean	unknown		unanalyzed	
@@ -16711,7 +16713,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00756f30	FUN_00756f30	.text	348		clean	unknown		unanalyzed	
 00757090	FUN_00757090	.text	317		clean	unknown		unanalyzed	
 007571d0	FUN_007571d0	.text	36		clean	unknown		unanalyzed	
-00757200	FUN_00757200	.text	782		clean	unknown		unanalyzed	
+00757200	FUN_00757200	.text	782	SageEngine\source\GameEngine\gamelogic\object\Object.cpp	clean	gamelogic		unanalyzed	
 00757510	FUN_00757510	.text	69		clean	unknown		unanalyzed	
 00757560	FUN_00757560	.text	346		clean	unknown		unanalyzed	
 007576c0	FUN_007576c0	.text	413		clean	unknown		unanalyzed	
@@ -16744,7 +16746,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007593c0	FUN_007593c0	.text	8		clean	unknown		unanalyzed	
 007593d0	FUN_007593d0	.text	990		clean	unknown		unanalyzed	
 007597b0	FUN_007597b0	.text	1185		clean	unknown		unanalyzed	
-00759c60	FUN_00759c60	.text	1588		clean	unknown		unanalyzed	
+00759c60	FUN_00759c60	.text	1588	SageEngine\source\GameEngine\gamelogic\object\Behavior\BezierProjectileBehavior.cpp	clean	gamelogic		unanalyzed	
 0075a2a0	FUN_0075a2a0	.text	330		clean	unknown		unanalyzed	
 0075a3f0	FUN_0075a3f0	.text	79		clean	unknown		unanalyzed	
 0075a440	FUN_0075a440	.text	601		clean	unknown		unanalyzed	
@@ -17678,9 +17680,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0078bee0	FUN_0078bee0	.text	118		clean	unknown		unanalyzed	
 0078bf60	FUN_0078bf60	.text	77		clean	unknown		unanalyzed	
 0078bfb0	FUN_0078bfb0	.text	198		clean	unknown		unanalyzed	
-0078c080	FUN_0078c080	.text	1146		clean	unknown		unanalyzed	
-0078c500	FUN_0078c500	.text	697		clean	unknown		unanalyzed	
-0078c7c0	FUN_0078c7c0	.text	612		clean	unknown		unanalyzed	
+0078c080	FUN_0078c080	.text	1146	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common		unanalyzed	
+0078c500	FUN_0078c500	.text	697	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common		unanalyzed	
+0078c7c0	FUN_0078c7c0	.text	612	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common		unanalyzed	
 0078ca30	FUN_0078ca30	.text	70		clean	unknown		unanalyzed	
 0078ca80	FUN_0078ca80	.text	126		clean	unknown		unanalyzed	
 0078cb00	FUN_0078cb00	.text	39		clean	unknown		unanalyzed	
@@ -17692,8 +17694,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0078cd90	FUN_0078cd90	.text	114		clean	unknown		unanalyzed	
 0078ce10	FUN_0078ce10	.text	115		clean	unknown		unanalyzed	
 0078ce90	FUN_0078ce90	.text	71		clean	unknown		unanalyzed	
-0078cee0	FUN_0078cee0	.text	755		clean	unknown		unanalyzed	
-0078d1e0	FUN_0078d1e0	.text	694		clean	unknown		unanalyzed	
+0078cee0	FUN_0078cee0	.text	755	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common		unanalyzed	
+0078d1e0	FUN_0078d1e0	.text	694	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common		unanalyzed	
 0078d4a0	FUN_0078d4a0	.text	77		clean	unknown		unanalyzed	
 0078d4f0	FUN_0078d4f0	.text	39		clean	unknown		unanalyzed	
 0078d520	FUN_0078d520	.text	61		clean	unknown		unanalyzed	
@@ -17711,7 +17713,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0078dba0	FUN_0078dba0	.text	253		clean	unknown		unanalyzed	
 0078dca0	FUN_0078dca0	.text	278		clean	unknown		unanalyzed	
 0078ddc0	FUN_0078ddc0	.text	134	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-0078de50	FUN_0078de50	.text	637		clean	unknown		unanalyzed	
+0078de50	FUN_0078de50	.text	637	SageEngine\source\GameEngine\common\thing\ThingTemplate.cpp	clean	common		unanalyzed	
 0078e0d0	FUN_0078e0d0	.text	234		clean	unknown		unanalyzed	
 0078e1c0	FUN_0078e1c0	.text	216		clean	unknown		unanalyzed	
 0078e2a0	FUN_0078e2a0	.text	173		clean	unknown		unanalyzed	
@@ -17736,7 +17738,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00795df0	FUN_00795df0	.text	94		clean	unknown		unanalyzed	
 00795e50	FUN_00795e50	.text	286	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00795f70	FUN_00795f70	.text	477		clean	unknown		unanalyzed	
-0079614d	FUN_0079614d	.text	2831		clean	unknown		unanalyzed	
+0079614d	FUN_0079614d	.text	2831	SageEngine\source\GameEngine\common\thing\ThingTemplate.cpp	clean	common		unanalyzed	
 00796c60	FUN_00796c60	.text	12		clean	unknown		unanalyzed	
 00796c6c	FUN_00796c6c	.text	171		clean	unknown		unanalyzed	
 00796d20	FUN_00796d20	.text	180		clean	unknown		unanalyzed	
@@ -18852,7 +18854,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007b09f0	FUN_007b09f0	.text	542		clean	unknown		unanalyzed	
 007b0c10	FUN_007b0c10	.text	305		clean	unknown		unanalyzed	
 007b0d50	FUN_007b0d50	.text	200		clean	unknown		unanalyzed	
-007b0e20	FUN_007b0e20	.text	257		clean	unknown		unanalyzed	
+007b0e20	FUN_007b0e20	.text	257	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
 007b0f30	FUN_007b0f30	.text	104		clean	unknown		unanalyzed	
 007b1090	FUN_007b1090	.text	180		clean	unknown		unanalyzed	
 007b1150	FUN_007b1150	.text	51		clean	unknown		unanalyzed	
@@ -20751,7 +20753,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00820550	FUN_00820550	.text	102		clean	unknown		unanalyzed	
 008205c0	FUN_008205c0	.text	111		clean	unknown		unanalyzed	
 00820630	FUN_00820630	.text	317		clean	unknown		unanalyzed	
-00820780	FUN_00820780	.text	992		clean	unknown		unanalyzed	
+00820780	FUN_00820780	.text	992	SageEngine\source\GameEngine\gamelogic\scriptengine\Scripts.cpp	clean	gamelogic		unanalyzed	
 00820b70	FUN_00820b70	.text	239		clean	unknown		unanalyzed	
 00820c60	FUN_00820c60	.text	102		clean	unknown		unanalyzed	
 00820cd0	FUN_00820cd0	.text	289		clean	unknown		unanalyzed	
@@ -21918,7 +21920,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008696c0	FUN_008696c0	.text	30		clean	unknown		unanalyzed	
 008696e0	FUN_008696e0	.text	70		clean	unknown		unanalyzed	
 00869730	FUN_00869730	.text	307		clean	unknown		unanalyzed	
-00869870	FUN_00869870	.text	1077		clean	unknown		unanalyzed	
+00869870	FUN_00869870	.text	1077	SageEngine\source\GameEngine\gamelogic\map\SidesList.cpp	clean	gamelogic		unanalyzed	
 00869cb0	FUN_00869cb0	.text	1071		clean	unknown		unanalyzed	
 0086a0f0	FUN_0086a0f0	.text	30		clean	unknown		unanalyzed	
 0086a110	FUN_0086a110	.text	716		clean	unknown		unanalyzed	
@@ -25190,7 +25192,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00908ed0	FUN_00908ed0	.text	154		clean	unknown		unanalyzed	
 00908f70	FUN_00908f70	.text	292		clean	unknown		unanalyzed	
 009090a0	FUN_009090a0	.text	287		clean	unknown		unanalyzed	
-009091c0	FUN_009091c0	.text	1474		clean	unknown		unanalyzed	
+009091c0	FUN_009091c0	.text	1474	SageEngine\source\GameEngineDevice\W3DDevice\GameClient\Drawable\W3DScriptedModelDraw.cpp	clean	render		unanalyzed	
 009097a0	FUN_009097a0	.text	131		clean	unknown		unanalyzed	
 00909830	FUN_00909830	.text	428		clean	unknown		unanalyzed	
 009099f0	FUN_009099f0	.text	66		clean	unknown		unanalyzed	
@@ -25204,7 +25206,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00909e60	FUN_00909e60	.text	56		clean	unknown		unanalyzed	
 00909ea0	FUN_00909ea0	.text	255		clean	unknown		unanalyzed	
 00909fa0	FUN_00909fa0	.text	3109	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-0090abd0	FUN_0090abd0	.text	1013		clean	unknown		unanalyzed	
+0090abd0	FUN_0090abd0	.text	1013	SageEngine\source\GameEngineDevice\W3DDevice\GameClient\Drawable\W3DScriptedModelDraw.cpp	clean	render		unanalyzed	
 0090afd0	FUN_0090afd0	.text	748		clean	unknown		unanalyzed	
 0090b2d0	FUN_0090b2d0	.text	338		clean	unknown		unanalyzed	
 0090b430	FUN_0090b430	.text	383	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
@@ -25223,7 +25225,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0090cb90	FUN_0090cb90	.text	16		clean	unknown		unanalyzed	
 0090cba0	FUN_0090cba0	.text	38		clean	unknown		unanalyzed	
 0090cbd0	FUN_0090cbd0	.text	320		clean	unknown		unanalyzed	
-0090cd10	FUN_0090cd10	.text	287		clean	unknown		unanalyzed	
+0090cd10	FUN_0090cd10	.text	287	SageEngine\source\GameEngineDevice\W3DDevice\GameClient\Drawable\W3DScriptedModelDraw.cpp	clean	render		unanalyzed	
 0090ce30	FUN_0090ce30	.text	2383	SageEngine\source\GameEngineDevice\W3DDevice\GameClient\Drawable\W3DScriptedModelDraw.cpp	clean	render		unanalyzed	
 0090d780	FUN_0090d780	.text	3453		clean	unknown		unanalyzed	
 0090e500	FUN_0090e500	.text	1492		clean	unknown		unanalyzed	
@@ -27829,7 +27831,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00980300	FUN_00980300	.text	24		clean	unknown		unanalyzed	
 00980320	FUN_00980320	.text	24		clean	unknown		unanalyzed	
 00980340	FUN_00980340	.text	117		clean	unknown		unanalyzed	
-009803c0	FUN_009803c0	.text	155		clean	unknown		unanalyzed	
+009803c0	FUN_009803c0	.text	155	Libraries\Source\ini\INI.cpp	clean	core		unanalyzed	
 00980460	FUN_00980460	.text	38		clean	unknown		unanalyzed	
 00980490	FUN_00980490	.text	102		clean	unknown		unanalyzed	
 00980500	FUN_00980500	.text	21		clean	unknown		unanalyzed	
@@ -28570,7 +28572,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009a24b0	FUN_009a24b0	.text	97		clean	unknown		unanalyzed	
 009a2520	FUN_009a2520	.text	17		clean	unknown		unanalyzed	
 009a2540	FUN_009a2540	.text	281		clean	unknown		unanalyzed	
-009a2660	FUN_009a2660	.text	989		clean	unknown		unanalyzed	
+009a2660	FUN_009a2660	.text	989	SageRender\source\Sage\Render\ShaderFactory.cpp	clean	render		unanalyzed	
 009a2a40	FUN_009a2a40	.text	389		clean	unknown		unanalyzed	
 009a2bd0	FUN_009a2bd0	.text	6		clean	unknown		unanalyzed	
 009a2be0	FUN_009a2be0	.text	520		clean	unknown		unanalyzed	
@@ -28622,7 +28624,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009a8dd0	FUN_009a8dd0	.text	86		clean	unknown		unanalyzed	
 009a8e30	FUN_009a8e30	.text	111		clean	unknown		unanalyzed	
 009a8ea0	FUN_009a8ea0	.text	290		clean	unknown		unanalyzed	
-009a8fd0	FUN_009a8fd0	.text	1104		clean	unknown		unanalyzed	
+009a8fd0	FUN_009a8fd0	.text	1104	SageRender\source\Sage\Render\MaterialFactory.cpp	clean	render		unanalyzed	
 009a9420	FUN_009a9420	.text	122		clean	unknown		unanalyzed	
 009a94a0	FUN_009a94a0	.text	137		clean	unknown		unanalyzed	
 009a9530	FUN_009a9530	.text	158		clean	unknown		unanalyzed	
@@ -28716,7 +28718,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009af1b0	FUN_009af1b0	.text	448		clean	unknown		unanalyzed	
 009af370	FUN_009af370	.text	302		clean	unknown		unanalyzed	
 009af4a0	FUN_009af4a0	.text	130		clean	unknown		unanalyzed	
-009af530	FUN_009af530	.text	994		clean	unknown		unanalyzed	
+009af530	FUN_009af530	.text	994	SageRender\source\Sage\Render\RenderObject.cpp	clean	render		unanalyzed	
 009af920	FUN_009af920	.text	277		clean	unknown		unanalyzed	
 009afa40	FUN_009afa40	.text	220		clean	unknown		unanalyzed	
 009afb20	FUN_009afb20	.text	640		clean	unknown		unanalyzed	
@@ -28728,7 +28730,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b0540	FUN_009b0540	.text	131		clean	unknown		unanalyzed	
 009b05d0	FUN_009b05d0	.text	98		clean	unknown		unanalyzed	
 009b0640	FUN_009b0640	.text	393		clean	unknown		unanalyzed	
-009b07d0	FUN_009b07d0	.text	448		clean	unknown		unanalyzed	
+009b07d0	FUN_009b07d0	.text	448	SageRender\source\Sage\Render\Core.cpp	clean	render		unanalyzed	
 009b0990	FUN_009b0990	.text	1099		clean	unknown		unanalyzed	
 009b0de0	FUN_009b0de0	.text	167		clean	unknown		unanalyzed	
 009b0e90	FUN_009b0e90	.text	619	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
@@ -29903,7 +29905,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009f3560	FUN_009f3560	.text	123		clean	unknown		unanalyzed	
 009f35e0	FUN_009f35e0	.text	36		clean	unknown		unanalyzed	
 009f3610	FUN_009f3610	.text	58		clean	unknown		unanalyzed	
-009f3650	FUN_009f3650	.text	109		clean	unknown		reversed	
+009f3650	FUN_009f3650	.text	109		clean	io	main	reversed	case-insensitive path compare; ra3::io::BigArchive::find
 009f36c0	FUN_009f36c0	.text	28		clean	unknown		unanalyzed	
 009f36e0	FUN_009f36e0	.text	51		clean	unknown		unanalyzed	
 009f3720	FUN_009f3720	.text	50		clean	unknown		unanalyzed	
@@ -29957,34 +29959,35 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009f5a10	FUN_009f5a10	.text	43		clean	unknown		unanalyzed	
 009f5a40	FUN_009f5a40	.text	26		clean	unknown		unanalyzed	
 009f5a60	FUN_009f5a60	.text	31		clean	unknown		unanalyzed	
-009f5a80	FUN_009f5a80	.text	101		clean	unknown		reversed	
-009f5db0	FUN_009f5db0	.text	71		clean	unknown		reversed	
-009f5e00	FUN_009f5e00	.text	128		clean	unknown		reversed	
+009f5a80	FUN_009f5a80	.text	101		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
+009f5af0	FUN_009f5af0	.text	704		clean	io	main	reversed	BigHandler::AddArchiveFromFile; ra3::io::ArchiveSet::mount
+009f5db0	FUN_009f5db0	.text	71		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
+009f5e00	FUN_009f5e00	.text	128		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
 009f5e80	FUN_009f5e80	.text	13		clean	unknown		unanalyzed	
-009f5e90	FUN_009f5e90	.text	21		clean	unknown		reversed	
+009f5e90	FUN_009f5e90	.text	21		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
 009f5eb0	FUN_009f5eb0	.text	31		clean	unknown		unanalyzed	
-009f5ed0	FUN_009f5ed0	.text	105		clean	unknown		reversed	
-009f5f40	FUN_009f5f40	.text	43		clean	unknown		reversed	
+009f5ed0	FUN_009f5ed0	.text	105		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
+009f5f40	FUN_009f5f40	.text	43		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
 009f5f70	FUN_009f5f70	.text	11		clean	unknown		unanalyzed	
-009f5f80	FUN_009f5f80	.text	768		clean	unknown		reversed	
+009f5f80	FUN_009f5f80	.text	768		clean	io	main	reversed	open file: first archive in list wins; ra3::io::ArchiveSet::find
 009f6280	FUN_009f6280	.text	299		clean	unknown		unanalyzed	
-009f63b0	FUN_009f63b0	.text	545		clean	unknown		reversed	
-009f65e0	FUN_009f65e0	.text	137		clean	unknown		reversed	
-009f6670	FUN_009f6670	.text	352		clean	unknown		reversed	
+009f63b0	FUN_009f63b0	.text	545		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
+009f65e0	FUN_009f65e0	.text	137		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
+009f6670	FUN_009f6670	.text	352		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
 009f67e0	FUN_009f67e0	.text	36		clean	unknown		unanalyzed	
-009f6810	FUN_009f6810	.text	100		clean	unknown		reversed	
+009f6810	FUN_009f6810	.text	100		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
 009f6880	FUN_009f6880	.text	58		clean	unknown		unanalyzed	
 009f68c0	FUN_009f68c0	.text	72		clean	unknown		unanalyzed	
-009f6910	FUN_009f6910	.text	119		clean	unknown		reversed	
-009f6990	FUN_009f6990	.text	97		clean	unknown		reversed	
-009f6a20	FUN_009f6a20	.text	35		clean	unknown		reversed	
-009f6a50	FUN_009f6a50	.text	79		clean	unknown		reversed	
-009f6aa0	FUN_009f6aa0	.text	87		clean	unknown		reversed	
-009f6b00	FUN_009f6b00	.text	134		clean	unknown		reversed	
-009f6b90	FUN_009f6b90	.text	357		clean	unknown		reversed	
-009f6d00	FUN_009f6d00	.text	763		clean	unknown		reversed	
+009f6910	FUN_009f6910	.text	119		clean	io	main	reversed	archive format check (BIG4/BIGF/Viv4/C0FB); ra3::io::BigArchive::open
+009f6990	FUN_009f6990	.text	97		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
+009f6a20	FUN_009f6a20	.text	35		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
+009f6a50	FUN_009f6a50	.text	79		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
+009f6aa0	FUN_009f6aa0	.text	87		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
+009f6b00	FUN_009f6b00	.text	134		clean	io	main	reversed	header trailer test; ra3::io::parseBigTrailer
+009f6b90	FUN_009f6b90	.text	357		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
+009f6d00	FUN_009f6d00	.text	763		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
 009f7000	FUN_009f7000	.text	297		clean	unknown		unanalyzed	
-009f7130	FUN_009f7130	.text	143		clean	unknown		reversed	
+009f7130	FUN_009f7130	.text	143		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
 009f71d0	FUN_009f71d0	.text	61		clean	unknown		unanalyzed	
 009f7210	FUN_009f7210	.text	48		clean	unknown		unanalyzed	
 009f7240	FUN_009f7240	.text	15		clean	unknown		unanalyzed	
@@ -29992,12 +29995,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009f7270	FUN_009f7270	.text	17		clean	unknown		unanalyzed	
 009f7290	FUN_009f7290	.text	21		clean	unknown		unanalyzed	
 009f72b0	FUN_009f72b0	.text	39		clean	unknown		unanalyzed	
-009f72e0	FUN_009f72e0	.text	522		clean	unknown		reversed	
-009f74f0	FUN_009f74f0	.text	65		clean	unknown		reversed	
+009f72e0	FUN_009f72e0	.text	522		clean	io	main	reversed	RefPack one-shot decoder; ra3::io::decompressRefPack
+009f74f0	FUN_009f74f0	.text	65		clean	io	main	reversed	RefPack size probe; ra3::io::readRefPackHeader
 009f7540	FUN_009f7540	.text	68		clean	unknown		unanalyzed	
 009f7590	FUN_009f7590	.text	42		clean	unknown		unanalyzed	
 009f75c0	FUN_009f75c0	.text	89		clean	unknown		unanalyzed	
-009f7620	FUN_009f7620	.text	1434		clean	unknown		reversed	
+009f7620	FUN_009f7620	.text	1434		clean	io	main	reversed	rw::core::codec::RefpackInflate (streaming)
 009f7c00	FUN_009f7c00	.text	75		clean	unknown		unanalyzed	
 009f7c50	FUN_009f7c50	.text	41		clean	unknown		unanalyzed	
 009f7c80	FUN_009f7c80	.text	572		clean	unknown		unanalyzed	

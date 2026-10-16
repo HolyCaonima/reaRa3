@@ -43,8 +43,9 @@ public class ExportProgramOverview extends GhidraScript {
 
     private static final Set<String> SECUROM_BLOCKS =
         Set.of("Stext", "Sitext", "Srdata", "Sdata", "Sidata", ".securom");
+    // Assertion messages carry the path with a ":<line>" suffix.
     private static final Pattern SOURCE_PATH =
-        Pattern.compile("(?i)^.*\\\\ra3\\\\code\\\\(.+\\.(cpp|h|hpp|inl))$");
+        Pattern.compile("(?i)^.*\\\\ra3\\\\code\\\\(.+?\\.(cpp|h|hpp|inl))(?::\\d+)?$");
 
     private static final class BlockStats {
         int functions;
