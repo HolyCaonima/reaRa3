@@ -65,6 +65,7 @@ class TypeDef:
     simple: bool = False
     base: str = ""
     enum: bool = False
+    enum_values: list[tuple[str, int]] = field(default_factory=list)
     list_item: str = ""
     fields: list[SourceField] = field(default_factory=list)
     type_group: str = ""
@@ -145,7 +146,7 @@ class SchemaModel:
     @staticmethod
     def _signature(item: TypeDef) -> tuple:
         return (
-            item.simple, item.base, item.enum, item.list_item,
+            item.simple, item.base, item.enum, tuple(item.enum_values), item.list_item,
             tuple((f.name, f.type_name, f.is_element, f.min_occurs,
                    f.max_occurs, f.pipeline_only, f.choice) for f in item.fields),
         )
@@ -162,6 +163,18 @@ class SchemaModel:
         if restriction is not None:
             item.base = local(restriction.get("base"))
             item.enum = restriction.find(XS + "enumeration") is not None
+            next_value = 0
+            named_values: dict[str, int] = {}
+            for enumeration in restriction.findall(XS + "enumeration"):
+                forced = enumeration.get(XAS + "forceValue")
+                if forced is not None:
+                    next_value = (
+                        named_values[forced] if forced in named_values
+                        else int(forced, 0))
+                value_name = enumeration.get("value", "")
+                item.enum_values.append((value_name, next_value))
+                named_values[value_name] = next_value
+                next_value += 1
             item.is_ref |= restriction.get(XAS + "isRef") == "true"
             item.is_weak_ref |= restriction.get(XAS + "isWeakRef") == "true"
         elif listing is not None:

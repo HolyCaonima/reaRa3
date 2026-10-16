@@ -3,6 +3,7 @@
 #include <ra3/asset/AssetInstance.h>
 #include <ra3/asset/AssetStream.h>
 #include <ra3/asset/NameHash.h>
+#include <ra3/asset/TypedAsset.h>
 #include <ra3/core/FileUtil.h>
 #include <ra3/core/GameConfig.h>
 #include <ra3/core/SkuDef.h>
@@ -13,6 +14,7 @@
 
 #include <algorithm>
 #include <chrono>
+#include <cstring>
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
@@ -21,6 +23,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #ifdef _WIN32
@@ -41,6 +44,8 @@ commands:
   streams [--deep]            validate every mounted compiled-asset stream
   manifest <stem> [--limit N] show one stream manifest (for example data/locale)
   asset <stem> <Type:Name>    dump one asset's fixups and references
+  dump <stem> <Type:Name>     dump one validated asset through generated reflection
+  types-check                 walk every shipped instance of every generated type
 )";
 
 std::string hexBytes(const std::uint8_t* data, std::size_t count)
@@ -478,6 +483,297 @@ ra3::Result<std::vector<std::uint8_t>> readDecodedRange(
     return result;
 }
 
+std::uint64_t readUnsigned(
+    const ra3::asset::AssetInstance& instance, std::uint32_t offset, std::uint32_t size)
+{
+    const auto bytes = instance.bytes();
+    if (offset > bytes.size || size > bytes.size - offset || size > 8) return 0;
+    std::uint64_t value = 0;
+    for (std::uint32_t index = 0; index < size; ++index) {
+        value |= static_cast<std::uint64_t>(bytes.data[offset + index]) << (index * 8);
+    }
+    return value;
+}
+
+struct TypedWalk {
+    const ra3::asset::AssetInstance& instance;
+    std::set<std::uint32_t> relocations;
+    std::set<std::uint32_t> imports;
+    std::vector<std::string> errors;
+    std::uint64_t fields = 0;
+
+    void error(const std::string& path, const std::string& message)
+    {
+        errors.push_back(path + ": " + message);
+    }
+
+    bool validEnum(std::string_view name, std::uint32_t value) const
+    {
+        const auto* info = ra3::asset::findGeneratedEnum(name);
+        if (info == nullptr) return true;
+        return std::any_of(
+            info->values, info->values + info->valueCount,
+            [value](const ra3::asset::EnumValueInfo& item) {
+                return item.value == value;
+            });
+    }
+
+    void walk(
+        const ra3::asset::TypeInfo& type,
+        std::uint32_t base,
+        const std::string& path)
+    {
+        if (base > instance.bytes().size ||
+            type.size > instance.bytes().size - base) {
+            error(path, "object is outside the instance");
+            return;
+        }
+        for (std::size_t index = 0; index < type.fieldCount; ++index) {
+            const ra3::asset::FieldInfo& field = type.fields[index];
+            const std::uint32_t offset = base + field.offset;
+            const std::string fieldPath =
+                path.empty() ? std::string(field.name) :
+                               path + "." + std::string(field.name);
+            ++fields;
+            switch (field.kind) {
+            case ra3::asset::FieldKind::Boolean:
+                if (const auto value = readUnsigned(instance, offset, field.size);
+                    value > 1) {
+                    error(fieldPath, "boolean value " + std::to_string(value) +
+                                         " is not 0 or 1");
+                }
+                break;
+            case ra3::asset::FieldKind::Enum: {
+                const auto value = static_cast<std::uint32_t>(
+                    readUnsigned(instance, offset, field.size));
+                if (!validEnum(field.elementType, value)) {
+                    error(fieldPath, "enum value " + std::to_string(value) +
+                                         " is not declared");
+                }
+                break;
+            }
+            case ra3::asset::FieldKind::String: {
+                ra3::asset::CompiledString value;
+                std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+                auto resolved = ra3::asset::resolve(instance, value, offset);
+                if (!resolved) error(fieldPath, resolved.error().message);
+                if (value.offset != 0) relocations.insert(offset + 4);
+                break;
+            }
+            case ra3::asset::FieldKind::FileReference: {
+                ra3::asset::FileReference value;
+                std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+                auto resolved = ra3::asset::resolve(instance, value, offset);
+                if (!resolved) error(fieldPath, resolved.error().message);
+                if (value.offset != 0) relocations.insert(offset);
+                break;
+            }
+            case ra3::asset::FieldKind::Blob: {
+                ra3::asset::DataBlob value;
+                std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+                auto resolved = ra3::asset::resolve(instance, value, offset);
+                if (!resolved) error(fieldPath, resolved.error().message);
+                if (value.offset != 0) relocations.insert(offset);
+                break;
+            }
+            case ra3::asset::FieldKind::AssetReference: {
+                ra3::asset::AssetReference value;
+                std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+                auto resolved = ra3::asset::resolve(instance, value, offset);
+                if (!resolved) error(fieldPath, resolved.error().message);
+                if (value.index != 0) imports.insert(offset);
+                break;
+            }
+            case ra3::asset::FieldKind::Struct: {
+                const auto* child = ra3::asset::findGeneratedType(field.elementType);
+                if (child == nullptr) {
+                    error(fieldPath, "missing reflected struct type");
+                } else {
+                    walk(*child, offset, fieldPath);
+                }
+                break;
+            }
+            case ra3::asset::FieldKind::List:
+            case ra3::asset::FieldKind::SimpleList: {
+                ra3::asset::CompiledList<> value;
+                std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+                auto resolved = ra3::asset::resolveList(
+                    instance, value.count, value.offset, field.elementSize, offset);
+                if (!resolved) {
+                    error(fieldPath, resolved.error().message);
+                    break;
+                }
+                if (value.offset != 0) relocations.insert(offset + 4);
+                const auto* child = ra3::asset::findGeneratedType(field.elementType);
+                const auto* enumeration =
+                    ra3::asset::findGeneratedEnum(field.elementType);
+                for (std::uint32_t item = 0; item < value.count; ++item) {
+                    const std::uint32_t itemOffset =
+                        value.offset + item * field.elementSize;
+                    const std::string itemPath =
+                        fieldPath + "[" + std::to_string(item) + "]";
+                    if (field.kind == ra3::asset::FieldKind::List &&
+                        child != nullptr) {
+                        walk(*child, itemOffset, itemPath);
+                    } else if (enumeration != nullptr) {
+                        ++fields;
+                        const auto enumValue = static_cast<std::uint32_t>(
+                            readUnsigned(instance, itemOffset, field.elementSize));
+                        if (!validEnum(field.elementType, enumValue)) {
+                            error(itemPath, "enum value " +
+                                                std::to_string(enumValue) +
+                                                " is not declared");
+                        }
+                    }
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+    }
+
+    void finish()
+    {
+        const std::set<std::uint32_t> actualRelocations(
+            instance.relocations().sites().begin(),
+            instance.relocations().sites().end());
+        std::set<std::uint32_t> actualImports;
+        for (const auto& item : instance.imports().imports()) {
+            actualImports.insert(item.site);
+        }
+        if (relocations != actualRelocations) {
+            error("$relocations", "reflection does not cover the relocation table exactly");
+        }
+        if (imports != actualImports) {
+            error("$imports", "reflection does not cover the import table exactly");
+        }
+    }
+};
+
+std::string enumName(std::string_view type, std::uint32_t value)
+{
+    const auto* info = ra3::asset::findGeneratedEnum(type);
+    if (info != nullptr) {
+        for (std::size_t index = 0; index < info->valueCount; ++index) {
+            if (info->values[index].value == value) {
+                return std::string(info->values[index].name);
+            }
+        }
+    }
+    return std::to_string(value);
+}
+
+void dumpTyped(
+    const ra3::asset::AssetInstance& instance,
+    const ra3::asset::TypeInfo& type,
+    std::uint32_t base,
+    const ra3::asset::Manifest& manifest,
+    const std::unordered_map<std::uint64_t, std::string>& assetNames,
+    int indent)
+{
+    const std::string spaces(static_cast<std::size_t>(indent), ' ');
+    for (std::size_t index = 0; index < type.fieldCount; ++index) {
+        const auto& field = type.fields[index];
+        const std::uint32_t offset = base + field.offset;
+        std::cout << spaces << field.name << " = ";
+        switch (field.kind) {
+        case ra3::asset::FieldKind::String: {
+            ra3::asset::CompiledString value;
+            std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+            auto resolved = ra3::asset::resolve(instance, value, offset);
+            std::cout << (resolved ? "\"" + std::string(resolved.value()) + "\""
+                                   : "<" + resolved.error().message + ">")
+                      << "\n";
+            break;
+        }
+        case ra3::asset::FieldKind::FileReference: {
+            ra3::asset::FileReference value;
+            std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+            auto resolved = ra3::asset::resolve(instance, value, offset);
+            std::cout << (resolved && resolved.value() ?
+                              "\"" + std::string(*resolved.value()) + "\"" :
+                              (resolved ? "null" : "<" + resolved.error().message + ">"))
+                      << "\n";
+            break;
+        }
+        case ra3::asset::FieldKind::AssetReference: {
+            const auto* imported = instance.importAt(offset);
+            if (imported == nullptr) {
+                std::cout << "null\n";
+            } else {
+                const auto* target = manifest.find(imported->target);
+                if (target != nullptr) {
+                    const auto targetIndex = static_cast<std::size_t>(
+                        target - manifest.entries().data());
+                    std::cout << manifest.name(targetIndex) << "\n";
+                } else {
+                    const std::uint64_t key =
+                        (static_cast<std::uint64_t>(imported->target.typeId) << 32) |
+                        imported->target.instanceId;
+                    const auto known = assetNames.find(key);
+                    if (known != assetNames.end()) {
+                        std::cout << known->second << "\n";
+                    } else {
+                        std::cout << hex32(imported->target.typeId) << ":"
+                                  << hex32(imported->target.instanceId) << "\n";
+                    }
+                }
+            }
+            break;
+        }
+        case ra3::asset::FieldKind::Struct: {
+            std::cout << "{\n";
+            const auto* child = ra3::asset::findGeneratedType(field.elementType);
+            if (child != nullptr) {
+                dumpTyped(instance, *child, offset, manifest, assetNames, indent + 2);
+            }
+            std::cout << spaces << "}\n";
+            break;
+        }
+        case ra3::asset::FieldKind::List:
+        case ra3::asset::FieldKind::SimpleList: {
+            ra3::asset::CompiledList<> value;
+            std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+            std::cout << "[" << value.count << "]\n";
+            const auto* child = ra3::asset::findGeneratedType(field.elementType);
+            for (std::uint32_t item = 0; item < value.count; ++item) {
+                const auto itemOffset = value.offset + item * field.elementSize;
+                std::cout << spaces << "  [" << item << "] ";
+                if (field.kind == ra3::asset::FieldKind::List && child != nullptr) {
+                    std::cout << "{\n";
+                    dumpTyped(
+                        instance, *child, itemOffset, manifest, assetNames, indent + 4);
+                    std::cout << spaces << "  }\n";
+                } else {
+                    const auto raw = static_cast<std::uint32_t>(
+                        readUnsigned(instance, itemOffset, field.elementSize));
+                    std::cout << enumName(field.elementType, raw) << "\n";
+                }
+            }
+            break;
+        }
+        case ra3::asset::FieldKind::Enum: {
+            const auto raw = static_cast<std::uint32_t>(
+                readUnsigned(instance, offset, field.size));
+            std::cout << enumName(field.elementType, raw) << "\n";
+            break;
+        }
+        case ra3::asset::FieldKind::Blob: {
+            ra3::asset::DataBlob value;
+            std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+            std::cout << "<" << value.size << " bytes @" << hex32(value.offset)
+                      << ">\n";
+            break;
+        }
+        default:
+            std::cout << readUnsigned(instance, offset, field.size) << "\n";
+            break;
+        }
+    }
+}
+
 bool displayable(std::string_view value)
 {
     if (value.empty()) return false;
@@ -519,7 +815,8 @@ int commandAsset(const Context& context, const std::string& stem, const std::str
         {instanceBytes.value().data(), instanceBytes.value().size()},
         {relocationBytes.value().data(), relocationBytes.value().size()},
         {importBytes.value().data(), importBytes.value().size()},
-        references, stem + "/" + name, entry->relocationDataOffset, entry->importsDataOffset);
+        references, stem + "/" + name, entry->relocationDataOffset,
+        entry->importsDataOffset, entry->id);
     if (!instance) return fail(instance.error().message);
 
     std::cout << "asset       : " << name << "\n"
@@ -570,6 +867,208 @@ int commandAsset(const Context& context, const std::string& stem, const std::str
         std::cout << "\n";
     }
     return 0;
+}
+
+int commandDump(const Context& context, const std::string& stem, const std::string& name)
+{
+    auto mounted = mountAll(context);
+    if (!mounted) return fail(mounted.error().message);
+    auto validation = ra3::asset::validateStreamBundle(mounted.value(), stem);
+    if (!validation) return fail(validation.error().message);
+    const auto& manifest = validation.value().manifest;
+    const auto* entry = manifest.findByName(name);
+    if (entry == nullptr) return fail(stem + ": asset not found: " + name);
+    const auto* type = ra3::asset::findGeneratedType(entry->id.typeId);
+    if (type == nullptr) return fail(name + ": type has no fully validated generated layout");
+    const auto index = static_cast<std::size_t>(entry - manifest.entries().data());
+
+    auto bin = ra3::asset::openDecodedMember(mounted.value(), stem + ".bin");
+    auto relo = ra3::asset::openDecodedMember(mounted.value(), stem + ".relo");
+    auto imp = ra3::asset::openDecodedMember(mounted.value(), stem + ".imp");
+    if (!bin) return fail(bin.error().message);
+    if (!relo) return fail(relo.error().message);
+    if (!imp) return fail(imp.error().message);
+    auto bytes = readDecodedRange(
+        bin.value(), entry->instanceDataOffset, entry->instanceDataSize, stem + ".bin");
+    auto relocations = readDecodedRange(
+        relo.value(), entry->relocationDataOffset, entry->relocationDataSize,
+        stem + ".relo");
+    auto imports = readDecodedRange(
+        imp.value(), entry->importsDataOffset, entry->importsDataSize, stem + ".imp");
+    if (!bytes) return fail(bytes.error().message);
+    if (!relocations) return fail(relocations.error().message);
+    if (!imports) return fail(imports.error().message);
+    auto instance = ra3::asset::AssetInstance::parse(
+        {bytes.value().data(), bytes.value().size()},
+        {relocations.value().data(), relocations.value().size()},
+        {imports.value().data(), imports.value().size()},
+        manifest.references(index), stem + "/" + name,
+        entry->relocationDataOffset, entry->importsDataOffset, entry->id);
+    if (!instance) return fail(instance.error().message);
+    if (bytes.value().empty()) return fail(name + ": external placeholder has no instance");
+
+    std::unordered_map<std::uint64_t, std::string> assetNames;
+    for (std::size_t asset = 0; asset < manifest.entries().size(); ++asset) {
+        const auto& id = manifest.entries()[asset].id;
+        const std::uint64_t key =
+            (static_cast<std::uint64_t>(id.typeId) << 32) | id.instanceId;
+        assetNames.emplace(key, std::string(manifest.name(asset)));
+    }
+    std::set<std::uint64_t> unresolved;
+    for (const auto& imported : instance.value().imports().imports()) {
+        const std::uint64_t key =
+            (static_cast<std::uint64_t>(imported.target.typeId) << 32) |
+            imported.target.instanceId;
+        if (assetNames.find(key) == assetNames.end()) unresolved.insert(key);
+    }
+    const auto mountedStems = ra3::asset::enumerateStreamStems(mounted.value());
+    std::vector<std::string> catalogQueue;
+    std::set<std::string> queued;
+    const auto enqueueDependencies = [&](const ra3::asset::Manifest& source) {
+        for (const auto& reference : source.referencedManifests()) {
+            const std::string wanted =
+                ra3::io::normalizeArchivePath(reference.name);
+            for (const std::string& candidate : mountedStems) {
+                const std::string member = candidate + ".manifest";
+                if (member.size() >= wanted.size() &&
+                    member.compare(
+                        member.size() - wanted.size(), wanted.size(), wanted) == 0 &&
+                    queued.insert(candidate).second) {
+                    catalogQueue.push_back(candidate);
+                }
+            }
+        }
+    };
+    enqueueDependencies(manifest);
+    for (std::size_t catalogIndex = 0;
+         catalogIndex < catalogQueue.size(); ++catalogIndex) {
+        if (unresolved.empty()) break;
+        const std::string& catalogStem = catalogQueue[catalogIndex];
+        if (catalogStem == stem) continue;
+        auto catalog = ra3::asset::readStreamManifest(
+            mounted.value(), catalogStem);
+        if (!catalog) return fail(catalog.error().message);
+        const auto& catalogManifest = catalog.value();
+        enqueueDependencies(catalogManifest);
+        for (std::size_t asset = 0;
+             asset < catalogManifest.entries().size(); ++asset) {
+            const auto& id = catalogManifest.entries()[asset].id;
+            const std::uint64_t key =
+                (static_cast<std::uint64_t>(id.typeId) << 32) | id.instanceId;
+            if (unresolved.erase(key) != 0) {
+                assetNames.emplace(key, std::string(catalogManifest.name(asset)));
+            }
+        }
+    }
+    TypedWalk check{instance.value()};
+    check.walk(*type, 0, "");
+    check.finish();
+    if (!check.errors.empty()) return fail(name + ": " + check.errors.front());
+    std::cout << name << " {\n";
+    dumpTyped(instance.value(), *type, 0, manifest, assetNames, 2);
+    std::cout << "}\n";
+    return 0;
+}
+
+int commandTypesCheck(const Context& context)
+{
+    const auto started = std::chrono::steady_clock::now();
+    auto mounted = mountAll(context);
+    if (!mounted) return fail(mounted.error().message);
+    std::set<std::uint32_t> checkedTypes;
+    std::uint64_t checkedInstances = 0;
+    std::uint64_t checkedFields = 0;
+    std::uint64_t failures = 0;
+    std::vector<std::string> examples;
+    std::map<std::string, std::uint64_t> failureSummary;
+
+    for (const std::string& stem :
+         ra3::asset::enumerateStreamStems(mounted.value())) {
+        auto validation = ra3::asset::validateStreamBundle(mounted.value(), stem);
+        if (!validation) return fail(validation.error().message);
+        const auto& manifest = validation.value().manifest;
+        auto bin = ra3::asset::openDecodedMember(mounted.value(), stem + ".bin");
+        auto relo = ra3::asset::openDecodedMember(mounted.value(), stem + ".relo");
+        auto imp = ra3::asset::openDecodedMember(mounted.value(), stem + ".imp");
+        if (!bin) return fail(bin.error().message);
+        if (!relo) return fail(relo.error().message);
+        if (!imp) return fail(imp.error().message);
+
+        for (std::size_t index = 0; index < manifest.entries().size(); ++index) {
+            const auto& entry = manifest.entries()[index];
+            const auto* type = ra3::asset::findGeneratedType(entry.id.typeId);
+            if (type == nullptr) continue;
+            checkedTypes.insert(entry.id.typeId);
+            ++checkedInstances;
+            auto bytes = readDecodedRange(
+                bin.value(), entry.instanceDataOffset, entry.instanceDataSize,
+                stem + ".bin");
+            auto relocations = readDecodedRange(
+                relo.value(), entry.relocationDataOffset, entry.relocationDataSize,
+                stem + ".relo");
+            auto imports = readDecodedRange(
+                imp.value(), entry.importsDataOffset, entry.importsDataSize,
+                stem + ".imp");
+            if (!bytes || !relocations || !imports) {
+                return fail(stem + ": failed to read typed instance chunks");
+            }
+            const std::string assetName =
+                stem + "/" + std::string(manifest.name(index));
+            auto instance = ra3::asset::AssetInstance::parse(
+                {bytes.value().data(), bytes.value().size()},
+                {relocations.value().data(), relocations.value().size()},
+                {imports.value().data(), imports.value().size()},
+                manifest.references(index), assetName,
+                entry.relocationDataOffset, entry.importsDataOffset, entry.id);
+            if (!instance) {
+                ++failures;
+                if (examples.size() < 20) {
+                    examples.push_back(assetName + ": " + instance.error().message);
+                }
+                continue;
+            }
+            if (bytes.value().empty()) continue;
+            TypedWalk walk{instance.value()};
+            walk.walk(*type, 0, "");
+            walk.finish();
+            checkedFields += walk.fields;
+            failures += walk.errors.size();
+            for (const std::string& item : walk.errors) {
+                const std::size_t separator = item.find(':');
+                ++failureSummary[item.substr(0, separator)];
+                if (examples.size() < 20) {
+                    examples.push_back(assetName + ": " + item);
+                }
+            }
+        }
+    }
+    const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::steady_clock::now() - started);
+    std::cout << "types     : " << checkedTypes.size() << " / "
+              << ra3::asset::generatedTypeCount() << "\n"
+              << "instances : " << checkedInstances << "\n"
+              << "fields    : " << checkedFields << "\n"
+              << "failures  : " << failures << "\n"
+              << "wall time : " << elapsed.count() << " ms\n";
+    for (const std::string& example : examples) {
+        std::cout << "  " << example << "\n";
+    }
+    if (!failureSummary.empty()) {
+        std::vector<std::pair<std::uint64_t, std::string>> ranked;
+        for (const auto& item : failureSummary) {
+            ranked.emplace_back(item.second, item.first);
+        }
+        std::sort(ranked.begin(), ranked.end(), std::greater<>());
+        std::cout << "failure summary:\n";
+        for (std::size_t index = 0; index < ranked.size() && index < 20; ++index) {
+            std::cout << "  " << ranked[index].first << "  "
+                      << ranked[index].second << "\n";
+        }
+    }
+    return failures == 0 &&
+                   checkedTypes.size() == ra3::asset::generatedTypeCount() ?
+               0 :
+               1;
 }
 
 int commandManifest(const Context& context, const std::string& stem, std::size_t limit)
@@ -681,6 +1180,12 @@ int main(int argc, char** argv)
     }
     if (command == "asset" && args.size() >= 3) {
         return commandAsset(context.value(), args[1], args[2]);
+    }
+    if (command == "dump" && args.size() >= 3) {
+        return commandDump(context.value(), args[1], args[2]);
+    }
+    if (command == "types-check") {
+        return commandTypesCheck(context.value());
     }
     std::cerr << kUsage;
     return 1;
