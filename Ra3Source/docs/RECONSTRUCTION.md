@@ -106,4 +106,5 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [x] 虚表 → 类（recon/vclass，已合并）：没有 RTTI；164 个资源处理器是 5 槽接口（析构 / create / 原位复制 / destroy / 缺失原型解析），分属 3 个模板族（多态 119、单例设置 20、4 字节值 9）加少量特化；`classes.tsv` 3,126 行、805 条候选继承边（启发式）。注意 `vtables.tsv` 是“连续代码指针段”，相邻虚表会被合并（docs/design/class_map.md）
 - [ ] 精确虚表边界：用构造/析构写入点与直接虚调用重新切分 vtables.tsv 的连续段
 - [ ] hook 候选目录：全部 clean 函数按叶/纯度/序言可搬/调用约定分级，并刷新 Ghidra 函数导出 — 子 agent，分支 recon/hookcat，独占 work/ghidra
-- [ ] 资源二进制布局：由 XSD 推导每个类型的实例布局，用全部实例的重定位/导入表验证（只写 Python） — 子 agent，分支 recon/xsdlayout
+- [x] 资源二进制布局（recon/xsdlayout，已合并，主控全量复跑结果一致）：由 XSD 推导实例布局（根 4 字节 token；基类 → 属性 → 元素；字符串/列表 `{长度/数量, 相对指针}`；引用为 1 起的导入序号），完全通过 132/257 类型、87,592/118,232 条实例（docs/design/asset_layout.md）
+- [ ] 资源布局第二轮：Audio/W3D/Tokenized typeGroup 与多态 choice（AudioEvent 0/5,234、W3DMesh、GameObject、FXParticleSystemTemplate 等），结合原程序处理器与 ReloDetokenizers
