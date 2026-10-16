@@ -3,4 +3,5 @@ ra3_add_executable(ra3_portcheck
         main.cpp
     DEPS
         Ra3::common
-        Ra3::math)
+        Ra3::math
+        Ra3::sim)

@@ -1,0 +1,6 @@
+address	status	owner	module	notes
+005a9310	reversed	recon/simrng	sim	six-dword add-with-carry RNG step; Generals randomValue counterpart; ra3::sim::nextRandom; oracle 400000 consecutive transitions from four seeds, Debug+Release
+005a93b0	reversed	recon/simrng	sim	seed all three RNG streams and logic base seed; Generals InitRandom(seed) counterpart; ra3::sim::seedRandom; oracle 10000/10000 Debug+Release
+005a94c0	reversed	recon/simrng	sim	logic inclusive integer range; differs from Generals by low>=high early return without state advance; ra3::sim::logicRandomInteger; oracle 10006/10006 Debug+Release
+005a94f0	reversed	recon/simrng	sim	client inclusive integer range; Generals GetGameClientRandomValue counterpart; ra3::sim::clientRandomInteger; oracle 10006/10006 Debug+Release
+005a9520	reversed	recon/simrng	sim	audio inclusive integer range; Generals GetGameAudioRandomValue counterpart; ra3::sim::clientRandomInteger; oracle 10006/10006 Debug+Release

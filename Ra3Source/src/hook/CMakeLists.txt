@@ -16,4 +16,5 @@ ra3_add_shared_library(ra3hook
         Ra3::hook
         Ra3::io
         Ra3::math
+        Ra3::sim
         Ra3::text)

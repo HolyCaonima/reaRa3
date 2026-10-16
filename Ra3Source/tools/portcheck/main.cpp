@@ -1,6 +1,7 @@
 #include <ra3/common/ByteString.h>
 #include <ra3/common/Crc32.h>
 #include <ra3/math/Math.h>
+#include <ra3/sim/Random.h>
 
 #include <algorithm>
 #include <cstdint>
@@ -145,6 +146,22 @@ T objectFromBytes(const std::vector<std::uint8_t>& bytes)
     }
     std::memcpy(&value, bytes.data(), sizeof(value));
     return value;
+}
+
+ra3::sim::RandomState randomState(const std::vector<std::uint8_t>& bytes)
+{
+    ra3::sim::RandomState state{};
+    if (bytes.size() != sizeof(state)) {
+        throw std::invalid_argument("random state must contain six dwords");
+    }
+    std::memcpy(&state, bytes.data(), sizeof(state));
+    return state;
+}
+
+void printRandom(std::uint32_t result, const ra3::sim::RandomState& state)
+{
+    std::cout << result << ' ';
+    printHex(reinterpret_cast<const std::uint8_t*>(&state), sizeof(state));
 }
 
 }  // namespace
@@ -322,6 +339,21 @@ int main()
             std::memcpy(output, &a, sizeof(a));
             std::memcpy(output + sizeof(a), &b, sizeof(b));
             printHex(output, sizeof(output));
+        } else if (op == "rngstep") {
+            auto state = randomState(first);
+            printRandom(ra3::sim::nextRandom(state), state);
+        } else if (op == "rngseed") {
+            ra3::sim::RandomState state{};
+            ra3::sim::seedRandom(state, number(firstText));
+            printHex(reinterpret_cast<const std::uint8_t*>(&state), sizeof(state));
+        } else if (op == "rnglogic" || op == "rngclient") {
+            auto state = randomState(first);
+            const int low = std::stoi(secondText);
+            const int high = std::stoi(thirdText);
+            const int result = op == "rnglogic"
+                ? ra3::sim::logicRandomInteger(state, low, high)
+                : ra3::sim::clientRandomInteger(state, low, high);
+            printRandom(static_cast<std::uint32_t>(result), state);
         } else {
             std::cout << "error\n";
         }
