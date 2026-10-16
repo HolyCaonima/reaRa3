@@ -38,7 +38,7 @@ read `+0x14`、seek `+0x1C`、stored-size `+0x20`、absolute-offset `+0x28`。
 | `GameBigArchive` | 0x68 | next/file/header `+0x00/+0x04/+0x08`，内嵌 index `+0x0C`，archiveName `+0x18`，两个 64 位范围值 `+0x20/+0x28`，format `+0x30`，同步对象 `+0x38` |
 | `GameBigIndex` | 0x0C | header `+0x00`，entries `+0x04`，searchTable `+0x08` |
 | `GameBigSearchEntry` | 0x08 | byte-swapped DJB2 hash `+0x00`，目录记录指针 `+0x04` |
-| `GameBigFile` | 0x40 | archive `+0x00`，inflater/temp `+0x0C/+0x10`，dataOffset `+0x18`，storedSize `+0x20`，expandedSize `+0x28`，source/logical cursor `+0x30/+0x38` |
+| `GameBigFile` | 0x40 | archive `+0x00`，inflater/temp `+0x0C/+0x10`，dataOffset `+0x18`，logicalSize `+0x20`，compressedSize（明文为 0）`+0x28`，source/logical cursor `+0x30/+0x38` |
 
 `GameBigArchive +0x38` 的 0x30 字节只确认由 `0x00A21790` 初始化；具体同步原语名称仍未知。
 `+0x20/+0x28` 的语义由 open/read 的加法约束恢复为档案范围起点和流基址，尚未用运行
@@ -160,3 +160,35 @@ ABI 尚未经过原机调用桩验证，本轮不挂 Seek。
 Open、Close、AddArchiveFromFile 和 BuildSearchTable 本轮均不 hook。FindFirst 会分配
 0x110 字节游标；FindNext 还调用外部模式匹配器并写调用方结果对象，也留待游标与结果
 布局完整恢复后处理。
+
+## 8. 第三轮 ABI oracle 与安全边界
+
+`verify_big_lifecycle_abi.py` 在 Unicorn 中执行原始 clean 函数，并把虚表入口绑定到
+Python 桩。验证结果：
+
+- allocator `+0x04` 是
+  `thiscall(size, tag, 0, alignment, 0)`；Read 的临时缓冲调用为
+  `(0x8000, "rw::core::BigHandler::temp Z buf", 0, 4, 0)`。
+- allocator `+0x08` 是 `thiscall(size, tag, flags)`；FindFirst 使用
+  `(0x110, "BigHandler::FindStruct", 0)`，Open 的反汇编同样确认
+  `(0x40, "BigFileHandler", 0)`。
+- allocator `+0x0C` 是 `thiscall(pointer, 0)`。Close 依次调用 inflater 的 deleting
+  destructor `(1)`、释放临时缓冲、释放 0x40 文件对象。
+- archive file `+0x1C` 是 thiscall、6 个栈 dword、callee cleanup；`+0x14` 是
+  thiscall、5 个栈 dword、callee cleanup。参数的高层语义仍有 opaque 参数，端口不能
+  在证据不足时重新排序或省略。
+- acquire `0x00A216A0` 为 `thiscall(sync, timeoutPointer)`、`ret 4`；release
+  `0x00A21760` 为 sync 在 ECX 的 fastcall/plain `ret`。两者都是 `.text/clean`，
+  critical-section 路径已在 oracle 中执行。
+
+Open 的赋值序列纠正了第二轮字段命名：`+0x20` 是调用方看到的逻辑长度（压缩成员为
+解压长度），`+0x28` 是压缩源长度并兼作 compressed 标志（明文成员为 0）。
+`prepareGameBigFile` 已移植不分配的规范化、跨档案查找和 0x40 状态构造；
+`seekGameBigFile`、`closeGameBigFile` 与 Read bookkeeping 也已移植。
+
+本轮只挂 `bigseek` 和 `bigclose`，均为 `explicitOnly`。Seek shadow 在原调用前复制
+完整 0x40 状态，调用后比较返回值和全部字段；replace 通过已验证的 inflater
+destructor/free ABI。Close shadow 只能原样转发（原调用后对象已经释放），replace
+走已验证释放顺序。Open、Read、InflateRange 和枚举没有达到任务要求的真实压缩档案
+逐字节/完整状态 differential，因此没有挂钩；特别是不能把 `DecodedStream` 的
+Pimpl 当成游戏 0x70-byte inflater。

@@ -1,0 +1,12 @@
+address	status	owner	module	notes
+009f5db0	reversed	recon/bigfs3	io	GameBigHandler::close; original-vs-stub ABI oracle verifies inflater deleting destructor(1), allocator free(pointer,0) for temporary then 0x40 file; ra3::io::closeGameBigFile; explicit replace hook, shadow pass-through because original invalidates the object
+009f5e00	reversed	recon/bigfs3	io	GameBigHandler::seek; original-vs-stub reset and logical-only paths verified, ret 0x18; ra3::io::seekGameBigFile; explicit shadow/replace hook
+009f5eb0	reversed	recon/bigfs3	io	GameBigHandler::freeIfPresent; allocator free ABI confirmed as thiscall free(pointer,0)
+009f5f80	reversed	recon/bigfs3	io	GameBigHandler::open; corrected +0x20 logicalSize and +0x28 compressedSize semantics; ra3::io::prepareGameBigFile ports allocation-free path normalization/search/state construction; no hook pending full real-archive original oracle
+009f6280	reversed	recon/bigfs3	io	GameBigHandler::inflateRange; clean call boundary inspected; original Read ABI oracle binds it as an opaque clean stub; no hook pending exact 0x70 inflater-state differential
+009f63b0	reversed	recon/bigfs3	io	GameBigHandler::read; original-vs-stub oracle verifies archive seek thiscall+6 dwords, read thiscall+5 dwords and temporary alloc ABI; bookkeeping helper ported; no hook pending byte/state differential on compressed members
+009f65e0	reversed	recon/bigfs3	io	GameBigHandler::findFirst; original-vs-stub oracle verifies tagged allocator thiscall(size=0x110,tag,flags=0); no hook pending complete 0x110/result layout
+009f6670	reversed	recon/bigfs3	io	GameBigHandler::findNext; 0x110 cursor progression and result writes remain partial; not hooked
+009f7620	reversed	recon/bigfs3	io	rw::core::codec::RefpackInflate; 0x70 state machine remains represented by DecodedStream semantically, not game-layout compatible; exact state differential still required
+00a216a0	reversed	recon/bigfs3	io	archive synchronization acquire; clean thiscall(sync, timeout-pointer), ret 4, returns recursion count or -1/-2; original body executed on critical-section stub path
+00a21760	reversed	recon/bigfs3	io	archive synchronization release; clean fastcall sync in ECX, plain ret, returns decremented recursion count; original body executed on critical-section stub path
