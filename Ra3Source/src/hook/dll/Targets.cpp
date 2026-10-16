@@ -2,6 +2,7 @@
 
 #include <ra3/asset/NameHash.h>
 #include <ra3/common/ByteString.h>
+#include <ra3/io/GameBigLayout.h>
 #include <ra3/io/PathCompare.h>
 #include <ra3/io/RefPack.h>
 
@@ -38,6 +39,8 @@ TargetState g_decodeUtf8;
 TargetState g_encodeUtf8;
 TargetState g_decodeUtf8Advance;
 TargetState g_refPackProbe;
+TargetState g_bigFindHash;
+TargetState g_bigFindEntry;
 
 // ra3_1.0.game 0x009F72E0: one-shot RefPack decoder, returns the decoded size.
 using DecodeFunction = int(__stdcall*)(std::uint8_t*, const std::uint8_t*);
@@ -623,6 +626,110 @@ std::uint32_t __stdcall refPackProbe(const std::uint8_t* data)
     return game;
 }
 
+// ra3_1.0.game 0x009F6B90: read-only lookup in one archive's sorted hash table.
+using BigFindHashFunction = const std::uint8_t*(__thiscall*)(
+    const ra3::io::GameBigIndex*, const char*, int, int);
+
+const std::uint8_t* __fastcall bigFindHash(
+    const ra3::io::GameBigIndex* index,
+    void*,
+    const char* path,
+    int offsetWidth,
+    int sizeWidth)
+{
+    TargetState& state = g_bigFindHash;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        const std::uint8_t* ours =
+            ra3::io::findGameBigHashedEntry(index, path, offsetWidth, sizeWidth);
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const std::uint8_t* game = reinterpret_cast<BigFindHashFunction>(state.original)(
+        index, path, offsetWidth, sizeWidth);
+    const std::uint8_t* ours =
+        ra3::io::findGameBigHashedEntry(index, path, offsetWidth, sizeWidth);
+    if (game == ours) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        std::ostringstream detail;
+        detail << describeName(path, static_cast<std::uint32_t>(std::strlen(path)))
+               << " game=" << static_cast<const void*>(game)
+               << " ours=" << static_cast<const void*>(ours);
+        reportMismatch("bigfindhash", state, detail.str());
+    }
+    return game;
+}
+
+// ra3_1.0.game 0x009F6D00: read-only lookup by path or ordinal in one archive.
+using BigFindEntryFunction = const char*(__thiscall*)(
+    const ra3::io::GameBigIndex*,
+    const char*,
+    int,
+    std::uint64_t*,
+    std::uint64_t*,
+    const std::uint8_t**,
+    int*);
+
+const char* __fastcall bigFindEntry(
+    const ra3::io::GameBigIndex* index,
+    void*,
+    const char* path,
+    int entryOrdinal,
+    std::uint64_t* offsetOut,
+    std::uint64_t* sizeOut,
+    const std::uint8_t** recordCursor,
+    int* cursorOrdinal)
+{
+    TargetState& state = g_bigFindEntry;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        const char* result = ra3::io::findGameBigEntry(
+            index, path, entryOrdinal, offsetOut, sizeOut, recordCursor, cursorOrdinal);
+        state.matches.fetch_add(1, relaxed);
+        return result;
+    }
+
+    const std::uint64_t initialOffset = offsetOut != nullptr ? *offsetOut : 0;
+    const std::uint64_t initialSize = sizeOut != nullptr ? *sizeOut : 0;
+    const std::uint8_t* initialRecord = recordCursor != nullptr ? *recordCursor : nullptr;
+    const int initialCursor = cursorOrdinal != nullptr ? *cursorOrdinal : -1;
+    const char* game = reinterpret_cast<BigFindEntryFunction>(state.original)(
+        index, path, entryOrdinal, offsetOut, sizeOut, recordCursor, cursorOrdinal);
+
+    std::uint64_t ourOffset = initialOffset;
+    std::uint64_t ourSize = initialSize;
+    const std::uint8_t* ourRecord = initialRecord;
+    int ourCursor = initialCursor;
+    const char* ours = ra3::io::findGameBigEntry(
+        index,
+        path,
+        entryOrdinal,
+        offsetOut != nullptr ? &ourOffset : nullptr,
+        sizeOut != nullptr ? &ourSize : nullptr,
+        recordCursor != nullptr ? &ourRecord : nullptr,
+        cursorOrdinal != nullptr ? &ourCursor : nullptr);
+    const bool equal = game == ours
+        && (offsetOut == nullptr || *offsetOut == ourOffset)
+        && (sizeOut == nullptr || *sizeOut == ourSize)
+        && (recordCursor == nullptr || *recordCursor == ourRecord)
+        && (cursorOrdinal == nullptr || *cursorOrdinal == ourCursor);
+    if (equal) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        std::ostringstream detail;
+        detail << "path="
+               << (path == nullptr
+                       ? std::string("<ordinal>")
+                       : describeName(path, static_cast<std::uint32_t>(std::strlen(path))))
+               << " ordinal=" << entryOrdinal
+               << " game=" << static_cast<const void*>(game)
+               << " ours=" << static_cast<const void*>(ours);
+        reportMismatch("bigfindentry", state, detail.str());
+    }
+    return game;
+}
+
 }  // namespace
 
 const char* modeName(Mode mode)
@@ -737,6 +844,14 @@ const std::vector<Target>& targets()
          {0x8B, 0x54, 0x24, 0x04, 0x33, 0xC9, 0x8A, 0x2A,
           0x56, 0x33, 0xC0, 0x8A, 0x4A, 0x01, 0x0F, 0xB7},
          6, reinterpret_cast<void*>(&refPackProbe), &g_refPackProbe},
+        {"bigfindhash", 0x005F6B90,
+         {0x83, 0xEC, 0x14, 0x53, 0x55, 0x56, 0x33, 0xF6,
+          0x57, 0x8B, 0xE9, 0x89, 0x74, 0x24, 0x14, 0xE8},
+         5, reinterpret_cast<void*>(&bigFindHash), &g_bigFindHash, true},
+        {"bigfindentry", 0x005F6D00,
+         {0x83, 0xEC, 0x10, 0x8B, 0x44, 0x24, 0x28, 0x53,
+          0x55, 0x56, 0x8B, 0xE9, 0x83, 0xC9, 0xFF, 0x33},
+         7, reinterpret_cast<void*>(&bigFindEntry), &g_bigFindEntry, true},
     };
     return table;
 }

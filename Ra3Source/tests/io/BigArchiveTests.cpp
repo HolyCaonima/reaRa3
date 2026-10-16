@@ -4,8 +4,11 @@
 
 #include <ra3/core/ByteOrder.h>
 #include <ra3/io/BigArchive.h>
+#include <ra3/io/GameBigLayout.h>
 
+#include <algorithm>
 #include <cstring>
+#include <vector>
 
 using ra3::io::BigArchive;
 using ra3::test::BigLayout;
@@ -28,7 +31,7 @@ RA3_TEST(BigArchive_ReadsIndexTrailerAndData)
     RA3_CHECK(std::memcmp(big.trailer()->bytes.data(), "L280", 4) == 0);
     RA3_CHECK_EQ(big.trailer()->number, 280);
 
-    const ra3::io::BigEntry* entry = big.find("DATA/Static.BIN");
+    const ra3::io::BigEntry* entry = big.find("DATA\\Static.BIN");
     RA3_REQUIRE(entry != nullptr);
     auto data = big.read(*entry);
     RA3_REQUIRE_OK(data);
@@ -41,6 +44,7 @@ RA3_TEST(BigArchive_ReadsIndexTrailerAndData)
     RA3_REQUIRE_OK(range);
     RA3_CHECK_EQ(std::string(range.value().begin(), range.value().end()), std::string("ATI"));
     RA3_CHECK(!big.read(*entry, 5, 2).ok());
+    RA3_CHECK(big.find("data/static.bin") == nullptr);
     RA3_CHECK(big.find("data\\missing.bin") == nullptr);
 }
 
@@ -113,8 +117,52 @@ RA3_TEST(BigArchive_RejectsCorruptIndex)
     ra3::writeU32BE(reinterpret_cast<std::uint8_t*>(&outOfBounds[20]), 0x7FFFFFF0u);  // first entry size
     RA3_CHECK(!BigArchive::open(dir.write("bounds.big", outOfBounds)).ok());
 
-    std::string duplicate = buildBig({{"data\\a.bin", "A"}, {"DATA/A.BIN", "B"}});
+    std::string duplicate = buildBig({{"data\\a.bin", "A"}, {"DATA\\A.BIN", "B"}});
     RA3_CHECK(!BigArchive::open(dir.write("dup.big", duplicate)).ok());
 
     RA3_CHECK(!BigArchive::open(dir.write("tiny.big", "BIG4")).ok());
+}
+
+RA3_TEST(GameBigLayout_FindsEntriesByOrdinalAndHash)
+{
+    std::string bytes = buildBig({{"data\\alpha.bin", "AAAA"}, {"DATA\\Beta.bin", "BBBBB"}});
+    const auto* header = reinterpret_cast<const std::uint8_t*>(bytes.data());
+    const std::uint8_t* first = header + 16;
+    const char* firstName = reinterpret_cast<const char*>(first + 8);
+    const std::uint8_t* second = first + 8 + std::strlen(firstName) + 1;
+    const char* secondName = reinterpret_cast<const char*>(second + 8);
+
+    std::vector<ra3::io::GameBigSearchEntry> search = {
+        {ra3::io::hashGameBigPath(firstName), first},
+        {ra3::io::hashGameBigPath(secondName), second},
+    };
+    std::sort(search.begin(), search.end(), [](const auto& left, const auto& right) {
+        return left.hash < right.hash;
+    });
+    const ra3::io::GameBigIndex index{header, header, search.data()};
+
+    std::uint64_t offset = 0;
+    std::uint64_t size = 0;
+    const std::uint8_t* cursor = nullptr;
+    int ordinal = -1;
+    const char* byOrdinal =
+        ra3::io::findGameBigEntry(&index, nullptr, 1, &offset, &size, &cursor, &ordinal);
+    RA3_REQUIRE(byOrdinal != nullptr);
+    RA3_CHECK_EQ(std::string(byOrdinal), std::string("DATA\\Beta.bin"));
+    RA3_CHECK_EQ(size, std::uint64_t{5});
+    RA3_CHECK_EQ(ordinal, 1);
+    RA3_CHECK(cursor == second);
+
+    const char* byName =
+        ra3::io::findGameBigEntry(&index, "data\\BETA.BIN", 0, &offset, &size, nullptr, nullptr);
+    RA3_REQUIRE(byName != nullptr);
+    RA3_CHECK_EQ(std::string(byName), std::string("DATA\\Beta.bin"));
+    RA3_CHECK_EQ(size, std::uint64_t{5});
+
+    RA3_CHECK(
+        ra3::io::findGameBigEntry(
+            &index, "data/Beta.bin", 0, &offset, &size, nullptr, nullptr)
+        == nullptr);
+    RA3_CHECK_EQ(offset, std::uint64_t{0});
+    RA3_CHECK_EQ(size, std::uint64_t{0});
 }

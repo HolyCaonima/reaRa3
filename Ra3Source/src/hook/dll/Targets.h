@@ -36,6 +36,8 @@ struct Target {
     std::size_t stolenLength;
     void* replacement;
     TargetState* state;
+    // Targets that read game-owned layouts require an explicit key in config.
+    bool explicitOnly = false;
 };
 
 const std::vector<Target>& targets();

@@ -36,6 +36,7 @@ add_subdirectory(src/common)
 add_subdirectory(src/hook)
 
 if(RA3_BUILD_TOOLS)
+    add_subdirectory(tools/bigcheck)
     add_subdirectory(tools/ra3tool)
     add_subdirectory(tools/ra3inject)
     add_subdirectory(tools/portcheck)
