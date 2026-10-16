@@ -13,6 +13,7 @@ ra3_add_executable(ra3_unit_tests
         hook/HookTests.cpp
         io/ArchiveSetTests.cpp
         io/BigArchiveTests.cpp
+        io/PathCompareTests.cpp
         io/RefPackTests.cpp
         text/CsfTests.cpp
     DEPS

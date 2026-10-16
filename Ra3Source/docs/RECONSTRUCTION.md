@@ -97,7 +97,8 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [ ] asset 里程碑 2：流式 RefPack、重定位/导入表、全量深度校验 — 子 agent，分支 recon/asset2
 - [x] 注入可行性研究 → 路线 A 成立。hook 库、注入器、RefPack hook 已合并（主控重写跳转与补丁事务）；真实游戏 shadow 38/38 一致，replace 38/38 成功并正常进主菜单（docs/design/injection.md §5.4）。未覆盖：进入对局
 - [x] 路线 A 通用化：`src/hook/dll/Targets.cpp` 目标表，按目标开关 off/shadow/replace，全部或全不安装。第二个目标 namehash（0x00417DB0）实机 shadow 5579/5579、replace 5554/5554，两目标同时替换正常进主菜单
-- [ ] 下一批 hook 目标：RefPack 大小探测 0x009F74F0（需按原语义移植）、路径比较 0x009F3650 等已复刻叶函数；进入对局的实机覆盖
+- [x] 第三个 hook 目标 pathcompare（0x009F3650，`ra3::io::comparePathNames`，复刻非 stricmp 的排序）：实机 shadow 227,359/227,359，三目标同时 replace 正常进主菜单
+- [ ] 下一批 hook 目标：RefPack 大小探测 0x009F74F0（等 asset2 合并后按原语义移植）、hook 候选目录里的纯叶函数；进入对局的实机覆盖
 - [x] 资源类型目录与名称哈希 — 已合并（recon/types）。`asset_types.tsv` 266 个类型全部有名（9 个只在程序里出现的用 XSD 标识符反查）；instanceId = 转小写的 SuperFastHash 变体（0x00417DB0），typeId = 不转小写的同一算法；C++ `ra3/asset/NameHash.h`，`ra3tool streams` 全量 118,232 条两项 0 不等。typeHash 语义未知（docs/design/asset_types.md）
 - [ ] Ghidra 函数导出刷新（types agent 用 -Save 补建了 0x004B1C80 等，台账尚未收录）
 - [x] 模块归属工具 `tools/analysis/attribute_modules.py` → `module_estimates.tsv`：台账/虚表/64 KiB 邻近三级归属，留出验证虚表 4/4、邻近 35/38（92%）；仍未归属 26,050。模块映射已按新台账刷新。asset 的邻近估计（961，留出 1/2）偏粗，慎用

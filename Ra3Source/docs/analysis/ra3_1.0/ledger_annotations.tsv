@@ -1,5 +1,5 @@
 address	status	owner	module	notes
-009f3650	reversed	main	io	case-insensitive path compare; ra3::io::BigArchive::find
+009f3650	verified	main	io	case-insensitive path compare (game ordering, signed bytes); ra3::io::comparePathNames; live hook pathcompare shadow 227359/227359, replace 230337/230337 (injection.md 5.4)
 009f5a80	reversed	main	io	BigHandler cluster; ra3::io::BigArchive
 009f5af0	reversed	main	io	BigHandler::AddArchiveFromFile; ra3::io::ArchiveSet::mount
 009f5db0	reversed	main	io	BigHandler cluster; ra3::io::BigArchive

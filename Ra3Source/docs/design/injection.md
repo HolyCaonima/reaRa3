@@ -80,6 +80,11 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 |---|---|---|---|---|
 | `refpack` | `0x009F72E0` 一次性 RefPack 解码 | `int __stdcall (uint8_t* dest, const uint8_t* src)` | 5（`push ecx; mov ecx,[esp+0Ch]`） | `ra3::io::decompressRefPackPrefix` |
 | `namehash` | `0x00417DB0` 名称哈希 | `uint32_t __cdecl (const char*, uint32_t len, uint32_t seed, char finalize)` | 8（`push ebx/ebp/esi/edi; mov edi,[esp+14h]`） | `ra3::asset::hashName` |
+| `pathcompare` | `0x009F3650` 档案路径比较 | `int __cdecl (const char*, const char*)`，返回 -1/0/1 | 5（`push esi; mov esi,[esp+8]`） | `ra3::io::comparePathNames` |
+
+`Ra3Source/tools/analysis/disasm.py <VA> --hook-only` 从只读的可执行文件直接给出前 16 字节、
+stolen 长度（≥5 字节的最短整指令前缀）及其是否位置无关、返回形式（`ret` = cdecl，
+`ret N` = stdcall/thiscall）。
 
 新增目标：在 `Targets.cpp` 写一个与原函数同 ABI 的 hook（shadow 调原函数并比较，
 replace 只调我们的实现），在表里加一行 `{键, RVA, 前 16 字节, stolen 长度, hook,
@@ -109,7 +114,14 @@ RefPack hook 的签名是
 候选：它在 flag 0x01 时也直接读紧跟签名的大小字段，与 `readRefPackHeader` 不同，
 需要先在 io 里按原语义移植。
 
-### 4.4 收缩流程
+### 4.4 pathcompare
+
+原函数只在两边是大小写相反的字母时才调整左边字符的大小写，且按有符号字节比较，
+所以相等判定等于 ASCII 不分大小写，但排序与 `stricmp` 不同（`"z" > "_"`，而
+`"Z" < "_"`）。`comparePathNames` 原样复刻这一排序；`BigArchive::find` 用哈希表，
+只依赖相等判定，两者一致。shadow 的不一致记录两边字符串和返回值。
+
+### 4.5 收缩流程
 
 逐函数收缩流程固定为：
 
@@ -187,6 +199,8 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 3 | replace | `--wait-window`，进程出现约 3 秒 | `calls=38 matches=38 mismatches=0` | 原函数不再执行；主菜单正常渲染 |
 | 4 | 两目标 shadow | `--wait-window` | refpack 38/38；namehash `calls=5579 matches=5579 mismatches=0` | 加载期名称哈希全部一致（含运行时 C locale 假设） |
 | 5 | 两目标 replace | `--wait-window` | refpack 38/38；namehash 5554/5554 | 两个原函数都不再执行；完整主菜单正常渲染 |
+| 6 | 三目标 shadow | `--wait-window` | refpack 38/38；namehash 5573/5573；pathcompare `calls=227359 matches=227359 mismatches=0` | 路径比较（含排序怪癖）全部一致 |
+| 7 | 三目标 replace | `--wait-window` | refpack 38/38；namehash 5603/5603；pathcompare 230337/230337 | 三个原函数都不再执行；主菜单正常 |
 
 replace 模式下 `matches` 表示 Ra3Source 解码成功并把结果交给游戏。运行 3 的主菜单
 截图中字体、贴图和菜单框体完整；弹出的 "Failed to connect to servers" 是 GameSpy

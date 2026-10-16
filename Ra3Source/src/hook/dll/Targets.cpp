@@ -1,6 +1,7 @@
 #include "Targets.h"
 
 #include <ra3/asset/NameHash.h>
+#include <ra3/io/PathCompare.h>
 #include <ra3/io/RefPack.h>
 
 #include <cstring>
@@ -16,6 +17,7 @@ constexpr auto relaxed = std::memory_order_relaxed;
 
 TargetState g_refPack;
 TargetState g_nameHash;
+TargetState g_pathCompare;
 
 // ra3_1.0.game 0x009F72E0: one-shot RefPack decoder, returns the decoded size.
 using DecodeFunction = int(__stdcall*)(std::uint8_t*, const std::uint8_t*);
@@ -115,6 +117,30 @@ std::uint32_t __cdecl nameHash(const char* data, std::uint32_t length, std::uint
     return game;
 }
 
+// ra3_1.0.game 0x009F3650: archive path compare, returns -1/0/1.
+using CompareFunction = int(__cdecl*)(const char*, const char*);
+
+int __cdecl pathCompare(const char* a, const char* b)
+{
+    TargetState& state = g_pathCompare;
+    state.calls.fetch_add(1, relaxed);
+    const int ours = ra3::io::comparePathNames(a, b);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const int game = reinterpret_cast<CompareFunction>(state.original)(a, b);
+    if (game == ours) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch("pathcompare", state,
+                       describeName(a, static_cast<std::uint32_t>(std::strlen(a))) + " vs "
+                           + describeName(b, static_cast<std::uint32_t>(std::strlen(b)))
+                           + " game=" + std::to_string(game) + " ours=" + std::to_string(ours));
+    }
+    return game;
+}
+
 }  // namespace
 
 const char* modeName(Mode mode)
@@ -153,6 +179,10 @@ const std::vector<Target>& targets()
          {0x53, 0x55, 0x56, 0x57, 0x8B, 0x7C, 0x24, 0x14,
           0x85, 0xFF, 0x0F, 0x84, 0x1F, 0x01, 0x00, 0x00},
          8, reinterpret_cast<void*>(&nameHash), &g_nameHash},
+        {"pathcompare", 0x005F3650,
+         {0x56, 0x8B, 0x74, 0x24, 0x08, 0x57, 0x8B, 0x7C,
+          0x24, 0x10, 0x8D, 0x9B, 0x00, 0x00, 0x00, 0x00},
+         5, reinterpret_cast<void*>(&pathCompare), &g_pathCompare},
     };
     return table;
 }

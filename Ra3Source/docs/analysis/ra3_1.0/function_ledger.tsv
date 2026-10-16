@@ -29905,7 +29905,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009f3560	FUN_009f3560	.text	123		clean	unknown		unanalyzed	
 009f35e0	FUN_009f35e0	.text	36		clean	unknown		unanalyzed	
 009f3610	FUN_009f3610	.text	58		clean	unknown		unanalyzed	
-009f3650	FUN_009f3650	.text	109		clean	io	main	reversed	case-insensitive path compare; ra3::io::BigArchive::find
+009f3650	FUN_009f3650	.text	109		clean	io	main	verified	case-insensitive path compare (game ordering, signed bytes); ra3::io::comparePathNames; live hook pathcompare shadow 227359/227359, replace 230337/230337 (injection.md 5.4)
 009f36c0	FUN_009f36c0	.text	28		clean	unknown		unanalyzed	
 009f36e0	FUN_009f36e0	.text	51		clean	unknown		unanalyzed	
 009f3720	FUN_009f3720	.text	50		clean	unknown		unanalyzed	
