@@ -185,7 +185,7 @@ def main() -> int:
             "stolen_length": str(prologue.stolen_length) if prologue.decodable else "",
             "movable_prologue": str(prologue.position_independent).lower(),
             "expected16": prologue.expected16.hex(" "),
-            "existing_equivalent": meta["notes"],
+            "existing_equivalent": meta["notes"] or "-",
         }
         if base_ok and not internal and not external:
             row["tier"] = "1"
