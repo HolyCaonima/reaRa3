@@ -1,0 +1,121 @@
+RA3 module attribution report
+=============================
+ledger_rows	48985
+source_file_rows	191
+vtable_candidates	2977
+vtables_with_ledger_methods	2783
+project_text_anchors	331
+selected_neighbor_window	0x10000
+window_rule	largest candidate with >= 20 adjacent project-anchor pairs and >= 90% agreement
+
+adjacent_anchor_locality
+window	agree	total	rate
+0x400	80	82	97.6%
+0x800	110	114	96.5%
+0x1000	132	138	95.7%
+0x2000	156	166	94.0%
+0x4000	185	200	92.5%
+0x8000	203	219	92.7%
+0x10000	203	221	91.9%
+
+ledger_input_modules
+module	rows
+asset	9
+audio	7
+common	25
+core	13
+gameclient	28
+gamelogic	170
+io	31
+net	21
+render	25
+securom	7429
+thirdparty	776
+ui	2
+unknown	40449
+
+module_summary
+module	ledger	vtable	neighbor	total
+asset	9	0	952	961
+audio	7	90	123	220
+common	25	0	1214	1239
+core	13	0	856	869
+gameclient	28	0	1261	1289
+gamelogic	170	98	6937	7205
+io	31	29	421	481
+net	21	0	1081	1102
+render	25	99	783	907
+ui	2	0	455	457
+thirdparty	776	0	0	776
+securom	7429	0	0	7429
+unknown	0	0	0	26050
+reconciled_total	48985
+
+securom_by_estimated_module
+module	entry-lost	inner-patched	entry-recoverable	patched	total_affected
+asset	169	4	11	0	184
+audio	0	9	2	0	11
+common	12	17	2	1	32
+core	119	13	8	0	140
+gameclient	2	26	4	1	33
+gamelogic	77	109	19	2	207
+io	12	2	1	0	15
+net	165	22	25	3	215
+render	0	12	1	0	13
+ui	0	0	0	0	0
+thirdparty	0	5	0	0	5
+securom	0	2	0	0	2
+unknown	97	211	48	1	357
+all	653	432	121	8	1214
+
+holdout
+seed	0x524133
+fraction_per_module	20%
+held_out	67
+training_project_anchors	264
+evaluation_window	0x10000
+module	method	correct	predicted	held_out	precision	coverage
+asset	neighbor	1	2	2	50.0%	100.0%
+audio	neighbor	1	1	1	100.0%	100.0%
+common	neighbor	4	5	5	80.0%	100.0%
+core	neighbor	3	3	3	100.0%	100.0%
+gameclient	neighbor	4	4	4	100.0%	66.7%
+gameclient	unknown	0	0	2	n/a	0.0%
+gamelogic	neighbor	15	16	16	93.8%	47.1%
+gamelogic	unknown	0	0	18	n/a	0.0%
+io	vtable	4	4	4	100.0%	66.7%
+io	neighbor	2	2	2	100.0%	33.3%
+net	neighbor	3	3	3	100.0%	75.0%
+net	unknown	0	0	1	n/a	0.0%
+render	neighbor	2	2	2	100.0%	40.0%
+render	unknown	0	0	3	n/a	0.0%
+ui	unknown	0	0	1	n/a	0.0%
+all	vtable	4	4	4	100.0%	6.0%
+all	neighbor	35	38	38	92.1%	56.7%
+all	unknown	0	0	25	n/a	0.0%
+
+conflicts
+vtable_conflict_functions	964
+neighbor_tie_functions	7
+thirdparty_barrier_functions	20499
+vtable_modules:audio,core,gameclient,gamelogic,io,thirdparty	1
+vtable_modules:audio,core,gameclient,gamelogic,render,thirdparty	3
+vtable_modules:audio,core,gameclient,thirdparty	1
+vtable_modules:core,gameclient	44
+vtable_modules:core,gameclient,gamelogic,io,render,thirdparty	1
+vtable_modules:core,gameclient,gamelogic,render,thirdparty	2
+vtable_modules:core,gameclient,gamelogic,thirdparty	357
+vtable_modules:core,gameclient,thirdparty	3
+vtable_modules:core,gamelogic	50
+vtable_modules:core,gamelogic,io,thirdparty	2
+vtable_modules:core,gamelogic,render	1
+vtable_modules:core,gamelogic,thirdparty	3
+vtable_modules:core,thirdparty	148
+vtable_modules:gamelogic,io,thirdparty	1
+vtable_modules:gamelogic,render	1
+vtable_modules:gamelogic,thirdparty	346
+
+direct_calls
+recognized_E8_sites	123661
+targets_with_callers	21998
+note	E8 bytes are scanned in clean .text ledger ranges; counts are call sites, not disassembled instructions.
