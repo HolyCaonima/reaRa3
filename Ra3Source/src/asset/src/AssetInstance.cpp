@@ -135,7 +135,8 @@ Result<AssetInstance> AssetInstance::parse(
     const std::vector<AssetId>& references,
     std::string diagnosticName,
     std::uint64_t relocationMemberOffset,
-    std::uint64_t importsMemberOffset)
+    std::uint64_t importsMemberOffset,
+    AssetId id)
 {
     auto relocationTable = RelocationTable::parse(
         relocations, instance, diagnosticName + ".relo", relocationMemberOffset);
@@ -145,6 +146,7 @@ Result<AssetInstance> AssetInstance::parse(
     if (!importTable) return importTable.error();
     AssetInstance result;
     result.m_instance = instance;
+    result.m_id = id;
     result.m_diagnosticName = std::move(diagnosticName);
     result.m_relocations = std::move(relocationTable).value();
     result.m_imports = std::move(importTable).value();

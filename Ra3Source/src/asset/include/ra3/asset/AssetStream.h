@@ -52,6 +52,8 @@ struct DeepStreamValidation {
 // manifest!"). Validation decodes only those first 4 bytes, because a 32-bit
 // process cannot hold every decompressed .bin at once.
 std::vector<std::string> enumerateStreamStems(const io::ArchiveSet& archives);
+Result<Manifest> readStreamManifest(
+    const io::ArchiveSet& archives, std::string_view stem);
 Result<StreamValidation> validateStreamBundle(
     const io::ArchiveSet& archives, std::string_view stem);
 Result<DeepStreamValidation> validateStreamDeep(

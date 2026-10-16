@@ -5,10 +5,13 @@ ra3_add_module(asset
         include/ra3/asset/AssetStream.h
         include/ra3/asset/Manifest.h
         include/ra3/asset/NameHash.h
+        include/ra3/asset/TypedAsset.h
+        include/ra3/asset/types/GeneratedTypes.h
         src/AssetInstance.cpp
         src/AssetStream.cpp
         src/Manifest.cpp
         src/NameHash.cpp
+        src/TypedAsset.cpp
     PUBLIC_DEPS
         Ra3::core
         Ra3::io)

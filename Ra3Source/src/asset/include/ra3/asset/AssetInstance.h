@@ -60,9 +60,11 @@ public:
         const std::vector<AssetId>& references,
         std::string diagnosticName,
         std::uint64_t relocationMemberOffset = 0,
-        std::uint64_t importsMemberOffset = 0);
+        std::uint64_t importsMemberOffset = 0,
+        AssetId id = {});
 
     ByteView bytes() const { return m_instance; }
+    AssetId id() const { return m_id; }
     const RelocationTable& relocations() const { return m_relocations; }
     const ImportTable& imports() const { return m_imports; }
 
@@ -73,6 +75,7 @@ public:
 
 private:
     ByteView m_instance;
+    AssetId m_id;
     std::string m_diagnosticName;
     RelocationTable m_relocations;
     ImportTable m_imports;

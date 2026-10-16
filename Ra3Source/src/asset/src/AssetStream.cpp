@@ -212,6 +212,14 @@ std::vector<std::string> enumerateStreamStems(const io::ArchiveSet& archives)
     return {stems.begin(), stems.end()};
 }
 
+Result<Manifest> readStreamManifest(
+    const io::ArchiveSet& archives, std::string_view stem)
+{
+    auto bytes = readDecoded(archives, stem, ".manifest");
+    if (!bytes) return bytes.error();
+    return parseManifest(stem, bytes.value());
+}
+
 Result<StreamValidation> validateStreamBundle(
     const io::ArchiveSet& archives, std::string_view stem)
 {
