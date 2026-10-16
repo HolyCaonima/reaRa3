@@ -101,7 +101,10 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [x] 进入对局的实机覆盖：三目标 shadow 在遭遇战中 refpack 58/58、namehash 117,975/117,975、pathcompare 451,773/451,773；三目标 replace 同样进入对局并正常运行（injection.md §5.4 运行 8、9）
 - [ ] 下一批 hook 目标：RefPack 大小探测 0x009F74F0（等 asset2 合并后按原语义移植）、hook 候选目录里的纯叶函数
 - [x] 资源类型目录与名称哈希 — 已合并（recon/types）。`asset_types.tsv` 266 个类型全部有名（9 个只在程序里出现的用 XSD 标识符反查）；instanceId = 转小写的 SuperFastHash 变体（0x00417DB0），typeId = 不转小写的同一算法；C++ `ra3/asset/NameHash.h`，`ra3tool streams` 全量 118,232 条两项 0 不等。typeHash 语义未知（docs/design/asset_types.md）
-- [ ] Ghidra 函数导出刷新（types agent 用 -Save 补建了 0x004B1C80 等，台账尚未收录）
+- [x] Ghidra 函数导出刷新（随 hookcat 合并完成）
+- [x] 离线差分预言机 `tools/analysis/emulate.py`：用 unicorn 从磁盘映像执行单个 clean 叶函数（只映射 .text/.rdata/.data，SecuROM 节不映射），可把 IAT 槽绑到 Python 桩；namehash 随机 3000/3000 与参考实现一致，pathcompare 与单测一致
+- [ ] hook 移植第一批：从候选目录挑 12–25 个有重写价值的纯函数（哈希/CRC/字符串/位运算），逐个用预言机差分后接入目标表 — 子 agent，分支 recon/ports1，用 work/ghidra
+- [ ] BigHandler 档案文件系统：恢复管理器/档案/条目的内存布局与全局实例，把只读查找函数移植成在游戏自身结构上运行的 C++ 并接入 shadow — 子 agent，分支 recon/bigfs，用 Ghidra 副本 work/ghidra_bigfs
 - [x] 模块归属工具 `tools/analysis/attribute_modules.py` → `module_estimates.tsv`：台账/虚表/64 KiB 邻近三级归属，留出验证虚表 4/4、邻近 35/38（92%）；仍未归属 26,050。模块映射已按新台账刷新。asset 的邻近估计（961，留出 1/2）偏粗，慎用
 - [x] 虚表 → 类（recon/vclass，已合并）：没有 RTTI；164 个资源处理器是 5 槽接口（析构 / create / 原位复制 / destroy / 缺失原型解析），分属 3 个模板族（多态 119、单例设置 20、4 字节值 9）加少量特化；`classes.tsv` 3,126 行、805 条候选继承边（启发式）。注意 `vtables.tsv` 是“连续代码指针段”，相邻虚表会被合并（docs/design/class_map.md）
 - [ ] 精确虚表边界：用构造/析构写入点与直接虚调用重新切分 vtables.tsv 的连续段
