@@ -1,0 +1,20 @@
+address	status	owner	module	notes
+009f5af0	reversed	recon/bigfs2	io	GameBigHandler::addArchiveFromFile; allocator +0x08 allocates tagged 0x68-byte archive nodes, file object supplies header reads, optional 0x009F7130 table build; lifecycle port deferred because file-open ABI remains unverified
+009f5db0	reversed	recon/bigfs2	io	GameBigHandler::close; deleting-destroys optional 0x70-byte inflater, frees its temporary buffer through allocator +0x0C, then frees the 0x40-byte GameBigFile
+009f5e00	reversed	recon/bigfs2	io	GameBigHandler::seek; ra3::io::applyGameBigSeekState ports field transition; nonzero compressed seek changes logicalPosition only, zero/plain seek resets logicalPosition and sourcePosition and discards inflater/temp; null-inflater Unicorn vs C++ 1000/1000; hook deferred pending allocator ABI verification
+009f5e80	reversed	recon/bigfs2	io	GameBigHandler::storedSize; ra3::io::gameBigStoredSize; Unicorn vs C++ 1000/1000
+009f5e90	reversed	recon/bigfs2	io	GameBigHandler::absoluteDataOffset; archive.rangeBegin + file.dataOffset; ra3::io::gameBigAbsoluteDataOffset; Unicorn vs C++ 1000/1000
+009f5eb0	reversed	recon/bigfs2	io	GameBigHandler::freeIfPresent; calls allocator vtable +0x0C(ptr,0), returns whether pointer was non-null
+009f5f80	reversed	recon/bigfs2	io	GameBigHandler::open; strips case-sensitive big:, one leading slash, supports archive|path, searches mount order, probes RefPack, allocator +0x08 creates 0x40-byte GameBigFile; hook deferred because allocation/file I/O is not side-effect-free
+009f6280	reversed	recon/bigfs2	io	GameBigHandler::inflateRange; drives 0x70-byte rw::core::codec::RefpackInflate and archive file vtable read +0x14; semantics aligned with ra3::io::DecodedStream, game-layout replacement deferred
+009f63b0	reversed	recon/bigfs2	io	GameBigHandler::read; locks archive +0x38, seeks archive file through vtable +0x1C, reads stored or streamed RefPack data, advances source/logical positions; hook deferred because shadow cannot perform file I/O
+009f65e0	reversed	recon/bigfs2	io	GameBigHandler::findFirst; strips scheme through colon, allocates 0x110-byte cursor with allocator +0x08 and dispatches virtual findNext/free; hook deferred because it allocates
+009f6670	reversed	recon/bigfs2	io	GameBigHandler::findNext; advances {archive,ordinal,record,recordOrdinal}, canonicalizes backslashes to slashes, applies caller pattern matcher, fills result; state/output layout partly recovered, no hook
+009f6810	reversed	recon/bigfs2	io	Big::readBigEndian32; ra3::io::readGameBigEndian32; Unicorn vs C++ 1000/1000
+009f6880	reversed	recon/bigfs2	io	Big::readBigEndian64; ra3::io::readGameBigEndian64; Unicorn vs C++ 1000/1000
+009f6910	reversed	recon/bigfs2	io	Big::detectFormat; BIG=0 C0FB=1 Viv4=2 invalid=3; ra3::io::detectGameBigFormat; Unicorn vs C++ 1000/1000
+009f6990	reversed	recon/bigfs2	io	Big::hashPath; seed parameter, CRT lowercase DJB2 then byte swap; ra3::io::hashGameBigPath; Unicorn vs C++ 1000/1000
+009f6a50	reversed	recon/bigfs2	io	Big::headerSize; ra3::io::gameBigHeaderSize; Unicorn vs C++ 1000/1000
+009f6aa0	reversed	recon/bigfs2	io	Big::entryCount; ra3::io::gameBigEntryCount; Unicorn vs C++ 1000/1000
+009f6b00	reversed	recon/bigfs2	io	Big::trailerSize; letter plus three digits, writes decimal tag and returns 8 else writes 0; ra3::io::gameBigTrailerSize; Unicorn vs C++ 1000/1000
+009f7130	reversed	recon/bigfs2	io	Big::buildSearchTable; allocator +0x08 allocates count*8, fills byte-swapped hash/record pairs through ordinal lookup, qsort unsigned hash; no hook because allocation/qsort mutates index

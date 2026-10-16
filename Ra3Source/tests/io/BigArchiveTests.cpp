@@ -166,3 +166,40 @@ RA3_TEST(GameBigLayout_FindsEntriesByOrdinalAndHash)
     RA3_CHECK_EQ(offset, std::uint64_t{0});
     RA3_CHECK_EQ(size, std::uint64_t{0});
 }
+
+RA3_TEST(GameBigLayout_MatchesHeaderHelpersAndSeekState)
+{
+    const std::uint8_t be[] = {0x12, 0x34, 0x56, 0x78, 0x9A};
+    RA3_CHECK_EQ(ra3::io::readGameBigEndian32(be, 3), std::uint32_t{0x123456});
+    RA3_CHECK_EQ(ra3::io::readGameBigEndian32(be, 5), std::uint32_t{0});
+    RA3_CHECK_EQ(ra3::io::readGameBigEndian64(be, 5), std::uint64_t{0x123456789A});
+
+    std::array<std::uint8_t, 32> header{};
+    std::memcpy(header.data(), "BIG4", 4);
+    ra3::writeU32BE(header.data() + 8, 7);
+    ra3::writeU32BE(header.data() + 12, static_cast<std::uint32_t>(header.size()));
+    std::memcpy(header.data() + 24, "L280", 4);
+    const ra3::io::GameBigIndex index{header.data(), header.data(), nullptr};
+    RA3_CHECK(
+        ra3::io::detectGameBigFormat(header.data()) == ra3::io::GameBigFormat::big);
+    RA3_CHECK_EQ(ra3::io::gameBigHeaderSize(header.data()), 32);
+    RA3_CHECK_EQ(ra3::io::gameBigEntryCount(&index), std::uint32_t{7});
+    int trailerNumber = -1;
+    RA3_CHECK_EQ(ra3::io::gameBigTrailerSize(&index, &trailerNumber), 8);
+    RA3_CHECK_EQ(trailerNumber, 280);
+
+    ra3::io::GameBigFile file{};
+    file.dataOffset = 100;
+    file.expandedSize = 1000;
+    file.sourcePosition = 123;
+    file.inflater = reinterpret_cast<void*>(1);
+    file.temporaryBuffer = reinterpret_cast<void*>(2);
+    RA3_CHECK(!ra3::io::applyGameBigSeekState(&file, 25));
+    RA3_CHECK_EQ(file.logicalPosition, std::uint64_t{25});
+    RA3_CHECK_EQ(file.sourcePosition, std::uint64_t{123});
+    RA3_CHECK(ra3::io::applyGameBigSeekState(&file, 0));
+    RA3_CHECK_EQ(file.logicalPosition, std::uint64_t{0});
+    RA3_CHECK_EQ(file.sourcePosition, std::uint64_t{100});
+    RA3_CHECK(file.inflater == nullptr);
+    RA3_CHECK(file.temporaryBuffer == nullptr);
+}

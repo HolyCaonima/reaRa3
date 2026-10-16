@@ -41,6 +41,15 @@ TargetState g_decodeUtf8Advance;
 TargetState g_refPackProbe;
 TargetState g_bigFindHash;
 TargetState g_bigFindEntry;
+TargetState g_bigReadBe32;
+TargetState g_bigReadBe64;
+TargetState g_bigDetectFormat;
+TargetState g_bigHashPath;
+TargetState g_bigHeaderSize;
+TargetState g_bigEntryCount;
+TargetState g_bigTrailerSize;
+TargetState g_bigStoredSize;
+TargetState g_bigAbsoluteOffset;
 
 // ra3_1.0.game 0x009F72E0: one-shot RefPack decoder, returns the decoded size.
 using DecodeFunction = int(__stdcall*)(std::uint8_t*, const std::uint8_t*);
@@ -730,6 +739,166 @@ const char* __fastcall bigFindEntry(
     return game;
 }
 
+void recordScalar64(
+    const char* key, TargetState& state, std::uint64_t game, std::uint64_t ours)
+{
+    if (game == ours) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        try {
+            std::ostringstream detail;
+            detail << std::hex << std::uppercase << "game=0x" << game << " ours=0x" << ours;
+            reportMismatch(key, state, detail.str());
+        } catch (...) {
+            state.mismatches.fetch_add(1, relaxed);
+        }
+    }
+}
+
+std::uint32_t __cdecl bigReadBe32(const std::uint8_t* bytes, int width)
+{
+    TargetState& state = g_bigReadBe32;
+    state.calls.fetch_add(1, relaxed);
+    const std::uint32_t ours = ra3::io::readGameBigEndian32(bytes, width);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const auto game = reinterpret_cast<std::uint32_t(__cdecl*)(const std::uint8_t*, int)>(
+        state.original)(bytes, width);
+    recordScalar("bigreadbe32", state, game, ours);
+    return game;
+}
+
+std::uint64_t __cdecl bigReadBe64(const std::uint8_t* bytes, int width)
+{
+    TargetState& state = g_bigReadBe64;
+    state.calls.fetch_add(1, relaxed);
+    const std::uint64_t ours = ra3::io::readGameBigEndian64(bytes, width);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const auto game = reinterpret_cast<std::uint64_t(__cdecl*)(const std::uint8_t*, int)>(
+        state.original)(bytes, width);
+    recordScalar64("bigreadbe64", state, game, ours);
+    return game;
+}
+
+std::uint32_t __cdecl bigDetectFormat(const std::uint8_t* header)
+{
+    TargetState& state = g_bigDetectFormat;
+    state.calls.fetch_add(1, relaxed);
+    const auto ours = static_cast<std::uint32_t>(ra3::io::detectGameBigFormat(header));
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const auto game = reinterpret_cast<std::uint32_t(__cdecl*)(const std::uint8_t*)>(
+        state.original)(header);
+    recordScalar("bigformat", state, game, ours);
+    return game;
+}
+
+std::uint32_t __cdecl bigHashPath(const char* path, std::uint32_t seed)
+{
+    TargetState& state = g_bigHashPath;
+    state.calls.fetch_add(1, relaxed);
+    const std::uint32_t ours = ra3::io::hashGameBigPath(path, seed);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const auto game = reinterpret_cast<std::uint32_t(__cdecl*)(const char*, std::uint32_t)>(
+        state.original)(path, seed);
+    recordScalar("bighashpath", state, game, ours);
+    return game;
+}
+
+int __cdecl bigHeaderSize(const std::uint8_t* header)
+{
+    TargetState& state = g_bigHeaderSize;
+    state.calls.fetch_add(1, relaxed);
+    const int ours = ra3::io::gameBigHeaderSize(header);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const int game =
+        reinterpret_cast<int(__cdecl*)(const std::uint8_t*)>(state.original)(header);
+    recordScalar("bigheadersize", state, static_cast<std::uint32_t>(game),
+                 static_cast<std::uint32_t>(ours));
+    return game;
+}
+
+std::uint32_t __fastcall bigEntryCount(
+    const ra3::io::GameBigIndex* index, void*)
+{
+    TargetState& state = g_bigEntryCount;
+    state.calls.fetch_add(1, relaxed);
+    const std::uint32_t ours = ra3::io::gameBigEntryCount(index);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const auto game = reinterpret_cast<std::uint32_t(__thiscall*)(
+        const ra3::io::GameBigIndex*)>(state.original)(index);
+    recordScalar("bigentrycount", state, game, ours);
+    return game;
+}
+
+int __fastcall bigTrailerSize(
+    const ra3::io::GameBigIndex* index, void*, int* numberOut)
+{
+    TargetState& state = g_bigTrailerSize;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        const int result = ra3::io::gameBigTrailerSize(index, numberOut);
+        state.matches.fetch_add(1, relaxed);
+        return result;
+    }
+    int expectedNumber = *numberOut;
+    const int ours = ra3::io::gameBigTrailerSize(index, &expectedNumber);
+    const int game = reinterpret_cast<int(__thiscall*)(
+        const ra3::io::GameBigIndex*, int*)>(state.original)(index, numberOut);
+    if (game == ours && *numberOut == expectedNumber) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch("bigtrailersize", state, "size or trailer number differs");
+    }
+    return game;
+}
+
+std::uint64_t __stdcall bigStoredSize(const ra3::io::GameBigFile* file)
+{
+    TargetState& state = g_bigStoredSize;
+    state.calls.fetch_add(1, relaxed);
+    const std::uint64_t ours = ra3::io::gameBigStoredSize(file);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const auto game = reinterpret_cast<std::uint64_t(__stdcall*)(
+        const ra3::io::GameBigFile*)>(state.original)(file);
+    recordScalar64("bigstoredsize", state, game, ours);
+    return game;
+}
+
+std::uint64_t __stdcall bigAbsoluteOffset(const ra3::io::GameBigFile* file)
+{
+    TargetState& state = g_bigAbsoluteOffset;
+    state.calls.fetch_add(1, relaxed);
+    const std::uint64_t ours = ra3::io::gameBigAbsoluteDataOffset(file);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const auto game = reinterpret_cast<std::uint64_t(__stdcall*)(
+        const ra3::io::GameBigFile*)>(state.original)(file);
+    recordScalar64("bigabsoluteoffset", state, game, ours);
+    return game;
+}
+
 }  // namespace
 
 const char* modeName(Mode mode)
@@ -844,6 +1013,42 @@ const std::vector<Target>& targets()
          {0x8B, 0x54, 0x24, 0x04, 0x33, 0xC9, 0x8A, 0x2A,
           0x56, 0x33, 0xC0, 0x8A, 0x4A, 0x01, 0x0F, 0xB7},
          6, reinterpret_cast<void*>(&refPackProbe), &g_refPackProbe},
+        {"bigreadbe32", 0x005F6810,
+         {0x8B, 0x44, 0x24, 0x08, 0x83, 0xF8, 0x01, 0x75,
+          0x08, 0x8B, 0x44, 0x24, 0x04, 0x0F, 0xB6, 0x00},
+         7, reinterpret_cast<void*>(&bigReadBe32), &g_bigReadBe32},
+        {"bigreadbe64", 0x005F6880,
+         {0x53, 0x8B, 0x5C, 0x24, 0x0C, 0x56, 0x57, 0x33,
+          0xF6, 0x33, 0xFF, 0x33, 0xC9, 0x85, 0xDB, 0x7E},
+         5, reinterpret_cast<void*>(&bigReadBe64), &g_bigReadBe64},
+        {"bigformat", 0x005F6910,
+         {0x53, 0x55, 0x56, 0x8B, 0x74, 0x24, 0x10, 0x0F,
+          0xB6, 0x4E, 0x01, 0x0F, 0xB6, 0x5E, 0x02, 0x57},
+         7, reinterpret_cast<void*>(&bigDetectFormat), &g_bigDetectFormat},
+        {"bighashpath", 0x005F6990,
+         {0x53, 0x8B, 0x1D, 0xD4, 0xA4, 0xBB, 0x00, 0x56,
+          0x57, 0x8B, 0x7C, 0x24, 0x10, 0x0F, 0xB6, 0x07},
+         7, reinterpret_cast<void*>(&bigHashPath), &g_bigHashPath},
+        {"bigheadersize", 0x005F6A50,
+         {0x56, 0x8B, 0x74, 0x24, 0x08, 0x57, 0x56, 0x33,
+          0xFF, 0xE8, 0xB2, 0xFE, 0xFF, 0xFF, 0x83, 0xC4},
+         5, reinterpret_cast<void*>(&bigHeaderSize), &g_bigHeaderSize},
+        {"bigentrycount", 0x005F6AA0,
+         {0x56, 0x8B, 0xF1, 0x8B, 0x46, 0x04, 0x57, 0x50,
+          0x33, 0xFF, 0xE8, 0x61, 0xFE, 0xFF, 0xFF, 0x83},
+         6, reinterpret_cast<void*>(&bigEntryCount), &g_bigEntryCount, true},
+        {"bigtrailersize", 0x005F6B00,
+         {0x53, 0x56, 0x8B, 0x31, 0x56, 0xE8, 0x46, 0xFF,
+          0xFF, 0xFF, 0x8A, 0x4C, 0x30, 0xF8, 0x8D, 0x44},
+         5, reinterpret_cast<void*>(&bigTrailerSize), &g_bigTrailerSize, true},
+        {"bigstoredsize", 0x005F5E80,
+         {0x8B, 0x4C, 0x24, 0x04, 0x8B, 0x41, 0x20, 0x8B,
+          0x51, 0x24, 0xC2, 0x04, 0x00, 0xCC, 0xCC, 0xCC},
+         7, reinterpret_cast<void*>(&bigStoredSize), &g_bigStoredSize, true},
+        {"bigabsoluteoffset", 0x005F5E90,
+         {0x8B, 0x4C, 0x24, 0x04, 0x8B, 0x11, 0x8B, 0x42,
+          0x20, 0x03, 0x41, 0x18, 0x8B, 0x52, 0x24, 0x13},
+         6, reinterpret_cast<void*>(&bigAbsoluteOffset), &g_bigAbsoluteOffset, true},
         {"bigfindhash", 0x005F6B90,
          {0x83, 0xEC, 0x14, 0x53, 0x55, 0x56, 0x33, 0xF6,
           0x57, 0x8B, 0xE9, 0x89, 0x74, 0x24, 0x14, 0xE8},

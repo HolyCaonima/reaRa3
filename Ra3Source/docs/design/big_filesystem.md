@@ -118,3 +118,45 @@ SecuROM section。`bigcheck Data\Misc.big` 对同一批 2207 个 C++ 用例作�
   本轮 live shadow 的有效覆盖应以 BIG4 为准。
 - live shadow 应在窗口出现后尽早注入，并走到主菜单和一次遭遇战加载，以覆盖初始
   资源流、地图和对局资源查找；长时间运行与并发加载仍需单独观察。
+
+## 7. 生命周期与第二批端口
+
+`GameBigHandler +0x1C` 是带虚表的 rw::core allocator。BigHandler clean 路径确认：
+`+0x08` 为带标签分配（`GameBigFile` 0x40、`GameBigArchive` 0x68、枚举游标 0x110、
+搜索表 `count*8`），`+0x0C` 为 `free(pointer, 0)`；`+0x04` 只用于 RefPack 临时缓冲
+的另一种分配入口。具体接口声明在 `GameBigLayout.h`，未知槽不命名。
+
+`GameBigArchive +0x04` 是 rw::core 文件对象。`Read` 只确认其虚表 `+0x14` 为 read、
+`+0x1C` 为绝对 seek；完整文件接口的其余槽和打开/关闭所有权仍未知。档案内
+`+0x38` 的 0x30 字节对象由 `0x00A21790` 初始化：前 0x18 字节兼容
+`CRITICAL_SECTION`/mutex handle，`+0x20` 是递归计数，`+0x24` 的字节选择
+critical-section 路径，`0x00A216A0/0x00A21760` 分别 acquire/release。析构路径和
+`+0x28` 的精确意义未恢复，因此代码仍把它保留为 opaque 0x30 字节。
+
+第二批公开了并离线差分验证以下无副作用端口：
+
+| VA | Ra3Source | Unicorn vs C++ | hook |
+|---|---|---:|---|
+| `0x009F6810` | `readGameBigEndian32` | 1000/1000 | `bigreadbe32` |
+| `0x009F6880` | `readGameBigEndian64` | 1000/1000 | `bigreadbe64` |
+| `0x009F6910` | `detectGameBigFormat` | 1000/1000 | `bigformat` |
+| `0x009F6990` | `hashGameBigPath(path, seed)` | 1000/1000 | `bighashpath` |
+| `0x009F6A50` | `gameBigHeaderSize` | 1000/1000 | `bigheadersize` |
+| `0x009F6AA0` | `gameBigEntryCount` | 1000/1000 | `bigentrycount`（显式） |
+| `0x009F6B00` | `gameBigTrailerSize` | 1000/1000 | `bigtrailersize`（显式） |
+| `0x009F5E80` | `gameBigStoredSize` | 1000/1000 | `bigstoredsize`（显式） |
+| `0x009F5E90` | `gameBigAbsoluteDataOffset` | 1000/1000 | `bigabsoluteoffset`（显式） |
+
+`applyGameBigSeekState` 精确实现 `0x009F5E00` 的字段转换（null-inflater
+Unicorn vs C++ 1000/1000），但不释放 inflater/temp。
+非零压缩流 seek 只改逻辑游标；零位置或 stored 路径把逻辑游标清零、物理游标设为
+`dataOffset + position`，并要求调用者销毁 inflater、释放临时缓冲。由于 allocator
+ABI 尚未经过原机调用桩验证，本轮不挂 Seek。
+
+`Read` 先获取档案锁、通过文件对象 seek/read，再走 stored 直接读取或 0x70 字节
+`RefpackInflate`。后者字段状态机与 `DecodedStream` 的 16/128 KiB 滑窗语义一致，
+但对象 ABI 不兼容，不能把 STL/Pimpl 对象放进游戏的 0x70 字节内存。shadow 不能进行
+第二次文件 I/O，replace 又依赖未验证的文件/allocator ABI，因此 Read、InflateRange、
+Open、Close、AddArchiveFromFile 和 BuildSearchTable 本轮均不 hook。FindFirst 会分配
+0x110 字节游标；FindNext 还调用外部模式匹配器并写调用方结果对象，也留待游标与结果
+布局完整恢复后处理。

@@ -101,6 +101,15 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `utf8next` | `0x00A284B0` UTF-8 解码并前移 | cdecl | 6 | `ra3::common::decodeUtf8AndAdvance` | live verified |
 | `bigfindhash` | `0x009F6B90` 单档案哈希表查找 | thiscall | 5 | `ra3::io::findGameBigHashedEntry` | live verified（shadow；replace 时唯一调用者已被替换）; 仅显式键启用 |
 | `bigfindentry` | `0x009F6D00` 单档案路径/序号查找 | thiscall | 7 | `ra3::io::findGameBigEntry` | live verified; 仅显式键启用 |
+| `bigreadbe32` | `0x009F6810` 变宽大端 32 位读取 | cdecl | 7 | `ra3::io::readGameBigEndian32` | offline-verified, live pending |
+| `bigreadbe64` | `0x009F6880` 变宽大端 64 位读取 | cdecl | 5 | `ra3::io::readGameBigEndian64` | offline-verified, live pending |
+| `bigformat` | `0x009F6910` BIG/C0FB/Viv4 格式判别 | cdecl | 7 | `ra3::io::detectGameBigFormat` | offline-verified, live pending |
+| `bighashpath` | `0x009F6990` BIG 路径 hash | cdecl | 7 | `ra3::io::hashGameBigPath` | offline-verified, live pending |
+| `bigheadersize` | `0x009F6A50` 目录头长度 | cdecl | 5 | `ra3::io::gameBigHeaderSize` | offline-verified, live pending |
+| `bigentrycount` | `0x009F6AA0` 目录条目数 | thiscall | 6 | `ra3::io::gameBigEntryCount` | offline-verified, live pending；仅显式键启用 |
+| `bigtrailersize` | `0x009F6B00` 目录尾标识 | thiscall | 5 | `ra3::io::gameBigTrailerSize` | offline-verified, live pending；仅显式键启用 |
+| `bigstoredsize` | `0x009F5E80` 文件 stored size | stdcall | 7 | `ra3::io::gameBigStoredSize` | offline-verified, live pending；仅显式键启用 |
+| `bigabsoluteoffset` | `0x009F5E90` 文件绝对数据偏移 | stdcall | 6 | `ra3::io::gameBigAbsoluteDataOffset` | offline-verified, live pending；仅显式键启用 |
 
 上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节
@@ -112,6 +121,10 @@ stolen 长度（≥5 字节的最短整指令前缀）及其是否位置无关�
 
 读取游戏自有布局的 `bigfindhash`、`bigfindentry` 默认关闭，不继承全局 `mode`；
 必须在配置中显式写出对应键。这样仅启用既有 `refpack` 的集成测试日志不会出现新目标。
+同样，`bigentrycount`、`bigtrailersize`、`bigstoredsize`、`bigabsoluteoffset` 读取游戏
+对象，也只认显式键；其余五个只读调用方缓冲的纯函数继承全局模式。第二批 9 个目标的
+expected16 均从发行文件读取，stolen 前缀位置无关且没有后向边落入前缀；每个目标经
+Unicorn 与 `bigcheck --stdio` 对 1000 例比较，均为 0 mismatch。
 
 新增目标：在 `Targets.cpp` 写一个与原函数同 ABI 的 hook（shadow 调原函数并比较，
 replace 只调我们的实现），在表里加一行 `{键, RVA, 前 16 字节, stolen 长度, hook,

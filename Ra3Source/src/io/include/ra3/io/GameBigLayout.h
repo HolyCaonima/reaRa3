@@ -6,6 +6,39 @@
 
 namespace ra3::io {
 
+enum class GameBigFormat : std::uint32_t {
+    big = 0,
+    c0fb = 1,
+    viv4 = 2,
+    invalid = 3
+};
+
+// rw::core allocator interface used through GameBigHandler +0x1C. The first
+// slot is not identified; +0x08 allocates tagged blocks and +0x0C frees them.
+struct GameAllocatorVtable {
+    void* unknown00;
+    void* allocateTemporary;
+    void* allocateTagged;
+    void* freeTagged;
+};
+
+struct GameAllocator {
+    const GameAllocatorVtable* vtable;
+};
+
+// The archive file object is an rw::core file implementation. BigHandler uses
+// virtual read +0x14 and seek +0x1C; the other slots remain deliberately opaque.
+struct GameArchiveFileVtable {
+    std::array<void*, 5> unknown00;
+    void* read;
+    void* unknown18;
+    void* seek;
+};
+
+struct GameArchiveFile {
+    const GameArchiveFileVtable* vtable;
+};
+
 // ra3_1.0.game 0x009F7130 / 0x009F6B90.
 struct GameBigSearchEntry {
     std::uint32_t hash;
@@ -23,7 +56,7 @@ struct GameBigIndex {
 // 0x009F5A80. Only fields observed in the clean BigHandler cluster are named.
 struct GameBigArchive {
     GameBigArchive* next;
-    void* file;
+    GameArchiveFile* file;
     std::uint8_t* ownedHeader;
     GameBigIndex index;
     const char* archiveName;
@@ -43,7 +76,7 @@ struct GameBigHandler {
     GameBigArchive* head;
     GameBigArchive* tail;
     std::uint32_t archiveCount;
-    void* allocator;
+    GameAllocator* allocator;
 };
 
 // File object allocated by ra3_1.0.game 0x009F5F80. Its virtual operations are
@@ -69,16 +102,42 @@ static_assert(offsetof(GameBigIndex, searchTable) == 0x08);
 static_assert(sizeof(GameBigArchive) == 0x68);
 static_assert(offsetof(GameBigArchive, index) == 0x0C);
 static_assert(offsetof(GameBigArchive, archiveName) == 0x18);
+static_assert(offsetof(GameBigArchive, rangeBegin) == 0x20);
+static_assert(offsetof(GameBigArchive, streamBase) == 0x28);
 static_assert(offsetof(GameBigArchive, format) == 0x30);
+static_assert(offsetof(GameBigArchive, synchronization) == 0x38);
 static_assert(sizeof(GameBigHandler) == 0x20);
 static_assert(offsetof(GameBigHandler, head) == 0x10);
 static_assert(offsetof(GameBigHandler, archiveCount) == 0x18);
+static_assert(offsetof(GameBigHandler, allocator) == 0x1C);
 static_assert(sizeof(GameBigFile) == 0x40);
+static_assert(offsetof(GameBigFile, inflater) == 0x0C);
 static_assert(offsetof(GameBigFile, dataOffset) == 0x18);
+static_assert(offsetof(GameBigFile, storedSize) == 0x20);
+static_assert(offsetof(GameBigFile, expandedSize) == 0x28);
+static_assert(offsetof(GameBigFile, sourcePosition) == 0x30);
 static_assert(offsetof(GameBigFile, logicalPosition) == 0x38);
 
+// ra3_1.0.game 0x009F6810 / 0x009F6880.
+std::uint32_t readGameBigEndian32(const std::uint8_t* bytes, int width) noexcept;
+std::uint64_t readGameBigEndian64(const std::uint8_t* bytes, int width) noexcept;
+
+// ra3_1.0.game 0x009F6910 / 0x009F6A50 / 0x009F6AA0 / 0x009F6B00.
+GameBigFormat detectGameBigFormat(const std::uint8_t* header) noexcept;
+int gameBigHeaderSize(const std::uint8_t* header) noexcept;
+std::uint32_t gameBigEntryCount(const GameBigIndex* index) noexcept;
+int gameBigTrailerSize(const GameBigIndex* index, int* numberOut) noexcept;
+
 // ra3_1.0.game 0x009F6990. The returned DJB2 value is byte-swapped.
-std::uint32_t hashGameBigPath(const char* path) noexcept;
+std::uint32_t hashGameBigPath(const char* path, std::uint32_t seed = 0x1505) noexcept;
+
+// ra3_1.0.game 0x009F5E80 / 0x009F5E90.
+std::uint64_t gameBigStoredSize(const GameBigFile* file) noexcept;
+std::uint64_t gameBigAbsoluteDataOffset(const GameBigFile* file) noexcept;
+
+// State-only part of ra3_1.0.game 0x009F5E00. Returns true when the caller must
+// destroy inflater and release temporaryBuffer after applying the transition.
+bool applyGameBigSeekState(GameBigFile* file, std::uint64_t position) noexcept;
 
 // ra3_1.0.game 0x009F6B90. Returns the start of an entry record or nullptr.
 const std::uint8_t* findGameBigHashedEntry(
