@@ -2,11 +2,13 @@ ra3_add_module(io
     SOURCES
         include/ra3/io/ArchiveSet.h
         include/ra3/io/BigArchive.h
+        include/ra3/io/GameBigLayout.h
         include/ra3/io/PathCompare.h
         include/ra3/io/ReadOnlyFile.h
         include/ra3/io/RefPack.h
         src/ArchiveSet.cpp
         src/BigArchive.cpp
+        src/GameBigLayout.cpp
         src/PathCompare.cpp
         src/ReadOnlyFile.cpp
         src/RefPack.cpp

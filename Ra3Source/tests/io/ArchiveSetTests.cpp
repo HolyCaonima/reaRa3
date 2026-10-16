@@ -30,7 +30,7 @@ RA3_TEST(ArchiveSet_FirstMountedArchiveWins)
     RA3_REQUIRE_OK(mounted);
     const ArchiveSet& set = mounted.value();
 
-    const auto shared = set.find("DATA/Shared.ini");
+    const auto shared = set.find("DATA\\Shared.ini");
     RA3_REQUIRE(shared.has_value());
     RA3_CHECK_EQ(contentOf(*shared), std::string("patched"));
 

@@ -31,7 +31,9 @@ public:
 
     const std::vector<BigArchive>& archives() const { return m_archives; }
 
-    // The copy the game opens: the first archive, in mount order, holding `path`.
+    // The copy the game opens: the first archive, in mount order, holding
+    // `path`. This high-level API canonicalizes '/' to the game's '\' input;
+    // GameBigLayout and BigArchive preserve the low-level separator semantics.
     std::optional<Location> find(std::string_view path) const;
 
     // Every archive containing `path`, in mount order.

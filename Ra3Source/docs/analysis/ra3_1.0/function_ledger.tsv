@@ -977,7 +977,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0043c254	FUN_0043c254	.text	11		clean	unknown		unanalyzed	
 0043c3fc	FUN_0043c3fc	.text	10		clean	unknown		unanalyzed	
 0043c510	FUN_0043c510	.text	13		clean	unknown		unanalyzed	
-0043c630	FUN_0043c630	.text	158	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset		unanalyzed	
+0043c630	FUN_0043c630	.text	158	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset	recon/layout2	reversed	ReloDetokenizers.h:127 unknown-polymorphic fatal cleanup; releases an object with an optional +8 allocation
 0043c8aa	FUN_0043c8aa	.text	11		clean	unknown		unanalyzed	
 0043c8b5	FUN_0043c8b5	.text	10		clean	unknown		unanalyzed	
 0043cbd0	FUN_0043cbd0	.text	42		clean	unknown		unanalyzed	
@@ -1231,9 +1231,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004477b0	thunk_FUN_029d0000	.text	6		entry-lost	unknown		unanalyzed	
 00447870	thunk_FUN_01984510	.text	6		entry-lost	unknown		unanalyzed	
 004479e0	FUN_004479e0	.text	911	Libraries\Source\assetmanager\Stream\ResourceManagerFileStream.cpp	clean	asset	main	reversed	ResourceManagerFileStream.cpp: opens .imp/.relo/.bin, compares leading u32 with the manifest stream checksum; ra3::asset::validateStreamBundle, AssetStream::loadDecoded
-00447d70	FUN_00447d70	.text	86		clean	unknown		unanalyzed	
+00447d70	FUN_00447d70	.text	86		clean	asset	recon/layout2	reversed	ResourceManagerFileStream record callback; validates record count, allocates count*0x30 and delegates stream opening/checksum validation to 0x004479E0
 00447dd0	thunk_FUN_02830000	.text	6		entry-lost	unknown		unanalyzed	
-00447e30	FUN_00447e30	.text	177		clean	unknown		unanalyzed	
+00447e30	FUN_00447e30	.text	177		clean	asset	recon/layout2	reversed	walks 12-byte typed fixup descriptors, converts descriptor-relative offsets with the instance base and dispatches EvaEvent/special typed fixups
 00448070	thunk_FUN_01977380	.text	6		entry-recoverable	unknown		unanalyzed	
 00448170	thunk_FUN_01984a00	.text	6		entry-lost	unknown		unanalyzed	
 004482a0	thunk_FUN_0197f700	.text	6		entry-recoverable	unknown		unanalyzed	
@@ -1440,7 +1440,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0045d960	thunk_FUN_0197c220	.text	6		entry-recoverable	unknown		unanalyzed	
 0045d9f0	thunk_FUN_01980520	.text	6		entry-lost	unknown		unanalyzed	
 0045e570	thunk_FUN_01977f20	.text	6		entry-lost	unknown		unanalyzed	
-0045e9a0	FUN_0045e9a0	.text	158	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset		unanalyzed	
+0045e9a0	FUN_0045e9a0	.text	158	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset	recon/layout2	reversed	ReloDetokenizers.h:127 unknown-polymorphic fatal cleanup; releases the +4/+8 allocations and owner
 0045f0f0	thunk_FUN_019808e0	.text	6		entry-lost	unknown		unanalyzed	
 0045f240	thunk_FUN_019782e0	.text	6		entry-lost	unknown		unanalyzed	
 0045f367	FUN_0045f367	.text	55		clean	unknown		unanalyzed	
@@ -1641,7 +1641,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00475d90	FUN_00475d90	.text	170		clean	unknown		unanalyzed	
 00475e3a	FUN_00475e3a	.text	498		clean	unknown		unanalyzed	
 00476af0	thunk_FUN_01973fd0	.text	6		entry-lost	unknown		unanalyzed	
-00477510	FUN_00477510	.text	135	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset		unanalyzed	
+00477510	FUN_00477510	.text	135	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset	recon/layout2	reversed	ReloDetokenizers.h:127 unknown-polymorphic fatal cleanup wrapper; invokes thunk 0x01985B70 then releases owner
 004775a0	FUN_004775a0	.text	56		clean	unknown		unanalyzed	
 004775e0	FUN_004775e0	.text	56		clean	unknown		unanalyzed	
 00477620	FUN_00477620	.text	56		clean	unknown		unanalyzed	
@@ -1657,7 +1657,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004778a0	FUN_004778a0	.text	56		clean	unknown		unanalyzed	
 004778e0	FUN_004778e0	.text	56		clean	unknown		unanalyzed	
 00477920	FUN_00477920	.text	56		clean	unknown		unanalyzed	
-00477a50	FUN_00477a50	.text	135	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset		unanalyzed	
+00477a50	FUN_00477a50	.text	135	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset	recon/layout2	reversed	ReloDetokenizers.h:127 unknown-polymorphic fatal cleanup wrapper; invokes thunk 0x01D6D000 then releases owner
 00477ae0	thunk_FUN_01d6c000	.text	6		entry-lost	unknown		unanalyzed	
 00477d90	thunk_FUN_019815f0	.text	6		entry-lost	unknown		unanalyzed	
 00477de0	thunk_FUN_024c0000	.text	6		entry-lost	unknown		unanalyzed	
@@ -2199,7 +2199,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004c9e50	FUN_004c9e50	.text	6		clean	unknown		unanalyzed	
 004c9e60	thunk_FUN_019754a0	.text	6		entry-lost	unknown		unanalyzed	
 004c9e80	thunk_FUN_01979eb0	.text	6		entry-lost	unknown		unanalyzed	
-004c9ea0	FUN_004c9ea0	.text	146		clean	unknown	recon/hookcat	reversed	hook candidate: 定长字节序列三路比较（-1/0/1）
+004c9ea0	FUN_004c9ea0	.text	146		clean	common	recon/ports1	verified	fixed-length unsigned byte comparison returning -1/0/1; ra3::common::compareBytes; emulator 2006/2006 (earlier: hook candidate: 定长字节序列三路比较（-1/0/1）); live shadow 269853/269853, replace 257685 calls in a skirmish (injection.md 5.4 runs 12-13)
 004c9f80	thunk_FUN_01982b40	.text	6		entry-lost	unknown		unanalyzed	
 004c9fe0	thunk_FUN_028b0000	.text	6		entry-lost	unknown		unanalyzed	
 004ca010	FUN_004ca010	.text	31		clean	unknown		unanalyzed	
@@ -2255,8 +2255,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004cb260	FUN_004cb260	.text	14		inner-patched	unknown		unanalyzed	
 004cb280	thunk_FUN_0197e460	.text	6		entry-lost	unknown		unanalyzed	
 004cb2a0	FUN_004cb2a0	.text	246	Libraries\Source\string\UnicodeString.cpp	clean	core		unanalyzed	
-004cb3a0	FUN_004cb3a0	.text	90		clean	unknown		unanalyzed	
-004cb400	FUN_004cb400	.text	85		clean	unknown	recon/hookcat	reversed	hook candidate: 比较两个带 16 位长度前缀的字节串
+004cb3a0	FUN_004cb3a0	.text	90		clean	common	recon/ports1	verified	compare uint16-length-prefixed bytes to a C string; ra3::common::compareLengthPrefixedToCString; emulator 2006/2006; live shadow 3434/3434, replace 3434 calls in a skirmish (injection.md 5.4 runs 12-13)
+004cb400	FUN_004cb400	.text	85		clean	common	recon/ports1	verified	compare two uint16-length-prefixed byte strings; ra3::common::compareLengthPrefixed; emulator 2006/2006 (earlier: hook candidate: 比较两个带 16 位长度前缀的字节串); live shadow 9022/9022, replace 9341 calls in a skirmish (injection.md 5.4 runs 12-13)
 004cb460	thunk_FUN_019830e0	.text	6		entry-lost	unknown		unanalyzed	
 004cb4c0	thunk_FUN_01975ab0	.text	6		entry-lost	unknown		unanalyzed	
 004cb520	thunk_FUN_01975a90	.text	6		entry-lost	unknown		unanalyzed	
@@ -11071,11 +11071,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00673800	FUN_00673800	.text	307		clean	unknown		unanalyzed	
 00673940	FUN_00673940	.text	220		clean	unknown		unanalyzed	
 00673a20	FUN_00673a20	.text	44		clean	unknown		unanalyzed	
-00673a50	FUN_00673a50	.text	1089		clean	unknown		unanalyzed	
+00673a50	FUN_00673a50	.text	1089		clean	asset	recon/layout2	reversed	FXParticleSystemTemplate runtime conversion; reads serialized module pointers at +0x80..+0xA4 and switches on concrete typeId tokens including B96643FF/75CD18B3
 00673ea0	FUN_00673ea0	.text	161	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00673f50	FUN_00673f50	.text	144		clean	unknown		unanalyzed	
 00673fe0	FUN_00673fe0	.text	158		clean	unknown		unanalyzed	
-00674080	FUN_00674080	.text	594		clean	unknown		unanalyzed	
+00674080	FUN_00674080	.text	594		clean	asset	recon/layout2	reversed	FXParticleSystemTemplate runtime constructor; retains serialized block and calls 0x00673A50 to construct polymorphic runtime modules
 006742e0	FUN_006742e0	.text	212		clean	unknown		unanalyzed	
 006743c0	FUN_006743c0	.text	314	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00674500	FUN_00674500	.text	85		clean	unknown		unanalyzed	
@@ -28728,7 +28728,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b0300	FUN_009b0300	.text	224		clean	unknown		unanalyzed	
 009b03e0	FUN_009b03e0	.text	43		clean	unknown		unanalyzed	
 009b0410	FUN_009b0410	.text	293	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-009b0540	FUN_009b0540	.text	131		clean	unknown		unanalyzed	
+009b0540	FUN_009b0540	.text	131		clean	asset	recon/layout2	reversed	W3D animation channel factory; 60D8CF69=AnimationChannelTimecoded and 77F97305=AnimationChannelDelta, allocates 0x34/0x38 runtime objects
 009b05d0	FUN_009b05d0	.text	98		clean	unknown		unanalyzed	
 009b0640	FUN_009b0640	.text	393		clean	unknown		unanalyzed	
 009b07d0	FUN_009b07d0	.text	448	SageRender\source\Sage\Render\Core.cpp	clean	render		unanalyzed	
@@ -28738,7 +28738,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b1100	FUN_009b1100	.text	236		clean	unknown		unanalyzed	
 009b1200	FUN_009b1200	.text	56		clean	unknown		unanalyzed	
 009b1310	FUN_009b1310	.text	636		clean	unknown		unanalyzed	
-009b15a0	FUN_009b15a0	.text	267		clean	unknown		unanalyzed	
+009b15a0	FUN_009b15a0	.text	267		clean	asset	recon/layout2	reversed	W3DAnimation runtime constructor; iterates relocated channel pointer array and calls 0x009B0540 for each tokenized channel
 009b16b0	FUN_009b16b0	.text	137		clean	unknown		unanalyzed	
 009b1740	FUN_009b1740	.text	63		clean	unknown		unanalyzed	
 009b1780	FUN_009b1780	.text	335		clean	unknown		unanalyzed	
@@ -29900,16 +29900,16 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009f2cf0	FUN_009f2cf0	.text	1692		clean	unknown		unanalyzed	
 009f3430	FUN_009f3430	.text	24		clean	unknown		unanalyzed	
 009f3450	FUN_009f3450	.text	29		clean	unknown		unanalyzed	
-009f3470	FUN_009f3470	.text	59		clean	unknown		unanalyzed	
-009f34b0	FUN_009f34b0	.text	67		clean	unknown		unanalyzed	
-009f3500	FUN_009f3500	.text	86		clean	unknown		unanalyzed	
-009f3560	FUN_009f3560	.text	123		clean	unknown		unanalyzed	
-009f35e0	FUN_009f35e0	.text	36		clean	unknown		unanalyzed	
-009f3610	FUN_009f3610	.text	58		clean	unknown		unanalyzed	
+009f3470	FUN_009f3470	.text	59		clean	common	recon/ports1	verified	copy at most count bytes without padding; ra3::common::copyStringLimited; emulator 2008/2008; live shadow 245/245, replace 245 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f34b0	FUN_009f34b0	.text	67		clean	common	recon/ports1	verified	append at most count bytes and terminate when needed; ra3::common::appendStringLimited; emulator 2007/2007; live shadow 3/3, replace 3 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f3500	FUN_009f3500	.text	86		clean	common	recon/ports1	verified	signed-byte string compare with limit; ra3::common::compareStringsLimited; emulator 2008/2008; live shadow 14688/14688, replace 14688 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f3560	FUN_009f3560	.text	123		clean	common	recon/ports1	verified	opposite-case ASCII string compare with limit and signed ordering; ra3::common::compareStringsCaseInsensitiveLimited; emulator 2008/2008; live shadow 15575/15575, replace 15576 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f35e0	FUN_009f35e0	.text	36		clean	common	recon/ports1	verified	NUL-terminated byte string copy; ra3::common::copyString; emulator 2007/2007; live shadow 115/115, replace 115 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f3610	FUN_009f3610	.text	58		clean	common	recon/ports1	verified	NUL-terminated signed-byte string compare; ra3::common::compareStrings; emulator 2007/2007; live shadow 1/1, replace 1 calls in a skirmish (injection.md 5.4 runs 12-13)
 009f3650	FUN_009f3650	.text	109		clean	io	main	verified	case-insensitive path compare (game ordering, signed bytes); ra3::io::comparePathNames; live hook pathcompare shadow 227359/227359, replace 230337/230337 (injection.md 5.4)
-009f36c0	FUN_009f36c0	.text	28		clean	unknown		unanalyzed	
-009f36e0	FUN_009f36e0	.text	51		clean	unknown		unanalyzed	
-009f3720	FUN_009f3720	.text	50		clean	unknown		unanalyzed	
+009f36c0	FUN_009f36c0	.text	28		clean	common	recon/ports1	verified	NUL-terminated byte string length; ra3::common::stringLength; emulator 2007/2007; live shadow 355818/355818, replace 416274 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f36e0	FUN_009f36e0	.text	51		clean	common	recon/ports1	verified	copy while folding ASCII A-Z; ra3::common::copyStringLowercase; emulator 2007/2007; live shadow 207/207, replace 207 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f3720	FUN_009f3720	.text	50		clean	common	recon/ports1	reversed	find last byte including the NUL terminator; ra3::common::findLastCharacter; emulator 2007/2007
 009f3760	FUN_009f3760	.text	304		clean	unknown		unanalyzed	
 009f38a0	FUN_009f38a0	.text	20		clean	unknown		unanalyzed	
 009f38c0	FUN_009f38c0	.text	21		clean	unknown		unanalyzed	
@@ -29923,7 +29923,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009f3d70	FUN_009f3d70	.text	159		clean	unknown		unanalyzed	
 009f3e10	FUN_009f3e10	.text	170		clean	unknown		unanalyzed	
 009f3ec0	FUN_009f3ec0	.text	69		clean	unknown		unanalyzed	
-009f3f10	FUN_009f3f10	.text	45		clean	unknown		unanalyzed	
+009f3f10	FUN_009f3f10	.text	45		clean	common	recon/ports1	reversed	widen unsigned bytes to uint16; ra3::common::widenBytes; emulator 2007/2007
 009f3f40	FUN_009f3f40	.text	311		clean	unknown		unanalyzed	
 009f4080	FUN_009f4080	.text	244		clean	unknown		unanalyzed	
 009f4180	FUN_009f4180	.text	361		clean	unknown		unanalyzed	
@@ -29959,37 +29959,37 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009f5990	FUN_009f5990	.text	114		clean	unknown		unanalyzed	
 009f5a10	FUN_009f5a10	.text	43		clean	unknown		unanalyzed	
 009f5a40	FUN_009f5a40	.text	26		clean	unknown		unanalyzed	
-009f5a60	FUN_009f5a60	.text	31		clean	unknown		unanalyzed	
-009f5a80	FUN_009f5a80	.text	101		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f5af0	FUN_009f5af0	.text	704		clean	io	main	reversed	BigHandler::AddArchiveFromFile; ra3::io::ArchiveSet::mount
-009f5db0	FUN_009f5db0	.text	71		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f5e00	FUN_009f5e00	.text	128		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f5e80	FUN_009f5e80	.text	13		clean	unknown		unanalyzed	
-009f5e90	FUN_009f5e90	.text	21		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f5eb0	FUN_009f5eb0	.text	31		clean	unknown		unanalyzed	
-009f5ed0	FUN_009f5ed0	.text	105		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f5f40	FUN_009f5f40	.text	43		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f5f70	FUN_009f5f70	.text	11		clean	unknown		unanalyzed	
-009f5f80	FUN_009f5f80	.text	768		clean	io	main	reversed	open file: first archive in list wins; ra3::io::ArchiveSet::find
-009f6280	FUN_009f6280	.text	299		clean	unknown		unanalyzed	
-009f63b0	FUN_009f63b0	.text	545		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f65e0	FUN_009f65e0	.text	137		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f6670	FUN_009f6670	.text	352		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f67e0	FUN_009f67e0	.text	36		clean	unknown		unanalyzed	
-009f6810	FUN_009f6810	.text	100		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f6880	FUN_009f6880	.text	58		clean	unknown		unanalyzed	
-009f68c0	FUN_009f68c0	.text	72		clean	unknown		unanalyzed	
-009f6910	FUN_009f6910	.text	119		clean	io	main	reversed	archive format check (BIG4/BIGF/Viv4/C0FB); ra3::io::BigArchive::open
-009f6990	FUN_009f6990	.text	97		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f6a20	FUN_009f6a20	.text	35		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f6a50	FUN_009f6a50	.text	79		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f6aa0	FUN_009f6aa0	.text	87		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f6b00	FUN_009f6b00	.text	134		clean	io	main	reversed	header trailer test; ra3::io::parseBigTrailer
-009f6b90	FUN_009f6b90	.text	357		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f6d00	FUN_009f6d00	.text	763		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f7000	FUN_009f7000	.text	297		clean	unknown		unanalyzed	
-009f7130	FUN_009f7130	.text	143		clean	io	main	reversed	BigHandler cluster; ra3::io::BigArchive
-009f71d0	FUN_009f71d0	.text	61		clean	unknown		unanalyzed	
+009f5a60	FUN_009f5a60	.text	31		clean	io	recon/bigfs	reversed	BigHandlerBase::~BigHandlerBase deleting destructor; vtable 0x00C69404
+009f5a80	FUN_009f5a80	.text	101		clean	io	recon/bigfs	reversed	GameBigArchive::GameBigArchive; initializes 0x68-byte archive node (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f5af0	FUN_009f5af0	.text	704		clean	io	recon/bigfs	reversed	BigHandler::AddArchiveFromFile; opens header, appends archive node, optionally builds search table (earlier: BigHandler::AddArchiveFromFile; ra3::io::ArchiveSet::mount)
+009f5db0	FUN_009f5db0	.text	71		clean	io	recon/bigfs	reversed	BigHandler::Close; destroys inflater/temp buffer and 0x40-byte GameBigFile (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f5e00	FUN_009f5e00	.text	128		clean	io	recon/bigfs	reversed	BigHandler::Seek; updates source/logical 64-bit positions and resets inflater when needed (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f5e80	FUN_009f5e80	.text	13		clean	io	recon/bigfs	reversed	BigHandler::GetStoredSize; returns GameBigFile +0x20
+009f5e90	FUN_009f5e90	.text	21		clean	io	recon/bigfs	reversed	BigHandler::GetAbsoluteDataOffset; archive rangeBegin plus file dataOffset (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f5eb0	FUN_009f5eb0	.text	31		clean	io	recon/bigfs	reversed	BigHandler::FreeIfPresent; allocator-backed release helper
+009f5ed0	FUN_009f5ed0	.text	105		clean	io	recon/bigfs	reversed	BigFindState::BigFindState; canonicalizes backslashes to slashes for enumeration (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f5f40	FUN_009f5f40	.text	43		clean	io	recon/bigfs	reversed	BigHandler::BigHandler; 0x20-byte base layout, list at +0x10 (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f5f70	FUN_009f5f70	.text	11		clean	io	recon/bigfs	reversed	BigHandler::~BigHandler non-deleting destructor
+009f5f80	FUN_009f5f80	.text	768		clean	io	recon/bigfs	reversed	BigHandler::Open; parses big: and archive qualifier, first mounted archive wins, allocates GameBigFile (earlier: open file: first archive in list wins; ra3::io::ArchiveSet::find)
+009f6280	FUN_009f6280	.text	299		clean	io	recon/bigfs	reversed	BigHandler::InflateRange; streaming RefPack read helper
+009f63b0	FUN_009f63b0	.text	545		clean	io	recon/bigfs	reversed	BigHandler::Read; raw or RefPack-backed read into caller buffer (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f65e0	FUN_009f65e0	.text	137		clean	io	recon/bigfs	reversed	BigHandler::FindFirst; allocates find state and dispatches first enumeration result (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f6670	FUN_009f6670	.text	352		clean	io	recon/bigfs	reversed	BigHandler::FindNext; advances archive/entry cursor and fills find result (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f67e0	FUN_009f67e0	.text	36		clean	io	recon/bigfs	reversed	BigHandler deleting destructor
+009f6810	FUN_009f6810	.text	100		clean	io	recon/bigfs	reversed	Big::ReadBigEndian32; reads one to four bytes (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f6880	FUN_009f6880	.text	58		clean	io	recon/bigfs	reversed	Big::ReadBigEndian64; reads variable-width big-endian integer
+009f68c0	FUN_009f68c0	.text	72		clean	io	recon/bigfs	reversed	Viv::HashPath; case-sensitive byte-swapped DJB2
+009f6910	FUN_009f6910	.text	119		clean	io	recon/bigfs	reversed	Big::DetectFormat; BIG=0 C0FB=1 Viv4=2 invalid=3 (earlier: archive format check (BIG4/BIGF/Viv4/C0FB); ra3::io::BigArchive::open)
+009f6990	FUN_009f6990	.text	97		clean	io	recon/bigfs	reversed	Big::HashPath; CRT-tolower byte-swapped DJB2 seed 0x1505; ra3::io::hashGameBigPath (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f6a20	FUN_009f6a20	.text	35		clean	io	recon/bigfs	reversed	Big::Index::Index; 0x0C-byte header/entries/search-table view (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f6a50	FUN_009f6a50	.text	79		clean	io	recon/bigfs	reversed	Big::HeaderSize; format-dependent header extent (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f6aa0	FUN_009f6aa0	.text	87		clean	io	recon/bigfs	reversed	Big::EntryCount; format-dependent entry count (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f6b00	FUN_009f6b00	.text	134		clean	io	recon/bigfs	reversed	Big::TrailerSize; recognizes letter plus three digits and returns 8 (earlier: header trailer test; ra3::io::parseBigTrailer)
+009f6b90	FUN_009f6b90	.text	357		clean	io	recon/bigfs	verified	Big::FindHashedEntry; read-only binary search; ra3::io::findGameBigHashedEntry; Unicorn 883 cases match (earlier: BigHandler cluster; ra3::io::BigArchive); live shadow 4632/4632, replace 0 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f6d00	FUN_009f6d00	.text	763		clean	io	recon/bigfs	verified	Big::FindEntry; read-only path/ordinal lookup and out parameters; ra3::io::findGameBigEntry; Unicorn 1324 cases match (earlier: BigHandler cluster; ra3::io::BigArchive); live shadow 2632475/2632475, replace 2694051 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f7000	FUN_009f7000	.text	297		clean	io	recon/bigfs	reversed	Viv::FindByHash; linear 16-byte-record lookup
+009f7130	FUN_009f7130	.text	143		clean	io	recon/bigfs	reversed	Big::BuildSearchTable; allocates hash/record pairs and qsorts by unsigned hash (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f71d0	FUN_009f71d0	.text	61		clean	io	recon/bigfs	reversed	Viv::FindEntry; hashes optional path then delegates to Viv::FindByHash
 009f7210	FUN_009f7210	.text	48		clean	unknown		unanalyzed	
 009f7240	FUN_009f7240	.text	15		clean	unknown		unanalyzed	
 009f7250	FUN_009f7250	.text	17		clean	unknown		unanalyzed	
@@ -30636,11 +30636,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a28150	FUN_00a28150	.text	186		clean	unknown		unanalyzed	
 00a28210	FUN_00a28210	.text	56		clean	unknown		unanalyzed	
 00a28250	FUN_00a28250	.text	58		clean	unknown		unanalyzed	
-00a28290	FUN_00a28290	.text	59		clean	unknown		unanalyzed	
-00a282d0	FUN_00a282d0	.text	116		clean	unknown		unanalyzed	
-00a28350	FUN_00a28350	.text	124		clean	unknown		unanalyzed	
+00a28290	FUN_00a28290	.text	59		clean	common	recon/ports1	verified	lowercase ASCII FNV-1a with signed high bytes and low-word sentinel; ra3::common::hashLowercaseFnv1a; emulator 2007/2007; live shadow 45542/45542, replace 45796 calls in a skirmish (injection.md 5.4 runs 12-13)
+00a282d0	FUN_00a282d0	.text	116		clean	common	recon/ports1	reversed	permissive one-to-four-byte UTF-8 decoder; ra3::common::decodeUtf8; emulator 2010/2010
+00a28350	FUN_00a28350	.text	124		clean	common	recon/ports1	reversed	legacy one-to-four-byte UTF-8 encoder; ra3::common::encodeUtf8; emulator 2010/2010
 00a283d0	FUN_00a283d0	.text	216		clean	unknown		unanalyzed	
-00a284b0	FUN_00a284b0	.text	152		clean	unknown		unanalyzed	
+00a284b0	FUN_00a284b0	.text	152		clean	common	recon/ports1	verified	permissive UTF-8 decode and advance; ra3::common::decodeUtf8AndAdvance; emulator 2010/2010; live shadow 414/414, replace 414 calls in a skirmish (injection.md 5.4 runs 12-13)
 00a28550	FUN_00a28550	.text	110		clean	unknown		unanalyzed	
 00a285c0	FUN_00a285c0	.text	126		clean	unknown		unanalyzed	
 00a28640	FUN_00a28640	.text	56		clean	unknown		unanalyzed	

@@ -24,6 +24,7 @@ from typing import BinaryIO, Iterable
 from build_asset_type_table import (
     ARCHIVES, ENTRY, HEADER, big_entries, read_member, refpack,
 )
+from asset_name_hash import type_id
 
 
 XS = "{http://www.w3.org/2001/XMLSchema}"
@@ -56,7 +57,9 @@ class SourceField:
     max_occurs: int | None = 1
     anonymous: "TypeDef | None" = None
     pipeline_only: bool = False
+    by_value: bool = False
     choice: bool = False
+    choice_group: int = 0
 
 
 @dataclass
@@ -64,6 +67,7 @@ class TypeDef:
     name: str
     simple: bool = False
     base: str = ""
+    tag: str = ""
     enum: bool = False
     enum_values: list[tuple[str, int]] = field(default_factory=list)
     list_item: str = ""
@@ -84,6 +88,7 @@ class LayoutField:
     type_name: str
     child: "Layout | None" = None
     item: "Layout | None" = None
+    alternatives: list["Layout"] = field(default_factory=list)
 
 
 @dataclass
@@ -109,8 +114,9 @@ class SchemaModel:
         self.substitutions: dict[str, list[str]] = defaultdict(list)
         self.duplicates: set[str] = set()
         self._anonymous_id = 0
-        self._layout_cache: dict[tuple[str, bool], Layout] = {}
-        self._loading: set[tuple[str, bool]] = set()
+        self._choice_id = 0
+        self._layout_cache: dict[tuple[str, bool, bool], Layout] = {}
+        self._loading: set[tuple[str, bool, bool]] = set()
         self._load()
 
     def _load(self) -> None:
@@ -146,9 +152,11 @@ class SchemaModel:
     @staticmethod
     def _signature(item: TypeDef) -> tuple:
         return (
-            item.simple, item.base, item.enum, tuple(item.enum_values), item.list_item,
+            item.simple, item.base, item.tag, item.enum,
+            tuple(item.enum_values), item.list_item,
             tuple((f.name, f.type_name, f.is_element, f.min_occurs,
-                   f.max_occurs, f.pipeline_only, f.choice) for f in item.fields),
+                   f.max_occurs, f.pipeline_only, f.by_value, f.choice)
+                  for f in item.fields),
         )
 
     def _parse_simple(self, node: ET.Element, path: Path) -> TypeDef:
@@ -162,6 +170,7 @@ class SchemaModel:
         listing = node.find(XS + "list")
         if restriction is not None:
             item.base = local(restriction.get("base"))
+            item.tag = local(restriction.get(XAS + "tag"))
             item.enum = restriction.find(XS + "enumeration") is not None
             next_value = 0
             named_values: dict[str, int] = {}
@@ -214,8 +223,13 @@ class SchemaModel:
         return item
 
     def _parse_particle(self, node: ET.Element, path: Path,
-                        in_choice: bool = False) -> list[SourceField]:
+                        in_choice: bool = False, choice_group: int = 0
+                        ) -> list[SourceField]:
         result: list[SourceField] = []
+        if node.tag == XS + "choice":
+            self._choice_id += 1
+            choice_group = self._choice_id
+            in_choice = True
         group_min = occurs(node, "minOccurs", 1)
         group_max = occurs(node, "maxOccurs", 1)
         for child in node:
@@ -223,6 +237,7 @@ class SchemaModel:
                 field = self._parse_field(child, path, True)
                 if field:
                     field.choice = in_choice
+                    field.choice_group = choice_group
                     if group_min == 0:
                         field.min_occurs = 0
                     if group_max != 1:
@@ -230,7 +245,7 @@ class SchemaModel:
                     result.append(field)
             elif child.tag in (XS + "sequence", XS + "choice", XS + "all"):
                 result.extend(self._parse_particle(
-                    child, path, in_choice or child.tag == XS + "choice"))
+                    child, path, in_choice, choice_group))
         return result
 
     def _parse_field(self, node: ET.Element, path: Path,
@@ -265,13 +280,15 @@ class SchemaModel:
             max_occurs=occurs(node, "maxOccurs", 1),
             anonymous=anonymous,
             pipeline_only=node.get(XAS + "pipelineOnly") == "true",
+            by_value=node.get(XAS + "byValue") == "true",
         )
 
     def asset_names(self) -> set[str]:
         return {name for name, item in self.types.items()
                 if item.type_group and not name.startswith("__")}
 
-    def _simple_kind(self, name: str, seen: set[str] | None = None) -> tuple[str, int]:
+    def _simple_kind(self, name: str, seen: set[str] | None = None,
+                     tokenized: bool = False) -> tuple[str, int]:
         seen = set() if seen is None else seen
         if name in seen:
             return "unsupported", 0
@@ -282,10 +299,12 @@ class SchemaModel:
             return "cstring", 4
         if name == "DataBlob":
             return "blob", 8
-        # Poid 标识同一编译对象图中的对象；发行 W3DHierarchy 证明它落盘为
-        # NUL 字符串指针并进入 relo，而不是进入资源级 imp。
+        # Poid 标识同一编译对象图中的对象。它保留编译期 token；原值不是
+        # 实例相对指针，也不列入普通 relo（W3DHierarchy 全量样本只有数组指针）。
         if name == "Poid":
-            return "cstring", 4
+            return "token", 4
+        if tokenized and name in ("string", "anyURI"):
+            return "token", 4
         builtins = {
             "string": ("string", 8), "anyURI": ("string", 8),
             "boolean": ("scalar", 4), "float": ("scalar", 4),
@@ -310,16 +329,29 @@ class SchemaModel:
                 "AssetReference", "WeakReference", "Poid"):
             return "reference", 4
         if item.list_item:
+            list_item = self.types.get(item.list_item)
+            if list_item is not None and list_item.enum:
+                # 枚举列表由 BAB 折叠为 32 位 flags，而不是动态数组。
+                return "scalar", 4
             return "list-simple", 8
         if item.enum:
             return "enum", 4
+        # 这些 tag 的 XML 载体是字符串，但 BAB 在落盘前转换为运行时 32 位值。
+        # Angle/Percentage/Time 分别对应弧度、比例和毫秒；StickyString/StringHash
+        # 对应运行时 token/hash。不能沿 restriction base 把它们当字符串指针。
+        if item.tag in (
+                "AngleTag", "PercentageTag", "TimeTag",
+                "PositiveNonZeroRealTag", "DurationTag", "VelocityTag",
+                "StickyStringTag", "StringHashTag"):
+            return "scalar", 4
         if item.base:
-            return self._simple_kind(item.base, seen)
+            return self._simple_kind(item.base, seen, tokenized)
         # 无 restriction base 的简单类型在 BAB 中是 32 位 token。
         return "scalar", 4
 
-    def layout(self, name: str, root: bool = False) -> Layout:
-        key = (name, root)
+    def layout(self, name: str, root: bool = False,
+               tokenized: bool = False) -> Layout:
+        key = (name, root, tokenized)
         cached = self._layout_cache.get(key)
         if cached:
             return cached
@@ -327,13 +359,74 @@ class SchemaModel:
             return Layout(name, 0, [], False, "递归内联类型")
         self._loading.add(key)
         try:
-            result = self._layout_impl(name, root)
+            result = self._layout_impl(name, root, tokenized)
             self._layout_cache[key] = result
             return result
         finally:
             self._loading.remove(key)
 
-    def _layout_impl(self, name: str, root: bool) -> Layout:
+    def _layout_impl(self, name: str, root: bool,
+                     tokenized: bool) -> Layout:
+        if name == "FXParticleSystemTemplate" and root:
+            # 0x00673A50 直接按这些偏移读取构建块：六个
+            # ClientRandomVariable 内联，模块槽则保留指针/多态列表。
+            scalar_fields = [
+                ("Priority", 4, "enum"), ("IsOneShot", 8, "scalar"),
+                ("Shader", 12, "enum"),
+                ("SystemLifetime", 32, "scalar"), ("SortLevel", 36, "scalar"),
+                ("IsGroundAligned", 40, "scalar"),
+                ("IsEmitAboveGroundOnly", 44, "scalar"),
+                ("IsParticleUpTowardsEmitter", 48, "scalar"),
+                ("UseMaximumHeight", 52, "scalar"),
+            ]
+            fields = [
+                LayoutField(field_name, field_offset, 4, kind, kind)
+                for field_name, field_offset, kind in scalar_fields
+            ]
+            for field_name, field_offset in (
+                    ("ParticleTexture", 16), ("Drawable", 20),
+                    ("SlaveSystem", 24), ("PerParticleAttachedSystem", 28)):
+                fields.append(LayoutField(
+                    field_name, field_offset, 4, "reference", "AssetReference"))
+            random_layout = self.layout("ClientRandomVariable", False)
+            for index, field_name in enumerate((
+                    "Lifetime", "Size", "StartSizeRate", "BurstDelay",
+                    "BurstCount", "InitialDelay")):
+                fields.append(LayoutField(
+                    field_name, 0x38 + index * random_layout.size,
+                    random_layout.size, "struct", "ClientRandomVariable",
+                    child=random_layout))
+            for field_name, field_offset, type_name in (
+                    ("Alphas", 0x80, "FXParticleAlpha"),
+                    ("Colors", 0x84, "FXParticleColor"),
+                    ("Wind", 0x88, "FXParticleWind")):
+                child = self.layout(type_name, False)
+                fields.append(LayoutField(
+                    field_name, field_offset, 4, "pointer-struct",
+                    type_name, child=child))
+            for field_name, field_offset, type_name in (
+                    ("Physics", 0x8C, "FXParticlePhysicsModule"),
+                    ("Draw", 0x90, "FXParticleDrawModule"),
+                    ("Volume", 0x94, "FXParticleVolumeModule"),
+                    ("Velocity", 0x98, "FXParticleVelocityModule"),
+                    ("Event", 0x9C, "FXParticleEventModule"),
+                    ("Update", 0xA4, "FXParticleUpdateModule")):
+                child = self.layout(type_name, False)
+                fields.append(LayoutField(
+                    field_name, field_offset, child.size, "struct",
+                    type_name, child=child))
+            return Layout(name, 0xA8, fields)
+        if name == "W3DAnimation" and root:
+            # W3D 管线把源标量/四元数帧压缩为 runtime 的 Timecoded/Delta 通道。
+            runtime = self.layout("W3DAnimationRuntime", True)
+            return Layout(name, runtime.size, runtime.fields,
+                          runtime.supported, runtime.reason)
+        if name == "RenderSubObjectReference":
+            # 两个 choice 分支都是 AssetReference，BAB 合并为同一个引用槽；
+            # 目标 typeId 由该资源的引用目录携带，不另存 discriminant。
+            return Layout(name, 4, [
+                LayoutField("RenderObject", 0, 4, "reference", "AssetReference"),
+            ])
         # AssetTypeAudio.xsd 同时给出源类型 AudioFile 与构建后
         # AudioFileRuntime；注释明确 HeaderData 经 xsd2cpp 配置转换。
         # 发行样本进一步证明运行时字段顺序为下列 32 字节形式。
@@ -352,19 +445,20 @@ class SchemaModel:
             ])
         item = self.types.get(name)
         if item is None:
-            kind, size = self._simple_kind(name)
+            kind, size = self._simple_kind(name, tokenized=tokenized)
             return Layout(name, size, [LayoutField(name, 0, size, kind, name)],
                           kind != "unsupported", "" if kind != "unsupported"
                           else "未知类型")
         if item.simple:
-            kind, size = self._simple_kind(name)
+            kind, size = self._simple_kind(name, tokenized=tokenized)
             return Layout(name, size, [LayoutField(name, 0, size, kind, name)])
 
+        tokenized = tokenized or (root and item.type_group == "Tokenized")
         fields: list[LayoutField] = []
         offset = 4 if root else 0
         # BaseAssetType 的 XML 标识字段不落盘；根对象的 4 字节槽由运行时类型提供。
         if item.base and item.base not in ("BaseAssetType", "BaseInheritableAsset"):
-            base_layout = self.layout(item.base, False)
+            base_layout = self.layout(item.base, False, tokenized)
             if not base_layout.supported:
                 return Layout(name, 0, [], False, f"基类 {item.base}: {base_layout.reason}")
             for field_item in base_layout.fields:
@@ -374,35 +468,87 @@ class SchemaModel:
                     field_item.child, field_item.item))
             offset += base_layout.size
 
-        for source in item.fields:
+        index = 0
+        while index < len(item.fields):
+            source = item.fields[index]
             if source.pipeline_only or source.name in (
-                    "id", "typeHashCode", "buildRule", "inheritFrom"):
+                    "id", "typeHashCode", "buildRule", "inheritFrom",
+                    # AudioEventInfo 运行时没有源 schema 的 SubmixSlider 槽；
+                    # 后续可选 Range 指针从发行块 +0x50 开始。
+                    "SubmixSlider"):
+                index += 1
                 continue
             offset = align(offset)
+            if source.choice:
+                group = [source]
+                index += 1
+                while (index < len(item.fields)
+                       and item.fields[index].choice_group == source.choice_group):
+                    group.append(item.fields[index])
+                    index += 1
+                alternatives = [self.layout(choice.type_name, False, tokenized)
+                                for choice in group]
+                if any(not choice.supported for choice in alternatives):
+                    return Layout(name, 0, [], False,
+                                  f"choice {source.name}: 未支持分支")
+                repeated_choice = (
+                    source.max_occurs is None or source.max_occurs != 1)
+                if repeated_choice:
+                    fields.append(LayoutField(
+                        source.name, offset, 8, "polymorphic-list",
+                        "|".join(choice.type_name for choice in group),
+                        alternatives=alternatives))
+                    offset += 8
+                else:
+                    kinds = [self._simple_kind(
+                                choice.type_name, tokenized=tokenized)
+                             for choice in group]
+                    if all(kind == kinds[0] for kind in kinds):
+                        fields.append(LayoutField(
+                            source.name, offset, kinds[0][1], kinds[0][0],
+                            "|".join(choice.type_name for choice in group)))
+                        offset += kinds[0][1]
+                    else:
+                        fields.append(LayoutField(
+                            source.name, offset, 4, "polymorphic-pointer",
+                            "|".join(choice.type_name for choice in group),
+                            alternatives=alternatives))
+                        offset += 4
+                continue
             repeated = source.max_occurs is None or source.max_occurs != 1
-            if repeated or source.choice:
-                child = self.layout(source.type_name, False)
+            if repeated:
+                child = self.layout(source.type_name, False, tokenized)
                 fields.append(LayoutField(
-                    source.name, offset, 8,
-                    "polymorphic-list" if source.choice else "list",
-                    source.type_name, item=child))
+                    source.name, offset, 8, "list", source.type_name, item=child))
                 offset += 8
+                index += 1
                 continue
 
             target = self.types.get(source.type_name)
             if target is not None and not target.simple:
-                child = self.layout(source.type_name, False)
+                child = self.layout(source.type_name, False, tokenized)
                 if not child.supported:
                     return Layout(name, 0, [], False,
                                   f"字段 {source.name}: {child.reason}")
-                fields.append(LayoutField(source.name, offset, child.size,
-                                          "struct", source.type_name, child=child))
-                offset += child.size
+                if (source.is_element and source.min_occurs == 0
+                        and not source.by_value):
+                    # 可选复合元素由空/非空指针表达；xas:byValue 才强制内联。
+                    fields.append(LayoutField(
+                        source.name, offset, 4, "pointer-struct",
+                        source.type_name, child=child))
+                    offset += 4
+                else:
+                    fields.append(LayoutField(
+                        source.name, offset, child.size,
+                        "struct", source.type_name, child=child))
+                    offset += child.size
             else:
-                kind, size = self._simple_kind(source.type_name)
+                kind, size = self._simple_kind(
+                    source.type_name, tokenized=tokenized)
                 fields.append(LayoutField(source.name, offset, size, kind,
                                           source.type_name))
                 offset += size
+            index += 1
         return Layout(name, align(offset), fields)
 
 
@@ -553,6 +699,11 @@ class InstanceValidator:
                             f"{field_path}: 导入序号 {ordinal}>{self.reference_count}")
             elif field_item.kind == "struct" and field_item.child:
                 self.walk(field_item.child, absolute, field_path)
+            elif field_item.kind == "pointer-struct" and field_item.child:
+                # 空值是 minOccurs=0 的正常表示；非空后由 walk 检查完整子对象范围。
+                target = self.pointer(absolute, 0, 1, field_path)
+                if target is not None:
+                    self.walk(field_item.child, target, field_path)
             elif field_item.kind == "list" and field_item.item:
                 count = self.u32(absolute)
                 target = self.pointer(
@@ -567,8 +718,30 @@ class InstanceValidator:
                 # 验证 count/pointer。元素按其 primitive 大小连续存放。
                 count = self.u32(absolute)
                 self.pointer(absolute + 4, count, 4, field_path)
+            elif field_item.kind == "polymorphic-pointer":
+                target = self.pointer(absolute, 0, 1, field_path)
+                if target is not None:
+                    self.walk_polymorphic(field_item, target, field_path)
             elif field_item.kind == "polymorphic-list":
-                self.errors.append(f"{field_path}: 多态 choice 尚未建模")
+                count = self.u32(absolute)
+                pointers = self.pointer(absolute + 4, count, 4, field_path)
+                if pointers is not None:
+                    for index in range(count):
+                        target = self.pointer(
+                            pointers + index * 4, 1, 4, f"{field_path}[{index}]")
+                        if target is not None:
+                            self.walk_polymorphic(
+                                field_item, target, f"{field_path}[{index}]")
+
+    def walk_polymorphic(self, field_item: LayoutField, target: int,
+                         path: str) -> None:
+        token = self.u32(target)
+        matches = [layout for layout in field_item.alternatives
+                   if type_id(layout.name) == token]
+        if len(matches) != 1:
+            self.errors.append(f"{path}: 未知多态 token {token:08X}")
+            return
+        self.walk(matches[0], target, path)
 
     def run(self) -> InstanceResult:
         # 发行流用零长记录声明“此资源由依赖流提供”；它没有可解释的实例对象，

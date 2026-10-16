@@ -103,11 +103,12 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [x] 资源类型目录与名称哈希 — 已合并（recon/types）。`asset_types.tsv` 266 个类型全部有名（9 个只在程序里出现的用 XSD 标识符反查）；instanceId = 转小写的 SuperFastHash 变体（0x00417DB0），typeId = 不转小写的同一算法；C++ `ra3/asset/NameHash.h`，`ra3tool streams` 全量 118,232 条两项 0 不等。typeHash 语义未知（docs/design/asset_types.md）
 - [x] Ghidra 函数导出刷新（随 hookcat 合并完成）
 - [x] 离线差分预言机 `tools/analysis/emulate.py`：用 unicorn 从磁盘映像执行单个 clean 叶函数（只映射 .text/.rdata/.data，SecuROM 节不映射），可把 IAT 槽绑到 Python 桩；namehash 随机 3000/3000 与参考实现一致，pathcompare 与单测一致
-- [ ] hook 移植第一批：从候选目录挑 12–25 个有重写价值的纯函数（哈希/CRC/字符串/位运算），逐个用预言机差分后接入目标表 — 子 agent，分支 recon/ports1，用 work/ghidra
-- [ ] BigHandler 档案文件系统：恢复管理器/档案/条目的内存布局与全局实例，把只读查找函数移植成在游戏自身结构上运行的 C++ 并接入 shadow — 子 agent，分支 recon/bigfs，用 Ghidra 副本 work/ghidra_bigfs
+- [x] hook 移植第一批（recon/ports1，已合并）：新 `common` 模块 17 个函数（限长/普通字符串复制·追加·比较·长度·小写复制·反向查找、字节扩宽、定长字节比较、两种长度前缀串比较、小写 FNV-1a、UTF-8 解码/编码/前移），预言机差分主控复跑 17×约 2,007 例 0 不一致；合并时主控收紧了限长复制/追加的 shadow 访存范围。实机：13 个在遭遇战中被调用，shadow 全部一致、23 目标同时 replace 对局正常（injection.md §5.4 运行 12、13）；stringfindlast、bytewiden、utf8decode、utf8encode 在该流程中未被调用，仍只有离线证据
+- [ ] 类型化资源访问：由 XSD 模型生成全部已验证类型的布局兼容 C++ 结构、枚举和反射表，`ra3tool dump`/`types-check` 全量逐字段校验 — 子 agent，分支 recon/typed
+- [x] BigHandler 档案文件系统（recon/bigfs，已合并）：全局实例槽 `0x00DEB69C`（`0x004D2490` 分配 0x20 字节派生对象），档案链表、每档案索引与按哈希排序的查找表布局（`ra3/io/GameBigLayout.h`，docs/design/big_filesystem.md）；只读查找 `0x009F6B90`/`0x009F6D00` 移植为在游戏结构上运行的 C++，Unicorn 在真实 Misc.big 目录上 2,207 例 0 不一致（主控复跑 `tools/analysis/ports/verify_big_lookup.py` 与 `bigcheck` 一致）。离线 `BigArchive::find` 改为区分斜杠方向（与游戏一致），`ArchiveSet` 负责把 '/' 规范成 '\'。实机 shadow：bigfindentry 2,632,470/2,632,470、bigfindhash 4,627/4,627；replace 后对局正常。这两个目标只认显式键
 - [x] 模块归属工具 `tools/analysis/attribute_modules.py` → `module_estimates.tsv`：台账/虚表/64 KiB 邻近三级归属，留出验证虚表 4/4、邻近 35/38（92%）；仍未归属 26,050。模块映射已按新台账刷新。asset 的邻近估计（961，留出 1/2）偏粗，慎用
 - [x] 虚表 → 类（recon/vclass，已合并）：没有 RTTI；164 个资源处理器是 5 槽接口（析构 / create / 原位复制 / destroy / 缺失原型解析），分属 3 个模板族（多态 119、单例设置 20、4 字节值 9）加少量特化；`classes.tsv` 3,126 行、805 条候选继承边（启发式）。注意 `vtables.tsv` 是“连续代码指针段”，相邻虚表会被合并（docs/design/class_map.md）
 - [ ] 精确虚表边界：用构造/析构写入点与直接虚调用重新切分 vtables.tsv 的连续段
 - [x] hook 候选目录（recon/hookcat，已合并，主控复跑计数一致）：40,333 个 clean 函数中 Tier 1 6,187、Tier 2 1,197（docs/design/hook_candidates.md、hook_candidates.tsv）；已上线的三个目标都在候选内。注意 Ghidra 推断的调用约定与裸 `ret` 常冲突，以 `return_forms` 为准。Ghidra 函数导出已刷新（48,986 行，补入 0x004B1C80；旧导出备份在 work/analysis/ghidra/pre_hookcat）
 - [x] 资源二进制布局（recon/xsdlayout，已合并，主控全量复跑结果一致）：由 XSD 推导实例布局（根 4 字节 token；基类 → 属性 → 元素；字符串/列表 `{长度/数量, 相对指针}`；引用为 1 起的导入序号），完全通过 132/257 类型、87,592/118,232 条实例（docs/design/asset_layout.md）
-- [ ] 资源布局第二轮：Audio/W3D/Tokenized typeGroup 与多态 choice（AudioEvent 0/5,234、W3DMesh、GameObject、FXParticleSystemTemplate 等），结合原程序处理器与 ReloDetokenizers — 子 agent，分支 recon/layout2，用 Ghidra 副本 work/ghidra_vclass
+- [x] 资源布局第二轮（recon/layout2，已合并）：tagged 标量、枚举 flags、可选复合指针、choice/多态指针数组、Poid/Tokenized 子规则；W3DContainer 与 W3DHierarchy 全量通过；总覆盖 157/257 类型、93,200/118,232 实例；程序锚定 0x00673A50 粒子模块与 0x009B0540 W3D 通道 typeId 工厂，剩余缺口见 asset_layout.md

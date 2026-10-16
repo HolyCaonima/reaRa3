@@ -12,5 +12,6 @@ ra3_add_shared_library(ra3hook
         dll/Targets.h
     DEPS
         Ra3::asset
+        Ra3::common
         Ra3::hook
         Ra3::io)
