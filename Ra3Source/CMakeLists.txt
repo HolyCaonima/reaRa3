@@ -32,9 +32,11 @@ add_subdirectory(src/core)
 add_subdirectory(src/io)
 add_subdirectory(src/text)
 add_subdirectory(src/asset)
+add_subdirectory(src/hook)
 
 if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/ra3tool)
+    add_subdirectory(tools/ra3inject)
 endif()
 
 if(RA3_BUILD_TESTS)
