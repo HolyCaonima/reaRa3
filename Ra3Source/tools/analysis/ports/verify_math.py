@@ -178,6 +178,7 @@ def verify(executable: Path) -> None:
                 output = emu.alloc(b"\xA5" * 16)
                 game_result = emu.call(ADDRESSES["colorargb"], [output, values[0]])
                 assert game_result.stack_cleanup == 0
+                assert game_result.eax == output
                 check("colorargb", cw, emu.read(output, 16), bytes.fromhex(cpp.call(
                     f"colorargb {values[0]}")), f"argb=0x{values[0]:08X}")
 
@@ -208,6 +209,7 @@ def verify(executable: Path) -> None:
                 output = emu.alloc(b"\xA5" * 12)
                 result = emu.call(ADDRESSES["scale3"], [output], ecx=obj_address)
                 assert result.stack_cleanup == 4
+                assert result.eax == output
                 check("scale3", cw, emu.read(output, 12), bytes.fromhex(cpp.call(
                     f"scale3 {token(a3_data)} {values[8]}")), f"index={index}")
 
@@ -220,6 +222,7 @@ def verify(executable: Path) -> None:
                     result = emu.call(
                         ADDRESSES["transform3"], [output, input_address], ecx=matrix)
                     assert result.stack_cleanup == 8
+                    assert result.eax == output
                     check("transform3", cw, emu.read(output, 12), bytes.fromhex(cpp.call(
                         f"transform3 {token(matrix_data)} {token(b3_data)}")), f"index={index}")
 
@@ -254,7 +257,7 @@ def verify(executable: Path) -> None:
                 emu.reset_data()
                 output = emu.alloc(b"\xA5" * 8)
                 input_address = emu.alloc(a2_data)
-                emu.call(ADDRESSES["normalize2"], [output, input_address])
+                assert emu.call(ADDRESSES["normalize2"], [output, input_address]).eax == output
                 check("normalize2", cw, emu.read(output, 8), bytes.fromhex(cpp.call(
                     f"normalize2 {token(a2_data)}")), f"index={index}")
 

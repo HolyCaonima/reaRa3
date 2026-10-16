@@ -115,7 +115,7 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [ ] 资源布局第三轮：AudioEvent、W3DMesh、GameObject、W3DAnimation、FXParticleSystemTemplate、ObjectCreationList 的剩余缺口，新通过类型自动进入生成的 C++ 视图 — 子 agent，分支 recon/layout3，work/ghidra_vclass
 - [ ] 模拟确定性：游戏逻辑/客户端随机数发生器与对局状态 CRC（XferCRC 类）定位、移植与快照式 shadow — 子 agent，分支 recon/simrng，work/ghidra_csf
 - [x] 运行时字符串表（recon/csf，已合并）：`TheGameText` 0x00DEEA54，管理器 0x6C 字节，override → primary → map 三张按 `_stricmp` 排序的表（docs/design/game_text.md）；只读查找 0x00539080/0x0053B500 移植，主控补充近似未命中与三表叠加后 Unicorn 原函数与 C++ 各 208,782 例 0 不一致；实机 shadow 707/707、673/673，replace 后界面文字正常。CSF 加载器 0x0052FCE0 为 inner-patched，未越界分析
-- [ ] hook 移植第二批：数学库（x87/SSE 逐位一致）与 CRC/哈希族 — 子 agent，分支 recon/ports2，work/ghidra_ports2
+- [x] hook 移植第二批（recon/ports2，已合并）：`src/math` 17 个 SSE/x87 原语与 CRC-32 C 字符串（docs/design/math_library.md）。oracle 在 CW 007F/027F/037F 下 Debug+Release 全部 0 不一致；返回 x87 ST0 的 4 个目标用 naked 入口保留 80 位结果。实机：运行 19 暴露 4 个包装缺少 EAX 结构体返回值（normalize2 调用者崩溃），修复后运行 20 shadow 53 目标 0 不一致、运行 21 replace 带 AI 对局正常；7 个目标 live verified，游戏 CW 0x007F，其余 10 个在遭遇战中未被调用
 - [x] hook 候选目录（recon/hookcat，已合并，主控复跑计数一致）：40,333 个 clean 函数中 Tier 1 6,187、Tier 2 1,197（docs/design/hook_candidates.md、hook_candidates.tsv）；已上线的三个目标都在候选内。注意 Ghidra 推断的调用约定与裸 `ret` 常冲突，以 `return_forms` 为准。Ghidra 函数导出已刷新（48,986 行，补入 0x004B1C80；旧导出备份在 work/analysis/ghidra/pre_hookcat）
 - [x] 资源二进制布局（recon/xsdlayout，已合并，主控全量复跑结果一致）：由 XSD 推导实例布局（根 4 字节 token；基类 → 属性 → 元素；字符串/列表 `{长度/数量, 相对指针}`；引用为 1 起的导入序号），完全通过 132/257 类型、87,592/118,232 条实例（docs/design/asset_layout.md）
 - [x] 资源布局第二轮（recon/layout2，已合并）：tagged 标量、枚举 flags、可选复合指针、choice/多态指针数组、Poid/Tokenized 子规则；W3DContainer 与 W3DHierarchy 全量通过；总覆盖 157/257 类型、93,200/118,232 实例；程序锚定 0x00673A50 粒子模块与 0x009B0540 W3D 通道 typeId 工厂，剩余缺口见 asset_layout.md

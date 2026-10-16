@@ -1365,8 +1365,8 @@ __declspec(naked) float __cdecl approximateLength3(const ra3::math::Vector3*)
     }
 }
 
-// ra3_1.0.game 0x005235B0.
-void __cdecl colorFromArgb(ra3::math::Vector4* output, std::uint32_t argb)
+// ra3_1.0.game 0x005235B0: returns `output` in EAX.
+ra3::math::Vector4* __cdecl colorFromArgb(ra3::math::Vector4* output, std::uint32_t argb)
 {
     TargetState& state = g_colorFromArgb;
     observeFloatingCall(state);
@@ -1374,11 +1374,12 @@ void __cdecl colorFromArgb(ra3::math::Vector4* output, std::uint32_t argb)
     if (state.mode == Mode::replace) {
         *output = ours;
         state.matches.fetch_add(1, relaxed);
-        return;
+        return output;
     }
-    reinterpret_cast<void(__cdecl*)(ra3::math::Vector4*, std::uint32_t)>(
-        state.original)(output, argb);
+    ra3::math::Vector4* const game = reinterpret_cast<ra3::math::Vector4*(__cdecl*)(
+        ra3::math::Vector4*, std::uint32_t)>(state.original)(output, argb);
     recordOutput("colorargb", state, output, &ours, sizeof(ours));
+    return game;
 }
 
 // ra3_1.0.game 0x00528BC0.
@@ -1453,8 +1454,8 @@ void __fastcall clampOffset68(void* object, void*, float lower, float upper)
         temporary + 0x68, 4);
 }
 
-// ra3_1.0.game 0x0056F370.
-void __cdecl normalizeVector2(
+// ra3_1.0.game 0x0056F370: returns `output` in EAX, which callers dereference.
+ra3::math::Vector2* __cdecl normalizeVector2(
     ra3::math::Vector2* output, const ra3::math::Vector2* input)
 {
     TargetState& state = g_normalizeVector2;
@@ -1465,11 +1466,12 @@ void __cdecl normalizeVector2(
     if (state.mode == Mode::replace) {
         *output = ours;
         state.matches.fetch_add(1, relaxed);
-        return;
+        return output;
     }
-    reinterpret_cast<void(__cdecl*)(
+    ra3::math::Vector2* const game = reinterpret_cast<ra3::math::Vector2*(__cdecl*)(
         ra3::math::Vector2*, const ra3::math::Vector2*)>(state.original)(output, input);
     recordOutput("normalize2", state, output, &ours, sizeof(ours));
+    return game;
 }
 
 // ra3_1.0.game 0x006ABCB0.
@@ -1558,8 +1560,8 @@ struct ScaledVectorObject {
 };
 static_assert(offsetof(ScaledVectorObject, scale) == 0x24);
 
-// ra3_1.0.game 0x009814E0.
-void __fastcall scaleVector3(
+// ra3_1.0.game 0x009814E0: returns `output` in EAX.
+ra3::math::Vector3* __fastcall scaleVector3(
     const ScaledVectorObject* object, void*, ra3::math::Vector3* output)
 {
     TargetState& state = g_scaleVector3;
@@ -1568,15 +1570,16 @@ void __fastcall scaleVector3(
     if (state.mode == Mode::replace) {
         *output = ours;
         state.matches.fetch_add(1, relaxed);
-        return;
+        return output;
     }
-    reinterpret_cast<void(__thiscall*)(
+    ra3::math::Vector3* const game = reinterpret_cast<ra3::math::Vector3*(__thiscall*)(
         const ScaledVectorObject*, ra3::math::Vector3*)>(state.original)(object, output);
     recordOutput("scalevector3", state, output, &ours, sizeof(ours));
+    return game;
 }
 
-// ra3_1.0.game 0x00994A10.
-void __fastcall transformDirection3(
+// ra3_1.0.game 0x00994A10: returns `output` in EAX.
+ra3::math::Vector3* __fastcall transformDirection3(
     const ra3::math::Matrix3x4* matrix,
     void*,
     ra3::math::Vector3* output,
@@ -1589,12 +1592,13 @@ void __fastcall transformDirection3(
     if (state.mode == Mode::replace) {
         *output = ours;
         state.matches.fetch_add(1, relaxed);
-        return;
+        return output;
     }
-    reinterpret_cast<void(__thiscall*)(
+    ra3::math::Vector3* const game = reinterpret_cast<ra3::math::Vector3*(__thiscall*)(
         const ra3::math::Matrix3x4*, ra3::math::Vector3*,
         const ra3::math::Vector3*)>(state.original)(matrix, output, input);
     recordOutput("transformdirection3", state, output, &ours, sizeof(ours));
+    return game;
 }
 
 }  // namespace

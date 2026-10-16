@@ -101,21 +101,21 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `utf8next` | `0x00A284B0` UTF-8 解码并前移 | cdecl | 6 | `ra3::common::decodeUtf8AndAdvance` | live verified |
 | `floatmax` | `0x00504620` 浮点最大值 | cdecl | 6 | `ra3::math::maximum` | offline-verified, live pending |
 | `floatclamp` | `0x00504650` 浮点夹取 | cdecl | 6 | `ra3::math::clamp` | offline-verified, live pending |
-| `vectorequal3` | `0x00504680` `Vector3` 精确相等 | cdecl | 8 | `ra3::math::exactlyEqual` | offline-verified, live pending |
-| `vectorrangeequal2` | `0x005046C0` `Vector2` 区间精确相等 | cdecl | 5 | `ra3::math::exactlyEqualVector2Range` | offline-verified, live pending |
+| `vectorequal3` | `0x00504680` `Vector3` 精确相等 | cdecl | 8 | `ra3::math::exactlyEqual` | live verified |
+| `vectorrangeequal2` | `0x005046C0` `Vector2` 区间精确相等 | cdecl | 5 | `ra3::math::exactlyEqualVector2Range` | live verified |
 | `squaredistance3` | `0x005049E0` `Vector3` 距离平方 | cdecl | 8 | `ra3::math::squaredDistance` | offline-verified（80-bit ST0）, live pending；NaN payload 待实机 |
 | `floatmin` | `0x00522A30` 浮点最小值 | cdecl | 6 | `ra3::math::minimum` | offline-verified, live pending |
 | `approximatelength3` | `0x00523240` `Vector3` 近似长度 | cdecl | 7 | `ra3::math::approximateLength` | offline-verified（80-bit ST0）, live pending；NaN payload 待实机 |
 | `colorargb` | `0x005235B0` ARGB 转 `Vector4` | cdecl | 12 | `ra3::math::colorFromArgb` | offline-verified, live pending |
 | `contains2` | `0x00528BC0` 二维包含测试 | cdecl | 8 | `ra3::math::containsInclusive` | offline-verified, live pending |
 | `separate2` | `0x00528C00` 二维点对分离 | cdecl | 8 | `ra3::math::separate` | offline-verified, live pending |
-| `clampoffset68` | `0x0055A9B0` 对象 `+0x68` 浮点夹取 | thiscall | 5 | `ra3::math::clampFloatAtOffset68` | offline-verified, live pending |
-| `distance3` | `0x00564150` `Vector3` 距离 | cdecl | 8 | `ra3::math::distance` | offline-verified（80-bit ST0）, live pending；NaN payload 待实机 |
-| `normalize2` | `0x0056F370` `Vector2` 归一化 | cdecl | 9 | `ra3::math::normalize` | offline-verified, live pending；NaN payload 待实机 |
+| `clampoffset68` | `0x0055A9B0` 对象 `+0x68` 浮点夹取 | thiscall | 5 | `ra3::math::clampFloatAtOffset68` | live verified |
+| `distance3` | `0x00564150` `Vector3` 距离 | cdecl | 8 | `ra3::math::distance` | live verified（80-bit ST0，游戏 CW 0x007F）；NaN payload 待实机 |
+| `normalize2` | `0x0056F370` `Vector2` 归一化 | cdecl | 9 | `ra3::math::normalize` | live verified（运行 19 暴露 EAX 返回值缺失，已修复）；NaN payload 待实机 |
 | `squaredistanceoffset38` | `0x006ABCB0` 到对象 `+0x38` 向量的距离平方 | thiscall | 7 | `ra3::math::squaredDistanceFromOffset38` | offline-verified（80-bit ST0）, live pending；NaN payload 待实机 |
 | `crc32cstring` | `0x0092A0D0` 零结尾字节串 CRC-32 | cdecl | 6 | `ra3::common::crc32CString` | offline-verified, live pending |
-| `scalevector3` | `0x009814E0` 对象向量缩放 | thiscall | 7 | `ra3::math::scaled` | offline-verified, live pending |
-| `transformdirection3` | `0x00994A10` `Matrix3x4` 方向变换 | thiscall | 9 | `ra3::math::transformDirection` | offline-verified, live pending；多 NaN payload 待实机 |
+| `scalevector3` | `0x009814E0` 对象向量缩放 | thiscall | 7 | `ra3::math::scaled` | live verified |
+| `transformdirection3` | `0x00994A10` `Matrix3x4` 方向变换 | thiscall | 9 | `ra3::math::transformDirection` | live verified；多 NaN payload 待实机 |
 | `bigfindhash` | `0x009F6B90` 单档案哈希表查找 | thiscall | 5 | `ra3::io::findGameBigHashedEntry` | live verified（shadow；replace 时唯一调用者已被替换）; 仅显式键启用 |
 | `bigfindentry` | `0x009F6D00` 单档案路径/序号查找 | thiscall | 7 | `ra3::io::findGameBigEntry` | live verified; 仅显式键启用 |
 | `bigreadbe32` | `0x009F6810` 变宽大端 32 位读取 | cdecl | 7 | `ra3::io::readGameBigEndian32` | live verified |
@@ -279,7 +279,7 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 "D:\Game\Ra3\Game\RA3_english_1.0.SkuDef"`。每次注入都报告非零
 `LoadLibraryW result` 与 `GetLastError=0`，日志首行均为
 `host base=0x400000 timestamp=0x48ef023a image_size=0x26a14f0`，没有出现完整性
-检查拒绝或崩溃。
+检查拒绝。唯一一次崩溃（运行 19）是我们 hook 包装的 ABI 缺陷，见表后说明。
 
 | 运行 | 模式 | 注入时机 | 到主菜单时的计数 | 结果 |
 |---|---|---|---|---|
@@ -301,6 +301,17 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 16 | 32 目标 replace（Release），进入遭遇战 | `--wait-window` | bigfindentry 2632470、bigentrycount 2629704、bigabsoluteoffset 7006、bigstoredsize 340 次由 Ra3Source 处理；bigformat 等 6 个辅助函数 0 次（调用者已被替换，改走同一份 C++） | 对局正常运行 |
 | 17 | 35 目标 shadow（Release；新增 gametexttable、gametextmanager、bigseek 显式键），进入遭遇战 | `--wait-window` | 31 个目标被调用，全部 0 不一致；gametexttable 707/707、gametextmanager 673/673、bigseek 3682/3682 | bigclose 未启用（shadow 只转发，无可比较对象） |
 | 18 | 36 目标 replace（Release，含 bigclose），进入遭遇战 | `--wait-window` | gametextmanager 640、gametexttable 290、bigseek 3574、bigclose 341、bigfindentry 2663337 次由 Ra3Source 处理 | 主菜单与遭遇战界面文字正常，对局正常运行；bigclose 的释放由我们的代码经游戏分配器完成 |
+| 19 | 53 目标 shadow（Release，新增 ports2 的 17 个数学目标，bigclose 也开），遭遇战加一个 Easy AI | `--wait-window` | 崩溃前全部 0 不一致；normalize2 1/1 | BEGIN 后约 60 秒 `ra3_1.0.game` 在 0x005869B3 访问违例；同样设置不注入的基线对局正常 |
+| 20 | 同运行 19，修复 4 个包装的 EAX 返回值后 | `--wait-window` | 53 个目标全部 0 不一致；normalize2 570/570、distance3 919/919（80-bit 比较）、transformdirection3 1208/1208、scalevector3 225/225、clampoffset68 31/31、vectorrangeequal2 4/4、vectorequal3 1/1；游戏 CW 0x007F、MXCSR 0x1FA0，`cw_changes=0` | 对局 2 分钟正常；ports2 另 10 个目标未被调用 |
+| 21 | 53 目标 replace（Release），遭遇战加 Easy AI | `--wait-window` | normalize2 570、distance3 262、scalevector3 224、transformdirection3 198、clampoffset68 30、bigclose 388、bigseek 3761、gametextmanager 875、bigfindentry 2661046 次由 Ra3Source 处理 | 对局 2 分钟正常，无崩溃事件 |
+
+运行 19 的崩溃点紧跟 `call 0x0056F370`（normalize2）：调用者把 EAX 当作结果指针
+解引用（`mov edx, [eax]`）。原函数按 MSVC 返回结构体的惯例把 `output` 留在 EAX，
+而包装声明为 `void`，EAX 是垃圾值。离线 oracle 只比较输出内存，所以没发现。同类的
+colorargb、scalevector3、transformdirection3 一并改为返回 `output`（shadow 返回原函数的
+EAX）；utf8encode、separate2、clampoffset68、bigclose 的原函数在 `ret` 时 EAX 只是
+临时值，保持 `void`。`verify_math.py` 现在对这 4 个函数断言 `eax == output`。之前的
+运行都没有 AI 对手，normalize2 没被调用过，所以直到运行 19 才暴露。
 
 运行 8、9 的操作：主菜单点掉离线提示 → Versus → Skirmish → 默认设置（Battlebase
 Beta，单人，阵营随机）→ BEGIN。点击由 `SetCursorPos`/`mouse_event` 发往前台游戏
@@ -338,3 +349,6 @@ replace 模式下 `matches` 表示 Ra3Source 解码成功并把结果交给游�
   是退出目标进程。进程退出时 worker 线程先被系统终止，可能正持有日志锁，所以
   `DLL_PROCESS_DETACH` 只在拿得到锁时写最后一次汇总。
 - 代码完整性检查属于必须尊重的外部约束，不在本项目规避范围内。
+- 包装必须复现原函数的完整返回约定，不只是写出的内存：结构体结果经隐藏指针返回时
+  EAX 也是返回值，x87 结果要保留 80 位 ST0。新目标要在反汇编里核对每个 `ret` 前的
+  EAX/ST0，oracle 也要比较它们。

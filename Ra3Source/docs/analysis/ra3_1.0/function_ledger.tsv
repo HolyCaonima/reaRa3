@@ -3532,8 +3532,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005045e0	FUN_005045e0	.text	63		clean	unknown		unanalyzed	
 00504620	FUN_00504620	.text	39		clean	math	recon/ports2	reversed	maximum(float,float); ra3::math::maximum; oracle 2031/2031 Debug+Release
 00504650	FUN_00504650	.text	39		clean	math	recon/ports2	reversed	clamp(float,float,float); ra3::math::clamp; oracle 2031/2031 Debug+Release
-00504680	FUN_00504680	.text	60		clean	math	recon/ports2	reversed	Vector3 exact equality; ra3::math::exactlyEqual; oracle 2031/2031 Debug+Release
-005046c0	FUN_005046c0	.text	63		clean	math	recon/ports2	reversed	Vector2 range exact equality; ra3::math::exactlyEqualVector2Range; oracle 2031/2031 Debug+Release
+00504680	FUN_00504680	.text	60		clean	math	recon/ports2	verified	Vector3 exact equality; ra3::math::exactlyEqual; oracle 2031/2031 Debug+Release; live shadow 1/1, replace 1 calls in a skirmish (运行 20/21)
+005046c0	FUN_005046c0	.text	63		clean	math	recon/ports2	verified	Vector2 range exact equality; ra3::math::exactlyEqualVector2Range; oracle 2031/2031 Debug+Release; live shadow 4/4, replace 4 calls in a skirmish (运行 20/21)
 00504700	FUN_00504700	.text	76		clean	unknown		unanalyzed	
 00504750	FUN_00504750	.text	50		clean	unknown		unanalyzed	
 00504790	FUN_00504790	.text	50		clean	unknown		unanalyzed	
@@ -5498,7 +5498,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0055a650	FUN_0055a650	.text	376		clean	unknown		unanalyzed	
 0055a7a0	FUN_0055a7a0	.text	489	SageEngine\source\GameEngine\common\audio\AudioEventRTS.cpp	clean	common		unanalyzed	
 0055a990	FUN_0055a990	.text	26		clean	unknown		unanalyzed	
-0055a9b0	FUN_0055a9b0	.text	38		clean	math	recon/ports2	reversed	clamp object float at +0x68; ra3::math::clampFloatAtOffset68; oracle 2031/2031 Debug+Release
+0055a9b0	FUN_0055a9b0	.text	38		clean	math	recon/ports2	verified	clamp object float at +0x68; ra3::math::clampFloatAtOffset68; oracle 2031/2031 Debug+Release; live shadow 31/31, replace 30 calls in a skirmish (运行 20/21)
 0055a9e0	FUN_0055a9e0	.text	67		clean	unknown		unanalyzed	
 0055aa30	FUN_0055aa30	.text	73		clean	unknown		unanalyzed	
 0055aa80	FUN_0055aa80	.text	120		clean	unknown		unanalyzed	
@@ -5859,7 +5859,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005640a0	FUN_005640a0	.text	8		clean	unknown		unanalyzed	
 005640a8	FUN_005640a8	.text	51		clean	unknown		unanalyzed	
 005640e0	FUN_005640e0	.text	110		clean	unknown		unanalyzed	
-00564150	FUN_00564150	.text	39		clean	math	recon/ports2	reversed	Vector3 distance, full 80-bit ST0 under caller CW; ra3::math::distance; oracle 2014/2014 at CW 007f/027f/037f Debug+Release; NaN payload emulator-unreliable
+00564150	FUN_00564150	.text	39		clean	math	recon/ports2	verified	Vector3 distance, full 80-bit ST0 under caller CW; ra3::math::distance; oracle 2014/2014 at CW 007f/027f/037f Debug+Release; NaN payload emulator-unreliable; live shadow 919/919, replace 262 calls in a skirmish (运行 20/21)
 00564180	FUN_00564180	.text	147		clean	unknown		unanalyzed	
 00564213	FUN_00564213	.text	98		clean	unknown		unanalyzed	
 00564280	FUN_00564280	.text	47		clean	unknown		unanalyzed	
@@ -6048,7 +6048,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0056f2a0	FUN_0056f2a0	.text	69		clean	unknown		unanalyzed	
 0056f2f0	FUN_0056f2f0	.text	58		clean	unknown		unanalyzed	
 0056f330	FUN_0056f330	.text	60		clean	unknown		unanalyzed	
-0056f370	FUN_0056f370	.text	97		clean	math	recon/ports2	reversed	Vector2 normalize, SSE then x87 reciprocal sqrt; ra3::math::normalize; oracle 2014/2014 at CW 007f/027f/037f Debug+Release; NaN payload emulator-unreliable
+0056f370	FUN_0056f370	.text	97		clean	math	recon/ports2	verified	Vector2 normalize, SSE then x87 reciprocal sqrt; ra3::math::normalize; oracle 2014/2014 at CW 007f/027f/037f Debug+Release; NaN payload emulator-unreliable; live shadow 570/570, replace 570 calls in a skirmish (运行 20/21)
 0056f490	FUN_0056f490	.text	89		clean	unknown		unanalyzed	
 0056f4f0	FUN_0056f4f0	.text	79		clean	unknown		unanalyzed	
 0056f540	FUN_0056f540	.text	57		clean	unknown		unanalyzed	
@@ -27874,7 +27874,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00981280	FUN_00981280	.text	58		clean	unknown		unanalyzed	
 009812c0	FUN_009812c0	.text	490		clean	unknown		unanalyzed	
 009814b0	FUN_009814b0	.text	43		clean	unknown		unanalyzed	
-009814e0	FUN_009814e0	.text	68		clean	math	recon/ports2	reversed	scale object Vector3 at +0x10 by float at +0x24; ra3::math::scaled; oracle 2031/2031 Debug+Release
+009814e0	FUN_009814e0	.text	68		clean	math	recon/ports2	verified	scale object Vector3 at +0x10 by float at +0x24; ra3::math::scaled; oracle 2031/2031 Debug+Release; live shadow 225/225, replace 224 calls in a skirmish (运行 20/21)
 00981530	FUN_00981530	.text	1323		clean	unknown		unanalyzed	
 00981a70	FUN_00981a70	.text	283		clean	unknown		unanalyzed	
 00981b90	FUN_00981b90	.text	349		clean	unknown		unanalyzed	
@@ -28226,7 +28226,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00994580	FUN_00994580	.text	1076		clean	unknown		unanalyzed	
 009949c0	FUN_009949c0	.text	59		clean	unknown		unanalyzed	
 00994a00	FUN_00994a00	.text	8		clean	unknown		unanalyzed	
-00994a10	FUN_00994a10	.text	142		clean	math	recon/ports2	reversed	Matrix3x4 direction transform; ra3::math::transformDirection; oracle 2000/2000 finite Debug+Release; multi-NaN payload emulator-unreliable
+00994a10	FUN_00994a10	.text	142		clean	math	recon/ports2	verified	Matrix3x4 direction transform; ra3::math::transformDirection; oracle 2000/2000 finite Debug+Release; multi-NaN payload emulator-unreliable; live shadow 1208/1208, replace 198 calls in a skirmish (运行 20/21)
 00994aa0	FUN_00994aa0	.text	804		clean	unknown		unanalyzed	
 00994dd0	FUN_00994dd0	.text	633		clean	unknown		unanalyzed	
 00995050	FUN_00995050	.text	933		clean	unknown		unanalyzed	
