@@ -37,6 +37,10 @@ RA3_TEST(BigArchive_ReadsIndexTrailerAndData)
     auto head = big.read(*entry, 3);
     RA3_REQUIRE_OK(head);
     RA3_CHECK_EQ(head.value().size(), std::size_t{3});
+    auto range = big.read(*entry, 2, 3);
+    RA3_REQUIRE_OK(range);
+    RA3_CHECK_EQ(std::string(range.value().begin(), range.value().end()), std::string("ATI"));
+    RA3_CHECK(!big.read(*entry, 5, 2).ok());
     RA3_CHECK(big.find("data\\missing.bin") == nullptr);
 }
 

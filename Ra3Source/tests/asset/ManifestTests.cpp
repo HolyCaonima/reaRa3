@@ -1,5 +1,6 @@
 #include "support/TestHarness.h"
 
+#include <ra3/asset/AssetInstance.h>
 #include <ra3/asset/AssetStream.h>
 #include <ra3/asset/Manifest.h>
 
@@ -154,4 +155,74 @@ RA3_TEST(AssetStream_ValidatesChecksumAndMemberLengths)
     RA3_CHECK(!ra3::asset::AssetStream::loadDecoded(
                    "data/test", makeManifest(), member(4), member(2), member(1))
                    .ok());
+}
+
+RA3_TEST(AssetInstance_ParsesRelocationsImportsAndStrings)
+{
+    std::vector<std::uint8_t> instance(32, 0);
+    putU32(instance, 0, 5);
+    putU32(instance, 4, 16);
+    putU32(instance, 8, 1);
+    std::memcpy(instance.data() + 16, "Arial", 5);
+    std::vector<std::uint8_t> relocations(8);
+    putU32(relocations, 0, 4);
+    putU32(relocations, 4, 0xFFFFFFFFu);
+    std::vector<std::uint8_t> imports(8);
+    putU32(imports, 0, 8);
+    putU32(imports, 4, 0xFFFFFFFFu);
+    const std::vector<ra3::asset::AssetId> references = {{0x11, 0x22}};
+
+    auto parsed = ra3::asset::AssetInstance::parse(
+        {instance.data(), instance.size()},
+        {relocations.data(), relocations.size()},
+        {imports.data(), imports.size()},
+        references, "test/Type:Name", 100, 200);
+    RA3_REQUIRE_OK(parsed);
+    RA3_CHECK_EQ(parsed.value().relocations().sites().size(), std::size_t{1});
+    RA3_REQUIRE(parsed.value().relocationTarget(4).has_value());
+    RA3_CHECK_EQ(*parsed.value().relocationTarget(4), 16u);
+    RA3_REQUIRE(parsed.value().importAt(8) != nullptr);
+    RA3_CHECK_EQ(parsed.value().importAt(8)->target.typeId, 0x11u);
+    auto text = parsed.value().readString(0);
+    RA3_REQUIRE_OK(text);
+    RA3_CHECK_EQ(text.value(), std::string_view("Arial"));
+}
+
+RA3_TEST(AssetInstance_RejectsMalformedTablesAndPastEndPointer)
+{
+    std::vector<std::uint8_t> instance(16, 0);
+    putU32(instance, 4, 16);
+    std::vector<std::uint8_t> noTerminator(4);
+    putU32(noTerminator, 0, 4);
+    std::vector<std::uint8_t> empty;
+    auto badRelocation = ra3::asset::AssetInstance::parse(
+        {instance.data(), instance.size()},
+        {noTerminator.data(), noTerminator.size()},
+        {empty.data(), empty.size()}, {}, "test/Type:Name");
+    RA3_CHECK(!badRelocation.ok());
+
+    std::vector<std::uint8_t> relocation(8);
+    putU32(relocation, 0, 4);
+    putU32(relocation, 4, 0xFFFFFFFFu);
+    auto endPointer = ra3::asset::AssetInstance::parse(
+        {instance.data(), instance.size()},
+        {relocation.data(), relocation.size()},
+        {empty.data(), empty.size()}, {}, "test/Type:Name");
+    RA3_REQUIRE_OK(endPointer);
+    putU32(instance, 4, 17);
+    auto pastEndPointer = ra3::asset::AssetInstance::parse(
+        {instance.data(), instance.size()},
+        {relocation.data(), relocation.size()},
+        {empty.data(), empty.size()}, {}, "test/Type:Name");
+    RA3_CHECK(!pastEndPointer.ok());
+
+    std::vector<std::uint8_t> imports(8);
+    putU32(imports, 0, 8);
+    putU32(imports, 4, 0xFFFFFFFFu);
+    putU32(instance, 8, 2);
+    auto outOfRangeImport = ra3::asset::AssetInstance::parse(
+        {instance.data(), instance.size()},
+        {empty.data(), empty.size()},
+        {imports.data(), imports.size()}, {{1, 2}}, "test/Type:Name");
+    RA3_CHECK(!outOfRangeImport.ok());
 }

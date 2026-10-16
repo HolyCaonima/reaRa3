@@ -81,6 +81,7 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `refpack` | `0x009F72E0` 一次性 RefPack 解码 | `int __stdcall (uint8_t* dest, const uint8_t* src)` | 5（`push ecx; mov ecx,[esp+0Ch]`） | `ra3::io::decompressRefPackPrefix` |
 | `namehash` | `0x00417DB0` 名称哈希 | `uint32_t __cdecl (const char*, uint32_t len, uint32_t seed, char finalize)` | 8（`push ebx/ebp/esi/edi; mov edi,[esp+14h]`） | `ra3::asset::hashName` |
 | `pathcompare` | `0x009F3650` 档案路径比较 | `int __cdecl (const char*, const char*)`，返回 -1/0/1 | 5（`push esi; mov esi,[esp+8]`） | `ra3::io::comparePathNames` |
+| `refpackprobe` | `0x009F74F0` RefPack 大小探测 | `uint32_t __stdcall (const uint8_t*)` | 6（`mov edx,[esp+4]; xor ecx,ecx`） | `ra3::io::probeRefPackSize` |
 
 `Ra3Source/tools/analysis/disasm.py <VA> --hook-only` 从只读的可执行文件直接给出前 16 字节、
 stolen 长度（≥5 字节的最短整指令前缀）及其是否位置无关、返回形式（`ret` = cdecl，
@@ -110,9 +111,13 @@ RefPack hook 的签名是
 结果。`replace` 只调用我们的实现。原函数里的 `tolower` 走 CRT（IAT `0x00BBA4D4`），
 所以 shadow 也同时检验了“游戏运行时是默认 C locale”这一假设。
 
-相邻的 RefPack 大小探测 `0x009F74F0`（`int __stdcall (const uint8_t*)`）是下一个
-候选：它在 flag 0x01 时也直接读紧跟签名的大小字段，与 `readRefPackHeader` 不同，
-需要先在 io 里按原语义移植。
+### 4.3.1 refpackprobe
+
+`0x009F74F0` 先按 `(头字 & 0x3EFF) == 0x10FB` 判定 RefPack，不是则返回 0；是则经
+`0x009F6810` 按大端读紧跟签名的 3 或 4 字节（flag 0x80）。flag 0x01 时读到的是压缩
+大小而不是解压大小，与 `readRefPackHeader` 不同，`probeRefPackSize` 原样保留。离线
+预言机（`tools/analysis/emulate.py`）对 256 种 flag 字节与 3,000 组随机头共 4,024 例
+0 不一致，栈清理 4 字节。shadow 的不一致只打印原函数实际读过的 2/5/6 个字节。
 
 ### 4.4 pathcompare
 

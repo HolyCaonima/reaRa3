@@ -18,6 +18,7 @@ constexpr auto relaxed = std::memory_order_relaxed;
 TargetState g_refPack;
 TargetState g_nameHash;
 TargetState g_pathCompare;
+TargetState g_refPackProbe;
 
 // ra3_1.0.game 0x009F72E0: one-shot RefPack decoder, returns the decoded size.
 using DecodeFunction = int(__stdcall*)(std::uint8_t*, const std::uint8_t*);
@@ -141,6 +142,35 @@ int __cdecl pathCompare(const char* a, const char* b)
     return game;
 }
 
+// ra3_1.0.game 0x009F74F0: RefPack size probe, 0 for non-RefPack data.
+using ProbeFunction = std::uint32_t(__stdcall*)(const std::uint8_t*);
+
+std::uint32_t __stdcall refPackProbe(const std::uint8_t* data)
+{
+    TargetState& state = g_refPackProbe;
+    state.calls.fetch_add(1, relaxed);
+    const std::uint32_t ours = ra3::io::probeRefPackSize(data);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const std::uint32_t game = reinterpret_cast<ProbeFunction>(state.original)(data);
+    if (game == ours) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        const bool signature = (data[0] & 0x3E) == 0x10 && data[1] == 0xFB;
+        const int read = signature ? ((data[0] & 0x80) ? 6 : 5) : 2;
+        std::ostringstream detail;
+        detail << std::hex << std::uppercase << std::setfill('0') << "header";
+        for (int i = 0; i < read; ++i) {
+            detail << ' ' << std::setw(2) << static_cast<unsigned>(data[i]);
+        }
+        detail << " game=0x" << game << " ours=0x" << ours;
+        reportMismatch("refpackprobe", state, detail.str());
+    }
+    return game;
+}
+
 }  // namespace
 
 const char* modeName(Mode mode)
@@ -183,6 +213,10 @@ const std::vector<Target>& targets()
          {0x56, 0x8B, 0x74, 0x24, 0x08, 0x57, 0x8B, 0x7C,
           0x24, 0x10, 0x8D, 0x9B, 0x00, 0x00, 0x00, 0x00},
          5, reinterpret_cast<void*>(&pathCompare), &g_pathCompare},
+        {"refpackprobe", 0x005F74F0,
+         {0x8B, 0x54, 0x24, 0x04, 0x33, 0xC9, 0x8A, 0x2A,
+          0x56, 0x33, 0xC0, 0x8A, 0x4A, 0x01, 0x0F, 0xB7},
+         6, reinterpret_cast<void*>(&refPackProbe), &g_refPackProbe},
     };
     return table;
 }

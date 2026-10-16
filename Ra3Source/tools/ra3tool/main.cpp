@@ -1,5 +1,6 @@
 // ra3tool: inspects the configured, read-only RA3 installation.
 
+#include <ra3/asset/AssetInstance.h>
 #include <ra3/asset/AssetStream.h>
 #include <ra3/asset/NameHash.h>
 #include <ra3/core/FileUtil.h>
@@ -11,6 +12,7 @@
 #include <ra3/io/RefPack.h>
 
 #include <algorithm>
+#include <chrono>
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
@@ -36,8 +38,9 @@ commands:
   mount                       open every archive of the SkuDef and summarise them
   find <path>                 show which mounted archives contain <path> and which copy the game uses
   unpack-check <archive>      decompress every RefPack entry of one archive and report the results
-  streams                     validate every mounted compiled-asset stream
+  streams [--deep]            validate every mounted compiled-asset stream
   manifest <stem> [--limit N] show one stream manifest (for example data/locale)
+  asset <stem> <Type:Name>    dump one asset's fixups and references
 )";
 
 std::string hexBytes(const std::uint8_t* data, std::size_t count)
@@ -315,8 +318,9 @@ std::string typePrefix(std::string_view name)
     return std::string(name.substr(0, colon));
 }
 
-int commandStreams(const Context& context)
+int commandStreams(const Context& context, bool deep)
 {
+    const auto started = std::chrono::steady_clock::now();
     auto mounted = mountAll(context);
     if (!mounted) {
         return fail(mounted.error().message);
@@ -329,6 +333,13 @@ int commandStreams(const Context& context)
     std::map<std::string, std::uint64_t> countsByType;
     std::map<std::uint32_t, std::string> namesByTypeId;
     std::map<std::uint32_t, std::set<std::uint32_t>> hashesByTypeId;
+    std::uint64_t relocationCount = 0;
+    std::uint64_t importCount = 0;
+    std::uint64_t referencesGreaterThanImports = 0;
+    std::uint64_t nonSequentialImports = 0;
+    std::uint64_t targetsAtEnd = 0;
+    std::uint64_t targetsPastEnd = 0;
+    std::uint64_t largestInstance = 0;
 
     for (const std::string& stem : stems) {
         auto validation = ra3::asset::validateStreamBundle(mounted.value(), stem);
@@ -368,6 +379,25 @@ int commandStreams(const Context& context)
             }
             hashesByTypeId[entry.id.typeId].insert(entry.typeHash);
         }
+        if (deep) {
+            auto deepValidation = ra3::asset::validateStreamDeep(mounted.value(), stem);
+            if (!deepValidation) {
+                problems.push_back(deepValidation.error().message);
+                continue;
+            }
+            relocationCount += deepValidation.value().relocations;
+            importCount += deepValidation.value().imports;
+            referencesGreaterThanImports +=
+                deepValidation.value().assetsWithMoreReferencesThanImports;
+            nonSequentialImports += deepValidation.value().nonSequentialImportSites;
+            targetsAtEnd += deepValidation.value().relocationTargetsAtInstanceEnd;
+            targetsPastEnd += deepValidation.value().relocationTargetsPastInstanceEnd;
+            largestInstance =
+                std::max(largestInstance, deepValidation.value().largestInstance);
+            problems.insert(
+                problems.end(), deepValidation.value().problems.begin(),
+                deepValidation.value().problems.end());
+        }
     }
 
     std::size_t varyingTypeHashes = 0;
@@ -391,6 +421,19 @@ int commandStreams(const Context& context)
               << "totalInstanceDataSize mismatches: " << totalSizeMismatches << "\n"
               << "type/instance id != name hash   : " << idMismatches << "\n"
               << "typeIds with varying typeHash   : " << varyingTypeHashes << " (information only)\n"
+              << "deep validation                 : " << (deep ? "yes" : "no") << "\n";
+    if (deep) {
+        std::cout << "relocations                     : " << relocationCount << "\n"
+                  << "imports                         : " << importCount << "\n"
+                  << "assets with refs > imports      : " << referencesGreaterThanImports << "\n"
+                  << "non-sequential import indices   : " << nonSequentialImports << "\n"
+                  << "relocation targets == size (ok) : " << targetsAtEnd << "\n"
+                  << "relocation targets > size       : " << targetsPastEnd << "\n"
+                  << "largest instance                : " << largestInstance << " bytes\n";
+    }
+    const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::steady_clock::now() - started);
+    std::cout << "wall time                       : " << elapsed.count() << " ms\n"
               << "top asset types:\n";
     constexpr std::size_t kTopTypes = 15;
     for (std::size_t i = 0; i < topTypes.size() && i < kTopTypes; ++i) {
@@ -403,6 +446,130 @@ int commandStreams(const Context& context)
         }
     }
     return problems.empty() ? 0 : 1;
+}
+
+ra3::Result<std::vector<std::uint8_t>> readDecodedRange(
+    ra3::io::DecodedStream& stream,
+    std::uint64_t offset,
+    std::size_t count,
+    const std::string& member)
+{
+    while (stream.position() < offset) {
+        const std::size_t amount = static_cast<std::size_t>(
+            std::min<std::uint64_t>(64 * 1024, offset - stream.position()));
+        auto skipped = stream.read(amount);
+        if (!skipped) return skipped.error();
+        if (skipped.value().empty()) {
+            return ra3::makeError(member + ": ended while seeking to decoded offset " +
+                                  std::to_string(offset));
+        }
+    }
+    std::vector<std::uint8_t> result;
+    result.reserve(count);
+    while (result.size() < count) {
+        auto chunk = stream.read(count - result.size());
+        if (!chunk) return chunk.error();
+        if (chunk.value().empty()) {
+            return ra3::makeError(member + ": ended while reading decoded offset " +
+                                  std::to_string(offset + result.size()));
+        }
+        result.insert(result.end(), chunk.value().begin(), chunk.value().end());
+    }
+    return result;
+}
+
+bool displayable(std::string_view value)
+{
+    if (value.empty()) return false;
+    return std::all_of(value.begin(), value.end(), [](char c) {
+        const auto byte = static_cast<unsigned char>(c);
+        return byte >= 0x20 && byte < 0x7F;
+    });
+}
+
+int commandAsset(const Context& context, const std::string& stem, const std::string& name)
+{
+    auto mounted = mountAll(context);
+    if (!mounted) return fail(mounted.error().message);
+    auto validation = ra3::asset::validateStreamBundle(mounted.value(), stem);
+    if (!validation) return fail(validation.error().message);
+    const ra3::asset::Manifest& manifest = validation.value().manifest;
+    const ra3::asset::AssetEntry* entry = manifest.findByName(name);
+    if (entry == nullptr) return fail(stem + ": asset not found: " + name);
+    const std::size_t index =
+        static_cast<std::size_t>(entry - manifest.entries().data());
+
+    auto bin = ra3::asset::openDecodedMember(mounted.value(), stem + ".bin");
+    auto relo = ra3::asset::openDecodedMember(mounted.value(), stem + ".relo");
+    auto imp = ra3::asset::openDecodedMember(mounted.value(), stem + ".imp");
+    if (!bin) return fail(bin.error().message);
+    if (!relo) return fail(relo.error().message);
+    if (!imp) return fail(imp.error().message);
+    auto instanceBytes = readDecodedRange(
+        bin.value(), entry->instanceDataOffset, entry->instanceDataSize, stem + ".bin");
+    auto relocationBytes = readDecodedRange(
+        relo.value(), entry->relocationDataOffset, entry->relocationDataSize, stem + ".relo");
+    auto importBytes = readDecodedRange(
+        imp.value(), entry->importsDataOffset, entry->importsDataSize, stem + ".imp");
+    if (!instanceBytes) return fail(instanceBytes.error().message);
+    if (!relocationBytes) return fail(relocationBytes.error().message);
+    if (!importBytes) return fail(importBytes.error().message);
+    const auto references = manifest.references(index);
+    auto instance = ra3::asset::AssetInstance::parse(
+        {instanceBytes.value().data(), instanceBytes.value().size()},
+        {relocationBytes.value().data(), relocationBytes.value().size()},
+        {importBytes.value().data(), importBytes.value().size()},
+        references, stem + "/" + name, entry->relocationDataOffset, entry->importsDataOffset);
+    if (!instance) return fail(instance.error().message);
+
+    std::cout << "asset       : " << name << "\n"
+              << "stem        : " << stem << "\n"
+              << "source      : " << manifest.sourceFile(index) << "\n"
+              << "typeId      : " << hex32(entry->id.typeId) << "\n"
+              << "instanceId  : " << hex32(entry->id.instanceId) << "\n"
+              << "typeHash    : " << hex32(entry->typeHash) << "\n"
+              << "instanceHash: " << hex32(entry->instanceHash) << "\n"
+              << "sizes       : " << entry->instanceDataSize << "/" << entry->relocationDataSize
+              << "/" << entry->importsDataSize << "\n"
+              << "flags       : " << entry->flags << "\n"
+              << "references:\n";
+    for (std::size_t i = 0; i < references.size(); ++i) {
+        const auto* target = manifest.find(references[i]);
+        std::cout << "  [" << (i + 1) << "] " << hex32(references[i].typeId) << ":"
+                  << hex32(references[i].instanceId);
+        if (target != nullptr) {
+            const std::size_t targetIndex =
+                static_cast<std::size_t>(target - manifest.entries().data());
+            std::cout << "  " << manifest.name(targetIndex);
+        }
+        std::cout << "\n";
+    }
+    std::cout << "relocations:\n";
+    for (const std::uint32_t site : instance.value().relocations().sites()) {
+        const auto target = instance.value().relocationTarget(site);
+        std::cout << "  " << hex32(site) << " -> "
+                  << (target ? hex32(*target) : std::string("(invalid)"));
+        if (site >= 4) {
+            auto text = instance.value().readString(site - 4);
+            if (text && displayable(text.value())) {
+                std::cout << "  string=\"" << text.value() << "\"";
+            }
+        }
+        std::cout << "\n";
+    }
+    std::cout << "imports:\n";
+    for (const auto& imported : instance.value().imports().imports()) {
+        const auto* target = manifest.find(imported.target);
+        std::cout << "  " << hex32(imported.site) << " -> [" << imported.referenceIndex << "] "
+                  << hex32(imported.target.typeId) << ":" << hex32(imported.target.instanceId);
+        if (target != nullptr) {
+            const std::size_t targetIndex =
+                static_cast<std::size_t>(target - manifest.entries().data());
+            std::cout << "  " << manifest.name(targetIndex);
+        }
+        std::cout << "\n";
+    }
+    return 0;
 }
 
 int commandManifest(const Context& context, const std::string& stem, std::size_t limit)
@@ -502,7 +669,8 @@ int main(int argc, char** argv)
         return commandUnpackCheck(context.value(), args[1]);
     }
     if (command == "streams") {
-        return commandStreams(context.value());
+        return commandStreams(
+            context.value(), args.size() >= 2 && args[1] == "--deep");
     }
     if (command == "manifest" && args.size() >= 2) {
         std::size_t limit = 50;
@@ -510,6 +678,9 @@ int main(int argc, char** argv)
             limit = static_cast<std::size_t>(std::strtoul(args[3].c_str(), nullptr, 10));
         }
         return commandManifest(context.value(), args[1], limit);
+    }
+    if (command == "asset" && args.size() >= 3) {
+        return commandAsset(context.value(), args[1], args[2]);
     }
     std::cerr << kUsage;
     return 1;
