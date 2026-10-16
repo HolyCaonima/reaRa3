@@ -1,0 +1,3 @@
+address	status	owner	module	notes
+004d2490		recon/vsplit	io	contains derived BigHandler construction; calls 009F5F40 then overwrites primary vptr with 00BDAF98 (documented in big_filesystem.md); whole function has other responsibilities
+009f5f40	reversed	recon/vsplit	io	BigHandler base constructor; writes primary vptr 00C69460 (documented in big_filesystem.md)
