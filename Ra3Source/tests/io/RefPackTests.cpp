@@ -6,6 +6,7 @@
 #include <vector>
 
 using ra3::io::decompressRefPack;
+using ra3::io::decompressRefPackPrefix;
 using ra3::io::readRefPackHeader;
 
 namespace {
@@ -72,4 +73,18 @@ RA3_TEST(RefPack_RejectsMalformedStreams)
     RA3_CHECK(rejects({0x10, 0xFB, 0x00, 0x00, 0x09, 0xE0, 'A', 'B', 'C', 'D', 0x08, 0x05, 0xFC}));  // copy before start
     RA3_CHECK(rejects({0x10, 0xFB, 0x00, 0x00, 0x01, 0xFD, 'A', 0x00}));                       // trailing byte
     RA3_CHECK(rejects({0x10, 0xFB, 0x00, 0x00, 0x02, 0xFD, 'A', 'B'}));                        // longer than declared
+}
+
+RA3_TEST(RefPack_DecodesPrefixWithoutTheRestOfTheStream)
+{
+    const std::vector<std::uint8_t> partial = {
+        0x10, 0xFB, 0x00, 0x00, 0x13,
+        0xE0, 'A', 'B', 'C', 'D',
+    };
+    auto prefix = decompressRefPackPrefix(partial.data(), partial.size(), 4);
+    RA3_REQUIRE_OK(prefix);
+    RA3_CHECK_EQ(std::string(prefix.value().begin(), prefix.value().end()), std::string("ABCD"));
+
+    auto tooLong = decompressRefPackPrefix(partial.data(), partial.size(), 5);
+    RA3_CHECK(!tooLong.ok());
 }

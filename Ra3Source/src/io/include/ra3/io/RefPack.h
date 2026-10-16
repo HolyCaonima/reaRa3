@@ -34,4 +34,9 @@ std::optional<RefPackHeader> readRefPackHeader(const std::uint8_t* data, std::si
 // end of `size` and produces exactly the declared number of bytes.
 Result<std::vector<std::uint8_t>> decompressRefPack(const std::uint8_t* data, std::size_t size);
 
+// Decodes at most `maxOutput` bytes and does not require the compressed input
+// to contain the remainder of the stream.
+Result<std::vector<std::uint8_t>> decompressRefPackPrefix(
+    const std::uint8_t* data, std::size_t size, std::size_t maxOutput);
+
 }  // namespace ra3::io

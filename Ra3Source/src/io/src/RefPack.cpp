@@ -1,5 +1,6 @@
 #include <ra3/io/RefPack.h>
 
+#include <algorithm>
 #include <string>
 
 namespace ra3::io {
@@ -14,34 +15,21 @@ std::uint32_t readBigEndian(const std::uint8_t* p, std::size_t bytes)
     return value;
 }
 
-}  // namespace
-
-std::optional<RefPackHeader> readRefPackHeader(const std::uint8_t* data, std::size_t size)
-{
-    if (size < 2 || (data[0] & 0x3E) != 0x10 || data[1] != 0xFB) {
-        return std::nullopt;
-    }
-    RefPackHeader header;
-    header.flags = data[0];
-    const std::size_t sizeBytes = (header.flags & 0x80) ? 4 : 3;
-    const std::size_t skip = (header.flags & 0x01) ? sizeBytes : 0;
-    header.headerSize = 2 + skip + sizeBytes;
-    if (size < header.headerSize) {
-        return std::nullopt;
-    }
-    header.decompressedSize = readBigEndian(data + 2 + skip, sizeBytes);
-    return header;
-}
-
-Result<std::vector<std::uint8_t>> decompressRefPack(const std::uint8_t* data, std::size_t size)
+// With no `prefix`, the whole stream is decoded and checked strictly. With a
+// prefix length, decoding stops once that many bytes exist, so the input may
+// end anywhere after the commands that produce them.
+Result<std::vector<std::uint8_t>> inflate(
+    const std::uint8_t* data, std::size_t size, std::optional<std::size_t> prefix)
 {
     const auto header = readRefPackHeader(data, size);
     if (!header) {
         return makeError("not a RefPack stream");
     }
+    const bool whole = !prefix;
+    const std::size_t limit = header->decompressedSize;
+    const std::size_t target = whole ? limit : std::min(*prefix, limit);
     std::vector<std::uint8_t> out;
-    out.reserve(header->decompressedSize);
-    const std::uint32_t limit = header->decompressedSize;
+    out.reserve(target);
     std::size_t in = header->headerSize;
 
     const auto fail = [&](const char* what) {
@@ -49,8 +37,11 @@ Result<std::vector<std::uint8_t>> decompressRefPack(const std::uint8_t* data, st
     };
 
     for (;;) {
+        if (!whole && out.size() == target) {
+            return out;
+        }
         if (in >= size) {
-            return fail("stream ends without a stop command");
+            return fail(whole ? "stream ends without a stop command" : "truncated before requested prefix");
         }
         const std::uint8_t b0 = data[in];
         std::size_t literal = 0;
@@ -90,21 +81,23 @@ Result<std::vector<std::uint8_t>> decompressRefPack(const std::uint8_t* data, st
         }
         in += commandSize;
 
-        if (size - in < literal) {
-            return fail("literal run past end of input");
-        }
-        if (out.size() + literal + length > limit) {
+        if (whole && out.size() + literal + length > limit) {
             return fail("output exceeds declared size");
         }
-        out.insert(out.end(), data + in, data + in + literal);
-        in += literal;
+        const std::size_t literalTaken = std::min(literal, target - out.size());
+        if (size - in < literalTaken) {
+            return fail("literal run past end of input");
+        }
+        out.insert(out.end(), data + in, data + in + literalTaken);
+        in += literalTaken;
 
-        if (length != 0) {
+        const std::size_t lengthTaken = std::min(length, target - out.size());
+        if (lengthTaken != 0) {
             if (distance > out.size()) {
                 return fail("back-reference before start of output");
             }
             const std::size_t from = out.size() - distance;
-            for (std::size_t i = 0; i < length; ++i) {
+            for (std::size_t i = 0; i < lengthTaken; ++i) {
                 const std::uint8_t byte = out[from + i];
                 out.push_back(byte);
             }
@@ -113,13 +106,43 @@ Result<std::vector<std::uint8_t>> decompressRefPack(const std::uint8_t* data, st
             break;
         }
     }
-    if (in != size) {
+    if (whole && in != size) {
         return fail("trailing bytes after stop command");
     }
-    if (out.size() != limit) {
-        return fail("output shorter than declared size");
+    if (out.size() != target) {
+        return fail(whole ? "output shorter than declared size" : "stream ends before requested prefix");
     }
     return out;
+}
+
+}  // namespace
+
+std::optional<RefPackHeader> readRefPackHeader(const std::uint8_t* data, std::size_t size)
+{
+    if (size < 2 || (data[0] & 0x3E) != 0x10 || data[1] != 0xFB) {
+        return std::nullopt;
+    }
+    RefPackHeader header;
+    header.flags = data[0];
+    const std::size_t sizeBytes = (header.flags & 0x80) ? 4 : 3;
+    const std::size_t skip = (header.flags & 0x01) ? sizeBytes : 0;
+    header.headerSize = 2 + skip + sizeBytes;
+    if (size < header.headerSize) {
+        return std::nullopt;
+    }
+    header.decompressedSize = readBigEndian(data + 2 + skip, sizeBytes);
+    return header;
+}
+
+Result<std::vector<std::uint8_t>> decompressRefPack(const std::uint8_t* data, std::size_t size)
+{
+    return inflate(data, size, std::nullopt);
+}
+
+Result<std::vector<std::uint8_t>> decompressRefPackPrefix(
+    const std::uint8_t* data, std::size_t size, std::size_t maxOutput)
+{
+    return inflate(data, size, maxOutput);
 }
 
 }  // namespace ra3::io
