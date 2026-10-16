@@ -1,10 +1,14 @@
 #include <ra3/common/ByteString.h>
+#include <ra3/common/Crc32.h>
+#include <ra3/math/Math.h>
 
 #include <algorithm>
 #include <cstdint>
+#include <cstring>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -46,6 +50,43 @@ std::uint32_t number(const std::string& text)
     return static_cast<std::uint32_t>(std::stoul(text, nullptr, 0));
 }
 
+float floatFromBits(const std::string& text)
+{
+    const std::uint32_t bits = number(text);
+    float value = 0.0F;
+    std::memcpy(&value, &bits, sizeof(value));
+    return value;
+}
+
+void printFloat(float value)
+{
+    std::uint32_t bits = 0;
+    std::memcpy(&bits, &value, sizeof(bits));
+    std::cout << bits << '\n';
+}
+
+void setFpuControlWord(std::uint16_t value)
+{
+#if defined(_MSC_VER) && defined(_M_IX86)
+    __asm {
+        fldcw value
+    }
+#else
+    (void)value;
+#endif
+}
+
+template <typename T>
+T objectFromBytes(const std::vector<std::uint8_t>& bytes)
+{
+    T value{};
+    if (bytes.size() != sizeof(T)) {
+        throw std::runtime_error("incorrect object size");
+    }
+    std::memcpy(&value, bytes.data(), sizeof(value));
+    return value;
+}
+
 }  // namespace
 
 int main()
@@ -68,7 +109,10 @@ int main()
         const char* const firstPtr = textPointer(first, firstText);
         const char* const secondPtr = textPointer(second, secondText);
 
-        if (op == "copylim") {
+        if (op == "fpcw") {
+            setFpuControlWord(static_cast<std::uint16_t>(number(firstText)));
+            std::cout << "ok\n";
+        } else if (op == "copylim") {
             const std::uint32_t count = number(secondText);
             std::vector<std::uint8_t> output(static_cast<std::size_t>(count) + 2, 0xA5);
             char* destination = firstText == "-" ? nullptr : reinterpret_cast<char*>(output.data());
@@ -132,6 +176,72 @@ int main()
             std::uint32_t codePoint = 0;
             const auto* end = ra3::common::decodeUtf8AndAdvance(first.data(), codePoint);
             std::cout << codePoint << ' ' << (end - first.data()) << '\n';
+        } else if (op == "crc32") {
+            std::cout << ra3::common::crc32CString(firstPtr) << '\n';
+        } else if (op == "maximum" || op == "minimum") {
+            const float a = floatFromBits(firstText);
+            const float b = floatFromBits(secondText);
+            printFloat(op == "maximum" ? ra3::math::maximum(a, b) : ra3::math::minimum(a, b));
+        } else if (op == "clamp") {
+            printFloat(ra3::math::clamp(
+                floatFromBits(firstText), floatFromBits(secondText), floatFromBits(thirdText)));
+        } else if (op == "equal3") {
+            std::cout << ra3::math::exactlyEqual(
+                objectFromBytes<ra3::math::Vector3>(first),
+                objectFromBytes<ra3::math::Vector3>(second)) << '\n';
+        } else if (op == "equal2range") {
+            const auto* a = reinterpret_cast<const ra3::math::Vector2*>(first.data());
+            const auto* b = reinterpret_cast<const ra3::math::Vector2*>(second.data());
+            std::cout << ra3::math::exactlyEqualVector2Range(
+                a, a + first.size() / sizeof(*a), b) << '\n';
+        } else if (op == "distance2" || op == "distance") {
+            const auto a = objectFromBytes<ra3::math::Vector3>(first);
+            const auto b = objectFromBytes<ra3::math::Vector3>(second);
+            printFloat(op == "distance2"
+                    ? ra3::math::squaredDistance(a, b)
+                    : ra3::math::distance(a, b));
+        } else if (op == "approximatelength") {
+            printFloat(ra3::math::approximateLength(
+                objectFromBytes<ra3::math::Vector3>(first)));
+        } else if (op == "normalize2") {
+            const auto input = objectFromBytes<ra3::math::Vector2>(first);
+            ra3::math::Vector2 output{};
+            ra3::math::normalize(input, output);
+            printHex(reinterpret_cast<const std::uint8_t*>(&output), sizeof(output));
+        } else if (op == "scale3") {
+            const auto output = ra3::math::scaled(
+                objectFromBytes<ra3::math::Vector3>(first), floatFromBits(secondText));
+            printHex(reinterpret_cast<const std::uint8_t*>(&output), sizeof(output));
+        } else if (op == "transform3") {
+            const auto output = ra3::math::transformDirection(
+                objectFromBytes<ra3::math::Matrix3x4>(first),
+                objectFromBytes<ra3::math::Vector3>(second));
+            printHex(reinterpret_cast<const std::uint8_t*>(&output), sizeof(output));
+        } else if (op == "offsetdistance2") {
+            printFloat(ra3::math::squaredDistanceFromOffset38(
+                first.data(), objectFromBytes<ra3::math::Vector3>(second)));
+        } else if (op == "clampoffset68") {
+            std::vector<std::uint8_t> object(0x6C);
+            std::memcpy(object.data() + 0x68, &first[0], sizeof(float));
+            ra3::math::clampFloatAtOffset68(
+                object.data(), floatFromBits(secondText), floatFromBits(thirdText));
+            printHex(object.data() + 0x68, sizeof(float));
+        } else if (op == "colorargb") {
+            const auto output = ra3::math::colorFromArgb(number(firstText));
+            printHex(reinterpret_cast<const std::uint8_t*>(&output), sizeof(output));
+        } else if (op == "contains2") {
+            std::cout << ra3::math::containsInclusive(
+                objectFromBytes<ra3::math::Vector2>(first),
+                objectFromBytes<ra3::math::Vector2>(second),
+                objectFromBytes<ra3::math::Vector2>(fromHex(thirdText))) << '\n';
+        } else if (op == "separate2") {
+            auto a = objectFromBytes<ra3::math::Vector2>(first);
+            auto b = objectFromBytes<ra3::math::Vector2>(second);
+            ra3::math::separate(a, b, floatFromBits(thirdText));
+            std::uint8_t output[sizeof(a) + sizeof(b)]{};
+            std::memcpy(output, &a, sizeof(a));
+            std::memcpy(output + sizeof(a), &b, sizeof(b));
+            printHex(output, sizeof(output));
         } else {
             std::cout << "error\n";
         }

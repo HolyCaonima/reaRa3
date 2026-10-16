@@ -14,4 +14,5 @@ ra3_add_shared_library(ra3hook
         Ra3::asset
         Ra3::common
         Ra3::hook
-        Ra3::io)
+        Ra3::io
+        Ra3::math)

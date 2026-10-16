@@ -1,0 +1,18 @@
+address	status	owner	module	notes
+00504620	reversed	recon/ports2	math	maximum(float,float); ra3::math::maximum; oracle 2017/2017 Debug+Release
+00504650	reversed	recon/ports2	math	clamp(float,float,float); ra3::math::clamp; oracle 2017/2017 Debug+Release
+00504680	reversed	recon/ports2	math	Vector3 exact equality; ra3::math::exactlyEqual; oracle 2017/2017 Debug+Release
+005046c0	reversed	recon/ports2	math	Vector2 range exact equality; ra3::math::exactlyEqualVector2Range; oracle 2017/2017 Debug+Release
+005049e0	reversed	recon/ports2	math	Vector3 squared distance, x87 caller CW; ra3::math::squaredDistance; oracle 2000/2000 at CW 007f/027f/037f Debug+Release; NaN payload emulator-unreliable
+00522a30	reversed	recon/ports2	math	minimum(float,float); ra3::math::minimum; oracle 2017/2017 Debug+Release
+00523240	reversed	recon/ports2	math	Vector3 approximate length; ra3::math::approximateLength; oracle 2000/2000 at CW 007f/027f/037f Debug+Release; NaN payload emulator-unreliable
+005235b0	reversed	recon/ports2	math	ARGB to Vector4; ra3::math::colorFromArgb; oracle 2017/2017 Debug+Release
+00528bc0	reversed	recon/ports2	math	inclusive Vector2 bounds test; ra3::math::containsInclusive; oracle 2017/2017 Debug+Release
+00528c00	reversed	recon/ports2	math	separate Vector2 pair; ra3::math::separate; oracle 2017/2017 Debug+Release
+0055a9b0	reversed	recon/ports2	math	clamp object float at +0x68; ra3::math::clampFloatAtOffset68; oracle 2017/2017 Debug+Release
+00564150	reversed	recon/ports2	math	Vector3 distance, x87 caller CW; ra3::math::distance; oracle 2000/2000 at CW 007f/027f/037f Debug+Release; NaN payload emulator-unreliable
+0056f370	reversed	recon/ports2	math	Vector2 normalize, SSE then x87 reciprocal sqrt; ra3::math::normalize; oracle 2000/2000 at CW 007f/027f/037f Debug+Release; NaN payload emulator-unreliable
+006abcb0	reversed	recon/ports2	math	squared distance from object Vector3 at +0x38; ra3::math::squaredDistanceFromOffset38; oracle 2000/2000 at CW 007f/027f/037f Debug+Release; NaN payload emulator-unreliable
+0092a0d0	reversed	recon/ports2	common	null-terminated IEEE CRC-32; ra3::common::crc32CString; oracle 2004/2004 Debug+Release
+009814e0	reversed	recon/ports2	math	scale object Vector3 at +0x10 by float at +0x24; ra3::math::scaled; oracle 2017/2017 Debug+Release
+00994a10	reversed	recon/ports2	math	Matrix3x4 direction transform; ra3::math::transformDirection; oracle 2000/2000 finite Debug+Release; multi-NaN payload emulator-unreliable
