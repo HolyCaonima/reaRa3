@@ -99,7 +99,7 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [x] 路线 A 通用化：`src/hook/dll/Targets.cpp` 目标表，按目标开关 off/shadow/replace，全部或全不安装。第二个目标 namehash（0x00417DB0）实机 shadow 5579/5579、replace 5554/5554，两目标同时替换正常进主菜单
 - [x] 第三个 hook 目标 pathcompare（0x009F3650，`ra3::io::comparePathNames`，复刻非 stricmp 的排序）：实机 shadow 227,359/227,359，三目标同时 replace 正常进主菜单
 - [x] 进入对局的实机覆盖：三目标 shadow 在遭遇战中 refpack 58/58、namehash 117,975/117,975、pathcompare 451,773/451,773；三目标 replace 同样进入对局并正常运行（injection.md §5.4 运行 8、9）
-- [ ] 第四个 hook 目标 refpackprobe（0x009F74F0，`ra3::io::probeRefPackSize`，flag 0x01 时返回压缩大小的怪癖照搬）：离线预言机 4,024/4,024，实机待跑
+- [x] 第四个 hook 目标 refpackprobe（0x009F74F0，`ra3::io::probeRefPackSize`，flag 0x01 时返回压缩大小的怪癖照搬）：离线预言机 4,024/4,024；遭遇战中 shadow 556/556，四目标同时 replace 进入对局正常（injection.md §5.4 运行 10、11）
 - [x] 资源类型目录与名称哈希 — 已合并（recon/types）。`asset_types.tsv` 266 个类型全部有名（9 个只在程序里出现的用 XSD 标识符反查）；instanceId = 转小写的 SuperFastHash 变体（0x00417DB0），typeId = 不转小写的同一算法；C++ `ra3/asset/NameHash.h`，`ra3tool streams` 全量 118,232 条两项 0 不等。typeHash 语义未知（docs/design/asset_types.md）
 - [x] Ghidra 函数导出刷新（随 hookcat 合并完成）
 - [x] 离线差分预言机 `tools/analysis/emulate.py`：用 unicorn 从磁盘映像执行单个 clean 叶函数（只映射 .text/.rdata/.data，SecuROM 节不映射），可把 IAT 槽绑到 Python 桩；namehash 随机 3000/3000 与参考实现一致，pathcompare 与单测一致

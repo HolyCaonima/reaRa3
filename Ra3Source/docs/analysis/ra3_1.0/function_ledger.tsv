@@ -29997,7 +29997,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009f7290	FUN_009f7290	.text	21		clean	unknown		unanalyzed	
 009f72b0	FUN_009f72b0	.text	39		clean	unknown		unanalyzed	
 009f72e0	FUN_009f72e0	.text	522		clean	io	main	verified	RefPack one-shot decoder; ra3::io::decompressRefPack; live shadow 38/38 match, replace 38/38 to main menu (injection.md 5.4)
-009f74f0	FUN_009f74f0	.text	65		clean	io	main	reversed	RefPack size probe; ra3::io::readRefPackHeader
+009f74f0	FUN_009f74f0	.text	65		clean	io	main	verified	RefPack size probe (first size field after signature; compressed size when flag 0x01); ra3::io::probeRefPackSize; emulator 4024/4024; live shadow 556/556 in skirmish, replace 549/549 in skirmish (injection.md 5.4 runs 10-11)
 009f7540	FUN_009f7540	.text	68		clean	unknown		unanalyzed	
 009f7590	FUN_009f7590	.text	42		clean	unknown		unanalyzed	
 009f75c0	FUN_009f75c0	.text	89		clean	unknown		unanalyzed	

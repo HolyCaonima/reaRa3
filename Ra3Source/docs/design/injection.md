@@ -208,6 +208,8 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 7 | 三目标 replace | `--wait-window` | refpack 38/38；namehash 5603/5603；pathcompare 230337/230337 | 三个原函数都不再执行；主菜单正常 |
 | 8 | 三目标 shadow，进入遭遇战 | `--wait-window` | 对局中 refpack 58/58；namehash 117975/117975；pathcompare 451773/451773 | 地图加载与对局期间全部一致 |
 | 9 | 三目标 replace，进入遭遇战 | `--wait-window` | 对局中 refpack 58/58；namehash 115099/115099；pathcompare 389740/389740 | 原函数不执行也能进入对局并正常运行 |
+| 10 | 四目标 shadow，进入遭遇战（asset2 合并后的解码器） | `--wait-window` | 对局中 refpack 58/58；namehash 116231/116231；pathcompare 467104/467104；refpackprobe 556/556 | 全部一致 |
+| 11 | 四目标 replace，进入遭遇战 | `--wait-window` | 对局中 refpack 58/58；namehash 117452/117452；pathcompare 575667/575667；refpackprobe 549/549 | 四个原函数都不执行，对局正常运行 |
 
 运行 8、9 的操作：主菜单点掉离线提示 → Versus → Skirmish → 默认设置（Battlebase
 Beta，单人，阵营随机）→ BEGIN。点击由 `SetCursorPos`/`mouse_event` 发往前台游戏
