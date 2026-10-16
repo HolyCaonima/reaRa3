@@ -251,6 +251,7 @@ bool installTargets(const Config& config)
             config.testAddress != 0 ? config.testAddress : base + target.rva);
         spec.expectedBytes = target.expected;
         spec.stolenLength = target.stolenLength;
+        spec.rel32Offsets = target.rel32Offsets;
         spec.replacement = target.replacement;
         spec.trampolineOut = &target.state->original;
         auto detour = ra3::hook::installDetour(spec);

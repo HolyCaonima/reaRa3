@@ -3,8 +3,11 @@
 
 #include <ra3/hook/Detour.h>
 
+#include <Windows.h>
+
 #include <array>
 #include <cstdint>
+#include <cstring>
 #include <string>
 #include <vector>
 
@@ -71,4 +74,47 @@ RA3_TEST(Hook_InstallsCallsTrampolineAndUninstalls)
     destination.fill(0);
     RA3_CHECK_EQ(decoder.function()(destination.data(), source.data()), 4);
     RA3_CHECK_EQ(g_replacementCalls, 1u);
+}
+
+namespace {
+
+using EmittedCall = int(__cdecl*)();
+void* g_callTrampoline = nullptr;
+
+int __cdecl callReplacement()
+{
+    return reinterpret_cast<EmittedCall>(g_callTrampoline)() + 1;
+}
+
+}  // namespace
+
+RA3_TEST(Hook_RebasesStolenRel32Call)
+{
+    // push esi; call helper; pop esi; ret / helper: mov eax, 42; ret
+    const std::array<std::uint8_t, 14> code = {
+        0x56, 0xE8, 0x02, 0x00, 0x00, 0x00, 0x5E, 0xC3,
+        0xB8, 0x2A, 0x00, 0x00, 0x00, 0xC3};
+    auto* memory = static_cast<std::uint8_t*>(VirtualAlloc(
+        nullptr, code.size(), MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE));
+    RA3_REQUIRE(memory != nullptr);
+    std::memcpy(memory, code.data(), code.size());
+    const auto function = reinterpret_cast<EmittedCall>(memory);
+    RA3_CHECK_EQ(function(), 42);
+
+    ra3::hook::HookSpec spec;
+    spec.target = memory;
+    spec.expectedBytes.assign(code.begin(), code.begin() + 6);
+    spec.stolenLength = 6;
+    spec.rel32Offsets = {1};
+    spec.replacement = reinterpret_cast<void*>(&callReplacement);
+    spec.trampolineOut = &g_callTrampoline;
+    auto installed = ra3::hook::installDetour(spec);
+    RA3_REQUIRE_OK(installed);
+    RA3_CHECK_EQ(function(), 43);
+    RA3_REQUIRE_OK(installed.value()->uninstall());
+    RA3_CHECK_EQ(function(), 42);
+
+    spec.rel32Offsets = {2};
+    RA3_CHECK(!ra3::hook::installDetour(spec).ok());
+    VirtualFree(memory, 0, MEM_RELEASE);
 }

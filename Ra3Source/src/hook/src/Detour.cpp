@@ -219,12 +219,29 @@ Result<std::unique_ptr<Detour>> installDetour(const HookSpec& spec)
     if (!std::equal(spec.expectedBytes.begin(), spec.expectedBytes.end(), target)) {
         return makeError("target bytes do not match the expected game build");
     }
+    for (const std::size_t offset : spec.rel32Offsets) {
+        if (offset + jumpSize > spec.stolenLength
+            || (spec.expectedBytes[offset] != 0xE8 && spec.expectedBytes[offset] != 0xE9)) {
+            return makeError("rel32 relocation does not name a stolen E8/E9 instruction");
+        }
+    }
 
     std::uint8_t* trampoline = allocateTrampoline(spec.stolenLength + jumpSize);
     if (trampoline == nullptr) {
         return makeError(windowsError("VirtualAlloc", GetLastError()));
     }
     std::memcpy(trampoline, target, spec.stolenLength);
+    for (const std::size_t offset : spec.rel32Offsets) {
+        std::uint32_t relative = 0;
+        std::memcpy(&relative, target + offset + 1, sizeof(relative));
+        const std::uint32_t destination =
+            static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(target + offset))
+            + static_cast<std::uint32_t>(jumpSize) + relative;
+        writeJump(
+            trampoline + offset, trampoline + offset,
+            reinterpret_cast<const void*>(static_cast<std::uintptr_t>(destination)));
+        trampoline[offset] = target[offset];
+    }
     writeJump(trampoline + spec.stolenLength, trampoline + spec.stolenLength, target + spec.stolenLength);
     FlushInstructionCache(GetCurrentProcess(), trampoline, spec.stolenLength + jumpSize);
 

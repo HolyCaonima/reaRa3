@@ -13,6 +13,9 @@ struct HookSpec {
     void* target = nullptr;
     std::vector<std::uint8_t> expectedBytes;
     std::size_t stolenLength = 0;
+    // Offsets of E8/E9 rel32 call/jmp instructions inside the stolen bytes;
+    // the trampoline copy is rebased so they still reach the same destination.
+    std::vector<std::size_t> rel32Offsets;
     void* replacement = nullptr;
     void** trampolineOut = nullptr;
 };

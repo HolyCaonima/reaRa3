@@ -36,12 +36,14 @@ struct Target {
     const char* key;
     std::uintptr_t rva;
     std::vector<std::uint8_t> expected;
-    // Whole, position-independent instructions covering at least 5 bytes.
+    // Whole instructions covering at least 5 bytes. The only position-dependent
+    // instructions allowed are E8/E9 rel32 at the offsets in rel32Offsets.
     std::size_t stolenLength;
     void* replacement;
     TargetState* state;
     // Targets that read game-owned layouts require an explicit key in config.
     bool explicitOnly = false;
+    std::vector<std::size_t> rel32Offsets{};
 };
 
 const std::vector<Target>& targets();
