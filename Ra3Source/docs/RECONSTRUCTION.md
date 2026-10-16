@@ -97,5 +97,5 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [ ] asset 里程碑 2：流式 RefPack、重定位/导入表、全量深度校验 — 子 agent，分支 recon/asset2
 - [ ] 注入可行性研究（决定主路线）：hook 库、注入器、影子/替换模式的 RefPack hook（0x009F72E0），只在自建的假目标进程上测试 — 子 agent，分支 recon/hook；真实游戏实验由主控在审查后执行
 - [ ] 资源类型目录（0x00417220 的全部注册）与实例名哈希算法（用仿真找） — 子 agent，分支 recon/types，独占 Ghidra 工程
-- [ ] 模块归属工具（台账 + 虚表 + 地址邻近，带留出验证）并刷新模块映射 — 子 agent，分支 recon/modmap
+- [x] 模块归属工具 `tools/analysis/attribute_modules.py` → `module_estimates.tsv`：台账/虚表/64 KiB 邻近三级归属，留出验证虚表 4/4、邻近 35/38（92%）；仍未归属 26,050。模块映射已按新台账刷新。asset 的邻近估计（961，留出 1/2）偏粗，慎用
 - [ ] 虚函数按虚表归类到 C++ 类（用 vtables.tsv）
