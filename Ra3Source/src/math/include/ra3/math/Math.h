@@ -45,11 +45,18 @@ bool exactlyEqualVector2Range(
 float squaredDistance(const Vector3& a, const Vector3& b) noexcept;
 float distance(const Vector3& a, const Vector3& b) noexcept;
 float approximateLength(const Vector3& value) noexcept;
+#if defined(_MSC_VER) && defined(_M_IX86)
+float __cdecl approximateLengthExtended(const Vector3* value) noexcept;
+#endif
 
 void normalize(const Vector2& input, Vector2& output) noexcept;
 Vector3 scaled(const Vector3& input, float scale) noexcept;
 Vector3 transformDirection(const Matrix3x4& matrix, const Vector3& input) noexcept;
 float squaredDistanceFromOffset38(const void* object, const Vector3& point) noexcept;
+#if defined(_MSC_VER) && defined(_M_IX86)
+float __fastcall squaredDistanceFromOffset38Extended(
+    const void* object, void* unused, const Vector3* point) noexcept;
+#endif
 void clampFloatAtOffset68(void* object, float lower, float upper) noexcept;
 
 Vector4 colorFromArgb(std::uint32_t argb) noexcept;

@@ -27,19 +27,34 @@
 按 x87 顺序计算 `smallest*0.25 + middle*0.34375 + largest`。这些实现不修改控制字，
 因此继承调用者的精度和舍入设置。
 
+`squaredDistance`、`distance`、`approximateLengthExtended` 和
+`squaredDistanceFromOffset38Extended` 的原 ABI 要求把计算结果留在 80 位 `ST0`；
+不能经 MSVC 的 `float` 临时量返回。它们的 x86 实现和 hook 入口均使用 naked 汇编。
+shadow 把游戏值和重建值分别 `fstp tbyte` 到两个十字节临时区，逐字节比较后再
+`fld tbyte` 游戏值；replace 以同样方式跨统计调用保存重建值。两条路径返回时均恰有
+一个未舍入值位于 x87 栈顶。其余 x87 返回目标只把内存中的单精度值 `fld` 到 `ST0`，
+不存在额外尾数或扩展指数需要保留。
+
 ## 3. 离线验证
 
 `tools/analysis/ports/verify_math.py` 通过 Unicorn 执行 shipped 函数，通过
 `ra3_portcheck` 执行重建函数。x87 敏感函数在 `CW=0x007F`（24 位）、
-`0x027F`（53 位）、`0x037F`（64 位）下各跑 2,000 个随机有限输入；每个组合均
-`2000/2000`。其余数学函数跑 2,000 个随机有限输入及 17 组边界值，均
-`2017/2017`；CRC-32 为 `2004/2004`。Debug 与 Release 各执行一次。
+`0x027F`（53 位）、`0x037F`（64 位）下各跑 2,000 个随机有限输入及 14 组有限
+边界值；每个组合均 `2014/2014`。上述四个扩展返回函数把 Unicorn 的物理 FP 寄存器
+按 TOP 映射为 `ST0`，与 portcheck 立即 `fstp tbyte` 输出的完整十字节值比较；用例包含
+会超出单精度指数范围的极大差值和 denormal。其余数学函数跑 2,000 个
+随机有限输入及 31 组边界值，均 `2031/2031`；方向变换为 `2000/2000`，
+CRC-32 为 `2004/2004`。Debug 与 Release 各执行一次。
 
 Unicorn 对 signaling NaN 的 x87 `fld/fstp` 静默化以及多个 NaN 参与 SSE 运算时的
 payload 选择与真实 x86 硬件不一致：相同指令序列会产生不同 payload。因此 x87 敏感
 函数和矩阵变换的 NaN payload 仍需实机 shadow；这里不把该部分记为离线 bit-exact
 证据。普通 quiet NaN、正负零、denormal 和正负无穷已覆盖于不经过上述不可靠路径的
 函数。
+
+每个使用 x87 的 hook 在入口记录一次调用者的控制字和 MXCSR。汇总行输出首次观察值
+`cw=0x.... mxcsr=0x........`，并以 `cw_changes` 统计后续控制字不同的调用；hook
+不写控制字或 MXCSR。该证据用于实机确认 D3D9 场景实际采用的精度控制。
 
 ## 4. 本批范围
 

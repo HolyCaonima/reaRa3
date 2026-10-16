@@ -38,7 +38,12 @@ HEAP_SIZE = 0x1000000
 STUB_BASE = 0x7FE00000
 RETURN_SENTINEL = STUB_BASE + 0xFF0
 FLOAT_RETURN_STUB = STUB_BASE + 0xFE0
+FPU_POP_STUB = STUB_BASE + 0xFD0
 FLOAT_RESULT = HEAP_BASE + HEAP_SIZE - 0x10
+FPU_REGISTERS = (
+    r.UC_X86_REG_FP0, r.UC_X86_REG_FP1, r.UC_X86_REG_FP2, r.UC_X86_REG_FP3,
+    r.UC_X86_REG_FP4, r.UC_X86_REG_FP5, r.UC_X86_REG_FP6, r.UC_X86_REG_FP7,
+)
 
 
 @dataclass(frozen=True)
@@ -81,6 +86,10 @@ class Emulator:
             FLOAT_RETURN_STUB,
             b"\xD9\x1D" + struct.pack("<I", FLOAT_RESULT)
             + b"\xE9" + struct.pack("<i", relative))
+        pop_relative = RETURN_SENTINEL - (FPU_POP_STUB + 7)
+        self.uc.mem_write(
+            FPU_POP_STUB,
+            b"\xDD\xD8\xE9" + struct.pack("<i", pop_relative))
         self._heap = HEAP_BASE
         self._stubs: dict[int, Callable[["Emulator"], int]] = {}
         self._next_stub = STUB_BASE
@@ -98,7 +107,10 @@ class Emulator:
         if address == RETURN_SENTINEL:
             uc.emu_stop()
             return
-        if FLOAT_RETURN_STUB <= address < FLOAT_RETURN_STUB + 11:
+        if (
+            FLOAT_RETURN_STUB <= address < FLOAT_RETURN_STUB + 11
+            or FPU_POP_STUB <= address < FPU_POP_STUB + 7
+        ):
             return
         stub = self._stubs.get(address)
         if stub is None:
@@ -181,3 +193,17 @@ class Emulator:
             max_instructions=max_instructions, _return_address=FLOAT_RETURN_STUB)
         bits = struct.unpack("<I", self.uc.mem_read(FLOAT_RESULT, 4))[0]
         return result, bits
+
+    def call_float80(self, address: int, stack_args: Sequence[int] = (), *,
+                     ecx: int = 0, edx: int = 0, fpu_control_word: int = 0x037F,
+                     max_instructions: int = 5_000_000) -> tuple[CallResult, bytes]:
+        """Call an x87-returning function and capture and pop its full 80-bit ST0."""
+        self.uc.reg_write(r.UC_X86_REG_FPCW, fpu_control_word)
+        result = self.call(
+            address, stack_args, ecx=ecx, edx=edx,
+            max_instructions=max_instructions)
+        top = (self.uc.reg_read(r.UC_X86_REG_FPSW) >> 11) & 7
+        mantissa, exponent = self.uc.reg_read(FPU_REGISTERS[top])
+        value = struct.pack("<QH", mantissa, exponent)
+        self.uc.emu_start(FPU_POP_STUB, RETURN_SENTINEL, count=3)
+        return result, value

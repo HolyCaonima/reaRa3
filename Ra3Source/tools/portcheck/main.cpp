@@ -76,6 +76,66 @@ void setFpuControlWord(std::uint16_t value)
 #endif
 }
 
+#if defined(_MSC_VER) && defined(_M_IX86)
+using ExtendedVectorPairFunction =
+    float(__cdecl*)(const ra3::math::Vector3&, const ra3::math::Vector3&) noexcept;
+using ExtendedVectorFunction =
+    float(__cdecl*)(const ra3::math::Vector3*) noexcept;
+using ExtendedOffsetDistanceFunction = float(__fastcall*)(
+    const void*, void*, const ra3::math::Vector3*) noexcept;
+
+ExtendedVectorPairFunction squaredDistanceExtended = &ra3::math::squaredDistance;
+ExtendedVectorPairFunction distanceExtended = &ra3::math::distance;
+ExtendedVectorFunction approximateLengthExtended = &ra3::math::approximateLengthExtended;
+ExtendedOffsetDistanceFunction offsetDistanceExtended =
+    &ra3::math::squaredDistanceFromOffset38Extended;
+
+void printExtendedVectorPair(
+    ExtendedVectorPairFunction function,
+    const ra3::math::Vector3* a,
+    const ra3::math::Vector3* b)
+{
+    std::uint8_t bytes[10]{};
+    __asm {
+        push b
+        push a
+        call function
+        add esp, 8
+        fstp tbyte ptr [bytes]
+    }
+    printHex(bytes, sizeof(bytes));
+}
+
+void printExtendedVector(
+    ExtendedVectorFunction function, const ra3::math::Vector3* value)
+{
+    std::uint8_t bytes[10]{};
+    __asm {
+        push value
+        call function
+        add esp, 4
+        fstp tbyte ptr [bytes]
+    }
+    printHex(bytes, sizeof(bytes));
+}
+
+void printExtendedOffsetDistance(
+    ExtendedOffsetDistanceFunction function,
+    const void* object,
+    const ra3::math::Vector3* point)
+{
+    std::uint8_t bytes[10]{};
+    __asm {
+        push point
+        xor edx, edx
+        mov ecx, object
+        call function
+        fstp tbyte ptr [bytes]
+    }
+    printHex(bytes, sizeof(bytes));
+}
+#endif
+
 template <typename T>
 T objectFromBytes(const std::vector<std::uint8_t>& bytes)
 {
@@ -194,15 +254,30 @@ int main()
             const auto* b = reinterpret_cast<const ra3::math::Vector2*>(second.data());
             std::cout << ra3::math::exactlyEqualVector2Range(
                 a, a + first.size() / sizeof(*a), b) << '\n';
-        } else if (op == "distance2" || op == "distance") {
+        } else if (
+            op == "distance2" || op == "distance" ||
+            op == "distance2x87" || op == "distancex87") {
             const auto a = objectFromBytes<ra3::math::Vector3>(first);
             const auto b = objectFromBytes<ra3::math::Vector3>(second);
-            printFloat(op == "distance2"
-                    ? ra3::math::squaredDistance(a, b)
-                    : ra3::math::distance(a, b));
+            if (op == "distance2") {
+                printFloat(ra3::math::squaredDistance(a, b));
+            } else if (op == "distance") {
+                printFloat(ra3::math::distance(a, b));
+#if defined(_MSC_VER) && defined(_M_IX86)
+            } else {
+                printExtendedVectorPair(
+                    op == "distance2x87" ? squaredDistanceExtended : distanceExtended,
+                    &a, &b);
+#endif
+            }
         } else if (op == "approximatelength") {
             printFloat(ra3::math::approximateLength(
                 objectFromBytes<ra3::math::Vector3>(first)));
+        } else if (op == "approximatelengthx87") {
+#if defined(_MSC_VER) && defined(_M_IX86)
+            const auto value = objectFromBytes<ra3::math::Vector3>(first);
+            printExtendedVector(approximateLengthExtended, &value);
+#endif
         } else if (op == "normalize2") {
             const auto input = objectFromBytes<ra3::math::Vector2>(first);
             ra3::math::Vector2 output{};
@@ -220,6 +295,11 @@ int main()
         } else if (op == "offsetdistance2") {
             printFloat(ra3::math::squaredDistanceFromOffset38(
                 first.data(), objectFromBytes<ra3::math::Vector3>(second)));
+        } else if (op == "offsetdistance2x87") {
+#if defined(_MSC_VER) && defined(_M_IX86)
+            const auto point = objectFromBytes<ra3::math::Vector3>(second);
+            printExtendedOffsetDistance(offsetDistanceExtended, first.data(), &point);
+#endif
         } else if (op == "clampoffset68") {
             std::vector<std::uint8_t> object(0x6C);
             std::memcpy(object.data() + 0x68, &first[0], sizeof(float));

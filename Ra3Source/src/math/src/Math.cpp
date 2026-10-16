@@ -178,6 +178,67 @@ float approximateLength(const Vector3& value) noexcept
 #endif
 }
 
+#if defined(_MSC_VER) && defined(_M_IX86)
+// x87 return remains extended; instruction order matches ra3_1.0.game 0x00523240.
+__declspec(naked) float __cdecl approximateLengthExtended(const Vector3*) noexcept
+{
+    __asm {
+        sub esp, 8
+        mov eax, dword ptr [esp + 0Ch]
+        fld dword ptr [eax]
+        fabs
+        fst dword ptr [esp + 4]
+        fld dword ptr [eax + 4]
+        mov ecx, dword ptr [esp + 4]
+        fabs
+        fst dword ptr [esp]
+        fld dword ptr [eax + 8]
+        mov edx, dword ptr [esp]
+        fabs
+        fstp dword ptr [esp + 0Ch]
+        fcomip st, st(1)
+        fstp st(0)
+        jbe firstOrdered
+        xor ecx, edx
+        xor edx, ecx
+        xor ecx, edx
+        mov dword ptr [esp], edx
+        mov dword ptr [esp + 4], ecx
+
+    firstOrdered:
+        movss xmm0, dword ptr [esp + 0Ch]
+        comiss xmm0, dword ptr [esp + 4]
+        mov eax, dword ptr [esp + 0Ch]
+        jbe largestOrdered
+        xor ecx, eax
+        xor eax, ecx
+        xor ecx, eax
+        mov dword ptr [esp + 0Ch], eax
+        mov dword ptr [esp + 4], ecx
+
+    largestOrdered:
+        movss xmm0, dword ptr [esp + 0Ch]
+        comiss xmm0, dword ptr [esp]
+        jbe allOrdered
+        xor edx, eax
+        xor eax, edx
+        xor edx, eax
+        mov dword ptr [esp + 0Ch], eax
+        mov dword ptr [esp], edx
+
+    allOrdered:
+        fld dword ptr [esp + 0Ch]
+        fmul dword ptr [quarter]
+        fld dword ptr [esp]
+        fmul dword ptr [elevenThirtySeconds]
+        faddp st(1), st
+        fadd dword ptr [esp + 4]
+        add esp, 8
+        ret
+    }
+}
+#endif
+
 // ra3_1.0.game 0x0056F370.
 void normalize(const Vector2& input, Vector2& output) noexcept
 {
@@ -271,6 +332,33 @@ float squaredDistanceFromOffset38(const void* object, const Vector3& point) noex
     std::memcpy(&origin, static_cast<const std::uint8_t*>(object) + 0x38, sizeof(origin));
     return squaredDistance(origin, point);
 }
+
+#if defined(_MSC_VER) && defined(_M_IX86)
+// x87 return remains extended; ABI matches ra3_1.0.game 0x006ABCB0.
+__declspec(naked) float __fastcall squaredDistanceFromOffset38Extended(
+    const void*, void*, const Vector3*) noexcept
+{
+    __asm {
+        mov eax, dword ptr [esp + 4]
+        fld dword ptr [ecx + 38h]
+        fsub dword ptr [eax]
+        fld dword ptr [ecx + 3Ch]
+        fsub dword ptr [eax + 4]
+        fld dword ptr [ecx + 40h]
+        fsub dword ptr [eax + 8]
+        fld st(2)
+        fmulp st(3), st
+        fld st(1)
+        fmulp st(2), st
+        fxch st(2)
+        faddp st(1), st
+        fld st(1)
+        fmulp st(2), st
+        faddp st(1), st
+        ret 4
+    }
+}
+#endif
 
 // ra3_1.0.game 0x0055A9B0.
 void clampFloatAtOffset68(void* object, float lower, float upper) noexcept

@@ -9,6 +9,7 @@
 #include <exception>
 #include <filesystem>
 #include <fstream>
+#include <iomanip>
 #include <limits>
 #include <map>
 #include <memory>
@@ -77,6 +78,14 @@ void writeSummary()
         std::ostringstream out;
         out << "summary " << target.key << " calls=" << state.calls.load()
             << " matches=" << state.matches.load() << " mismatches=" << state.mismatches.load();
+        const std::uint32_t controlWord = state.firstFpuControlWord.load();
+        if (controlWord != 0) {
+            out << std::hex << std::uppercase << std::setfill('0')
+                << " cw=0x" << std::setw(4) << controlWord
+                << " mxcsr=0x" << std::setw(8) << state.firstMxcsr.load()
+                << std::dec
+                << " cw_changes=" << state.fpuControlWordChanges.load();
+        }
         writeLine(out.str());
     }
 }

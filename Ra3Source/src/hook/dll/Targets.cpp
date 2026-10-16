@@ -61,6 +61,9 @@ TargetState g_crc32CString;
 TargetState g_scaleVector3;
 TargetState g_transformDirection3;
 
+static_assert(offsetof(TargetState, mode) == 0);
+static_assert(offsetof(TargetState, original) == 4);
+
 // ra3_1.0.game 0x009F72E0: one-shot RefPack decoder, returns the decoded size.
 using DecodeFunction = int(__stdcall*)(std::uint8_t*, const std::uint8_t*);
 
@@ -756,6 +759,50 @@ std::uint32_t floatBits(float value)
     return bits;
 }
 
+void observeFloatingEntry(
+    TargetState* state, std::uint32_t controlWord, std::uint32_t mxcsr)
+{
+    state->calls.fetch_add(1, relaxed);
+    std::uint32_t expected = 0;
+    if (state->firstFpuControlWord.compare_exchange_strong(
+            expected, controlWord, relaxed, relaxed)) {
+        state->firstMxcsr.store(mxcsr, relaxed);
+    } else if (expected != controlWord) {
+        state->fpuControlWordChanges.fetch_add(1, relaxed);
+    }
+}
+
+void observeFloatingCall(TargetState& state)
+{
+    std::uint16_t controlWord = 0;
+    std::uint32_t mxcsr = 0;
+#if defined(_MSC_VER) && defined(_M_IX86)
+    __asm {
+        fnstcw controlWord
+        stmxcsr mxcsr
+    }
+#endif
+    observeFloatingEntry(&state, controlWord, mxcsr);
+}
+
+void recordExtendedResult(
+    const char* key,
+    TargetState* state,
+    const std::uint8_t* game,
+    const std::uint8_t* ours)
+{
+    if (std::memcmp(game, ours, 10) == 0) {
+        state->matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch(key, *state, "80-bit x87 result differs");
+    }
+}
+
+void recordExtendedReplacement(TargetState* state)
+{
+    state->matches.fetch_add(1, relaxed);
+}
+
 float shadowBinaryFloat(
     const char* key, TargetState& state, float a, float b,
     float (*implementation)(float, float))
@@ -774,7 +821,7 @@ float shadowBinaryFloat(
 float __cdecl maximumFloat(float a, float b)
 {
     TargetState& state = g_maximumFloat;
-    state.calls.fetch_add(1, relaxed);
+    observeFloatingCall(state);
     return shadowBinaryFloat("floatmax", state, a, b, &ra3::math::maximum);
 }
 
@@ -782,7 +829,7 @@ float __cdecl maximumFloat(float a, float b)
 float __cdecl minimumFloat(float a, float b)
 {
     TargetState& state = g_minimumFloat;
-    state.calls.fetch_add(1, relaxed);
+    observeFloatingCall(state);
     return shadowBinaryFloat("floatmin", state, a, b, &ra3::math::minimum);
 }
 
@@ -790,7 +837,7 @@ float __cdecl minimumFloat(float a, float b)
 float __cdecl clampFloat(float value, float lower, float upper)
 {
     TargetState& state = g_clampFloat;
-    state.calls.fetch_add(1, relaxed);
+    observeFloatingCall(state);
     const float ours = ra3::math::clamp(value, lower, upper);
     if (state.mode == Mode::replace) {
         state.matches.fetch_add(1, relaxed);
@@ -838,60 +885,188 @@ bool __cdecl equalVector2Range(
     return game;
 }
 
-float shadowVectorPair(
-    const char* key, TargetState& state,
-    const ra3::math::Vector3* a, const ra3::math::Vector3* b,
-    float (*implementation)(const ra3::math::Vector3&, const ra3::math::Vector3&) noexcept)
-{
-    const float ours = implementation(*a, *b);
-    if (state.mode == Mode::replace) {
-        state.matches.fetch_add(1, relaxed);
-        return ours;
-    }
-    const float game = reinterpret_cast<float(__cdecl*)(
-        const ra3::math::Vector3*, const ra3::math::Vector3*)>(state.original)(a, b);
-    recordScalar(key, state, floatBits(game), floatBits(ours));
-    return game;
-}
+using ExtendedVectorPairFunction = float(__cdecl*)(
+    const ra3::math::Vector3&, const ra3::math::Vector3&) noexcept;
+ExtendedVectorPairFunction g_squaredDistanceImplementation = &ra3::math::squaredDistance;
+ExtendedVectorPairFunction g_distanceImplementation = &ra3::math::distance;
+constexpr char squaredDistance3Key[] = "squaredistance3";
+constexpr char distance3Key[] = "distance3";
 
 // ra3_1.0.game 0x005049E0.
-float __cdecl squaredDistance3(
-    const ra3::math::Vector3* a, const ra3::math::Vector3* b)
+__declspec(naked) float __cdecl squaredDistance3(
+    const ra3::math::Vector3*, const ra3::math::Vector3*)
 {
-    TargetState& state = g_squaredDistance3;
-    state.calls.fetch_add(1, relaxed);
-    return shadowVectorPair("squaredistance3", state, a, b, &ra3::math::squaredDistance);
+    __asm {
+        push ebp
+        mov ebp, esp
+        sub esp, 32
+        fnstcw word ptr [ebp - 8]
+        stmxcsr dword ptr [ebp - 4]
+        movzx eax, word ptr [ebp - 8]
+        push dword ptr [ebp - 4]
+        push eax
+        push offset g_squaredDistance3
+        call observeFloatingEntry
+        add esp, 12
+        cmp dword ptr [g_squaredDistance3], 2
+        je replacePath
+
+        push dword ptr [ebp + 12]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_squaredDistance3 + 4]
+        add esp, 8
+        fstp tbyte ptr [ebp - 20]
+        push dword ptr [ebp + 12]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_squaredDistanceImplementation]
+        add esp, 8
+        fstp tbyte ptr [ebp - 32]
+        lea eax, [ebp - 32]
+        push eax
+        lea eax, [ebp - 20]
+        push eax
+        push offset g_squaredDistance3
+        push offset squaredDistance3Key
+        call recordExtendedResult
+        add esp, 16
+        fld tbyte ptr [ebp - 20]
+        leave
+        ret
+
+    replacePath:
+        push dword ptr [ebp + 12]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_squaredDistanceImplementation]
+        add esp, 8
+        fstp tbyte ptr [ebp - 32]
+        push offset g_squaredDistance3
+        call recordExtendedReplacement
+        add esp, 4
+        fld tbyte ptr [ebp - 32]
+        leave
+        ret
+    }
 }
 
 // ra3_1.0.game 0x00564150.
-float __cdecl distance3(const ra3::math::Vector3* a, const ra3::math::Vector3* b)
+__declspec(naked) float __cdecl distance3(
+    const ra3::math::Vector3*, const ra3::math::Vector3*)
 {
-    TargetState& state = g_distance3;
-    state.calls.fetch_add(1, relaxed);
-    return shadowVectorPair("distance3", state, a, b, &ra3::math::distance);
+    __asm {
+        push ebp
+        mov ebp, esp
+        sub esp, 32
+        fnstcw word ptr [ebp - 8]
+        stmxcsr dword ptr [ebp - 4]
+        movzx eax, word ptr [ebp - 8]
+        push dword ptr [ebp - 4]
+        push eax
+        push offset g_distance3
+        call observeFloatingEntry
+        add esp, 12
+        cmp dword ptr [g_distance3], 2
+        je replacePath
+
+        push dword ptr [ebp + 12]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_distance3 + 4]
+        add esp, 8
+        fstp tbyte ptr [ebp - 20]
+        push dword ptr [ebp + 12]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_distanceImplementation]
+        add esp, 8
+        fstp tbyte ptr [ebp - 32]
+        lea eax, [ebp - 32]
+        push eax
+        lea eax, [ebp - 20]
+        push eax
+        push offset g_distance3
+        push offset distance3Key
+        call recordExtendedResult
+        add esp, 16
+        fld tbyte ptr [ebp - 20]
+        leave
+        ret
+
+    replacePath:
+        push dword ptr [ebp + 12]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_distanceImplementation]
+        add esp, 8
+        fstp tbyte ptr [ebp - 32]
+        push offset g_distance3
+        call recordExtendedReplacement
+        add esp, 4
+        fld tbyte ptr [ebp - 32]
+        leave
+        ret
+    }
 }
 
+using ExtendedVectorFunction =
+    float(__cdecl*)(const ra3::math::Vector3*) noexcept;
+ExtendedVectorFunction g_approximateLengthImplementation =
+    &ra3::math::approximateLengthExtended;
+constexpr char approximateLengthKey[] = "approximatelength3";
+
 // ra3_1.0.game 0x00523240.
-float __cdecl approximateLength3(const ra3::math::Vector3* value)
+__declspec(naked) float __cdecl approximateLength3(const ra3::math::Vector3*)
 {
-    TargetState& state = g_approximateLength3;
-    state.calls.fetch_add(1, relaxed);
-    const float ours = ra3::math::approximateLength(*value);
-    if (state.mode == Mode::replace) {
-        state.matches.fetch_add(1, relaxed);
-        return ours;
+    __asm {
+        push ebp
+        mov ebp, esp
+        sub esp, 32
+        fnstcw word ptr [ebp - 4]
+        stmxcsr dword ptr [ebp - 8]
+        movzx eax, word ptr [ebp - 4]
+        push dword ptr [ebp - 8]
+        push eax
+        push offset g_approximateLength3
+        call observeFloatingEntry
+        add esp, 12
+        cmp dword ptr [g_approximateLength3], 2
+        je replacePath
+
+        push dword ptr [ebp + 8]
+        call dword ptr [g_approximateLength3 + 4]
+        add esp, 4
+        fstp tbyte ptr [ebp - 20]
+        push dword ptr [ebp + 8]
+        call dword ptr [g_approximateLengthImplementation]
+        add esp, 4
+        fstp tbyte ptr [ebp - 32]
+        lea eax, [ebp - 32]
+        push eax
+        lea eax, [ebp - 20]
+        push eax
+        push offset g_approximateLength3
+        push offset approximateLengthKey
+        call recordExtendedResult
+        add esp, 16
+        fld tbyte ptr [ebp - 20]
+        leave
+        ret
+
+    replacePath:
+        push dword ptr [ebp + 8]
+        call dword ptr [g_approximateLengthImplementation]
+        add esp, 4
+        fstp tbyte ptr [ebp - 32]
+        push offset g_approximateLength3
+        call recordExtendedReplacement
+        add esp, 4
+        fld tbyte ptr [ebp - 32]
+        leave
+        ret
     }
-    const float game = reinterpret_cast<float(__cdecl*)(
-        const ra3::math::Vector3*)>(state.original)(value);
-    recordScalar("approximatelength3", state, floatBits(game), floatBits(ours));
-    return game;
 }
 
 // ra3_1.0.game 0x005235B0.
 void __cdecl colorFromArgb(ra3::math::Vector4* output, std::uint32_t argb)
 {
     TargetState& state = g_colorFromArgb;
-    state.calls.fetch_add(1, relaxed);
+    observeFloatingCall(state);
     const ra3::math::Vector4 ours = ra3::math::colorFromArgb(argb);
     if (state.mode == Mode::replace) {
         *output = ours;
@@ -980,7 +1155,7 @@ void __cdecl normalizeVector2(
     ra3::math::Vector2* output, const ra3::math::Vector2* input)
 {
     TargetState& state = g_normalizeVector2;
-    state.calls.fetch_add(1, relaxed);
+    observeFloatingCall(state);
     const ra3::math::Vector2 inputCopy = *input;
     ra3::math::Vector2 ours{};
     ra3::math::normalize(inputCopy, ours);
@@ -995,20 +1170,65 @@ void __cdecl normalizeVector2(
 }
 
 // ra3_1.0.game 0x006ABCB0.
-float __fastcall squaredDistanceOffset38(
-    const void* object, void*, const ra3::math::Vector3* point)
+using ExtendedOffsetDistanceFunction = float(__fastcall*)(
+    const void*, void*, const ra3::math::Vector3*) noexcept;
+ExtendedOffsetDistanceFunction g_squaredDistanceOffset38Implementation =
+    &ra3::math::squaredDistanceFromOffset38Extended;
+constexpr char squaredDistanceOffset38Key[] = "squaredistanceoffset38";
+
+__declspec(naked) float __fastcall squaredDistanceOffset38(
+    const void*, void*, const ra3::math::Vector3*)
 {
-    TargetState& state = g_squaredDistanceOffset38;
-    state.calls.fetch_add(1, relaxed);
-    const float ours = ra3::math::squaredDistanceFromOffset38(object, *point);
-    if (state.mode == Mode::replace) {
-        state.matches.fetch_add(1, relaxed);
-        return ours;
+    __asm {
+        push ebp
+        mov ebp, esp
+        sub esp, 40
+        mov dword ptr [ebp - 12], ecx
+        fnstcw word ptr [ebp - 8]
+        stmxcsr dword ptr [ebp - 4]
+        movzx eax, word ptr [ebp - 8]
+        push dword ptr [ebp - 4]
+        push eax
+        push offset g_squaredDistanceOffset38
+        call observeFloatingEntry
+        add esp, 12
+        cmp dword ptr [g_squaredDistanceOffset38], 2
+        je replacePath
+
+        push dword ptr [ebp + 8]
+        mov ecx, dword ptr [ebp - 12]
+        call dword ptr [g_squaredDistanceOffset38 + 4]
+        fstp tbyte ptr [ebp - 24]
+        push dword ptr [ebp + 8]
+        xor edx, edx
+        mov ecx, dword ptr [ebp - 12]
+        call dword ptr [g_squaredDistanceOffset38Implementation]
+        fstp tbyte ptr [ebp - 40]
+        lea eax, [ebp - 40]
+        push eax
+        lea eax, [ebp - 24]
+        push eax
+        push offset g_squaredDistanceOffset38
+        push offset squaredDistanceOffset38Key
+        call recordExtendedResult
+        add esp, 16
+        fld tbyte ptr [ebp - 24]
+        leave
+        ret 4
+
+    replacePath:
+        push dword ptr [ebp + 8]
+        xor edx, edx
+        mov ecx, dword ptr [ebp - 12]
+        call dword ptr [g_squaredDistanceOffset38Implementation]
+        fstp tbyte ptr [ebp - 40]
+        push offset g_squaredDistanceOffset38
+        call recordExtendedReplacement
+        add esp, 4
+        fld tbyte ptr [ebp - 40]
+        leave
+        ret 4
     }
-    const float game = reinterpret_cast<float(__thiscall*)(
-        const void*, const ra3::math::Vector3*)>(state.original)(object, point);
-    recordScalar("squaredistanceoffset38", state, floatBits(game), floatBits(ours));
-    return game;
 }
 
 // ra3_1.0.game 0x0092A0D0.

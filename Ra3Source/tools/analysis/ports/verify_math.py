@@ -81,6 +81,16 @@ def checked_float(emu: Emulator, name: str, args: list[int], cw: int, **register
     return bits
 
 
+def checked_extended(
+        emu: Emulator, name: str, args: list[int], cw: int,
+        expected_cleanup: int = 0, **registers) -> bytes:
+    result, value = emu.call_float80(
+        ADDRESSES[name], args, fpu_control_word=cw, **registers)
+    if result.stack_cleanup != expected_cleanup:
+        raise AssertionError(f"{name}: unexpected cleanup {result.stack_cleanup}")
+    return value
+
+
 def verify(executable: Path) -> None:
     rng = random.Random(0x504F525432)
     emu = Emulator()
@@ -99,6 +109,19 @@ def verify(executable: Path) -> None:
         return bits
 
     cases = [tuple(random_finite_bits() for _ in range(9)) for _ in range(RANDOM_CASES)]
+    finite_edges = edges[:12]
+    extended_edges = [
+        tuple(finite_edges[(i + j) % len(finite_edges)] for j in range(9))
+        for i in range(len(finite_edges))
+    ]
+    extended_edges.extend([
+        (0x7F7FFFFF, 0x7F7FFFFF, 0x7F7FFFFF,
+         0xFF7FFFFF, 0xFF7FFFFF, 0xFF7FFFFF, 0, 0, 0),
+        (0x00000001, 0x80000001, 0x00000001,
+         0x80000001, 0x00000001, 0x80000001, 0, 0, 0),
+    ])
+    cases.extend(extended_edges)
+    extended_case_count = len(cases)
     cases.extend(tuple(edges[(i + j) % len(edges)] for j in range(9))
                  for i in range(len(edges)))
 
@@ -212,20 +235,21 @@ def verify(executable: Path) -> None:
                           f"clampoffset68 {token(pack32(values[0]))} "
                           f"{values[1]} {values[2]}")), f"index={index}")
 
-            if index < RANDOM_CASES:
+            if index < extended_case_count:
                 for name in ("distance2", "distance"):
                     emu.reset_data()
                     a3 = emu.alloc(a3_data)
                     b3 = emu.alloc(b3_data)
-                    game = checked_float(emu, name, [a3, b3], cw)
-                    ours = int(cpp.call(f"{name} {token(a3_data)} {token(b3_data)}"))
+                    game = checked_extended(emu, name, [a3, b3], cw)
+                    ours = bytes.fromhex(cpp.call(
+                        f"{name}x87 {token(a3_data)} {token(b3_data)}"))
                     check(name, cw, game, ours, f"index={index}")
 
                 emu.reset_data()
                 a3 = emu.alloc(a3_data)
-                game = checked_float(emu, "approximatelength", [a3], cw)
-                check("approximatelength", cw, game, int(cpp.call(
-                    f"approximatelength {token(a3_data)}")), f"index={index}")
+                game = checked_extended(emu, "approximatelength", [a3], cw)
+                check("approximatelength", cw, game, bytes.fromhex(cpp.call(
+                    f"approximatelengthx87 {token(a3_data)}")), f"index={index}")
 
                 emu.reset_data()
                 output = emu.alloc(b"\xA5" * 8)
@@ -239,12 +263,12 @@ def verify(executable: Path) -> None:
                 obj[0x38:0x44] = a3_data
                 obj_address = emu.alloc(bytes(obj))
                 point = emu.alloc(b3_data)
-                result, game = emu.call_float32(
-                    ADDRESSES["offsetdistance2"], [point], ecx=obj_address,
-                    fpu_control_word=cw)
-                assert result.stack_cleanup == 4
-                check("offsetdistance2", cw, game, int(cpp.call(
-                    f"offsetdistance2 {token(bytes(obj))} {token(b3_data)}")), f"index={index}")
+                game = checked_extended(
+                    emu, "offsetdistance2", [point], cw,
+                    expected_cleanup=4, ecx=obj_address)
+                check("offsetdistance2", cw, game, bytes.fromhex(cpp.call(
+                    f"offsetdistance2x87 {token(bytes(obj))} {token(b3_data)}")),
+                    f"index={index}")
 
     cpp.set_control_word(CONTROL_WORDS[-1])
     crc_cases = [b"\0", b"123456789\0", b"\x80\xff\0"]
