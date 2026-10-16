@@ -197,10 +197,23 @@ int inject(DWORD pid, const std::wstring& dllPath, bool waitWindow)
     }
 
     RemoteData data;
-    data.loadLibrary = remoteProcedureAddress(pid, "LoadLibraryW");
-    data.getLastError = remoteProcedureAddress(pid, "GetLastError");
-    if (data.loadLibrary == nullptr || data.getLastError == nullptr || dllPath.size() >= std::size(data.path)) {
-        std::wcerr << L"could not resolve remote loader functions or DLL path is too long\n";
+    if (dllPath.size() >= std::size(data.path)) {
+        std::wcerr << L"DLL path is too long\n";
+        CloseHandle(process);
+        return 1;
+    }
+    // Module snapshots of a process that is still loading modules fail
+    // transiently (ERROR_BAD_LENGTH / ERROR_PARTIAL_COPY).
+    for (int attempt = 0; attempt < 50; ++attempt) {
+        data.loadLibrary = remoteProcedureAddress(pid, "LoadLibraryW");
+        data.getLastError = remoteProcedureAddress(pid, "GetLastError");
+        if (data.loadLibrary != nullptr && data.getLastError != nullptr) {
+            break;
+        }
+        Sleep(100);
+    }
+    if (data.loadLibrary == nullptr || data.getLastError == nullptr) {
+        printWindowsError(L"resolving remote LoadLibraryW/GetLastError");
         CloseHandle(process);
         return 1;
     }

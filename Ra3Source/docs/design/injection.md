@@ -201,15 +201,22 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 5 | 两目标 replace | `--wait-window` | refpack 38/38；namehash 5554/5554 | 两个原函数都不再执行；完整主菜单正常渲染 |
 | 6 | 三目标 shadow | `--wait-window` | refpack 38/38；namehash 5573/5573；pathcompare `calls=227359 matches=227359 mismatches=0` | 路径比较（含排序怪癖）全部一致 |
 | 7 | 三目标 replace | `--wait-window` | refpack 38/38；namehash 5603/5603；pathcompare 230337/230337 | 三个原函数都不再执行；主菜单正常 |
+| 8 | 三目标 shadow，进入遭遇战 | `--wait-window` | 对局中 refpack 58/58；namehash 117975/117975；pathcompare 451773/451773 | 地图加载与对局期间全部一致 |
+| 9 | 三目标 replace，进入遭遇战 | `--wait-window` | 对局中 refpack 58/58；namehash 115099/115099；pathcompare 389740/389740 | 原函数不执行也能进入对局并正常运行 |
+
+运行 8、9 的操作：主菜单点掉离线提示 → Versus → Skirmish → 默认设置（Battlebase
+Beta，单人，阵营随机）→ BEGIN。点击由 `SetCursorPos`/`mouse_event` 发往前台游戏
+窗口，截图核对每一步。运行 9 之前有一次注入在进程出现约 1 秒时失败（远程模块快照
+尚未就绪，游戏未被注入，结果作废）；注入器现对远程函数解析重试 5 秒。
 
 replace 模式下 `matches` 表示 Ra3Source 解码成功并把结果交给游戏。运行 3 的主菜单
 截图中字体、贴图和菜单框体完整；弹出的 "Failed to connect to servers" 是 GameSpy
 下线后的离线提示，与 hook 无关。
 
 结论：路线 A 在真实进程上成立——注入时机在保护启动阶段之后，`.text` 内联补丁
-未被拒绝，已复刻的函数可以整体替换原实现，多个目标可以同时替换。尚未覆盖：进入对局（地图加载可能
-产生更多 RefPack 调用）；窗口出现前的少量解码可能早于注入，shadow 无法证明覆盖了
-全部调用。
+未被拒绝，已复刻的函数可以整体替换原实现，多个目标可以同时替换，并且替换后能进入
+对局。尚未覆盖：长时间对局与存读档；窗口出现前的少量调用可能早于注入，shadow 无法
+证明覆盖了全部调用。
 
 ## 6. 已知风险
 
