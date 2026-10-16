@@ -9,84 +9,18 @@
 namespace ra3::io {
 namespace {
 
-enum class BigFormat {
-    big = 0,
-    c0fb = 1,
-    viv = 2,
-    invalid = 3
-};
-
-std::uint32_t readBigEndian(const std::uint8_t* bytes, int width) noexcept
-{
-    std::uint32_t value = 0;
-    for (int i = 0; i < width; ++i) {
-        value = (value << 8) | bytes[i];
-    }
-    return value;
-}
-
-std::uint64_t readBigEndian64(const std::uint8_t* bytes, int width) noexcept
-{
-    std::uint64_t value = 0;
-    for (int i = 0; i < width; ++i) {
-        value = (value << 8) | bytes[i];
-    }
-    return value;
-}
-
-BigFormat formatOf(const std::uint8_t* header) noexcept
-{
-    if (std::memcmp(header, "Viv4", 4) == 0) {
-        return BigFormat::viv;
-    }
-    if (header[0] == 'B' && header[1] == 'I' && header[2] == 'G') {
-        return BigFormat::big;
-    }
-    if (header[0] == 0xC0 && header[1] == 0xFB) {
-        return BigFormat::c0fb;
-    }
-    return BigFormat::invalid;
-}
-
-int entryCount(const GameBigIndex* index) noexcept
-{
-    if (formatOf(index->entries) == BigFormat::c0fb) {
-        return static_cast<int>(readBigEndian(index->header + 4, 2));
-    }
-    return static_cast<int>(readBigEndian(index->entries + 8, 4));
-}
-
-int headerSize(const std::uint8_t* header) noexcept
-{
-    if (formatOf(header) == BigFormat::c0fb) {
-        return static_cast<int>(readBigEndian(header + 2, 2)) + 4;
-    }
-    return static_cast<int>(readBigEndian(header + 12, 4));
-}
-
-int trailerSize(const std::uint8_t* header) noexcept
-{
-    const std::uint8_t* trailer = header + headerSize(header) - 8;
-    const bool letter = (trailer[0] >= 'A' && trailer[0] <= 'Z')
-        || (trailer[0] >= 'a' && trailer[0] <= 'z');
-    const bool digits = trailer[1] >= '0' && trailer[1] <= '9'
-        && trailer[2] >= '0' && trailer[2] <= '9'
-        && trailer[3] >= '0' && trailer[3] <= '9';
-    return letter && digits ? 8 : 0;
-}
-
 void fieldWidths(const std::uint8_t* header, int& offsetWidth, int& sizeWidth) noexcept
 {
     offsetWidth = 4;
     sizeWidth = 4;
-    const BigFormat format = formatOf(header);
-    if (format == BigFormat::big) {
+    const GameBigFormat format = detectGameBigFormat(header);
+    if (format == GameBigFormat::big) {
         offsetWidth = static_cast<int>(static_cast<signed char>(header[3])) - '0';
         if (offsetWidth == 'F' - '0') {
             offsetWidth = 4;
         }
         sizeWidth = std::min(offsetWidth, 4);
-    } else if (format == BigFormat::c0fb) {
+    } else if (format == GameBigFormat::c0fb) {
         offsetWidth = 3;
         sizeWidth = 3;
     }
@@ -119,25 +53,100 @@ void setEntryOutputs(
 {
     if (offsetOut != nullptr) {
         *offsetOut = wide
-            ? readBigEndian64(record, offsetWidth)
+            ? readGameBigEndian64(record, offsetWidth)
             : (offsetWidth >= 1 && offsetWidth <= 4
-                   ? readBigEndian(record, offsetWidth)
+                   ? readGameBigEndian32(record, offsetWidth)
                    : 0);
     }
     if (sizeOut != nullptr) {
         *sizeOut = wide
-            ? readBigEndian64(record + offsetWidth, sizeWidth)
+            ? readGameBigEndian64(record + offsetWidth, sizeWidth)
             : (sizeWidth >= 1 && sizeWidth <= 4
-                   ? readBigEndian(record + offsetWidth, sizeWidth)
+                   ? readGameBigEndian32(record + offsetWidth, sizeWidth)
                    : 0);
     }
 }
 
 }  // namespace
 
-std::uint32_t hashGameBigPath(const char* path) noexcept
+std::uint32_t readGameBigEndian32(const std::uint8_t* bytes, int width) noexcept
 {
-    std::uint32_t hash = 0x1505;
+    if (width < 1 || width > 4) {
+        return 0;
+    }
+    std::uint32_t value = 0;
+    for (int i = 0; i < width; ++i) {
+        value = (value << 8) | bytes[i];
+    }
+    return value;
+}
+
+std::uint64_t readGameBigEndian64(const std::uint8_t* bytes, int width) noexcept
+{
+    std::uint64_t value = 0;
+    for (int i = 0; i < width; ++i) {
+        value = (value << 8) | bytes[i];
+    }
+    return value;
+}
+
+GameBigFormat detectGameBigFormat(const std::uint8_t* header) noexcept
+{
+    if (std::memcmp(header, "Viv4", 4) == 0) {
+        return GameBigFormat::viv4;
+    }
+    if (header[0] == 'B' && header[1] == 'I' && header[2] == 'G') {
+        return GameBigFormat::big;
+    }
+    if (header[0] == 0xC0 && header[1] == 0xFB) {
+        return GameBigFormat::c0fb;
+    }
+    return GameBigFormat::invalid;
+}
+
+int gameBigHeaderSize(const std::uint8_t* header) noexcept
+{
+    const GameBigFormat format = detectGameBigFormat(header);
+    if (format == GameBigFormat::c0fb) {
+        return static_cast<int>(readGameBigEndian32(header + 2, 2)) + 4;
+    }
+    if (format == GameBigFormat::big || format == GameBigFormat::viv4) {
+        return static_cast<int>(readGameBigEndian32(header + 12, 4));
+    }
+    return 0;
+}
+
+std::uint32_t gameBigEntryCount(const GameBigIndex* index) noexcept
+{
+    if (detectGameBigFormat(index->entries) == GameBigFormat::c0fb) {
+        return readGameBigEndian32(index->header + 4, 2);
+    }
+    const GameBigFormat format = detectGameBigFormat(index->entries);
+    return format == GameBigFormat::big || format == GameBigFormat::viv4
+        ? readGameBigEndian32(index->header + 8, 4)
+        : 0;
+}
+
+int gameBigTrailerSize(const GameBigIndex* index, int* numberOut) noexcept
+{
+    const std::uint8_t* trailer = index->header + gameBigHeaderSize(index->header) - 8;
+    const bool letter = (trailer[0] >= 'A' && trailer[0] <= 'Z')
+        || (trailer[0] >= 'a' && trailer[0] <= 'z');
+    const bool digits = trailer[1] >= '0' && trailer[1] <= '9'
+        && trailer[2] >= '0' && trailer[2] <= '9'
+        && trailer[3] >= '0' && trailer[3] <= '9';
+    if (!letter || !digits) {
+        *numberOut = 0;
+        return 0;
+    }
+    *numberOut = (trailer[1] - '0') * 100 + (trailer[2] - '0') * 10
+        + trailer[3] - '0';
+    return 8;
+}
+
+std::uint32_t hashGameBigPath(const char* path, std::uint32_t seed) noexcept
+{
+    std::uint32_t hash = seed;
     const auto* bytes = reinterpret_cast<const unsigned char*>(path);
     while (*bytes != 0) {
         hash = hash * 33u + static_cast<std::uint32_t>(std::tolower(*bytes));
@@ -146,13 +155,39 @@ std::uint32_t hashGameBigPath(const char* path) noexcept
     return byteSwap(hash);
 }
 
+std::uint64_t gameBigStoredSize(const GameBigFile* file) noexcept
+{
+    return file->storedSize;
+}
+
+std::uint64_t gameBigAbsoluteDataOffset(const GameBigFile* file) noexcept
+{
+    return file->archive->rangeBegin + file->dataOffset;
+}
+
+bool applyGameBigSeekState(GameBigFile* file, std::uint64_t position) noexcept
+{
+    if (position != 0 && file->expandedSize != 0) {
+        file->logicalPosition = position;
+        return false;
+    }
+    file->logicalPosition = 0;
+    file->sourcePosition = file->dataOffset + position;
+    const bool reset = file->inflater != nullptr;
+    if (reset) {
+        file->inflater = nullptr;
+        file->temporaryBuffer = nullptr;
+    }
+    return reset;
+}
+
 const std::uint8_t* findGameBigHashedEntry(
     const GameBigIndex* index,
     const char* path,
     int offsetWidth,
     int sizeWidth) noexcept
 {
-    const int count = entryCount(index);
+    const int count = static_cast<int>(gameBigEntryCount(index));
     int first = 0;
     int last = count - 1;
     const std::uint32_t wanted = hashGameBigPath(path);
@@ -210,14 +245,16 @@ const char* findGameBigEntry(
     }
 
     const std::uint8_t* header = index->header;
-    const BigFormat format = formatOf(header);
+    const GameBigFormat format = detectGameBigFormat(header);
     int offsetWidth = 4;
     int sizeWidth = 4;
     fieldWidths(header, offsetWidth, sizeWidth);
-    if (format == BigFormat::c0fb) {
+    if (format == GameBigFormat::c0fb) {
         record = header + 6;
     }
-    const std::uint8_t* end = header + headerSize(header) - trailerSize(header);
+    int trailerNumber = 0;
+    const std::uint8_t* end =
+        header + gameBigHeaderSize(header) - gameBigTrailerSize(index, &trailerNumber);
 
     const auto succeed = [&](const std::uint8_t* found) noexcept {
         setEntryOutputs(
