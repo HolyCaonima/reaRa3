@@ -5,6 +5,7 @@
 #include <ra3/io/GameBigLayout.h>
 #include <ra3/io/PathCompare.h>
 #include <ra3/io/RefPack.h>
+#include <ra3/text/GameTextLayout.h>
 
 #include <algorithm>
 #include <cstring>
@@ -41,6 +42,8 @@ TargetState g_decodeUtf8Advance;
 TargetState g_refPackProbe;
 TargetState g_bigFindHash;
 TargetState g_bigFindEntry;
+TargetState g_gameTextTable;
+TargetState g_gameTextManager;
 
 // ra3_1.0.game 0x009F72E0: one-shot RefPack decoder, returns the decoded size.
 using DecodeFunction = int(__stdcall*)(std::uint8_t*, const std::uint8_t*);
@@ -730,6 +733,56 @@ const char* __fastcall bigFindEntry(
     return game;
 }
 
+// ra3_1.0.game 0x00539080: lookup in one sorted GameText table.
+using GameTextTableFunction = const ra3::text::GameUnicodeString*(__thiscall*)(
+    const ra3::text::GameStringTable*, const char*);
+
+const ra3::text::GameUnicodeString* __fastcall gameTextTable(
+    const ra3::text::GameStringTable* table, void*, const char* label)
+{
+    TargetState& state = g_gameTextTable;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ra3::text::findGameText(table, label);
+    }
+    const ra3::text::GameUnicodeString* game =
+        reinterpret_cast<GameTextTableFunction>(state.original)(table, label);
+    const ra3::text::GameUnicodeString* ours = ra3::text::findGameText(table, label);
+    if (game == ours) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch("gametexttable", state,
+                       describeName(label, static_cast<std::uint32_t>(std::strlen(label))));
+    }
+    return game;
+}
+
+// ra3_1.0.game 0x0053B500: manager lookup with override/primary/map precedence.
+using GameTextManagerFunction = const ra3::text::GameUnicodeString*(__thiscall*)(
+    const ra3::text::GameTextManager*, const char*);
+
+const ra3::text::GameUnicodeString* __fastcall gameTextManager(
+    const ra3::text::GameTextManager* manager, void*, const char* label)
+{
+    TargetState& state = g_gameTextManager;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ra3::text::findGameText(manager, label);
+    }
+    const ra3::text::GameUnicodeString* game =
+        reinterpret_cast<GameTextManagerFunction>(state.original)(manager, label);
+    const ra3::text::GameUnicodeString* ours = ra3::text::findGameText(manager, label);
+    if (game == ours) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch("gametextmanager", state,
+                       describeName(label, static_cast<std::uint32_t>(std::strlen(label))));
+    }
+    return game;
+}
+
 }  // namespace
 
 const char* modeName(Mode mode)
@@ -852,6 +905,14 @@ const std::vector<Target>& targets()
          {0x83, 0xEC, 0x10, 0x8B, 0x44, 0x24, 0x28, 0x53,
           0x55, 0x56, 0x8B, 0xE9, 0x83, 0xC9, 0xFF, 0x33},
          7, reinterpret_cast<void*>(&bigFindEntry), &g_bigFindEntry, true},
+        {"gametexttable", 0x00139080,
+         {0x8B, 0x11, 0x83, 0xEC, 0x08, 0x85, 0xD2, 0x74,
+          0x3E, 0x83, 0x79, 0x08, 0x00, 0x74, 0x38, 0x8B},
+         5, reinterpret_cast<void*>(&gameTextTable), &g_gameTextTable, true},
+        {"gametextmanager", 0x0013B500,
+         {0x56, 0x8B, 0xF1, 0x8B, 0x4E, 0x50, 0x33, 0xC0,
+          0x85, 0xC9, 0x57, 0x8B, 0x7C, 0x24, 0x0C, 0x74},
+         6, reinterpret_cast<void*>(&gameTextManager), &g_gameTextManager, true},
     };
     return table;
 }

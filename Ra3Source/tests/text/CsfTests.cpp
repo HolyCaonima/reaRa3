@@ -1,6 +1,7 @@
 #include "support/TestHarness.h"
 
 #include <ra3/text/Csf.h>
+#include <ra3/text/GameTextLayout.h>
 
 #include <cstdint>
 #include <cstring>
@@ -86,4 +87,36 @@ RA3_TEST(Csf_ParsesRtsWrtsAndUtf16IntoUtf8)
     RA3_CHECK(theme->extra == "voice_theme");
     RA3_CHECK_EQ(strings.entries().size(), strings.labelCount());
     RA3_CHECK(!strings.get("missing").has_value());
+}
+
+RA3_TEST(GameTextLayout_FindsCaseInsensitivelyAndUsesManagerPrecedence)
+{
+    using namespace ra3::text;
+    const char alphaLabel[] = "GUI:Alpha";
+    const char betaLabel[] = "GUI:Beta";
+    const char16_t alphaText[] = u"alpha";
+    const char16_t betaText[] = u"beta";
+    const char16_t overrideText[] = u"override";
+    GameTextInfo primaryInfo[] = {
+        {{alphaLabel}, {alphaText}, {nullptr}},
+        {{betaLabel}, {betaText}, {nullptr}},
+    };
+    GameTextLookupEntry primaryLookup[] = {
+        {&primaryInfo[0].label, &primaryInfo[0]},
+        {&primaryInfo[1].label, &primaryInfo[1]},
+    };
+    GameStringTable primary{2, primaryInfo, primaryLookup};
+    GameTextInfo overrideInfo{{betaLabel}, {overrideText}, {nullptr}};
+    GameTextLookupEntry overrideLookup{&overrideInfo.label, &overrideInfo};
+    GameStringTable overrideTable{1, &overrideInfo, &overrideLookup};
+
+    RA3_CHECK(findGameText(&primary, "gui:alpha") == &primaryInfo[0].text);
+    RA3_CHECK(findGameText(&primary, "GUI:BETA") == &primaryInfo[1].text);
+    RA3_CHECK(findGameText(&primary, "GUI:Missing") == nullptr);
+
+    GameTextManager manager{};
+    manager.primary = &primary;
+    manager.overrideTable = &overrideTable;
+    RA3_CHECK(findGameText(&manager, "gui:beta") == &overrideInfo.text);
+    RA3_CHECK(findGameText(&manager, "GUI:Alpha") == &primaryInfo[0].text);
 }

@@ -101,6 +101,8 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `utf8next` | `0x00A284B0` UTF-8 解码并前移 | cdecl | 6 | `ra3::common::decodeUtf8AndAdvance` | live verified |
 | `bigfindhash` | `0x009F6B90` 单档案哈希表查找 | thiscall | 5 | `ra3::io::findGameBigHashedEntry` | live verified（shadow；replace 时唯一调用者已被替换）; 仅显式键启用 |
 | `bigfindentry` | `0x009F6D00` 单档案路径/序号查找 | thiscall | 7 | `ra3::io::findGameBigEntry` | live verified; 仅显式键启用 |
+| `gametexttable` | `0x00539080` 单个 GameText 排序表查询 | thiscall | 5 | `ra3::text::findGameText(GameStringTable*)` | offline-verified，live pending；仅显式键启用 |
+| `gametextmanager` | `0x0053B500` GameText 三表优先级查询 | thiscall | 6 | `ra3::text::findGameText(GameTextManager*)` | offline-verified，live pending；仅显式键启用 |
 
 上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节
@@ -112,6 +114,9 @@ stolen 长度（≥5 字节的最短整指令前缀）及其是否位置无关�
 
 读取游戏自有布局的 `bigfindhash`、`bigfindentry` 默认关闭，不继承全局 `mode`；
 必须在配置中显式写出对应键。这样仅启用既有 `refpack` 的集成测试日志不会出现新目标。
+`gametexttable`、`gametextmanager` 同样读取游戏自有布局，也只认显式键。两者用真实
+`gamestrings.csf` 构造的 10,401 项表在 Unicorn 中各验证 20,804 例，均 0 不一致；
+shadow 只比较返回指针，不进入或创建缺失字符串回退。
 
 新增目标：在 `Targets.cpp` 写一个与原函数同 ABI 的 hook（shadow 调原函数并比较，
 replace 只调我们的实现），在表里加一行 `{键, RVA, 前 16 字节, stolen 长度, hook,

@@ -1,0 +1,7 @@
+address	status	owner	module	notes
+00521c50	reversed	recon/csf	text	GameText::Fetch; vtable 0x00BE0FD0 +0x40; delegates to manager lookup, writes exists, returns global fallback 0x00DEAD00 on miss
+00535a10	reversed	recon/csf	text	GameTextLowerBound; sorted 8-byte lookup entries; MSVCRT _stricmp comparison
+00539080	reversed	recon/csf	text	GameStringTable::Find; Ra3::text::findGameText; Unicorn real gamestrings.csf 20804/20804, 0 mismatches; hook gametexttable offline-verified
+0053b500	reversed	recon/csf	text	GameTextManager::Find; override(+0x50), primary(+0x48), map(+0x4C) precedence; Unicorn 20804/20804, 0 mismatches; hook gametextmanager offline-verified
+00541e30	reversed	recon/csf	text	GameTextManager::Clear; destroys owned tables at +0x48/+0x4C/+0x50 and clears initialized
+005478c0	reversed	recon/csf	text	GameTextManager::Init; allocates 0x0C-byte table objects; CSF loader call reaches inner-patched 0x0052FCE0 and was not followed
