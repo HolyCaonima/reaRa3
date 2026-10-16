@@ -76,11 +76,31 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 
 ### 4.1 目标表
 
-| 键 | 函数 | 签名 | stolen | Ra3Source 实现 |
-|---|---|---|---|---|
-| `refpack` | `0x009F72E0` 一次性 RefPack 解码 | `int __stdcall (uint8_t* dest, const uint8_t* src)` | 5（`push ecx; mov ecx,[esp+0Ch]`） | `ra3::io::decompressRefPackPrefix` |
-| `namehash` | `0x00417DB0` 名称哈希 | `uint32_t __cdecl (const char*, uint32_t len, uint32_t seed, char finalize)` | 8（`push ebx/ebp/esi/edi; mov edi,[esp+14h]`） | `ra3::asset::hashName` |
-| `pathcompare` | `0x009F3650` 档案路径比较 | `int __cdecl (const char*, const char*)`，返回 -1/0/1 | 5（`push esi; mov esi,[esp+8]`） | `ra3::io::comparePathNames` |
+| 键 | 函数 | ABI | stolen | Ra3Source 实现 | 状态 |
+|---|---|---|---:|---|---|
+| `refpack` | `0x009F72E0` 一次性 RefPack 解码 | stdcall | 5 | `ra3::io::decompressRefPackPrefix` | live verified |
+| `namehash` | `0x00417DB0` 名称哈希 | cdecl | 8 | `ra3::asset::hashName` | live verified |
+| `pathcompare` | `0x009F3650` 档案路径比较 | cdecl | 5 | `ra3::io::comparePathNames` | live verified |
+| `stringcopylimit` | `0x009F3470` 限长复制 | cdecl | 6 | `ra3::common::copyStringLimited` | offline-verified, live pending |
+| `stringappendlimit` | `0x009F34B0` 限长追加 | cdecl | 5 | `ra3::common::appendStringLimited` | offline-verified, live pending |
+| `stringcomparelimit` | `0x009F3500` 限长比较 | cdecl | 5 | `ra3::common::compareStringsLimited` | offline-verified, live pending |
+| `stringcomparecaselimit` | `0x009F3560` ASCII 不分大小写限长比较 | cdecl | 5 | `ra3::common::compareStringsCaseInsensitiveLimited` | offline-verified, live pending |
+| `stringcopy` | `0x009F35E0` 字符串复制 | cdecl | 5 | `ra3::common::copyString` | offline-verified, live pending |
+| `stringcompare` | `0x009F3610` 字符串比较 | cdecl | 6 | `ra3::common::compareStrings` | offline-verified, live pending |
+| `stringlength` | `0x009F36C0` 字符串长度 | cdecl | 6 | `ra3::common::stringLength` | offline-verified, live pending |
+| `stringlowercopy` | `0x009F36E0` ASCII 小写复制 | cdecl | 5 | `ra3::common::copyStringLowercase` | offline-verified, live pending |
+| `stringfindlast` | `0x009F3720` 反向查找字节 | cdecl | 7 | `ra3::common::findLastCharacter` | offline-verified, live pending |
+| `bytewiden` | `0x009F3F10` 字节扩宽至 16 位 | cdecl | 5 | `ra3::common::widenBytes` | offline-verified, live pending |
+| `bytecompare` | `0x004C9EA0` 定长字节比较 | stdcall | 7 | `ra3::common::compareBytes` | offline-verified, live pending |
+| `prefixedccompare` | `0x004CB3A0` 长度前缀串与 C 串比较 | thiscall | 5 | `ra3::common::compareLengthPrefixedToCString` | offline-verified, live pending |
+| `prefixedcompare` | `0x004CB400` 两个长度前缀串比较 | thiscall | 6 | `ra3::common::compareLengthPrefixed` | offline-verified, live pending |
+| `fnvhash` | `0x00A28290` ASCII 小写 FNV-1a | cdecl | 7 | `ra3::common::hashLowercaseFnv1a` | offline-verified, live pending |
+| `utf8decode` | `0x00A282D0` 宽松 UTF-8 解码 | cdecl | 6 | `ra3::common::decodeUtf8` | offline-verified, live pending |
+| `utf8encode` | `0x00A28350` UTF-8 编码 | cdecl | 9 | `ra3::common::encodeUtf8` | offline-verified, live pending |
+| `utf8next` | `0x00A284B0` UTF-8 解码并前移 | cdecl | 6 | `ra3::common::decodeUtf8AndAdvance` | offline-verified, live pending |
+
+上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
+后向边均不落入各自前 `stolen` 字节。
 
 `Ra3Source/tools/analysis/disasm.py <VA> --hook-only` 从只读的可执行文件直接给出前 16 字节、
 stolen 长度（≥5 字节的最短整指令前缀）及其是否位置无关、返回形式（`ret` = cdecl，
@@ -89,6 +109,11 @@ stolen 长度（≥5 字节的最短整指令前缀）及其是否位置无关�
 新增目标：在 `Targets.cpp` 写一个与原函数同 ABI 的 hook（shadow 调原函数并比较，
 replace 只调我们的实现），在表里加一行 `{键, RVA, 前 16 字节, stolen 长度, hook,
 状态}`，并在本表登记。RVA 以 0x00400000 为基址；文件偏移 = VA − 0x00400000。
+
+本批跳过 `0x0050B5F0`、`0x006C3A10`、`0x009C9980..0x009C9A50` 等 EASTL
+容器内部；跳过依赖全局随机状态的 `0x005A94C0`；跳过 x87/SSE 浮点候选
+`0x004D2EE0`、`0x005A9550`、`0x004D9100`、`0x009C9DD0`；`0x009F3760`
+虽是纯优化字节复制，但对重写价值低且重叠输入契约不明确，也未接入。
 
 ### 4.2 refpack
 
