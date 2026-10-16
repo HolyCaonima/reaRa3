@@ -2,6 +2,7 @@
 
 #include <ra3/asset/Manifest.h>
 #include <ra3/io/ArchiveSet.h>
+#include <ra3/io/RefPack.h>
 
 #include <array>
 #include <cstddef>
@@ -31,6 +32,19 @@ struct StreamValidation {
     bool totalInstanceDataSizeMatches = false;
 };
 
+struct DeepStreamValidation {
+    std::string stem;
+    std::uint64_t assets = 0;
+    std::uint64_t relocations = 0;
+    std::uint64_t imports = 0;
+    std::uint64_t assetsWithMoreReferencesThanImports = 0;
+    std::uint64_t nonSequentialImportSites = 0;
+    std::uint64_t relocationTargetsAtInstanceEnd = 0;
+    std::uint64_t relocationTargetsPastInstanceEnd = 0;
+    std::uint64_t largestInstance = 0;
+    std::vector<std::string> problems;
+};
+
 // Each of .bin, .relo and .imp starts with the manifest's streamChecksum and is
 // then exactly the concatenation of the assets' chunks, so its length is 4 plus
 // the matching size sum. ra3_1.0.game (ResourceManagerFileStream, 0x004479E0)
@@ -40,6 +54,11 @@ struct StreamValidation {
 std::vector<std::string> enumerateStreamStems(const io::ArchiveSet& archives);
 Result<StreamValidation> validateStreamBundle(
     const io::ArchiveSet& archives, std::string_view stem);
+Result<DeepStreamValidation> validateStreamDeep(
+    const io::ArchiveSet& archives, std::string_view stem);
+
+Result<io::DecodedStream> openDecodedMember(
+    const io::ArchiveSet& archives, std::string_view memberPath);
 
 class AssetStream {
 public:

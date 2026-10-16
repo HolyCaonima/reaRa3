@@ -113,9 +113,9 @@ XSD 的公共模型是：资源至少有 `id`，可有 `typeHashCode`、`buildRu
 
 **`.bin/.relo/.imp`** 都是 4 字节流校验和，后面按记录顺序拼接各资源的块：第 i 个资源的实例数据位于 `.bin` 偏移 `4 + Σ instanceDataSize[0..i)`，`.relo`、`.imp` 同理。因此三者长度分别等于 `4 + Σ` 对应尺寸。校验和不符时原程序报 `... file is not in synch with manifest!`（`ResourceManagerFileStream.cpp`，`0x004479E0`）。[全量][程序]
 
-**重定位块**：u32 数组，以 `0xFFFFFFFF` 结尾；每项是实例内一个 4 字节对齐字段的偏移，该字段存的是相对实例起点的偏移，装载时加上实例基址变成指针。例：`FontSubstitution:Arial` 的重定位为 `8, 0x10, 0x24, 0x38`，偏移 8 处的值 `0x14` 正指向实例内的 `"Arial"`。在 `global` 的 11,253 条资源上，所有重定位位置和目标都落在实例内。[实测]
+**重定位块**：u32 数组，以 `0xFFFFFFFF` 结尾；尺寸为 0 表示完全没有表，非空表的终止符必须是最后一项。每项是实例内一个 4 字节对齐字段的偏移，该字段存的是相对实例起点的偏移，装载时加上实例基址变成指针。例：`FontSubstitution:Arial` 的重定位为 `8, 0x10, 0x24, 0x38`，偏移 8 处的值 `0x14` 正指向实例内的 `"Arial"`。全量共有 6,849,878 个重定位位置；位置本身全部对齐且容得下 u32，目标全部满足 `target <= instanceDataSize`。其中 3,250 个目标恰等于实例大小、没有目标超过末端，因此一过尾偏移是合法编码，不能按 `target < instanceDataSize` 拒绝。[全量]
 
-**导入块**：同样是以 `0xFFFFFFFF` 结尾的实例内偏移数组。第 k 个导入位置在文件里存的值是 k（从 1 开始），对应该资源引用列表里的第 k 项，装载时换成被引用资源。`global` 里每条资源的导入数都等于引用数；地图流里有 237 条资源（如 `Road:*`）引用多于导入，多出的引用只作加载依赖。[实测]
+**导入块**：同样是以 `0xFFFFFFFF` 结尾的实例内偏移数组；全量共有 259,832 个导入位置。位置全部对齐且容得下 u32，字段值都在 `1..assetReferenceCount`，同一资源内没有重复导入同一引用索引。通常第 k 个导入位置存 k，但全量有 8 条资源、23 个位置不符合这个顺序，会跳过只作依赖的前置引用，例如 `OrdersManagerSettings:Settings_OrdersManager` 的第一个导入值为 3，`FXParticleSystemTemplate:FXDebrisWaterSplashMedium` 的第一个导入值为 2。因此导入项应按字段中的 1-based 值索引引用表，不能按导入项序号推导。[全量] `global` 里每条资源的导入数都等于引用数；全量有 44,017 条资源引用数大于导入数，多出的引用只作加载依赖。[全量]
 
 **字符串与列表**在 `FontSubstitution` 样本的实例数据里分别编码为 `{u32 长度, 偏移}` 和 `{u32 数量, 偏移}`，偏移都在重定位表里；其他类型尚未逐一核对。[实测]
 
@@ -145,11 +145,14 @@ Generals `W3DAssetManager` 把名称转小写作为缓存键，按需加载 W3D/
 
 `ra3tool streams`（`ra3::asset::validateStreamBundle`，数据测试 `AssetGameData_AllMountedStreamsPassLightValidation` 也跑同一检查）对 257 组逐组检查：清单尺寸方程、记录内偏移不越界、三个块长之和加 4 等于 `.bin/.relo/.imp` 长度、四件套首 4 字节校验和一致。结果 0 问题；唯一的偏差是 63 个地图流的 `totalInstanceDataSize` 大于记录之和。`.bin` 长度取自 RefPack 头，不必解压：`worldbuilder` 流的实例数据有 1.17 GB，32 位进程不能整块解压。[全量]
 
+`ra3tool streams --deep` 使用 128 KiB 滑窗的增量 RefPack 解码器，按清单顺序一次只保留一条资源的实例数据；未压缩成员也走同一拉取接口。它对全部 118,232 条资源检查重定位/导入表的尺寸、终止符、位置、目标和引用索引，统计到 6,849,878 个重定位、259,832 个导入、44,017 条 `references > imports` 的资源，严格不变量 0 问题。信息性例外是 3,250 个合法一过尾重定位目标，以及 8 条资源中的 23 个不按 1、2、3 顺序出现的导入索引。[全量]
+
 ### 3.6 未决项
 
 - **instanceId 的哈希算法**：已排除 SuperFastHash（含种子/大小写变体）、CRC32、FNV-1/FNV-1a、DJB2、Jenkins one-at-a-time、lookup2、lookup3、Murmur2。`.text` 里 58 处 FNV-1 都是 EASTL `hash_map` 的字符串哈希。存档 `xfer` 代码保存的是 `(typeId, instanceId)` 对而不是名字，所以那里也没有运行时哈希。清单自带完整名字表，首个里程碑不需要这个算法。
 - `allTypesHash`、`instanceHash`、记录 `flags` 和地图流 `totalInstanceDataSize` 的语义。
 - 多态类型令牌在重定位中的编码。
+- 44,017 条 `references > imports` 资源中未导入引用的具体加载时机；现已证实它们不能统一解释为地图道路资源。[全量]
 
 ## 4. `Ra3::asset` 接口草案
 
@@ -264,7 +267,7 @@ public:
 
 ## 5. 用真实数据逐步验证
 
-进度：第 1–6、8 步已完成，结果见 §3.2；第 9 步完成了结构不变量部分，重定位和导入的全量解析留给第二个里程碑；第 10 步完成了清单和校验和两段调用链；第 7 步的类型部分已由原程序注册表证实（typeId/typeHash 是编译期常量），实例哈希算法仍未知。
+进度：第 1–6、8、9 步已完成，结果见 §3.2/§3.5；增量 RefPack 解码、重定位/导入严格解析和只读 `AssetInstance` 视图已经实现。第 10 步完成了清单和校验和两段调用链；第 7 步的类型部分已由原程序注册表证实（typeId/typeHash 是编译期常量），实例哈希算法仍未知。
 
 1. **冻结清单。** 用 `ra3tool mount`/`big` 只读枚举 14 个档案，按规范化 stem 分组，验证 257 组都恰有四个成员；记录每个成员的存储大小、RefPack 状态和解压大小。[实测][推断]
 2. **以 `locale` 建立最小样本。** 它四件套均未压缩且体积小；先确认四成员公共 `0xDC63FC0D` 的作用域，并把所有 32 位值、对齐位置和字符串范围导出成带偏移表。[实测]

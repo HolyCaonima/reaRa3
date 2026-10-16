@@ -142,11 +142,22 @@ const BigEntry* BigArchive::find(std::string_view path) const
 
 Result<std::vector<std::uint8_t>> BigArchive::read(const BigEntry& entry, std::size_t maxBytes) const
 {
+    return read(entry, 0, std::min<std::size_t>(entry.size, maxBytes));
+}
+
+Result<std::vector<std::uint8_t>> BigArchive::read(
+    const BigEntry& entry, std::uint64_t offset, std::size_t count) const
+{
+    if (offset > entry.size || count > static_cast<std::uint64_t>(entry.size) - offset) {
+        return makeError(entry.path + ": read of " + std::to_string(count) +
+                         " bytes at member offset " + std::to_string(offset) +
+                         " is past the end of the entry");
+    }
     auto stream = ReadOnlyFile::open(m_file);
     if (!stream) {
         return stream.error();
     }
-    return stream.value().read(entry.offset, std::min<std::size_t>(entry.size, maxBytes));
+    return stream.value().read(static_cast<std::uint64_t>(entry.offset) + offset, count);
 }
 
 }  // namespace ra3::io

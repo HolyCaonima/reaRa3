@@ -4,7 +4,10 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <functional>
+#include <memory>
 #include <optional>
+#include <string>
 #include <vector>
 
 namespace ra3::io {
@@ -29,6 +32,36 @@ struct RefPackHeader {
 };
 
 std::optional<RefPackHeader> readRefPackHeader(const std::uint8_t* data, std::size_t size);
+
+using RangeReader =
+    std::function<Result<std::vector<std::uint8_t>>(std::uint64_t offset, std::size_t count)>;
+
+// Sequential decoded view of either a RefPack stream or plain bytes. Input is
+// fetched in bounded ranges and RefPack history is limited to its 128 KiB
+// window, matching rw::core::codec::RefpackInflate (0x009F7620).
+class DecodedStream {
+public:
+    static Result<DecodedStream> open(
+        RangeReader source,
+        std::uint64_t storedSize,
+        std::string name,
+        std::size_t sourceChunkSize = 64 * 1024);
+
+    DecodedStream(DecodedStream&&) noexcept;
+    DecodedStream& operator=(DecodedStream&&) noexcept;
+    ~DecodedStream();
+
+    Result<std::vector<std::uint8_t>> read(std::size_t maxBytes);
+    std::uint64_t decodedSize() const;
+    std::uint64_t position() const;
+    bool compressed() const;
+    bool finished() const;
+
+private:
+    struct Impl;
+    explicit DecodedStream(std::unique_ptr<Impl> impl);
+    std::unique_ptr<Impl> m_impl;
+};
 
 // Fails unless the command stream ends with its stop command exactly at the
 // end of `size` and produces exactly the declared number of bytes.

@@ -1,9 +1,11 @@
 #include "support/TestHarness.h"
 
+#include <ra3/asset/AssetInstance.h>
 #include <ra3/asset/AssetStream.h>
 #include <ra3/core/GameConfig.h>
 #include <ra3/core/SkuDef.h>
 #include <ra3/io/ArchiveSet.h>
+#include <ra3/io/RefPack.h>
 
 namespace {
 
@@ -125,4 +127,44 @@ RA3_TEST(AssetGameData_GlobalFullLoadPartitionsEveryMember)
     RA3_CHECK_EQ(instance, stream.value().instanceMember().size);
     RA3_CHECK_EQ(relocation, stream.value().relocationMember().size);
     RA3_CHECK_EQ(imports, stream.value().importsMember().size);
+}
+
+RA3_TEST(AssetGameData_StreamingMatchesOneShotForCompressedGlobalBin)
+{
+    const auto archives = mountInstallation();
+    const auto location = archives.find("data/global.bin");
+    RA3_REQUIRE(location.has_value());
+    auto stored = location->archive->read(*location->entry);
+    RA3_REQUIRE_OK(stored);
+    auto expected = ra3::io::decompressRefPack(stored.value().data(), stored.value().size());
+    RA3_REQUIRE_OK(expected);
+
+    auto stream = ra3::asset::openDecodedMember(archives, "data/global.bin");
+    RA3_REQUIRE_OK(stream);
+    RA3_CHECK(stream.value().compressed());
+    std::vector<std::uint8_t> actual;
+    while (!stream.value().finished()) {
+        auto chunk = stream.value().read(4093);
+        RA3_REQUIRE_OK(chunk);
+        actual.insert(actual.end(), chunk.value().begin(), chunk.value().end());
+    }
+    RA3_CHECK(actual == expected.value());
+}
+
+RA3_TEST(AssetGameData_LocaleFixupTablesMatchVerifiedExample)
+{
+    const auto archives = mountInstallation();
+    auto stream = ra3::asset::AssetStream::load(archives, "data/locale");
+    RA3_REQUIRE_OK(stream);
+    const auto references = stream.value().manifest().references(0);
+    auto instance = ra3::asset::AssetInstance::parse(
+        stream.value().instanceData(0),
+        stream.value().relocationData(0),
+        stream.value().importsData(0),
+        references, "data/locale/FontSubstitution:Arial");
+    RA3_REQUIRE_OK(instance);
+    const std::vector<std::uint32_t> expected = {8, 0x10, 0x24, 0x38};
+    RA3_CHECK(instance.value().relocations().sites() == expected);
+    RA3_REQUIRE(instance.value().relocationTarget(8).has_value());
+    RA3_CHECK_EQ(*instance.value().relocationTarget(8), 0x14u);
 }

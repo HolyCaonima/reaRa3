@@ -1,10 +1,13 @@
 #include <ra3/asset/AssetStream.h>
 
+#include <ra3/asset/AssetInstance.h>
+#include <ra3/io/ReadOnlyFile.h>
 #include <ra3/io/RefPack.h>
 
 #include <algorithm>
 #include <array>
 #include <limits>
+#include <memory>
 #include <set>
 
 namespace ra3::asset {
@@ -129,7 +132,67 @@ Result<std::uint64_t> memberExpected(std::uint64_t payload)
     return payload + 4;
 }
 
+Result<std::vector<std::uint8_t>> readExactly(
+    io::DecodedStream& stream, std::size_t count, const std::string& name)
+{
+    std::vector<std::uint8_t> bytes;
+    bytes.reserve(count);
+    while (bytes.size() < count) {
+        auto chunk = stream.read(count - bytes.size());
+        if (!chunk) return chunk.error();
+        if (chunk.value().empty()) {
+            return makeError(name + ": decoded stream ended at offset " +
+                             std::to_string(stream.position()) + ", expected " +
+                             std::to_string(count - bytes.size()) + " more bytes");
+        }
+        bytes.insert(bytes.end(), chunk.value().begin(), chunk.value().end());
+    }
+    return bytes;
+}
+
+Result<std::vector<std::uint8_t>> readAll(
+    io::DecodedStream& stream, const std::string& name)
+{
+    if (stream.decodedSize() > std::numeric_limits<std::size_t>::max()) {
+        return makeError(name + ": decoded member does not fit address space");
+    }
+    auto bytes = readExactly(stream, static_cast<std::size_t>(stream.decodedSize()), name);
+    if (!bytes) return bytes.error();
+    auto finish = stream.read(1);
+    if (!finish) return finish.error();
+    if (!stream.finished()) {
+        return makeError(name + ": decoder did not reach the end of the member");
+    }
+    return bytes;
+}
+
 }  // namespace
+
+Result<io::DecodedStream> openDecodedMember(
+    const io::ArchiveSet& archives, std::string_view path)
+{
+    const auto location = archives.find(path);
+    if (!location) {
+        return makeError(std::string(path) + ": member not found");
+    }
+    const io::BigArchive* archive = location->archive;
+    const io::BigEntry* entry = location->entry;
+    auto opened = io::ReadOnlyFile::open(archive->file());
+    if (!opened) return opened.error();
+    auto file = std::make_shared<io::ReadOnlyFile>(std::move(opened).value());
+    const std::uint64_t entryOffset = entry->offset;
+    const std::uint64_t entrySize = entry->size;
+    const std::string entryPath = entry->path;
+    return io::DecodedStream::open(
+        [file, entryOffset, entrySize, entryPath](std::uint64_t offset, std::size_t count) {
+            if (offset > entrySize || count > entrySize - offset) {
+                return Result<std::vector<std::uint8_t>>(
+                    makeError(entryPath + ": streaming range is outside the member"));
+            }
+            return file->read(entryOffset + offset, count);
+        },
+        entry->size, std::string(path));
+}
 
 std::vector<std::string> enumerateStreamStems(const io::ArchiveSet& archives)
 {
@@ -192,6 +255,107 @@ Result<StreamValidation> validateStreamBundle(
         std::move(importsInfo).value(),
     };
     validation.manifest = std::move(manifest);
+    return validation;
+}
+
+Result<DeepStreamValidation> validateStreamDeep(
+    const io::ArchiveSet& archives, std::string_view stem)
+{
+    auto light = validateStreamBundle(archives, stem);
+    if (!light) return light.error();
+    const Manifest& manifest = light.value().manifest;
+    const std::string binName = memberPath(stem, ".bin");
+    const std::string relocationName = memberPath(stem, ".relo");
+    const std::string importsName = memberPath(stem, ".imp");
+
+    auto instanceStream = openDecodedMember(archives, binName);
+    auto relocationStream = openDecodedMember(archives, relocationName);
+    auto importsStream = openDecodedMember(archives, importsName);
+    if (!instanceStream) return instanceStream.error();
+    if (!relocationStream) return relocationStream.error();
+    if (!importsStream) return importsStream.error();
+    auto relocationMember = readAll(relocationStream.value(), relocationName);
+    auto importsMember = readAll(importsStream.value(), importsName);
+    if (!relocationMember) return relocationMember.error();
+    if (!importsMember) return importsMember.error();
+
+    auto checksum = readExactly(instanceStream.value(), 4, binName);
+    if (!checksum) return checksum.error();
+    DeepStreamValidation validation;
+    validation.stem = std::string(stem);
+    validation.assets = manifest.entries().size();
+
+    for (std::size_t index = 0; index < manifest.entries().size(); ++index) {
+        const AssetEntry& entry = manifest.entries()[index];
+        auto instanceBytes =
+            readExactly(instanceStream.value(), entry.instanceDataSize, binName);
+        if (!instanceBytes) return instanceBytes.error();
+        validation.largestInstance =
+            std::max<std::uint64_t>(validation.largestInstance, entry.instanceDataSize);
+        const ByteView instance{instanceBytes.value().data(), instanceBytes.value().size()};
+        const ByteView relocations = {
+            relocationMember.value().data() + static_cast<std::size_t>(entry.relocationDataOffset),
+            entry.relocationDataSize};
+        const ByteView imports = {
+            importsMember.value().data() + static_cast<std::size_t>(entry.importsDataOffset),
+            entry.importsDataSize};
+        const auto references = manifest.references(index);
+        const std::string assetName =
+            std::string(stem) + "/" + std::string(manifest.name(index));
+
+        std::size_t badTargets = 0;
+        if (relocations.size >= 4 && (relocations.size % 4) == 0 &&
+            readU32(relocations.data + relocations.size - 4) == 0xFFFFFFFFu) {
+            validation.relocations += relocations.size / 4 - 1;
+            for (std::size_t offset = 0; offset + 4 < relocations.size; offset += 4) {
+                const std::uint32_t site = readU32(relocations.data + offset);
+                if (site <= instance.size && instance.size - site >= 4) {
+                    const std::uint32_t target = readU32(instance.data + site);
+                    if (target == instance.size) {
+                        ++validation.relocationTargetsAtInstanceEnd;
+                    } else if (target > instance.size) {
+                        ++badTargets;
+                        ++validation.relocationTargetsPastInstanceEnd;
+                        validation.problems.push_back(
+                            assetName + ".relo: relocation site " + std::to_string(site) +
+                            " targets " + std::to_string(target) +
+                            " outside instance size " + std::to_string(instance.size) +
+                            " at offset " +
+                            std::to_string(entry.relocationDataOffset + offset));
+                    }
+                }
+            }
+        }
+        auto relocationTable = RelocationTable::parse(
+            relocations, instance, assetName + ".relo", entry.relocationDataOffset);
+        if (!relocationTable && badTargets == 0) {
+            validation.problems.push_back(relocationTable.error().message);
+        }
+        auto importTable = ImportTable::parse(
+            imports, instance, references, assetName + ".imp", entry.importsDataOffset);
+        std::size_t importsForAsset = 0;
+        if (!importTable) {
+            validation.problems.push_back(importTable.error().message);
+        } else {
+            importsForAsset = importTable.value().imports().size();
+            validation.imports += importsForAsset;
+            for (std::size_t importIndex = 0;
+                 importIndex < importTable.value().imports().size(); ++importIndex) {
+                if (importTable.value().imports()[importIndex].referenceIndex !=
+                    static_cast<std::uint32_t>(importIndex + 1)) {
+                    ++validation.nonSequentialImportSites;
+                }
+            }
+        }
+        if (references.size() > importsForAsset) {
+            ++validation.assetsWithMoreReferencesThanImports;
+        }
+    }
+    auto finish = instanceStream.value().read(1);
+    if (!finish) return finish.error();
+    if (!instanceStream.value().finished()) {
+        return makeError(binName + ": decoder did not reach the stop command after all assets");
+    }
     return validation;
 }
 

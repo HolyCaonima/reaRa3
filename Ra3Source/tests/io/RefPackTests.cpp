@@ -7,6 +7,7 @@
 
 using ra3::io::decompressRefPack;
 using ra3::io::decompressRefPackPrefix;
+using ra3::io::DecodedStream;
 using ra3::io::readRefPackHeader;
 
 namespace {
@@ -87,4 +88,73 @@ RA3_TEST(RefPack_DecodesPrefixWithoutTheRestOfTheStream)
 
     auto tooLong = decompressRefPackPrefix(partial.data(), partial.size(), 5);
     RA3_CHECK(!tooLong.ok());
+}
+
+RA3_TEST(RefPack_StreamingWrapsWindowAndUsesLongestDistance)
+{
+    constexpr std::size_t literalSize = 128 * 1024;
+    constexpr std::size_t copySize = 5;
+    std::vector<std::uint8_t> packed = {
+        0x90, 0xFB, 0x00, 0x02, 0x00, 0x05,
+    };
+    std::vector<std::uint8_t> expected;
+    expected.reserve(literalSize + copySize);
+    std::size_t emitted = 0;
+    while (literalSize - emitted >= 112) {
+        packed.push_back(0xFB);
+        for (std::size_t i = 0; i < 112; ++i) {
+            const auto value = static_cast<std::uint8_t>((emitted + i) * 37u);
+            packed.push_back(value);
+            expected.push_back(value);
+        }
+        emitted += 112;
+    }
+    const std::size_t remainder = literalSize - emitted;
+    RA3_REQUIRE(remainder >= 4 && (remainder % 4) == 0);
+    packed.push_back(static_cast<std::uint8_t>(0xE0 + (remainder - 4) / 4));
+    for (std::size_t i = 0; i < remainder; ++i) {
+        const auto value = static_cast<std::uint8_t>((emitted + i) * 37u);
+        packed.push_back(value);
+        expected.push_back(value);
+    }
+    packed.insert(packed.end(), {0xD0, 0xFF, 0xFF, 0x00, 0xFC});
+    expected.insert(expected.end(), expected.begin(), expected.begin() + copySize);
+
+    auto stream = DecodedStream::open(
+        [&packed](std::uint64_t offset, std::size_t count)
+            -> ra3::Result<std::vector<std::uint8_t>> {
+            const auto begin = packed.begin() + static_cast<std::size_t>(offset);
+            return std::vector<std::uint8_t>(begin, begin + count);
+        },
+        packed.size(), "synthetic", 7);
+    RA3_REQUIRE_OK(stream);
+    std::vector<std::uint8_t> actual;
+    while (!stream.value().finished()) {
+        auto chunk = stream.value().read(997);
+        RA3_REQUIRE_OK(chunk);
+        actual.insert(actual.end(), chunk.value().begin(), chunk.value().end());
+    }
+    RA3_CHECK_EQ(actual.size(), expected.size());
+    RA3_CHECK(actual == expected);
+}
+
+RA3_TEST(RefPack_StreamingPlainBytesUsesSameInterface)
+{
+    const std::vector<std::uint8_t> plain = {'p', 'l', 'a', 'i', 'n'};
+    auto stream = DecodedStream::open(
+        [&plain](std::uint64_t offset, std::size_t count)
+            -> ra3::Result<std::vector<std::uint8_t>> {
+            const auto begin = plain.begin() + static_cast<std::size_t>(offset);
+            return std::vector<std::uint8_t>(begin, begin + count);
+        },
+        plain.size(), "plain", 2);
+    RA3_REQUIRE_OK(stream);
+    RA3_CHECK(!stream.value().compressed());
+    auto first = stream.value().read(2);
+    auto rest = stream.value().read(20);
+    RA3_REQUIRE_OK(first);
+    RA3_REQUIRE_OK(rest);
+    RA3_CHECK_EQ(std::string(first.value().begin(), first.value().end()), std::string("pl"));
+    RA3_CHECK_EQ(std::string(rest.value().begin(), rest.value().end()), std::string("ain"));
+    RA3_CHECK(stream.value().finished());
 }

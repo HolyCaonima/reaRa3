@@ -62,6 +62,10 @@ public:
     Result<std::vector<std::uint8_t>> read(const BigEntry& entry,
                                            std::size_t maxBytes = std::numeric_limits<std::size_t>::max()) const;
 
+    // Reads exactly `count` bytes at an offset relative to the entry.
+    Result<std::vector<std::uint8_t>> read(
+        const BigEntry& entry, std::uint64_t offset, std::size_t count) const;
+
 private:
     std::filesystem::path m_file;
     std::array<char, 4> m_magic{};
