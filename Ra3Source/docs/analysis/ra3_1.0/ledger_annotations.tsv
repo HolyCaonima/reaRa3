@@ -18,8 +18,8 @@ address	status	owner	module	notes
 009f6a50	reversed	recon/bigfs	io	Big::HeaderSize; format-dependent header extent (earlier: BigHandler cluster; ra3::io::BigArchive)
 009f6aa0	reversed	recon/bigfs	io	Big::EntryCount; format-dependent entry count (earlier: BigHandler cluster; ra3::io::BigArchive)
 009f6b00	reversed	recon/bigfs	io	Big::TrailerSize; recognizes letter plus three digits and returns 8 (earlier: header trailer test; ra3::io::parseBigTrailer)
-009f6b90	reversed	recon/bigfs	io	Big::FindHashedEntry; read-only binary search; ra3::io::findGameBigHashedEntry; Unicorn 883 cases match (earlier: BigHandler cluster; ra3::io::BigArchive)
-009f6d00	reversed	recon/bigfs	io	Big::FindEntry; read-only path/ordinal lookup and out parameters; ra3::io::findGameBigEntry; Unicorn 1324 cases match (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f6b90	verified	recon/bigfs	io	Big::FindHashedEntry; read-only binary search; ra3::io::findGameBigHashedEntry; Unicorn 883 cases match (earlier: BigHandler cluster; ra3::io::BigArchive); live shadow 4632/4632, replace 0 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f6d00	verified	recon/bigfs	io	Big::FindEntry; read-only path/ordinal lookup and out parameters; ra3::io::findGameBigEntry; Unicorn 1324 cases match (earlier: BigHandler cluster; ra3::io::BigArchive); live shadow 2632475/2632475, replace 2694051 calls in a skirmish (injection.md 5.4 runs 12-13)
 009f7130	reversed	recon/bigfs	io	Big::BuildSearchTable; allocates hash/record pairs and qsorts by unsigned hash (earlier: BigHandler cluster; ra3::io::BigArchive)
 009f72e0	verified	main	io	RefPack one-shot decoder; ra3::io::decompressRefPack; live shadow 38/38 match, replace 38/38 to main menu (injection.md 5.4)
 009f74f0	verified	main	io	RefPack size probe (first size field after signature; compressed size when flag 0x01); ra3::io::probeRefPackSize; emulator 4024/4024; live shadow 556/556 in skirmish, replace 549/549 in skirmish (injection.md 5.4 runs 10-11)
@@ -115,9 +115,9 @@ address	status	owner	module	notes
 007e1c70	reversed	recon/hookcat	unknown	hook candidate: 返回 this+0x34 的索引槽
 00a77ae0	reversed	recon/hookcat	unknown	hook candidate: 初始化二字段结构为 {1,arg}
 00a77bd0	reversed	recon/hookcat	unknown	hook candidate: 把 NUL 结尾字符串复制到 this+0x20
-004cb400	reversed	recon/ports1	common	compare two uint16-length-prefixed byte strings; ra3::common::compareLengthPrefixed; emulator 2006/2006 (earlier: hook candidate: 比较两个带 16 位长度前缀的字节串)
+004cb400	verified	recon/ports1	common	compare two uint16-length-prefixed byte strings; ra3::common::compareLengthPrefixed; emulator 2006/2006 (earlier: hook candidate: 比较两个带 16 位长度前缀的字节串); live shadow 9022/9022, replace 9341 calls in a skirmish (injection.md 5.4 runs 12-13)
 007e1ba0	reversed	recon/hookcat	unknown	hook candidate: 测试对象内两个状态字节是否都为零
-004c9ea0	reversed	recon/ports1	common	fixed-length unsigned byte comparison returning -1/0/1; ra3::common::compareBytes; emulator 2006/2006 (earlier: hook candidate: 定长字节序列三路比较（-1/0/1）)
+004c9ea0	verified	recon/ports1	common	fixed-length unsigned byte comparison returning -1/0/1; ra3::common::compareBytes; emulator 2006/2006 (earlier: hook candidate: 定长字节序列三路比较（-1/0/1）); live shadow 269853/269853, replace 257685 calls in a skirmish (injection.md 5.4 runs 12-13)
 00983a90	reversed	recon/hookcat	unknown	hook candidate: 写虚表并初始化多个对象字段
 00b23c00	reversed	recon/hookcat	unknown	hook candidate: 清零首个字段
 006a4f80	reversed	recon/hookcat	unknown	hook candidate: 事件码为 0x16A 时按布尔参数派发 +1/-1
@@ -137,21 +137,21 @@ address	status	owner	module	notes
 00997400	reversed	recon/hookcat	unknown	hook candidate: 返回全局对象地址
 006873c0	reversed	recon/hookcat	unknown	hook candidate: 返回 this+0x454 字段
 009c9dd0	reversed	recon/hookcat	unknown	hook candidate: 按比例和 ceil 更新容量并返回是否扩容及增量
-009f3470	reversed	recon/ports1	common	copy at most count bytes without padding; ra3::common::copyStringLimited; emulator 2008/2008
-009f34b0	reversed	recon/ports1	common	append at most count bytes and terminate when needed; ra3::common::appendStringLimited; emulator 2007/2007
-009f3500	reversed	recon/ports1	common	signed-byte string compare with limit; ra3::common::compareStringsLimited; emulator 2008/2008
-009f3560	reversed	recon/ports1	common	opposite-case ASCII string compare with limit and signed ordering; ra3::common::compareStringsCaseInsensitiveLimited; emulator 2008/2008
-009f35e0	reversed	recon/ports1	common	NUL-terminated byte string copy; ra3::common::copyString; emulator 2007/2007
-009f3610	reversed	recon/ports1	common	NUL-terminated signed-byte string compare; ra3::common::compareStrings; emulator 2007/2007
-009f36c0	reversed	recon/ports1	common	NUL-terminated byte string length; ra3::common::stringLength; emulator 2007/2007
-009f36e0	reversed	recon/ports1	common	copy while folding ASCII A-Z; ra3::common::copyStringLowercase; emulator 2007/2007
+009f3470	verified	recon/ports1	common	copy at most count bytes without padding; ra3::common::copyStringLimited; emulator 2008/2008; live shadow 245/245, replace 245 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f34b0	verified	recon/ports1	common	append at most count bytes and terminate when needed; ra3::common::appendStringLimited; emulator 2007/2007; live shadow 3/3, replace 3 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f3500	verified	recon/ports1	common	signed-byte string compare with limit; ra3::common::compareStringsLimited; emulator 2008/2008; live shadow 14688/14688, replace 14688 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f3560	verified	recon/ports1	common	opposite-case ASCII string compare with limit and signed ordering; ra3::common::compareStringsCaseInsensitiveLimited; emulator 2008/2008; live shadow 15575/15575, replace 15576 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f35e0	verified	recon/ports1	common	NUL-terminated byte string copy; ra3::common::copyString; emulator 2007/2007; live shadow 115/115, replace 115 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f3610	verified	recon/ports1	common	NUL-terminated signed-byte string compare; ra3::common::compareStrings; emulator 2007/2007; live shadow 1/1, replace 1 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f36c0	verified	recon/ports1	common	NUL-terminated byte string length; ra3::common::stringLength; emulator 2007/2007; live shadow 355818/355818, replace 416274 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f36e0	verified	recon/ports1	common	copy while folding ASCII A-Z; ra3::common::copyStringLowercase; emulator 2007/2007; live shadow 207/207, replace 207 calls in a skirmish (injection.md 5.4 runs 12-13)
 009f3720	reversed	recon/ports1	common	find last byte including the NUL terminator; ra3::common::findLastCharacter; emulator 2007/2007
 009f3f10	reversed	recon/ports1	common	widen unsigned bytes to uint16; ra3::common::widenBytes; emulator 2007/2007
-004cb3a0	reversed	recon/ports1	common	compare uint16-length-prefixed bytes to a C string; ra3::common::compareLengthPrefixedToCString; emulator 2006/2006
-00a28290	reversed	recon/ports1	common	lowercase ASCII FNV-1a with signed high bytes and low-word sentinel; ra3::common::hashLowercaseFnv1a; emulator 2007/2007
+004cb3a0	verified	recon/ports1	common	compare uint16-length-prefixed bytes to a C string; ra3::common::compareLengthPrefixedToCString; emulator 2006/2006; live shadow 3434/3434, replace 3434 calls in a skirmish (injection.md 5.4 runs 12-13)
+00a28290	verified	recon/ports1	common	lowercase ASCII FNV-1a with signed high bytes and low-word sentinel; ra3::common::hashLowercaseFnv1a; emulator 2007/2007; live shadow 45542/45542, replace 45796 calls in a skirmish (injection.md 5.4 runs 12-13)
 00a282d0	reversed	recon/ports1	common	permissive one-to-four-byte UTF-8 decoder; ra3::common::decodeUtf8; emulator 2010/2010
 00a28350	reversed	recon/ports1	common	legacy one-to-four-byte UTF-8 encoder; ra3::common::encodeUtf8; emulator 2010/2010
-00a284b0	reversed	recon/ports1	common	permissive UTF-8 decode and advance; ra3::common::decodeUtf8AndAdvance; emulator 2010/2010
+00a284b0	verified	recon/ports1	common	permissive UTF-8 decode and advance; ra3::common::decodeUtf8AndAdvance; emulator 2010/2010; live shadow 414/414, replace 414 calls in a skirmish (injection.md 5.4 runs 12-13)
 009f5a60	reversed	recon/bigfs	io	BigHandlerBase::~BigHandlerBase deleting destructor; vtable 0x00C69404
 009f5e80	reversed	recon/bigfs	io	BigHandler::GetStoredSize; returns GameBigFile +0x20
 009f5eb0	reversed	recon/bigfs	io	BigHandler::FreeIfPresent; allocator-backed release helper

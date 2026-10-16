@@ -2199,7 +2199,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004c9e50	FUN_004c9e50	.text	6		clean	unknown		unanalyzed	
 004c9e60	thunk_FUN_019754a0	.text	6		entry-lost	unknown		unanalyzed	
 004c9e80	thunk_FUN_01979eb0	.text	6		entry-lost	unknown		unanalyzed	
-004c9ea0	FUN_004c9ea0	.text	146		clean	common	recon/ports1	reversed	fixed-length unsigned byte comparison returning -1/0/1; ra3::common::compareBytes; emulator 2006/2006 (earlier: hook candidate: 定长字节序列三路比较（-1/0/1）)
+004c9ea0	FUN_004c9ea0	.text	146		clean	common	recon/ports1	verified	fixed-length unsigned byte comparison returning -1/0/1; ra3::common::compareBytes; emulator 2006/2006 (earlier: hook candidate: 定长字节序列三路比较（-1/0/1）); live shadow 269853/269853, replace 257685 calls in a skirmish (injection.md 5.4 runs 12-13)
 004c9f80	thunk_FUN_01982b40	.text	6		entry-lost	unknown		unanalyzed	
 004c9fe0	thunk_FUN_028b0000	.text	6		entry-lost	unknown		unanalyzed	
 004ca010	FUN_004ca010	.text	31		clean	unknown		unanalyzed	
@@ -2255,8 +2255,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004cb260	FUN_004cb260	.text	14		inner-patched	unknown		unanalyzed	
 004cb280	thunk_FUN_0197e460	.text	6		entry-lost	unknown		unanalyzed	
 004cb2a0	FUN_004cb2a0	.text	246	Libraries\Source\string\UnicodeString.cpp	clean	core		unanalyzed	
-004cb3a0	FUN_004cb3a0	.text	90		clean	common	recon/ports1	reversed	compare uint16-length-prefixed bytes to a C string; ra3::common::compareLengthPrefixedToCString; emulator 2006/2006
-004cb400	FUN_004cb400	.text	85		clean	common	recon/ports1	reversed	compare two uint16-length-prefixed byte strings; ra3::common::compareLengthPrefixed; emulator 2006/2006 (earlier: hook candidate: 比较两个带 16 位长度前缀的字节串)
+004cb3a0	FUN_004cb3a0	.text	90		clean	common	recon/ports1	verified	compare uint16-length-prefixed bytes to a C string; ra3::common::compareLengthPrefixedToCString; emulator 2006/2006; live shadow 3434/3434, replace 3434 calls in a skirmish (injection.md 5.4 runs 12-13)
+004cb400	FUN_004cb400	.text	85		clean	common	recon/ports1	verified	compare two uint16-length-prefixed byte strings; ra3::common::compareLengthPrefixed; emulator 2006/2006 (earlier: hook candidate: 比较两个带 16 位长度前缀的字节串); live shadow 9022/9022, replace 9341 calls in a skirmish (injection.md 5.4 runs 12-13)
 004cb460	thunk_FUN_019830e0	.text	6		entry-lost	unknown		unanalyzed	
 004cb4c0	thunk_FUN_01975ab0	.text	6		entry-lost	unknown		unanalyzed	
 004cb520	thunk_FUN_01975a90	.text	6		entry-lost	unknown		unanalyzed	
@@ -29900,15 +29900,15 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009f2cf0	FUN_009f2cf0	.text	1692		clean	unknown		unanalyzed	
 009f3430	FUN_009f3430	.text	24		clean	unknown		unanalyzed	
 009f3450	FUN_009f3450	.text	29		clean	unknown		unanalyzed	
-009f3470	FUN_009f3470	.text	59		clean	common	recon/ports1	reversed	copy at most count bytes without padding; ra3::common::copyStringLimited; emulator 2008/2008
-009f34b0	FUN_009f34b0	.text	67		clean	common	recon/ports1	reversed	append at most count bytes and terminate when needed; ra3::common::appendStringLimited; emulator 2007/2007
-009f3500	FUN_009f3500	.text	86		clean	common	recon/ports1	reversed	signed-byte string compare with limit; ra3::common::compareStringsLimited; emulator 2008/2008
-009f3560	FUN_009f3560	.text	123		clean	common	recon/ports1	reversed	opposite-case ASCII string compare with limit and signed ordering; ra3::common::compareStringsCaseInsensitiveLimited; emulator 2008/2008
-009f35e0	FUN_009f35e0	.text	36		clean	common	recon/ports1	reversed	NUL-terminated byte string copy; ra3::common::copyString; emulator 2007/2007
-009f3610	FUN_009f3610	.text	58		clean	common	recon/ports1	reversed	NUL-terminated signed-byte string compare; ra3::common::compareStrings; emulator 2007/2007
+009f3470	FUN_009f3470	.text	59		clean	common	recon/ports1	verified	copy at most count bytes without padding; ra3::common::copyStringLimited; emulator 2008/2008; live shadow 245/245, replace 245 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f34b0	FUN_009f34b0	.text	67		clean	common	recon/ports1	verified	append at most count bytes and terminate when needed; ra3::common::appendStringLimited; emulator 2007/2007; live shadow 3/3, replace 3 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f3500	FUN_009f3500	.text	86		clean	common	recon/ports1	verified	signed-byte string compare with limit; ra3::common::compareStringsLimited; emulator 2008/2008; live shadow 14688/14688, replace 14688 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f3560	FUN_009f3560	.text	123		clean	common	recon/ports1	verified	opposite-case ASCII string compare with limit and signed ordering; ra3::common::compareStringsCaseInsensitiveLimited; emulator 2008/2008; live shadow 15575/15575, replace 15576 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f35e0	FUN_009f35e0	.text	36		clean	common	recon/ports1	verified	NUL-terminated byte string copy; ra3::common::copyString; emulator 2007/2007; live shadow 115/115, replace 115 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f3610	FUN_009f3610	.text	58		clean	common	recon/ports1	verified	NUL-terminated signed-byte string compare; ra3::common::compareStrings; emulator 2007/2007; live shadow 1/1, replace 1 calls in a skirmish (injection.md 5.4 runs 12-13)
 009f3650	FUN_009f3650	.text	109		clean	io	main	verified	case-insensitive path compare (game ordering, signed bytes); ra3::io::comparePathNames; live hook pathcompare shadow 227359/227359, replace 230337/230337 (injection.md 5.4)
-009f36c0	FUN_009f36c0	.text	28		clean	common	recon/ports1	reversed	NUL-terminated byte string length; ra3::common::stringLength; emulator 2007/2007
-009f36e0	FUN_009f36e0	.text	51		clean	common	recon/ports1	reversed	copy while folding ASCII A-Z; ra3::common::copyStringLowercase; emulator 2007/2007
+009f36c0	FUN_009f36c0	.text	28		clean	common	recon/ports1	verified	NUL-terminated byte string length; ra3::common::stringLength; emulator 2007/2007; live shadow 355818/355818, replace 416274 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f36e0	FUN_009f36e0	.text	51		clean	common	recon/ports1	verified	copy while folding ASCII A-Z; ra3::common::copyStringLowercase; emulator 2007/2007; live shadow 207/207, replace 207 calls in a skirmish (injection.md 5.4 runs 12-13)
 009f3720	FUN_009f3720	.text	50		clean	common	recon/ports1	reversed	find last byte including the NUL terminator; ra3::common::findLastCharacter; emulator 2007/2007
 009f3760	FUN_009f3760	.text	304		clean	unknown		unanalyzed	
 009f38a0	FUN_009f38a0	.text	20		clean	unknown		unanalyzed	
@@ -29985,8 +29985,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009f6a50	FUN_009f6a50	.text	79		clean	io	recon/bigfs	reversed	Big::HeaderSize; format-dependent header extent (earlier: BigHandler cluster; ra3::io::BigArchive)
 009f6aa0	FUN_009f6aa0	.text	87		clean	io	recon/bigfs	reversed	Big::EntryCount; format-dependent entry count (earlier: BigHandler cluster; ra3::io::BigArchive)
 009f6b00	FUN_009f6b00	.text	134		clean	io	recon/bigfs	reversed	Big::TrailerSize; recognizes letter plus three digits and returns 8 (earlier: header trailer test; ra3::io::parseBigTrailer)
-009f6b90	FUN_009f6b90	.text	357		clean	io	recon/bigfs	reversed	Big::FindHashedEntry; read-only binary search; ra3::io::findGameBigHashedEntry; Unicorn 883 cases match (earlier: BigHandler cluster; ra3::io::BigArchive)
-009f6d00	FUN_009f6d00	.text	763		clean	io	recon/bigfs	reversed	Big::FindEntry; read-only path/ordinal lookup and out parameters; ra3::io::findGameBigEntry; Unicorn 1324 cases match (earlier: BigHandler cluster; ra3::io::BigArchive)
+009f6b90	FUN_009f6b90	.text	357		clean	io	recon/bigfs	verified	Big::FindHashedEntry; read-only binary search; ra3::io::findGameBigHashedEntry; Unicorn 883 cases match (earlier: BigHandler cluster; ra3::io::BigArchive); live shadow 4632/4632, replace 0 calls in a skirmish (injection.md 5.4 runs 12-13)
+009f6d00	FUN_009f6d00	.text	763		clean	io	recon/bigfs	verified	Big::FindEntry; read-only path/ordinal lookup and out parameters; ra3::io::findGameBigEntry; Unicorn 1324 cases match (earlier: BigHandler cluster; ra3::io::BigArchive); live shadow 2632475/2632475, replace 2694051 calls in a skirmish (injection.md 5.4 runs 12-13)
 009f7000	FUN_009f7000	.text	297		clean	io	recon/bigfs	reversed	Viv::FindByHash; linear 16-byte-record lookup
 009f7130	FUN_009f7130	.text	143		clean	io	recon/bigfs	reversed	Big::BuildSearchTable; allocates hash/record pairs and qsorts by unsigned hash (earlier: BigHandler cluster; ra3::io::BigArchive)
 009f71d0	FUN_009f71d0	.text	61		clean	io	recon/bigfs	reversed	Viv::FindEntry; hashes optional path then delegates to Viv::FindByHash
@@ -30636,11 +30636,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a28150	FUN_00a28150	.text	186		clean	unknown		unanalyzed	
 00a28210	FUN_00a28210	.text	56		clean	unknown		unanalyzed	
 00a28250	FUN_00a28250	.text	58		clean	unknown		unanalyzed	
-00a28290	FUN_00a28290	.text	59		clean	common	recon/ports1	reversed	lowercase ASCII FNV-1a with signed high bytes and low-word sentinel; ra3::common::hashLowercaseFnv1a; emulator 2007/2007
+00a28290	FUN_00a28290	.text	59		clean	common	recon/ports1	verified	lowercase ASCII FNV-1a with signed high bytes and low-word sentinel; ra3::common::hashLowercaseFnv1a; emulator 2007/2007; live shadow 45542/45542, replace 45796 calls in a skirmish (injection.md 5.4 runs 12-13)
 00a282d0	FUN_00a282d0	.text	116		clean	common	recon/ports1	reversed	permissive one-to-four-byte UTF-8 decoder; ra3::common::decodeUtf8; emulator 2010/2010
 00a28350	FUN_00a28350	.text	124		clean	common	recon/ports1	reversed	legacy one-to-four-byte UTF-8 encoder; ra3::common::encodeUtf8; emulator 2010/2010
 00a283d0	FUN_00a283d0	.text	216		clean	unknown		unanalyzed	
-00a284b0	FUN_00a284b0	.text	152		clean	common	recon/ports1	reversed	permissive UTF-8 decode and advance; ra3::common::decodeUtf8AndAdvance; emulator 2010/2010
+00a284b0	FUN_00a284b0	.text	152		clean	common	recon/ports1	verified	permissive UTF-8 decode and advance; ra3::common::decodeUtf8AndAdvance; emulator 2010/2010; live shadow 414/414, replace 414 calls in a skirmish (injection.md 5.4 runs 12-13)
 00a28550	FUN_00a28550	.text	110		clean	unknown		unanalyzed	
 00a285c0	FUN_00a285c0	.text	126		clean	unknown		unanalyzed	
 00a28640	FUN_00a28640	.text	56		clean	unknown		unanalyzed	

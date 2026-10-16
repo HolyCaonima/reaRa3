@@ -82,25 +82,25 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `namehash` | `0x00417DB0` 名称哈希 | cdecl | 8 | `ra3::asset::hashName` | live verified |
 | `pathcompare` | `0x009F3650` 档案路径比较 | cdecl | 5 | `ra3::io::comparePathNames` | live verified |
 | `refpackprobe` | `0x009F74F0` RefPack 大小探测 | stdcall | 6 | `ra3::io::probeRefPackSize` | live verified |
-| `stringcopylimit` | `0x009F3470` 限长复制 | cdecl | 6 | `ra3::common::copyStringLimited` | offline-verified, live pending |
-| `stringappendlimit` | `0x009F34B0` 限长追加 | cdecl | 5 | `ra3::common::appendStringLimited` | offline-verified, live pending |
-| `stringcomparelimit` | `0x009F3500` 限长比较 | cdecl | 5 | `ra3::common::compareStringsLimited` | offline-verified, live pending |
-| `stringcomparecaselimit` | `0x009F3560` ASCII 不分大小写限长比较 | cdecl | 5 | `ra3::common::compareStringsCaseInsensitiveLimited` | offline-verified, live pending |
-| `stringcopy` | `0x009F35E0` 字符串复制 | cdecl | 5 | `ra3::common::copyString` | offline-verified, live pending |
-| `stringcompare` | `0x009F3610` 字符串比较 | cdecl | 6 | `ra3::common::compareStrings` | offline-verified, live pending |
-| `stringlength` | `0x009F36C0` 字符串长度 | cdecl | 6 | `ra3::common::stringLength` | offline-verified, live pending |
-| `stringlowercopy` | `0x009F36E0` ASCII 小写复制 | cdecl | 5 | `ra3::common::copyStringLowercase` | offline-verified, live pending |
-| `stringfindlast` | `0x009F3720` 反向查找字节 | cdecl | 7 | `ra3::common::findLastCharacter` | offline-verified, live pending |
-| `bytewiden` | `0x009F3F10` 字节扩宽至 16 位 | cdecl | 5 | `ra3::common::widenBytes` | offline-verified, live pending |
-| `bytecompare` | `0x004C9EA0` 定长字节比较 | stdcall | 7 | `ra3::common::compareBytes` | offline-verified, live pending |
-| `prefixedccompare` | `0x004CB3A0` 长度前缀串与 C 串比较 | thiscall | 5 | `ra3::common::compareLengthPrefixedToCString` | offline-verified, live pending |
-| `prefixedcompare` | `0x004CB400` 两个长度前缀串比较 | thiscall | 6 | `ra3::common::compareLengthPrefixed` | offline-verified, live pending |
-| `fnvhash` | `0x00A28290` ASCII 小写 FNV-1a | cdecl | 7 | `ra3::common::hashLowercaseFnv1a` | offline-verified, live pending |
-| `utf8decode` | `0x00A282D0` 宽松 UTF-8 解码 | cdecl | 6 | `ra3::common::decodeUtf8` | offline-verified, live pending |
-| `utf8encode` | `0x00A28350` UTF-8 编码 | cdecl | 9 | `ra3::common::encodeUtf8` | offline-verified, live pending |
-| `utf8next` | `0x00A284B0` UTF-8 解码并前移 | cdecl | 6 | `ra3::common::decodeUtf8AndAdvance` | offline-verified, live pending |
-| `bigfindhash` | `0x009F6B90` 单档案哈希表查找 | thiscall | 5 | `ra3::io::findGameBigHashedEntry` | offline-verified (883/883), live pending; 仅显式键启用 |
-| `bigfindentry` | `0x009F6D00` 单档案路径/序号查找 | thiscall | 7 | `ra3::io::findGameBigEntry` | offline-verified (1324/1324), live pending; 仅显式键启用 |
+| `stringcopylimit` | `0x009F3470` 限长复制 | cdecl | 6 | `ra3::common::copyStringLimited` | live verified |
+| `stringappendlimit` | `0x009F34B0` 限长追加 | cdecl | 5 | `ra3::common::appendStringLimited` | live verified |
+| `stringcomparelimit` | `0x009F3500` 限长比较 | cdecl | 5 | `ra3::common::compareStringsLimited` | live verified |
+| `stringcomparecaselimit` | `0x009F3560` ASCII 不分大小写限长比较 | cdecl | 5 | `ra3::common::compareStringsCaseInsensitiveLimited` | live verified |
+| `stringcopy` | `0x009F35E0` 字符串复制 | cdecl | 5 | `ra3::common::copyString` | live verified |
+| `stringcompare` | `0x009F3610` 字符串比较 | cdecl | 6 | `ra3::common::compareStrings` | live verified |
+| `stringlength` | `0x009F36C0` 字符串长度 | cdecl | 6 | `ra3::common::stringLength` | live verified |
+| `stringlowercopy` | `0x009F36E0` ASCII 小写复制 | cdecl | 5 | `ra3::common::copyStringLowercase` | live verified |
+| `stringfindlast` | `0x009F3720` 反向查找字节 | cdecl | 7 | `ra3::common::findLastCharacter` | offline-verified；运行 12/13 未被调用 |
+| `bytewiden` | `0x009F3F10` 字节扩宽至 16 位 | cdecl | 5 | `ra3::common::widenBytes` | offline-verified；运行 12/13 未被调用 |
+| `bytecompare` | `0x004C9EA0` 定长字节比较 | stdcall | 7 | `ra3::common::compareBytes` | live verified |
+| `prefixedccompare` | `0x004CB3A0` 长度前缀串与 C 串比较 | thiscall | 5 | `ra3::common::compareLengthPrefixedToCString` | live verified |
+| `prefixedcompare` | `0x004CB400` 两个长度前缀串比较 | thiscall | 6 | `ra3::common::compareLengthPrefixed` | live verified |
+| `fnvhash` | `0x00A28290` ASCII 小写 FNV-1a | cdecl | 7 | `ra3::common::hashLowercaseFnv1a` | live verified |
+| `utf8decode` | `0x00A282D0` 宽松 UTF-8 解码 | cdecl | 6 | `ra3::common::decodeUtf8` | offline-verified；运行 12/13 未被调用 |
+| `utf8encode` | `0x00A28350` UTF-8 编码 | cdecl | 9 | `ra3::common::encodeUtf8` | offline-verified；运行 12/13 未被调用 |
+| `utf8next` | `0x00A284B0` UTF-8 解码并前移 | cdecl | 6 | `ra3::common::decodeUtf8AndAdvance` | live verified |
+| `bigfindhash` | `0x009F6B90` 单档案哈希表查找 | thiscall | 5 | `ra3::io::findGameBigHashedEntry` | live verified（shadow；replace 时唯一调用者已被替换）; 仅显式键启用 |
+| `bigfindentry` | `0x009F6D00` 单档案路径/序号查找 | thiscall | 7 | `ra3::io::findGameBigEntry` | live verified; 仅显式键启用 |
 
 上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节
@@ -241,11 +241,18 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 9 | 三目标 replace，进入遭遇战 | `--wait-window` | 对局中 refpack 58/58；namehash 115099/115099；pathcompare 389740/389740 | 原函数不执行也能进入对局并正常运行 |
 | 10 | 四目标 shadow，进入遭遇战（asset2 合并后的解码器） | `--wait-window` | 对局中 refpack 58/58；namehash 116231/116231；pathcompare 467104/467104；refpackprobe 556/556 | 全部一致 |
 | 11 | 四目标 replace，进入遭遇战 | `--wait-window` | 对局中 refpack 58/58；namehash 117452/117452；pathcompare 575667/575667；refpackprobe 549/549 | 四个原函数都不执行，对局正常运行 |
+| 12 | 23 目标 shadow（含显式启用的 bigfind*），进入遭遇战 | `--wait-window` | 对局中 19 个目标被调用，全部 0 不一致；如 bigfindentry 2632470/2632470、pathcompare 762327/762327、stringlength 273450/273450、bytecompare 269853/269853、fnvhash 45230/45230、bigfindhash 4627/4627 | stringfindlast、bytewiden、utf8decode、utf8encode 未被调用 |
+| 13 | 23 目标 replace，进入遭遇战 | `--wait-window` | 对局中 bigfindentry 2694036、pathcompare 763499、stringlength 276354、bytecompare 257685 次全部由 Ra3Source 处理；bigfindhash 0 次（唯一调用者 bigfindentry 已被替换） | 对局正常运行 |
 
 运行 8、9 的操作：主菜单点掉离线提示 → Versus → Skirmish → 默认设置（Battlebase
 Beta，单人，阵营随机）→ BEGIN。点击由 `SetCursorPos`/`mouse_event` 发往前台游戏
 窗口，截图核对每一步。运行 9 之前有一次注入在进程出现约 1 秒时失败（远程模块快照
 尚未就绪，游戏未被注入，结果作废）；注入器现对远程函数解析重试 5 秒。
+
+运行 12、13 的 DLL 是 Debug 构建：bigfindentry 在加载期约 220 万次调用，加载到主菜单
+比只挂四个目标时慢约一倍。运行 13 之前有一次作废：配置脚本与启动命令并行执行，DLL
+读到了上一轮的 shadow 配置（日志显示 `mode=shadow`）；脚本现等待旧进程退出、确认日志
+已删除后才返回，启动必须在它之后。
 
 replace 模式下 `matches` 表示 Ra3Source 解码成功并把结果交给游戏。运行 3 的主菜单
 截图中字体、贴图和菜单框体完整；弹出的 "Failed to connect to servers" 是 GameSpy
