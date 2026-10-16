@@ -52,6 +52,8 @@ Ra3Source 按子系统分模块，每个模块一个静态库 `ra3_<name>`（别
 
 **人工状态不写在台账里**，而是写在旁边的 `docs/analysis/ra3_1.0/ledger_annotations.tsv`（列 `address status owner module notes`，每个地址一行）。生成脚本把其中非空字段覆盖到台账对应行，所以重新生成不会丢失认领和结论；标注了却找不到函数的地址会在生成时列出。
 
+`docs/analysis/ra3_1.0/module_estimates.tsv` 在台账之上记录可复现的模块估计、证据方法和直接调用入边；从仓库根目录运行 `python Ra3Source/tools/analysis/attribute_modules.py --inputs D:/Game/Ra3/RevRa3/work/analysis/ghidra --exe D:/Game/Ra3/Game/Data/ra3_1.0.game` 可重新生成它及配套报告。
+
 **认领规则**：开工前在标注文件里给要做的函数加一行，`owner` 填自己、`status` 置 `claimed`；完成并验证后置 `reversed` 或 `verified`，在 `notes` 里写结论和对应的 Ra3Source 符号，然后重新生成台账。**不要改别人 owner 非空的行。** 并行分支各自只追加自己的行，合并时冲突最小。
 
 ## 5. 并行工作规则

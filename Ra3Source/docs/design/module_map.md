@@ -1,69 +1,111 @@
 # RA3 模块映射、规模与重建顺序
 
-> 本文的统计取自台账修正前的版本（48,982 行；当时断言里 `文件.cpp:行号` 形式的源路径没被识别，assetmanager 为 0 行）。修正后台账为 48,985 行，`asset` 9 行、`io` 31 行、`core` 13 行，数字待按新台账刷新。§6.1 列的 0x004479E0 已确认是 `ResourceManagerFileStream.cpp` 的校验和检查，见 `asset_system.md` §3.4。
+本文以当前 `function_ledger.tsv` 和 `module_estimates.tsv` 为准。统计原始记录保存在
+`docs/analysis/ra3_1.0/module_estimates_report.txt`，可由
+`tools/analysis/attribute_modules.py` 确定性重建。
 
 ## 1. 口径与证据等级
 
-本文以 `function_ledger.tsv` 的 **48,982 行**、`source_file_functions.tsv` 的源码路径锚点、`source_paths.txt` 的恢复树、`vtables.tsv` 的 **2,977 个虚表候选**为基线；这些数量均为 **[实测]**。游戏文件只以只读方式扫描。
+基线包含 **48,985** 个 ledger 函数、**191** 条恢复源码路径、**2,977** 个虚表候选；
+其中 **2,783** 个虚表至少有一个 ledger 方法，项目源码在 `.text` 中给出 **331**
+个模块锚点 **[实测-账本]**。
 
 标记约定：
 
-- **[实测-账本]**：直接统计台账字段。
-- **[实测-二进制]**：只读扫描 `ra3_1.0.game` 得到。
-- **[推断-邻近]**：把 `.text` 中 `module=unknown` 的函数分给距离不超过 `0x10000`（64 KiB）的最近源码锚点。距离相同取低地址锚点。该窗口用于近似 MSVC 按 `.obj` 链接后常见的局部连续性。
-- **[参照]**：Generals/Zero Hour GPL 树中的结构类比；不能证明 RA3 实现相同。
+- **[实测-账本]**：直接统计 ledger 或导出清单。
+- **[实测-二进制]**：只读扫描 `ra3_1.0.game`。
+- **[推断-虚表]**：同一候选虚表至少有两个不同的 ledger 锚点，且模块一致。
+- **[推断-邻近]**：同一 `.text` 局部区间内最近的 ledger 锚点。
+- **[参照]**：Generals/Zero Hour GPL 树的结构类比，不能证明 RA3 行为相同。
 
-邻近法只传播 `core/common/gamelogic/gameclient/net/render/audio/ui` 的 RA3 专属源码锚点；不使用遍布各模块的 EASTL `allocator.h`，也不跨过 64 KiB 强行填满地址空间。它为 **23,896** 个 `unknown` 给出候选归属，另有 **16,659** 个仍保持未知 **[推断-邻近]**。因此下文“估计数”适合排工作量，不是最终所有权。
+归属优先级是 `ledger → vtable → neighbor → unknown`。虚表只接受至少两个一致锚点；
+出现多个模块便保留 `unknown`。邻近法把第三方锚点当边界，不向或越过
+`thirdparty` 传播，也不进入 SecuROM 区段。等距锚点若模块不同，同样保留
+`unknown`。
 
-直接调用数通过在台账所列 `.text` 函数范围内扫描 `E8 rel32` 并解析目标地址得到 **[实测-二进制]**。它不计虚调用、函数指针、尾调用和导入间接调用；误把嵌入数据当指令的风险因限定在函数范围内而降低，但未经过逐条反汇编确认。
+邻近窗口由工具在固定候选集上选择：取满足“至少 **20** 对相邻项目锚点且模块一致率
+不低于 **90%**”的最大窗口。当前选择 **0x10000（64 KiB）**；该距离内相邻锚点
+**203/221（91.9%）** 同模块。较近区间的累计结果为：
+
+| 最大距离 | 同模块/总对数 | 一致率 |
+|---:|---:|---:|
+| `0x400` | 80/82 | 97.6% |
+| `0x1000` | 132/138 | 95.7% |
+| `0x4000` | 185/200 | 92.5% |
+| `0x10000` | 203/221 | 91.9% |
+
+这支持把 64 KiB 当保守的 `.obj` 局部上限，不证明整个窗口属于同一个对象文件。
+
+直接调用数是在 `securom=clean` 的 `.text` ledger 函数范围内扫描 `E8 rel32` 并
+解析到 ledger 入口得到的调用点数。本次识别 **123,661** 个调用点，命中
+**21,998** 个目标 **[实测-二进制]**。它不计虚调用、函数指针、尾调用和导入
+间接调用；扫描不是逐条反汇编，嵌入数据仍可能造成误报。
+
+### 留出验证
+
+工具以固定种子 `0x524133`，在每个有足够锚点的项目模块内随机留出 **20%**；
+本次留出 **67** 个，训练锚点 **264** 个，评估窗口仍为 `0x10000`。精度的分母
+只包含该方法实际给出预测的样本；`—` 表示该模块没有该方法的预测。
+
+| 模块 | 留出数 | vtable 正确/预测（精度） | neighbor 正确/预测（精度） | 未预测 |
+|---|---:|---:|---:|---:|
+| `asset` | 2 | — | 1/2（50.0%） | 0 |
+| `audio` | 1 | — | 1/1（100.0%） | 0 |
+| `common` | 5 | — | 4/5（80.0%） | 0 |
+| `core` | 3 | — | 3/3（100.0%） | 0 |
+| `gameclient` | 6 | — | 4/4（100.0%） | 2 |
+| `gamelogic` | 34 | — | 15/16（93.8%） | 18 |
+| `io` | 6 | 4/4（100.0%） | 2/2（100.0%） | 0 |
+| `net` | 4 | — | 3/3（100.0%） | 1 |
+| `render` | 5 | — | 2/2（100.0%） | 3 |
+| `ui` | 1 | — | — | 1 |
+| **合计** | **67** | **4/4（100.0%）** | **35/38（92.1%）** | **25** |
+
+样本很小，尤其 `asset`、`audio`、`ui`，不能把百分比解释成总体准确率。生产归属还
+遇到 **964** 个虚表冲突函数、**7** 个邻居等距冲突和 **20,499** 个第三方边界阻断
+函数；工具没有强猜。
 
 ## 2. 权威模块映射
 
-Generals 路径默认相对于 `GeneralsMD\Code`；`Generals\Code` 有同构的较早版本，应以两树差异辅助判断演化。
+Generals 路径默认相对于 `GeneralsMD\Code`。
 
-| Ra3Source 模块 | RA3 恢复源码子树/证据 | Generals 对应目录与关键文件 | 边界与状态 |
+| Ra3Source 模块 | RA3 恢复源码子树/证据 | Generals 对应目录 | 边界与状态 |
 |---|---|---|---|
-| `core` | `Libraries\Source\ini\INI.cpp`、`string\{StringBase,UnicodeString}.cpp`、`debug\*`、`memorypool\lite_source\lite_memorypool.cpp` | `Libraries\Source\{ini,string,debug,memorypool}`；`GameEngine\Source\Common\System\{AsciiString,UnicodeString,MemoryPool}.cpp` | 配置、字符串、诊断、基础内存；已实现。 |
-| `io` | `lib-packages\RtsBase\0.0-dev\source\file\cmn\{FileSystem,MemoryFile,RwFileWrapper,TextFile}.cpp`；rw::core filesystem/BigHandler/RefPack（字符串证据） | `GameEngine\Source\Common\System\{ArchiveFile,ArchiveFileSystem,StreamingArchiveFile}.cpp`；`GameEngineDevice\Source\Win32Device\Common\{Win32BIGFile,Win32BIGFileSystem,Win32LocalFile,Win32LocalFileSystem}.cpp` | 只读文件、BIG、RefPack；已实现。平台文件访问后端留给 `platform`。 |
-| `text` | `SageEngine\source\GameEngine\gameclient\GameText.cpp`；发行数据 `gamestrings.csf` | `GameEngine\Source\GameClient\GameText.cpp` | CSF 与本地化查询；已实现。 |
-| `asset` | `Libraries\Source\assetmanager\AssetList\{FullAssetList,FullAssetListPartial,PartialAssetList}.cpp`、`resourcemanager.cpp`、`Stream\ResourceManagerFileStream.cpp`、`AssetReferenceFixup.h`；`RtsXmlPipeline\ReloDetokenizers.h` | 无四件套的直接同物；边界参考 `Common\System\ArchiveFile*.cpp`，缓存/按需实例化参考 `GameEngineDevice\Source\W3DDevice\GameClient\{W3DAssetManager,W3DAssetManagerExposed}.cpp` | `.manifest/.bin/.relo/.imp/.cdata`；设计中，不能从 Generals 推导 RA3 记录布局。 |
-| `common` | `SageEngine\source\GameEngine\common\audio\AudioEventRTS.cpp`、`GameStart.cpp`、`rts\{Player,PlayerList}.cpp`、`StateMachine.cpp`、`system\BuildAssistant.cpp`、`thing\{Thing,ThingTemplate}.cpp` | `GameEngine\Source\Common\Audio\AudioEventRTS.cpp`；`Common\RTS\{Player,PlayerList}.cpp`；`Common\System\{BuildAssistant,StateMachine}.cpp`；`Common\Thing\{Thing,ThingTemplate,Module,ModuleFactory}.cpp` | 跨客户端/逻辑共享的领域类型和模块工厂；未动工。 |
-| `gamelogic` | `SageEngine\source\GameEngine\gamelogic`，恢复 116 个文件：`ai`、`dynamics`、`map`、`object\{Behavior,Contain,SpecialPower,Update,Weapon,WeaponEffects}`、`scriptengine`、`skirmishai`、`system` | `GameEngine\Source\GameLogic\AI`、`Map`、`Object`、`ScriptEngine`、`System`；关键文件 `Object.cpp`、`Weapon.cpp`、`GameLogic.cpp`、`ScriptEngine.cpp` | 确定性模拟、对象与 AI；未动工。 |
-| `gameclient` | `SageEngine\source\GameEngine\gameclient`，恢复 21 个文件：`Drawable.cpp`、`FXList.cpp`、`GameSubTitles.cpp`、`input\Mouse.cpp`、`system\Anim2D.cpp`、`system\FXParticleSystem\*` 等 | `GameEngine\Source\GameClient\Drawable`、`Input`、`MessageStream`、`System`、`Terrain`；关键文件 `DrawableManager.cpp`、`Mouse.cpp`、`ParticleSys.cpp` | 非确定性客户端表现、输入语义、FX；未动工。 |
-| `net` | `SageEngine\source\GameEngine\gamenetwork`：`GameSpy\Thread\{Buddy,Competition,Peer}Thread.cpp`、`GameSPYNATImpl.cpp`、`ReliableTransport.cpp`、`TickerDataHandler.cpp` | `GameEngine\Source\GameNetwork`；关键文件 `Network.cpp`、`Transport.cpp`、`Connection*.cpp`、`FrameData*.cpp`、`NetCommand*.cpp`、`GameSpy\Thread\*.cpp` | 帧同步、命令流、传输和旧 GameSpy 边界；未动工。 |
-| `render` | `GameEngineDevice\W3DDevice\GameClient\{W3DDisplay,W3DView,WorldHeightMap,W3DRainManager,W3DTracerManager}.cpp`、`Drawable\W3D*Draw.cpp`、`posteffect\PostEffect.cpp`；`SageRender\source\Sage\Render\{Core,MaterialFactory,RenderObject,ShaderFactory}.cpp` | `GameEngineDevice\Source\W3DDevice\{Common,GameClient,GameLogic}`；`Libraries\Source\WWVegas\{WW3D2,WWMath,wwshade}`；关键文件 `W3DDisplay.cpp`、`W3DView.cpp`、`W3DScene.cpp`、`W3DShaderManager.cpp` | 渲染抽象、W3D 场景和 DX9 后端；未动工。 |
-| `audio` | `GameEngineDevice\sageaudiodevice\AudioCache\SageAudioCache.cpp`、`PhysicalRenderingLayer\RenderingSound.cpp`、`SageAudioManager.cpp`；另有 rw::audio::core 字符串证据 | `GameEngine\Source\Common\Audio`；`GameEngineDevice\Source\MilesAudioDevice\MilesAudioManager.cpp`；`Libraries\Source\WWVegas\{WWAudio,Miles6}` | `common` 持有 AudioEvent 领域描述，`audio` 持有缓存、播放与设备后端；未动工。 |
-| `ui` | `SageInGameUI\source\Sage\UI\Mouse\Tactical\UIImpl.cpp`、`ObjectActions.cpp`；Apt/EAStringC 导出接口 | `GameEngine\Source\GameClient\GUI`、`GameClient\InGameUI.cpp`；`GameEngineDevice\Source\W3DDevice\GameClient\W3DInGameUI.cpp` | 游戏 UI 编排与 Apt 适配；未动工。Apt 本体没有恢复出的具体源码路径。 |
-| `platform` | 恢复树没有 Win32Device 路径；Win32/DInput/D3D 导入及窗口函数为程序证据 | `GameEngineDevice\Source\Win32Device\Common\Win32GameEngine.cpp`、`Win32OSDisplay.cpp`、`Win32LocalFile*.cpp`；`Win32Device\GameClient\{Win32Mouse,Win32DIMouse,Win32DIKeyboard}.cpp` | 当前不在 ledger 的 `module` 枚举中；建议把 OS 接口与具体 Win32/DX9 后端分开。未动工。 |
+| `core` | `Libraries\Source\{ini,string,debug,memorypool}` | `Libraries\Source\...`、`GameEngine\Source\Common\System` | 配置、字符串、诊断、基础内存；已实现。 |
+| `io` | `lib-packages\RtsBase\...\file`，以及 rw::core 文件系统证据 | `Common\System\ArchiveFile*`、`Win32Device\Common\Win32*File*` | 只读文件、BIG、RefPack；已实现。 |
+| `text` | `GameEngine\gameclient\GameText.cpp` 与 `gamestrings.csf` | `GameClient\GameText.cpp` | CSF 与本地化查询；已实现，但当前 ledger 没有模块锚点。 |
+| `asset` | `Libraries\Source\assetmanager`、`RtsXmlPipeline` | 无四件套直接同物 | `.manifest/.bin/.relo/.imp/.cdata`；里程碑已实现。 |
+| `common` | `GameEngine\common` | `GameEngine\Source\Common` | 跨客户端和逻辑的共享领域类型。 |
+| `gamelogic` | `GameEngine\gamelogic` | `GameEngine\Source\GameLogic` | 确定性模拟、对象、脚本与 AI。 |
+| `gameclient` | `GameEngine\gameclient` | `GameEngine\Source\GameClient` | 非确定性表现、FX、粒子和输入语义。 |
+| `net` | `GameEngine\gamenetwork` | `GameEngine\Source\GameNetwork` | 帧同步、命令流、传输和旧 GameSpy 边界。 |
+| `render` | `GameEngineDevice\W3DDevice`、`SageRender` | `W3DDevice`、`WWVegas` | 渲染抽象、W3D 场景和 DX9 后端。 |
+| `audio` | `GameEngineDevice\sageaudiodevice` 与 rw::audio 证据 | `Common\Audio`、`MilesAudioDevice` | 缓存、播放与设备后端；AudioEvent 描述留在 `common`。 |
+| `ui` | `SageInGameUI` 与 Apt 导出证据 | `GameClient\GUI`、`InGameUI.cpp` | 游戏 UI 编排与 Apt 适配。 |
+| `platform` | Win32/DInput/D3D 导入与窗口函数 | `Win32Device` | OS 接口和具体后端；当前没有 ledger 模块值。 |
 
-台账的非 Ra3Source 构建桶：
-
-| ledger 值 | 含义 | 处理 |
-|---|---|---|
-| `thirdparty` | EASTL、OpenSSL、ATL/CRT 等 | **778 [实测-账本]**；优先替换为依赖或标准库，不逐函数重建。 |
-| `securom` | `Stext/Sdata/.securom` 等保护代码 | **7,429 [实测-账本]**；不在重建范围。 |
-| `unknown` | 尚无可靠归属 | 原始 **40,555 [实测-账本]**；邻近传播后暂余 **16,659 [推断-邻近]**。 |
+非构建桶：`thirdparty` 有 **776** 行，`securom` 有 **7,429** 行，均不逐函数重建
+**[实测-账本]**。原始 `unknown` 有 **40,449** 行；归属后仍有 **26,050** 行
+**[实测-账本+推断]**。
 
 ## 3. 模块规模
 
-“直接数”严格等于 ledger 的 `module` 列；`asset/io/text` 的 0 表示分类器没有标注，并不表示二进制中没有实现。“估计数”包含直接数和 64 KiB 邻近传播。
+| 模块 | ledger | vtable 新增 | neighbor 新增 | 估计总数 |
+|---|---:|---:|---:|---:|
+| `asset` | 9 | 0 | 952 | **961** |
+| `audio` | 7 | 90 | 123 | **220** |
+| `common` | 25 | 0 | 1,214 | **1,239** |
+| `core` | 13 | 0 | 856 | **869** |
+| `gameclient` | 28 | 0 | 1,261 | **1,289** |
+| `gamelogic` | 170 | 98 | 6,937 | **7,205** |
+| `io` | 31 | 29 | 421 | **481** |
+| `net` | 21 | 0 | 1,081 | **1,102** |
+| `render` | 25 | 99 | 783 | **907** |
+| `ui` | 2 | 0 | 455 | **457** |
 
-| 模块 | ledger 直接数 | 邻近新增 | 细化估计 | 可信度 |
-|---|---:|---:|---:|---|
-| `core` | 2 [实测] | 491 [推断] | **493 [推断]** | 低；仅两个 memorypool 锚点，且附近恰有大量保护入口，明显可能吸入启动/运行库代码。 |
-| `io` | 0 [实测] | — | **未能估计** | 已知 0x004D1B60、0x009F5AF0–0x009F7620 等实现证据，但不来自源码路径锚点，不能据此划定整个对象区间。 |
-| `text` | 0 [实测] | — | **未能估计** | `GameText.cpp` 路径无函数锚点；模块已由数据格式重建，不应把 0 当规模。 |
-| `asset` | 0 [实测] | — | **未能估计** | 六个 assetmanager 路径均无函数锚点；只找到局部四件套交叉引用。 |
-| `common` | 9 [实测] | 1,661 [推断] | **1,670 [推断]** | 中低；5.5M、7.9M、8.0M 三个稀疏簇。 |
-| `gamelogic` | 158 [实测] | 12,581 [推断] | **12,739 [推断]** | 中；锚点最多且覆盖 6.7M–8.9M 多个密集簇，但仍可能混入邻接模块。 |
-| `gameclient` | 25 [实测] | 3,430 [推断] | **3,455 [推断]** | 中低；锚点分散于多个代码簇。 |
-| `net` | 2 [实测] | 1,091 [推断] | **1,093 [推断]** | 低；只有两个锚点。 |
-| `render` | 15 [实测] | 1,963 [推断] | **1,978 [推断]** | 中低；W3D 锚点较清楚，但 SageRender/WW3D 边界未锚定。 |
-| `audio` | 7 [实测] | 535 [推断] | **542 [推断]** | 中低；三个具体文件有锚点，rw::audio 区域未覆盖。 |
-| `ui` | 2 [实测] | 2,144 [推断] | **2,146 [推断]** | 低；两个锚点相距约 3.8 MiB，Apt 与 UI 很可能混在估计中。 |
-| `platform` | 不在枚举 [实测] | — | **未能估计** | 只能由导入/API 使用识别局部入口。 |
-
-对账：八个可传播模块合计 **24,116**（其中直接 220、推断新增 23,896），加未归属 16,659、`thirdparty` 778、`securom` 7,429，恰为 **48,982 [实测+推断对账]**。这说明统计没有漏行，不说明传播归属正确。
+项目模块估计合计 **14,730**；加 `thirdparty` **776**、`securom` **7,429** 和
+`unknown` **26,050**，恰为 **48,985** **[实测+推断对账]**。对账只证明没有
+漏行。`text` 和 `platform` 没有可用锚点，因此不在估计表中。
 
 ## 4. 依赖图与重建顺序
 
@@ -100,169 +142,128 @@ graph TD
     ui --> platform_backend
 ```
 
-建议自底向上顺序：
-
-1. **基线：`core → io → text`**，三者已完成 **[实测-仓库]**。
-2. **`platform` 的窄接口 + `asset`**：先冻结文件、窗口、时钟、输入、图形/音频设备接口；随后完成四件套目录、重定位、导入与 registry。具体 Win32 后端仍可延后。
-3. **`common`**：Thing/ThingTemplate、Module、StateMachine、Player、AudioEvent 等共享模型。
-4. **`gamelogic`**：先 GameLogic/Object/Weapon，再 ScriptEngine、地图、AI；以固定 tick 和可序列化状态为约束。
-5. **`net`**：建立在确定性逻辑与命令序列化之上；离线 transport/mock 可先行。
-6. **`gameclient`**：Drawable、FX、粒子、客户端状态和输入语义。
-7. **`audio` 与 `render`**：audio 可在 common+asset 后并行；render 在 Drawable/asset 身份稳定后推进。
-8. **`ui`**：先 ObjectActions/UI 状态，再接 Apt；依赖 text、gameclient 和 render。
-9. **Win32/DX9/DInput/Miles 后端与启动整合**：最后把 platform 实现、主循环和各设备模块接通。
-
-关键防环规则：`common` 只定义 AudioEvent/Thing 等抽象，不能依赖 `audio/render/ui`；`asset` 只提供稳定身份与原始/类型化视图，不能依赖消费资源的游戏模块；`platform` 接口不包含游戏领域对象。
+顺序仍为：先稳定 `core/io/text/asset` 和窄 `platform` 接口，再推进 `common`、
+`gamelogic`、`net`、`gameclient`，随后接 `audio/render/ui`，最后整合平台后端。
+`common` 不依赖表现设备，`asset` 不依赖资源消费者，以此防止依赖环。
 
 ## 5. SecuROM 影响
 
-下表把保护状态随同 64 KiB 邻近归属传播。`entry-lost` 和 `inner-patched` 是用户要求的主指标；其余状态用于核对。
+下表随当前模块估计统计保护状态；它不分析保护区代码 **[实测-账本；模块为推断]**。
 
-| 模块 | 估计总数 | entry-lost | inner-patched | entry-recoverable | patched | 判断 |
-|---|---:|---:|---:|---:|---:|---|
-| `core` | 493 | 128 | 9 | 10 | 0 | 数字高但可信度低，极可能把受保护启动区误归到 memorypool。 |
-| `common` | 1,670 | 4 | 27 | 3 | 0 | 中等。 |
-| `gamelogic` | 12,739 | **188** | **186** | 37 | 2 | 绝对数量最高，重建风险最高且结论相对最可信。 |
-| `gameclient` | 3,455 | 2 | **49** | 6 | 1 | 以中间补丁为主。 |
-| `net` | 1,093 | 0 | 32 | 10 | 0 | 无入口丢失被分到锚点窗口，但锚点太少。 |
-| `render` | 1,978 | 1 | 30 | 6 | 0 | 中间补丁为主。 |
-| `audio` | 542 | 0 | 29 | 2 | 0 | 中间补丁占比偏高。 |
-| `ui` | 2,146 | 0 | 0 | 0 | 1 | “几乎无影响”不可靠，两个锚点无法覆盖 Apt。 |
-| 仍未知 | 16,659 | **330** | 63 | 47 | 4 | 最大未决风险池。 |
+| 模块 | 估计总数 | entry-lost | inner-patched | entry-recoverable | patched | 受影响合计 |
+|---|---:|---:|---:|---:|---:|---:|
+| `asset` | 961 | 169 | 4 | 11 | 0 | 184 |
+| `audio` | 220 | 0 | 9 | 2 | 0 | 11 |
+| `common` | 1,239 | 12 | 17 | 2 | 1 | 32 |
+| `core` | 869 | 119 | 13 | 8 | 0 | 140 |
+| `gameclient` | 1,289 | 2 | 26 | 4 | 1 | 33 |
+| `gamelogic` | 7,205 | 77 | 109 | 19 | 2 | 207 |
+| `io` | 481 | 12 | 2 | 1 | 0 | 15 |
+| `net` | 1,102 | 165 | 22 | 25 | 3 | 215 |
+| `render` | 907 | 0 | 12 | 1 | 0 | 13 |
+| `ui` | 457 | 0 | 0 | 0 | 0 | 0 |
+| 仍未知 | 26,050 | 97 | 211 | 48 | 1 | 357 |
 
-合计恰为 ledger 的 `entry-lost=653`、`inner-patched=425`、`entry-recoverable=121`、`patched=8` **[实测-账本；模块分配为推断]**。实际排期应优先把 gamelogic 的 188 个入口丢失函数按调用者/虚表归类；不要据 `core` 的 128 直接认定现有 core 重建受同等影响。
+另有 `thirdparty` **5** 个、`securom` 桶 **2** 个受影响记录。全表合计
+`entry-lost=653`、`inner-patched=432`、`entry-recoverable=121`、`patched=8`，
+共 **1,214**，与当前 ledger 完全一致。`asset` 与 `net` 的入口丢失估计很高，
+但 `asset` 留出精度只有 **50.0%**，应先补锚点，不能直接据此排期。
 
 ## 6. 未动工模块的切入函数
 
-表中“锚定”表示台账已有具体 RA3 源文件；“邻近”表示函数本身无 `source_file`，文件名由最近锚点推断；“语义”表示由字符串或导入 API 识别。全部候选均为 `securom=clean` **[实测-账本]**。
+下列候选都为 `securom=clean`。E8 入边使用本次受限扫描结果
+**[实测-账本+实测-二进制]**。
 
 ### 6.1 asset
 
-assetmanager 在台账中为 0 行，以下是只读扫描的局部突破口，不是源码锚定。0x004479E0 同时直接引用 `.relo` 和 `.imp` 字符串 **[实测-二进制]**。
-
-| 地址 | ledger 名 | E8 入边 | 建议源文件 | 依据 |
-|---|---|---:|---|---|
-| `0x004479E0` | `FUN_004479e0` | 1 | `Libraries\Source\assetmanager\resourcemanager.cpp`（推断） | 直接引用 `.relo`、`.imp`；优先分析四件套打开/分派。 |
-| `0x00447D70` | `FUN_00447d70` | 0 | 同上（推断） | 直接调用 0x004479E0；适合恢复上层参数和返回语义。 |
-| `0x00447E30` | `FUN_00447e30` | 1 | 同上或 `Stream\ResourceManagerFileStream.cpp`（推断） | 与前两者地址连续。 |
-| `0x00448530` | `FUN_00448530` | 1 | 同上（低可信推断） | 邻近 clean 函数；需先验证是否仍在同一 `.obj`。 |
+| 地址 | ledger 名 | E8 入边 | 源文件/语义 |
+|---|---|---:|---|
+| `0x004479E0` | `FUN_004479e0` | 1 | `Stream\ResourceManagerFileStream.cpp`；四件套校验和检查。 |
+| `0x00495890` | `FUN_00495890` | 1 | `AssetList\FullAssetList.cpp`；完整清单。 |
+| `0x00416E60` | `FUN_00416e60` | 0 | `AssetList\PartialAssetList.cpp`；部分清单约束。 |
+| `0x00417220` | `FUN_00417220` | 164 | `resourcemanager.cpp`；资产类型处理器注册。 |
+| `0x004A64CC` | `FUN_004a64cc` | 0 | 人工 ledger 锚点；cdata 路径格式化。 |
 
 ### 6.2 common
 
-| 地址 | ledger 名 | E8 入边 | RA3 源文件 |
-|---|---|---:|---|
-| `0x0055B5E0` | `FUN_0055b5e0` | 9 | `common\audio\AudioEventRTS.cpp`（锚定） |
-| `0x00556FF0` | `FUN_00556ff0` | 8 | `common\system\BuildAssistant.cpp`（锚定） |
-| `0x0055B6F0` | `FUN_0055b6f0` | 6 | `common\audio\AudioEventRTS.cpp`（锚定） |
-| `0x0055A7A0` | `FUN_0055a7a0` | 5 | `common\audio\AudioEventRTS.cpp`（锚定） |
-
-切入要点：先恢复 AudioEvent 值对象/解析边界和 BuildAssistant 的查询接口；避免一开始进入 Player/Thing 的大对象图。
+| 地址 | E8 入边 | RA3 源文件 |
+|---|---:|---|
+| `0x0078D1E0` | 114 | `common\thing\Thing.cpp` |
+| `0x0078C080` | 79 | `common\thing\Thing.cpp` |
+| `0x005BA020` | 9 | `common\StateMachine.cpp` |
+| `0x00556FF0` | 8 | `common\system\BuildAssistant.cpp` |
 
 ### 6.3 gamelogic
 
-| 地址 | ledger 名 | E8 入边 | RA3 源文件 |
-|---|---|---:|---|
-| `0x008684C0` | `FUN_008684c0` | 15 | `gamelogic\map\TerrainLogic.cpp`（锚定） |
-| `0x006A7AE0` | `FUN_006a7ae0` | 13 | `gamelogic\object\ObjectCreationList.cpp`（锚定） |
-| `0x008BE710` | `FUN_008be710` | 10 | `gamelogic\skirmishai\AIMicroManager\AIMicroManager.cpp`（锚定） |
-| `0x008B15D0` | `FUN_008b15d0` | 9 | 同上（锚定） |
-| `0x00859770` | `FUN_00859770` | 6 | `gamelogic\scriptengine\ScriptEngine.cpp`（锚定） |
-
-切入要点：TerrainLogic 与 OCL 能先形成小而可测的查询/创建边界；ScriptEngine 可建立脚本宿主接口；AI 两个高入边函数适合在核心对象模型稳定后进入。
+| 地址 | E8 入边 | RA3 源文件 |
+|---|---:|---|
+| `0x004ED9C0` | 127 | `gamelogic\system\GameLogic.cpp` |
+| `0x00757200` | 38 | `gamelogic\object\Object.cpp` |
+| `0x008684C0` | 15 | `gamelogic\map\TerrainLogic.cpp` |
+| `0x006A7AE0` | 12 | `gamelogic\object\ObjectCreationList.cpp` |
+| `0x00859770` | 6 | `gamelogic\scriptengine\ScriptEngine.cpp` |
 
 ### 6.4 gameclient
 
-| 地址 | ledger 名 | E8 入边 | RA3 源文件 |
-|---|---|---:|---|
-| `0x00538530` | `FUN_00538530` | 91 | `gameclient\FXList.cpp`（锚定） |
-| `0x00873F80` | `FUN_00873f80` | 5 | `drawable\Behavior\RandomSoundSelectorClientBehavior.cpp`（锚定） |
-| `0x0051FCB0` | `FUN_0051fcb0` | 4 | `gameclient\Drawable.cpp`（锚定） |
-| `0x00929C40` | `FUN_00929c40` | 3 | `SkirmishAISupport\SkirmishAIInTroubleMonitor.cpp`（锚定） |
-| `0x00665C40` | `FUN_00665c40` | 3 | `system\FXParticleSystem\fxpsemittervolumemodule.cpp`（锚定） |
-
-切入要点：0x00538530 的静态调用覆盖显著最高，适合先确定 FXList 的公共调度；Drawable 建立逻辑对象到表现对象的边界；粒子模块可作为纯数据转换测试。
+| 地址 | E8 入边 | RA3 源文件 |
+|---|---:|---|
+| `0x00538530` | 87 | `gameclient\FXList.cpp` |
+| `0x00873F80` | 5 | `drawable\Behavior\RandomSoundSelectorClientBehavior.cpp` |
+| `0x0051FCB0` | 4 | `gameclient\Drawable.cpp` |
+| `0x00665C40` | 3 | `system\FXParticleSystem\fxpsemittervolumemodule.cpp` |
 
 ### 6.5 net
 
-只有两个直接源码锚点，后三项的源文件是地址邻近推断。
+新 ledger 已有 ReliableTransport 锚点，不再需要旧版的远距离邻近候选。
 
-| 地址 | ledger 名 | E8 入边 | RA3 源文件 |
-|---|---|---:|---|
-| `0x005E6D20` | `FUN_005e6d20` | 3 | `gamenetwork\GameSPYNATImpl.cpp`（锚定） |
-| `0x005D7A00` | `FUN_005d7a00` | 1 | `gamenetwork\TickerDataHandler.cpp`（锚定） |
-| `0x005D5AE0` | `FUN_005d5ae0` | 85 | `TickerDataHandler.cpp`（邻近 `0x1F20`） |
-| `0x005EACE0` | `FUN_005eace0` | 57 | `GameSPYNATImpl.cpp`（邻近 `0x3FC0`） |
-| `0x005EAB60` | `FUN_005eab60` | 46 | `GameSPYNATImpl.cpp`（邻近 `0x3E40`） |
-
-切入要点：先验证三个高入边邻近函数是否真与两个锚点同 `.obj`；若成立，可先抽离 ticker 数据编码，再把 GameSpy NAT 封装成可替换的旧服务适配器。
+| 地址 | E8 入边 | RA3 源文件 |
+|---|---:|---|
+| `0x005DD6F0` | 14 | `gamenetwork\ReliableTransport.cpp` |
+| `0x005E6D20` | 3 | `gamenetwork\GameSPYNATImpl.cpp` |
+| `0x005F1DD0` | 2 | `gamenetwork\ReliableTransport.cpp` |
 
 ### 6.6 render
 
-| 地址 | ledger 名 | E8 入边 | RA3 源文件 |
-|---|---|---:|---|
-| `0x0090CE30` | `FUN_0090ce30` | 4 | `W3DDevice\GameClient\Drawable\W3DScriptedModelDraw.cpp`（锚定） |
-| `0x00908420` | `FUN_00908420` | 2 | 同上（锚定） |
-| `0x008F7990` | `FUN_008f7990` | 1 | `Drawable\W3DSpotlightDraw.cpp`（锚定） |
-| `0x008E8A00` | `FUN_008e8a00` | 1 | `Drawable\W3DScriptedModelDraw.cpp`（锚定） |
-| `0x008E52B0` | `FUN_008e52b0` | 1 | `Drawable\W3DDynamicsDraw.cpp`（锚定） |
-
-切入要点：先恢复 Draw 模块输入和资源句柄，不立即复刻 DX9 状态机；把模型脚本、聚光灯和动力学数据转换做成可记录的渲染命令。
+| 地址 | E8 入边 | RA3 源文件 |
+|---|---:|---|
+| `0x0090CE30` | 4 | `W3DDevice\GameClient\Drawable\W3DScriptedModelDraw.cpp` |
+| `0x009B07D0` | 2 | `SageRender\source\Sage\Render\Core.cpp` |
+| `0x009A8FD0` | 2 | `SageRender\source\Sage\Render\MaterialFactory.cpp` |
+| `0x00573F30` | 2 | `W3DDevice\GameClient\W3DDisplay.cpp` |
 
 ### 6.7 audio
 
-| 地址 | ledger 名 | E8 入边 | RA3 源文件 |
-|---|---|---:|---|
-| `0x005161C0` | `FUN_005161c0` | 5 | `sageaudiodevice\SageAudioManager.cpp`（锚定） |
-| `0x00504BB0` | `FUN_00504bb0` | 4 | `AudioCache\SageAudioCache.cpp`（锚定） |
-| `0x0051D3C0` | `FUN_0051d3c0` | 3 | `SageAudioManager.cpp`（锚定） |
-| `0x00515B70` | `FUN_00515b70` | 1 | `PhysicalRenderingLayer\RenderingSound.cpp`（锚定） |
-| `0x0051E560` | `FUN_0051e560` | 0 | `SageAudioManager.cpp`（锚定；可能经虚调用） |
-
-切入要点：先确定 manager→cache→rendering sound 的请求流，用空设备验证生命周期；零 E8 入边不等于不可达，需结合虚表。
+| 地址 | E8 入边 | RA3 源文件 |
+|---|---:|---|
+| `0x005161C0` | 5 | `sageaudiodevice\SageAudioManager.cpp` |
+| `0x0051D3C0` | 3 | `sageaudiodevice\SageAudioManager.cpp` |
+| `0x00515B70` | 1 | `PhysicalRenderingLayer\RenderingSound.cpp` |
+| `0x00504BB0` | 0 | `AudioCache\SageAudioCache.cpp`；可能依赖虚调用。 |
 
 ### 6.8 ui
 
-后三项都距 `ObjectActions.cpp` 锚点不足 `0x1300`，比本章通用 64 KiB 窗口更强，但仍需反编译确认。
+| 地址 | E8 入边 | RA3 源文件 |
+|---|---:|---|
+| `0x00A78C00` | 4 | `SageInGameUI\source\Sage\UI\ObjectActions.cpp` |
+| `0x00AB47D0` | 0 | `SageInGameUI\source\Sage\UI\Mouse\Tactical\UIImpl.cpp` |
 
-| 地址 | ledger 名 | E8 入边 | RA3 源文件 |
-|---|---|---:|---|
-| `0x00A78C00` | `FUN_00a78c00` | 4 | `SageInGameUI\source\Sage\UI\ObjectActions.cpp`（锚定） |
-| `0x00AB47D0` | `FUN_00ab47d0` | 0 | `SageInGameUI\source\Sage\UI\Mouse\Tactical\UIImpl.cpp`（锚定） |
-| `0x00A77AE0` | `FUN_00a77ae0` | 140 | `ObjectActions.cpp`（邻近 `0x1120`） |
-| `0x00A79E90` | `FUN_00a79e90` | 125 | `ObjectActions.cpp`（邻近 `0x1290`） |
-| `0x00A78020` | `FUN_00a78020` | 106 | `ObjectActions.cpp`（邻近 `0x0BE0`） |
-
-切入要点：先验证三个高入边函数是否为 ObjectActions 的小型查询/调度，再恢复 tactical UI；Apt 导出接口应单独建 ABI 清单。
+旧版三个高入边邻近候选没有升级为 ledger 或虚表归属，继续保持推断，不列为首选。
 
 ### 6.9 platform
 
-platform 没有 RA3 源码路径锚点。下列候选由原始 IAT 槽的静态引用确定 **[实测-二进制]**，建议源文件仅是 Generals 同构类比 **[参照+推断]**。Windows 回调和主循环常通过函数指针/系统入口到达，E8 入边为 0 不意外。
+`platform` 仍无源码锚点。保留已由 IAT 引用确认的入口作为局部调查点
+**[实测-二进制+参照]**：
 
-| 地址 | ledger 名 | E8 入边 | 使用的 API | 建议源文件 |
-|---|---|---:|---|---|
-| `0x004017B0` | `FUN_004017b0` | 0 | `RegisterClassW`、`CreateWindowExW`、`ShowWindow`、`UpdateWindow` | `Win32Device\Common\Win32GameEngine.cpp`（推断） |
-| `0x005036D0` | `FUN_005036d0` | 0 | `PeekMessageA`、`TranslateMessage`、`DispatchMessageA`、`GetMessageA` | `Win32GameEngine.cpp`（推断） |
-| `0x00504390` | `FUN_00504390` | 0 | `PeekMessageA`、`TranslateMessage`、`DispatchMessageA` | `Win32GameEngine.cpp`（推断） |
-| `0x00511F60` | `FUN_00511f60` | 0 | `DefWindowProcW/A` | `Win32Device\Common\Win32OSDisplay.cpp`（推断） |
-
-切入要点：先恢复窗口创建、消息泵和窗口过程之间的控制流，再定义最小 platform 接口；D3D9/DInput 的 IAT thunk 只是导入跳板，不作为重建函数。
+| 地址 | ledger 名 | E8 入边 | 使用的 API / Generals 类比 |
+|---|---|---:|---|
+| `0x004017B0` | `FUN_004017b0` | 0 | 窗口注册与创建；`Win32GameEngine.cpp`。 |
+| `0x005036D0` | `FUN_005036d0` | 0 | 消息泵；`Win32GameEngine.cpp`。 |
+| `0x00504390` | `FUN_00504390` | 0 | 消息泵；`Win32GameEngine.cpp`。 |
+| `0x00511F60` | `FUN_00511f60` | 0 | 默认窗口过程；`Win32OSDisplay.cpp`。 |
 
 ## 7. 把握程度与下一步
 
-高把握：
-
-- ledger 总数、直接模块数、保护状态总数、2,977 个虚表候选；
-- 191 个恢复源码路径及概览第 6 节给出的子树文件数；
-- 所有“锚定”函数的地址、源文件、`clean` 状态；
-- `.relo/.imp` 对 0x004479E0 的静态引用，以及 platform 候选使用的 Win32 API；
-- E8 统计的定义和扫描范围。
-
-推断：
-
-- 64 KiB 邻近传播后的模块规模及其 SecuROM 分模块数字；
-- `asset` 四个候选中除字符串交叉引用之外的具体职责和源文件；
-- net/ui 的邻近候选源文件；
-- platform 候选对应哪个 RA3 `.cpp`；
-- Generals 目录仅能提供结构、接口和命名参照，不能证明 RA3 字段布局或行为。
-
-优先补证顺序：先反编译 asset 的 0x004479E0 调用链；再对 net/ui 高入边邻近候选确认 `.obj` 边界；随后把 2,977 个虚表按构造函数写入点归类。每增加一个可靠源码/类锚点，都应重新运行邻近统计并缩小或拆分窗口，而不是把本版估计固化为事实。
+ledger 行数、源码路径数、虚表清单、保护状态和受限 E8 扫描是实测值。虚表和邻近
+归属是可复现推断；留出结果说明整体已预测样本精度较高，但覆盖有限且模块样本极不
+均衡。下一步应优先解决虚表多模块冲突，并为 `asset/net/ui` 补充可靠锚点；每次锚点
+变化后重跑工具，不把本版估计固化为事实。
