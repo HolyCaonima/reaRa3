@@ -4142,7 +4142,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00521b00	FUN_00521b00	.text	260		clean	unknown		unanalyzed	
 00521c10	FUN_00521c10	.text	24		clean	unknown		unanalyzed	
 00521c30	FUN_00521c30	.text	28		clean	unknown		unanalyzed	
-00521c50	FUN_00521c50	.text	67		clean	unknown		unanalyzed	
+00521c50	FUN_00521c50	.text	67		clean	text	recon/csf	reversed	GameText::Fetch; vtable 0x00BE0FD0 +0x40; delegates to manager lookup, writes exists, returns global fallback 0x00DEAD00 on miss
 00521ca0	FUN_00521ca0	.text	33		clean	unknown		unanalyzed	
 00521cd0	FUN_00521cd0	.text	11		patched	unknown		unanalyzed	
 00521d50	FUN_00521d50	.text	4		clean	unknown		unanalyzed	
@@ -4708,7 +4708,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00535830	FUN_00535830	.text	275		clean	unknown		unanalyzed	
 00535950	FUN_00535950	.text	111		clean	unknown		unanalyzed	
 005359c0	FUN_005359c0	.text	74		clean	unknown		unanalyzed	
-00535a10	FUN_00535a10	.text	204		clean	unknown		unanalyzed	
+00535a10	FUN_00535a10	.text	204		clean	text	recon/csf	reversed	GameTextLowerBound; sorted 8-byte lookup entries; MSVCRT _stricmp comparison
 00535ae0	FUN_00535ae0	.text	139		clean	unknown		unanalyzed	
 00535b70	FUN_00535b70	.text	105		clean	unknown		unanalyzed	
 00535be0	FUN_00535be0	.text	177		clean	unknown		unanalyzed	
@@ -4761,7 +4761,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00538e80	FUN_00538e80	.text	305		clean	unknown		unanalyzed	
 00538fc0	FUN_00538fc0	.text	117		clean	unknown		unanalyzed	
 00539040	FUN_00539040	.text	52		clean	unknown		unanalyzed	
-00539080	FUN_00539080	.text	79		clean	unknown		unanalyzed	
+00539080	FUN_00539080	.text	79		clean	text	recon/csf	reversed	GameStringTable::Find; Ra3::text::findGameText; Unicorn real gamestrings.csf 208782/208782 incl. near misses and layered tables; hook gametexttable offline-verified
 005390d0	FUN_005390d0	.text	102		clean	unknown		unanalyzed	
 00539140	FUN_00539140	.text	586		clean	unknown		unanalyzed	
 00539390	FUN_00539390	.text	15		clean	unknown		unanalyzed	
@@ -4825,7 +4825,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0053b300	FUN_0053b300	.text	359		clean	unknown		unanalyzed	
 0053b470	FUN_0053b470	.text	46		clean	unknown		unanalyzed	
 0053b4f0	FUN_0053b4f0	.text	10		clean	unknown		unanalyzed	
-0053b500	FUN_0053b500	.text	62		clean	unknown		unanalyzed	
+0053b500	FUN_0053b500	.text	62		clean	text	recon/csf	reversed	GameTextManager::Find; override(+0x50), primary(+0x48), map(+0x4C) precedence; Unicorn 69594/69594 primary-only and 69594/69594 layered; hook gametextmanager offline-verified
 0053b540	FUN_0053b540	.text	257		clean	unknown		unanalyzed	
 0053b650	FUN_0053b650	.text	301		clean	unknown		unanalyzed	
 0053b780	FUN_0053b780	.text	133		clean	unknown		unanalyzed	
@@ -4920,7 +4920,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00541370	FUN_00541370	.text	96		clean	unknown		unanalyzed	
 005413d0	FUN_005413d0	.text	487		clean	unknown		unanalyzed	
 005415c0	FUN_005415c0	.text	2142	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-00541e30	FUN_00541e30	.text	99		clean	unknown		unanalyzed	
+00541e30	FUN_00541e30	.text	99		clean	text	recon/csf	reversed	GameTextManager::Clear; destroys owned tables at +0x48/+0x4C/+0x50 and clears initialized
 00541ea0	FUN_00541ea0	.text	77		clean	unknown		unanalyzed	
 00541ef0	FUN_00541ef0	.text	97		clean	unknown		unanalyzed	
 00541f60	FUN_00541f60	.text	464		clean	unknown		unanalyzed	
@@ -4995,7 +4995,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00546fd5	FUN_00546fd5	.text	132	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00547060	FUN_00547060	.text	396		clean	unknown		unanalyzed	
 005471f0	FUN_005471f0	.text	1737		clean	unknown		unanalyzed	
-005478c0	FUN_005478c0	.text	266		clean	unknown		unanalyzed	
+005478c0	FUN_005478c0	.text	266		clean	text	recon/csf	reversed	GameTextManager::Init; allocates 0x0C-byte table objects; CSF loader call reaches inner-patched 0x0052FCE0 and was not followed
 005479d0	FUN_005479d0	.text	100		clean	unknown		unanalyzed	
 00547a40	FUN_00547a40	.text	280		clean	unknown		unanalyzed	
 00547b60	FUN_00547b60	.text	199		clean	unknown		unanalyzed	

@@ -172,3 +172,9 @@ address	status	owner	module	notes
 00674080	reversed	recon/layout2	asset	FXParticleSystemTemplate runtime constructor; retains serialized block and calls 0x00673A50 to construct polymorphic runtime modules
 009b0540	reversed	recon/layout2	asset	W3D animation channel factory; 60D8CF69=AnimationChannelTimecoded and 77F97305=AnimationChannelDelta, allocates 0x34/0x38 runtime objects
 009b15a0	reversed	recon/layout2	asset	W3DAnimation runtime constructor; iterates relocated channel pointer array and calls 0x009B0540 for each tokenized channel
+00521c50	reversed	recon/csf	text	GameText::Fetch; vtable 0x00BE0FD0 +0x40; delegates to manager lookup, writes exists, returns global fallback 0x00DEAD00 on miss
+00535a10	reversed	recon/csf	text	GameTextLowerBound; sorted 8-byte lookup entries; MSVCRT _stricmp comparison
+00539080	reversed	recon/csf	text	GameStringTable::Find; Ra3::text::findGameText; Unicorn real gamestrings.csf 208782/208782 incl. near misses and layered tables; hook gametexttable offline-verified
+0053b500	reversed	recon/csf	text	GameTextManager::Find; override(+0x50), primary(+0x48), map(+0x4C) precedence; Unicorn 69594/69594 primary-only and 69594/69594 layered; hook gametextmanager offline-verified
+00541e30	reversed	recon/csf	text	GameTextManager::Clear; destroys owned tables at +0x48/+0x4C/+0x50 and clears initialized
+005478c0	reversed	recon/csf	text	GameTextManager::Init; allocates 0x0C-byte table objects; CSF loader call reaches inner-patched 0x0052FCE0 and was not followed

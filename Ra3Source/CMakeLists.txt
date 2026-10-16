@@ -40,6 +40,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/ra3tool)
     add_subdirectory(tools/ra3inject)
     add_subdirectory(tools/portcheck)
+    add_subdirectory(tools/textcheck)
 endif()
 
 if(RA3_BUILD_TESTS)
