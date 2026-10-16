@@ -107,4 +107,4 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [ ] 精确虚表边界：用构造/析构写入点与直接虚调用重新切分 vtables.tsv 的连续段
 - [ ] hook 候选目录：全部 clean 函数按叶/纯度/序言可搬/调用约定分级，并刷新 Ghidra 函数导出 — 子 agent，分支 recon/hookcat，独占 work/ghidra
 - [x] 资源二进制布局（recon/xsdlayout，已合并，主控全量复跑结果一致）：由 XSD 推导实例布局（根 4 字节 token；基类 → 属性 → 元素；字符串/列表 `{长度/数量, 相对指针}`；引用为 1 起的导入序号），完全通过 132/257 类型、87,592/118,232 条实例（docs/design/asset_layout.md）
-- [ ] 资源布局第二轮：Audio/W3D/Tokenized typeGroup 与多态 choice（AudioEvent 0/5,234、W3DMesh、GameObject、FXParticleSystemTemplate 等），结合原程序处理器与 ReloDetokenizers
+- [x] 资源布局第二轮（recon/layout2）：tagged 标量、枚举 flags、可选复合指针、choice/多态指针数组、Poid/Tokenized 子规则；W3DContainer 与 W3DHierarchy 全量通过；总覆盖 157/257 类型、93,200/118,232 实例；程序锚定 0x00673A50 粒子模块与 0x009B0540 W3D 通道 typeId 工厂，剩余缺口见 asset_layout.md

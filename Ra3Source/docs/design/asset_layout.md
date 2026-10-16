@@ -36,6 +36,7 @@
 | `DataBlob` | `{u32 relativePointer, u32 byteSize}` | Apt 三种数据资产 |
 | 标量、枚举、bool | 通常为 4 字节；显式 byte/short 保留 1/2 字节，再按下一字段对齐 | XSD primitive 与实例尺寸 |
 | 固定单个 complex element | 内联；递归使用同样的 attribute-first 规则 | `SeparatorList`、`FontDesc` |
+| 可选 complex element | 通常是可空的单指针；非空槽进 `.relo`，目标仍按 complex 布局 | 多类可选配置对象全量回归 |
 | `maxOccurs != 1` / `unbounded` | `{u32 count, u32 relativePointer}`，元素连续存放 | `FontSubstitution.Substitute`、`Language.FontInfo` |
 | 资源引用 | 4 字节槽；非零值是从 1 开始的引用序号，位置必须在 `.imp` | 多个已通过类型 |
 | pointer/blob/list | 指针是实例起点相对偏移；非空槽必须出现在 `.relo` | 全部通过实例 |
@@ -65,6 +66,50 @@ sizeof = 20
 - `AudioFile` 使用同文件的 `AudioFileRuntime` 语义；发行数据证明根为 32 字节：
   subtitle 字符串、sample count/rate、header blob、channel count。11,920 条全部通过。
 
+第二轮又证实了以下编译转换：
+
+- `xas:tag` 的 `Angle/Percentage/Time/Duration/Velocity/StringHash/StickyString`
+  虽以 XML 字符串为载体，落盘都是 4 字节运行时值；不能沿 `xs:string`
+  restriction 推成字符串指针。
+- `xs:list` 的 item 为枚举时编译为 32 位 bit flags；普通 primitive/string list
+  仍为 `{count,pointer}`。
+- 单选 choice 的多个 `AssetReference` 分支共用一个 4 字节引用槽。
+  `W3DContainer.RenderObject` 因而没有额外 discriminant，目标类型由 manifest
+  引用目录中的 `(typeId,instanceId)` 给出；7,014 条全部通过。
+- 重复多态 choice 是 `{count,pointer}` 指向一个**指针数组**；根列表指针和每个
+  数组项都进 `.relo`。数组项所指对象首 `u32` 是具体 XSD 类型名的 typeId，
+  token 本身不进 `.relo`。例如 `W3DAnimation` 的
+  `0x60D8CF69/0x77F97305` 分别是
+  `AnimationChannelTimecoded/AnimationChannelDelta`。
+- `Poid` 是 4 字节对象内 token，不是 C 字符串或资源导入，也不进普通
+  `.relo`。`W3DHierarchy` 的发行非空实例只把根数组指针列入 `.relo`；
+  6,946 条全部通过，推翻了上一版“Poid 是 detokenizer relocation”的假设。
+- `Tokenized` typeGroup 会把普通字符串递归收缩为 4 字节 token/hash；这已修正
+  `GameObject/WeaponTemplate` 的静态偏移，但两类仍有模块专用布局，尚未全量通过。
+- `FXParticleSystemTemplate` 的根是 168 字节专用布局。clean 函数
+  `0x00673A50` 直接读取 `+0x80..+0xA4` 的模块槽并按 typeId 构造运行时模块；
+  当前根偏移已吻合，嵌套模块仍有未解差异。
+
+### 2.1 程序中的 relocation / detokenizer 边界
+
+发行字节与 clean 函数共同表明，流程不是“在同一个槽里区分相对指针和 token”：
+
+1. `.relo` 只登记相对**指针槽**；装载阶段把槽值加实例基址。
+2. 若该指针指向多态对象，目标对象首字才是 typeId token。
+3. 类型专用运行时构造器读取 token、分配真实对象并调用对应复制构造。
+
+`0x009B15A0` 遍历已重定位的 W3D 通道指针数组，`0x009B0540` 完成两种运行时
+通道工厂分派；`0x00674080 -> 0x00673A50` 是粒子系统的同类路径。
+`ReloDetokenizers.h:127` 对应的
+`0x0043C630/0x0045E9A0/0x00477510/0x00477A50` 是未知 token 的致命诊断与
+清理实例。`0x00447E30` 会把 12 字节 typed-fixup 描述符中的相对偏移加实例基址
+后按类型分派，但它不是原始 `.relo` 数组循环。
+
+原始逐项 `.relo` 循环位于 `ResourceManagerFileStream` 周边未恢复入口中；
+相关台账项为 `entry-lost`，本轮按 SecuROM 规则停止。可确认的 clean 边界是
+`0x00447D70`（记录分配/委托）和 `0x004479E0`（打开三成员并校验 checksum）。
+因此逐项循环的精确入口地址仍是未决项，不能越过台账边界猜定。
+
 ## 3. 工具与验证方法
 
 `xsd_layout.py` 加载 821 个 XSD 文件，建立 complex/simple type、extension、
@@ -92,14 +137,17 @@ attribute、element、匿名类型、enum、XSD list、choice 和引用类型目
 
 ### 3.1 当前覆盖
 
-全量结果（2026-10-16）：
+第二轮全量结果（2026-10-16）：
 
 | 指标 | 结果 |
 |---|---:|
 | 四件套流 | 257 / 257 |
-| 发行资源类型完全通过 | **132 / 257** |
-| 发行 manifest 记录通过 | **87,592 / 118,232** |
-| 未通过记录 | 30,640 |
+| 发行资源类型完全通过 | **157 / 257** |
+| 发行 manifest 记录通过 | **93,200 / 118,232** |
+| 未通过记录 | 25,032 |
+
+相对第一轮的 **132 / 257、87,592 / 118,232**，增加 25 个完全通过类型和
+5,608 条通过记录。第一轮 132 个完全通过类型没有回归。
 
 这里“类型完全通过”要求该类型每条发行记录（包括零长外部占位）都通过；“记录通过”
 不等于已经理解其上层游戏语义，只表示本文列出的二进制布局、边界、relo 和 imp
@@ -111,14 +159,17 @@ attribute、element、匿名类型、enum、XSD list、choice 和引用类型目
 
 | 类型 | 通过 / 总数 | 原因 |
 |---|---:|---|
-| AudioEvent | 0 / 5,234 | `Audio` typeGroup 有源到 runtime 的专用重排；当前仍按源 XSD 得到 244 字节，而发行根常为 176/200 字节 |
-| W3DMesh | 12,033 / 17,058 | `W3D` typeGroup 的顶点块和 FXShader 多态常量不是普通 list |
-| GameObject | 8,511 / 12,280 | 大量模块/文本字段使用 tokenized runtime 表示；源 XSD 直接布局会把 token 误判为指针 |
-| W3DContainer | 5,053 / 7,014 | RenderObject substitution/choice 需要多态 token 解码 |
-| W3DHierarchy | 5,009 / 6,946 | Pivot 的 Poid relo 值不是普通实例相对指针，符合待解的 ReloDetokenizer 路径 |
-| W3DAnimation | 4,099 / 5,924 | channel choice 在运行时变为 timecoded/delta 多态结构 |
-| FXParticleSystemTemplate | 2,740 / 4,110 | Physics/Draw 等多个 choice 的 runtime discriminant 和对象表示未知 |
-| ObjectCreationList | 898 / 1,787 | polymorphic CreateObject nugget 尚未解码 |
+| AudioEvent | 46 / 5,234 | 根已从 244 修正到 148 字节；Attack/Sound/Decay 三组运行时列表仍有额外重排 |
+| W3DMesh | 12,033 / 17,058 | `W3D` 顶点块是专用压缩/指针目录，且 FXShader 内部仍有运行时差异 |
+| GameObject | 8,511 / 12,280 | Tokenized 字符串已收缩，但 Browser、GameDependency 和模块集合仍是专用表示 |
+| W3DAnimation | 4,099 / 5,924 | 根和 typeId 工厂已证实；Timecoded/Delta 通道内部 list/padding 尚差 4–8 字节 |
+| FXParticleSystemTemplate | 2,740 / 4,110 | 168 字节根及模块 token 已证实；Color/Alpha 和各模块内部可选数组仍有差异 |
+| ObjectCreationList | 901 / 1,787 | 56 字节根已吻合；CreateObject nugget 的可选 Vector/引用列表并非通用表示 |
+| AIStrategicStateDefinition | 0 / 704 | Tactic/Heuristic 的嵌套多态与可选对象仍未建模 |
+| VideoEventList | 0 / 690 | Movie/TitleCard 多态事件的运行时对象布局未解 |
+
+`W3DContainer` 已从 5,053 / 7,014 提升到 **7,014 / 7,014**，
+`W3DHierarchy` 从 5,009 / 6,946 提升到 **6,946 / 6,946**。
 
 这些失败不是越界后继续“猜读”；验证器在第一层不一致时记录失败。TSV 中部分
 大类型的通过数来自合法零长依赖占位，不能据此声称其非空 runtime 布局已解决。
@@ -146,14 +197,15 @@ python Ra3Source/tools/analysis/xsd_layout.py `
 
 ## 6. 未决问题与下一步
 
-1. `xas:typeGroup="Audio" / "W3D" / "Tokenized"` 的完整编译规则不在公开 XSD
-   本身；需继续从同目录 runtime 类型、发行字节及原程序
-   `RtsXmlPipeline/ReloDetokenizers.h` 调用链三方交叉验证。
-2. choice/substitution group 的槽究竟是 discriminant+inline union、token 指针还是
-   对象数组，随 typeGroup 变化，不能采用一个未经验证的统一表示。
-3. Poid 在普通 XML 对象图与 W3D Pivot 中表现不同；W3D 的 relo 项可能触发
-   detokenizer，而不是普通“加实例基址”。
-4. worldbuilder 流中的少量系统/UI 类型与另外两份平台流根尺寸不同，可能是
+1. `AudioEvent` 三个文件引用列表为什么在运行时合并/重排，需继续对照音频构造函数；
+   当前 148 字节静态根正确，但列表槽语义尚未闭环。
+2. `W3DMesh` 的 VertexData 专用块和 FXShader 常量数组、`W3DAnimation` 两种压缩
+   通道的内部 padding，需分别建模，不能套普通 XSD list。
+3. `GameObject/WeaponTemplate` 的 Tokenized 不只影响字符串，还会重写模块集合和
+   若干 tagged 数值；当前递归字符串 token 规则只是已证实子集。
+4. 原始 `.relo` 逐项循环的精确入口落在台账 `entry-lost` 边界内；后续只有出现
+   新的 clean 调用边界时才能继续，不能分析 SecuROM thunk/body。
+5. worldbuilder 流中的少量系统/UI 类型与另外两份平台流根尺寸不同，可能是
    runtime wrapper 或 schema 版本差异；在找到版本选择依据前保留为失败。
-5. `typeHash` 很可能可用于选择精确 layout 版本，但其生成算法仍未证实。
+6. `typeHash` 很可能可用于选择精确 layout 版本，但其生成算法仍未证实。
 

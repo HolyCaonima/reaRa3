@@ -5,60 +5,60 @@ typeId	typeName	instances	passed	failed	fully_validated	root_size	min_instance_s
 057786F9	FontSubstitution	5	5	0	yes	20	100	116	
 05CE3E75	PathMusicGameDynamicState	211	5	206	no	20	24	48	重定位未命中布局:4 (206); 引用字段缺导入:4 (206); 导入未命中布局:20 (206)
 0634D9CC	UIMouseTacticalCoOpAIButtonsHelpButton	3	3	0	yes	36	0	84	
-064B2184	ConnectionLineManager	3	2	1	no	56	0	92	FXShader.Constants.Texture: 多态 choice 尚未建模 (1); FXShader.Constants.Float: 多态 choice 尚未建模 (1); FXShader.Constants.Int: 多态 choice 尚未建模 (1)
-06BCB058	UIMouseTacticalCommandCommunicateWithAllies	3	2	1	no	80	0	132	BeaconAttachableObjectFilter.Include: 指针 1536 越界 (1); BeaconAttachableObjectFilter.StatusBitFlagsExclude: 指针 4096 越界 (1); 非空指针缺重定位:24,36,60 (1)
+064B2184	ConnectionLineManager	3	2	1	no	32	0	92	FXShader.Constants.Texture: 非零数量使用空指针 (1); 重定位未命中布局:24,60,72 (1); 导入未命中布局:76 (1)
+06BCB058	UIMouseTacticalCommandCommunicateWithAllies	3	2	1	no	20	0	132	BeaconAttachableObjectFilter.ExcludeThing: 指针 4096 越界 (1); 非空指针缺重定位:60 (1)
 08080BC0	UICommandButton	3	2	1	no	12	0	48	FactionSettings: 指向数据 12+60 越界 (1); 导入未命中布局:16,28,40 (1)
-09DF0972	UISubtitleDisplay	3	2	1	no	60	0	48	实例 48 小于根布局 60 (1)
+09DF0972	UISubtitleDisplay	3	2	1	no	56	0	48	实例 48 小于根布局 56 (1)
 0B63AEF0	MultiplayerSettings	3	2	1	no	56	0	732	GameStatsModeData[0].AvailableMapName: 指针 2000 越界 (1); GameStatsModeData[1].AvailableMapName[0].string: 指针 256000 越界 (1); GameStatsModeData[1].AvailableMapName[1].string: 指针 512000 越界 (1)
 0E626554	UIMouseTacticalGroupSelection	3	3	0	yes	12	0	172	
-0F2AEC14	InvisibilityManagerSettings	3	2	1	no	68	0	116	CamouflageDetectorObjectFilter.Relationship: 非零数量使用空指针 (1); CamouflageDetectorObjectFilter.Include: 非零数量使用空指针 (1); CamouflageDetectorObjectFilter.StatusBitFlagsExclude: 非零数量使用空指针 (1)
-11D8BAC7	AudioLOD	2	0	2	no	60	44	76	CPULimiterLevel: 指针 48000 越界 (1); Processor: 指针 2000 越界 (1); 非空指针缺重定位:24,32,56 (1)
+0F2AEC14	InvisibilityManagerSettings	3	2	1	no	48	0	116	CamouflageDetectorObjectFilter.ExcludeThing: 指针 4096 越界 (1); 非空指针缺重定位:44 (1)
+11D8BAC7	AudioLOD	2	0	2	no	52	44	76	Processor: 指针 3200 越界 (1); 非空指针缺重定位:48 (1); 重定位未命中布局:36 (1)
 11E5CF64	StringHashTable	4	4	0	yes	16	10220	2140964	
-12CFE3EF	LocalBuildListMonitor	3	2	1	no	88	0	136	TimeBetweenUpdates: 指向数据 4+1048576000 越界 (1); ProducerObjectFilter.Relationship: 非零数量使用空指针 (1); 非空指针缺重定位:8 (1)
+12CFE3EF	LocalBuildListMonitor	3	3	0	yes	24	0	136	
 147335B2	PathMusicGameDynamicStateSet	8	8	0	yes	16	28	56	
 14A0B8E1	UIMouseTacticalToggleRepairModeButton	3	3	0	yes	36	0	68	
 151D037C	GameLODPreset	4	4	0	yes	28	60	60	
-1553B19E	EvaEvent	314	0	314	no	72	44	92	实例 68 小于根布局 72 (178); QuietTime: 字符串无 NUL (104); 重定位未命中布局:28 (104)
+1553B19E	EvaEvent	314	0	314	no	56	44	92	OtherEvaEventToBlock: 指向数据 2+8993930292 越界 (232); 非空指针缺重定位:44,52 (232); 导入未命中布局:44,52,60 (232)
 166B084D	AudioFile	11920	11920	0	yes	32	60	104	
 17F749CF	SkirmishSettings	1	0	1	no	20	100	100	RandomCrateSpawner: 导入序号 932178903>0 (1); 引用字段缺导入:8 (1)
 18DD9C43	GeneralHotKeySlots	3	3	0	yes	12	0	12	
 1A66FEFC	UIMouseTacticalAttackMoveButton	3	3	0	yes	36	0	68	
-1C48076F	ForceFeedbackEvent	42	28	14	no	32	0	20	实例 20 小于根布局 32 (14)
+1C48076F	ForceFeedbackEvent	42	42	0	yes	20	0	20	
 1CF76DDF	UIMouseTacticalCommandPlaceWall	3	3	0	yes	8	0	8	
 1F9865CE	IntelDB	3	3	0	yes	12	0	8908	
 1FB298D1	StaticGameLOD	6	0	6	no	92	80	80	实例 80 小于根布局 92 (6)
-1FD451BF	LargeGroupAudioMap	1	0	1	no	72	136	136	RequiredObjectStatusBits: 指针 1065353216 越界 (1); ExcludedObjectStatusBits: 指向数据 1+4404019200 越界 (1); Sound: 非零数量使用空指针 (1)
-2078A161	RadiusCursor	90	60	30	no	12	0	76	DecalTemplate.Component: 指向数据 12+84 越界 (30); 导入未命中布局:12 (30)
+1FD451BF	LargeGroupAudioMap	1	0	1	no	52	136	136	Sound: 非零数量使用空指针 (1); 重定位未命中布局:8,36,120 (1); 导入未命中布局:112 (1)
+2078A161	RadiusCursor	90	60	30	no	12	0	76	DecalTemplate.Component[0].Color: 指针 4294967295 越界 (30); 非空指针缺重定位:72 (30)
 21BA45A7	ImageSequence	9	9	0	yes	12	0	52	
 21E727DA	Texture	13835	13835	0	yes	12	0	16777356	
 22B4748B	TerrainAssetCollection	3	2	1	no	12	0	41896	TerrainAsset[0].WBFolder: 字符串无 NUL (1); TerrainAsset[1].WBFolder: 字符串无 NUL (1); TerrainAsset[2].Texture: 字符串无 NUL (1)
-230236F6	Video	719	0	719	no	32	44	80	Volume: 非零数量使用空指针 (715); 非空指针缺重定位:24 (4); Volume: 指向数据 1+1056964608 越界 (3)
-242FF6D4	AIStrategicStateDefinition	704	0	704	no	296	144	672	base.Heuristic.ConstantHeuristic: 多态 choice 尚未建模 (658); base.Heuristic.TimerHeuristic: 多态 choice 尚未建模 (658); base.Heuristic.IntervalHeuristic: 多态 choice 尚未建模 (658)
-2448AE30	W3DAnimation	5924	4099	1825	no	60	0	288176	Channels.ChannelScalar: 多态 choice 尚未建模 (1790); Channels.ChannelQuaternion: 多态 choice 尚未建模 (1790); 重定位未命中布局:20,24,28,32,36,40,44,48 (1583)
+230236F6	Video	719	719	0	yes	28	44	80	
+242FF6D4	AIStrategicStateDefinition	704	0	704	no	64	144	672	Tactic[0].TeamTemplate: 非零数量使用空指针 (564); Tactic[0].TargetBaseCriteria: 指针 16842752 越界 (543); 导入未命中布局:236 (324)
+2448AE30	W3DAnimation	5924	4099	1825	no	24	0	288176	非空指针缺重定位:48,56 (40); 重定位未命中布局:52,60 (40); 非空指针缺重定位:356,364,400,408,444,452,488,496 (38)
 246D0C65	UIMouseDragSelectionFeedback	3	2	1	no	44	0	20	实例 20 小于根布局 44 (1)
 246F4433	BasicMouseCursors	1	1	0	yes	20	20	20	
 2893E309	Environment	3	2	1	no	164	0	156	实例 156 小于根布局 164 (1)
-28E7FD7F	FXParticleSystemTemplate	4110	2740	1370	no	448	0	748	Physics.Default: 多态 choice 尚未建模 (1280); Physics.Swarm: 多态 choice 尚未建模 (1280); Draw.Default: 多态 choice 尚未建模 (1280)
+28E7FD7F	FXParticleSystemTemplate	4110	2740	1370	no	168	0	748	Colors.Color: 非零数量使用空指针 (763); Colors.Color: 指向数据 1+4080 越界 (479); 非空指针缺重定位:188 (479)
 296A6335	UIMouseTacticalForceAttackMoveButton	3	3	0	yes	36	0	76	
 2B9FE633	CampaignEnumerator	3	3	0	yes	12	0	24	
 2C358B80	MpGameRules	1	1	0	yes	24	24	24	
 2E0AD8B0	UIMouseTacticalCoOpAIButtonsHoldObjectButton	3	3	0	yes	36	0	92	
-3090CD40	RegisteredObjectSet	159	106	53	no	76	0	152	非空指针缺重定位:20 (18); ObjectFilter.Include: 非零数量使用空指针 (14); ObjectFilter.Relationship: 非零数量使用空指针 (14)
+3090CD40	RegisteredObjectSet	159	139	20	no	56	0	152	非空指针缺重定位:52 (8); 非空指针缺重定位:44 (4); ObjectFilter.IncludeThing: 非零数量使用空指针 (3)
 309E61A1	MeshInstanceTemplate	1	1	0	yes	12	48	48	
-31F4DCE2	FormationAssistantUnitDefinition	5	0	5	no	24	136	188	IncludeObjectFilter[0].Relationship: 非零数量使用空指针 (5); IncludeObjectFilter[0].Include: 非零数量使用空指针 (3); IncludeObjectFilter[0].StatusBitFlagsExclude: 非零数量使用空指针 (2)
-373E10FA	AITargetingHeuristic	397	0	397	no	160	196	252	BaseSelection.PreferredNotBaseTypes: 指针 1153138688 越界 (388); 非空指针缺重定位:144,156 (330); 重定位未命中布局:152,200 (235)
-38AFAA14	UITimerDisplay	3	2	1	no	92	0	88	实例 88 小于根布局 92 (1)
+31F4DCE2	FormationAssistantUnitDefinition	5	3	2	no	24	136	188	IncludeObjectFilter[0].ExcludeThing: 指针 4096 越界 (2); 非空指针缺重定位:64 (2); 重定位未命中布局:116,132 (1)
+373E10FA	AITargetingHeuristic	397	71	326	no	100	196	252	重定位未命中布局:152,200 (235); 重定位未命中布局:164 (30); Name: 指针 805306368 越界 (26)
+38AFAA14	UITimerDisplay	3	2	1	no	88	0	88	NormalFont.Name: 指针 4294966357 越界 (1); ReadyFont.Name: 指针 1768125772 越界 (1); 非空指针缺重定位:36,64 (1)
 39DB25F8	PathfindSettings	1	1	0	yes	64	64	64	
-3A6C5E8E	ArmorTemplate	466	308	158	no	52	0	1248	DamageScalar: 指针 1683514611 越界 (158); SideDamageScalar: 指针 81996879 越界 (158); FlankedPenalty: 指针 1683514611 越界 (158)
+3A6C5E8E	ArmorTemplate	466	308	158	no	32	0	1248	Armor: 指针 1683514611 越界 (158); 非空指针缺重定位:28 (158); 重定位未命中布局:748 (111)
 3A9CE0B0	AptConstData	187	187	0	yes	12	44	97472	
 3C70F027	UIMouseTacticalExitContainerButton	3	3	0	yes	20	0	60	
 3DAA8C20	AptGeometryData	2302	2302	0	yes	16	48	166012	
 3E3CE4BA	DynamicsContactTagMapping	3	3	0	yes	12	0	60	
-3E7426AC	GiftManagerSettings	3	2	1	no	72	0	120	ObjectGiftSettings.AllowObjectFilter.Relationship: 非零数量使用空指针 (1); ObjectGiftSettings.AllowObjectFilter.IncludeThing: 非零数量使用空指针 (1)
+3E7426AC	GiftManagerSettings	3	3	0	yes	52	0	120	
 418D2781	RadarTerrainImage	65	65	0	yes	40	40	40	
 423395E1	AptDatData	187	187	0	yes	12	60	836	
 43E16D66	UIMouseTacticalPlayerTechStoreButton	3	2	1	no	40	0	100	TechPointAwardedSound: 导入序号 40>1 (1); 重定位未命中布局:36 (1); 引用字段缺导入:36 (1)
-44A5973D	ObjectFilterAsset	93	58	35	no	68	0	164	Filter.Relationship: 非零数量使用空指针 (27); Filter.StatusBitFlagsExclude: 非零数量使用空指针 (14); Filter.Include: 非零数量使用空指针 (13)
+44A5973D	ObjectFilterAsset	93	67	26	no	48	0	164	Filter.ExcludeThing: 指针 4096 越界 (14); 非空指针缺重定位:44 (14); 重定位未命中布局:96 (7)
 4696A138	TerrainVisualSettings	1	1	0	yes	28	28	28	
 484D7CF8	PlayerTechStoreTemplate	90	90	0	yes	16	0	116	
 48A3EEC6	HeaderTemplate	13	13	0	yes	20	28	36	
@@ -76,12 +76,12 @@ typeId	typeName	instances	passed	failed	fully_validated	root_size	min_instance_s
 5080A5D8	MappableKey	92	92	0	yes	12	20	28	
 51B9CD64	FontDefaultSetting	3	3	0	yes	20	32	32	
 51C6B6A8	UIMouseTacticalCoOpAIButtonsNormalButton	3	3	0	yes	36	0	84	
-554FC288	InvisibilityTemplate	12	8	4	no	84	0	240	ForbiddenConditionExceptions: 指向数据 28+470235584 越界 (4); 非空指针缺重定位:16 (4); 导入未命中布局:164,168 (2)
-5608EE71	AudioSettings	1	0	1	no	528	416	416	实例 416 小于根布局 528 (1)
-564A9693	VideoEventList	690	0	690	no	20	32	88	EventList.Movie: 多态 choice 尚未建模 (690); EventList.TitleCard: 多态 choice 尚未建模 (690); 导入未命中布局:28 (689)
+554FC288	InvisibilityTemplate	12	10	2	no	56	0	240	导入未命中布局:164,168 (2)
+5608EE71	AudioSettings	1	0	1	no	376	416	416	VolumeSliderMultiplierForMovie: 指针 1063004405 越界 (1); 非空指针缺重定位:220 (1); 重定位未命中布局:212 (1)
+564A9693	VideoEventList	690	0	690	no	12	32	88	EventList.Movie[0].base.FadeIn: 指针 3074724042 越界 (690); 非空指针缺重定位:16 (689); 导入未命中布局:28 (689)
 56626220	PackedTextureImage	2289	2289	0	yes	36	0	36	
-57900170	W3DDeviceSettings	1	0	1	no	136	168	168	OpacityOfSimpleMergeDecals: 指针 4000 越界 (1); TreeFadeObjectFilter.StatusBitFlags: 指针 65536 越界 (1); 非空指针缺重定位:16,100 (1)
-5796C4B7	TerrainParticleMapping	12	8	4	no	20	0	784	Mapping[0].RequiredModelConditions: 指针 16777216 越界 (4); Mapping[0].ForbiddenModelConditions: 非零数量使用空指针 (4); Mapping[5].ForbiddenModelConditions: 指针 67108864 越界 (4)
+57900170	W3DDeviceSettings	1	0	1	no	112	168	168	TreeFadeObjectFilter.ExcludeThing: 指针 65536 越界 (1); 非空指针缺重定位:100 (1)
+5796C4B7	TerrainParticleMapping	12	8	4	no	16	0	784	导入未命中布局:148,276,404,532,660 (3); 导入未命中布局:148,276 (1)
 57E00896	UIMouseTacticalCommandPlaceRallyPoint	3	3	0	yes	8	0	8	
 582FDC2A	WaterTransparency	1	0	1	no	16	16	16	StandingWaterTexture: 导入序号 1521397687>0 (1); 引用字段缺导入:12 (1)
 585E034E	CampaignTemplate	9	9	0	yes	84	0	268	
@@ -89,30 +89,30 @@ typeId	typeName	instances	passed	failed	fully_validated	root_size	min_instance_s
 59DA7B59	HealthBarTemplate	18	18	0	yes	8	0	8	
 5B53BD84	UIDecalDestinationMarker	3	3	0	yes	32	0	56	
 5C34A41C	UIJoypadCommandBarHomogenousGroup	3	3	0	yes	8	0	8	
-5CFAC0D8	UIFloatingTextDisplay	3	2	1	no	36	0	44	TimeOut: 指针 1086324736 越界 (1); Font.Name: 指向数据 18+32 越界 (1); 非空指针缺重定位:8,24 (1)
+5CFAC0D8	UIFloatingTextDisplay	3	3	0	yes	32	0	44	
 5D65A2E0	PurchasePlayerTechButtonTemplate	216	216	0	yes	12	0	12	
 5F74536D	TerrainTextureAtlas	61	0	61	no	20	8380844	16761704	Tile[1].NormalTexture: 指针 542327876 越界 (61); 重定位未命中布局:8,12,20 (61); Tile[0].NormalTexture: 指针 1431655765 越界 (60)
 5F969146	MapMetaData	1	0	1	no	12	19708	19708	MapMetaData[0].Description: 指向数据 37+1439898703 越界 (1); MapMetaData[0].DisplayName: 字符串无 NUL (1); MapMetaData[0].StartPosition: 指向数据 256+76560 越界 (1)
-60F120B8	BreezeInfo	3	2	1	no	32	0	28	实例 28 小于根布局 32 (1)
-6167B6A9	MusicScriptConditionNugget_HitBySuperWeapon	3	0	3	no	28	28	28	Time: 指向数据 3+1056964608 越界 (3); 非空指针缺重定位:12 (3); 重定位未命中布局:16 (3)
-61D7EA40	W3DHierarchy	6946	5009	1937	no	12	0	15912	Pivot[0].Name: 指针 3472033915 越界 (1937); 非空指针缺重定位:12,112,212,312,412,512,612,712 (1188); 非空指针缺重定位:12,112 (299)
-620C480B	AIBuildStateDefinition	113	0	113	no	236	88	1768	base.Heuristic.ConstantHeuristic: 多态 choice 尚未建模 (78); base.Heuristic.TimerHeuristic: 多态 choice 尚未建模 (78); base.Heuristic.IntervalHeuristic: 多态 choice 尚未建模 (78)
+60F120B8	BreezeInfo	3	3	0	yes	28	0	28	
+6167B6A9	MusicScriptConditionNugget_HitBySuperWeapon	3	0	3	no	24	28	28	重定位未命中布局:16 (3); 引用字段缺导入:4,20 (3); 导入未命中布局:24 (3)
+61D7EA40	W3DHierarchy	6946	6946	0	yes	12	0	15912	
+620C480B	AIBuildStateDefinition	113	0	113	no	20	88	1768	引用字段缺导入:20,76,132,188 (22); 引用字段缺导入:20,76,132,188,244 (17); 引用字段缺导入:20,76,132 (16)
 629A93BB	UIJoypadCommandBarCoopCommunicator	3	3	0	yes	8	0	8	
-652AF19D	UIMessageDisplay	3	2	1	no	52	0	44	实例 44 小于根布局 52 (1)
-65EFB153	ProjectilePath	15	10	5	no	28	0	864	重定位未命中布局:12 (5); 非空指针缺重定位:24 (3); Point: 指针 1063486952 越界 (2)
-6B00C87D	UIMouseTacticalLookAt	3	2	1	no	72	0	124	KeyScrollFactor: 指针 1048576000 越界 (1); MouseDragScrollFactor: 指向数据 8+1048576000 越界 (1); ViewBookmark[3].SaveHotKeySlot: 导入序号 1048576000>25 (1)
+652AF19D	UIMessageDisplay	3	2	1	no	48	0	44	实例 44 小于根布局 48 (1)
+65EFB153	ProjectilePath	15	15	0	yes	16	0	864	
+6B00C87D	UIMouseTacticalLookAt	3	3	0	yes	60	0	124	
 6B7227C2	PlayerTechRank	10	10	0	yes	20	24	24	
-6B9474EB	JoypadCommandBarButtonTemplate	660	390	270	no	236	0	172	实例 32 小于根布局 236 (150); 实例 20 小于根布局 236 (101); 实例 16 小于根布局 236 (7)
+6B9474EB	JoypadCommandBarButtonTemplate	660	390	270	no	8	0	172	重定位未命中布局:4 (238); 导入未命中布局:12,16,20 (114); 导入未命中布局:12,16 (90)
 6BBCE2EC	MiscEvaEvents	3	3	0	yes	164	0	188	
 6C41E6DC	AptAptData	187	187	0	yes	12	112	837244	
 6F78B1A4	UnitIntro	192	128	64	no	12	0	12	引用字段缺导入:4 (64); Video: 导入序号 2558009391>1 (1); Video: 导入序号 1805323955>1 (1)
-6FBC4A9F	ExperienceLevelTemplate	777	518	259	no	140	0	196	LevelUpTintPreColorTime: 指针 1065353216 越界 (187); LevelUpTintPostColorTime: 非零数量使用空指针 (187); ModelConditionState: 非零数量使用空指针 (183)
-7046D9F8	MusicTrack	3	0	3	no	224	136	148	实例 148 小于根布局 224 (2); 实例 136 小于根布局 224 (1)
+6FBC4A9F	ExperienceLevelTemplate	777	518	259	no	120	0	196	Prerequisite: 导入序号 108>3 (171); LevelUpFxList: 指向数据 192+12 越界 (171); AttributeModifier: 非零数量使用空指针 (171)
+7046D9F8	MusicTrack	3	0	3	no	128	136	148	非空指针缺重定位:100 (2); 重定位未命中布局:128 (2); 导入未命中布局:132 (2)
 70868814	UIJoypadCommandBarStances	3	3	0	yes	8	0	8	
 728B3825	UIMouseTacticalTelestrator	3	3	0	yes	8	0	8	
 732477A0	JoypadCommandBarTemplate	30	30	0	yes	24	0	120	
 749B5209	UIMouseTacticalCommandToggleSelfRepair	3	3	0	yes	12	0	12	
-7504005C	FormationAssistant	1	0	1	no	100	152	152	ObjectFilter.ExcludeThing: 非零数量使用空指针 (1); 非空指针缺重定位:44 (1); 重定位未命中布局:36 (1)
+7504005C	FormationAssistant	1	1	0	yes	40	152	152	
 7559AD25	ModelSettings	1	0	1	no	28	24	24	实例 24 小于根布局 28 (1)
 75B6EC99	UIMouseTacticalBuildQueueTab	3	3	0	yes	12	0	500	
 77AC3B08	TargetingInTurretArcCompare	1	1	0	yes	4	4	4	
@@ -122,34 +122,34 @@ typeId	typeName	instances	passed	failed	fully_validated	root_size	min_instance_s
 7B3F8F48	UIMouseTacticalCommandGetCrate	3	3	0	yes	8	0	8	
 7B6AE7D5	MiscAudio	1	0	1	no	384	380	380	实例 380 小于根布局 384 (1)
 7BA13C8D	UIMouseTacticalCommandForceAttack	3	3	0	yes	12	0	12	
-7D464170	LogicCommand	987	606	381	no	276	0	316	实例 32 小于根布局 276 (163); 实例 204 小于根布局 276 (157); 实例 232 小于根布局 276 (37)
+7D464170	LogicCommand	987	616	371	no	28	0	316	导入未命中布局:28 (323); 引用字段缺导入:12,124 (192); AISpecialPowerInfo.ObjectFilter: 指针 1203982208 越界 (186)
 7F0818D9	PlayerTech	1273	1273	0	yes	16	16	24	
 7F96D96D	PlayerTechUpgradeBinding	3	3	0	yes	12	28	36	
 81583E8B	UIJoypadCommandBarTopMenu	3	3	0	yes	8	0	8	
-81D85EFA	SpecialPowerTemplate	611	295	316	no	476	0	744	ViewObjectDuration: 非零数量使用空指针 (227); ForbiddenObjectFilter.Include: 非零数量使用空指针 (225); ObjectFilter.Include: 非零数量使用空指针 (218)
-844D7B9F	AudioEvent	5234	0	5234	no	244	156	1696	实例 200 小于根布局 244 (2292); 实例 176 小于根布局 244 (1109); base.Type: 指针 1045220556 越界 (673)
-86682E78	FXList	1594	1061	533	no	148	0	2320	NuggetList.EvaEvent: 多态 choice 尚未建模 (424); NuggetList.Sound: 多态 choice 尚未建模 (424); NuggetList.RayEffect: 多态 choice 尚未建模 (424)
+81D85EFA	SpecialPowerTemplate	611	348	263	no	264	0	744	ForbiddenObjectFilter.ExcludeThing: 非零数量使用空指针 (218); 重定位未命中布局:536,544,568 (72); 导入未命中布局:244,308 (71)
+844D7B9F	AudioEvent	5234	46	5188	no	148	156	1696	Decay: 非零数量使用空指针 (5155); 重定位未命中布局:140 (4800); 导入未命中布局:152 (3474)
+86682E78	FXList	1594	1061	533	no	32	0	2320	导入未命中布局:76 (140); 重定位未命中布局:20 (138); 重定位未命中布局:20,32,36,40 (72)
 87C8CD72	UIMouseTacticalPlanningModeButton	3	3	0	yes	36	0	76	
 88011B0E	MusicScriptConditionNugget_Or	2	2	0	yes	12	20	20	
 88230CCD	UIMouseTacticalPlayerPowerHotKeys	3	3	0	yes	12	0	72	
 8BACD634	PathMusicGameDynamicTransition	34	0	34	no	12	12	12	引用字段缺导入:4 (34); DestinationState: 导入序号 2167093285>1 (7); DestinationState: 导入序号 3448604233>1 (5)
 8CA5A7D7	TargetingDistanceCompare	1	1	0	yes	8	8	8	
-8CC42BF2	EvaSettings	1	0	1	no	28	20	20	实例 20 小于根布局 28 (1)
-8D32382D	BounceKickTerrainMapping	3	2	1	no	12	0	36	Mapping: 指向数据 12+36 越界 (1)
+8CC42BF2	EvaSettings	1	1	0	yes	20	20	20	
+8D32382D	BounceKickTerrainMapping	3	3	0	yes	12	0	36	
 8E14B8C3	ScorchMarkSettings	3	3	0	yes	12	0	260	
-8E28081D	MultiplayerColor	7	0	7	no	64	40	44	实例 40 小于根布局 64 (4); 实例 44 小于根布局 64 (3)
+8E28081D	MultiplayerColor	7	0	7	no	52	40	44	实例 40 小于根布局 52 (4); 实例 44 小于根布局 52 (3)
 8F7DC19B	MusicPalette	62	61	1	no	16	0	16	非空指针缺重定位:12 (1)
-9053D603	UnitOverlayIconSettings	3	2	1	no	140	0	196	HealUnitIconImageSequence: 导入序号 1061158912>19 (1); AmmoPipScale: 指针 1058642329 越界 (1); ContainPipScale: 指针 1061158912 越界 (1)
-9077F377	AIMicroManagerData	118	0	118	no	356	172	352	实例 304 小于根布局 356 (91); 实例 320 小于根布局 356 (17); 实例 352 小于根布局 356 (4)
-90D951AD	Weather	7	2	5	no	108	0	180	实例 84 小于根布局 108 (4); Rain.RainTexture: 导入序号 24>1 (1); WeatherData: 指针 1077936128 越界 (1)
+9053D603	UnitOverlayIconSettings	3	2	1	no	104	0	196	HealUnitIconImageSequence: 导入序号 1061158912>19 (1); FactionVeterancy: 指向数据 1+1488 越界 (1); 非空指针缺重定位:100 (1)
+9077F377	AIMicroManagerData	118	0	118	no	224	172	352	非空指针缺重定位:216 (99); RetreatBaseCriteria: 指针 536870912 越界 (98); 重定位未命中布局:148,152 (91)
+90D951AD	Weather	7	6	1	no	24	0	180	WeatherData[1].Sound: 导入序号 3>1 (1); 引用字段缺导入:144,152 (1)
 9312B9AC	OnDemandTexture	349	349	0	yes	8	0	8	
-942FFF2D	GameObject	12280	8511	3769	no	3868	0	126684	Browser: 指针 1835445784 越界 (3396); Description: 指针 2503394572 越界 (3396); TypeDescription: 指针 438907818 越界 (3396)
-94D4D96E	WeaponTemplate	1298	678	620	no	1032	0	5724	AimDirection: 指针 1683514611 越界 (620); IdleAfterFiringDelaySeconds: 指针 1310124621 越界 (620); HoldAfterFiringDelaySeconds: 指针 2054343657 越界 (620)
+942FFF2D	GameObject	12280	8511	3769	no	548	0	126684	Browser: 指针 3067491221 越界 (3769); GameDependency.ForbiddenUpgrade: 非零数量使用空指针 (3769); GameDependency.ObjectFilter: 指针 1065353216 越界 (3769)
+94D4D96E	WeaponTemplate	1298	678	620	no	432	0	5724	OverrideVoiceEnterStateAttackSound: 指针 1841014334 越界 (620); PreAttackDelay: 指针 219975299 越界 (620); CoolDownDelayBetweenShots: 指针 341435837 越界 (620)
 9551955B	UIMouseTacticalCommandMisc	3	3	0	yes	16	0	16	
 95FE3C05	PathMusicMap	3	3	0	yes	8	0	65932	
 967ED1DC	UIDecalCloud	3	3	0	yes	16	0	16	
 9684C743	StanceTemplate	9	9	0	yes	12	0	44	
-9687F57B	Mouse	3	2	1	no	24	0	20	实例 20 小于根布局 24 (1)
+9687F57B	Mouse	3	3	0	yes	20	0	20	
 9A651D89	PathMusicEvent	243	0	243	no	16	16	20	非空指针缺重定位:4 (243); XferAlternateEvent: 导入序号 16>0 (44); 重定位未命中布局:8 (44)
 9A7A151D	UIMouseTacticalMainCommandBarHotKeys	3	3	0	yes	24	0	120	
 9AEFFBAF	UIDecalGrid	3	2	1	no	96	0	56	实例 56 小于根布局 96 (1)
@@ -158,98 +158,98 @@ A0C9EC41	UIMouseTacticalCommandForceMove	3	3	0	yes	8	0	8
 A2A3374C	WaterSetting	4	0	4	no	24	12	12	实例 12 小于根布局 24 (4)
 A336BCC2	UIMouseHUDElementHotKeyGate	3	3	0	yes	12	0	188	
 A37B9988	UIJoypadCommandBarPlayerPowers	3	3	0	yes	8	0	8	
-A3A7AF37	Multisound	451	0	451	no	20	44	576	Subsound: 指向数据 1+0 越界 (451); 非空指针缺重定位:8,16 (451); 重定位未命中布局:12 (451)
+A3A7AF37	Multisound	451	0	451	no	16	44	576	Subsound: 指向数据 16+0 越界 (451); 导入未命中布局:16,44 (264); 导入未命中布局:16 (146)
 A6E6BBA7	HotKeySlot	325	325	0	yes	24	32	68	
 A70BC1D6	PathMusicTrack	6	4	2	no	20	0	240	重定位未命中布局:8,20 (2); 非空指针缺重定位:4 (1); 非空指针缺重定位:4,12 (1)
 A76A7A93	UIMouseTacticalOpenAdvancedCommandsButton	3	3	0	yes	36	0	92	
-A80607E3	MusicScriptConditionNugget_LocalPlayerKillRatio	4	0	4	no	28	20	20	实例 20 小于根布局 28 (4)
-A9152D94	EmotionTemplate	6	4	2	no	148	0	324	DurationInactiveObject: 非零数量使用空指针 (2); 非空指针缺重定位:12,28,120 (2); Options: 指针 1077936128 越界 (1)
+A80607E3	MusicScriptConditionNugget_LocalPlayerKillRatio	4	4	0	yes	20	20	20	
+A9152D94	EmotionTemplate	6	6	0	yes	100	0	324	
 A9A98B43	GraphicsHardware	1	0	1	no	12	16128	16128	Device[1].Name: 字符串无 NUL (1); Device[2].Name: 字符串无 NUL (1); Device[3].Name: 指针 16740 越界 (1)
 AB4CFCD4	UIMouseTacticalSetStanceButton	3	3	0	yes	12	0	332	
-AC5E9172	UIMouseTacticalQuickChatDisplay	3	2	1	no	32	0	4708	DelayDuration: 指向数据 4+1073741824 越界 (1); MenuItem[0].ChatMessageGroup[0].ChatMessage[0].MessageRef: 导入序号 1162690894>1 (1); MenuItem[0].ChatMessageGroup[0].ChatMessage[1].MessageRef: 导入序号 1769296186>1 (1)
-AC78CE63	AIBudgetStateDefinition	11	0	11	no	236	56	576	实例 56 小于根布局 236 (5); base.Heuristic.ConstantHeuristic: 多态 choice 尚未建模 (2); base.Heuristic.TimerHeuristic: 多态 choice 尚未建模 (2)
+AC5E9172	UIMouseTacticalQuickChatDisplay	3	2	1	no	28	0	4708	MenuItem[0].MenuItem: 指向数据 184+0 越界 (1); MenuItem[1].MenuItem: 指向数据 1400+0 越界 (1); MenuItem[2].MenuItem: 指向数据 2464+0 越界 (1)
+AC78CE63	AIBudgetStateDefinition	11	7	4	no	20	56	576	非空指针缺重定位:76 (2); 重定位未命中布局:80 (2); base.Heuristic.ConstantHeuristic[1].EnemyFilter.ExcludeThing: 指针 67108864 越界 (2)
 ACEF31A4	DynamicGameLOD	5	5	0	yes	24	24	24	
-AD3568F5	DamageFX	24	17	7	no	12	0	3444	FXGroup: 指向数据 12+3696 越界 (6); 导入未命中布局:24,28,76,80,128,132,180,184 (4); 导入未命中布局:24,28,76,80,84,88,128,132 (2)
+AD3568F5	DamageFX	24	24	0	yes	12	0	3444	
 AD9779B6	FormationAssistantTemplate	10	10	0	yes	12	112	652	
-AD983E7E	MusicScriptConditionNugget_PathMusicStateLastActive	18	0	18	no	24	20	20	实例 20 小于根布局 24 (18)
+AD983E7E	MusicScriptConditionNugget_PathMusicStateLastActive	18	0	18	no	20	20	20	引用字段缺导入:4 (18); TrackedState: 导入序号 1895145566>0 (2); TrackedState: 导入序号 3191426046>0 (2)
 ADADEA42	DrawGroupInfo	1	0	1	no	84	80	80	实例 80 小于根布局 84 (1)
 ADB2367F	UIMouseTacticalCoOpAIButtonsHoldPositionButton	3	3	0	yes	36	0	100	
 ADCA75CA	Language	1	1	0	yes	44	252	252	
 B0415646	UIMouseTacticalCommandMineOre	3	3	0	yes	8	0	8	
 B05D5241	UIMouseTacticalWaypointModeButton	3	3	0	yes	36	0	76	
-B0B8A920	UnitAISettings	1	0	1	no	332	392	392	SellPercentage: 指针 1092616192 越界 (1); UnlookPersistDuration: 非零数量使用空指针 (1); BuilderFadeOutTime: 指针 1500 越界 (1)
+B0B8A920	UnitAISettings	1	0	1	no	260	392	392	CompleteTargetingCompareList: 导入序号 1101004800>1 (1); VictoryConditionUnitObjectFilter.IncludeThing: 指针 65536 越界 (1); VictoryConditionUnitObjectFilter.ExcludeThing: 非零数量使用空指针 (1)
 B20D9681	UIMouseTacticalReverseMoveButton	3	3	0	yes	36	0	76	
 B28CCA45	WaterTextureList	6	6	0	yes	16	100	468	
-B29F0574	OrdersManagerSettings	3	2	1	no	436	0	376	实例 376 小于根布局 436 (1)
+B29F0574	OrdersManagerSettings	3	2	1	no	128	0	376	FormationPreviewShader: 导入序号 128>12 (1); BuildPlacementShader: 导入序号 132>12 (1); PendingStart: 对象 316+72 越界 (1)
 B5AD65F8	ButtonSingleStateData	777	777	0	yes	32	0	164	
 B63667C0	UIMouseTacticalCommandEnter	3	2	1	no	20	0	56	InfiltratorEffectTypeSettings: 指向数据 3+128 越界 (1); 非空指针缺重定位:16 (1); 重定位未命中布局:12 (1)
 B6472112	EngagingContent	80	80	0	yes	28	96	120	
-B71D7323	UIConfigList	3	2	1	no	12	0	33240	UIDynamicConfig[0].Name: 非零数量使用空指针 (1); UIDynamicConfig[0].ComponentList.UIComponentAptJoypad: 多态 choice 尚未建模 (1); UIDynamicConfig[0].ComponentList.UIComponentSound: 多态 choice 尚未建模 (1)
+B71D7323	UIConfigList	3	2	1	no	12	0	33240	UIDynamicConfig[0].ComponentList.UIComponentAptJoypad[2].MagnetismObjectFilter: 指针 1065185444 越界 (1); UIDynamicConfig[0].ComponentList.UIComponentAptJoypad[4].AptFSCommandHandlerName: 字符串无 NUL (1); UIDynamicConfig[0].ComponentList.UIComponentAptJoypad[4].AptTokenDelimiters: 字符串无 NUL (1)
 B873251C	UIMouseTacticalCoOpAIButtonsAssaultButton	3	3	0	yes	36	0	92	
-BCC23F6C	ShaderOverride	18	12	6	no	16	0	376	Rule[0].ReplaceShaderName: 指针 2848242336 越界 (5); Rule[1].ReplaceShaderName: 指针 2848242336 越界 (5); Rule[2].ReplaceShaderName: 指针 2848242336 越界 (3)
+BCC23F6C	ShaderOverride	18	12	6	no	16	0	376	重定位未命中布局:16,32,48,64 (3); 重定位未命中布局:16,32 (1); 重定位未命中布局:16,32,48,64,80 (1)
 BCEDA263	LightingSettings	1	1	0	yes	48	876	876	
-BD468ACC	MissionHotSpotSettings	3	2	1	no	16	0	208	DecalTemplate.Component: 指向数据 16+252 越界 (1); 导入未命中布局:16,80,144 (1)
+BD468ACC	MissionHotSpotSettings	3	2	1	no	16	0	208	DecalTemplate.Component[0].Color: 指针 4294967295 越界 (1); DecalTemplate.Component[1].Color: 指针 4294967295 越界 (1); DecalTemplate.Component[2].Color: 指针 4294967295 越界 (1)
 BE06A9E5	TargetingCompareList	4	4	0	yes	12	16	20	
-C2B1A262	W3DMesh	17058	12033	5025	no	204	0	2841352	Vertices: 非零数量使用空指针 (5025); FXShader.Constants.Texture: 多态 choice 尚未建模 (5025); FXShader.Constants.Float: 多态 choice 尚未建模 (5025)
+C2B1A262	W3DMesh	17058	12033	5025	no	152	0	2841352	Vertices: 非零数量使用空指针 (5025); 重定位未命中布局:4,56,64,72,100,172,196,220 (4757); FXShader.TechniqueName: 非零数量使用空指针 (2050)
 C36CC13E	AutoParticleSystemSettings	1	0	1	no	124	180	180	FireSmall.ParticleSystemId: 导入序号 3830106322>0 (1); FireMedium.ParticleSystemId: 导入序号 2466413827>0 (1); FireLarge.ParticleSystemId: 导入序号 1050418336>0 (1)
-C376BC30	ResourceSettings	1	0	1	no	12	8	8	实例 8 小于根布局 12 (1)
-C5E07887	AttributeModifier	332	216	116	no	84	0	236	引用字段缺导入:32 (43); ModelConditionsClear: 非零数量使用空指针 (34); StartFX: 导入序号 1>0 (30)
+C376BC30	ResourceSettings	1	1	0	yes	8	8	8	
+C5E07887	AttributeModifier	332	216	116	no	64	0	236	非空指针缺重定位:60 (67); 重定位未命中布局:48 (64); 引用字段缺导入:28 (32)
 C70CAD55	PathMusicEventSet	2	2	0	yes	16	36	440	
-C8438DFD	DebugHotKeys	1	0	1	no	12	1872	1872	Map.HotKey: 指向数据 12+2480 越界 (1); 导入未命中布局:12,16,24,28,36,40,48,52 (1)
-C8AA398E	UIMouseTacticalRadarTelestrator	3	2	1	no	20	0	12	实例 12 小于根布局 20 (1)
+C8438DFD	DebugHotKeys	1	1	0	yes	12	1872	1872	
+C8AA398E	UIMouseTacticalRadarTelestrator	3	3	0	yes	12	0	12	
 C92313E0	FormationSelectionTemplate	10	10	0	yes	16	16	16	
 CB2E04E9	TutorialMapData	1	1	0	yes	12	812	812	
 CBD960EC	UIMouseTacticalPauseButton	3	3	0	yes	36	0	76	
 CC13A3DA	UIJoypadCommandBarButtonBuild	3	3	0	yes	12	0	36	
-CF359C6A	MusicScriptConditionNugget_EngagementCount	7	0	7	no	40	32	32	实例 32 小于根布局 40 (7)
+CF359C6A	MusicScriptConditionNugget_EngagementCount	7	0	7	no	32	32	32	重定位未命中布局:20 (7)
 CF4AED23	MissionTemplate	81	81	0	yes	148	0	852	
 D19D90C6	Road	756	756	0	yes	24	0	24	
-D1AEB526	UnitAbilityButtonTemplate	337	224	113	no	96	0	40	实例 20 小于根布局 96 (74); 实例 32 小于根布局 96 (25); 实例 40 小于根布局 96 (11)
+D1AEB526	UnitAbilityButtonTemplate	337	224	113	no	12	0	40	重定位未命中布局:8 (88); 导入未命中布局:16 (74); 重定位未命中布局:8,20 (25)
 D3863433	UIMouseTacticalCommandAttack	3	2	1	no	32	0	28	实例 28 小于根布局 32 (1)
-D414D1C3	DialogEvent	2	0	2	no	224	132	148	实例 132 小于根布局 224 (1); 实例 148 小于根布局 224 (1)
+D414D1C3	DialogEvent	2	1	1	no	128	132	148	非空指针缺重定位:100 (1); 重定位未命中布局:128 (1); 导入未命中布局:132 (1)
 D4BABAC7	FontDirectory	1	1	0	yes	12	24	24	
-D51AE5E1	GameMap	61	0	61	no	164	75660	486332	Structure[0].base.Flags: 非零数量使用空指针 (61); Structure[1].base.Flags: 非零数量使用空指针 (61); Structure[2].base.Flags: 非零数量使用空指针 (61)
+D51AE5E1	GameMap	61	0	61	no	80	75660	486332	Structure[0].Team: 字符串无 NUL (61); Structure[0].EventList: 非零数量使用空指针 (61); Structure[1].Faction: 非零数量使用空指针 (61)
 D522E6ED	UIMouseTacticalCommandAttackMove	3	3	0	yes	12	0	12	
 D5D580F6	ArmyDefinition	3	0	3	no	64	88	88	引用字段缺导入:12,16,20,24,28,32,40,44 (3); MCVTemplate: 导入序号 685397838>0 (1); GathererTemplate: 导入序号 706309745>0 (1)
-D6D4F18E	AIPersonalityDefinition	180	0	180	no	640	568	4360	UnitBuilderOverallOffensivePreference: 指针 1145569280 越界 (174); UnitBuilderEnemyTowerWeight: 指针 1131413504 越界 (174); RepairBuildingsAtDifficulty: 指针 1084227584 越界 (174)
-D76B50C7	UnitTypeIcon	42	28	14	no	16	0	20	重定位未命中布局:8 (14)
-D7D07964	MusicScriptConditionNugget_ScoredKillCount	5	0	5	no	28	20	24	实例 24 小于根布局 28 (3); 实例 20 小于根布局 28 (2)
+D6D4F18E	AIPersonalityDefinition	180	0	180	no	456	568	4360	UnitModifier: 非零数量使用空指针 (180); SpecificUnitCap: 非零数量使用空指针 (175); OpeningMove[2].Heuristic.ConstantHeuristic: 指针 2684354560 越界 (90)
+D76B50C7	UnitTypeIcon	42	42	0	yes	12	0	20	
+D7D07964	MusicScriptConditionNugget_ScoredKillCount	5	0	5	no	24	20	24	重定位未命中布局:12 (3); 实例 20 小于根布局 24 (2)
 D9456C84	UIJoypadCommandBarControlGroups	3	3	0	yes	8	0	8	
 DD834D41	UIMouseTacticalForceMoveButton	3	3	0	yes	36	0	68	
 DE279056	MusicScriptConditionNugget_PathMusicStateCurrentlyActive	7	0	7	no	8	8	8	引用字段缺导入:4 (7); TrackedState: 导入序号 1895145566>0 (1); TrackedState: 导入序号 3230604908>0 (1)
-DEBF8788	GameScriptList	765	0	765	no	20	28	23280	ScriptSet.Script: 非零数量使用空指针 (765); 重定位未命中布局:4 (539); ScriptSet.ScriptGroup: 指向数据 28+0 越界 (180)
-DEFCA2F6	DefaultHotKeys	1	0	1	no	12	1560	1560	Map.HotKey: 指向数据 12+2064 越界 (1); 导入未命中布局:12,16,24,28,36,40,48,52 (1)
-DF496AB2	UIMouseVoiceChat	3	2	1	no	76	0	172	TalkButtonHelp.Description: 指针 1768904250 越界 (1); TalkButtonHelp.TypeDescription: 指针 1867347041 越界 (1); TalkButtonHelp.Instructions: 指针 1129530692 越界 (1)
+DEBF8788	GameScriptList	765	539	226	no	8	28	23280	非空指针缺重定位:12,20 (110); ScriptSet.ScriptGroup: 非零数量使用空指针 (70); 非空指针缺重定位:12 (70)
+DEFCA2F6	DefaultHotKeys	1	1	0	yes	12	1560	1560	
+DF496AB2	UIMouseVoiceChat	3	3	0	yes	20	0	172	
 DFE29605	UIMouseTacticalForceAttackButton	3	3	0	yes	36	0	76	
 E1920287	MouseCursor	54	54	0	yes	16	24	44	
-E1AFE75B	UpgradeTemplate	95	0	95	no	252	140	416	实例 140 小于根布局 252 (70); GameDependency.RequiredModelConditionsAny: 指针 1315267681 越界 (20); 非空指针缺重定位:44,144,152,160,168,176,184,196 (19)
+E1AFE75B	UpgradeTemplate	95	85	10	no	140	140	416	重定位未命中布局:132,300,312 (2); 重定位未命中布局:132,300,312,328 (2); 重定位未命中布局:132,144 (2)
 E279D385	EngagingContentSequence	34	34	0	yes	20	44	56	
-E3159616	UIMouseTacticalCommandPlaceAIBeacon	3	2	1	no	12	0	296	BeaconTypeSettings[0].AttachableObjectFilter.Relationship: 非零数量使用空指针 (1); BeaconTypeSettings[0].AttachableObjectFilter.Include: 指向数据 2+1024 越界 (1); BeaconTypeSettings[0].AttachableObjectFilter.StatusBitFlags: 指向数据 1+736 越界 (1)
+E3159616	UIMouseTacticalCommandPlaceAIBeacon	3	2	1	no	12	0	296	BeaconTypeSettings[0].AttachableObjectFilter.IncludeThing: 指针 50331648 越界 (1); BeaconTypeSettings[2].PlaceUnattachedCursor: 导入序号 184>4 (1); BeaconTypeSettings[2].AttachableObjectFilter.IncludeThing: 非零数量使用空指针 (1)
 E3181C04	W3DCollisionBox	6262	6262	0	yes	32	0	32	
-E4266B40	AIData	1	0	1	no	276	276	276	LowLodTree: 指针 1077936128 越界 (1); LowLodTreeNoGrab: 指针 16842753 越界 (1); LowLodTreeNoHarvest: 指向数据 256+16842753 越界 (1)
+E4266B40	AIData	1	0	1	no	256	276	276	LowLodTree: 指针 1077936128 越界 (1); LowLodTreeNoGrab: 指针 16842753 越界 (1); LowLodTreeNoHarvest: 指向数据 256+16842753 越界 (1)
 E862FF86	CameraSettings	1	1	0	yes	84	84	84	
-E86E4D61	ObjectCreationList	1787	898	889	no	60	0	1376	CreateObject: 非零数量使用空指针 (803); 非空指针缺重定位:8 (800); 重定位未命中布局:12,296 (674)
+E86E4D61	ObjectCreationList	1787	901	886	no	56	0	1376	CreateObject[0].Offset: 指针 1086882016 越界 (803); CreateObject[0].ForbiddenUpgrade: 指针 1065353216 越界 (803); CreateObject[0].CreateObject: 指针 1065353216 越界 (800)
 E88B2522	UIJoypadCommandBarSingleUnit	3	3	0	yes	20	0	20	
 E8D44EF5	AudioEventLimitGroup	2	2	0	yes	8	8	8	
-E99CB24B	HealthBarSettings	3	2	1	no	16	0	588	ObjectMapping[0].ObjectFilter.Relationship: 非零数量使用空指针 (1); ObjectMapping[0].ObjectFilter.Include: 非零数量使用空指针 (1); ObjectMapping[2].ObjectFilter.Relationship: 非零数量使用空指针 (1)
-EA2C2798	AmbientStream	2	0	2	no	224	136	140	实例 140 小于根布局 224 (1); 实例 136 小于根布局 224 (1)
+E99CB24B	HealthBarSettings	3	2	1	no	16	0	588	重定位未命中布局:236,352,468 (1); 引用字段缺导入:160 (1); 导入未命中布局:132,248,364 (1)
+EA2C2798	AmbientStream	2	0	2	no	128	136	140	base.PitchShift: 对象 136+8 越界 (1); 重定位未命中布局:128 (1); 导入未命中布局:132 (1)
 EC066D65	LogicCommandSet	477	477	0	yes	12	0	212	
-ECBE73E8	SkirmishOpeningMove	64	0	64	no	20	68	1636	Order[2].Time: 字符串无 NUL (60); Order[3].Time: 非零数量使用空指针 (56); Order[0].Build: 字符串无 NUL (54)
-ECC2A1D3	LocomotorTemplate	366	242	124	no	604	0	512	实例 396 小于根布局 604 (63); 实例 484 小于根布局 604 (37); 实例 400 小于根布局 604 (12)
-ECE7DB5E	BuildSystemSettings	1	0	1	no	40	36	36	实例 36 小于根布局 40 (1)
+ECBE73E8	SkirmishOpeningMove	64	64	0	yes	20	68	1636	
+ECC2A1D3	LocomotorTemplate	366	242	124	no	468	0	512	实例 396 小于根布局 468 (63); 重定位未命中布局:108,112 (37); 实例 400 小于根布局 468 (12)
+ECE7DB5E	BuildSystemSettings	1	1	0	yes	36	36	36	
 ED0A75AC	UIMouseTacticalCommandDock	3	3	0	yes	8	0	8	
 ED226AE9	Credits	1	0	1	no	32	39616	39616	Style[1].Font.Name: 指针 4294226274 越界 (1); Style[3].Font.Name: 指针 543450450 越界 (1); 非空指针缺重定位:52,84,148 (1)
 EED6A240	MusicScriptConditionNugget_Not	4	4	0	yes	8	8	8	
 F00548C6	UIMouseTacticalCommandReverseMove	3	3	0	yes	8	0	8	
 F0C74A4A	UIRadarObjectsLayer	3	2	1	no	36	0	396	SpecialIcon: 指针 3234856960 越界 (1); 非空指针缺重定位:32 (1); 重定位未命中布局:20 (1)
-F0F08712	W3DContainer	7014	5053	1961	no	16	0	4512	SubObject[0].RenderObject.Mesh: 多态 choice 尚未建模 (702); SubObject[0].RenderObject.CollisionBox: 多态 choice 尚未建模 (702); 导入未命中布局:28,44 (613)
-F10F77EE	PlayerPowerButtonTemplate	198	82	116	no	40	0	80	Data.Power: 多态 choice 尚未建模 (116); Data.TargetedPower: 多态 choice 尚未建模 (116); Data.MultipleTargetsTargetedPower: 多态 choice 尚未建模 (116)
-F231D60D	PlayerTemplate	16	0	16	no	264	200	360	SpellBookSP: 导入序号 1627485>20 (10); SpellBookMP: 导入序号 1627485>20 (10); UnattachedMpBeaconTemplate: 导入序号 297151385>20 (10)
+F0F08712	W3DContainer	7014	7014	0	yes	16	0	4512	
+F10F77EE	PlayerPowerButtonTemplate	198	82	116	no	12	0	80	重定位未命中布局:8 (113); 导入未命中布局:16,20,24,28 (112); 重定位未命中布局:8,44,52 (1)
+F231D60D	PlayerTemplate	16	0	16	no	204	200	360	TechRank: 指针 1952670022 越界 (14); SpellBookSP: 导入序号 1627485>20 (10); SpellBookMP: 导入序号 1627485>20 (10)
 F40E5021	UIMouseTacticalBuildQueueTypeTab	3	3	0	yes	12	0	484	
 F4491BA9	UIQuickChatMessage	684	684	0	yes	16	0	76	
 F4834051	UIMouseTacticalSellModeButton	3	3	0	yes	36	0	68	
 F6C9D597	UIMouseTacticalStopButton	3	3	0	yes	36	0	60	
-F6D753D1	RedAlertTemplate	4	2	2	no	104	0	108	EvaEventToPlayOnRedAlertInitiateOwner: 导入序号 1069547520>7 (2); EvaEventToPlayOnRedAlertInitiateAlly: 导入序号 1073741824>7 (2); EvaEventToPlayOnRedAlertInitiateEnemy: 导入序号 92>7 (2)
+F6D753D1	RedAlertTemplate	4	2	2	no	100	0	108	EvaEventToPlayOnRedAlertInitiateOwner: 导入序号 1065353216>7 (2); EvaEventToPlayOnRedAlertInitiateAlly: 导入序号 1069547520>7 (2); EvaEventToPlayOnRedAlertInitiateEnemy: 导入序号 1073741824>7 (2)
 F70043B6	UIMouseTacticalThreatMeter	3	3	0	yes	36	0	76	
 F7CE0BBD	ShadowMap	3	3	0	yes	16	0	16	
 F92B2739	UIMouseTacticalCommandSetRallyPoint	3	3	0	yes	8	0	8	
