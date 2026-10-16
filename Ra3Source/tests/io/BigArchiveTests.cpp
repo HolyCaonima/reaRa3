@@ -26,11 +26,13 @@ std::uint32_t readGameBigRange(
     std::uint32_t count)
 {
     const auto& bytes = *static_cast<const std::string*>(context);
-    if (offset + count > bytes.size()) {
+    if (offset >= bytes.size()) {
         return 0;
     }
-    std::memcpy(destination, bytes.data() + static_cast<std::size_t>(offset), count);
-    return count;
+    const auto actual = static_cast<std::uint32_t>(
+        std::min<std::uint64_t>(count, bytes.size() - offset));
+    std::memcpy(destination, bytes.data() + static_cast<std::size_t>(offset), actual);
+    return actual;
 }
 
 struct ReleaseCounts {
@@ -259,12 +261,21 @@ RA3_TEST(GameBigLayout_PreparesAndReleasesFileState)
         0x10000,
         &readGameBigRange,
         const_cast<std::string*>(&bytes),
-        &file));
+        &file) == ra3::io::GameBigOpenResult::found);
     RA3_CHECK(file.archive == &archive);
     RA3_CHECK_EQ(file.ownerToken, std::uint32_t{0x1234});
     RA3_CHECK_EQ(file.logicalSize, std::uint64_t{10});
     RA3_CHECK_EQ(file.compressedSize, std::uint64_t{0});
-    RA3_CHECK_EQ(file.sourcePosition, file.dataOffset);
+    RA3_CHECK_EQ(
+        file.sourcePosition,
+        file.dataOffset + std::min<std::uint64_t>(16, bytes.size() - file.dataOffset));
+
+    archive.format = static_cast<std::uint32_t>(ra3::io::GameBigFormat::viv4);
+    RA3_CHECK(ra3::io::prepareGameBigFile(
+        &handler, "big:/data\\plain.bin", 0x1234, 0x10000,
+        &readGameBigRange, const_cast<std::string*>(&bytes), &file)
+        == ra3::io::GameBigOpenResult::unsupported);
+    archive.format = 0;
 
     ReleaseCounts counts;
     file.inflater = reinterpret_cast<void*>(1);

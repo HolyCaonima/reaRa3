@@ -182,7 +182,7 @@ bool applyGameBigSeekState(GameBigFile* file, std::uint64_t position) noexcept
     return reset;
 }
 
-bool prepareGameBigFile(
+GameBigOpenResult prepareGameBigFile(
     const GameBigHandler* handler,
     const char* path,
     std::uint32_t ownerToken,
@@ -192,7 +192,7 @@ bool prepareGameBigFile(
     GameBigFile* output) noexcept
 {
     if (handler == nullptr || path == nullptr || output == nullptr) {
-        return false;
+        return GameBigOpenResult::notFound;
     }
     if (std::strncmp(path, "big:", 4) == 0) {
         path += 4;
@@ -220,6 +220,9 @@ bool prepareGameBigFile(
                 continue;
             }
         }
+        if (archive->format == static_cast<std::uint32_t>(GameBigFormat::viv4)) {
+            return GameBigOpenResult::unsupported;
+        }
 
         std::uint64_t offset = 0;
         std::uint64_t size = 0;
@@ -228,19 +231,19 @@ bool prepareGameBigFile(
             == nullptr) {
             // A qualified archive never falls through to a later archive.
             if (separator != nullptr) {
-                return false;
+                return GameBigOpenResult::notFound;
             }
             continue;
         }
 
         std::uint64_t decodedSize = 0;
-        if (read != nullptr && size >= 5) {
+        std::uint32_t prefixRead = 0;
+        if (read != nullptr) {
+            // The original probes its stack buffer even after a short read;
+            // its unread tail is stale stack data where ours stays zero.
             std::uint8_t prefix[16]{};
-            const std::uint32_t wanted =
-                static_cast<std::uint32_t>(std::min<std::uint64_t>(sizeof(prefix), size));
-            if (read(readContext, archive, offset, prefix, wanted) == wanted) {
-                decodedSize = probeRefPackSize(prefix);
-            }
+            prefixRead = read(readContext, archive, offset, prefix, sizeof(prefix));
+            decodedSize = probeRefPackSize(prefix);
         }
 
         *output = {};
@@ -250,10 +253,10 @@ bool prepareGameBigFile(
         output->dataOffset = offset;
         output->logicalSize = decodedSize == 0 ? size : decodedSize;
         output->compressedSize = decodedSize == 0 ? 0 : size;
-        output->sourcePosition = offset;
-        return true;
+        output->sourcePosition = offset + prefixRead;
+        return GameBigOpenResult::found;
     }
-    return false;
+    return GameBigOpenResult::notFound;
 }
 
 std::uint64_t seekGameBigFile(

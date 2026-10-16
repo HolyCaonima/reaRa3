@@ -107,11 +107,13 @@ std::uint32_t vectorRangeRead(
     std::uint32_t count)
 {
     const auto* bytes = static_cast<const std::vector<std::uint8_t>*>(context);
-    if (offset > bytes->size() || count > bytes->size() - offset) {
+    if (offset >= bytes->size()) {
         return 0;
     }
-    std::memcpy(destination, bytes->data() + static_cast<std::size_t>(offset), count);
-    return count;
+    const auto actual = static_cast<std::uint32_t>(
+        std::min<std::uint64_t>(count, bytes->size() - offset));
+    std::memcpy(destination, bytes->data() + static_cast<std::size_t>(offset), actual);
+    return actual;
 }
 
 std::uint32_t readBe32(const std::uint8_t* bytes)
@@ -219,10 +221,10 @@ int helperOracle()
             const std::string path(
                 reinterpret_cast<const char*>(pathBytes.data()), pathBytes.size());
             ra3::io::GameBigFile file{};
-            const bool found = ra3::io::prepareGameBigFile(
+            const ra3::io::GameBigOpenResult result = ra3::io::prepareGameBigFile(
                 &mountedHandler, path.c_str(), 0x12345678u, 0x10000u,
                 &vectorRangeRead, &mountedBytes, &file);
-            if (!found) {
+            if (result != ra3::io::GameBigOpenResult::found) {
                 std::cout << '0';
             } else {
                 std::cout << "1 " << file.ownerToken << ' ' << file.openMode

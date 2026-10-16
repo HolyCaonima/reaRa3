@@ -93,16 +93,22 @@ class Original:
         emu.write(allocator_vtable + 8, struct.pack("<I", allocate_stub))
         allocator = emu.alloc(struct.pack("<I", allocator_vtable))
 
+        # 0x009CA390 queues an async read; 0x009CA280 waits and returns the
+        # transferred byte count (op +0x38), which Open adds to sourcePosition.
+        transferred = [0]
+
         def configure(machine: Emulator) -> int:
             destination = machine.stack_arg(1)
             offset = machine.stack_arg(2) | (machine.stack_arg(3) << 32)
             count = machine.stack_arg(4)
-            emu.write(destination, self.data[offset:offset + count])
+            chunk = self.data[offset:offset + count]
+            emu.write(destination, chunk)
+            transferred[0] = len(chunk)
             return 0
 
         def position(machine: Emulator) -> int:
             emu.uc.reg_write(r.UC_X86_REG_EDX, 0)
-            return 0
+            return transferred[0]
 
         emu.bind_function(0x009C9F40, lambda machine: machine.register(r.UC_X86_REG_ECX))
         emu.bind_function(0x009CA390, configure, 36)

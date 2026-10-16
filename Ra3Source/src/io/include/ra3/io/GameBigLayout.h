@@ -225,9 +225,19 @@ std::uint32_t hashGameBigPath(const char* path, std::uint32_t seed = 0x1505) noe
 std::uint64_t gameBigStoredSize(const GameBigFile* file) noexcept;
 std::uint64_t gameBigAbsoluteDataOffset(const GameBigFile* file) noexcept;
 
-// ra3_1.0.game 0x009F5F80 state construction without allocation. The range
-// reader is optional; without it compressed-size probing is skipped.
-bool prepareGameBigFile(
+enum class GameBigOpenResult : std::uint32_t {
+    notFound,
+    found,
+    // The scan reached a Viv4 archive (format 2), whose 0x009F71D0 lookup and
+    // streamBase source position are not ported.
+    unsupported
+};
+
+// ra3_1.0.game 0x009F5F80 state construction without allocation. The original
+// always reads a 16-byte prefix at the member offset, probes it for RefPack and
+// leaves sourcePosition past the bytes actually read. Without a range reader
+// the probe is skipped and sourcePosition stays at the member offset.
+GameBigOpenResult prepareGameBigFile(
     const GameBigHandler* handler,
     const char* path,
     std::uint32_t ownerToken,

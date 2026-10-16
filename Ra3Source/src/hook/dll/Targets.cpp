@@ -1849,24 +1849,29 @@ ra3::io::GameBigFile* __fastcall bigOpen(
     if (state.mode == Mode::replace) {
         ra3::io::GameBigFile expected{};
         bool rangeReadFailed = false;
-        if (!ra3::io::prepareGameBigFile(
-                handler, path, ownerToken, openMode, &readArchiveRange,
-                &rangeReadFailed, &expected)
-            || rangeReadFailed) {
+        const ra3::io::GameBigOpenResult result = ra3::io::prepareGameBigFile(
+            handler, path, ownerToken, openMode, &readArchiveRange,
+            &rangeReadFailed, &expected);
+        if (result == ra3::io::GameBigOpenResult::unsupported || rangeReadFailed) {
+            state.skipped.fetch_add(1, relaxed);
+            return reinterpret_cast<BigOpenFunction>(state.original)(
+                handler, path, openMode, archiveFileOut);
+        }
+        if (result == ra3::io::GameBigOpenResult::notFound) {
             return nullptr;
         }
         if (archiveFileOut != nullptr) {
             *archiveFileOut = expected.archive->file;
         }
-        auto* result = static_cast<ra3::io::GameBigFile*>(
+        auto* file = static_cast<ra3::io::GameBigFile*>(
             allocateGameTagged(
                 handler->allocator, sizeof(expected), "BigFileHandler"));
-        if (result == nullptr) {
+        if (file == nullptr) {
             return nullptr;
         }
-        *result = expected;
+        *file = expected;
         state.matches.fetch_add(1, relaxed);
-        return result;
+        return file;
     }
 
     ra3::io::GameBigFile* game =
@@ -1874,10 +1879,15 @@ ra3::io::GameBigFile* __fastcall bigOpen(
             handler, path, openMode, archiveFileOut);
     ra3::io::GameBigFile expected{};
     bool rangeReadFailed = false;
-    const bool found = ra3::io::prepareGameBigFile(
+    const ra3::io::GameBigOpenResult result = ra3::io::prepareGameBigFile(
         handler, path, ownerToken, openMode, &readArchiveRange, &rangeReadFailed,
         &expected);
-    if (rangeReadFailed) {
+    const bool found = result == ra3::io::GameBigOpenResult::found;
+    if (found && game != nullptr) {
+        // The original never writes +0x14; it holds stale allocator bytes.
+        expected.unknown14 = game->unknown14;
+    }
+    if (rangeReadFailed || result == ra3::io::GameBigOpenResult::unsupported) {
         state.skipped.fetch_add(1, relaxed);
     } else if ((!found && game == nullptr)
         || (found && game != nullptr
@@ -1886,7 +1896,22 @@ ra3::io::GameBigFile* __fastcall bigOpen(
                 || *archiveFileOut == expected.archive->file))) {
         state.matches.fetch_add(1, relaxed);
     } else if (found || game != nullptr) {
-        reportMismatch("bigopen", state, "return or 0x40 file state differs");
+        std::ostringstream detail;
+        detail << "path=" << path << " mode=" << openMode << " game=" << (game != nullptr)
+               << " ours=" << found << std::hex;
+        if (found && game != nullptr) {
+            const auto* left = reinterpret_cast<const std::uint32_t*>(game);
+            const auto* right = reinterpret_cast<const std::uint32_t*>(&expected);
+            for (std::size_t i = 0; i < sizeof(expected) / 4; ++i) {
+                if (left[i] != right[i]) {
+                    detail << " +0x" << i * 4 << " game=0x" << left[i] << " ours=0x" << right[i];
+                }
+            }
+            if (archiveFileOut != nullptr && *archiveFileOut != expected.archive->file) {
+                detail << " archiveFileOut differs";
+            }
+        }
+        reportMismatch("bigopen", state, detail.str());
     } else {
         state.skipped.fetch_add(1, relaxed);
     }

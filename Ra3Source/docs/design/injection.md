@@ -137,8 +137,8 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `clientrandomint` | `0x005A94F0` 客户端流闭区间整数 | cdecl | 5 | `ra3::sim::clientRandomInteger` | live verified；仅显式键启用 |
 | `audiorandomint` | `0x005A9520` 音频流闭区间整数 | cdecl | 5 | `ra3::sim::clientRandomInteger` | live verified；仅显式键启用 |
 | `bigfindclose` | `0x009F5EB0` BIG 枚举状态释放 | thiscall | 6 | allocator-backed release | offline-verified, live pending；仅显式键启用 |
-| `bigopen` | `0x009F5F80` BIG 文件 open | thiscall（3 stack dword） | 6 | `ra3::io::prepareGameBigFile` + tagged allocation | offline-verified, live pending；仅显式键启用 |
-| `bigread` | `0x009F63B0` BIG 文件 read | thiscall（5 stack dword） | 5 | `ra3::io::readGameBigFile` | offline-verified, live pending；仅显式键启用 |
+| `bigopen` | `0x009F5F80` BIG 文件 open | thiscall（3 stack dword） | 6 | `ra3::io::prepareGameBigFile` + tagged allocation | live verified；仅显式键启用 |
+| `bigread` | `0x009F63B0` BIG 文件 read | thiscall（5 stack dword） | 5 | `ra3::io::readGameBigFile` | live verified；仅显式键启用 |
 | `bigfindfirst` | `0x009F65E0` BIG 枚举开始 | thiscall（2 stack dword） | 5 | `ra3::io::initializeGameBigFindState` + `findNextGameBig` | offline-verified, live pending；仅显式键启用 |
 | `bigfindnext` | `0x009F6670` BIG 枚举推进 | thiscall（2 stack dword） | 6 | `ra3::io::findNextGameBig` | offline-verified, live pending；仅显式键启用 |
 
@@ -174,6 +174,7 @@ Open shadow 不分配，只在栈上构造预期 0x40 状态；Read shadow 的�
 不再访问已释放对象。replace
 使用已验证 allocator/file/sync ABI 和布局兼容的 0x70 inflater。live 应尽早注入，
 进入主菜单和遭遇战，以覆盖压缩与明文成员、加载期 seek/read 以及资源枚举。
+运行 24–28（§5.4）的结果是 open/read live verified；三个枚举目标在注入后没有被调用。
 
 `Ra3Source/tools/analysis/disasm.py <VA> --hook-only` 从只读的可执行文件直接给出前 16 字节、
 stolen 长度（≥5 字节的最短整指令前缀）及其是否位置无关、返回形式（`ret` = cdecl，
@@ -338,6 +339,11 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 21 | 53 目标 replace（Release），遭遇战加 Easy AI | `--wait-window` | normalize2 570、distance3 262、scalevector3 224、transformdirection3 198、clampoffset68 30、bigclose 388、bigseek 3761、gametextmanager 875、bigfindentry 2661046 次由 Ra3Source 处理 | 对局 2 分钟正常，无崩溃事件 |
 | 22 | 58 目标 shadow（Release，新增 simrng 的 5 个显式键），遭遇战加 Easy AI | `--wait-window` | 58 个目标全部 0 不一致；randomstep 256113/256113、logicrandomint 23888/23888、clientrandomint 248/248、audiorandomint 278/278（返回值与六 dword 状态都比较） | randominit 0 次（播种早于注入或走别的路径）；对局 2 分钟正常 |
 | 23 | 58 目标 replace（Release），遭遇战加 Easy AI | `--wait-window` | randomstep 221723、logicrandomint 22174、clientrandomint 109、audiorandomint 159、bigfindentry 2632560 次由 Ra3Source 处理 | 对局 2 分钟正常，无崩溃事件 |
+| 24 | 12 个 BIG/GameText 显式键 shadow（Release，新增 bigopen、bigread），遭遇战加 Easy AI | `--wait-window` | bigopen 486 次中 357 次不一致；bigread 705/3800（其余 skipped）；其余目标 0 不一致 | 对局正常；bigfindfirst/next/close 0 次 |
+| 25 | 同运行 24，bigopen 不一致改为逐 dword 报告 | `--wait-window` | 不一致全部只在 +0x30 `sourcePosition`，游戏值比我们多 0x10 | 只到主菜单；原因见表后说明 |
+| 26 | 同运行 24，`prepareGameBigFile` 修复后 | `--wait-window` | bigopen 232 次中 67 次不一致，全部只在 +0x14 | 只到主菜单；+0x14 是原函数从不写入的分配器残留 |
+| 27 | 同运行 24，shadow 比较改取游戏的 +0x14 | `--wait-window` | 全部 0 不一致；bigopen 502/502、bigread 725/3725（3000 次成员大于 8 MiB 而 skipped）、bigseek 3725/3725、bigclose 370/370 | 对局 2 分钟正常，无崩溃事件 |
+| 28 | 15 个显式键 replace（Release，含 bigopen、bigread、bigfind*），遭遇战加 Easy AI | `--wait-window` | bigopen 480 次（351 次打开、129 次未找到）、bigread 3676、bigseek 3687、bigclose 354、bigfindentry 2627891、gametextmanager 736 次由 Ra3Source 处理 | 对局 2 分钟正常，无崩溃事件；枚举三目标仍 0 次 |
 
 运行 19 的崩溃点紧跟 `call 0x0056F370`（normalize2）：调用者把 EAX 当作结果指针
 解引用（`mov edx, [eax]`）。原函数按 MSVC 返回结构体的惯例把 `output` 留在 EAX，
@@ -346,6 +352,18 @@ colorargb、scalevector3、transformdirection3 一并改为返回 `output`（sha
 EAX）；utf8encode、separate2、clampoffset68、bigclose 的原函数在 `ret` 时 EAX 只是
 临时值，保持 `void`。`verify_math.py` 现在对这 4 个函数断言 `eax == output`。之前的
 运行都没有 AI 对手，normalize2 没被调用过，所以直到运行 19 才暴露。
+
+运行 24 的 bigopen 不一致同样是离线 oracle 的桩掩盖的。原函数在
+0x009F6110–0x009F6167 用一次异步读取成员开头 16 字节做 RefPack 探测：0x009CA390
+排队，0x009CA280 等待并返回 op +0x38 的已传输字节数，随后
+`sourcePosition = offset + 已传输字节数`。旧移植让 `sourcePosition = offset`，
+`verify_bigfs4_open.py` 的 0x009CA280 桩恰好返回 0，所以两者一致。现在
+`prepareGameBigFile` 无条件读 16 字节，不论成员大小都探测，oracle 桩返回真实的
+传输字节数。原函数从不写 +0x14，值是分配器残留（运行 26 见到 0x6265645C 等），
+Read/Seek/Close/Size 也不读它，所以 shadow 比较取游戏值。Viv4（format 2）档案改走
+0x009F71D0，并把 `sourcePosition` 设为 `streamBase`。这条路径未移植；遇到时
+replace 交回原函数并计入 `skipped`，发行版 BIG 不走这条路。运行 24 的 129 次
+"一致"其实全是双方都未找到的调用。
 
 运行 8、9 的操作：主菜单点掉离线提示 → Versus → Skirmish → 默认设置（Battlebase
 Beta，单人，阵营随机）→ BEGIN。点击由 `SetCursorPos`/`mouse_event` 发往前台游戏

@@ -225,6 +225,16 @@ Open、Read、FindFirst、FindNext、FindClose 都是 `explicitOnly` hook。Open
 用栈上 0x40 临时对象计算预期状态；Read shadow 先快照 0x40 状态，并在 8 MiB 上限
 内用独立只读 Win32 handle 与 RefPack 解码器核对返回字节，超限计入 `skipped`；
 枚举 shadow 在 0x110 副本上推进。replace 只通过 bigfs3 已验证的
-allocator/file/sync ABI。状态均为 offline-verified, live pending。
-当前派生 handler 虚表 `0x00BDAF98` 覆盖了三个基类枚举槽，因此这三个基类 hook
-在实机上可能保持 0 次；需要同时观察派生入口后再决定是否另挂目标。
+allocator/file/sync ABI。
+
+Open 每次都发出一个 16 字节的异步读取（`0x009CA390` 排队，`0x009CA280` 等待并
+返回 op `+0x38` 的已传输字节数），不论成员大小都对缓冲做 RefPack 探测，并让
+`sourcePosition = offset + 已传输字节数`。因此首次未经 Seek 的明文 Read 从成员第
+16 字节开始。原函数不写 `+0x14`。`format == 2`（Viv4）档案改用 `0x009F71D0`
+查找，`sourcePosition` 取 archive `+0x28` `streamBase`；`prepareGameBigFile` 对此
+返回 `GameBigOpenResult::unsupported`，hook 交回原函数。最初的移植和 oracle 桩都
+漏了这些已传输字节，实机 shadow 运行 25 暴露后已修正（`injection.md` §5.4）。
+
+实机运行 27（shadow）和 28（replace，遭遇战）之后，Open 与 Read 为 live verified。
+当前派生 handler 虚表 `0x00BDAF98` 覆盖了三个基类枚举槽，运行 24–28 中这三个基类
+hook 都是 0 次，所以仍为 offline-verified；要覆盖枚举，需要逆向派生入口后另挂目标。
