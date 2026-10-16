@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import struct
+from dataclasses import dataclass
 from pathlib import Path
 
 import capstone
@@ -19,6 +20,14 @@ from capstone import x86
 
 DEFAULT_EXE = Path(r"D:\Game\Ra3\Game\Data\ra3_1.0.game")
 JUMP_SIZE = 5
+
+
+@dataclass(frozen=True)
+class HookPrologue:
+    expected16: bytes
+    stolen_length: int
+    position_independent: bool
+    decodable: bool
 
 
 class Image:
@@ -60,6 +69,21 @@ def position_dependent(insn) -> bool:
     return False
 
 
+def analyze_hook_prologue(image: Image, address: int) -> HookPrologue:
+    """Returns the inline-detour properties of the shortest >=5-byte prefix."""
+    code = image.read(address, 16)
+    md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    md.detail = True
+    stolen = 0
+    movable = True
+    for insn in md.disasm(code, address):
+        stolen += insn.size
+        movable = movable and not position_dependent(insn)
+        if stolen >= JUMP_SIZE:
+            break
+    return HookPrologue(code, stolen, movable, stolen >= JUMP_SIZE)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("address", type=lambda s: int(s, 0))
@@ -78,14 +102,13 @@ def main() -> None:
           f"rva=0x{args.address - image.base:08X}")
     print("expected16 " + " ".join(f"{b:02X}" for b in code[:16]))
 
+    hook = analyze_hook_prologue(image, args.address)
     stolen = 0
-    movable = True
     returns: set[str] = set()
     lines = []
     for insn in md.disasm(code, args.address):
         if stolen < JUMP_SIZE:
             stolen += insn.size
-            movable = movable and not position_dependent(insn)
         lines.append(f"  {insn.address:08X}  {insn.bytes.hex(' '):<24} {insn.mnemonic} {insn.op_str}")
         if insn.group(capstone.CS_GRP_RET):
             returns.add(f"{insn.mnemonic} {insn.op_str}".strip())
@@ -93,10 +116,11 @@ def main() -> None:
                 break
         if insn.mnemonic == "int3" and lines and stolen >= JUMP_SIZE:
             break
-    if stolen < JUMP_SIZE:
+    if not hook.decodable:
         print("stolen     undecodable prefix")
     else:
-        print(f"stolen     {stolen} bytes, {'position independent' if movable else 'POSITION DEPENDENT'}")
+        print(f"stolen     {hook.stolen_length} bytes, "
+              f"{'position independent' if hook.position_independent else 'POSITION DEPENDENT'}")
     print("returns    " + (", ".join(sorted(returns)) or "none seen"))
     if not args.hook_only:
         print("\n".join(lines))

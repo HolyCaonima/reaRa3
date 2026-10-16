@@ -1,0 +1,52 @@
+address	status	owner	module	notes
+0050b5f0	candidate-reviewed	recon/hookcat	unknown	哈希桶链查找：按 key 取模并返回节点/桶位置二元组
+009c9980	candidate-reviewed	recon/hookcat	unknown	红黑树迭代器前驱（左子树最右节点或向父节点回溯）
+00686fa0	candidate-reviewed	recon/hookcat	unknown	返回 this+0x418 字段
+0078d880	candidate-reviewed	recon/hookcat	unknown	调用 0x0050B5F0 查表并返回命中节点的 value
+00b61ed0	candidate-reviewed	recon/hookcat	unknown	写入虚表并清零两个字段的构造初始化
+0098f720	candidate-reviewed	recon/hookcat	unknown	把节点追加到单链表尾
+00417070	candidate-reviewed	recon/hookcat	unknown	清零两个相邻指针/字段
+00788640	candidate-reviewed	recon/hookcat	unknown	仅写入虚表指针的构造初始化
+005a9f60	candidate-reviewed	recon/hookcat	unknown	写虚表并以 999999/0 初始化对象字段
+007e1e30	candidate-reviewed	recon/hookcat	unknown	扫描 20 个槽，按位掩码选中槽并消费对应位
+006c3a10	candidate-reviewed	recon/hookcat	unknown	无符号键红黑树 lower_bound
+004d29d0	candidate-reviewed	recon/hookcat	unknown	从双向链表摘除节点并把节点重置为自环
+009c9a50	candidate-reviewed	recon/hookcat	unknown	红黑树插入后的旋转与着色修复
+004d2ee0	candidate-reviewed	recon/hookcat	unknown	x87 浮点到 64 位整数转换/舍入辅助函数
+00aafe10	candidate-reviewed	recon/hookcat	unknown	有符号键红黑树 lower_bound
+00b66f80	candidate-reviewed	recon/hookcat	unknown	红黑树删除、旋转与着色修复
+005a94c0	candidate-reviewed	recon/hookcat	unknown	生成闭区间 [min,max] 的伪随机整数
+009c99c0	candidate-reviewed	recon/hookcat	unknown	红黑树迭代器后继
+007e20f0	candidate-reviewed	recon/hookcat	unknown	按对象状态在两个候选字段间选择并返回指针
+0094af80	candidate-reviewed	recon/hookcat	unknown	边界检查后返回定长记录数组中的元素地址
+00b4d0f0	candidate-reviewed	recon/hookcat	unknown	返回首个字段
+005a9550	candidate-reviewed	recon/hookcat	unknown	生成区间内伪随机浮点数
+00687c90	candidate-reviewed	recon/hookcat	unknown	嵌套对象满足条件时调用其 +0xAC 字段相关辅助逻辑
+009971c0	candidate-reviewed	recon/hookcat	unknown	返回全局单例/状态指针
+005b6150	candidate-reviewed	recon/hookcat	unknown	大型对象构造初始化（SSE 仅用于批量清零）
+007d2cb0	candidate-reviewed	recon/hookcat	unknown	对象构造初始化并调用区间清理辅助函数
+007e1c70	candidate-reviewed	recon/hookcat	unknown	返回 this+0x34 的索引槽
+00a77ae0	candidate-reviewed	recon/hookcat	unknown	初始化二字段结构为 {1,arg}
+00a77bd0	candidate-reviewed	recon/hookcat	unknown	把 NUL 结尾字符串复制到 this+0x20
+004cb400	candidate-reviewed	recon/hookcat	unknown	比较两个带 16 位长度前缀的字节串
+007e1ba0	candidate-reviewed	recon/hookcat	unknown	测试对象内两个状态字节是否都为零
+004c9ea0	candidate-reviewed	recon/hookcat	unknown	定长字节序列三路比较（-1/0/1）
+00983a90	candidate-reviewed	recon/hookcat	unknown	写虚表并初始化多个对象字段
+00b23c00	candidate-reviewed	recon/hookcat	unknown	清零首个字段
+006a4f80	candidate-reviewed	recon/hookcat	unknown	事件码为 0x16A 时按布尔参数派发 +1/-1
+006a54d0	candidate-reviewed	recon/hookcat	unknown	从状态位或对象身份关系计算状态码
+006c0ed0	candidate-reviewed	recon/hookcat	unknown	组合多个状态位与辅助谓词计算布尔结果
+0078da40	candidate-reviewed	recon/hookcat	unknown	遍历两侧关联 ID 并判断两个对象是否相互关联
+004d9100	candidate-reviewed	recon/hookcat	unknown	三维 float 向量归一化
+00548be0	candidate-reviewed	recon/hookcat	unknown	二维边界检查后查找/计算网格元素地址
+005d5ae0	candidate-reviewed	recon/hookcat	unknown	哨兵与范围检查后返回六元素数组槽
+007e4ab0	candidate-reviewed	recon/hookcat	unknown	动态数组边界检查后返回指针元素
+004e41b0	candidate-reviewed	recon/hookcat	unknown	复制 8 字节元素区间并收缩容器尾指针
+00b11d40	candidate-reviewed	recon/hookcat	unknown	返回 this+0xAC 字段
+00861a70	candidate-reviewed	recon/hookcat	unknown	按带长度前缀字符串在线性链中查找节点
+0040a390	candidate-reviewed	recon/hookcat	unknown	按正/负索引访问 16 字节环形/分段记录
+00417080	candidate-reviewed	recon/hookcat	unknown	复制两个相邻 32 位字段
+007e1df0	candidate-reviewed	recon/hookcat	unknown	在 20 个槽中查找类型位恰好匹配的对象
+00997400	candidate-reviewed	recon/hookcat	unknown	返回全局对象地址
+006873c0	candidate-reviewed	recon/hookcat	unknown	返回 this+0x454 字段
+009c9dd0	candidate-reviewed	recon/hookcat	unknown	按比例和 ceil 更新容量并返回是否扩容及增量
