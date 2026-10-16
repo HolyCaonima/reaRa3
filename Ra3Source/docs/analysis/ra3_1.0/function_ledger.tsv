@@ -2146,6 +2146,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004af960	FUN_004af960	.text	825		clean	unknown		unanalyzed	
 004afc99	FUN_004afc99	.text	6284		clean	unknown		unanalyzed	
 004b1c1f	FUN_004b1c1f	.text	23		clean	unknown		unanalyzed	
+004b1c80	FUN_004b1c80	.text	258		clean	asset	recon/types	reversed	type-factory leaf created with -Save; four cases and allocation sizes exported (asset_factory.tsv)
 004b3922	FUN_004b3922	.text	30		clean	unknown		unanalyzed	
 004b4349	FUN_004b4349	.text	260		clean	unknown		unanalyzed	
 004b5050	FUN_004b5050	.text	39		clean	unknown		unanalyzed	
