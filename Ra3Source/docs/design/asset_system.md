@@ -139,7 +139,27 @@ Generals `W3DAssetManager` 把名称转小写作为缓存键，按需加载 W3D/
 | `0x004A64CC` | `assetmanager\resourcemanager.cpp` | 生成 `.cdata` 文件名 |
 | `0x00416E60` | `assetmanager\AssetList\PartialAssetList.cpp` | 报 `Patch streams not alllowed to be partial` |
 
-另有两处尚未建成函数的线索：从 `0x004B1C80` 起是按 typeId 二分比较的类型工厂 `switch`（`cmp ecx, 0x057786F9; je …; push 0x14; call 分配`）；`RtsXmlPipeline\ReloDetokenizers.h:127` 报 `unknown polymorphic type`，说明部分重定位字段装的是多态类型令牌，装载时要换成虚表指针，这是第二个里程碑要读的代码。
+第二轮已把“重定位字段直接装多态令牌”的猜测纠正为两层结构：
+
+- `.relo` 指向的是普通**指针槽**；例如 `W3DAnimation` 根 `+0x14` 指向指针数组，
+  数组各项本身也在 `.relo`。数组项所指对象的首 `u32` 才是多态 typeId token，
+  token 槽不在 `.relo`，两者没有共用编码或高位标签。
+- `0x009B15A0` 遍历已经重定位的通道指针数组，调用 `0x009B0540`；后者比较
+  `0x60D8CF69` / `0x77F97305`，恰好是
+  `AnimationChannelTimecoded` / `AnimationChannelDelta` 的区分大小写 typeId，
+  再分配 `0x34` / `0x38` 字节运行时对象。
+- `0x00673A50` 对粒子序列化块 `+0x80..+0xA4` 的模块槽做同样转换；
+  `+0x8C` 的 Physics token 包括 `0xB96643FF`
+  (`FXParticleDefaultPhysics`) 和 `0x75CD18B3`
+  (`FXParticleSwarmPhysics`)。它构造新的运行时模块，而不是把 token 原地改成虚表。
+- `ReloDetokenizers.h:127` 的四个 clean 实例
+  `0x0043C630/0x0045E9A0/0x00477510/0x00477A50`
+  是未知 token 的致命诊断/清理路径。原始逐项 `.relo` 循环所在的相邻流方法入口
+  被台账标为 `entry-lost`，按 SecuROM 边界没有继续分析；clean 边界
+  `0x00447D70` 负责分配 manifest 记录，`0x004479E0` 打开并校验四件套，
+  `0x00447E30` 则遍历 12 字节 typed-fixup 描述符并用实例基址还原其对象地址。
+  因此“谁逐项执行原始 `.relo` 加基址”仍是有边界的未知项，不能把
+  `0x00447E30` 冒充为该循环。[程序][全量]
 
 ### 3.5 全量校验
 
