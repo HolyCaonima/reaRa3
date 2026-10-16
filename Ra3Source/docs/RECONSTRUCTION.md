@@ -27,7 +27,7 @@ Ra3Source 按子系统分模块，每个模块一个静态库 `ra3_<name>`（别
 | `core` | Libraries\Source\{ini,string,debug,memorypool} | Code\GameEngine\Source\Common | 已完成 |
 | `io` | lib-packages\RtsBase\…\file、rw::core filesystem | Code\GameEngine\Source\Common\System\ArchiveFile* | 已完成 |
 | `text` | CSF 字符串表 | Code\GameEngine\Source\GameClient\GameText.cpp | 已完成（实测 10,401 条） |
-| `asset` | Libraries\Source\assetmanager、RtsXmlPipeline | Code\GameEngine\Source\Common\System\AssetManager 等 | 格式已证实，实现中 |
+| `asset` | Libraries\Source\assetmanager、RtsXmlPipeline | Code\GameEngine\Source\Common\System\AssetManager 等 | 里程碑 1 完成（清单、四件套校验、按资源切块） |
 | `common` | GameEngine\common | Code\GameEngine\Source\Common | 规划 |
 | `gamelogic` | GameEngine\gamelogic（127+ 函数已锚定） | Code\GameEngine\Source\GameLogic | 规划 |
 | `gameclient` | GameEngine\gameclient | Code\GameEngine\Source\GameClient | 规划 |
@@ -71,7 +71,7 @@ cmake --build build/win32 --config Debug
 cd build/win32 && ctest -C Debug            # 3.19 不支持 --test-dir
 ```
 
-CMake 在 `C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin`，需要时加进 PATH。`ra3tool paths|sku|mount|big|find|unpack-check` 可对实际数据做端到端检查。Ghidra 分析用 `tools/ghidra/run_headless.ps1`（需 `GHIDRA_INSTALL_DIR`、`JAVA_HOME`；默认只读）。
+CMake 在 `C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin`，需要时加进 PATH。`ra3tool paths|sku|mount|big|find|unpack-check|streams|manifest` 可对实际数据做端到端检查。Ghidra 分析用 `tools/ghidra/run_headless.ps1`（需 `GHIDRA_INSTALL_DIR`、`JAVA_HOME`；默认只读）。
 
 ## 7. 参考资料与授权边界
 
@@ -90,7 +90,7 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [x] 资源流格式：清单/重定位/导入/cdata 布局在全部 257 组上校验通过，并与原程序 FullAssetList、ResourceManagerFileStream 对上（docs/design/asset_system.md §3）
 - [x] 虚表恢复：补建约 11,022 个虚函数，导出 2,977 个虚表清单（docs/analysis/ra3_1.0/vtables.tsv）
 - [x] text（CSF）模块 — 已合并进 main，实测 gamestrings.csf 解析出 10,401 条字符串，单测 26、数据测试 5、CTest 2 全通过
-- [ ] asset 模块里程碑 1（四件套读取与资源目录）— 实现中（子 agent，分支 recon/asset）
-- [ ] 模块映射文档 — 进行中（子 agent，docs/design/module_map.md）
+- [x] asset 模块里程碑 1（四件套读取与资源目录）— 已合并；`ra3tool streams` 2 秒校验 257 组 / 118,232 条资源，0 问题；RefPack 全/前缀解码共用一个实现，14 个档案 5,203 个压缩条目 0 失败；单测 32、数据测试 8 全通过
+- [x] 模块映射文档（docs/design/module_map.md）— 统计基于修正前的台账，待刷新
 - [ ] 注入可行性研究（决定主路线）
 - [ ] 虚函数按虚表归类到 C++ 类（下一步，用 vtables.tsv）

@@ -1230,7 +1230,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00447740	thunk_FUN_01976f30	.text	6		entry-lost	unknown		unanalyzed	
 004477b0	thunk_FUN_029d0000	.text	6		entry-lost	unknown		unanalyzed	
 00447870	thunk_FUN_01984510	.text	6		entry-lost	unknown		unanalyzed	
-004479e0	FUN_004479e0	.text	911	Libraries\Source\assetmanager\Stream\ResourceManagerFileStream.cpp	clean	asset	main	reversed	ResourceManagerFileStream.cpp: opens .imp/.relo/.bin, compares leading u32 with the manifest stream checksum
+004479e0	FUN_004479e0	.text	911	Libraries\Source\assetmanager\Stream\ResourceManagerFileStream.cpp	clean	asset	main	reversed	ResourceManagerFileStream.cpp: opens .imp/.relo/.bin, compares leading u32 with the manifest stream checksum; ra3::asset::validateStreamBundle, AssetStream::loadDecoded
 00447d70	FUN_00447d70	.text	86		clean	unknown		unanalyzed	
 00447dd0	thunk_FUN_02830000	.text	6		entry-lost	unknown		unanalyzed	
 00447e30	FUN_00447e30	.text	177		clean	unknown		unanalyzed	
@@ -1980,7 +1980,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00495544	FUN_00495544	.text	1		clean	unknown		unanalyzed	
 00495545	FUN_00495545	.text	1		clean	unknown		unanalyzed	
 004955b0	thunk_FUN_01db3000	.text	6		entry-lost	unknown		unanalyzed	
-00495890	FUN_00495890	.text	1042	Libraries\Source\assetmanager\AssetList\FullAssetList.cpp	clean	asset	main	reversed	FullAssetList.cpp: reads manifest, allocates count*0x30 entries, sums sizes at +0x20/+0x24/+0x28, recurses into kind-2 referenced manifests
+00495890	FUN_00495890	.text	1042	Libraries\Source\assetmanager\AssetList\FullAssetList.cpp	clean	asset	main	reversed	FullAssetList.cpp: reads manifest, allocates count*0x30 entries, sums sizes at +0x20/+0x24/+0x28, recurses into kind-2 referenced manifests; ra3::asset::Manifest::parse (no recursion yet)
 00495cb0	FUN_00495cb0	.text	32		entry-lost	unknown		unanalyzed	
 00495df0	FUN_00495df0	.text	10		clean	unknown		unanalyzed	
 00498d03	FUN_00498d03	.text	19		clean	unknown		unanalyzed	
@@ -2031,7 +2031,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004a62e0	FUN_004a62e0	.text	288		clean	unknown		unanalyzed	
 004a6410	thunk_FUN_01982c60	.text	6		entry-lost	unknown		unanalyzed	
 004a64b0	FUN_004a64b0	.text	28		clean	unknown		unanalyzed	
-004a64cc	FUN_004a64cc	.text	134		clean	asset	main	reversed	"resourcemanager.cpp: formats ""%s%08X.%08X.%08X.%08X.cdata"""
+004a64cc	FUN_004a64cc	.text	134		clean	asset	main	reversed	"resourcemanager.cpp: formats ""%s%08X.%08X.%08X.%08X.cdata""; ra3::asset::cdataPath"
 004a6560	FUN_004a6560	.text	83		clean	unknown		unanalyzed	
 004a6c40	FUN_004a6c40	.text	289		clean	unknown		unanalyzed	
 004a6d61	FUN_004a6d61	.text	675		clean	unknown		unanalyzed	

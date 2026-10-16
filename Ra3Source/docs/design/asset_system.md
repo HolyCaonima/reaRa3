@@ -143,7 +143,7 @@ Generals `W3DAssetManager` 把名称转小写作为缓存键，按需加载 W3D/
 
 ### 3.5 全量校验
 
-`work/probe/validate_all.py`（临时脚本，不入库；`Ra3::asset` 合并后由 `ra3tool streams` 取代）对 257 组逐组检查：清单尺寸方程、记录内偏移不越界、三个块长之和加 4 等于 `.bin/.relo/.imp` 长度、四件套首 4 字节校验和一致。结果 0 问题；唯一的偏差是 63 个地图流的 `totalInstanceDataSize` 大于记录之和。`.bin` 长度取自 RefPack 头，不必解压：`worldbuilder` 流的实例数据有 1.17 GB，32 位进程不能整块解压。[全量]
+`ra3tool streams`（`ra3::asset::validateStreamBundle`，数据测试 `AssetGameData_AllMountedStreamsPassLightValidation` 也跑同一检查）对 257 组逐组检查：清单尺寸方程、记录内偏移不越界、三个块长之和加 4 等于 `.bin/.relo/.imp` 长度、四件套首 4 字节校验和一致。结果 0 问题；唯一的偏差是 63 个地图流的 `totalInstanceDataSize` 大于记录之和。`.bin` 长度取自 RefPack 头，不必解压：`worldbuilder` 流的实例数据有 1.17 GB，32 位进程不能整块解压。[全量]
 
 ### 3.6 未决项
 
