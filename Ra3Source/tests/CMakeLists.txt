@@ -6,6 +6,7 @@ ra3_add_executable(ra3_unit_tests
         support/TestMain.cpp
         asset/ManifestTests.cpp
         asset/NameHashTests.cpp
+        common/ByteStringTests.cpp
         core/GameConfigTests.cpp
         core/IniFileTests.cpp
         core/SkuDefTests.cpp
@@ -18,6 +19,7 @@ ra3_add_executable(ra3_unit_tests
         text/CsfTests.cpp
     DEPS
         Ra3::asset
+        Ra3::common
         Ra3::core
         Ra3::hook
         Ra3::io
