@@ -22,6 +22,7 @@ param(
     [Parameter(ParameterSetName = 'Script')] [switch] $Save,
     [string] $ProjectDir = (Join-Path $PSScriptRoot '..\..\..\work\ghidra'),
     [string] $ProjectName = 'RA3',
+    [string] $LogDir = '',
     [string] $MaxMem = '16G'
 )
 
@@ -61,7 +62,11 @@ $env:GHIDRA_HEADLESS_MAXMEM = $MaxMem
 
 $ProjectDir = [IO.Path]::GetFullPath($ProjectDir)
 $null = New-Item -ItemType Directory -Force $ProjectDir
-$logDir = [IO.Path]::GetFullPath((Join-Path $ProjectDir '..\logs'))
+$logDir = if ($LogDir) {
+    [IO.Path]::GetFullPath($LogDir)
+} else {
+    [IO.Path]::GetFullPath((Join-Path $ProjectDir '..\logs'))
+}
 $null = New-Item -ItemType Directory -Force $logDir
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
 

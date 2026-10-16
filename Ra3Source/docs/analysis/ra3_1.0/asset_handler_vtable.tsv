@@ -1,0 +1,6 @@
+slot	byte_offset	shared_implementation	shared_handler_count	handlers_overriding	unique_implementations	inferred_method_name	confidence	evidence
+0	0x00	00AAC690	162	2	2	scalar_deleting_destructor	high	162/164 指向 00AAC690；反编译形状为调用基类清理、按 flags&1 释放 this、ret 4，符合 MSVC scalar deleting destructor
+1	0x04	004D5C10	119	45	18	create_instance	high	119 个处理器复用 004D5C10（尾调 this->vtable[5]）；20 个复用单槽存储实现，9 个复用 4 字节分配实现；其余为类型特化构造
+2	0x08	00522910	119	45	17	copy_construct_in_place	high	119 个复用 00522910（尾调 this->vtable[7]）；21 个为 ret 0x0C 空实现，9 个复用“若目标非空则把源 4 字节写入目标”；DamageFX 特化以第二参数为 this、第一参数为复制源调用复制构造，第三参数未使用
+3	0x0C	007E2E40	119	45	11	destroy_instance	high	119 个复用 007E2E40（尾调 this->vtable[6]）；20 个清空持有槽，17 个为空实现；其余执行类型特化销毁
+4	0x10	004A6560	164	0	1	resolve_missing_prototype	medium	164/164 指向 004A6560；比较 MissingPrototype 名称哈希，未命中时从 this+4 的表调用 004A62E0；推断为缺失原型解析
