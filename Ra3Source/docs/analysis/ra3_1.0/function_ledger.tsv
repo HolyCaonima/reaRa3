@@ -6877,12 +6877,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005a9220	FUN_005a9220	.text	6		clean	unknown		unanalyzed	
 005a9230	FUN_005a9230	.text	6		clean	unknown		unanalyzed	
 005a9240	FUN_005a9240	.text	205		clean	unknown		unanalyzed	
-005a9310	FUN_005a9310	.text	127		clean	unknown		unanalyzed	
-005a93b0	FUN_005a93b0	.text	188		clean	unknown		unanalyzed	
+005a9310	FUN_005a9310	.text	127		clean	sim	recon/simrng	reversed	six-dword add-with-carry RNG step; Generals randomValue counterpart; ra3::sim::nextRandom; oracle 400000 consecutive transitions from four seeds, Debug+Release
+005a93b0	FUN_005a93b0	.text	188		clean	sim	recon/simrng	reversed	seed all three RNG streams and logic base seed; Generals InitRandom(seed) counterpart; ra3::sim::seedRandom; oracle 10000/10000 Debug+Release
 005a9470	FUN_005a9470	.text	10		inner-patched	unknown		unanalyzed	
-005a94c0	FUN_005a94c0	.text	48		clean	unknown	recon/hookcat	reversed	hook candidate: 生成闭区间 [min,max] 的伪随机整数
-005a94f0	FUN_005a94f0	.text	40		clean	unknown		unanalyzed	
-005a9520	FUN_005a9520	.text	40		clean	unknown		unanalyzed	
+005a94c0	FUN_005a94c0	.text	48		clean	sim	recon/simrng	reversed	logic inclusive integer range; differs from Generals by low>=high early return without state advance; ra3::sim::logicRandomInteger; oracle 10006/10006 Debug+Release (earlier: hook candidate: 生成闭区间 [min,max] 的伪随机整数)
+005a94f0	FUN_005a94f0	.text	40		clean	sim	recon/simrng	reversed	client inclusive integer range; Generals GetGameClientRandomValue counterpart; ra3::sim::clientRandomInteger; oracle 10006/10006 Debug+Release
+005a9520	FUN_005a9520	.text	40		clean	sim	recon/simrng	reversed	audio inclusive integer range; Generals GetGameAudioRandomValue counterpart; ra3::sim::clientRandomInteger; oracle 10006/10006 Debug+Release
 005a9550	FUN_005a9550	.text	75		clean	unknown	recon/hookcat	reversed	hook candidate: 生成区间内伪随机浮点数
 005a95a0	FUN_005a95a0	.text	75		clean	unknown		unanalyzed	
 005a95f0	FUN_005a95f0	.text	75		clean	unknown		unanalyzed	
@@ -10484,10 +10484,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00661200	FUN_00661200	.text	6		clean	unknown		unanalyzed	
 00661210	FUN_00661210	.text	167		clean	unknown		unanalyzed	
 006612c0	FUN_006612c0	.text	31		clean	unknown		unanalyzed	
-006612e0	FUN_006612e0	.text	144		clean	unknown		unanalyzed	
+006612e0	FUN_006612e0	.text	144		clean	asset	recon/layout3	reversed	FXParticleAlpha runtime constructor; consumes 20-byte keyframes from serialized count/pointer and distributes entries by 1-based slot
 00661370	FUN_00661370	.text	169		clean	unknown		unanalyzed	
 00661420	FUN_00661420	.text	6		clean	unknown		unanalyzed	
-00661430	FUN_00661430	.text	346		clean	unknown		unanalyzed	
+00661430	FUN_00661430	.text	346		clean	asset	recon/layout3	reversed	FXParticleColor runtime constructor; reads reordered root fields and consumes 20-byte color keyframes from serialized count/pointer
 00661590	FUN_00661590	.text	1101		clean	unknown		unanalyzed	
 006619e0	FUN_006619e0	.text	6		clean	unknown		unanalyzed	
 006619f0	FUN_006619f0	.text	71		clean	unknown		unanalyzed	
@@ -28685,8 +28685,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009ad400	FUN_009ad400	.text	187		clean	unknown		unanalyzed	
 009ad4c0	FUN_009ad4c0	.text	100		clean	unknown		unanalyzed	
 009ad530	FUN_009ad530	.text	111		clean	unknown		unanalyzed	
-009ad5a0	FUN_009ad5a0	.text	126		clean	unknown		unanalyzed	
-009ad620	FUN_009ad620	.text	25		clean	unknown		unanalyzed	
+009ad5a0	FUN_009ad5a0	.text	126		clean	asset	recon/layout3	reversed	W3D AnimationChannelDelta runtime constructor; serialized offsets +04/+08/+0C, pivot +10, scale +14, init +18/+1C, numBits +20, compressed bytes +24/+28
+009ad620	FUN_009ad620	.text	25		clean	asset	recon/layout3	reversed	W3D AnimationChannelDelta vector-length-8 constructor specialization delegating to 0x009AD5A0
 009ad640	FUN_009ad640	.text	47		clean	unknown		unanalyzed	
 009ad670	FUN_009ad670	.text	144		clean	unknown		unanalyzed	
 009ad700	FUN_009ad700	.text	22		clean	unknown		unanalyzed	
@@ -28714,7 +28714,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009aed70	FUN_009aed70	.text	401		clean	unknown		unanalyzed	
 009aef10	FUN_009aef10	.text	231		clean	unknown		unanalyzed	
 009af000	FUN_009af000	.text	231		clean	unknown		unanalyzed	
-009af0f0	FUN_009af0f0	.text	126		clean	unknown		unanalyzed	
+009af0f0	FUN_009af0f0	.text	126		clean	asset	recon/layout3	reversed	W3D AnimationChannelTimecoded runtime constructor; serialized pivot +10 and count/pointer lists +14/+18 and +1C/+20
 009af170	FUN_009af170	.text	63		clean	unknown		unanalyzed	
 009af1b0	FUN_009af1b0	.text	448		clean	unknown		unanalyzed	
 009af370	FUN_009af370	.text	302		clean	unknown		unanalyzed	

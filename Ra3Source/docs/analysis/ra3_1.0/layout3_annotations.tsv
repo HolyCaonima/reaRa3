@@ -1,6 +1,0 @@
-address	status	owner	module	notes
-006612e0	reversed	recon/layout3	asset	FXParticleAlpha runtime constructor; consumes 20-byte keyframes from serialized count/pointer and distributes entries by 1-based slot
-00661430	reversed	recon/layout3	asset	FXParticleColor runtime constructor; reads reordered root fields and consumes 20-byte color keyframes from serialized count/pointer
-009ad5a0	reversed	recon/layout3	asset	W3D AnimationChannelDelta runtime constructor; serialized offsets +04/+08/+0C, pivot +10, scale +14, init +18/+1C, numBits +20, compressed bytes +24/+28
-009ad620	reversed	recon/layout3	asset	W3D AnimationChannelDelta vector-length-8 constructor specialization delegating to 0x009AD5A0
-009af0f0	reversed	recon/layout3	asset	W3D AnimationChannelTimecoded runtime constructor; serialized pivot +10 and count/pointer lists +14/+18 and +1C/+20

@@ -102,7 +102,7 @@ address	status	owner	module	notes
 004d2ee0	reversed	recon/hookcat	unknown	hook candidate: x87 浮点到 64 位整数转换/舍入辅助函数
 00aafe10	reversed	recon/hookcat	unknown	hook candidate: 有符号键红黑树 lower_bound
 00b66f80	reversed	recon/hookcat	unknown	hook candidate: 红黑树删除、旋转与着色修复
-005a94c0	reversed	recon/hookcat	unknown	hook candidate: 生成闭区间 [min,max] 的伪随机整数
+005a94c0	reversed	recon/simrng	sim	logic inclusive integer range; differs from Generals by low>=high early return without state advance; ra3::sim::logicRandomInteger; oracle 10006/10006 Debug+Release (earlier: hook candidate: 生成闭区间 [min,max] 的伪随机整数)
 009c99c0	reversed	recon/hookcat	unknown	hook candidate: 红黑树迭代器后继
 007e20f0	reversed	recon/hookcat	unknown	hook candidate: 按对象状态在两个候选字段间选择并返回指针
 0094af80	reversed	recon/hookcat	unknown	hook candidate: 边界检查后返回定长记录数组中的元素地址
@@ -197,3 +197,12 @@ address	status	owner	module	notes
 0092a0d0	reversed	recon/ports2	common	null-terminated IEEE CRC-32; ra3::common::crc32CString; oracle 2004/2004 Debug+Release
 009814e0	verified	recon/ports2	math	scale object Vector3 at +0x10 by float at +0x24; ra3::math::scaled; oracle 2031/2031 Debug+Release; live shadow 225/225, replace 224 calls in a skirmish (运行 20/21)
 00994a10	verified	recon/ports2	math	Matrix3x4 direction transform; ra3::math::transformDirection; oracle 2000/2000 finite Debug+Release; multi-NaN payload emulator-unreliable; live shadow 1208/1208, replace 198 calls in a skirmish (运行 20/21)
+006612e0	reversed	recon/layout3	asset	FXParticleAlpha runtime constructor; consumes 20-byte keyframes from serialized count/pointer and distributes entries by 1-based slot
+00661430	reversed	recon/layout3	asset	FXParticleColor runtime constructor; reads reordered root fields and consumes 20-byte color keyframes from serialized count/pointer
+009ad5a0	reversed	recon/layout3	asset	W3D AnimationChannelDelta runtime constructor; serialized offsets +04/+08/+0C, pivot +10, scale +14, init +18/+1C, numBits +20, compressed bytes +24/+28
+009ad620	reversed	recon/layout3	asset	W3D AnimationChannelDelta vector-length-8 constructor specialization delegating to 0x009AD5A0
+009af0f0	reversed	recon/layout3	asset	W3D AnimationChannelTimecoded runtime constructor; serialized pivot +10 and count/pointer lists +14/+18 and +1C/+20
+005a9310	reversed	recon/simrng	sim	six-dword add-with-carry RNG step; Generals randomValue counterpart; ra3::sim::nextRandom; oracle 400000 consecutive transitions from four seeds, Debug+Release
+005a93b0	reversed	recon/simrng	sim	seed all three RNG streams and logic base seed; Generals InitRandom(seed) counterpart; ra3::sim::seedRandom; oracle 10000/10000 Debug+Release
+005a94f0	reversed	recon/simrng	sim	client inclusive integer range; Generals GetGameClientRandomValue counterpart; ra3::sim::clientRandomInteger; oracle 10006/10006 Debug+Release
+005a9520	reversed	recon/simrng	sim	audio inclusive integer range; Generals GetGameAudioRandomValue counterpart; ra3::sim::clientRandomInteger; oracle 10006/10006 Debug+Release
