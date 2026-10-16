@@ -30,6 +30,7 @@ include(Ra3Targets)
 
 add_subdirectory(src/core)
 add_subdirectory(src/io)
+add_subdirectory(src/text)
 
 if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/ra3tool)
