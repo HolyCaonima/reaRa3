@@ -162,3 +162,13 @@ address	status	owner	module	notes
 009f68c0	reversed	recon/bigfs	io	Viv::HashPath; case-sensitive byte-swapped DJB2
 009f7000	reversed	recon/bigfs	io	Viv::FindByHash; linear 16-byte-record lookup
 009f71d0	reversed	recon/bigfs	io	Viv::FindEntry; hashes optional path then delegates to Viv::FindByHash
+0043c630	reversed	recon/layout2	asset	ReloDetokenizers.h:127 unknown-polymorphic fatal cleanup; releases an object with an optional +8 allocation
+00447d70	reversed	recon/layout2	asset	ResourceManagerFileStream record callback; validates record count, allocates count*0x30 and delegates stream opening/checksum validation to 0x004479E0
+00447e30	reversed	recon/layout2	asset	walks 12-byte typed fixup descriptors, converts descriptor-relative offsets with the instance base and dispatches EvaEvent/special typed fixups
+0045e9a0	reversed	recon/layout2	asset	ReloDetokenizers.h:127 unknown-polymorphic fatal cleanup; releases the +4/+8 allocations and owner
+00477510	reversed	recon/layout2	asset	ReloDetokenizers.h:127 unknown-polymorphic fatal cleanup wrapper; invokes thunk 0x01985B70 then releases owner
+00477a50	reversed	recon/layout2	asset	ReloDetokenizers.h:127 unknown-polymorphic fatal cleanup wrapper; invokes thunk 0x01D6D000 then releases owner
+00673a50	reversed	recon/layout2	asset	FXParticleSystemTemplate runtime conversion; reads serialized module pointers at +0x80..+0xA4 and switches on concrete typeId tokens including B96643FF/75CD18B3
+00674080	reversed	recon/layout2	asset	FXParticleSystemTemplate runtime constructor; retains serialized block and calls 0x00673A50 to construct polymorphic runtime modules
+009b0540	reversed	recon/layout2	asset	W3D animation channel factory; 60D8CF69=AnimationChannelTimecoded and 77F97305=AnimationChannelDelta, allocates 0x34/0x38 runtime objects
+009b15a0	reversed	recon/layout2	asset	W3DAnimation runtime constructor; iterates relocated channel pointer array and calls 0x009B0540 for each tokenized channel

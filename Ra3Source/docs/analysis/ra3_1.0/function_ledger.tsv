@@ -977,7 +977,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0043c254	FUN_0043c254	.text	11		clean	unknown		unanalyzed	
 0043c3fc	FUN_0043c3fc	.text	10		clean	unknown		unanalyzed	
 0043c510	FUN_0043c510	.text	13		clean	unknown		unanalyzed	
-0043c630	FUN_0043c630	.text	158	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset		unanalyzed	
+0043c630	FUN_0043c630	.text	158	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset	recon/layout2	reversed	ReloDetokenizers.h:127 unknown-polymorphic fatal cleanup; releases an object with an optional +8 allocation
 0043c8aa	FUN_0043c8aa	.text	11		clean	unknown		unanalyzed	
 0043c8b5	FUN_0043c8b5	.text	10		clean	unknown		unanalyzed	
 0043cbd0	FUN_0043cbd0	.text	42		clean	unknown		unanalyzed	
@@ -1231,9 +1231,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004477b0	thunk_FUN_029d0000	.text	6		entry-lost	unknown		unanalyzed	
 00447870	thunk_FUN_01984510	.text	6		entry-lost	unknown		unanalyzed	
 004479e0	FUN_004479e0	.text	911	Libraries\Source\assetmanager\Stream\ResourceManagerFileStream.cpp	clean	asset	main	reversed	ResourceManagerFileStream.cpp: opens .imp/.relo/.bin, compares leading u32 with the manifest stream checksum; ra3::asset::validateStreamBundle, AssetStream::loadDecoded
-00447d70	FUN_00447d70	.text	86		clean	unknown		unanalyzed	
+00447d70	FUN_00447d70	.text	86		clean	asset	recon/layout2	reversed	ResourceManagerFileStream record callback; validates record count, allocates count*0x30 and delegates stream opening/checksum validation to 0x004479E0
 00447dd0	thunk_FUN_02830000	.text	6		entry-lost	unknown		unanalyzed	
-00447e30	FUN_00447e30	.text	177		clean	unknown		unanalyzed	
+00447e30	FUN_00447e30	.text	177		clean	asset	recon/layout2	reversed	walks 12-byte typed fixup descriptors, converts descriptor-relative offsets with the instance base and dispatches EvaEvent/special typed fixups
 00448070	thunk_FUN_01977380	.text	6		entry-recoverable	unknown		unanalyzed	
 00448170	thunk_FUN_01984a00	.text	6		entry-lost	unknown		unanalyzed	
 004482a0	thunk_FUN_0197f700	.text	6		entry-recoverable	unknown		unanalyzed	
@@ -1440,7 +1440,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0045d960	thunk_FUN_0197c220	.text	6		entry-recoverable	unknown		unanalyzed	
 0045d9f0	thunk_FUN_01980520	.text	6		entry-lost	unknown		unanalyzed	
 0045e570	thunk_FUN_01977f20	.text	6		entry-lost	unknown		unanalyzed	
-0045e9a0	FUN_0045e9a0	.text	158	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset		unanalyzed	
+0045e9a0	FUN_0045e9a0	.text	158	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset	recon/layout2	reversed	ReloDetokenizers.h:127 unknown-polymorphic fatal cleanup; releases the +4/+8 allocations and owner
 0045f0f0	thunk_FUN_019808e0	.text	6		entry-lost	unknown		unanalyzed	
 0045f240	thunk_FUN_019782e0	.text	6		entry-lost	unknown		unanalyzed	
 0045f367	FUN_0045f367	.text	55		clean	unknown		unanalyzed	
@@ -1641,7 +1641,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00475d90	FUN_00475d90	.text	170		clean	unknown		unanalyzed	
 00475e3a	FUN_00475e3a	.text	498		clean	unknown		unanalyzed	
 00476af0	thunk_FUN_01973fd0	.text	6		entry-lost	unknown		unanalyzed	
-00477510	FUN_00477510	.text	135	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset		unanalyzed	
+00477510	FUN_00477510	.text	135	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset	recon/layout2	reversed	ReloDetokenizers.h:127 unknown-polymorphic fatal cleanup wrapper; invokes thunk 0x01985B70 then releases owner
 004775a0	FUN_004775a0	.text	56		clean	unknown		unanalyzed	
 004775e0	FUN_004775e0	.text	56		clean	unknown		unanalyzed	
 00477620	FUN_00477620	.text	56		clean	unknown		unanalyzed	
@@ -1657,7 +1657,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004778a0	FUN_004778a0	.text	56		clean	unknown		unanalyzed	
 004778e0	FUN_004778e0	.text	56		clean	unknown		unanalyzed	
 00477920	FUN_00477920	.text	56		clean	unknown		unanalyzed	
-00477a50	FUN_00477a50	.text	135	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset		unanalyzed	
+00477a50	FUN_00477a50	.text	135	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset	recon/layout2	reversed	ReloDetokenizers.h:127 unknown-polymorphic fatal cleanup wrapper; invokes thunk 0x01D6D000 then releases owner
 00477ae0	thunk_FUN_01d6c000	.text	6		entry-lost	unknown		unanalyzed	
 00477d90	thunk_FUN_019815f0	.text	6		entry-lost	unknown		unanalyzed	
 00477de0	thunk_FUN_024c0000	.text	6		entry-lost	unknown		unanalyzed	
@@ -11071,11 +11071,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00673800	FUN_00673800	.text	307		clean	unknown		unanalyzed	
 00673940	FUN_00673940	.text	220		clean	unknown		unanalyzed	
 00673a20	FUN_00673a20	.text	44		clean	unknown		unanalyzed	
-00673a50	FUN_00673a50	.text	1089		clean	unknown		unanalyzed	
+00673a50	FUN_00673a50	.text	1089		clean	asset	recon/layout2	reversed	FXParticleSystemTemplate runtime conversion; reads serialized module pointers at +0x80..+0xA4 and switches on concrete typeId tokens including B96643FF/75CD18B3
 00673ea0	FUN_00673ea0	.text	161	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00673f50	FUN_00673f50	.text	144		clean	unknown		unanalyzed	
 00673fe0	FUN_00673fe0	.text	158		clean	unknown		unanalyzed	
-00674080	FUN_00674080	.text	594		clean	unknown		unanalyzed	
+00674080	FUN_00674080	.text	594		clean	asset	recon/layout2	reversed	FXParticleSystemTemplate runtime constructor; retains serialized block and calls 0x00673A50 to construct polymorphic runtime modules
 006742e0	FUN_006742e0	.text	212		clean	unknown		unanalyzed	
 006743c0	FUN_006743c0	.text	314	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00674500	FUN_00674500	.text	85		clean	unknown		unanalyzed	
@@ -28728,7 +28728,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b0300	FUN_009b0300	.text	224		clean	unknown		unanalyzed	
 009b03e0	FUN_009b03e0	.text	43		clean	unknown		unanalyzed	
 009b0410	FUN_009b0410	.text	293	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-009b0540	FUN_009b0540	.text	131		clean	unknown		unanalyzed	
+009b0540	FUN_009b0540	.text	131		clean	asset	recon/layout2	reversed	W3D animation channel factory; 60D8CF69=AnimationChannelTimecoded and 77F97305=AnimationChannelDelta, allocates 0x34/0x38 runtime objects
 009b05d0	FUN_009b05d0	.text	98		clean	unknown		unanalyzed	
 009b0640	FUN_009b0640	.text	393		clean	unknown		unanalyzed	
 009b07d0	FUN_009b07d0	.text	448	SageRender\source\Sage\Render\Core.cpp	clean	render		unanalyzed	
@@ -28738,7 +28738,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b1100	FUN_009b1100	.text	236		clean	unknown		unanalyzed	
 009b1200	FUN_009b1200	.text	56		clean	unknown		unanalyzed	
 009b1310	FUN_009b1310	.text	636		clean	unknown		unanalyzed	
-009b15a0	FUN_009b15a0	.text	267		clean	unknown		unanalyzed	
+009b15a0	FUN_009b15a0	.text	267		clean	asset	recon/layout2	reversed	W3DAnimation runtime constructor; iterates relocated channel pointer array and calls 0x009B0540 for each tokenized channel
 009b16b0	FUN_009b16b0	.text	137		clean	unknown		unanalyzed	
 009b1740	FUN_009b1740	.text	63		clean	unknown		unanalyzed	
 009b1780	FUN_009b1780	.text	335		clean	unknown		unanalyzed	
