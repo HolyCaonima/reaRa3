@@ -36,4 +36,17 @@ std::uint32_t crc32CString(const char* text) noexcept
     return ~crc;
 }
 
+// ra3_1.0.game 0x0092A0A0; structure after Generals Common/crc.h (GPL v3).
+std::uint32_t addRotatingCrc(const void* data, std::uint32_t length, std::uint32_t crc) noexcept
+{
+    if (data == nullptr) {
+        return crc;
+    }
+    const auto* bytes = static_cast<const std::uint8_t*>(data);
+    for (std::uint32_t index = 0; index < length; ++index) {
+        crc = (crc << 1) + bytes[index] + (crc >> 31);
+    }
+    return crc;
+}
+
 }  // namespace ra3::common

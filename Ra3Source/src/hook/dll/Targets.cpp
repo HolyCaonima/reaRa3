@@ -1870,6 +1870,216 @@ __declspec(naked) float __cdecl audioRandomReal(float, float)
     }
 }
 
+TargetState g_rotatingCrc;
+TargetState g_logicSeedCrc;
+TargetState g_randomVariableSet;
+TargetState g_randomVariableCopyRangeFirst;
+TargetState g_randomVariableCopyTypeFirst;
+TargetState g_clientRandomVariable;
+TargetState g_logicRandomVariable;
+
+// ra3_1.0.game 0x0092A0A0, cdecl (data, length, crc).
+std::uint32_t __cdecl rotatingCrc(const void* data, std::uint32_t length, std::uint32_t crc)
+{
+    TargetState& state = g_rotatingCrc;
+    state.calls.fetch_add(1, relaxed);
+    const std::uint32_t ours = ra3::common::addRotatingCrc(data, length, crc);
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const std::uint32_t game = reinterpret_cast<std::uint32_t(__cdecl*)(
+        const void*, std::uint32_t, std::uint32_t)>(state.original)(data, length, crc);
+    recordScalar("rotatingcrc", state, game, ours);
+    return game;
+}
+
+// ra3_1.0.game 0x005A9390, cdecl () over the logic stream.
+std::uint32_t __cdecl logicSeedCrc()
+{
+    TargetState& state = g_logicSeedCrc;
+    state.calls.fetch_add(1, relaxed);
+    const std::uint32_t ours = ra3::sim::randomStateCrc(*gameLogicRandomState());
+    if (state.mode == Mode::replace) {
+        state.matches.fetch_add(1, relaxed);
+        return ours;
+    }
+    const std::uint32_t game =
+        reinterpret_cast<std::uint32_t(__cdecl*)()>(state.original)();
+    recordScalar("logicseedcrc", state, game, ours);
+    return game;
+}
+
+void recordRandomVariable(
+    const char* key,
+    TargetState& state,
+    const ra3::sim::RandomVariable& game,
+    const ra3::sim::RandomVariable& ours)
+{
+    if (std::memcmp(&game, &ours, sizeof(game)) == 0) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch(key, state, "12-byte random variable differs");
+    }
+}
+
+// ra3_1.0.game 0x005A9640, thiscall (low, high, distribution), ret 0xC.
+void __fastcall setRandomVariable(
+    ra3::sim::RandomVariable* self, void*, float low, float high, std::int32_t distribution)
+{
+    TargetState& state = g_randomVariableSet;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        ra3::sim::setRandomVariable(*self, low, high, distribution);
+        state.matches.fetch_add(1, relaxed);
+        return;
+    }
+    ra3::sim::RandomVariable expected = *self;
+    ra3::sim::setRandomVariable(expected, low, high, distribution);
+    reinterpret_cast<void(__thiscall*)(ra3::sim::RandomVariable*, float, float, std::int32_t)>(
+        state.original)(self, low, high, distribution);
+    recordRandomVariable("randomvariableset", state, *self, expected);
+}
+
+using RandomVariableCopyFunction = ra3::sim::RandomVariable*(__thiscall*)(
+    ra3::sim::RandomVariable*, const ra3::sim::RandomVariable*);
+
+ra3::sim::RandomVariable* copyRandomVariable(
+    const char* key,
+    TargetState& state,
+    ra3::sim::RandomVariable* self,
+    const ra3::sim::RandomVariable* source)
+{
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        ra3::sim::copyRandomVariable(*self, *source);
+        state.matches.fetch_add(1, relaxed);
+        return self;
+    }
+    ra3::sim::RandomVariable expected{};
+    ra3::sim::copyRandomVariable(expected, *source);
+    ra3::sim::RandomVariable* const game =
+        reinterpret_cast<RandomVariableCopyFunction>(state.original)(self, source);
+    if (game != self) {
+        reportMismatch(key, state, "EAX is not this");
+        return game;
+    }
+    recordRandomVariable(key, state, *self, expected);
+    return game;
+}
+
+// ra3_1.0.game 0x005A9660 (low, high, then distribution) and 0x005A9680
+// (distribution first); thiscall (source), ret 4, EAX = this.
+ra3::sim::RandomVariable* __fastcall copyRandomVariableRangeFirst(
+    ra3::sim::RandomVariable* self, void*, const ra3::sim::RandomVariable* source)
+{
+    return copyRandomVariable(
+        "randomvariablecopyrange", g_randomVariableCopyRangeFirst, self, source);
+}
+
+ra3::sim::RandomVariable* __fastcall copyRandomVariableTypeFirst(
+    ra3::sim::RandomVariable* self, void*, const ra3::sim::RandomVariable* source)
+{
+    return copyRandomVariable(
+        "randomvariablecopytype", g_randomVariableCopyTypeFirst, self, source);
+}
+
+using RandomVariableFunction = float(__cdecl*)(
+    const ra3::sim::RandomVariable*, ra3::sim::RandomState*) noexcept;
+
+struct RandomVariableTarget {
+    const char* key;
+    TargetState* state;
+    ra3::sim::RandomState* (*stream)();
+    RandomVariableFunction implementation;
+};
+
+const RandomVariableTarget g_clientRandomVariableTarget{
+    "clientrandomvariable", &g_clientRandomVariable, &gameClientRandomState,
+    &ra3::sim::clientRandomVariableExtended};
+const RandomVariableTarget g_logicRandomVariableTarget{
+    "logicrandomvariable", &g_logicRandomVariable, &gameLogicRandomState,
+    &ra3::sim::logicRandomVariableExtended};
+
+// Same result-buffer protocol as runRandomReal; the originals are thiscall.
+void __cdecl runRandomVariable(
+    const RandomVariableTarget* target,
+    const ra3::sim::RandomVariable* variable,
+    std::uint8_t* result)
+{
+    TargetState& state = *target->state;
+    observeFloatingCall(state);
+    ra3::sim::RandomState* const stream = target->stream();
+    const RandomVariableFunction implementation = target->implementation;
+    if (state.mode == Mode::replace) {
+        __asm {
+            push stream
+            push variable
+            call implementation
+            add esp, 8
+            mov eax, result
+            fstp tbyte ptr [eax]
+        }
+        state.matches.fetch_add(1, relaxed);
+        return;
+    }
+
+    ra3::sim::RandomState expected = *stream;
+    ra3::sim::RandomState* const replica = &expected;
+    void* const original = state.original;
+    std::uint8_t ours[10]{};
+    __asm {
+        mov ecx, variable
+        call original
+        mov eax, result
+        fstp tbyte ptr [eax]
+        push replica
+        push variable
+        call implementation
+        add esp, 8
+        fstp tbyte ptr [ours]
+    }
+    if (std::memcmp(result, ours, sizeof(ours)) == 0
+        && std::memcmp(stream, &expected, sizeof(expected)) == 0) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch(target->key, state, "80-bit x87 result or six-dword state differs");
+    }
+}
+
+// ra3_1.0.game 0x005A96A0 / 0x005A9730, thiscall () -> ST0.
+__declspec(naked) float clientRandomVariable()
+{
+    __asm {
+        sub esp, 12
+        mov eax, esp
+        push eax
+        push ecx
+        push offset g_clientRandomVariableTarget
+        call runRandomVariable
+        add esp, 12
+        fld tbyte ptr [esp]
+        add esp, 12
+        ret
+    }
+}
+
+__declspec(naked) float logicRandomVariable()
+{
+    __asm {
+        sub esp, 12
+        mov eax, esp
+        push eax
+        push ecx
+        push offset g_logicRandomVariableTarget
+        call runRandomVariable
+        add esp, 12
+        fld tbyte ptr [esp]
+        add esp, 12
+        ret
+    }
+}
+
 void releaseGameAllocation(void* context, void* allocation);
 
 std::filesystem::path archiveDiskPath(const ra3::io::GameBigArchive* archive)
@@ -3160,6 +3370,36 @@ const std::vector<Target>& targets()
          {0x51, 0xF3, 0x0F, 0x10, 0x44, 0x24, 0x0C, 0xF3,
           0x0F, 0x5C, 0x44, 0x24, 0x08, 0x0F, 0x57, 0xC9},
          7, reinterpret_cast<void*>(&audioRandomReal), &g_audioRandomReal, true},
+        {"rotatingcrc", 0x0052A0A0,
+         {0x8B, 0x54, 0x24, 0x04, 0x85, 0xD2, 0x8B, 0x44,
+          0x24, 0x0C, 0x74, 0x21, 0x56, 0x8B, 0x74, 0x24},
+         6, reinterpret_cast<void*>(&rotatingCrc), &g_rotatingCrc, true},
+        {"logicseedcrc", 0x001A9390,
+         {0x6A, 0x00, 0x6A, 0x18, 0x68, 0x20, 0x74, 0xCB,
+          0x00, 0xE8, 0x02, 0x0D, 0x38, 0x00, 0x83, 0xC4},
+         9, reinterpret_cast<void*>(&logicSeedCrc), &g_logicSeedCrc, true},
+        {"randomvariableset", 0x001A9640,
+         {0xF3, 0x0F, 0x10, 0x44, 0x24, 0x04, 0x8B, 0x44,
+          0x24, 0x0C, 0xF3, 0x0F, 0x11, 0x41, 0x04, 0xF3},
+         6, reinterpret_cast<void*>(&setRandomVariable), &g_randomVariableSet, true},
+        {"randomvariablecopyrange", 0x001A9660,
+         {0x8B, 0xC1, 0x8B, 0x4C, 0x24, 0x04, 0xD9, 0x41,
+          0x04, 0xD9, 0x58, 0x04, 0xD9, 0x41, 0x08, 0xD9},
+         6, reinterpret_cast<void*>(&copyRandomVariableRangeFirst),
+         &g_randomVariableCopyRangeFirst, true},
+        {"randomvariablecopytype", 0x001A9680,
+         {0x8B, 0xC1, 0x8B, 0x4C, 0x24, 0x04, 0x8B, 0x11,
+          0x89, 0x10, 0xD9, 0x41, 0x04, 0xD9, 0x58, 0x04},
+         6, reinterpret_cast<void*>(&copyRandomVariableTypeFirst),
+         &g_randomVariableCopyTypeFirst, true},
+        {"clientrandomvariable", 0x001A96A0,
+         {0x8B, 0x01, 0x83, 0xEC, 0x0C, 0x83, 0xE8, 0x00,
+          0x74, 0x0B, 0x83, 0xE8, 0x01, 0x74, 0x21, 0xD9},
+         5, reinterpret_cast<void*>(&clientRandomVariable), &g_clientRandomVariable, true},
+        {"logicrandomvariable", 0x001A9730,
+         {0x83, 0xEC, 0x0C, 0x56, 0x8B, 0xF1, 0x8B, 0x06,
+          0x83, 0xE8, 0x00, 0x74, 0x53, 0x83, 0xE8, 0x01},
+         6, reinterpret_cast<void*>(&logicRandomVariable), &g_logicRandomVariable, true},
         {"bigfindclose", 0x005F5EB0,
          {0x8B, 0x44, 0x24, 0x04, 0x85, 0xC0, 0x74, 0x12,
           0x8B, 0x49, 0x1C, 0x8B, 0x11, 0x6A, 0x00, 0x50},

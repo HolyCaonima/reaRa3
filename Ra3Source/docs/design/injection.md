@@ -142,6 +142,13 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `logicrandomreal` | `0x005A9550` 逻辑流实数区间（x87 ST0） | cdecl（naked） | 7 | `ra3::sim::randomRealExtended` | live verified；仅显式键启用 |
 | `clientrandomreal` | `0x005A95A0` 客户端流实数区间（x87 ST0） | cdecl（naked） | 7 | `ra3::sim::randomRealExtended` | live verified；仅显式键启用 |
 | `audiorandomreal` | `0x005A95F0` 音频流实数区间（x87 ST0） | cdecl（naked） | 7 | `ra3::sim::randomRealExtended` | live verified；仅显式键启用 |
+| `rotatingcrc` | `0x0092A0A0` Generals `CRC::computeCRC` 字节循环 | cdecl（3） | 6 | `ra3::common::addRotatingCrc` | live verified；仅显式键启用 |
+| `logicseedcrc` | `0x005A9390` `GetGameLogicRandomSeedCRC` | cdecl | 9 | `ra3::sim::randomStateCrc` | live verified；仅显式键启用 |
+| `randomvariableset` | `0x005A9640` RandomVariable 设置 (low, high, type) | thiscall（3） | 6 | `ra3::sim::setRandomVariable` | live verified；仅显式键启用 |
+| `randomvariablecopyrange` | `0x005A9660` RandomVariable 复制（先 low/high） | thiscall（1，EAX=this） | 6 | `ra3::sim::copyRandomVariable` | live verified；仅显式键启用 |
+| `randomvariablecopytype` | `0x005A9680` RandomVariable 复制（先 type） | thiscall（1，EAX=this） | 6 | `ra3::sim::copyRandomVariable` | live verified；仅显式键启用 |
+| `clientrandomvariable` | `0x005A96A0` `GameClientRandomVariable::getValue`（x87 ST0） | thiscall（naked） | 5 | `ra3::sim::clientRandomVariableExtended` | live verified；仅显式键启用 |
+| `logicrandomvariable` | `0x005A9730` `GameLogicRandomVariable::getValue`（x87 ST0） | thiscall（naked） | 6 | `ra3::sim::logicRandomVariableExtended` | offline-verified，遭遇战中未被调用；仅显式键启用 |
 | `bigfindclose` | `0x009F5EB0` BIG 枚举状态释放 | thiscall | 6 | allocator-backed release | offline-verified, live pending；仅显式键启用 |
 | `bigopen` | `0x009F5F80` BIG 文件 open | thiscall（3 stack dword） | 6 | `ra3::io::prepareGameBigFile` + tagged allocation | live verified；仅显式键启用 |
 | `bigread` | `0x009F63B0` BIG 文件 read | thiscall（5 stack dword） | 5 | `ra3::io::readGameBigFile` | live verified；仅显式键启用 |
@@ -382,6 +389,8 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 30 | 全局 replace 加全部 33 个显式键 replace（共 76 目标，Release），遭遇战加 Easy AI | `--wait-window` | 字符串 13 目标共约 427 万次由 Ra3Source 处理（asciistringcopy 3092434、asciistringensure 625688、asciistringassign 460862、unicodestringrelease 33144）；asciistringconcat 7869 次空串目标交回原函数 | 对局 2 分钟正常，无崩溃事件 |
 | 31 | 全局 shadow 加 8 个 RNG 显式键 shadow（Release），遭遇战加 Easy AI | `--wait-window` | logicrandomreal 16828/16828、clientrandomreal 18437/18437、audiorandomreal 220713/220713（十字节 ST0 与六 dword 状态逐字节），randomstep 179620/179620；client 实数调用者 CW 变化 18372 次 | 对局 2 分钟正常，无崩溃事件 |
 | 32 | 全局 replace 加全部 36 个显式键 replace（共 79 目标，Release），遭遇战加 Easy AI | `--wait-window` | logicrandomreal 17379、clientrandomreal 19944、audiorandomreal 231678 次由 Ra3Source 处理；randomstep 降为 9961（实数 helper 改走 `nextRandom`） | 对局 2 分钟正常，无崩溃事件 |
+| 33 | 全局 shadow 加 14 个 RNG/CRC 显式键 shadow（Release），遭遇战加 Easy AI | `--wait-window` | clientrandomvariable 108747/108747（十字节 ST0 与状态逐字节，调用者 CW 变化 108558 次）、randomvariablecopytype 17152/17152、randomvariablecopyrange 11630/11630、randomvariableset 6108/6108、rotatingcrc 2811/2811、logicseedcrc 6/6；logicrandomvariable 0 次 | 对局 2 分钟正常，无崩溃事件 |
+| 34 | 全局 replace 加全部 43 个显式键 replace（共 86 目标，Release），遭遇战加 Easy AI | `--wait-window` | clientrandomvariable 68235、randomvariablecopytype 17152、randomvariablecopyrange 11630、randomvariableset 6108、rotatingcrc 2805、logicseedcrc 4 次由 Ra3Source 处理；randomstep 只剩 8 次 | 对局 2 分钟正常，无崩溃事件 |
 
 运行 19 的崩溃点紧跟 `call 0x0056F370`（normalize2）：调用者把 EAX 当作结果指针
 解引用（`mov edx, [eax]`）。原函数按 MSVC 返回结构体的惯例把 `output` 留在 EAX，

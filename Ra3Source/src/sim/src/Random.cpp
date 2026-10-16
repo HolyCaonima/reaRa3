@@ -1,5 +1,10 @@
 #include <ra3/sim/Random.h>
 
+#include <ra3/common/Crc32.h>
+
+#include <cmath>
+#include <cstring>
+
 namespace ra3::sim {
 
 // ra3_1.0.game 0x005A9310. State is six contiguous little-endian dwords.
@@ -117,6 +122,180 @@ __declspec(naked) float __cdecl randomRealExtended(RandomState*, float, float) n
         fmul dword ptr [esp]
         fadd dword ptr [esp + 0Ch]
         pop ecx
+        ret
+    }
+}
+#endif
+
+std::uint32_t randomStateCrc(const RandomState& state) noexcept
+{
+    return ra3::common::addRotatingCrc(&state, sizeof(state), 0);
+}
+
+void setRandomVariable(
+    RandomVariable& variable, float low, float high, std::int32_t distribution) noexcept
+{
+    variable.low = low;
+    variable.high = high;
+    variable.distribution = distribution;
+}
+
+namespace {
+
+// x87 loads quiet a signaling NaN by setting the top fraction bit. Bits, not
+// a float, are returned: an x86 float return would itself pass through x87.
+std::uint32_t quietedThroughX87(const float& value) noexcept
+{
+    std::uint32_t bits = 0;
+    std::memcpy(&bits, &value, sizeof(bits));
+    if ((bits & 0x7F800000U) == 0x7F800000U && (bits & 0x007FFFFFU) != 0) {
+        bits |= 0x00400000U;
+    }
+    return bits;
+}
+
+float constantOrUniform(const RandomVariable& variable, RandomState& state) noexcept
+{
+    if (variable.distribution == static_cast<std::int32_t>(RandomDistribution::constant)
+        && variable.low == variable.high) {
+        return variable.low;
+    }
+    return randomReal(state, variable.low, variable.high);
+}
+
+}  // namespace
+
+void copyRandomVariable(RandomVariable& destination, const RandomVariable& source) noexcept
+{
+    const std::int32_t distribution = source.distribution;
+    const std::uint32_t low = quietedThroughX87(source.low);
+    const std::uint32_t high = quietedThroughX87(source.high);
+    std::memcpy(&destination.low, &low, sizeof(low));
+    std::memcpy(&destination.high, &high, sizeof(high));
+    destination.distribution = distribution;
+}
+
+float clientRandomVariableValue(const RandomVariable& variable, RandomState& state) noexcept
+{
+    switch (static_cast<RandomDistribution>(variable.distribution)) {
+    case RandomDistribution::constant:
+    case RandomDistribution::uniform:
+        return constantOrUniform(variable, state);
+    default:
+        return 0.0F;
+    }
+}
+
+float logicRandomVariableValue(const RandomVariable& variable, RandomState& state) noexcept
+{
+    switch (static_cast<RandomDistribution>(variable.distribution)) {
+    case RandomDistribution::constant:
+    case RandomDistribution::uniform:
+        return constantOrUniform(variable, state);
+    case RandomDistribution::highBias: {
+        const float unit = static_cast<float>(nextRandom(state)) * randomScale;
+        const float root = std::sqrt(unit);
+        return (variable.high - variable.low) * root + variable.low;
+    }
+    default:
+        return 0.0F;
+    }
+}
+
+#if defined(_MSC_VER) && defined(_M_IX86)
+namespace {
+
+using RandomRealFunction = float(__cdecl*)(RandomState*, float, float) noexcept;
+const RandomRealFunction randomRealImplementation = &randomRealExtended;
+
+}  // namespace
+
+__declspec(naked) float __cdecl clientRandomVariableExtended(
+    const RandomVariable*, RandomState*) noexcept
+{
+    __asm {
+        mov eax, dword ptr [esp + 4]
+        mov ecx, dword ptr [eax]
+        test ecx, ecx
+        je constantValue
+        cmp ecx, 1
+        je uniformValue
+        fldz
+        ret
+
+    constantValue:
+        movss xmm0, dword ptr [eax + 4]
+        ucomiss xmm0, dword ptr [eax + 8]
+        jp uniformValue
+        jne uniformValue
+        fld dword ptr [eax + 4]
+        ret
+
+    uniformValue:
+        push dword ptr [eax + 8]
+        push dword ptr [eax + 4]
+        push dword ptr [esp + 10h]
+        call dword ptr [randomRealImplementation]
+        add esp, 12
+        ret
+    }
+}
+
+__declspec(naked) float __cdecl logicRandomVariableExtended(
+    const RandomVariable*, RandomState*) noexcept
+{
+    __asm {
+        mov eax, dword ptr [esp + 4]
+        mov ecx, dword ptr [eax]
+        test ecx, ecx
+        je constantValue
+        cmp ecx, 1
+        je uniformValue
+        cmp ecx, 5
+        je highBiasValue
+        fldz
+        ret
+
+    constantValue:
+        movss xmm0, dword ptr [eax + 4]
+        ucomiss xmm0, dword ptr [eax + 8]
+        jp uniformValue
+        jne uniformValue
+        fld dword ptr [eax + 4]
+        ret
+
+    uniformValue:
+        push dword ptr [eax + 8]
+        push dword ptr [eax + 4]
+        push dword ptr [esp + 10h]
+        call dword ptr [randomRealImplementation]
+        add esp, 12
+        ret
+
+    highBiasValue:
+        sub esp, 8
+        push dword ptr [esp + 10h]
+        call dword ptr [randomStep]
+        add esp, 4
+        test eax, eax
+        mov dword ptr [esp + 4], eax
+        fild dword ptr [esp + 4]
+        jge highBiasUnsigned
+        fadd dword ptr [randomUnsignedBias]
+
+    highBiasUnsigned:
+        fmul dword ptr [randomScale]
+        fstp dword ptr [esp + 4]
+        fld dword ptr [esp + 4]
+        fsqrt
+        fstp dword ptr [esp]
+        mov eax, dword ptr [esp + 0Ch]
+        fld dword ptr [eax + 4]
+        fld dword ptr [eax + 8]
+        fsub st, st(1)
+        fmul dword ptr [esp]
+        faddp st(1), st
+        add esp, 8
         ret
     }
 }

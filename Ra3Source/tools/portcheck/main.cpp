@@ -51,12 +51,18 @@ std::uint32_t number(const std::string& text)
     return static_cast<std::uint32_t>(std::stoul(text, nullptr, 0));
 }
 
-float floatFromBits(const std::string& text)
+// A float return travels through x87 ST0 on 32-bit MSVC and quiets signaling
+// NaNs; a one-member struct is returned in EAX with its bits intact.
+struct FloatBits {
+    float value;
+};
+
+FloatBits floatFromBits(const std::string& text)
 {
     const std::uint32_t bits = number(text);
-    float value = 0.0F;
-    std::memcpy(&value, &bits, sizeof(value));
-    return value;
+    FloatBits result{};
+    std::memcpy(&result.value, &bits, sizeof(result.value));
+    return result;
 }
 
 void printFloat(float value)
@@ -122,6 +128,11 @@ void printExtendedVector(
 
 using RandomRealFunction = float(__cdecl*)(ra3::sim::RandomState*, float, float) noexcept;
 RandomRealFunction randomRealExtended = &ra3::sim::randomRealExtended;
+using RandomVariableFunction =
+    float(__cdecl*)(const ra3::sim::RandomVariable*, ra3::sim::RandomState*) noexcept;
+
+void printRandomExtended(
+    const std::uint8_t (&bytes)[10], std::uint32_t rounded, const ra3::sim::RandomState* state);
 
 // Prints the 80-bit ST0, its single-precision store and the post-state.
 void printRandomRealExtended(ra3::sim::RandomState* state, float lower, float upper)
@@ -137,6 +148,30 @@ void printRandomRealExtended(ra3::sim::RandomState* state, float lower, float up
         fst dword ptr [rounded]
         fstp tbyte ptr [bytes]
     }
+    printRandomExtended(bytes, rounded, state);
+}
+
+void printRandomVariableExtended(
+    RandomVariableFunction function,
+    const ra3::sim::RandomVariable* variable,
+    ra3::sim::RandomState* state)
+{
+    std::uint8_t bytes[10]{};
+    std::uint32_t rounded = 0;
+    __asm {
+        push state
+        push variable
+        call function
+        add esp, 8
+        fst dword ptr [rounded]
+        fstp tbyte ptr [bytes]
+    }
+    printRandomExtended(bytes, rounded, state);
+}
+
+void printRandomExtended(
+    const std::uint8_t (&bytes)[10], std::uint32_t rounded, const ra3::sim::RandomState* state)
+{
     const auto flags = std::cout.flags();
     const char fill = std::cout.fill();
     std::cout << std::hex << std::setfill('0');
@@ -285,12 +320,12 @@ int main()
         } else if (op == "crc32") {
             std::cout << ra3::common::crc32CString(firstPtr) << '\n';
         } else if (op == "maximum" || op == "minimum") {
-            const float a = floatFromBits(firstText);
-            const float b = floatFromBits(secondText);
+            const float a = floatFromBits(firstText).value;
+            const float b = floatFromBits(secondText).value;
             printFloat(op == "maximum" ? ra3::math::maximum(a, b) : ra3::math::minimum(a, b));
         } else if (op == "clamp") {
             printFloat(ra3::math::clamp(
-                floatFromBits(firstText), floatFromBits(secondText), floatFromBits(thirdText)));
+                floatFromBits(firstText).value, floatFromBits(secondText).value, floatFromBits(thirdText).value));
         } else if (op == "equal3") {
             std::cout << ra3::math::exactlyEqual(
                 objectFromBytes<ra3::math::Vector3>(first),
@@ -331,7 +366,7 @@ int main()
             printHex(reinterpret_cast<const std::uint8_t*>(&output), sizeof(output));
         } else if (op == "scale3") {
             const auto output = ra3::math::scaled(
-                objectFromBytes<ra3::math::Vector3>(first), floatFromBits(secondText));
+                objectFromBytes<ra3::math::Vector3>(first), floatFromBits(secondText).value);
             printHex(reinterpret_cast<const std::uint8_t*>(&output), sizeof(output));
         } else if (op == "transform3") {
             const auto output = ra3::math::transformDirection(
@@ -350,7 +385,7 @@ int main()
             std::vector<std::uint8_t> object(0x6C);
             std::memcpy(object.data() + 0x68, &first[0], sizeof(float));
             ra3::math::clampFloatAtOffset68(
-                object.data(), floatFromBits(secondText), floatFromBits(thirdText));
+                object.data(), floatFromBits(secondText).value, floatFromBits(thirdText).value);
             printHex(object.data() + 0x68, sizeof(float));
         } else if (op == "colorargb") {
             const auto output = ra3::math::colorFromArgb(number(firstText));
@@ -363,7 +398,7 @@ int main()
         } else if (op == "separate2") {
             auto a = objectFromBytes<ra3::math::Vector2>(first);
             auto b = objectFromBytes<ra3::math::Vector2>(second);
-            ra3::math::separate(a, b, floatFromBits(thirdText));
+            ra3::math::separate(a, b, floatFromBits(thirdText).value);
             std::uint8_t output[sizeof(a) + sizeof(b)]{};
             std::memcpy(output, &a, sizeof(a));
             std::memcpy(output + sizeof(a), &b, sizeof(b));
@@ -386,15 +421,65 @@ int main()
         } else if (op == "rngreal") {
             auto state = randomState(first);
             const float result =
-                ra3::sim::randomReal(state, floatFromBits(secondText), floatFromBits(thirdText));
+                ra3::sim::randomReal(state, floatFromBits(secondText).value, floatFromBits(thirdText).value);
             std::uint32_t bits = 0;
             std::memcpy(&bits, &result, sizeof(bits));
             printRandom(bits, state);
         } else if (op == "rngrealx87") {
 #if defined(_MSC_VER) && defined(_M_IX86)
             auto state = randomState(first);
-            printRandomRealExtended(&state, floatFromBits(secondText), floatFromBits(thirdText));
+            printRandomRealExtended(&state, floatFromBits(secondText).value, floatFromBits(thirdText).value);
 #endif
+        } else if (op == "rotcrc") {
+            static const std::uint8_t emptyBuffer = 0;
+            const void* data = firstText == "-" ? nullptr
+                : first.empty() ? &emptyBuffer : static_cast<const void*>(first.data());
+            std::cout << ra3::common::addRotatingCrc(
+                data, number(secondText), number(thirdText)) << '\n';
+        } else if (op == "rngseedcrc") {
+            std::cout << ra3::sim::randomStateCrc(randomState(first)) << '\n';
+        } else if (op == "rngvarset") {
+            ra3::sim::RandomVariable variable{};
+            ra3::sim::setRandomVariable(
+                variable, floatFromBits(firstText).value, floatFromBits(secondText).value,
+                static_cast<std::int32_t>(number(thirdText)));
+            printHex(reinterpret_cast<const std::uint8_t*>(&variable), sizeof(variable));
+        } else if (op == "x87roundtrip") {
+            std::uint32_t bits = number(firstText);
+#if defined(_MSC_VER) && defined(_M_IX86)
+            __asm {
+                fld dword ptr [bits]
+                fstp dword ptr [bits]
+            }
+#endif
+            std::cout << bits << '\n';
+        } else if (op == "rngvarcopy") {
+            const auto source = objectFromBytes<ra3::sim::RandomVariable>(first);
+            ra3::sim::RandomVariable destination{};
+            ra3::sim::copyRandomVariable(destination, source);
+            printHex(reinterpret_cast<const std::uint8_t*>(&destination), sizeof(destination));
+        } else if (op == "rngvar" || op == "rngvarx87") {
+            const auto variable = objectFromBytes<ra3::sim::RandomVariable>(first);
+            auto state = randomState(second);
+            const bool logic = thirdText == "logic";
+            if (!logic && thirdText != "client") {
+                throw std::invalid_argument("stream must be client or logic");
+            }
+            if (op == "rngvar") {
+                const float result = logic
+                    ? ra3::sim::logicRandomVariableValue(variable, state)
+                    : ra3::sim::clientRandomVariableValue(variable, state);
+                std::uint32_t bits = 0;
+                std::memcpy(&bits, &result, sizeof(bits));
+                printRandom(bits, state);
+            } else {
+#if defined(_MSC_VER) && defined(_M_IX86)
+                printRandomVariableExtended(
+                    logic ? &ra3::sim::logicRandomVariableExtended
+                          : &ra3::sim::clientRandomVariableExtended,
+                    &variable, &state);
+#endif
+            }
         } else {
             std::cout << "error\n";
         }

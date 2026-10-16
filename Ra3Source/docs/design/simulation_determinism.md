@@ -53,6 +53,43 @@ the emulator's softfloat picks NaN operands differently from hardware. The
 live shadow run compares payloads too, because there both sides execute on
 the real FPU.
 
+## Random variables
+
+Generals `RandomVariable` survives as a 12-byte `{distribution, low, high}`
+record (`ra3::sim::RandomVariable`). `0x005A9640` sets low, high, and the
+distribution with SSE moves, so it is bit-exact. `0x005A9660` and
+`0x005A9680` are the two compiler-emitted copies, differing only in whether
+the distribution is copied first. Both move low and high through x87
+`fld`/`fstp`, which quiets a signaling NaN (sets fraction bit 22) and is
+otherwise exact. Unicorn does not model that quieting, so the oracle takes
+those fields from a native `fld`/`fstp` round trip on the host FPU.
+
+`0x005A96A0` is `GameClientRandomVariable::getValue` on the client stream
+(74 call sites, mostly particle code). `constant` returns `low` when
+`low == high` (ordered compare) and otherwise falls through to `uniform`.
+`uniform` is the client real helper inlined. Every other distribution returns
+`+0.0`. `0x005A9730` is the logic counterpart (one call site). It also
+implements `highBias` (5): it always advances, stores `r = unsigned * 2^-32`
+and `sqrt(r)` as floats, and evaluates `low + (high - low) * sqrt(r)` on x87
+with no delta check. Gaussian, triangular, and low bias are absent from both,
+as in Generals.
+
+## CRC helpers
+
+`0x0092A0A0` is the Generals `CRC::computeCRC` byte loop
+(`crc = rotl(crc, 1) + byte`), taking `(data, length, crc)` and returning
+`crc` unchanged for a null buffer (`ra3::common::addRotatingCrc`). Its other
+nine callers are network-transport packet code, for example `0x005D7DF0`,
+which rejects packets over 476 bytes (Generals `MAX_PACKET_SIZE`).
+`0x005A9390` is `GetGameLogicRandomSeedCRC`, the rotating CRC of the 24-byte
+logic state starting from zero (`ra3::sim::randomStateCrc`). Ghidra did not
+create a function there, so it has no ledger row. Its only caller is
+`0x004D7490`, which is `entry-lost`. In Generals this value feeds
+`GameLogic::getCRC`, so the per-frame game-state CRC producer most likely sits
+behind that SecuROM boundary and is not analyzed further.
+
+## Hooks
+
 All RNG hooks are `explicitOnly`. Shadow snapshots the six state words before
 calling the original, applies the Ra3Source transition to the snapshot, and
 compares both the return value and complete post-state. `randominit` compares
@@ -63,7 +100,9 @@ temporary state is stack-local.
 ## CRC investigation
 
 RA3 does not retain an identifiable Generals-style `XferCRC::addCRC` in the
-clean image. A complete scan found no clean length-based IEEE CRC-32 routine;
+clean image. The byte-wise rotating CRC at `0x0092A0A0` (see above) is the
+Generals `CRC` class, not the per-dword `XferCRC` accumulator. A complete
+scan found no clean length-based IEEE CRC-32 routine;
 `0x0092A0D0` is only a null-terminated string CRC helper. The string
 `CRCBuffer::PREALLOCATE_SIZE must be increased` leads to `0x004D4EA0`, but
 that function merely records a high-water allocation size for desync report
@@ -78,12 +117,16 @@ presented as an RA3 implementation.
 
 ## Hookability
 
-The eight registered functions (`randomstep`, `randominit`,
+The fifteen registered functions (`randomstep`, `randominit`,
 `logicrandomint`, `clientrandomint`, `audiorandomint`, `logicrandomreal`,
-`clientrandomreal`, and `audiorandomreal`) are clean `.text` functions with
-position-independent stolen prefixes. They are offline verified and require
-an explicit key so ordinary hook configurations and the refpack-only
-integration test remain unchanged.
+`clientrandomreal`, `audiorandomreal`, `rotatingcrc`, `logicseedcrc`,
+`randomvariableset`, `randomvariablecopyrange`, `randomvariablecopytype`,
+`clientrandomvariable`, and `logicrandomvariable`) are clean `.text`
+functions with position-independent stolen prefixes. They are offline
+verified and require an explicit key so ordinary hook configurations and the
+refpack-only integration test remain unchanged. The random-variable
+`getValue` hooks use the same naked result-buffer entries as the real
+helpers, with `ECX` passed through as the variable.
 
 Each real-helper hook is a naked cdecl entry that reserves a 10-byte buffer
 and calls the C++ `runRandomReal`. Replace mode runs the port on the game

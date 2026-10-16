@@ -6886,11 +6886,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005a9550	FUN_005a9550	.text	75		clean	sim	recon/simrng	verified	logic real range (low, high) -> x87 ST0; SSE single delta, delta<=0 returns high without advance, unsigned dword * factor(2^-32) * delta + low; ra3::sim::randomRealExtended (naked, 80-bit exact) + portable randomReal; Unicorn oracle 6000/6000 80-bit ST0 + state at CW 007F/027F/037F, Debug+Release (earlier: hook candidate: 生成区间内伪随机浮点数); live shadow 16828/16828, replace 17379 calls in a skirmish (运行 31/32)
 005a95a0	FUN_005a95a0	.text	75		clean	sim	recon/simrng	verified	client real range, instruction-identical to 0x005A9550 except state 0x00CB73F0; ra3::sim::randomRealExtended; oracle 6000/6000 80-bit ST0 + state at CW 007F/027F/037F, Debug+Release; live shadow 18437/18437, replace 19944 calls in a skirmish (运行 31/32)
 005a95f0	FUN_005a95f0	.text	75		clean	sim	recon/simrng	verified	audio real range, instruction-identical to 0x005A9550 except state 0x00CB7408; ra3::sim::randomRealExtended; oracle 6000/6000 80-bit ST0 + state at CW 007F/027F/037F, Debug+Release; live shadow 220713/220713, replace 231678 calls in a skirmish (运行 31/32)
-005a9640	FUN_005a9640	.text	31		clean	unknown		unanalyzed	
-005a9660	FUN_005a9660	.text	25		clean	unknown		unanalyzed	
-005a9680	FUN_005a9680	.text	25		clean	unknown		unanalyzed	
-005a96a0	FUN_005a96a0	.text	141		clean	unknown		unanalyzed	
-005a9730	FUN_005a9730	.text	224		clean	unknown		unanalyzed	
+005a9640	FUN_005a9640	.text	31		clean	sim	recon/simrng	verified	RandomVariable::setRange thiscall (low, high, distribution) ret 0xC, SSE moves; ra3::sim::setRandomVariable; oracle 2000/2000 incl. signaling NaNs, Debug+Release; live shadow 6108/6108, replace 6108 calls in a skirmish (运行 33/34)
+005a9660	FUN_005a9660	.text	25		clean	sim	recon/simrng	verified	RandomVariable copy (low, high via x87 fld/fstp, then distribution), thiscall ret 4, EAX=this; x87 quiets signaling NaNs; ra3::sim::copyRandomVariable; oracle 2000/2000 (Unicorn lacks SNaN quieting, native fld/fstp used for those fields); live shadow 11630/11630, replace 11630 calls in a skirmish (运行 33/34)
+005a9680	FUN_005a9680	.text	25		clean	sim	recon/simrng	verified	RandomVariable copy (distribution first, then low/high via x87), thiscall ret 4, EAX=this; ra3::sim::copyRandomVariable; oracle 2000/2000 as 0x005A9660; live shadow 17152/17152, replace 17152 calls in a skirmish (运行 33/34)
+005a96a0	FUN_005a96a0	.text	141		clean	sim	recon/simrng	verified	GameClientRandomVariable::getValue thiscall -> x87 ST0: constant returns low when low==high else uniform (client real helper inlined), other distributions +0.0; ra3::sim::clientRandomVariableExtended (naked) + portable clientRandomVariableValue; oracle 6000/6000 80-bit ST0 + state at CW 007F/027F/037F, Debug+Release; live shadow 108747/108747, replace 68235 calls in a skirmish (运行 33/34)
+005a9730	FUN_005a9730	.text	224		clean	sim	recon/simrng	reversed	GameLogicRandomVariable::getValue thiscall -> x87 ST0: as 0x005A96A0 on the logic stream plus highBias (5): low + (high-low)*sqrt(r), r and sqrt stored as floats, no delta check; ra3::sim::logicRandomVariableExtended (naked) + portable; oracle 6000/6000 80-bit ST0 + state at CW 007F/027F/037F, Debug+Release; 0 calls in a live skirmish (运行 33)
 005a9820	FUN_005a9820	.text	115		clean	unknown		unanalyzed	
 005a98a0	FUN_005a98a0	.text	9		clean	unknown		unanalyzed	
 005a98b0	FUN_005a98b0	.text	7		clean	unknown		unanalyzed	
@@ -25972,7 +25972,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00929f70	FUN_00929f70	.text	96		clean	unknown		unanalyzed	
 00929fd0	FUN_00929fd0	.text	97		clean	unknown		unanalyzed	
 0092a040	FUN_0092a040	.text	91		clean	unknown		unanalyzed	
-0092a0a0	FUN_0092a0a0	.text	46		clean	unknown		unanalyzed	
+0092a0a0	FUN_0092a0a0	.text	46		clean	common	recon/simrng	verified	Generals CRC::computeCRC byte loop, cdecl (data, length, crc): crc = rotl(crc,1) + byte, null data returns crc; ra3::common::addRotatingCrc; oracle 2000/2000 Debug+Release; other callers are network-transport packet code (0x005D7DF0 rejects > 476 bytes); live shadow 2811/2811, replace 2805 calls in a skirmish (运行 33/34)
 0092a0d0	FUN_0092a0d0	.text	51		clean	common	recon/ports2	reversed	null-terminated IEEE CRC-32; ra3::common::crc32CString; oracle 2004/2004 Debug+Release
 0092a110	FUN_0092a110	.text	25		clean	unknown		unanalyzed	
 0092a130	FUN_0092a130	.text	7		clean	unknown		unanalyzed	

@@ -21,6 +21,13 @@ AUDIO_INT = 0x005A9520
 LOGIC_REAL = 0x005A9550
 CLIENT_REAL = 0x005A95A0
 AUDIO_REAL = 0x005A95F0
+SEED_CRC = 0x005A9390
+ROTATING_CRC = 0x0092A0A0
+VARIABLE_SET = 0x005A9640
+VARIABLE_COPY_RANGE_FIRST = 0x005A9660
+VARIABLE_COPY_TYPE_FIRST = 0x005A9680
+CLIENT_VARIABLE = 0x005A96A0
+LOGIC_VARIABLE = 0x005A9730
 CLIENT_STATE = 0x00CB73F0
 AUDIO_STATE = 0x00CB7408
 LOGIC_STATE = 0x00CB7420
@@ -66,6 +73,17 @@ def random_float(rng: random.Random) -> int:
     if choice < 0.6:
         return struct.unpack("<I", struct.pack("<f", rng.uniform(-1000.0, 1000.0)))[0]
     return rng.randrange(0x100000000)
+
+
+def random_distribution(rng: random.Random) -> int:
+    choice = rng.random()
+    if choice < 0.35:
+        return 0
+    if choice < 0.7:
+        return 1
+    if choice < 0.9:
+        return 5
+    return rng.choice((2, 3, 4, 6, 0xFFFFFFFF, 0x80000001, rng.randrange(0x100000000)))
 
 
 class CppOracle:
@@ -207,6 +225,130 @@ def verify(executable: Path) -> None:
                 total += 1
         real_totals[name] = total
 
+    crc_cases = 0
+    buffer_address = emu.alloc(bytes(512))
+    for index in range(2_000):
+        length = rng.choice((0, 1, 2, 3, 4, 24, 476, rng.randrange(64)))
+        data = bytes(rng.randrange(256) for _ in range(length))
+        crc = rng.choice((0, 0xFFFFFFFF, 0x80000000, rng.randrange(0x100000000)))
+        null_buffer = index % 50 == 0
+        emu.write(buffer_address, data)
+        game = emu.call(ROTATING_CRC, [0 if null_buffer else buffer_address, length, crc])
+        if game.stack_cleanup != 0:
+            raise AssertionError(f"rotating CRC stack cleanup {game.stack_cleanup}")
+        encoded = "-" if null_buffer else data.hex() or "."
+        ours = int(cpp.call(f"rotcrc {encoded} {length} {crc}"))
+        if game.eax != ours:
+            raise AssertionError(f"rotating CRC mismatch length={length} crc=0x{crc:08X}")
+        crc_cases += 1
+
+    seed_crc_cases = 0
+    for _ in range(1_000):
+        state = bytes(rng.randrange(256) for _ in range(24))
+        emu.reset_data()
+        emu.write(LOGIC_STATE, state)
+        game = emu.call(SEED_CRC)
+        if game.stack_cleanup != 0 or emu.read(LOGIC_STATE, 24) != state:
+            raise AssertionError("seed CRC changed the stack or the logic state")
+        if game.eax != int(cpp.call(f"rngseedcrc {state.hex()}")):
+            raise AssertionError(f"seed CRC mismatch for {state.hex()}")
+        seed_crc_cases += 1
+
+    signaling = (0x7F800001, 0xFF800001, 0x7FBFFFFF, 0xFFA00000)
+    variable_float = lambda: (rng.choice(signaling) if rng.random() < 0.25
+                              else random_float(rng))
+    variable_address = emu.alloc(bytes(12))
+    source_address = emu.alloc(bytes(12))
+    set_cases = 0
+    for _ in range(2_000):
+        low, high = variable_float(), variable_float()
+        distribution = random_distribution(rng)
+        emu.write(variable_address, bytes(rng.randrange(256) for _ in range(12)))
+        game = emu.call(VARIABLE_SET, [low, high, distribution], ecx=variable_address)
+        if game.stack_cleanup != 12:
+            raise AssertionError(f"variable set stack cleanup {game.stack_cleanup}")
+        ours = bytes.fromhex(cpp.call(f"rngvarset {low} {high} {distribution}"))
+        if emu.read(variable_address, 12) != ours:
+            raise AssertionError(f"variable set mismatch {low:08X} {high:08X} {distribution}")
+        set_cases += 1
+
+    copy_totals: dict[str, int] = {}
+    quieted = 0
+    emulator_snan_gaps = 0
+    for name, address in (("range-first", VARIABLE_COPY_RANGE_FIRST),
+                          ("type-first", VARIABLE_COPY_TYPE_FIRST)):
+        total = 0
+        for _ in range(2_000):
+            source = struct.pack("<III", random_distribution(rng), variable_float(), variable_float())
+            emu.write(source_address, source)
+            emu.write(variable_address, bytes(rng.randrange(256) for _ in range(12)))
+            game = emu.call(address, [source_address], ecx=variable_address)
+            if game.stack_cleanup != 4 or game.eax != variable_address:
+                raise AssertionError(f"{name} copy ABI: cleanup {game.stack_cleanup} "
+                                     f"eax 0x{game.eax:08X}")
+            ours = bytes.fromhex(cpp.call(f"rngvarcopy {source.hex()}"))
+            game_bytes = emu.read(variable_address, 12)
+            # Unicorn's fld m32 does not quiet a signaling NaN; the host FPU
+            # does, so those fields take the native fld/fstp round trip.
+            fields = list(struct.unpack("<III", game_bytes))
+            for slot in (1, 2):
+                native = int(cpp.call(f"x87roundtrip {fields[slot]}"))
+                if native != fields[slot]:
+                    emulator_snan_gaps += 1
+                    fields[slot] = native
+            game_bytes = struct.pack("<III", *fields)
+            if game_bytes != ours:
+                raise AssertionError(f"{name} copy mismatch {source.hex()}: "
+                                     f"game {game_bytes.hex()} ours {ours.hex()}")
+            quieted += game_bytes != source
+            total += 1
+        copy_totals[name] = total
+
+    variable_totals: dict[str, int] = {}
+    variable_nan = 0
+    variable_portable = 0
+    for name, address, global_address in (("client", CLIENT_VARIABLE, CLIENT_STATE),
+                                          ("logic", LOGIC_VARIABLE, LOGIC_STATE)):
+        total = 0
+        for control_word in CONTROL_WORDS:
+            if cpp.call(f"fpcw {control_word}") != "ok":
+                raise RuntimeError("portcheck could not set the control word")
+            for index in range(2_000):
+                low, high = random_float(rng), random_float(rng)
+                if index % 8 == 0:
+                    high = low
+                variable = struct.pack("<III", random_distribution(rng), low, high)
+                state = bytes(rng.randrange(256) for _ in range(24))
+                emu.reset_data()
+                emu.write(REAL_FACTOR, struct.pack("<I", REAL_FACTOR_BITS))
+                emu.write(global_address, state)
+                emu.write(variable_address, variable)
+                game, game_value = emu.call_float80(
+                    address, ecx=variable_address, fpu_control_word=control_word)
+                if game.stack_cleanup != 0:
+                    raise AssertionError(f"{name} variable stack cleanup {game.stack_cleanup}")
+                game_state = emu.read(global_address, 24)
+                extended, single, ours_state = cpp.call(
+                    f"rngvarx87 {variable.hex()} {state.hex()} {name}").split()
+                both_nan = is_nan80(game_value) and is_nan80(bytes.fromhex(extended))
+                if ((bytes.fromhex(extended) != game_value and not both_nan)
+                        or bytes.fromhex(ours_state) != game_state):
+                    raise AssertionError(
+                        f"{name} variable mismatch cw=0x{control_word:04X} {variable.hex()}: "
+                        f"game {game_value.hex()} ours {extended}")
+                if both_nan:
+                    variable_nan += 1
+                elif control_word == 0x007F and portable_comparable(low, high):
+                    portable, portable_state = cpp.call(
+                        f"rngvar {variable.hex()} {state.hex()} {name}").split()
+                    if int(portable) != int(single) or bytes.fromhex(portable_state) != game_state:
+                        raise AssertionError(
+                            f"{name} portable variable mismatch {variable.hex()}: "
+                            f"x87 single {int(single):08X} portable {int(portable):08X}")
+                    variable_portable += 1
+                total += 1
+        variable_totals[name] = total
+
     cpp.close()
     print(f"step: {step_cases}/{step_cases} matched, 4 consecutive seeded streams")
     print(f"seed-all: {seed_cases}/{seed_cases} matched")
@@ -217,6 +359,18 @@ def verify(executable: Path) -> None:
               f"CW {'/'.join(f'{cw:04X}' for cw in CONTROL_WORDS)})")
     print(f"real NaN results (payload not compared): {nan_results}; portable float at "
           f"CW 007F: {portable_cases}/{portable_cases} matched")
+    print(f"rotating-crc: {crc_cases}/{crc_cases} matched; seed-crc: "
+          f"{seed_crc_cases}/{seed_crc_cases} matched")
+    print(f"variable-set: {set_cases}/{set_cases} matched")
+    for name, total in copy_totals.items():
+        print(f"variable-copy-{name}: {total}/{total} matched")
+    print(f"copies that quieted a signaling NaN: {quieted} (fields Unicorn left "
+          f"signaling, taken from the native x87 round trip: {emulator_snan_gaps})")
+    for name, total in variable_totals.items():
+        print(f"{name}-variable: {total}/{total} matched (80-bit ST0 and state, "
+              f"CW {'/'.join(f'{cw:04X}' for cw in CONTROL_WORDS)})")
+    print(f"variable NaN results (payload not compared): {variable_nan}; portable float at "
+          f"CW 007F: {variable_portable}/{variable_portable} matched")
 
 
 def main() -> None:
