@@ -81,10 +81,15 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `refpack` | `0x009F72E0` 一次性 RefPack 解码 | `int __stdcall (uint8_t* dest, const uint8_t* src)` | 5（`push ecx; mov ecx,[esp+0Ch]`） | `ra3::io::decompressRefPackPrefix` |
 | `namehash` | `0x00417DB0` 名称哈希 | `uint32_t __cdecl (const char*, uint32_t len, uint32_t seed, char finalize)` | 8（`push ebx/ebp/esi/edi; mov edi,[esp+14h]`） | `ra3::asset::hashName` |
 | `pathcompare` | `0x009F3650` 档案路径比较 | `int __cdecl (const char*, const char*)`，返回 -1/0/1 | 5（`push esi; mov esi,[esp+8]`） | `ra3::io::comparePathNames` |
+| `bigfindhash` | `0x009F6B90` 单档案哈希表查找 | `record* __thiscall (GameBigIndex*, const char*, int offsetWidth, int sizeWidth)` | 5（`sub esp,14h; push ebx; push ebp`） | `ra3::io::findGameBigHashedEntry`；offline 883/883，live pending |
+| `bigfindentry` | `0x009F6D00` 单档案路径/序号查找 | `const char* __thiscall (GameBigIndex*, const char*, int, uint64_t*, uint64_t*, record**, int*)` | 7（`sub esp,10h; mov eax,[esp+28h]`） | `ra3::io::findGameBigEntry`；offline 1324/1324，live pending |
 
 `Ra3Source/tools/analysis/disasm.py <VA> --hook-only` 从只读的可执行文件直接给出前 16 字节、
 stolen 长度（≥5 字节的最短整指令前缀）及其是否位置无关、返回形式（`ret` = cdecl，
 `ret N` = stdcall/thiscall）。
+
+读取游戏自有布局的 `bigfindhash`、`bigfindentry` 默认关闭，不继承全局 `mode`；
+必须在配置中显式写出对应键。这样仅启用既有 `refpack` 的集成测试日志不会出现新目标。
 
 新增目标：在 `Targets.cpp` 写一个与原函数同 ABI 的 hook（shadow 调原函数并比较，
 replace 只调我们的实现），在表里加一行 `{键, RVA, 前 16 字节, stolen 长度, hook,

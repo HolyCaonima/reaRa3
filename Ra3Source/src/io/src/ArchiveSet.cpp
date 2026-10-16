@@ -24,8 +24,10 @@ Result<ArchiveSet> ArchiveSet::mount(const std::filesystem::path& gameRoot, cons
 
 std::optional<ArchiveSet::Location> ArchiveSet::find(std::string_view path) const
 {
+    std::string canonical(path);
+    std::replace(canonical.begin(), canonical.end(), '/', '\\');
     for (const BigArchive& archive : m_archives) {
-        if (const BigEntry* entry = archive.find(path)) {
+        if (const BigEntry* entry = archive.find(canonical)) {
             return Location{&archive, entry};
         }
     }
@@ -35,8 +37,10 @@ std::optional<ArchiveSet::Location> ArchiveSet::find(std::string_view path) cons
 std::vector<ArchiveSet::Location> ArchiveSet::findAll(std::string_view path) const
 {
     std::vector<Location> hits;
+    std::string canonical(path);
+    std::replace(canonical.begin(), canonical.end(), '/', '\\');
     for (const BigArchive& archive : m_archives) {
-        if (const BigEntry* entry = archive.find(path)) {
+        if (const BigEntry* entry = archive.find(canonical)) {
             hits.push_back({&archive, entry});
         }
     }

@@ -1,0 +1,32 @@
+address	status	owner	module	notes
+009f5a60	reversed	recon/bigfs	io	BigHandlerBase::~BigHandlerBase deleting destructor; vtable 0x00C69404
+009f5a80	reversed	recon/bigfs	io	GameBigArchive::GameBigArchive; initializes 0x68-byte archive node
+009f5af0	reversed	recon/bigfs	io	BigHandler::AddArchiveFromFile; opens header, appends archive node, optionally builds search table
+009f5db0	reversed	recon/bigfs	io	BigHandler::Close; destroys inflater/temp buffer and 0x40-byte GameBigFile
+009f5e00	reversed	recon/bigfs	io	BigHandler::Seek; updates source/logical 64-bit positions and resets inflater when needed
+009f5e80	reversed	recon/bigfs	io	BigHandler::GetStoredSize; returns GameBigFile +0x20
+009f5e90	reversed	recon/bigfs	io	BigHandler::GetAbsoluteDataOffset; archive rangeBegin plus file dataOffset
+009f5eb0	reversed	recon/bigfs	io	BigHandler::FreeIfPresent; allocator-backed release helper
+009f5ed0	reversed	recon/bigfs	io	BigFindState::BigFindState; canonicalizes backslashes to slashes for enumeration
+009f5f40	reversed	recon/bigfs	io	BigHandler::BigHandler; 0x20-byte base layout, list at +0x10
+009f5f70	reversed	recon/bigfs	io	BigHandler::~BigHandler non-deleting destructor
+009f5f80	reversed	recon/bigfs	io	BigHandler::Open; parses big: and archive qualifier, first mounted archive wins, allocates GameBigFile
+009f6280	reversed	recon/bigfs	io	BigHandler::InflateRange; streaming RefPack read helper
+009f63b0	reversed	recon/bigfs	io	BigHandler::Read; raw or RefPack-backed read into caller buffer
+009f65e0	reversed	recon/bigfs	io	BigHandler::FindFirst; allocates find state and dispatches first enumeration result
+009f6670	reversed	recon/bigfs	io	BigHandler::FindNext; advances archive/entry cursor and fills find result
+009f67e0	reversed	recon/bigfs	io	BigHandler deleting destructor
+009f6810	reversed	recon/bigfs	io	Big::ReadBigEndian32; reads one to four bytes
+009f6880	reversed	recon/bigfs	io	Big::ReadBigEndian64; reads variable-width big-endian integer
+009f68c0	reversed	recon/bigfs	io	Viv::HashPath; case-sensitive byte-swapped DJB2
+009f6910	reversed	recon/bigfs	io	Big::DetectFormat; BIG=0 C0FB=1 Viv4=2 invalid=3
+009f6990	reversed	recon/bigfs	io	Big::HashPath; CRT-tolower byte-swapped DJB2 seed 0x1505; ra3::io::hashGameBigPath
+009f6a20	reversed	recon/bigfs	io	Big::Index::Index; 0x0C-byte header/entries/search-table view
+009f6a50	reversed	recon/bigfs	io	Big::HeaderSize; format-dependent header extent
+009f6aa0	reversed	recon/bigfs	io	Big::EntryCount; format-dependent entry count
+009f6b00	reversed	recon/bigfs	io	Big::TrailerSize; recognizes letter plus three digits and returns 8
+009f6b90	reversed	recon/bigfs	io	Big::FindHashedEntry; read-only binary search; ra3::io::findGameBigHashedEntry; Unicorn 883 cases match
+009f6d00	reversed	recon/bigfs	io	Big::FindEntry; read-only path/ordinal lookup and out parameters; ra3::io::findGameBigEntry; Unicorn 1324 cases match
+009f7000	reversed	recon/bigfs	io	Viv::FindByHash; linear 16-byte-record lookup
+009f7130	reversed	recon/bigfs	io	Big::BuildSearchTable; allocates hash/record pairs and qsorts by unsigned hash
+009f71d0	reversed	recon/bigfs	io	Viv::FindEntry; hashes optional path then delegates to Viv::FindByHash

@@ -54,8 +54,8 @@ public:
     const std::optional<BigTrailer>& trailer() const { return m_trailer; }
     const std::vector<BigEntry>& entries() const { return m_entries; }
 
-    // Lookup ignores ASCII case, like the game's comparison (0x009F3650), and
-    // also treats '/' and '\' alike.
+    // Lookup ignores ASCII case, like the game's comparison (0x009F3650).
+    // Slash direction is significant; callers use the archive's '\' spelling.
     const BigEntry* find(std::string_view path) const;
 
     // Reads the entry's bytes, at most `maxBytes` of them.
@@ -72,7 +72,7 @@ private:
     std::unordered_map<std::string, std::size_t> m_lookup;
 };
 
-// Lower-case ASCII with '\' separators: the key BigArchive::find compares.
+// Lower-case ASCII: the key BigArchive::find compares.
 std::string normalizeArchivePath(std::string_view path);
 
 // The game's trailer test, applied to the 8 bytes ending a header.

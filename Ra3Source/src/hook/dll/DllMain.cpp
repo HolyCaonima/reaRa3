@@ -219,7 +219,10 @@ Mode modeFor(const Config& config, const Target& target)
         return Mode::off;
     }
     const auto found = config.modes.find(target.key);
-    return found != config.modes.end() ? found->second : config.defaultMode;
+    if (found != config.modes.end()) {
+        return found->second;
+    }
+    return target.explicitOnly ? Mode::off : config.defaultMode;
 }
 
 // Installs every enabled target or none of them.

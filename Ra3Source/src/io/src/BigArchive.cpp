@@ -29,9 +29,7 @@ bool isAsciiDigit(std::uint8_t c)
 
 std::string normalizeArchivePath(std::string_view path)
 {
-    std::string result = lowerAscii(path);
-    std::replace(result.begin(), result.end(), '/', '\\');
-    return result;
+    return lowerAscii(path);
 }
 
 std::optional<BigTrailer> parseBigTrailer(const std::uint8_t* lastEightHeaderBytes)
