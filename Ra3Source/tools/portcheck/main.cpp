@@ -120,6 +120,35 @@ void printExtendedVector(
     printHex(bytes, sizeof(bytes));
 }
 
+using RandomRealFunction = float(__cdecl*)(ra3::sim::RandomState*, float, float) noexcept;
+RandomRealFunction randomRealExtended = &ra3::sim::randomRealExtended;
+
+// Prints the 80-bit ST0, its single-precision store and the post-state.
+void printRandomRealExtended(ra3::sim::RandomState* state, float lower, float upper)
+{
+    std::uint8_t bytes[10]{};
+    std::uint32_t rounded = 0;
+    __asm {
+        push upper
+        push lower
+        push state
+        call randomRealExtended
+        add esp, 12
+        fst dword ptr [rounded]
+        fstp tbyte ptr [bytes]
+    }
+    const auto flags = std::cout.flags();
+    const char fill = std::cout.fill();
+    std::cout << std::hex << std::setfill('0');
+    for (const std::uint8_t byte : bytes) {
+        std::cout << std::setw(2) << static_cast<unsigned>(byte);
+    }
+    std::cout.flags(flags);
+    std::cout.fill(fill);
+    std::cout << ' ' << rounded << ' ';
+    printHex(reinterpret_cast<const std::uint8_t*>(state), sizeof(*state));
+}
+
 void printExtendedOffsetDistance(
     ExtendedOffsetDistanceFunction function,
     const void* object,
@@ -354,6 +383,18 @@ int main()
                 ? ra3::sim::logicRandomInteger(state, low, high)
                 : ra3::sim::clientRandomInteger(state, low, high);
             printRandom(static_cast<std::uint32_t>(result), state);
+        } else if (op == "rngreal") {
+            auto state = randomState(first);
+            const float result =
+                ra3::sim::randomReal(state, floatFromBits(secondText), floatFromBits(thirdText));
+            std::uint32_t bits = 0;
+            std::memcpy(&bits, &result, sizeof(bits));
+            printRandom(bits, state);
+        } else if (op == "rngrealx87") {
+#if defined(_MSC_VER) && defined(_M_IX86)
+            auto state = randomState(first);
+            printRandomRealExtended(&state, floatFromBits(secondText), floatFromBits(thirdText));
+#endif
         } else {
             std::cout << "error\n";
         }

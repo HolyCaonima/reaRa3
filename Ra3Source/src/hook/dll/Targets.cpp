@@ -1753,6 +1753,123 @@ int __cdecl audioRandomInteger(int low, int high)
         "audiorandomint", g_audioRandomInt, gameAudioRandomState(), low, high, false);
 }
 
+TargetState g_logicRandomReal;
+TargetState g_clientRandomReal;
+TargetState g_audioRandomReal;
+
+struct RandomRealTarget {
+    const char* key;
+    TargetState* state;
+    ra3::sim::RandomState* (*stream)();
+};
+
+const RandomRealTarget g_logicRandomRealTarget{"logicrandomreal", &g_logicRandomReal, &gameLogicRandomState};
+const RandomRealTarget g_clientRandomRealTarget{"clientrandomreal", &g_clientRandomReal, &gameClientRandomState};
+const RandomRealTarget g_audioRandomRealTarget{"audiorandomreal", &g_audioRandomReal, &gameAudioRandomState};
+
+using RandomRealFunction = float(__cdecl*)(ra3::sim::RandomState*, float, float) noexcept;
+
+// Writes the full 80-bit x87 result to `result`; the naked entries reload it
+// so callers see ST0 rounded only by their own control word.
+void __cdecl runRandomReal(
+    const RandomRealTarget* target, float lower, float upper, std::uint8_t* result)
+{
+    TargetState& state = *target->state;
+    observeFloatingCall(state);
+    ra3::sim::RandomState* const stream = target->stream();
+    RandomRealFunction implementation = &ra3::sim::randomRealExtended;
+    if (state.mode == Mode::replace) {
+        __asm {
+            push upper
+            push lower
+            push stream
+            call implementation
+            add esp, 12
+            mov eax, result
+            fstp tbyte ptr [eax]
+        }
+        state.matches.fetch_add(1, relaxed);
+        return;
+    }
+
+    ra3::sim::RandomState expected = *stream;
+    ra3::sim::RandomState* const replica = &expected;
+    void* const original = state.original;
+    std::uint8_t ours[10]{};
+    __asm {
+        push upper
+        push lower
+        call original
+        add esp, 8
+        mov eax, result
+        fstp tbyte ptr [eax]
+        push upper
+        push lower
+        push replica
+        call implementation
+        add esp, 12
+        fstp tbyte ptr [ours]
+    }
+    if (std::memcmp(result, ours, sizeof(ours)) == 0
+        && std::memcmp(stream, &expected, sizeof(expected)) == 0) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch(target->key, state, "80-bit x87 result or six-dword state differs");
+    }
+}
+
+// ra3_1.0.game 0x005A9550 / 0x005A95A0 / 0x005A95F0, cdecl (low, high) -> ST0.
+__declspec(naked) float __cdecl logicRandomReal(float, float)
+{
+    __asm {
+        sub esp, 12
+        mov eax, esp
+        push eax
+        push dword ptr [esp + 24]
+        push dword ptr [esp + 24]
+        push offset g_logicRandomRealTarget
+        call runRandomReal
+        add esp, 16
+        fld tbyte ptr [esp]
+        add esp, 12
+        ret
+    }
+}
+
+__declspec(naked) float __cdecl clientRandomReal(float, float)
+{
+    __asm {
+        sub esp, 12
+        mov eax, esp
+        push eax
+        push dword ptr [esp + 24]
+        push dword ptr [esp + 24]
+        push offset g_clientRandomRealTarget
+        call runRandomReal
+        add esp, 16
+        fld tbyte ptr [esp]
+        add esp, 12
+        ret
+    }
+}
+
+__declspec(naked) float __cdecl audioRandomReal(float, float)
+{
+    __asm {
+        sub esp, 12
+        mov eax, esp
+        push eax
+        push dword ptr [esp + 24]
+        push dword ptr [esp + 24]
+        push offset g_audioRandomRealTarget
+        call runRandomReal
+        add esp, 16
+        fld tbyte ptr [esp]
+        add esp, 12
+        ret
+    }
+}
+
 void releaseGameAllocation(void* context, void* allocation);
 
 std::filesystem::path archiveDiskPath(const ra3::io::GameBigArchive* archive)
@@ -3031,6 +3148,18 @@ const std::vector<Target>& targets()
          {0x8B, 0x44, 0x24, 0x08, 0x56, 0x57, 0x8B, 0x7C,
           0x24, 0x0C, 0x8B, 0xF0, 0x2B, 0xF7, 0x83, 0xC6},
          5, reinterpret_cast<void*>(&audioRandomInteger), &g_audioRandomInt, true},
+        {"logicrandomreal", 0x001A9550,
+         {0x51, 0xF3, 0x0F, 0x10, 0x44, 0x24, 0x0C, 0xF3,
+          0x0F, 0x5C, 0x44, 0x24, 0x08, 0x0F, 0x57, 0xC9},
+         7, reinterpret_cast<void*>(&logicRandomReal), &g_logicRandomReal, true},
+        {"clientrandomreal", 0x001A95A0,
+         {0x51, 0xF3, 0x0F, 0x10, 0x44, 0x24, 0x0C, 0xF3,
+          0x0F, 0x5C, 0x44, 0x24, 0x08, 0x0F, 0x57, 0xC9},
+         7, reinterpret_cast<void*>(&clientRandomReal), &g_clientRandomReal, true},
+        {"audiorandomreal", 0x001A95F0,
+         {0x51, 0xF3, 0x0F, 0x10, 0x44, 0x24, 0x0C, 0xF3,
+          0x0F, 0x5C, 0x44, 0x24, 0x08, 0x0F, 0x57, 0xC9},
+         7, reinterpret_cast<void*>(&audioRandomReal), &g_audioRandomReal, true},
         {"bigfindclose", 0x005F5EB0,
          {0x8B, 0x44, 0x24, 0x04, 0x85, 0xC0, 0x74, 0x12,
           0x8B, 0x49, 0x1C, 0x8B, 0x11, 0x6A, 0x00, 0x50},

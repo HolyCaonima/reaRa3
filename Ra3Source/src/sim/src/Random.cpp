@@ -64,4 +64,62 @@ int clientRandomInteger(RandomState& state, int low, int high) noexcept
         nextRandom(state) % width + static_cast<std::uint32_t>(low));
 }
 
+namespace {
+
+// The game computes 1 / (2^32 - 1) at startup (0x00BA7EC0) and stores it as
+// a float, which rounds to exactly 2^-32.
+const float randomScale = 0x1p-32F;
+const float randomUnsignedBias = 0x1p32F;
+
+#if defined(_MSC_VER) && defined(_M_IX86)
+using StepFunction = std::uint32_t (*)(RandomState&) noexcept;
+const StepFunction randomStep = &nextRandom;
+#endif
+
+}  // namespace
+
+float randomReal(RandomState& state, float low, float high) noexcept
+{
+    const float delta = high - low;
+    if (delta <= 0.0F) {
+        return high;
+    }
+    return static_cast<float>(nextRandom(state)) * randomScale * delta + low;
+}
+
+#if defined(_MSC_VER) && defined(_M_IX86)
+__declspec(naked) float __cdecl randomRealExtended(RandomState*, float, float) noexcept
+{
+    __asm {
+        push ecx
+        movss xmm0, dword ptr [esp + 10h]
+        subss xmm0, dword ptr [esp + 0Ch]
+        xorps xmm1, xmm1
+        comiss xmm1, xmm0
+        movss dword ptr [esp], xmm0
+        jb advance
+        fld dword ptr [esp + 10h]
+        pop ecx
+        ret
+
+    advance:
+        push dword ptr [esp + 8]
+        call dword ptr [randomStep]
+        add esp, 4
+        test eax, eax
+        mov dword ptr [esp + 10h], eax
+        fild dword ptr [esp + 10h]
+        jge unsignedReady
+        fadd dword ptr [randomUnsignedBias]
+
+    unsignedReady:
+        fmul dword ptr [randomScale]
+        fmul dword ptr [esp]
+        fadd dword ptr [esp + 0Ch]
+        pop ecx
+        ret
+    }
+}
+#endif
+
 }  // namespace ra3::sim

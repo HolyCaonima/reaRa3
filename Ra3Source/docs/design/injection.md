@@ -139,6 +139,9 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `logicrandomint` | `0x005A94C0` 逻辑流闭区间整数 | cdecl | 5 | `ra3::sim::logicRandomInteger` | live verified；仅显式键启用 |
 | `clientrandomint` | `0x005A94F0` 客户端流闭区间整数 | cdecl | 5 | `ra3::sim::clientRandomInteger` | live verified；仅显式键启用 |
 | `audiorandomint` | `0x005A9520` 音频流闭区间整数 | cdecl | 5 | `ra3::sim::clientRandomInteger` | live verified；仅显式键启用 |
+| `logicrandomreal` | `0x005A9550` 逻辑流实数区间（x87 ST0） | cdecl（naked） | 7 | `ra3::sim::randomRealExtended` | live verified；仅显式键启用 |
+| `clientrandomreal` | `0x005A95A0` 客户端流实数区间（x87 ST0） | cdecl（naked） | 7 | `ra3::sim::randomRealExtended` | live verified；仅显式键启用 |
+| `audiorandomreal` | `0x005A95F0` 音频流实数区间（x87 ST0） | cdecl（naked） | 7 | `ra3::sim::randomRealExtended` | live verified；仅显式键启用 |
 | `bigfindclose` | `0x009F5EB0` BIG 枚举状态释放 | thiscall | 6 | allocator-backed release | offline-verified, live pending；仅显式键启用 |
 | `bigopen` | `0x009F5F80` BIG 文件 open | thiscall（3 stack dword） | 6 | `ra3::io::prepareGameBigFile` + tagged allocation | live verified；仅显式键启用 |
 | `bigread` | `0x009F63B0` BIG 文件 read | thiscall（5 stack dword） | 5 | `ra3::io::readGameBigFile` | live verified；仅显式键启用 |
@@ -174,6 +177,10 @@ shadow 最终重新装入游戏值，replace 重新装入重建值，因此调�
 目标还在入口采集调用者 CW 与 MXCSR；汇总行的
 `cw=0x.... mxcsr=0x........ cw_changes=N` 给出首次值和后续 CW 变化次数，采集过程
 不修改浮点环境。
+三个 RNG 实数区间目标同理：naked 入口在栈上留十字节区，C++ `runRandomReal` 在
+replace 时把 `randomRealExtended` 的 `ST0` 以 `fstp tbyte` 写入，shadow 时写入原函数
+结果并与状态快照上的重建结果逐字节比较（同时比较六 dword 状态），入口再 `fld tbyte`
+返回。
 bigfs4 的五个目标同样只认显式键。建议首次 live shadow 配置：
 
 ```
@@ -373,6 +380,8 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 28 | 15 个显式键 replace（Release，含 bigopen、bigread、bigfind*），遭遇战加 Easy AI | `--wait-window` | bigopen 480 次（351 次打开、129 次未找到）、bigread 3676、bigseek 3687、bigclose 354、bigfindentry 2627891、gametextmanager 736 次由 Ra3Source 处理 | 对局 2 分钟正常，无崩溃事件；枚举三目标仍 0 次 |
 | 29 | 全局 shadow 加 13 个字符串显式键 shadow（Release），遭遇战加 Easy AI | `--wait-window` | 13 个字符串目标全部被调用、0 不一致：asciistringcopy 3094060、asciistringensure 645065、asciistringassign 461287、unicodestringrelease 33658 等；asciistringconcat 20480 次中 8528 次是空串目标而 skipped | 对局 2 分钟正常，无崩溃事件 |
 | 30 | 全局 replace 加全部 33 个显式键 replace（共 76 目标，Release），遭遇战加 Easy AI | `--wait-window` | 字符串 13 目标共约 427 万次由 Ra3Source 处理（asciistringcopy 3092434、asciistringensure 625688、asciistringassign 460862、unicodestringrelease 33144）；asciistringconcat 7869 次空串目标交回原函数 | 对局 2 分钟正常，无崩溃事件 |
+| 31 | 全局 shadow 加 8 个 RNG 显式键 shadow（Release），遭遇战加 Easy AI | `--wait-window` | logicrandomreal 16828/16828、clientrandomreal 18437/18437、audiorandomreal 220713/220713（十字节 ST0 与六 dword 状态逐字节），randomstep 179620/179620；client 实数调用者 CW 变化 18372 次 | 对局 2 分钟正常，无崩溃事件 |
+| 32 | 全局 replace 加全部 36 个显式键 replace（共 79 目标，Release），遭遇战加 Easy AI | `--wait-window` | logicrandomreal 17379、clientrandomreal 19944、audiorandomreal 231678 次由 Ra3Source 处理；randomstep 降为 9961（实数 helper 改走 `nextRandom`） | 对局 2 分钟正常，无崩溃事件 |
 
 运行 19 的崩溃点紧跟 `call 0x0056F370`（normalize2）：调用者把 EAX 当作结果指针
 解引用（`mov edx, [eax]`）。原函数按 MSVC 返回结构体的惯例把 `output` 留在 EAX，

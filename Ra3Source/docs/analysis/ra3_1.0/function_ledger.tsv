@@ -6883,9 +6883,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005a94c0	FUN_005a94c0	.text	48		clean	sim	recon/simrng	verified	logic inclusive integer range; differs from Generals by low>=high early return without state advance; ra3::sim::logicRandomInteger; oracle 10006/10006 Debug+Release (earlier: hook candidate: 生成闭区间 [min,max] 的伪随机整数); live shadow 23888/23888, replace 22174 calls in a skirmish (运行 22/23)
 005a94f0	FUN_005a94f0	.text	40		clean	sim	recon/simrng	verified	client inclusive integer range; Generals GetGameClientRandomValue counterpart; ra3::sim::clientRandomInteger; oracle 10006/10006 Debug+Release; live shadow 248/248, replace 109 calls in a skirmish (运行 22/23)
 005a9520	FUN_005a9520	.text	40		clean	sim	recon/simrng	verified	audio inclusive integer range; Generals GetGameAudioRandomValue counterpart; ra3::sim::clientRandomInteger; oracle 10006/10006 Debug+Release; live shadow 278/278, replace 159 calls in a skirmish (运行 22/23)
-005a9550	FUN_005a9550	.text	75		clean	unknown	recon/hookcat	reversed	hook candidate: 生成区间内伪随机浮点数
-005a95a0	FUN_005a95a0	.text	75		clean	unknown		unanalyzed	
-005a95f0	FUN_005a95f0	.text	75		clean	unknown		unanalyzed	
+005a9550	FUN_005a9550	.text	75		clean	sim	recon/simrng	verified	logic real range (low, high) -> x87 ST0; SSE single delta, delta<=0 returns high without advance, unsigned dword * factor(2^-32) * delta + low; ra3::sim::randomRealExtended (naked, 80-bit exact) + portable randomReal; Unicorn oracle 6000/6000 80-bit ST0 + state at CW 007F/027F/037F, Debug+Release (earlier: hook candidate: 生成区间内伪随机浮点数); live shadow 16828/16828, replace 17379 calls in a skirmish (运行 31/32)
+005a95a0	FUN_005a95a0	.text	75		clean	sim	recon/simrng	verified	client real range, instruction-identical to 0x005A9550 except state 0x00CB73F0; ra3::sim::randomRealExtended; oracle 6000/6000 80-bit ST0 + state at CW 007F/027F/037F, Debug+Release; live shadow 18437/18437, replace 19944 calls in a skirmish (运行 31/32)
+005a95f0	FUN_005a95f0	.text	75		clean	sim	recon/simrng	verified	audio real range, instruction-identical to 0x005A9550 except state 0x00CB7408; ra3::sim::randomRealExtended; oracle 6000/6000 80-bit ST0 + state at CW 007F/027F/037F, Debug+Release; live shadow 220713/220713, replace 231678 calls in a skirmish (运行 31/32)
 005a9640	FUN_005a9640	.text	31		clean	unknown		unanalyzed	
 005a9660	FUN_005a9660	.text	25		clean	unknown		unanalyzed	
 005a9680	FUN_005a9680	.text	25		clean	unknown		unanalyzed	
@@ -40334,7 +40334,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00ba7e30	FUN_00ba7e30	.text	44		clean	unknown		unanalyzed	
 00ba7e60	FUN_00ba7e60	.text	44		clean	unknown		unanalyzed	
 00ba7e90	FUN_00ba7e90	.text	41		clean	unknown		unanalyzed	
-00ba7ec0	FUN_00ba7ec0	.text	30		clean	unknown		unanalyzed	
+00ba7ec0	FUN_00ba7ec0	.text	30		clean	sim	recon/simrng	reversed	static initializer: float 0x00DF65B0 = 1.0 / (_CIpow(2.0, 32.0) - 1.0) = exactly 2^-32 (0x2F800000); RNG real-range factor
 00ba7ee0	FUN_00ba7ee0	.text	21		clean	unknown		unanalyzed	
 00ba7f00	FUN_00ba7f00	.text	14		clean	unknown		unanalyzed	
 00ba7f10	FUN_00ba7f10	.text	18		clean	unknown		unanalyzed	

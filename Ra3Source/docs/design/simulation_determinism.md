@@ -30,12 +30,28 @@ zero. These distinctions cover reversed, singleton, negative, and full
 32-bit ranges.
 
 The three real helpers are instruction-identical except for their state
-address. They calculate the delta with SSE, reject a non-positive delta, then
-convert the unsigned random dword on x87 and evaluate
-`random * factor * delta + low` in extended precision. Their result remains
-in ST0 and depends on the caller's x87 control word. They are mapped but not
-hooked: a normal C++ `float` hook would round the result and violate
-determinism. A future hook must use a naked assembly return path.
+address. They calculate the single-precision delta `high - low` with SSE. A
+zero or negative delta returns `high` from x87 without advancing; a positive
+or NaN delta advances, because `comiss` reports an unordered comparison as
+below. They then convert the random dword on x87, add `2^32` when its sign
+bit is set, and evaluate `random * factor * delta + low`. `factor` is the
+float global at `0x00DF65B0`. The static initializer at `0x00BA7EC0` computes
+`1.0 / (pow(2.0, 32.0) - 1.0)` on x87 through MSVCR80 `_CIpow` and stores it
+as a float, which rounds to exactly `2^-32` (`0x2F800000`). The result
+remains in ST0, so it is rounded only by the caller's x87 control word.
+
+`ra3::sim::randomRealExtended` is a naked MSVC x86 port with the same x87
+instruction order, so it leaves the same 80-bit ST0 under every control word.
+`ra3::sim::randomReal` is the portable form. It matches the original under
+the game's usual control word `0x007F` (24-bit precision) while every
+intermediate stays in the normal single-precision range. Denormal or
+overflowing operands differ because x87 keeps its wider exponent. The Unicorn
+oracle compares the full 80-bit ST0 and post-state for 2,000 random and
+special-value cases per helper under control words `0x007F`, `0x027F`, and
+`0x037F`. When both results are NaN it skips the payload comparison, because
+the emulator's softfloat picks NaN operands differently from hardware. The
+live shadow run compares payloads too, because there both sides execute on
+the real FPU.
 
 All RNG hooks are `explicitOnly`. Shadow snapshots the six state words before
 calling the original, applies the Ra3Source transition to the snapshot, and
@@ -62,8 +78,19 @@ presented as an RA3 implementation.
 
 ## Hookability
 
-The five registered functions (`randomstep`, `randominit`,
-`logicrandomint`, `clientrandomint`, and `audiorandomint`) are clean `.text`
-functions with position-independent stolen prefixes. They are offline
-verified and require an explicit key so ordinary hook configurations and the
-refpack-only integration test remain unchanged.
+The eight registered functions (`randomstep`, `randominit`,
+`logicrandomint`, `clientrandomint`, `audiorandomint`, `logicrandomreal`,
+`clientrandomreal`, and `audiorandomreal`) are clean `.text` functions with
+position-independent stolen prefixes. They are offline verified and require
+an explicit key so ordinary hook configurations and the refpack-only
+integration test remain unchanged.
+
+Each real-helper hook is a naked cdecl entry that reserves a 10-byte buffer
+and calls the C++ `runRandomReal`. Replace mode runs the port on the game
+stream and stores ST0 with `fstp tbyte`. Shadow mode calls the original,
+then runs the port on a state snapshot, and compares the 10 result bytes and
+the six-dword post-state. The entry reloads the buffer with `fld tbyte`, so
+the caller receives the unrounded extended result either way. In a live
+skirmish the client-stream callers changed the x87 control word on 18,372 of
+18,437 calls, while logic callers stayed at `0x007F`. A float-returning hook
+would be wrong whenever such a caller runs above 24-bit precision.
