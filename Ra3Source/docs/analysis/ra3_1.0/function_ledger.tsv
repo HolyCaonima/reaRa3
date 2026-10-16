@@ -630,7 +630,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004171eb	FUN_004171eb	.text	10		clean	unknown		unanalyzed	
 00417200	thunk_FUN_019811b0	.text	6		entry-lost	unknown		unanalyzed	
 00417206	FUN_00417206	.text	23		clean	unknown		unanalyzed	
-00417220	FUN_00417220	.text	176	Libraries\Source\assetmanager\resourcemanager.cpp	clean	asset	main	reversed	resourcemanager.cpp: registers an asset type handler {vtable, typeId, typeHash}; ~160 static-initializer callers
+00417220	FUN_00417220	.text	176	Libraries\Source\assetmanager\resourcemanager.cpp	clean	asset	recon/types	reversed	Libraries\Source\assetmanager\resourcemanager.cpp: registers handler descriptors {vtable, typeId, typeHash}; 164 clean direct callers exported (asset_types_program.tsv)
 00417300	thunk_FUN_01973b60	.text	6		entry-lost	unknown		unanalyzed	
 00417306	FUN_00417306	.text	10		clean	unknown		unanalyzed	
 00417310	FUN_00417310	.text	24		clean	unknown		unanalyzed	
@@ -654,7 +654,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00417d80	thunk_FUN_01d7d000	.text	6		entry-lost	unknown		unanalyzed	
 00417d86	FUN_00417d86	.text	23		clean	unknown		unanalyzed	
 00417d9d	FUN_00417d9d	.text	11		clean	unknown		unanalyzed	
-00417db0	FUN_00417db0	.text	360		clean	unknown		unanalyzed	
+00417db0	FUN_00417db0	.text	360		clean	asset	recon/types	verified	resourcemanager.cpp neighborhood: lowercase SuperFastHash core (bytes,length,seed,finalize); ra3::asset::hashName; 118,232/118,232 instanceIds
 00417fe0	FUN_00417fe0	.text	61		clean	unknown		unanalyzed	
 00418090	thunk_FUN_019742c0	.text	6		entry-lost	unknown		unanalyzed	
 00418096	FUN_00418096	.text	10		clean	unknown		unanalyzed	
@@ -1731,7 +1731,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0047be10	thunk_FUN_01d96000	.text	6		entry-lost	unknown		unanalyzed	
 0047be30	FUN_0047be30	.text	60		clean	unknown		unanalyzed	
 0047be70	thunk_FUN_019790a0	.text	6		entry-lost	unknown		unanalyzed	
-0047be90	FUN_0047be90	.text	698		clean	unknown		unanalyzed	
+0047be90	FUN_0047be90	.text	698		clean	asset	recon/types	verified	runtime string-to-instanceId wrapper: strlen, then 00417DB0(name,length,length,1); ra3::asset::instanceIdFromName
 0047c150	FUN_0047c150	.text	59		clean	unknown		unanalyzed	
 0047c190	thunk_FUN_01981eb0	.text	6		entry-lost	unknown		unanalyzed	
 0047c27b	FUN_0047c27b	.text	56		clean	unknown		unanalyzed	
@@ -4910,7 +4910,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00540a70	FUN_00540a70	.text	156		clean	unknown		unanalyzed	
 00540b10	FUN_00540b10	.text	23		clean	unknown		unanalyzed	
 00540b30	FUN_00540b30	.text	19		clean	unknown		unanalyzed	
-00540b50	FUN_00540b50	.text	907		clean	unknown		unanalyzed	
+00540b50	FUN_00540b50	.text	907		clean	asset	recon/types	reversed	dynamic handler descriptor for typeId 86682E78 (FXList), typeHash 6C5977BB, vtable 00BDFD04
 00540ee0	FUN_00540ee0	.text	90		clean	unknown		unanalyzed	
 00540f40	FUN_00540f40	.text	76		clean	unknown		unanalyzed	
 00540f90	FUN_00540f90	.text	112		clean	unknown		unanalyzed	

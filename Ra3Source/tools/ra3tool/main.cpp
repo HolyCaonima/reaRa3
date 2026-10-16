@@ -1,6 +1,7 @@
 // ra3tool: inspects the configured, read-only RA3 installation.
 
 #include <ra3/asset/AssetStream.h>
+#include <ra3/asset/NameHash.h>
 #include <ra3/core/FileUtil.h>
 #include <ra3/core/GameConfig.h>
 #include <ra3/core/SkuDef.h>
@@ -323,6 +324,7 @@ int commandStreams(const Context& context)
     const auto stems = ra3::asset::enumerateStreamStems(mounted.value());
     std::uint64_t assetCount = 0;
     std::size_t totalSizeMismatches = 0;
+    std::size_t idMismatches = 0;
     std::vector<std::string> problems;
     std::map<std::string, std::uint64_t> countsByType;
     std::map<std::uint32_t, std::string> namesByTypeId;
@@ -341,7 +343,22 @@ int commandStreams(const Context& context)
         }
         for (std::size_t i = 0; i < manifest.entries().size(); ++i) {
             const auto& entry = manifest.entries()[i];
-            const std::string prefix = typePrefix(manifest.name(i));
+            const std::string_view name = manifest.name(i);
+            const std::string prefix = typePrefix(name);
+            const std::size_t colon = name.find(':');
+            const std::string_view instanceName =
+                colon == std::string_view::npos ? name : name.substr(colon + 1);
+            if (ra3::asset::instanceIdFromName(instanceName) != entry.id.instanceId &&
+                ++idMismatches <= 10) {
+                problems.push_back(stem + ": " + std::string(name) + " instanceId " +
+                                   hex32(entry.id.instanceId) + " != name hash " +
+                                   hex32(ra3::asset::instanceIdFromName(instanceName)));
+            }
+            if (ra3::asset::typeIdFromName(prefix) != entry.id.typeId && ++idMismatches <= 10) {
+                problems.push_back(stem + ": " + std::string(name) + " typeId " +
+                                   hex32(entry.id.typeId) + " != type name hash " +
+                                   hex32(ra3::asset::typeIdFromName(prefix)));
+            }
             ++countsByType[prefix];
             const auto inserted = namesByTypeId.emplace(entry.id.typeId, prefix);
             if (!inserted.second && inserted.first->second != prefix) {
@@ -372,6 +389,7 @@ int commandStreams(const Context& context)
               << "assets                          : " << assetCount << "\n"
               << "problems                        : " << problems.size() << "\n"
               << "totalInstanceDataSize mismatches: " << totalSizeMismatches << "\n"
+              << "type/instance id != name hash   : " << idMismatches << "\n"
               << "typeIds with varying typeHash   : " << varyingTypeHashes << " (information only)\n"
               << "top asset types:\n";
     constexpr std::size_t kTopTypes = 15;

@@ -97,7 +97,7 @@ XSD 的公共模型是：资源至少有 `id`，可有 `typeHashCode`、`buildRu
 | 偏移 | 字段 | 说明 |
 |---|---|---|
 | 0x00 | typeId | 编译期常量，如 `FontSubstitution` = `0x057786F9`；同一值出现在原程序的类型处理器注册表和类型工厂 `switch` 里 [程序] |
-| 0x04 | instanceId | 实例名的哈希，算法未知（见 §3.6） |
+| 0x04 | instanceId | 实例名（转小写）的 SuperFastHash 变体，`ra3::asset::instanceIdFromName`；typeId 是类型名不转小写的同一算法（docs/design/asset_types.md §3） |
 | 0x08 | typeHash | 类型布局哈希，原程序把它和 typeId 一起注册（如 `.rdata:00BC80E8` = `0xA63E49F9`）[程序] |
 | 0x0C | instanceHash | 语义未证实 |
 | 0x10 | assetReferenceOffset | 资源引用缓冲内的**字节**偏移 |
@@ -147,7 +147,7 @@ Generals `W3DAssetManager` 把名称转小写作为缓存键，按需加载 W3D/
 
 ### 3.6 未决项
 
-- **instanceId 的哈希算法**：已排除 SuperFastHash（含种子/大小写变体）、CRC32、FNV-1/FNV-1a、DJB2、Jenkins one-at-a-time、lookup2、lookup3、Murmur2。`.text` 里 58 处 FNV-1 都是 EASTL `hash_map` 的字符串哈希。存档 `xfer` 代码保存的是 `(typeId, instanceId)` 对而不是名字，所以那里也没有运行时哈希。清单自带完整名字表，首个里程碑不需要这个算法。
+- ~~instanceId 的哈希算法~~ 已解决：`0x00417DB0` 的 SuperFastHash 变体（逐字节 `tolower`、初值为长度、末尾 avalanche），typeId 是同一算法不转小写。全部 118,232 条资源两项均吻合，见 docs/design/asset_types.md §3。早先“已排除 SuperFastHash”的结论是错的：当时没有同时满足“先转小写 + 以长度为初值”。
 - `allTypesHash`、`instanceHash`、记录 `flags` 和地图流 `totalInstanceDataSize` 的语义。
 - 多态类型令牌在重定位中的编码。
 
@@ -264,7 +264,7 @@ public:
 
 ## 5. 用真实数据逐步验证
 
-进度：第 1–6、8 步已完成，结果见 §3.2；第 9 步完成了结构不变量部分，重定位和导入的全量解析留给第二个里程碑；第 10 步完成了清单和校验和两段调用链；第 7 步的类型部分已由原程序注册表证实（typeId/typeHash 是编译期常量），实例哈希算法仍未知。
+进度：第 1–6、8 步已完成，结果见 §3.2；第 9 步完成了结构不变量部分，重定位和导入的全量解析留给第二个里程碑；第 10 步完成了清单和校验和两段调用链；第 7 步的类型部分已由原程序注册表证实（typeId/typeHash 是编译期常量），实例名与类型名哈希已解决（`ra3/asset/NameHash.h`），typeHash 语义仍未知。
 
 1. **冻结清单。** 用 `ra3tool mount`/`big` 只读枚举 14 个档案，按规范化 stem 分组，验证 257 组都恰有四个成员；记录每个成员的存储大小、RefPack 状态和解压大小。[实测][推断]
 2. **以 `locale` 建立最小样本。** 它四件套均未压缩且体积小；先确认四成员公共 `0xDC63FC0D` 的作用域，并把所有 32 位值、对齐位置和字符串范围导出成带偏移表。[实测]

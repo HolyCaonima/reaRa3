@@ -15,15 +15,21 @@ from pathlib import Path
 MASK = 0xFFFFFFFF
 
 
-def _lower_ascii(data: bytes) -> bytes:
+def _require_ascii(data: bytes) -> bytes:
     if any(byte >= 0x80 for byte in data):
         raise ValueError("RA3 shipping-name verification covers ASCII only")
+    return data
+
+
+def _lower_ascii(data: bytes) -> bytes:
     return bytes(byte + 0x20 if 0x41 <= byte <= 0x5A else byte for byte in data)
 
 
-def hash_bytes(data: bytes, seed: int, finalize: bool = True) -> int:
-    """Implement the clean function at 0x00417DB0."""
-    data = _lower_ascii(data)
+def hash_bytes(data: bytes, seed: int, finalize: bool = True, fold: bool = True) -> int:
+    """Implement the clean function at 0x00417DB0; fold=False is the typeId variant."""
+    data = _require_ascii(data)
+    if fold:
+        data = _lower_ascii(data)
     value = seed & MASK
     offset = 0
     for _ in range(len(data) // 4):
@@ -59,6 +65,12 @@ def hash_bytes(data: bytes, seed: int, finalize: bool = True) -> int:
 def instance_id(name: str) -> int:
     encoded = name.encode("ascii")
     return hash_bytes(encoded, len(encoded), True)
+
+
+def type_id(name: str) -> int:
+    """typeId of a type name: same mix, no case folding (257/257 shipped types)."""
+    encoded = name.encode("ascii")
+    return hash_bytes(encoded, len(encoded), True, fold=False)
 
 
 def verify_pairs(path: Path) -> tuple[int, int]:

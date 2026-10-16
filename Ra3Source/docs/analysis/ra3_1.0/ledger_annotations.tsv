@@ -31,5 +31,9 @@ address	status	owner	module	notes
 004479e0	reversed	main	asset	ResourceManagerFileStream.cpp: opens .imp/.relo/.bin, compares leading u32 with the manifest stream checksum; ra3::asset::validateStreamBundle, AssetStream::loadDecoded
 00495890	reversed	main	asset	FullAssetList.cpp: reads manifest, allocates count*0x30 entries, sums sizes at +0x20/+0x24/+0x28, recurses into kind-2 referenced manifests; ra3::asset::Manifest::parse (no recursion yet)
 00416e60	reversed	main	asset	PartialAssetList.cpp:64 "Patch streams not alllowed to be partial"
-00417220	reversed	main	asset	resourcemanager.cpp: registers an asset type handler {vtable, typeId, typeHash}; ~160 static-initializer callers
+00417220	reversed	recon/types	asset	Libraries\Source\assetmanager\resourcemanager.cpp: registers handler descriptors {vtable, typeId, typeHash}; 164 clean direct callers exported (asset_types_program.tsv)
+00417db0	verified	recon/types	asset	resourcemanager.cpp neighborhood: lowercase SuperFastHash core (bytes,length,seed,finalize); ra3::asset::hashName; 118,232/118,232 instanceIds
+0047be90	verified	recon/types	asset	runtime string-to-instanceId wrapper: strlen, then 00417DB0(name,length,length,1); ra3::asset::instanceIdFromName
 004a64cc	reversed	main	asset	resourcemanager.cpp: formats "%s%08X.%08X.%08X.%08X.cdata"; ra3::asset::cdataPath
+004b1c80	reversed	recon/types	asset	type-factory leaf created with -Save; four cases and allocation sizes exported (asset_factory.tsv)
+00540b50	reversed	recon/types	asset	dynamic handler descriptor for typeId 86682E78 (FXList), typeHash 6C5977BB, vtable 00BDFD04

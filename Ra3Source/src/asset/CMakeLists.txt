@@ -3,8 +3,10 @@ ra3_add_module(asset
         include/ra3/asset/AssetId.h
         include/ra3/asset/AssetStream.h
         include/ra3/asset/Manifest.h
+        include/ra3/asset/NameHash.h
         src/AssetStream.cpp
         src/Manifest.cpp
+        src/NameHash.cpp
     PUBLIC_DEPS
         Ra3::core
         Ra3::io)

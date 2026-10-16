@@ -27,7 +27,7 @@ Ra3Source 按子系统分模块，每个模块一个静态库 `ra3_<name>`（别
 | `core` | Libraries\Source\{ini,string,debug,memorypool} | Code\GameEngine\Source\Common | 已完成 |
 | `io` | lib-packages\RtsBase\…\file、rw::core filesystem | Code\GameEngine\Source\Common\System\ArchiveFile* | 已完成 |
 | `text` | CSF 字符串表 | Code\GameEngine\Source\GameClient\GameText.cpp | 已完成（实测 10,401 条） |
-| `asset` | Libraries\Source\assetmanager、RtsXmlPipeline | Code\GameEngine\Source\Common\System\AssetManager 等 | 里程碑 1 完成（清单、四件套校验、按资源切块） |
+| `asset` | Libraries\Source\assetmanager、RtsXmlPipeline | Code\GameEngine\Source\Common\System\AssetManager 等 | 里程碑 1 完成（清单、四件套校验、按资源切块、类型/实例名哈希） |
 | `common` | GameEngine\common | Code\GameEngine\Source\Common | 规划 |
 | `gamelogic` | GameEngine\gamelogic（127+ 函数已锚定） | Code\GameEngine\Source\GameLogic | 规划 |
 | `gameclient` | GameEngine\gameclient | Code\GameEngine\Source\GameClient | 规划 |
@@ -97,6 +97,7 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [ ] asset 里程碑 2：流式 RefPack、重定位/导入表、全量深度校验 — 子 agent，分支 recon/asset2
 - [x] 注入可行性研究 → 路线 A 成立。hook 库、注入器、RefPack hook 已合并（主控重写跳转与补丁事务）；真实游戏 shadow 38/38 一致，replace 38/38 成功并正常进主菜单（docs/design/injection.md §5.4）。未覆盖：进入对局
 - [ ] 路线 A 通用化：多目标 hook 表（每个目标一行 RVA/期望字节/实现），按函数开关 shadow/replace，替换下一批已复刻函数
-- [ ] 资源类型目录（0x00417220 的全部注册）与实例名哈希算法（用仿真找） — 子 agent，分支 recon/types，独占 Ghidra 工程
+- [x] 资源类型目录与名称哈希 — 已合并（recon/types）。`asset_types.tsv` 266 个类型全部有名（9 个只在程序里出现的用 XSD 标识符反查）；instanceId = 转小写的 SuperFastHash 变体（0x00417DB0），typeId = 不转小写的同一算法；C++ `ra3/asset/NameHash.h`，`ra3tool streams` 全量 118,232 条两项 0 不等。typeHash 语义未知（docs/design/asset_types.md）
+- [ ] Ghidra 函数导出刷新（types agent 用 -Save 补建了 0x004B1C80 等，台账尚未收录）
 - [x] 模块归属工具 `tools/analysis/attribute_modules.py` → `module_estimates.tsv`：台账/虚表/64 KiB 邻近三级归属，留出验证虚表 4/4、邻近 35/38（92%）；仍未归属 26,050。模块映射已按新台账刷新。asset 的邻近估计（961，留出 1/2）偏粗，慎用
 - [ ] 虚函数按虚表归类到 C++ 类（用 vtables.tsv）

@@ -25,31 +25,32 @@
 不能据此推断它们都需要独立资源处理器。完整集合就是
 `asset_types.tsv` 中 `asset_count` 非空且 `registrar_address` 为空的行。[程序][全量][推断]
 
-程序注册但发行数据未出现的 7 个类型如下。程序没有保存可直接恢复的类型名，
-所以名称保持空白。[程序][全量]
+程序注册但发行数据未出现的 7 个类型如下。程序里没有它们的类型名字符串；名称
+是用 §3.2 的 typeId 算法对 modding SDK `Schemas/*.xsd` 中全部标识符求哈希反查
+得到的（表中 `typeName_source=schema`）。[程序][全量]
 
-| typeId | typeHash | handler vtable | registrar |
-|---|---|---|---|
-| `0x0CAD7864` | `0x629BD41C` | `0x00BF3400` | `0x00BA8F20` |
-| `0x0F3DE1C6` | `0x6A9E6E8B` | `0x00BD930C` | `0x00BA5560` |
-| `0x17E53184` | `0x07BCA38C` | `0x00BDFC28` | `0x00BA6150` |
-| `0x89A0BDA4` | `0xBE9DF599` | `0x00BF3474` | `0x00BA9070` |
-| `0xD63C6B4C` | `0x404D9E5D` | `0x00BF3514` | `0x00BA9170` |
-| `0xF38E1878` | `0x8EC2496A` | `0x00C35DD8` | `0x00BA9F60` |
-| `0xFC82DC06` | `0xA5DF846F` | `0x00BE6EB0` | `0x00BA7F30` |
+| typeId | 类型名（XSD 反查） | typeHash | handler vtable | registrar |
+|---|---|---|---|---|
+| `0x0CAD7864` | `DLContent` | `0x629BD41C` | `0x00BF3400` | `0x00BA8F20` |
+| `0x0F3DE1C6` | `AssetReportTable` | `0x6A9E6E8B` | `0x00BD930C` | `0x00BA5560` |
+| `0x17E53184` | `CrowdResponse` | `0x07BCA38C` | `0x00BDFC28` | `0x00BA6150` |
+| `0x89A0BDA4` | `GameplayConditionData` | `0xBE9DF599` | `0x00BF3474` | `0x00BA9070` |
+| `0xD63C6B4C` | `MapNameToAchievementEventMapping` | `0x404D9E5D` | `0x00BF3514` | `0x00BA9170` |
+| `0xF38E1878` | `AIPersonalityToAchievementEventMapping` | `0x8EC2496A` | `0x00C35DD8` | `0x00BA9F60` |
+| `0xFC82DC06` | `TheVersion` | `0xA5DF846F` | `0x00BE6EB0` | `0x00BA7F30` |
 
 163 个初始化器使用静态 16 字节描述符。`0x00540B50` 是唯一的动态描述符调用：
-它写入 `typeId=0x86682E78`、`.rdata:0x00BC7D34` 中的
+它写入 `typeId=0x86682E78`（`FXList`）、`.rdata:0x00BC7D34` 中的
 `typeHash=0x6C5977BB` 和虚表 `0x00BDFD04` 后调用 `0x00417220`。[程序]
 
 持久化补建的 `0x004B1C80` 类型工厂叶函数覆盖 4 个 case：
 
 | typeId | 分配大小 |
 |---|---:|
-| `0x05DB454B` | 16 |
+| `0x05DB454B` (`SkirmishStartCash`，XSD 反查) | 16 |
 | `0x057786F9` (`FontSubstitution`) | 20 |
 | `0x05CE3E75` (`PathMusicGameDynamicState`) | 20 |
-| `0x05F72D93` | 16 |
+| `0x05F72D93` (`SupplyCenterProductionExitUpdateModuleData`，XSD 反查) | 16 |
 
 这里只报告该叶函数实际覆盖的 case，不能把 4 个误称为完整类型工厂数量。[程序]
 
@@ -92,11 +93,27 @@ Python 参考实现是 `tools/analysis/asset_name_hash.py`。它对 257 个流�
 manifest 中没有同一类型下这种碰撞；一般 32 位哈希仍可能碰撞，不能只靠
 `instanceId` 证明原始拼写唯一。[程序][全量][推断]
 
+### 3.2 typeId
+
+`typeId` 是同一混合**不做大小写折叠**、以字节长度为初值并执行 avalanche 的结果，
+对 257 个发行类型名全部成立（例如 `FontSubstitution -> 0x057786F9`、
+`FXList -> 0x86682E78`）。实例名算法会先转小写，所以直接套用它对类型名 0 命中。
+程序里计算类型名哈希的调用点尚未定位；类型 ID 在注册描述符里是编译期常量。[全量]
+
+### 3.3 C++ 实现与全量校验
+
+`ra3::asset::hashName / instanceIdFromName / typeIdFromName`
+（`src/asset/include/ra3/asset/NameHash.h`）按 `0x00417DB0` 反编译语义实现：
+MSVC `char` 有符号，每个字节以有符号值传给 `tolower` 并以符号扩展参与混合，所以
+≥0x80 的字节与参考 SuperFastHash 不同；大小写折叠按默认 "C" locale（只改 A–Z）。
+`ra3tool streams` 用我们自己的清单解析器对全部 118,232 条资源同时校验
+`instanceId == instanceIdFromName(实例名)` 与 `typeId == typeIdFromName(类型名)`，
+结果 0 不等，与 Python 参考实现互相独立。[全量][程序]
+
 ## 4. 尚未确定
 
-对 257 个类型名直接使用上述实例名算法，没有一个结果等于 `typeId`；追加冒号
-和常见 XML namespace 前缀也没有匹配。因此 `typeId` 不是已证实的同算法
-“类型名哈希”，本阶段只把它作为编译期常量。[全量]
+`typeHash` 不是类型名经两种变体得到的值，也不是 CRC32/FNV-1/FNV-1a；
+推测是类型结构定义（XSD 布局）的版本哈希，未证实。[全量][推断]
 
 `instanceHash` 也不是实例名、`Type:Name`、类型名或流名经上述算法得到的值：
 对 118,232 条记录四种形式都为 0 匹配。它的内容哈希或版本语义仍未知。[全量]

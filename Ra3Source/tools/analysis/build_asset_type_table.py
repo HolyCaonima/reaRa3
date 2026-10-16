@@ -8,10 +8,13 @@ from __future__ import annotations
 
 import argparse
 import csv
+import re
 import struct
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
+
+from asset_name_hash import type_id as type_id_of_name
 
 
 ARCHIVES = (
@@ -171,6 +174,21 @@ def one(values: set[str]) -> str:
     return ";".join(sorted(v for v in values if v))
 
 
+def schema_names(root: Path | None) -> dict[int, set[str]]:
+    """typeId -> XSD identifiers hashing to it (names types the data never uses)."""
+    if root is None:
+        return {}
+    identifiers: set[str] = set()
+    for path in root.rglob("*.xsd"):
+        text = path.read_text(encoding="utf-8", errors="replace")
+        identifiers.update(re.findall(r'name="([A-Za-z_][A-Za-z0-9_]*)"', text))
+        identifiers.update(re.findall(r'type="(?:[A-Za-z]+:)?([A-Za-z_][A-Za-z0-9_]*)"', text))
+    result: dict[int, set[str]] = defaultdict(set)
+    for name in identifiers:
+        result[type_id_of_name(name)].add(name)
+    return result
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--data-dir", type=Path, required=True)
@@ -179,9 +197,16 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--pairs", type=Path,
                         help="optional full name/id verification corpus")
+    parser.add_argument("--schemas", type=Path,
+                        help="modding SDK Schemas directory; names types absent from the data")
     args = parser.parse_args()
 
     data = collect_data(args.data_dir, args.pairs)
+    for type_id, datum in data.items():
+        for name in datum.names:
+            if type_id_of_name(name) != type_id:
+                raise ValueError(f"typeId {type_id:08X} is not the hash of {name!r}")
+    schemas = schema_names(args.schemas)
     program: dict[int, list[dict[str, str]]] = defaultdict(list)
     for row in read_tsv(args.program):
         program[int(row["typeId"], 16)].append(row)
@@ -190,7 +215,7 @@ def main() -> None:
         factory[int(row["typeId"], 16)].add(row["alloc_size"])
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    fields = ("typeId", "typeName", "typeHash_data", "typeHash_program",
+    fields = ("typeId", "typeName", "typeName_source", "typeHash_data", "typeHash_program",
               "handler_vtable", "registrar_address", "factory_alloc_size",
               "asset_count", "streams", "min_instance_size", "max_instance_size")
     with args.output.open("w", encoding="utf-8", newline="") as stream:
@@ -199,9 +224,16 @@ def main() -> None:
         for type_id in sorted(set(data) | set(program) | set(factory)):
             datum = data.get(type_id)
             registrations = program.get(type_id, [])
+            if datum:
+                type_name, source = one(datum.names), "data"
+            elif type_id in schemas:
+                type_name, source = one(schemas[type_id]), "schema"
+            else:
+                type_name, source = "", ""
             writer.writerow({
                 "typeId": f"{type_id:08X}",
-                "typeName": one(datum.names) if datum else "",
+                "typeName": type_name,
+                "typeName_source": source,
                 "typeHash_data": one({f"{v:08X}" for v in datum.hashes}) if datum else "",
                 "typeHash_program": one({r["typeHash"] for r in registrations}),
                 "handler_vtable": one({r["handler_vtable"] for r in registrations}),
