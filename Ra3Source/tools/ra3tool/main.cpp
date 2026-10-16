@@ -552,6 +552,26 @@ struct TypedWalk {
                 }
                 break;
             }
+            case ra3::asset::FieldKind::EnumFlags: {
+                const auto value = static_cast<std::uint32_t>(
+                    readUnsigned(instance, offset, field.size));
+                const auto* info =
+                    ra3::asset::findGeneratedEnum(field.elementType);
+                std::uint32_t allowed = 0;
+                if (info != nullptr) {
+                    for (std::size_t valueIndex = 0;
+                         valueIndex < info->valueCount; ++valueIndex) {
+                        const std::uint32_t enumValue =
+                            info->values[valueIndex].value;
+                        if (enumValue < 32) allowed |= 1u << enumValue;
+                    }
+                }
+                if ((value & ~allowed) != 0) {
+                    error(fieldPath, "flags contain undeclared bits " +
+                                         hex32(value & ~allowed));
+                }
+                break;
+            }
             case ra3::asset::FieldKind::String: {
                 ra3::asset::CompiledString value;
                 std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
@@ -585,11 +605,33 @@ struct TypedWalk {
                 break;
             }
             case ra3::asset::FieldKind::Struct: {
-                const auto* child = ra3::asset::findGeneratedType(field.elementType);
+                const auto* child =
+                    ra3::asset::findGeneratedTypeByIndex(field.childTypeIndex);
                 if (child == nullptr) {
                     error(fieldPath, "missing reflected struct type");
                 } else {
                     walk(*child, offset, fieldPath);
+                }
+                break;
+            }
+            case ra3::asset::FieldKind::PointerStruct: {
+                ra3::asset::CompiledPointer<> value;
+                std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+                const auto* child =
+                    ra3::asset::findGeneratedTypeByIndex(field.childTypeIndex);
+                if (child == nullptr) {
+                    error(fieldPath, "missing reflected pointer target type");
+                    break;
+                }
+                auto resolved = ra3::asset::resolvePointer(
+                    instance, value.offset, offset, child->size);
+                if (!resolved) {
+                    error(fieldPath, resolved.error().message);
+                    break;
+                }
+                if (value.offset != 0) {
+                    relocations.insert(offset);
+                    walk(*child, value.offset, fieldPath);
                 }
                 break;
             }
@@ -604,7 +646,8 @@ struct TypedWalk {
                     break;
                 }
                 if (value.offset != 0) relocations.insert(offset + 4);
-                const auto* child = ra3::asset::findGeneratedType(field.elementType);
+                const auto* child =
+                    ra3::asset::findGeneratedTypeByIndex(field.childTypeIndex);
                 const auto* enumeration =
                     ra3::asset::findGeneratedEnum(field.elementType);
                 for (std::uint32_t item = 0; item < value.count; ++item) {
@@ -625,6 +668,43 @@ struct TypedWalk {
                                                 " is not declared");
                         }
                     }
+                }
+                break;
+            }
+            case ra3::asset::FieldKind::PolymorphicPointer: {
+                ra3::asset::PolymorphicPointer value;
+                std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+                auto resolved = ra3::asset::resolve(
+                    instance, value, offset, field);
+                if (!resolved) {
+                    error(fieldPath, resolved.error().message);
+                    break;
+                }
+                if (resolved.value()) {
+                    relocations.insert(offset);
+                    walk(
+                        *resolved.value()->type,
+                        resolved.value()->offset, fieldPath);
+                }
+                break;
+            }
+            case ra3::asset::FieldKind::PolymorphicList: {
+                ra3::asset::PolymorphicList value;
+                std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+                auto resolved = ra3::asset::resolve(
+                    instance, value, offset, field);
+                if (!resolved) {
+                    error(fieldPath, resolved.error().message);
+                    break;
+                }
+                if (value.offset != 0) relocations.insert(offset + 4);
+                for (std::size_t item = 0; item < resolved.value().size(); ++item) {
+                    relocations.insert(
+                        value.offset + static_cast<std::uint32_t>(item) * 4);
+                    const auto& view = resolved.value()[item];
+                    walk(
+                        *view.type, view.offset,
+                        fieldPath + "[" + std::to_string(item) + "]");
                 }
                 break;
             }
@@ -663,6 +743,29 @@ std::string enumName(std::string_view type, std::uint32_t value)
         }
     }
     return std::to_string(value);
+}
+
+std::string enumFlagsName(std::string_view type, std::uint32_t value)
+{
+    const auto* info = ra3::asset::findGeneratedEnum(type);
+    if (info == nullptr || value == 0) return std::to_string(value);
+    std::string result;
+    std::uint32_t remaining = value;
+    for (std::size_t index = 0; index < info->valueCount; ++index) {
+        const std::uint32_t enumValue = info->values[index].value;
+        if (enumValue >= 32) continue;
+        const std::uint32_t flag = 1u << enumValue;
+        if (flag != 0 && (remaining & flag) == flag) {
+            if (!result.empty()) result += "|";
+            result += info->values[index].name;
+            remaining &= ~flag;
+        }
+    }
+    if (remaining != 0) {
+        if (!result.empty()) result += "|";
+        result += hex32(remaining);
+    }
+    return result.empty() ? std::to_string(value) : result;
 }
 
 void dumpTyped(
@@ -725,11 +828,30 @@ void dumpTyped(
         }
         case ra3::asset::FieldKind::Struct: {
             std::cout << "{\n";
-            const auto* child = ra3::asset::findGeneratedType(field.elementType);
+            const auto* child =
+                ra3::asset::findGeneratedTypeByIndex(field.childTypeIndex);
             if (child != nullptr) {
                 dumpTyped(instance, *child, offset, manifest, assetNames, indent + 2);
             }
             std::cout << spaces << "}\n";
+            break;
+        }
+        case ra3::asset::FieldKind::PointerStruct: {
+            ra3::asset::CompiledPointer<> value;
+            std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+            const auto* child =
+                ra3::asset::findGeneratedTypeByIndex(field.childTypeIndex);
+            if (value.offset == 0) {
+                std::cout << "null\n";
+            } else if (child == nullptr) {
+                std::cout << "<missing reflected pointer target>\n";
+            } else {
+                std::cout << "{\n";
+                dumpTyped(
+                    instance, *child, value.offset, manifest, assetNames,
+                    indent + 2);
+                std::cout << spaces << "}\n";
+            }
             break;
         }
         case ra3::asset::FieldKind::List:
@@ -737,7 +859,8 @@ void dumpTyped(
             ra3::asset::CompiledList<> value;
             std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
             std::cout << "[" << value.count << "]\n";
-            const auto* child = ra3::asset::findGeneratedType(field.elementType);
+            const auto* child =
+                ra3::asset::findGeneratedTypeByIndex(field.childTypeIndex);
             for (std::uint32_t item = 0; item < value.count; ++item) {
                 const auto itemOffset = value.offset + item * field.elementSize;
                 std::cout << spaces << "  [" << item << "] ";
@@ -754,10 +877,53 @@ void dumpTyped(
             }
             break;
         }
+        case ra3::asset::FieldKind::PolymorphicPointer: {
+            ra3::asset::PolymorphicPointer value;
+            std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+            auto resolved = ra3::asset::resolve(instance, value, offset, field);
+            if (!resolved) {
+                std::cout << "<" << resolved.error().message << ">\n";
+            } else if (!resolved.value()) {
+                std::cout << "null\n";
+            } else {
+                std::cout << resolved.value()->type->name << " {\n";
+                dumpTyped(
+                    instance, *resolved.value()->type, resolved.value()->offset,
+                    manifest, assetNames, indent + 2);
+                std::cout << spaces << "}\n";
+            }
+            break;
+        }
+        case ra3::asset::FieldKind::PolymorphicList: {
+            ra3::asset::PolymorphicList value;
+            std::memcpy(&value, instance.bytes().data + offset, sizeof(value));
+            auto resolved = ra3::asset::resolve(instance, value, offset, field);
+            if (!resolved) {
+                std::cout << "<" << resolved.error().message << ">\n";
+                break;
+            }
+            std::cout << "[" << resolved.value().size() << "]\n";
+            for (std::size_t item = 0; item < resolved.value().size(); ++item) {
+                const auto& view = resolved.value()[item];
+                std::cout << spaces << "  [" << item << "] "
+                          << view.type->name << " {\n";
+                dumpTyped(
+                    instance, *view.type, view.offset, manifest, assetNames,
+                    indent + 4);
+                std::cout << spaces << "  }\n";
+            }
+            break;
+        }
         case ra3::asset::FieldKind::Enum: {
             const auto raw = static_cast<std::uint32_t>(
                 readUnsigned(instance, offset, field.size));
             std::cout << enumName(field.elementType, raw) << "\n";
+            break;
+        }
+        case ra3::asset::FieldKind::EnumFlags: {
+            const auto raw = static_cast<std::uint32_t>(
+                readUnsigned(instance, offset, field.size));
+            std::cout << enumFlagsName(field.elementType, raw) << "\n";
             break;
         }
         case ra3::asset::FieldKind::Blob: {
@@ -767,8 +933,25 @@ void dumpTyped(
                       << ">\n";
             break;
         }
+        case ra3::asset::FieldKind::Token:
+            std::cout << hex32(static_cast<std::uint32_t>(
+                             readUnsigned(instance, offset, field.size)))
+                      << "\n";
+            break;
+        case ra3::asset::FieldKind::Float: {
+            const std::uint32_t raw = static_cast<std::uint32_t>(
+                readUnsigned(instance, offset, field.size));
+            float value = 0.0F;
+            std::memcpy(&value, &raw, sizeof(value));
+            std::cout << value;
+            if (!field.unit.empty()) std::cout << " " << field.unit;
+            std::cout << "\n";
+            break;
+        }
         default:
-            std::cout << readUnsigned(instance, offset, field.size) << "\n";
+            std::cout << readUnsigned(instance, offset, field.size);
+            if (!field.unit.empty()) std::cout << " " << field.unit;
+            std::cout << "\n";
             break;
         }
     }

@@ -68,6 +68,10 @@ sizeof = 20
 
 第二轮又证实了以下编译转换：
 
+- 通用 attribute-first 规则有少量 runtime-wrapper 顺序例外：三种 texture/radar
+  image 的 `Rotated`、`W3DCollisionBox.JoypadPickingOnly` 和
+  `BuildSystemSettings.BuildabilityUsesStaticDecalSize` 位于后续内联/标量字段
+  之后；严格 bool 检查已对全部发行实例确认这些偏移。
 - `xas:tag` 的 `Angle/Percentage/Time/Duration/Velocity/StringHash/StickyString`
   虽以 XML 字符串为载体，落盘都是 4 字节运行时值；不能沿 `xs:string`
   restriction 推成字符串指针。

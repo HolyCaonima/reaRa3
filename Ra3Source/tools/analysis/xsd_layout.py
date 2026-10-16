@@ -184,6 +184,10 @@ class SchemaModel:
                 item.enum_values.append((value_name, next_value))
                 named_values[value_name] = next_value
                 next_value += 1
+            if item.name == "DamageFXType":
+                # Every shipped non-placeholder DamageFX starts its FXGroup list
+                # with an all-ones sentinel before the XSD-declared values.
+                item.enum_values.append(("Unset", 0xFFFFFFFF))
             item.is_ref |= restriction.get(XAS + "isRef") == "true"
             item.is_weak_ref |= restriction.get(XAS + "isWeakRef") == "true"
         elif listing is not None:
@@ -465,7 +469,8 @@ class SchemaModel:
                 fields.append(LayoutField(
                     f"base.{field_item.path}", offset + field_item.offset,
                     field_item.size, field_item.kind, field_item.type_name,
-                    field_item.child, field_item.item))
+                    field_item.child, field_item.item,
+                    field_item.alternatives))
             offset += base_layout.size
 
         index = 0
@@ -549,7 +554,30 @@ class SchemaModel:
                                           source.type_name))
                 offset += size
             index += 1
-        return Layout(name, align(offset), fields)
+        size = align(offset)
+        trailing_bools = {
+            "OnDemandTextureImage": "Rotated",
+            "PackedTextureImage": "Rotated",
+            "RadarTerrainImage": "Rotated",
+            "W3DCollisionBox": "JoypadPickingOnly",
+            "BuildSystemSettings": "BuildabilityUsesStaticDecalSize",
+        }
+        if root and name in trailing_bools:
+            # Shipped instances place these bools after later inline/scalar fields.
+            # Strict bool validation proved the generic attribute-first
+            # offsets instead read dimensions/float bits in every non-placeholder
+            # instance of these types.
+            trailing_name = trailing_bools[name]
+            trailing = next(field_item for field_item in fields
+                            if field_item.path == trailing_name)
+            old_offset = trailing.offset
+            for field_item in fields:
+                if field_item.offset > old_offset:
+                    field_item.offset -= trailing.size
+            trailing.offset = size - trailing.size
+            fields.remove(trailing)
+            fields.append(trailing)
+        return Layout(name, size, fields)
 
 
 @dataclass

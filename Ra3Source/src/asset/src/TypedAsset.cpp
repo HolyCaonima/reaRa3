@@ -27,6 +27,42 @@ Result<ByteView> resolveRange(
     return ByteView{bytes.data + offset, static_cast<std::size_t>(size)};
 }
 
+std::uint32_t readLittleU32(const std::uint8_t* data)
+{
+    return static_cast<std::uint32_t>(data[0]) |
+           (static_cast<std::uint32_t>(data[1]) << 8) |
+           (static_cast<std::uint32_t>(data[2]) << 16) |
+           (static_cast<std::uint32_t>(data[3]) << 24);
+}
+
+Result<PolymorphicView> resolvePolymorphicTarget(
+    const AssetInstance& instance,
+    std::uint32_t target,
+    const FieldInfo& field)
+{
+    if (target > instance.bytes().size ||
+        instance.bytes().size - target < sizeof(std::uint32_t)) {
+        return makeError("polymorphic target token is outside the asset instance");
+    }
+    const std::uint32_t token = readLittleU32(instance.bytes().data + target);
+    for (std::size_t index = 0; index < field.alternativeCount; ++index) {
+        const AlternativeInfo& alternative = field.alternatives[index];
+        if (alternative.typeId == token) {
+            const TypeInfo* type = findGeneratedTypeByIndex(alternative.typeIndex);
+            if (type == nullptr) {
+                return makeError("polymorphic alternative has no generated type");
+            }
+            if (target > instance.bytes().size ||
+                type->size > instance.bytes().size - target) {
+                return makeError("polymorphic object is outside the asset instance");
+            }
+            return PolymorphicView{type, target};
+        }
+    }
+    return makeError(
+        "unknown polymorphic type token " + std::to_string(token));
+}
+
 }  // namespace
 
 Result<std::string_view> resolve(
@@ -92,6 +128,60 @@ Result<std::optional<AssetId>> resolve(
     return std::optional<AssetId>(imported->target);
 }
 
+Result<std::optional<ByteView>> resolvePointer(
+    const AssetInstance& instance,
+    std::uint32_t offset,
+    std::uint32_t site,
+    std::uint32_t minimumSize)
+{
+    if (offset == 0) return std::optional<ByteView>{};
+    auto bytes = resolveRange(instance, offset, minimumSize, site);
+    if (!bytes) return bytes.error();
+    return std::optional<ByteView>(bytes.value());
+}
+
+Result<std::optional<PolymorphicView>> resolve(
+    const AssetInstance& instance,
+    const PolymorphicPointer& value,
+    std::uint32_t site,
+    const FieldInfo& field)
+{
+    auto target = resolvePointer(instance, value.offset, site, 4);
+    if (!target) return target.error();
+    if (!target.value()) return std::optional<PolymorphicView>{};
+    auto view = resolvePolymorphicTarget(instance, value.offset, field);
+    if (!view) return view.error();
+    return std::optional<PolymorphicView>(view.value());
+}
+
+Result<std::vector<PolymorphicView>> resolve(
+    const AssetInstance& instance,
+    const PolymorphicList& value,
+    std::uint32_t site,
+    const FieldInfo& field)
+{
+    auto pointers = resolveRange(
+        instance, value.offset, static_cast<std::uint64_t>(value.count) * 4,
+        site + 4);
+    if (!pointers) return pointers.error();
+    std::vector<PolymorphicView> result;
+    result.reserve(value.count);
+    for (std::uint32_t index = 0; index < value.count; ++index) {
+        const std::uint32_t pointerSite = value.offset + index * 4;
+        const std::uint32_t target =
+            readLittleU32(pointers.value().data + static_cast<std::size_t>(index) * 4);
+        auto targetBytes = resolvePointer(instance, target, pointerSite, 4);
+        if (!targetBytes) return targetBytes.error();
+        if (!targetBytes.value()) {
+            return makeError("polymorphic list contains a null object pointer");
+        }
+        auto view = resolvePolymorphicTarget(instance, target, field);
+        if (!view) return view.error();
+        result.push_back(view.value());
+    }
+    return result;
+}
+
 const TypeInfo* findGeneratedType(std::uint32_t typeId)
 {
     for (const TypeInfo& type : generated::kTypes) {
@@ -106,6 +196,13 @@ const TypeInfo* findGeneratedType(std::string_view name)
         if (type.name == name) return &type;
     }
     return nullptr;
+}
+
+const TypeInfo* findGeneratedTypeByIndex(std::uint32_t index)
+{
+    return index < generated::kAllTypes.size() ?
+               &generated::kAllTypes[index] :
+               nullptr;
 }
 
 const EnumInfo* findGeneratedEnum(std::string_view name)

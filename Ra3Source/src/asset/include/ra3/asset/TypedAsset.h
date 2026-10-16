@@ -9,10 +9,15 @@
 #include <optional>
 #include <string_view>
 #include <type_traits>
+#include <vector>
 
 namespace ra3::asset {
 
 struct RuntimeToken {
+    std::uint32_t raw = 0;
+};
+
+struct AssetToken {
     std::uint32_t raw = 0;
 };
 
@@ -40,20 +45,39 @@ struct AssetReference {
     std::uint32_t index = 0;
 };
 
+template <typename T = void>
+struct CompiledPointer {
+    std::uint32_t offset = 0;
+};
+
+struct PolymorphicPointer {
+    std::uint32_t offset = 0;
+};
+
+struct PolymorphicList {
+    std::uint32_t count = 0;
+    std::uint32_t offset = 0;
+};
+
 enum class FieldKind : std::uint8_t {
     RuntimeToken,
+    Token,
     Unsigned,
     Signed,
     Float,
     Boolean,
     Enum,
+    EnumFlags,
     String,
     FileReference,
     Blob,
     AssetReference,
     Struct,
+    PointerStruct,
     List,
     SimpleList,
+    PolymorphicPointer,
+    PolymorphicList,
 };
 
 struct EnumValueInfo {
@@ -67,6 +91,12 @@ struct EnumInfo {
     std::size_t valueCount = 0;
 };
 
+struct AlternativeInfo {
+    std::string_view name;
+    std::uint32_t typeId = 0;
+    std::uint32_t typeIndex = 0;
+};
+
 struct FieldInfo {
     std::string_view name;
     std::uint32_t offset = 0;
@@ -74,6 +104,10 @@ struct FieldInfo {
     FieldKind kind = FieldKind::Unsigned;
     std::string_view elementType;
     std::uint32_t elementSize = 0;
+    std::string_view unit;
+    std::uint32_t childTypeIndex = 0xFFFFFFFFu;
+    const AlternativeInfo* alternatives = nullptr;
+    std::size_t alternativeCount = 0;
 };
 
 struct TypeInfo {
@@ -82,6 +116,11 @@ struct TypeInfo {
     std::uint32_t size = 0;
     const FieldInfo* fields = nullptr;
     std::size_t fieldCount = 0;
+};
+
+struct PolymorphicView {
+    const TypeInfo* type = nullptr;
+    std::uint32_t offset = 0;
 };
 
 template <typename T>
@@ -131,9 +170,36 @@ Result<ByteView> resolveList(
     std::uint32_t site);
 Result<std::optional<AssetId>> resolve(
     const AssetInstance& instance, const AssetReference& value, std::uint32_t site);
+Result<std::optional<ByteView>> resolvePointer(
+    const AssetInstance& instance,
+    std::uint32_t offset,
+    std::uint32_t site,
+    std::uint32_t minimumSize);
+
+template <typename T>
+Result<std::optional<ByteView>> resolve(
+    const AssetInstance& instance,
+    const CompiledPointer<T>& value,
+    std::uint32_t site)
+{
+    return resolvePointer(
+        instance, value.offset, site, static_cast<std::uint32_t>(sizeof(T)));
+}
+
+Result<std::optional<PolymorphicView>> resolve(
+    const AssetInstance& instance,
+    const PolymorphicPointer& value,
+    std::uint32_t site,
+    const FieldInfo& field);
+Result<std::vector<PolymorphicView>> resolve(
+    const AssetInstance& instance,
+    const PolymorphicList& value,
+    std::uint32_t site,
+    const FieldInfo& field);
 
 const TypeInfo* findGeneratedType(std::uint32_t typeId);
 const TypeInfo* findGeneratedType(std::string_view name);
+const TypeInfo* findGeneratedTypeByIndex(std::uint32_t index);
 const EnumInfo* findGeneratedEnum(std::string_view name);
 const TypeInfo* generatedTypesBegin();
 std::size_t generatedTypeCount();

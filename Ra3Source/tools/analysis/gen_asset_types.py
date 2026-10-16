@@ -8,6 +8,7 @@ import keyword
 import re
 from pathlib import Path
 
+from asset_name_hash import type_id
 from xsd_layout import Layout, LayoutField, SchemaModel
 
 
@@ -61,26 +62,51 @@ def validated_roots(path: Path) -> list[tuple[int, str]]:
     return sorted(result, key=lambda item: item[1])
 
 
+def model_type_tag(model: SchemaModel, name: str) -> str:
+    seen: set[str] = set()
+    while name and name not in seen:
+        seen.add(name)
+        item = model.types.get(name)
+        if item is None:
+            return ""
+        if item.tag:
+            return item.tag
+        name = item.base
+    return ""
+
+
 def field_kind(model: SchemaModel, item: LayoutField) -> str:
     if item.kind == "scalar":
+        target = model.types.get(item.type_name)
+        if target is not None and target.list_item:
+            listed = model.types.get(target.list_item)
+            if listed is not None and listed.enum:
+                return "EnumFlags"
         if item.type_name in ("boolean", "SageBool"):
             return "Boolean"
-        if item.type_name in ("float", "SageReal"):
+        if (item.type_name in ("float", "SageReal") or
+                model_type_tag(model, item.type_name) in (
+                    "AngleTag", "PercentageTag",
+                    "PositiveNonZeroRealTag", "VelocityTag")):
             return "Float"
         if item.type_name in ("byte", "short", "int", "integer", "SageInt"):
             return "Signed"
         return "Unsigned"
     return {
         "scalar64": "Unsigned",
+        "token": "Token",
         "enum": "Enum",
         "string": "String",
         "cstring": "FileReference",
         "blob": "Blob",
         "reference": "AssetReference",
         "struct": "Struct",
+        "pointer-struct": "PointerStruct",
         "list": "List",
         "list-simple": "SimpleList",
-    }.get(item.kind, "Unsigned")
+        "polymorphic-pointer": "PolymorphicPointer",
+        "polymorphic-list": "PolymorphicList",
+    }[item.kind]
 
 
 class Generator:
@@ -94,32 +120,11 @@ class Generator:
         for _, name in roots:
             self.cpp_names[(True, name)] = unique_identifier(name, used)
         for _, name in roots:
-            layout = model.layout(name, True)
-            self._apply_verified_runtime_order(layout)
-            self._collect(layout, True)
+            self._collect(model.layout(name, True), True)
         for key in sorted(self.layouts, key=lambda value: (not value[0], value[1])):
             if key not in self.cpp_names:
                 suffix = "Value" if not key[0] else ""
                 self.cpp_names[key] = unique_identifier(key[1] + suffix, used)
-
-    @staticmethod
-    def _apply_verified_runtime_order(layout: Layout) -> None:
-        trailing_bool = {
-            "OnDemandTextureImage": "Rotated",
-            "PackedTextureImage": "Rotated",
-            "RadarTerrainImage": "Rotated",
-            "W3DCollisionBox": "JoypadPickingOnly",
-        }.get(layout.name)
-        if trailing_bool is None:
-            return
-        field = next(item for item in layout.fields if item.path == trailing_bool)
-        old_offset = field.offset
-        for item in layout.fields:
-            if item.offset > old_offset:
-                item.offset -= field.size
-        field.offset = layout.size - field.size
-        layout.fields.remove(field)
-        layout.fields.append(field)
 
     def _collect(self, layout: Layout, root: bool) -> None:
         key = (root, layout.name)
@@ -130,21 +135,41 @@ class Generator:
             type_def = self.model.types.get(item.type_name)
             if item.kind == "enum":
                 self.enums.add(item.type_name)
+            elif item.kind == "scalar" and type_def is not None and type_def.list_item:
+                listed = self.model.types.get(type_def.list_item)
+                if listed is not None and listed.enum:
+                    self.enums.add(type_def.list_item)
             elif item.kind == "list-simple" and type_def is not None:
                 listed = self.model.types.get(type_def.list_item)
                 if listed is not None and listed.enum:
                     self.enums.add(type_def.list_item)
-            if item.kind == "struct" and item.child is not None:
+            if item.kind in ("struct", "pointer-struct") and item.child is not None:
                 self._collect(item.child, False)
             if item.kind == "list" and item.item is not None:
                 if type_def is not None and type_def.enum:
                     self.enums.add(item.type_name)
                 self._collect(item.item, False)
+            for alternative in item.alternatives:
+                self._collect(alternative, False)
 
     def enum_name(self, name: str) -> str:
         return identifier(name)
 
+    def type_tag(self, name: str) -> str:
+        return model_type_tag(self.model, name)
+
+    def unit(self, item: LayoutField) -> str:
+        return {
+            "AngleTag": "radians",
+            "PercentageTag": "ratio",
+            "TimeTag": "milliseconds",
+            "DurationTag": "milliseconds",
+            "VelocityTag": "velocity",
+        }.get(self.type_tag(item.type_name), "")
+
     def cpp_type(self, item: LayoutField) -> str:
+        if item.kind == "token":
+            return "AssetToken"
         if item.kind == "string":
             return "CompiledString"
         if item.kind == "cstring":
@@ -157,6 +182,13 @@ class Generator:
             return self.enum_name(item.type_name)
         if item.kind == "struct":
             return self.cpp_names[(False, item.child.name)]
+        if item.kind == "pointer-struct":
+            child = self.cpp_names[(False, item.child.name)]
+            return f"CompiledPointer<{child}>"
+        if item.kind == "polymorphic-pointer":
+            return "PolymorphicPointer"
+        if item.kind == "polymorphic-list":
+            return "PolymorphicList"
         if item.kind in ("list", "list-simple"):
             element = "std::uint8_t"
             if item.kind == "list" and item.item is not None:
@@ -170,7 +202,11 @@ class Generator:
                 elif target is not None:
                     element = "std::uint32_t"
             return f"CompiledList<{element}>"
-        if item.kind == "scalar" and item.type_name in ("float", "SageReal"):
+        if item.kind == "scalar" and (
+                item.type_name in ("float", "SageReal") or
+                self.type_tag(item.type_name) in (
+                    "AngleTag", "PercentageTag",
+                    "PositiveNonZeroRealTag", "VelocityTag")):
             return "float"
         if item.kind == "scalar64" and item.type_name in ("double",):
             return "double"
@@ -178,7 +214,7 @@ class Generator:
         return ("std::int" if signed else "std::uint") + str(item.size * 8) + "_t"
 
     def element_info(self, item: LayoutField) -> tuple[str, int]:
-        if item.kind == "struct" and item.child is not None:
+        if item.kind in ("struct", "pointer-struct") and item.child is not None:
             return item.child.name, item.child.size
         if item.kind == "list" and item.item is not None:
             return item.item.name, item.item.size
@@ -188,6 +224,12 @@ class Generator:
             return name, 4
         if item.kind == "enum":
             return item.type_name, item.size
+        if item.kind == "scalar":
+            target = self.model.types.get(item.type_name)
+            if target is not None and target.list_item:
+                listed = self.model.types.get(target.list_item)
+                if listed is not None and listed.enum:
+                    return target.list_item, item.size
         return item.type_name, item.size
 
     def ordered_structs(self) -> list[tuple[tuple[bool, str], Layout]]:
@@ -200,12 +242,14 @@ class Generator:
             visited.add(key)
             layout = self.layouts[key]
             for item in layout.fields:
-                if item.kind == "struct" and item.child is not None:
+                if item.kind in ("struct", "pointer-struct") and item.child is not None:
                     visit((False, item.child.name))
                 if item.kind == "list" and item.item is not None:
                     child_key = (False, item.item.name)
                     if child_key in self.layouts:
                         visit(child_key)
+                for alternative in item.alternatives:
+                    visit((False, alternative.name))
             result.append((key, layout))
 
         for _, name in self.roots:
@@ -292,11 +336,11 @@ class Generator:
         lines.extend(["#pragma pack(pop)", "", "}  // namespace ra3::asset::types", ""])
 
         lines.append("namespace ra3::asset {")
-        for type_id, name in self.roots:
+        for root_type_id, name in self.roots:
             cpp = self.cpp_names[(True, name)]
             lines.extend([
                 f"template <> struct AssetTypeTraits<types::{cpp}> {{",
-                f"    static constexpr std::uint32_t typeId = 0x{type_id:08X}u;",
+                f"    static constexpr std::uint32_t typeId = 0x{root_type_id:08X}u;",
                 f'    static constexpr std::string_view name = "{name}";',
                 "};",
             ])
@@ -313,8 +357,32 @@ class Generator:
                 lines.append(f'    {{"{escaped}", 0x{value & 0xFFFFFFFF:08X}u}},')
             lines.extend(["}};", ""])
 
+        ordered = self.ordered_structs()
+        ordered_indexes = {
+            key: index for index, (key, _) in enumerate(ordered)
+        }
+        alternative_names: dict[tuple[int, int], str] = {}
+        for type_index, (_, layout) in enumerate(ordered):
+            for field_index, field_item in enumerate(layout.fields):
+                if not field_item.alternatives:
+                    continue
+                array_name = (
+                    f"kAlternatives_{type_index}_{field_index}_"
+                    f"{identifier(layout.name)}")
+                alternative_names[(type_index, field_index)] = array_name
+                lines.append(
+                    f"inline constexpr std::array<AlternativeInfo, "
+                    f"{len(field_item.alternatives)}> {array_name} = {{{{")
+                for alternative in field_item.alternatives:
+                    alternative_index = ordered_indexes[(False, alternative.name)]
+                    lines.append(
+                        f'    {{"{alternative.name}", '
+                        f"0x{type_id(alternative.name):08X}u, "
+                        f"{alternative_index}u}},")
+                lines.extend(["}};", ""])
+
         metadata_names: dict[tuple[bool, str], str] = {}
-        for index, (key, layout) in enumerate(self.ordered_structs()):
+        for index, (key, layout) in enumerate(ordered):
             array_name = f"kFields_{index}_{identifier(layout.name)}"
             metadata_names[key] = array_name
             count = len(layout.fields) + (1 if key[0] else 0)
@@ -322,26 +390,37 @@ class Generator:
                 f"inline constexpr std::array<FieldInfo, {count}> {array_name} = {{{{")
             if key[0]:
                 lines.append(
-                    '    {"$runtimeType", 0, 4, FieldKind::RuntimeToken, "", 4},')
-            for field_item in layout.fields:
+                    '    {"$runtimeType", 0, 4, FieldKind::RuntimeToken, "", 4, '
+                    '"", 0xFFFFFFFFu, nullptr, 0},')
+            for field_index, field_item in enumerate(layout.fields):
                 element_name, element_size = self.element_info(field_item)
                 escaped_name = field_item.path.replace("\\", "\\\\").replace('"', '\\"')
                 escaped_type = element_name.replace("\\", "\\\\").replace('"', '\\"')
+                child_index = 0xFFFFFFFF
+                if field_item.kind in ("struct", "pointer-struct"):
+                    child_index = ordered_indexes[(False, field_item.child.name)]
+                elif field_item.kind == "list" and field_item.item is not None:
+                    child_index = ordered_indexes[(False, field_item.item.name)]
+                alternatives = alternative_names.get((index, field_index))
+                alternative_data = (
+                    f"{alternatives}.data()" if alternatives else "nullptr")
+                alternative_count = (
+                    f"{alternatives}.size()" if alternatives else "0")
+                escaped_unit = self.unit(field_item).replace('"', '\\"')
                 lines.append(
                     f'    {{"{escaped_name}", {field_item.offset}, {field_item.size}, '
                     f'FieldKind::{field_kind(self.model, field_item)}, '
-                    f'"{escaped_type}", {element_size}}},')
+                    f'"{escaped_type}", {element_size}, "{escaped_unit}", '
+                    f"0x{child_index:08X}u, {alternative_data}, "
+                    f"{alternative_count}}},")
             lines.extend(["}};", ""])
 
-        ordered = self.ordered_structs()
-        root_ids = {name: type_id for type_id, name in self.roots}
         lines.append(
             f"inline constexpr std::array<TypeInfo, {len(ordered)}> kAllTypes = {{{{")
         for key, layout in ordered:
-            type_id = root_ids.get(layout.name, 0) if key[0] else 0
             array_name = metadata_names[key]
             lines.append(
-                f'    {{"{layout.name}", 0x{type_id:08X}u, {layout.size}, '
+                f'    {{"{layout.name}", 0x{type_id(layout.name):08X}u, {layout.size}, '
                 f"{array_name}.data(), {array_name}.size()}},")
         lines.extend(["}};", ""])
 
