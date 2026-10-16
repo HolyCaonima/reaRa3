@@ -310,7 +310,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0040a2bd	FUN_0040a2bd	.text	11		clean	unknown		unanalyzed	
 0040a2d0	thunk_FUN_0197c580	.text	6		entry-lost	unknown		unanalyzed	
 0040a340	thunk_FUN_01980990	.text	6		entry-lost	unknown		unanalyzed	
-0040a390	FUN_0040a390	.text	44		clean	unknown		unanalyzed	
+0040a390	FUN_0040a390	.text	44		clean	unknown	recon/hookcat	reversed	hook candidate: 按正/负索引访问 16 字节环形/分段记录
 0040a3c0	FUN_0040a3c0	.text	23		clean	unknown		unanalyzed	
 0040a3e0	thunk_FUN_01978370	.text	6		entry-lost	unknown		unanalyzed	
 0040a440	thunk_FUN_0197c550	.text	6		entry-lost	unknown		unanalyzed	
@@ -618,8 +618,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00417000	FUN_00417000	.text	53		clean	unknown		unanalyzed	
 00417040	FUN_00417040	.text	22		clean	unknown		unanalyzed	
 00417060	thunk_FUN_01954420	.text	6		entry-lost	unknown		unanalyzed	
-00417070	FUN_00417070	.text	16		clean	unknown		unanalyzed	
-00417080	FUN_00417080	.text	19		clean	unknown		unanalyzed	
+00417070	FUN_00417070	.text	16		clean	unknown	recon/hookcat	reversed	hook candidate: 清零两个相邻指针/字段
+00417080	FUN_00417080	.text	19		clean	unknown	recon/hookcat	reversed	hook candidate: 复制两个相邻 32 位字段
 004170a0	FUN_004170a0	.text	17		clean	unknown		unanalyzed	
 004170c0	FUN_004170c0	.text	17		clean	unknown		unanalyzed	
 00417130	FUN_00417130	.text	43		clean	unknown		unanalyzed	
@@ -2199,7 +2199,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004c9e50	FUN_004c9e50	.text	6		clean	unknown		unanalyzed	
 004c9e60	thunk_FUN_019754a0	.text	6		entry-lost	unknown		unanalyzed	
 004c9e80	thunk_FUN_01979eb0	.text	6		entry-lost	unknown		unanalyzed	
-004c9ea0	FUN_004c9ea0	.text	146		clean	unknown		unanalyzed	
+004c9ea0	FUN_004c9ea0	.text	146		clean	unknown	recon/hookcat	reversed	hook candidate: 定长字节序列三路比较（-1/0/1）
 004c9f80	thunk_FUN_01982b40	.text	6		entry-lost	unknown		unanalyzed	
 004c9fe0	thunk_FUN_028b0000	.text	6		entry-lost	unknown		unanalyzed	
 004ca010	FUN_004ca010	.text	31		clean	unknown		unanalyzed	
@@ -2256,7 +2256,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004cb280	thunk_FUN_0197e460	.text	6		entry-lost	unknown		unanalyzed	
 004cb2a0	FUN_004cb2a0	.text	246	Libraries\Source\string\UnicodeString.cpp	clean	core		unanalyzed	
 004cb3a0	FUN_004cb3a0	.text	90		clean	unknown		unanalyzed	
-004cb400	FUN_004cb400	.text	85		clean	unknown		unanalyzed	
+004cb400	FUN_004cb400	.text	85		clean	unknown	recon/hookcat	reversed	hook candidate: 比较两个带 16 位长度前缀的字节串
 004cb460	thunk_FUN_019830e0	.text	6		entry-lost	unknown		unanalyzed	
 004cb4c0	thunk_FUN_01975ab0	.text	6		entry-lost	unknown		unanalyzed	
 004cb520	thunk_FUN_01975a90	.text	6		entry-lost	unknown		unanalyzed	
@@ -2439,7 +2439,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004d27d0	thunk_FUN_019531c0	.text	6		entry-recoverable	unknown		unanalyzed	
 004d2960	FUN_004d2960	.text	76		clean	unknown		unanalyzed	
 004d29b0	thunk_FUN_0197a8b0	.text	6		entry-lost	unknown		unanalyzed	
-004d29d0	FUN_004d29d0	.text	21		clean	unknown		unanalyzed	
+004d29d0	FUN_004d29d0	.text	21		clean	unknown	recon/hookcat	reversed	hook candidate: 从双向链表摘除节点并把节点重置为自环
 004d29f0	FUN_004d29f0	.text	169		clean	unknown		unanalyzed	
 004d2aa0	FUN_004d2aa0	.text	48		clean	unknown		unanalyzed	
 004d2ad0	FUN_004d2ad0	.text	47		clean	unknown		unanalyzed	
@@ -2451,7 +2451,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004d2ece	MSVCR80.DLL::setjmp3	.text	6		clean	unknown		unanalyzed	
 004d2ed4	MSVCR80.DLL::strncpy	.text	6		clean	unknown		unanalyzed	
 004d2eda	MSVCR80.DLL::memcpy	.text	6		clean	unknown		unanalyzed	
-004d2ee0	FUN_004d2ee0	.text	28		clean	unknown		unanalyzed	
+004d2ee0	FUN_004d2ee0	.text	28		clean	unknown	recon/hookcat	reversed	hook candidate: x87 浮点到 64 位整数转换/舍入辅助函数
 004d2f16	FUN_004d2f16	.text	117		clean	unknown		unanalyzed	
 004d2f8c	MSVCR80.DLL::strchr	.text	6		clean	unknown		unanalyzed	
 004d2f92	MSVCR80.DLL::_vsnprintf	.text	6		clean	unknown		unanalyzed	
@@ -2741,7 +2741,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004d8f60	FUN_004d8f60	.text	243		clean	unknown		unanalyzed	
 004d90c0	thunk_FUN_01976470	.text	6		entry-lost	unknown		unanalyzed	
 004d90e0	thunk_FUN_0197aae0	.text	6		entry-recoverable	unknown		unanalyzed	
-004d9100	FUN_004d9100	.text	126		clean	unknown		unanalyzed	
+004d9100	FUN_004d9100	.text	126		clean	unknown	recon/hookcat	reversed	hook candidate: 三维 float 向量归一化
 004d9180	thunk_FUN_0197eb80	.text	6		entry-lost	unknown		unanalyzed	
 004d9230	FUN_004d9230	.text	68		clean	unknown		unanalyzed	
 004d9280	FUN_004d9280	.text	520		clean	unknown		unanalyzed	
@@ -3034,7 +3034,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004e407b	FUN_004e407b	.text	200		clean	unknown		unanalyzed	
 004e414a	FUN_004e414a	.text	12		clean	unknown		unanalyzed	
 004e4160	FUN_004e4160	.text	73		clean	unknown		unanalyzed	
-004e41b0	FUN_004e41b0	.text	66		clean	unknown		unanalyzed	
+004e41b0	FUN_004e41b0	.text	66		clean	unknown	recon/hookcat	reversed	hook candidate: 复制 8 字节元素区间并收缩容器尾指针
 004e4200	thunk_FUN_01de1000	.text	6		entry-lost	unknown		unanalyzed	
 004e4340	thunk_FUN_019846c0	.text	6		entry-lost	unknown		unanalyzed	
 004e4540	thunk_FUN_01d68000	.text	6		entry-lost	unknown		unanalyzed	
@@ -3735,7 +3735,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0050b500	FUN_0050b500	.text	75	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 0050b550	FUN_0050b550	.text	75	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 0050b5a0	FUN_0050b5a0	.text	71		clean	unknown		unanalyzed	
-0050b5f0	FUN_0050b5f0	.text	93		clean	unknown		unanalyzed	
+0050b5f0	FUN_0050b5f0	.text	93		clean	unknown	recon/hookcat	reversed	hook candidate: 哈希桶链查找：按 key 取模并返回节点/桶位置二元组
 0050b650	FUN_0050b650	.text	35		clean	unknown		unanalyzed	
 0050b680	FUN_0050b680	.text	85	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 0050b6e0	FUN_0050b6e0	.text	77		inner-patched	unknown		unanalyzed	
@@ -5023,7 +5023,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00548b80	FUN_00548b80	.text	31		clean	unknown		unanalyzed	
 00548ba0	FUN_00548ba0	.text	31		clean	unknown		unanalyzed	
 00548bc0	FUN_00548bc0	.text	28		clean	unknown		unanalyzed	
-00548be0	FUN_00548be0	.text	96		clean	unknown		unanalyzed	
+00548be0	FUN_00548be0	.text	96		clean	unknown	recon/hookcat	reversed	hook candidate: 二维边界检查后查找/计算网格元素地址
 00548c40	FUN_00548c40	.text	17		clean	unknown		unanalyzed	
 00548c60	FUN_00548c60	.text	22		clean	unknown		unanalyzed	
 00548c80	FUN_00548c80	.text	8		clean	unknown		unanalyzed	
@@ -6880,10 +6880,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005a9310	FUN_005a9310	.text	127		clean	unknown		unanalyzed	
 005a93b0	FUN_005a93b0	.text	188		clean	unknown		unanalyzed	
 005a9470	FUN_005a9470	.text	10		inner-patched	unknown		unanalyzed	
-005a94c0	FUN_005a94c0	.text	48		clean	unknown		unanalyzed	
+005a94c0	FUN_005a94c0	.text	48		clean	unknown	recon/hookcat	reversed	hook candidate: 生成闭区间 [min,max] 的伪随机整数
 005a94f0	FUN_005a94f0	.text	40		clean	unknown		unanalyzed	
 005a9520	FUN_005a9520	.text	40		clean	unknown		unanalyzed	
-005a9550	FUN_005a9550	.text	75		clean	unknown		unanalyzed	
+005a9550	FUN_005a9550	.text	75		clean	unknown	recon/hookcat	reversed	hook candidate: 生成区间内伪随机浮点数
 005a95a0	FUN_005a95a0	.text	75		clean	unknown		unanalyzed	
 005a95f0	FUN_005a95f0	.text	75		clean	unknown		unanalyzed	
 005a9640	FUN_005a9640	.text	31		clean	unknown		unanalyzed	
@@ -6907,7 +6907,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005a9ea0	FUN_005a9ea0	.text	9		inner-patched	unknown		unanalyzed	
 005a9f00	FUN_005a9f00	.text	73		clean	unknown		unanalyzed	
 005a9f50	FUN_005a9f50	.text	5		clean	unknown		unanalyzed	
-005a9f60	FUN_005a9f60	.text	43		clean	unknown		unanalyzed	
+005a9f60	FUN_005a9f60	.text	43		clean	unknown	recon/hookcat	reversed	hook candidate: 写虚表并以 999999/0 初始化对象字段
 005a9f90	FUN_005a9f90	.text	3		clean	unknown		unanalyzed	
 005a9fa0	FUN_005a9fa0	.text	55		clean	unknown		unanalyzed	
 005a9fe0	FUN_005a9fe0	.text	81		clean	unknown		unanalyzed	
@@ -7275,7 +7275,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005b6090	FUN_005b6090	.text	99		clean	unknown		unanalyzed	
 005b6100	FUN_005b6100	.text	8		clean	unknown		unanalyzed	
 005b6110	FUN_005b6110	.text	51		clean	unknown		unanalyzed	
-005b6150	FUN_005b6150	.text	173		clean	unknown		unanalyzed	
+005b6150	FUN_005b6150	.text	173		clean	unknown	recon/hookcat	reversed	hook candidate: 大型对象构造初始化（SSE 仅用于批量清零）
 005b6200	FUN_005b6200	.text	45		clean	unknown		unanalyzed	
 005b6230	FUN_005b6230	.text	16		clean	unknown		unanalyzed	
 005b6240	FUN_005b6240	.text	39		clean	unknown		unanalyzed	
@@ -7990,7 +7990,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005d5a90	FUN_005d5a90	.text	35		clean	unknown		unanalyzed	
 005d5ac0	FUN_005d5ac0	.text	9		clean	unknown		unanalyzed	
 005d5ad0	FUN_005d5ad0	.text	9		clean	unknown		unanalyzed	
-005d5ae0	FUN_005d5ae0	.text	28		clean	unknown		unanalyzed	
+005d5ae0	FUN_005d5ae0	.text	28		clean	unknown	recon/hookcat	reversed	hook candidate: 哨兵与范围检查后返回六元素数组槽
 005d5b00	FUN_005d5b00	.text	21		clean	unknown		unanalyzed	
 005d5b20	FUN_005d5b20	.text	10		clean	unknown		unanalyzed	
 005d5b30	FUN_005d5b30	.text	20		clean	unknown		unanalyzed	
@@ -11916,7 +11916,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00686e80	FUN_00686e80	.text	16		clean	unknown		unanalyzed	
 00686e90	FUN_00686e90	.text	18		clean	unknown		unanalyzed	
 00686eb0	FUN_00686eb0	.text	230		clean	unknown		unanalyzed	
-00686fa0	FUN_00686fa0	.text	7		clean	unknown		unanalyzed	
+00686fa0	FUN_00686fa0	.text	7		clean	unknown	recon/hookcat	reversed	hook candidate: 返回 this+0x418 字段
 00686fb0	FUN_00686fb0	.text	24		clean	unknown		unanalyzed	
 00686fd0	FUN_00686fd0	.text	34		clean	unknown		unanalyzed	
 00687000	FUN_00687000	.text	36		clean	unknown		unanalyzed	
@@ -11937,7 +11937,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00687320	FUN_00687320	.text	33		clean	unknown		unanalyzed	
 00687350	FUN_00687350	.text	42		clean	unknown		unanalyzed	
 00687380	FUN_00687380	.text	64		clean	unknown		unanalyzed	
-006873c0	FUN_006873c0	.text	7		clean	unknown		unanalyzed	
+006873c0	FUN_006873c0	.text	7		clean	unknown	recon/hookcat	reversed	hook candidate: 返回 this+0x454 字段
 00687430	FUN_00687430	.text	42		clean	unknown		unanalyzed	
 00687460	FUN_00687460	.text	65		clean	unknown		unanalyzed	
 006874b0	FUN_006874b0	.text	55		clean	unknown		unanalyzed	
@@ -11971,7 +11971,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00687c00	FUN_00687c00	.text	41		clean	unknown		unanalyzed	
 00687c30	FUN_00687c30	.text	44		clean	unknown		unanalyzed	
 00687c60	FUN_00687c60	.text	38		clean	unknown		unanalyzed	
-00687c90	FUN_00687c90	.text	31		clean	unknown		unanalyzed	
+00687c90	FUN_00687c90	.text	31		clean	unknown	recon/hookcat	reversed	hook candidate: 嵌套对象满足条件时调用其 +0xAC 字段相关辅助逻辑
 00687cb0	FUN_00687cb0	.text	7		clean	unknown		unanalyzed	
 00687cc0	FUN_00687cc0	.text	51		clean	unknown		unanalyzed	
 00687d00	FUN_00687d00	.text	80		clean	unknown		unanalyzed	
@@ -13125,7 +13125,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a4ed0	FUN_006a4ed0	.text	77		clean	unknown		unanalyzed	
 006a4f20	FUN_006a4f20	.text	55		clean	unknown		unanalyzed	
 006a4f60	FUN_006a4f60	.text	18		clean	unknown		unanalyzed	
-006a4f80	FUN_006a4f80	.text	42		clean	unknown		unanalyzed	
+006a4f80	FUN_006a4f80	.text	42		clean	unknown	recon/hookcat	reversed	hook candidate: 事件码为 0x16A 时按布尔参数派发 +1/-1
 006a4fb0	FUN_006a4fb0	.text	117		clean	unknown		unanalyzed	
 006a5030	FUN_006a5030	.text	36		clean	unknown		unanalyzed	
 006a5060	FUN_006a5060	.text	132		clean	unknown		unanalyzed	
@@ -13142,7 +13142,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a5370	FUN_006a5370	.text	129		clean	unknown		unanalyzed	
 006a5400	FUN_006a5400	.text	67		clean	unknown		unanalyzed	
 006a5450	FUN_006a5450	.text	114		clean	unknown		unanalyzed	
-006a54d0	FUN_006a54d0	.text	37		clean	unknown		unanalyzed	
+006a54d0	FUN_006a54d0	.text	37		clean	unknown	recon/hookcat	reversed	hook candidate: 从状态位或对象身份关系计算状态码
 006a5500	FUN_006a5500	.text	42		clean	unknown		unanalyzed	
 006a5530	FUN_006a5530	.text	93		clean	unknown		unanalyzed	
 006a5590	FUN_006a5590	.text	93		clean	unknown		unanalyzed	
@@ -13958,7 +13958,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c0be0	FUN_006c0be0	.text	106		clean	unknown		unanalyzed	
 006c0c50	FUN_006c0c50	.text	508		clean	unknown		unanalyzed	
 006c0e50	FUN_006c0e50	.text	125		clean	unknown		unanalyzed	
-006c0ed0	FUN_006c0ed0	.text	105		clean	unknown		unanalyzed	
+006c0ed0	FUN_006c0ed0	.text	105		clean	unknown	recon/hookcat	reversed	hook candidate: 组合多个状态位与辅助谓词计算布尔结果
 006c0f40	FUN_006c0f40	.text	159		clean	unknown		unanalyzed	
 006c0fe0	FUN_006c0fe0	.text	86		clean	unknown		unanalyzed	
 006c1040	FUN_006c1040	.text	104		clean	unknown		unanalyzed	
@@ -14026,7 +14026,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c3960	FUN_006c3960	.text	57		clean	unknown		unanalyzed	
 006c39a0	FUN_006c39a0	.text	18		clean	unknown		unanalyzed	
 006c39c0	FUN_006c39c0	.text	78		clean	unknown		unanalyzed	
-006c3a10	FUN_006c3a10	.text	70		clean	unknown		unanalyzed	
+006c3a10	FUN_006c3a10	.text	70		clean	unknown	recon/hookcat	reversed	hook candidate: 无符号键红黑树 lower_bound
 006c3a60	FUN_006c3a60	.text	105		inner-patched	unknown		unanalyzed	
 006c3ad0	FUN_006c3ad0	.text	435		clean	unknown		unanalyzed	
 006c3d40	FUN_006c3d40	.text	88	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
@@ -17274,7 +17274,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007885e0	FUN_007885e0	.text	15		clean	unknown		unanalyzed	
 007885f0	FUN_007885f0	.text	51		clean	unknown		unanalyzed	
 00788630	FUN_00788630	.text	6		clean	unknown		unanalyzed	
-00788640	FUN_00788640	.text	7		clean	unknown		unanalyzed	
+00788640	FUN_00788640	.text	7		clean	unknown	recon/hookcat	reversed	hook candidate: 仅写入虚表指针的构造初始化
 00788650	FUN_00788650	.text	51		clean	unknown		unanalyzed	
 00788690	FUN_00788690	.text	6		clean	unknown		unanalyzed	
 007886a0	FUN_007886a0	.text	14		clean	unknown		unanalyzed	
@@ -17706,10 +17706,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0078d7e0	FUN_0078d7e0	.text	71		clean	unknown		unanalyzed	
 0078d830	FUN_0078d830	.text	30		clean	unknown		unanalyzed	
 0078d850	FUN_0078d850	.text	47		clean	unknown		unanalyzed	
-0078d880	FUN_0078d880	.text	57		clean	unknown		unanalyzed	
+0078d880	FUN_0078d880	.text	57		clean	unknown	recon/hookcat	reversed	hook candidate: 调用 0x0050B5F0 查表并返回命中节点的 value
 0078d8c0	FUN_0078d8c0	.text	127		clean	unknown		unanalyzed	
 0078d940	FUN_0078d940	.text	244		clean	unknown		unanalyzed	
-0078da40	FUN_0078da40	.text	277		clean	unknown		unanalyzed	
+0078da40	FUN_0078da40	.text	277		clean	unknown	recon/hookcat	reversed	hook candidate: 遍历两侧关联 ID 并判断两个对象是否相互关联
 0078db60	FUN_0078db60	.text	58		clean	unknown		unanalyzed	
 0078dba0	FUN_0078dba0	.text	253		clean	unknown		unanalyzed	
 0078dca0	FUN_0078dca0	.text	278		clean	unknown		unanalyzed	
@@ -19430,7 +19430,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007d2830	FUN_007d2830	.text	342		clean	unknown		unanalyzed	
 007d2990	FUN_007d2990	.text	647		clean	unknown		unanalyzed	
 007d2c20	FUN_007d2c20	.text	138		clean	unknown		unanalyzed	
-007d2cb0	FUN_007d2cb0	.text	115		clean	unknown		unanalyzed	
+007d2cb0	FUN_007d2cb0	.text	115		clean	unknown	recon/hookcat	reversed	hook candidate: 对象构造初始化并调用区间清理辅助函数
 007d2d30	FUN_007d2d30	.text	242		clean	unknown		unanalyzed	
 007d2e30	FUN_007d2e30	.text	307		clean	unknown		unanalyzed	
 007d2f70	FUN_007d2f70	.text	30		clean	unknown		unanalyzed	
@@ -19700,23 +19700,23 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e1b70	FUN_007e1b70	.text	7		clean	unknown		unanalyzed	
 007e1b80	FUN_007e1b80	.text	7		clean	unknown		unanalyzed	
 007e1b90	FUN_007e1b90	.text	7		clean	unknown		unanalyzed	
-007e1ba0	FUN_007e1ba0	.text	27		clean	unknown		unanalyzed	
+007e1ba0	FUN_007e1ba0	.text	27		clean	unknown	recon/hookcat	reversed	hook candidate: 测试对象内两个状态字节是否都为零
 007e1be0	FUN_007e1be0	.text	28		clean	unknown		unanalyzed	
 007e1c00	FUN_007e1c00	.text	17		clean	unknown		unanalyzed	
 007e1c20	FUN_007e1c20	.text	17		clean	unknown		unanalyzed	
 007e1c40	FUN_007e1c40	.text	20		clean	unknown		unanalyzed	
 007e1c60	FUN_007e1c60	.text	14		clean	unknown		unanalyzed	
-007e1c70	FUN_007e1c70	.text	11		clean	unknown		unanalyzed	
+007e1c70	FUN_007e1c70	.text	11		clean	unknown	recon/hookcat	reversed	hook candidate: 返回 this+0x34 的索引槽
 007e1c80	FUN_007e1c80	.text	54		clean	unknown		unanalyzed	
 007e1cc0	FUN_007e1cc0	.text	279		clean	unknown		unanalyzed	
-007e1df0	FUN_007e1df0	.text	61		clean	unknown		unanalyzed	
-007e1e30	FUN_007e1e30	.text	78		clean	unknown		unanalyzed	
+007e1df0	FUN_007e1df0	.text	61		clean	unknown	recon/hookcat	reversed	hook candidate: 在 20 个槽中查找类型位恰好匹配的对象
+007e1e30	FUN_007e1e30	.text	78		clean	unknown	recon/hookcat	reversed	hook candidate: 扫描 20 个槽，按位掩码选中槽并消费对应位
 007e1e80	FUN_007e1e80	.text	61		clean	unknown		unanalyzed	
 007e1ec0	FUN_007e1ec0	.text	413		clean	unknown		unanalyzed	
 007e2060	FUN_007e2060	.text	45		clean	unknown		unanalyzed	
 007e2090	FUN_007e2090	.text	41		clean	unknown		unanalyzed	
 007e20c0	FUN_007e20c0	.text	48		clean	unknown		unanalyzed	
-007e20f0	FUN_007e20f0	.text	39		clean	unknown		unanalyzed	
+007e20f0	FUN_007e20f0	.text	39		clean	unknown	recon/hookcat	reversed	hook candidate: 按对象状态在两个候选字段间选择并返回指针
 007e2120	FUN_007e2120	.text	78		clean	unknown		unanalyzed	
 007e2170	FUN_007e2170	.text	28		clean	unknown		unanalyzed	
 007e2190	FUN_007e2190	.text	8		clean	unknown		unanalyzed	
@@ -19849,7 +19849,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e49f0	FUN_007e49f0	.text	20		clean	unknown		unanalyzed	
 007e4a10	FUN_007e4a10	.text	45		clean	unknown		unanalyzed	
 007e4a40	FUN_007e4a40	.text	105		clean	unknown		unanalyzed	
-007e4ab0	FUN_007e4ab0	.text	40		clean	unknown		unanalyzed	
+007e4ab0	FUN_007e4ab0	.text	40		clean	unknown	recon/hookcat	reversed	hook candidate: 动态数组边界检查后返回指针元素
 007e4ae0	FUN_007e4ae0	.text	16		clean	unknown		unanalyzed	
 007e4af0	FUN_007e4af0	.text	28		clean	unknown		unanalyzed	
 007e4b10	FUN_007e4b10	.text	59		clean	unknown		unanalyzed	
@@ -21764,7 +21764,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00861450	FUN_00861450	.text	93		clean	unknown		unanalyzed	
 008614b0	FUN_008614b0	.text	449		clean	unknown		unanalyzed	
 00861680	FUN_00861680	.text	971		clean	unknown		unanalyzed	
-00861a70	FUN_00861a70	.text	129		clean	unknown		unanalyzed	
+00861a70	FUN_00861a70	.text	129		clean	unknown	recon/hookcat	reversed	hook candidate: 按带长度前缀字符串在线性链中查找节点
 00861b00	FUN_00861b00	.text	414		clean	unknown		unanalyzed	
 00861cb0	FUN_00861cb0	.text	380		clean	unknown		unanalyzed	
 00861e30	FUN_00861e30	.text	254		clean	unknown		unanalyzed	
@@ -26779,7 +26779,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0094aab0	FUN_0094aab0	.text	1097		clean	unknown		unanalyzed	
 0094af00	FUN_0094af00	.text	30		clean	unknown		unanalyzed	
 0094af20	FUN_0094af20	.text	86		clean	unknown		unanalyzed	
-0094af80	FUN_0094af80	.text	29		clean	unknown		unanalyzed	
+0094af80	FUN_0094af80	.text	29		clean	unknown	recon/hookcat	reversed	hook candidate: 边界检查后返回定长记录数组中的元素地址
 0094afa0	FUN_0094afa0	.text	91		clean	unknown		unanalyzed	
 0094b000	FUN_0094b000	.text	30		clean	unknown		unanalyzed	
 0094b020	FUN_0094b020	.text	66		clean	unknown		unanalyzed	
@@ -27913,7 +27913,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00983950	FUN_00983950	.text	82		clean	unknown		unanalyzed	
 009839b0	FUN_009839b0	.text	105		clean	unknown		unanalyzed	
 00983a20	FUN_00983a20	.text	112		clean	unknown		unanalyzed	
-00983a90	FUN_00983a90	.text	38		clean	unknown		unanalyzed	
+00983a90	FUN_00983a90	.text	38		clean	unknown	recon/hookcat	reversed	hook candidate: 写虚表并初始化多个对象字段
 00983ac0	FUN_00983ac0	.text	67		clean	unknown		unanalyzed	
 00983b10	FUN_00983b10	.text	33		clean	unknown		unanalyzed	
 00983b40	FUN_00983b40	.text	351		clean	unknown		unanalyzed	
@@ -28109,7 +28109,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0098f670	FUN_0098f670	.text	57		clean	unknown		unanalyzed	
 0098f6b0	FUN_0098f6b0	.text	39		clean	unknown		unanalyzed	
 0098f6e0	FUN_0098f6e0	.text	51		clean	unknown		unanalyzed	
-0098f720	FUN_0098f720	.text	46		clean	unknown		unanalyzed	
+0098f720	FUN_0098f720	.text	46		clean	unknown	recon/hookcat	reversed	hook candidate: 把节点追加到单链表尾
 0098f750	FUN_0098f750	.text	74		clean	unknown		unanalyzed	
 0098f7a0	FUN_0098f7a0	.text	143		clean	unknown		unanalyzed	
 0098f830	FUN_0098f830	.text	101		clean	unknown		unanalyzed	
@@ -28271,7 +28271,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00997160	FUN_00997160	.text	11		clean	unknown		unanalyzed	
 00997170	FUN_00997170	.text	19		clean	unknown		unanalyzed	
 00997190	FUN_00997190	.text	37		clean	unknown		unanalyzed	
-009971c0	FUN_009971c0	.text	6		clean	unknown		unanalyzed	
+009971c0	FUN_009971c0	.text	6		clean	unknown	recon/hookcat	reversed	hook candidate: 返回全局单例/状态指针
 009971d0	FUN_009971d0	.text	6		clean	unknown		unanalyzed	
 009971e0	FUN_009971e0	.text	6		clean	unknown		unanalyzed	
 009971f0	FUN_009971f0	.text	6		clean	unknown		unanalyzed	
@@ -28285,7 +28285,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00997330	FUN_00997330	.text	66		clean	unknown		unanalyzed	
 00997380	FUN_00997380	.text	112		clean	unknown		unanalyzed	
 009973f0	thunk_FUN_004465d6	.text	5		clean	unknown		unanalyzed	
-00997400	FUN_00997400	.text	6		clean	unknown		unanalyzed	
+00997400	FUN_00997400	.text	6		clean	unknown	recon/hookcat	reversed	hook candidate: 返回全局对象地址
 00997410	FUN_00997410	.text	77		clean	unknown		unanalyzed	
 00997460	FUN_00997460	.text	67		clean	unknown		unanalyzed	
 009974b0	FUN_009974b0	.text	140		clean	unknown		unanalyzed	
@@ -29349,15 +29349,15 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009c9920	FUN_009c9920	.text	30		clean	unknown		unanalyzed	
 009c9940	FUN_009c9940	.text	28		clean	unknown		unanalyzed	
 009c9960	FUN_009c9960	.text	24		clean	unknown		unanalyzed	
-009c9980	FUN_009c9980	.text	50		clean	unknown		unanalyzed	
-009c99c0	FUN_009c99c0	.text	61		clean	unknown		unanalyzed	
+009c9980	FUN_009c9980	.text	50		clean	unknown	recon/hookcat	reversed	hook candidate: 红黑树迭代器前驱（左子树最右节点或向父节点回溯）
+009c99c0	FUN_009c99c0	.text	61		clean	unknown	recon/hookcat	reversed	hook candidate: 红黑树迭代器后继
 009c9a00	FUN_009c9a00	.text	74		clean	unknown		unanalyzed	
-009c9a50	FUN_009c9a50	.text	475		clean	unknown		unanalyzed	
+009c9a50	FUN_009c9a50	.text	475		clean	unknown	recon/hookcat	reversed	hook candidate: 红黑树插入后的旋转与着色修复
 009c9c30	FUN_009c9c30	.text	63		clean	unknown		unanalyzed	
 009c9c70	FUN_009c9c70	.text	27		clean	unknown		unanalyzed	
 009c9c90	FUN_009c9c90	.text	113		clean	unknown		unanalyzed	
 009c9d10	FUN_009c9d10	.text	179		clean	unknown		unanalyzed	
-009c9dd0	FUN_009c9dd0	.text	366		clean	unknown		unanalyzed	
+009c9dd0	FUN_009c9dd0	.text	366		clean	unknown	recon/hookcat	reversed	hook candidate: 按比例和 ceil 更新容量并返回是否扩容及增量
 009c9f40	FUN_009c9f40	.text	67		clean	unknown		unanalyzed	
 009c9f90	FUN_009c9f90	.text	17		clean	unknown		unanalyzed	
 009c9fe0	FUN_009c9fe0	.text	282		clean	unknown		unanalyzed	
@@ -32243,13 +32243,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a77a80	FUN_00a77a80	.text	31		clean	unknown		unanalyzed	
 00a77aa0	FUN_00a77aa0	.text	26		clean	unknown		unanalyzed	
 00a77ac0	FUN_00a77ac0	.text	26		clean	unknown		unanalyzed	
-00a77ae0	FUN_00a77ae0	.text	18		clean	unknown		unanalyzed	
+00a77ae0	FUN_00a77ae0	.text	18		clean	unknown	recon/hookcat	reversed	hook candidate: 初始化二字段结构为 {1,arg}
 00a77b00	FUN_00a77b00	.text	71		clean	unknown		unanalyzed	
 00a77b50	FUN_00a77b50	.text	22		clean	unknown		unanalyzed	
 00a77b70	FUN_00a77b70	.text	21		clean	unknown		unanalyzed	
 00a77b90	FUN_00a77b90	.text	25		clean	unknown		unanalyzed	
 00a77bb0	FUN_00a77bb0	.text	27		clean	unknown		unanalyzed	
-00a77bd0	FUN_00a77bd0	.text	31		clean	unknown		unanalyzed	
+00a77bd0	FUN_00a77bd0	.text	31		clean	unknown	recon/hookcat	reversed	hook candidate: 把 NUL 结尾字符串复制到 this+0x20
 00a77bf0	FUN_00a77bf0	.text	40		clean	unknown		unanalyzed	
 00a77c20	FUN_00a77c20	.text	14		clean	unknown		unanalyzed	
 00a77c30	FUN_00a77c30	.text	14		clean	unknown		unanalyzed	
@@ -33964,7 +33964,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00aafcd0	FUN_00aafcd0	.text	95		clean	unknown		unanalyzed	
 00aafd30	FUN_00aafd30	.text	64		clean	unknown		unanalyzed	
 00aafd70	FUN_00aafd70	.text	36		clean	unknown		unanalyzed	
-00aafe10	FUN_00aafe10	.text	70		clean	unknown		unanalyzed	
+00aafe10	FUN_00aafe10	.text	70		clean	unknown	recon/hookcat	reversed	hook candidate: 有符号键红黑树 lower_bound
 00aafe60	FUN_00aafe60	.text	10		clean	unknown		unanalyzed	
 00aaff60	FUN_00aaff60	.text	55		clean	unknown		unanalyzed	
 00aafff0	FUN_00aafff0	.text	36		clean	unknown		unanalyzed	
@@ -36964,7 +36964,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00b11cd0	FUN_00b11cd0	.text	41		clean	unknown		unanalyzed	
 00b11d00	FUN_00b11d00	.text	26		clean	unknown		unanalyzed	
 00b11d20	FUN_00b11d20	.text	18		clean	unknown		unanalyzed	
-00b11d40	FUN_00b11d40	.text	7		clean	unknown		unanalyzed	
+00b11d40	FUN_00b11d40	.text	7		clean	unknown	recon/hookcat	reversed	hook candidate: 返回 this+0xAC 字段
 00b11d50	FUN_00b11d50	.text	4		clean	unknown		unanalyzed	
 00b11d60	FUN_00b11d60	.text	33		clean	unknown		unanalyzed	
 00b11d90	FUN_00b11d90	.text	27		clean	unknown		unanalyzed	
@@ -37518,7 +37518,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00b23ae0	FUN_00b23ae0	.text	55		clean	unknown		unanalyzed	
 00b23b20	FUN_00b23b20	.text	52		clean	unknown		unanalyzed	
 00b23b60	FUN_00b23b60	.text	154		clean	unknown		unanalyzed	
-00b23c00	FUN_00b23c00	.text	9		clean	unknown		unanalyzed	
+00b23c00	FUN_00b23c00	.text	9		clean	unknown	recon/hookcat	reversed	hook candidate: 清零首个字段
 00b23c10	CRect::CRect	.text	32		clean	unknown		unanalyzed	
 00b23c30	FUN_00b23c30	.text	68		clean	unknown		unanalyzed	
 00b23c80	FUN_00b23c80	.text	104		clean	unknown		unanalyzed	
@@ -38276,7 +38276,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00b4c470	FUN_00b4c470	.text	374		clean	unknown		unanalyzed	
 00b4c5f0	FUN_00b4c5f0	.text	706		clean	unknown		unanalyzed	
 00b4c8c0	FUN_00b4c8c0	.text	2088		clean	unknown		unanalyzed	
-00b4d0f0	FUN_00b4d0f0	.text	7		clean	unknown		unanalyzed	
+00b4d0f0	FUN_00b4d0f0	.text	7		clean	unknown	recon/hookcat	reversed	hook candidate: 返回首个字段
 00b4d140	FUN_00b4d140	.text	114		clean	unknown		unanalyzed	
 00b4d1c0	FUN_00b4d1c0	.text	304		clean	unknown		unanalyzed	
 00b4d2f0	FUN_00b4d2f0	.text	475		clean	unknown		unanalyzed	
@@ -38929,7 +38929,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00b61de0	FUN_00b61de0	.text	7		clean	unknown		unanalyzed	
 00b61e10	FUN_00b61e10	.text	23		clean	unknown		unanalyzed	
 00b61e30	FUN_00b61e30	.text	154		clean	unknown		unanalyzed	
-00b61ed0	FUN_00b61ed0	.text	17		clean	unknown		unanalyzed	
+00b61ed0	FUN_00b61ed0	.text	17		clean	unknown	recon/hookcat	reversed	hook candidate: 写入虚表并清零两个字段的构造初始化
 00b61ef0	FUN_00b61ef0	.text	25		clean	unknown		unanalyzed	
 00b61f10	FUN_00b61f10	.text	6		clean	unknown		unanalyzed	
 00b61f20	FUN_00b61f20	.text	14		clean	unknown		unanalyzed	
@@ -39071,7 +39071,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00b66ea0	FUN_00b66ea0	.text	31		clean	unknown		unanalyzed	
 00b66ec0	FUN_00b66ec0	.text	103		clean	unknown		unanalyzed	
 00b66f30	FUN_00b66f30	.text	70		clean	unknown		unanalyzed	
-00b66f80	FUN_00b66f80	.text	692		clean	unknown		unanalyzed	
+00b66f80	FUN_00b66f80	.text	692		clean	unknown	recon/hookcat	reversed	hook candidate: 红黑树删除、旋转与着色修复
 00b67240	FUN_00b67240	.text	6		clean	unknown		unanalyzed	
 00b67250	KERNEL32.DLL::Sleep	.text	6		clean	unknown		unanalyzed	
 00b67260	KERNEL32.DLL::GetTickCount	.text	6		clean	unknown		unanalyzed	
