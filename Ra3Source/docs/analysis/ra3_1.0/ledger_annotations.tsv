@@ -30,10 +30,59 @@ address	status	owner	module	notes
 004d1b60	reversed	main	core	SkuDef add-big directive; ra3::SkuDef / ra3::io::ArchiveSet::mount
 004479e0	reversed	main	asset	ResourceManagerFileStream.cpp: opens .imp/.relo/.bin, compares leading u32 with the manifest stream checksum; ra3::asset::validateStreamBundle, AssetStream::loadDecoded
 00495890	reversed	main	asset	FullAssetList.cpp: reads manifest, allocates count*0x30 entries, sums sizes at +0x20/+0x24/+0x28, recurses into kind-2 referenced manifests; ra3::asset::Manifest::parse (no recursion yet)
-00416e60	reversed	main	asset	PartialAssetList.cpp:64 "Patch streams not alllowed to be partial"
+00416e60	reversed	main	asset	"PartialAssetList.cpp:64 ""Patch streams not alllowed to be partial"""
 00417220	reversed	recon/types	asset	Libraries\Source\assetmanager\resourcemanager.cpp: registers handler descriptors {vtable, typeId, typeHash}; 164 clean direct callers exported (asset_types_program.tsv)
 00417db0	verified	recon/types	asset	resourcemanager.cpp neighborhood: lowercase SuperFastHash core (bytes,length,seed,finalize); ra3::asset::hashName; 118,232/118,232 instanceIds; live hook namehash shadow 5579/5579, replace 5554/5554 (injection.md 5.4)
 0047be90	verified	recon/types	asset	runtime string-to-instanceId wrapper: strlen, then 00417DB0(name,length,length,1); ra3::asset::instanceIdFromName
-004a64cc	reversed	main	asset	resourcemanager.cpp: formats "%s%08X.%08X.%08X.%08X.cdata"; ra3::asset::cdataPath
+004a64cc	reversed	main	asset	"resourcemanager.cpp: formats ""%s%08X.%08X.%08X.%08X.cdata""; ra3::asset::cdataPath"
 004b1c80	reversed	recon/types	asset	type-factory leaf created with -Save; four cases and allocation sizes exported (asset_factory.tsv)
 00540b50	reversed	recon/types	asset	dynamic handler descriptor for typeId 86682E78 (FXList), typeHash 6C5977BB, vtable 00BDFD04
+00402750		recon/vclass	asset	proposed_name=AssetHandler<TerrainVisualSettings>::create_instance; slot=1; shared_by=1 handlers; field_offsets=0x24; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+004173b0	reversed	recon/vclass	asset	name=AssetHandlerTemplate::scalar_deleting_destructor; slot=0; shared_by=2 handlers; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义
+00499660		recon/vclass	asset	proposed_name=AssetHandler<StringHashTable>::create_instance; slot=1; shared_by=1 handlers; allocation_size=36; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0049b3a0		recon/vclass	asset	proposed_name=AssetHandler<StringHashTable>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0x4,0x8,0xC; small_constants=0x4,0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0049b400		recon/vclass	asset	proposed_name=AssetHandler<StringHashTable>::destroy_instance; slot=3; shared_by=1 handlers; field_offsets=0x4,0x8,0xC; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+004a4930		recon/vclass	asset	proposed_name=AssetHandler<AssetReportTable>::destroy_instance; slot=3; shared_by=1 handlers; field_offsets=0xC; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+004a5480		recon/vclass	asset	proposed_name=AssetHandler<AssetReportTable>::create_instance; slot=1; shared_by=1 handlers; allocation_size=28; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+004a54a0		recon/vclass	asset	proposed_name=AssetHandler<AssetReportTable>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0xC; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+004a6560	reversed	recon/vclass	asset	name=AssetHandlerBase::resolve_missing_prototype; slot=4; shared_by=164 handlers; field_offsets=0x4; small_constants=0x4,0xC,0x10; 已由 Ghidra 反编译并结合调用约定确认语义
+004d5c00		recon/vclass	asset	proposed_name=AssetHandlerTemplate::destroy_instance; slot=3; shared_by=17 handlers; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+004d5c10	reversed	recon/vclass	asset	name=AssetHandlerTemplate::create_instance; slot=1; shared_by=119 handlers; field_offsets=0x14; 已由 Ghidra 反编译并结合调用约定确认语义
+00522910	reversed	recon/vclass	asset	name=AssetHandlerTemplate::copy_construct_in_place; slot=2; shared_by=119 handlers; field_offsets=0x1C; 已由 Ghidra 反编译并结合调用约定确认语义
+00522920		recon/vclass	asset	proposed_name=AssetHandler<BounceKickTerrainMapping>::create_instance; slot=1; shared_by=1 handlers; allocation_size=12; field_offsets=0x4,0x8; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+00522950		recon/vclass	asset	proposed_name=AssetHandler<BounceKickTerrainMapping>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0x4,0x8; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+00531250	reversed	recon/vclass	asset	name=AssetHandler<PathMusicGameDynamicState>::destroy_instance; slot=3; shared_by=1 handlers; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义
+0054a1c0	reversed	recon/vclass	asset	name=AssetHandlerTemplate::destroy_instance; slot=3; shared_by=20 handlers; field_offsets=0x10; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义
+005ac8c0	reversed	recon/vclass	asset	name=AssetHandler<DamageFX>::create_instance; slot=1; shared_by=1 handlers; allocation_size=456; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义
+005ac8e0	reversed	recon/vclass	asset	name=AssetHandler<DamageFX>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0xC; 已由 Ghidra 反编译并结合调用约定确认语义
+00688bb0	reversed	recon/vclass	asset	name=AssetHandlerTemplate::copy_construct_in_place; slot=2; shared_by=9 handlers; small_constants=0xC; 已由 Ghidra 反编译并结合调用约定确认语义
+006d30f0		recon/vclass	asset	proposed_name=AssetHandler<ProjectilePath>::destroy_instance; slot=3; shared_by=1 handlers; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+006f2b40		recon/vclass	asset	proposed_name=AssetHandler<ProjectilePath>::create_instance; slot=1; shared_by=1 handlers; allocation_size=16; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+006f2b60		recon/vclass	asset	proposed_name=AssetHandler<ProjectilePath>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0x4,0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0079c130		recon/vclass	asset	proposed_name=AssetHandler<AIData>::create_instance; slot=1; shared_by=1 handlers; allocation_size=1; field_offsets=0x38; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0079c160		recon/vclass	asset	proposed_name=AssetHandler<AIData>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0x38; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0079c180		recon/vclass	asset	proposed_name=AssetHandler<TargetingInTurretArcCompare>::create_instance; slot=1; shared_by=1 handlers; allocation_size=4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0079c1a0		recon/vclass	asset	proposed_name=AssetHandler<TargetingInTurretArcCompare>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0079c1c0		recon/vclass	asset	proposed_name=AssetHandler<TargetingCombatChainCompare>::create_instance; slot=1; shared_by=1 handlers; allocation_size=4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0079c1e0		recon/vclass	asset	proposed_name=AssetHandler<TargetingCombatChainCompare>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+007a7a00		recon/vclass	asset	proposed_name=AssetHandler<TargetingDistanceCompare>::create_instance; slot=1; shared_by=1 handlers; allocation_size=8; field_offsets=0x4; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+007a7a30		recon/vclass	asset	proposed_name=AssetHandler<TargetingDistanceCompare>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0x4; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+007e2df0		recon/vclass	asset	proposed_name=AssetHandler<RedAlertTemplate>::create_instance; slot=1; shared_by=1 handlers; allocation_size=92; small_constants=0x4,0x17; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+007e2e20		recon/vclass	asset	proposed_name=AssetHandler<RedAlertTemplate>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0xC,0x17; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+007e2e40	reversed	recon/vclass	asset	name=AssetHandlerTemplate::destroy_instance; slot=3; shared_by=119 handlers; field_offsets=0x18; 已由 Ghidra 反编译并结合调用约定确认语义
+007f84c0		recon/vclass	asset	proposed_name=AssetHandler<PlayerTech>::destroy_instance; slot=3; shared_by=1 handlers; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+007fdf80		recon/vclass	asset	proposed_name=AssetHandler<PlayerTech>::create_instance; slot=1; shared_by=1 handlers; allocation_size=20; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+007fdfa0		recon/vclass	asset	proposed_name=AssetHandler<PlayerTech>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+008d69b0	reversed	recon/vclass	asset	name=AssetHandlerTemplate::create_instance; slot=1; shared_by=20 handlers; field_offsets=0x10; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义
+008e5ec0		recon/vclass	asset	proposed_name=AssetHandlerTemplate::create_instance; slot=1; shared_by=2 handlers; allocation_size=16; field_offsets=0x4,0x8,0xC; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+008e5ef0		recon/vclass	asset	proposed_name=AssetHandlerTemplate::copy_construct_in_place; slot=2; shared_by=2 handlers; field_offsets=0x4,0x8,0xC; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+00935e70		recon/vclass	asset	proposed_name=AssetHandler<OnDemandTexture>::create_instance; slot=1; shared_by=1 handlers; allocation_size=12; field_offsets=0x4,0x8; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+00935ed0		recon/vclass	asset	proposed_name=AssetHandler<OnDemandTexture>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0x4,0x8; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+00935f20		recon/vclass	asset	proposed_name=AssetHandler<OnDemandTexture>::destroy_instance; slot=3; shared_by=1 handlers; field_offsets=0x8; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+009ab7c0	reversed	recon/vclass	asset	name=AssetHandlerTemplate::copy_construct_in_place; slot=2; shared_by=21 handlers; small_constants=0xC; 已由 Ghidra 反编译并结合调用约定确认语义
+009ccda0		recon/vclass	asset	proposed_name=AssetHandler<TerrainVisualSettings>::destroy_instance; slot=3; shared_by=1 handlers; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+00a79730	reversed	recon/vclass	asset	name=AssetHandlerTemplate::create_instance; slot=1; shared_by=9 handlers; allocation_size=4; 已由 Ghidra 反编译并结合调用约定确认语义
+00a79750		recon/vclass	asset	proposed_name=AssetHandler<PlayerTechStoreTemplate>::create_instance; slot=1; shared_by=1 handlers; allocation_size=4; field_offsets=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+00a7e8c0		recon/vclass	asset	proposed_name=AssetHandler<PlayerTechStoreTemplate>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0x4; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+00a7e910		recon/vclass	asset	proposed_name=AssetHandler<PlayerTechStoreTemplate>::destroy_instance; slot=3; shared_by=1 handlers; field_offsets=0x4; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+00aac690	reversed	recon/vclass	asset	name=AssetHandlerTemplate::scalar_deleting_destructor; slot=0; shared_by=162 handlers; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义

@@ -93,7 +93,8 @@ create / in-place copy / destroy 族。`0x005AC8C0` 分配 `0x1C8` 字节，
   在 `asset_handler_methods.tsv`，不能把分配大小等同于 manifest 中每个实例的
   序列化块长。
 
-`vclass_annotations.tsv` 对 49 个不同处理器槽函数给出建议符号。只有本轮实际由
+`vclass_annotations.tsv`（生成器输出；合并时已并入 `ledger_annotations.tsv` 并删除，
+重新生成后需同样并入）对 49 个不同处理器槽函数给出建议符号。只有本轮实际由
 Ghidra 反编译并理解语义的 14 个函数标为 `reversed`；其余 35 个仅有槽归类和建议
 名称，按协议保持空状态。
 

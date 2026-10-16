@@ -56,7 +56,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004026d0	thunk_FUN_0197fc30	.text	6		entry-lost	unknown		unanalyzed	
 004026f7	FUN_004026f7	.text	10		clean	unknown		unanalyzed	
 0040272d	FUN_0040272d	.text	11		clean	unknown		unanalyzed	
-00402750	FUN_00402750	.text	24		clean	unknown		unanalyzed	
+00402750	FUN_00402750	.text	24		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<TerrainVisualSettings>::create_instance; slot=1; shared_by=1 handlers; field_offsets=0x24; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 00402770	FUN_00402770	.text	12		clean	unknown		unanalyzed	
 00402780	thunk_FUN_02350000	.text	6		entry-lost	unknown		unanalyzed	
 00402786	FUN_00402786	.text	10		clean	unknown		unanalyzed	
@@ -636,7 +636,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00417310	FUN_00417310	.text	24		clean	unknown		unanalyzed	
 00417380	thunk_FUN_01981a00	.text	6		entry-lost	unknown		unanalyzed	
 00417386	FUN_00417386	.text	11		clean	unknown		unanalyzed	
-004173b0	FUN_004173b0	.text	31		clean	unknown		unanalyzed	
+004173b0	FUN_004173b0	.text	31		clean	asset	recon/vclass	reversed	name=AssetHandlerTemplate::scalar_deleting_destructor; slot=0; shared_by=2 handlers; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义
 004174e0	FUN_004174e0	.text	97		clean	unknown		unanalyzed	
 00417550	thunk_FUN_01974340	.text	6		entry-lost	unknown		unanalyzed	
 004175a0	FUN_004175a0	.text	20		inner-patched	unknown		unanalyzed	
@@ -1988,7 +1988,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004994a0	FUN_004994a0	.text	294		clean	unknown		unanalyzed	
 004995d0	thunk_FUN_02710000	.text	6		entry-lost	unknown		unanalyzed	
 00499640	thunk_FUN_0197dbd0	.text	6		entry-lost	unknown		unanalyzed	
-00499660	FUN_00499660	.text	26		clean	unknown		unanalyzed	
+00499660	FUN_00499660	.text	26		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<StringHashTable>::create_instance; slot=1; shared_by=1 handlers; allocation_size=36; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 00499ba0	FUN_00499ba0	.text	250	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00499d30	FUN_00499d30	.text	30		clean	unknown		unanalyzed	
 00499d50	FUN_00499d50	.text	67		clean	unknown		unanalyzed	
@@ -1996,8 +1996,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00499dc0	thunk_FUN_01dad000	.text	6		entry-lost	unknown		unanalyzed	
 00499de0	FUN_00499de0	.text	134		clean	unknown		unanalyzed	
 00499e27	FUN_00499e27	.text	75		clean	unknown		unanalyzed	
-0049b3a0	FUN_0049b3a0	.text	85		clean	unknown		unanalyzed	
-0049b400	FUN_0049b400	.text	86		clean	unknown		unanalyzed	
+0049b3a0	FUN_0049b3a0	.text	85		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<StringHashTable>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0x4,0x8,0xC; small_constants=0x4,0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0049b400	FUN_0049b400	.text	86		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<StringHashTable>::destroy_instance; slot=3; shared_by=1 handlers; field_offsets=0x4,0x8,0xC; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 0049bc50	thunk_FUN_01982d10	.text	6		entry-lost	unknown		unanalyzed	
 004a2e6a	FUN_004a2e6a	.text	45		clean	unknown		unanalyzed	
 004a3fc0	FUN_004a3fc0	.text	56		clean	unknown		unanalyzed	
@@ -2007,7 +2007,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004a43a0	thunk_FUN_0197e130	.text	6		entry-lost	unknown		unanalyzed	
 004a4650	thunk_FUN_01955540	.text	6		entry-recoverable	unknown		unanalyzed	
 004a4710	FUN_004a4710	.text	537		clean	unknown		unanalyzed	
-004a4930	FUN_004a4930	.text	43		clean	unknown		unanalyzed	
+004a4930	FUN_004a4930	.text	43		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<AssetReportTable>::destroy_instance; slot=3; shared_by=1 handlers; field_offsets=0xC; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 004a4a80	thunk_FUN_01975710	.text	6		entry-lost	unknown		unanalyzed	
 004a4c90	FUN_004a4c90	.text	168		clean	unknown		unanalyzed	
 004a4d90	thunk_FUN_01dc2000	.text	6		entry-lost	unknown		unanalyzed	
@@ -2016,8 +2016,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004a5000	FUN_004a5000	.text	348	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 004a5170	FUN_004a5170	.text	623	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 004a53f0	FUN_004a53f0	.text	132		clean	unknown		unanalyzed	
-004a5480	FUN_004a5480	.text	26		clean	unknown		unanalyzed	
-004a54a0	FUN_004a54a0	.text	42		clean	unknown		unanalyzed	
+004a5480	FUN_004a5480	.text	26		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<AssetReportTable>::create_instance; slot=1; shared_by=1 handlers; allocation_size=28; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+004a54a0	FUN_004a54a0	.text	42		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<AssetReportTable>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0xC; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 004a54d0	thunk_FUN_0197a040	.text	6		entry-lost	unknown		unanalyzed	
 004a5730	thunk_FUN_0197a020	.text	6		entry-lost	unknown		unanalyzed	
 004a5920	FUN_004a5920	.text	112		clean	unknown		unanalyzed	
@@ -2032,7 +2032,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004a6410	thunk_FUN_01982c60	.text	6		entry-lost	unknown		unanalyzed	
 004a64b0	FUN_004a64b0	.text	28		clean	unknown		unanalyzed	
 004a64cc	FUN_004a64cc	.text	134		clean	asset	main	reversed	"resourcemanager.cpp: formats ""%s%08X.%08X.%08X.%08X.cdata""; ra3::asset::cdataPath"
-004a6560	FUN_004a6560	.text	83		clean	unknown		unanalyzed	
+004a6560	FUN_004a6560	.text	83		clean	asset	recon/vclass	reversed	name=AssetHandlerBase::resolve_missing_prototype; slot=4; shared_by=164 handlers; field_offsets=0x4; small_constants=0x4,0xC,0x10; 已由 Ghidra 反编译并结合调用约定确认语义
 004a6c40	FUN_004a6c40	.text	289		clean	unknown		unanalyzed	
 004a6d61	FUN_004a6d61	.text	675		clean	unknown		unanalyzed	
 004a71d0	FUN_004a71d0	.text	332		clean	unknown		unanalyzed	
@@ -2612,8 +2612,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004d5b10	FUN_004d5b10	.text	157		clean	unknown		unanalyzed	
 004d5bb0	FUN_004d5bb0	.text	22		clean	unknown		unanalyzed	
 004d5bd0	FUN_004d5bd0	.text	46		clean	unknown		unanalyzed	
-004d5c00	FUN_004d5c00	.text	14		clean	unknown		unanalyzed	
-004d5c10	FUN_004d5c10	.text	7		clean	unknown		unanalyzed	
+004d5c00	FUN_004d5c00	.text	14		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandlerTemplate::destroy_instance; slot=3; shared_by=17 handlers; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+004d5c10	FUN_004d5c10	.text	7		clean	asset	recon/vclass	reversed	name=AssetHandlerTemplate::create_instance; slot=1; shared_by=119 handlers; field_offsets=0x14; 已由 Ghidra 反编译并结合调用约定确认语义
 004d5c20	FUN_004d5c20	.text	30		clean	unknown		unanalyzed	
 004d5c40	FUN_004d5c40	.text	51		clean	unknown		unanalyzed	
 004d5c80	FUN_004d5c80	.text	67		clean	unknown		unanalyzed	
@@ -4194,9 +4194,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00522800	FUN_00522800	.text	6		clean	unknown		unanalyzed	
 00522840	FUN_00522840	.text	52		clean	unknown		unanalyzed	
 00522880	FUN_00522880	.text	33		inner-patched	unknown		unanalyzed	
-00522910	FUN_00522910	.text	7		clean	unknown		unanalyzed	
-00522920	FUN_00522920	.text	42		clean	unknown		unanalyzed	
-00522950	FUN_00522950	.text	31		clean	unknown		unanalyzed	
+00522910	FUN_00522910	.text	7		clean	asset	recon/vclass	reversed	name=AssetHandlerTemplate::copy_construct_in_place; slot=2; shared_by=119 handlers; field_offsets=0x1C; 已由 Ghidra 反编译并结合调用约定确认语义
+00522920	FUN_00522920	.text	42		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<BounceKickTerrainMapping>::create_instance; slot=1; shared_by=1 handlers; allocation_size=12; field_offsets=0x4,0x8; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+00522950	FUN_00522950	.text	31		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<BounceKickTerrainMapping>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0x4,0x8; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 00522970	FUN_00522970	.text	22		clean	unknown		unanalyzed	
 00522990	FUN_00522990	.text	157		clean	unknown		unanalyzed	
 00522a30	FUN_00522a30	.text	39		clean	unknown		unanalyzed	
@@ -4609,7 +4609,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00531190	FUN_00531190	.text	49		clean	unknown		unanalyzed	
 005311d0	FUN_005311d0	.text	38		clean	unknown		unanalyzed	
 00531200	FUN_00531200	.text	75		clean	unknown		unanalyzed	
-00531250	FUN_00531250	.text	18		clean	unknown		unanalyzed	
+00531250	FUN_00531250	.text	18		clean	asset	recon/vclass	reversed	name=AssetHandler<PathMusicGameDynamicState>::destroy_instance; slot=3; shared_by=1 handlers; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义
 00531270	FUN_00531270	.text	75		inner-patched	unknown		unanalyzed	
 005312c0	FUN_005312c0	.text	102		clean	unknown		unanalyzed	
 00531330	FUN_00531330	.text	19		clean	unknown		unanalyzed	
@@ -5130,7 +5130,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0054a0b0	FUN_0054a0b0	.text	27		clean	unknown		unanalyzed	
 0054a0d0	FUN_0054a0d0	.text	190		clean	unknown		unanalyzed	
 0054a190	FUN_0054a190	.text	33		clean	unknown		unanalyzed	
-0054a1c0	FUN_0054a1c0	.text	12		clean	unknown		unanalyzed	
+0054a1c0	FUN_0054a1c0	.text	12		clean	asset	recon/vclass	reversed	name=AssetHandlerTemplate::destroy_instance; slot=3; shared_by=20 handlers; field_offsets=0x10; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义
 0054a1d0	FUN_0054a1d0	.text	58		clean	unknown		unanalyzed	
 0054a210	FUN_0054a210	.text	27		clean	unknown		unanalyzed	
 0054a230	FUN_0054a230	.text	38		clean	unknown		unanalyzed	
@@ -7023,8 +7023,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005ac850	FUN_005ac850	.text	75		clean	unknown		unanalyzed	
 005ac8a0	FUN_005ac8a0	.text	14		clean	unknown		unanalyzed	
 005ac8b0	FUN_005ac8b0	.text	13		clean	unknown		unanalyzed	
-005ac8c0	FUN_005ac8c0	.text	29		clean	unknown		unanalyzed	
-005ac8e0	FUN_005ac8e0	.text	21		clean	unknown		unanalyzed	
+005ac8c0	FUN_005ac8c0	.text	29		clean	asset	recon/vclass	reversed	name=AssetHandler<DamageFX>::create_instance; slot=1; shared_by=1 handlers; allocation_size=456; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义
+005ac8e0	FUN_005ac8e0	.text	21		clean	asset	recon/vclass	reversed	name=AssetHandler<DamageFX>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0xC; 已由 Ghidra 反编译并结合调用约定确认语义
 005ac900	FUN_005ac900	.text	56		clean	unknown		unanalyzed	
 005ac940	FUN_005ac940	.text	47		clean	unknown		unanalyzed	
 005ac970	FUN_005ac970	.text	61		clean	unknown		unanalyzed	
@@ -12054,7 +12054,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00688b10	FUN_00688b10	.text	46		clean	unknown		unanalyzed	
 00688b40	FUN_00688b40	.text	61		clean	unknown		unanalyzed	
 00688b80	FUN_00688b80	.text	43		clean	unknown		unanalyzed	
-00688bb0	FUN_00688bb0	.text	17		clean	unknown		unanalyzed	
+00688bb0	FUN_00688bb0	.text	17		clean	asset	recon/vclass	reversed	name=AssetHandlerTemplate::copy_construct_in_place; slot=2; shared_by=9 handlers; small_constants=0xC; 已由 Ghidra 反编译并结合调用约定确认语义
 00688bd0	FUN_00688bd0	.text	105		clean	unknown		unanalyzed	
 00688c40	FUN_00688c40	.text	105		clean	unknown		unanalyzed	
 00688cb0	FUN_00688cb0	.text	6		clean	unknown		unanalyzed	
@@ -14440,7 +14440,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006d29a0	FUN_006d29a0	.text	103		clean	unknown		unanalyzed	
 006d2a10	FUN_006d2a10	.text	1710		clean	unknown		unanalyzed	
 006d30c0	FUN_006d30c0	.text	44		clean	unknown		unanalyzed	
-006d30f0	FUN_006d30f0	.text	37		clean	unknown		unanalyzed	
+006d30f0	FUN_006d30f0	.text	37		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<ProjectilePath>::destroy_instance; slot=3; shared_by=1 handlers; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 006d3120	FUN_006d3120	.text	398		clean	unknown		unanalyzed	
 006d32b0	FUN_006d32b0	.text	28		clean	unknown		unanalyzed	
 006d32cc	FUN_006d32cc	.text	345		clean	unknown		unanalyzed	
@@ -15046,8 +15046,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006f2320	FUN_006f2320	.text	354		clean	unknown		unanalyzed	
 006f2490	FUN_006f2490	.text	671		clean	unknown		unanalyzed	
 006f2730	FUN_006f2730	.text	32		inner-patched	unknown		unanalyzed	
-006f2b40	FUN_006f2b40	.text	26		clean	unknown		unanalyzed	
-006f2b60	FUN_006f2b60	.text	36		clean	unknown		unanalyzed	
+006f2b40	FUN_006f2b40	.text	26		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<ProjectilePath>::create_instance; slot=1; shared_by=1 handlers; allocation_size=16; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+006f2b60	FUN_006f2b60	.text	36		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<ProjectilePath>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0x4,0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 006f2b90	FUN_006f2b90	.text	99		clean	unknown		unanalyzed	
 006f2c00	FUN_006f2c00	.text	160		clean	unknown		unanalyzed	
 006f2ca0	FUN_006f2ca0	.text	160		clean	unknown		unanalyzed	
@@ -18142,12 +18142,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079c080	FUN_0079c080	.text	100		clean	unknown		unanalyzed	
 0079c0f0	FUN_0079c0f0	.text	8		clean	unknown		unanalyzed	
 0079c100	FUN_0079c100	.text	45		clean	unknown		unanalyzed	
-0079c130	FUN_0079c130	.text	45		clean	unknown		unanalyzed	
-0079c160	FUN_0079c160	.text	32		clean	unknown		unanalyzed	
-0079c180	FUN_0079c180	.text	28		clean	unknown		unanalyzed	
-0079c1a0	FUN_0079c1a0	.text	17		clean	unknown		unanalyzed	
-0079c1c0	FUN_0079c1c0	.text	28		clean	unknown		unanalyzed	
-0079c1e0	FUN_0079c1e0	.text	17		clean	unknown		unanalyzed	
+0079c130	FUN_0079c130	.text	45		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<AIData>::create_instance; slot=1; shared_by=1 handlers; allocation_size=1; field_offsets=0x38; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0079c160	FUN_0079c160	.text	32		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<AIData>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0x38; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0079c180	FUN_0079c180	.text	28		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<TargetingInTurretArcCompare>::create_instance; slot=1; shared_by=1 handlers; allocation_size=4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0079c1a0	FUN_0079c1a0	.text	17		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<TargetingInTurretArcCompare>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0079c1c0	FUN_0079c1c0	.text	28		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<TargetingCombatChainCompare>::create_instance; slot=1; shared_by=1 handlers; allocation_size=4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+0079c1e0	FUN_0079c1e0	.text	17		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<TargetingCombatChainCompare>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 0079c280	FUN_0079c280	.text	31		clean	unknown		unanalyzed	
 0079c2a0	FUN_0079c2a0	.text	83		clean	unknown		unanalyzed	
 0079c300	FUN_0079c300	.text	64		clean	unknown		unanalyzed	
@@ -18573,8 +18573,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007a78d0	FUN_007a78d0	.text	103		clean	unknown		unanalyzed	
 007a7940	FUN_007a7940	.text	28		clean	unknown		unanalyzed	
 007a795c	FUN_007a795c	.text	147		clean	unknown		unanalyzed	
-007a7a00	FUN_007a7a00	.text	35		clean	unknown		unanalyzed	
-007a7a30	FUN_007a7a30	.text	24		clean	unknown		unanalyzed	
+007a7a00	FUN_007a7a00	.text	35		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<TargetingDistanceCompare>::create_instance; slot=1; shared_by=1 handlers; allocation_size=8; field_offsets=0x4; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+007a7a30	FUN_007a7a30	.text	24		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<TargetingDistanceCompare>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0x4; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 007a7a50	FUN_007a7a50	.text	75	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 007a7aa0	FUN_007a7aa0	.text	71		clean	unknown		unanalyzed	
 007a7af0	FUN_007a7af0	.text	175	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
@@ -19790,9 +19790,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e2da0	FUN_007e2da0	.text	7		clean	unknown		unanalyzed	
 007e2db0	FUN_007e2db0	.text	7		clean	unknown		unanalyzed	
 007e2dd0	FUN_007e2dd0	.text	21		clean	unknown		unanalyzed	
-007e2df0	FUN_007e2df0	.text	39		clean	unknown		unanalyzed	
-007e2e20	FUN_007e2e20	.text	26		clean	unknown		unanalyzed	
-007e2e40	FUN_007e2e40	.text	7		clean	unknown		unanalyzed	
+007e2df0	FUN_007e2df0	.text	39		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<RedAlertTemplate>::create_instance; slot=1; shared_by=1 handlers; allocation_size=92; small_constants=0x4,0x17; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+007e2e20	FUN_007e2e20	.text	26		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<RedAlertTemplate>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0xC,0x17; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+007e2e40	FUN_007e2e40	.text	7		clean	asset	recon/vclass	reversed	name=AssetHandlerTemplate::destroy_instance; slot=3; shared_by=119 handlers; field_offsets=0x18; 已由 Ghidra 反编译并结合调用约定确认语义
 007e2e50	FUN_007e2e50	.text	41		clean	unknown		unanalyzed	
 007e2e80	FUN_007e2e80	.text	59		clean	unknown		unanalyzed	
 007e2ec0	FUN_007e2ec0	.text	49		clean	unknown		unanalyzed	
@@ -20298,7 +20298,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007f80d0	FUN_007f80d0	.text	69		clean	unknown		unanalyzed	
 007f8120	FUN_007f8120	.text	154		clean	unknown		unanalyzed	
 007f81c0	FUN_007f81c0	.text	765		clean	unknown		unanalyzed	
-007f84c0	FUN_007f84c0	.text	29		clean	unknown		unanalyzed	
+007f84c0	FUN_007f84c0	.text	29		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<PlayerTech>::destroy_instance; slot=3; shared_by=1 handlers; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 007f84e0	FUN_007f84e0	.text	118		clean	unknown		unanalyzed	
 007f8560	FUN_007f8560	.text	126		clean	unknown		unanalyzed	
 007f85e0	FUN_007f85e0	.text	117		clean	unknown		unanalyzed	
@@ -20399,8 +20399,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007fdc70	FUN_007fdc70	.text	130		clean	unknown		unanalyzed	
 007fdd00	FUN_007fdd00	.text	189		clean	unknown		unanalyzed	
 007fddc0	FUN_007fddc0	.text	436		clean	unknown		unanalyzed	
-007fdf80	FUN_007fdf80	.text	26		clean	unknown		unanalyzed	
-007fdfa0	FUN_007fdfa0	.text	32		clean	unknown		unanalyzed	
+007fdf80	FUN_007fdf80	.text	26		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<PlayerTech>::create_instance; slot=1; shared_by=1 handlers; allocation_size=20; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+007fdfa0	FUN_007fdfa0	.text	32		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<PlayerTech>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 007fdfc0	FUN_007fdfc0	.text	75		clean	unknown		unanalyzed	
 007fe010	FUN_007fe010	.text	222		clean	unknown		unanalyzed	
 007fe0f0	FUN_007fe0f0	.text	484		clean	unknown		unanalyzed	
@@ -24269,7 +24269,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008d6950	FUN_008d6950	.text	24		clean	unknown		unanalyzed	
 008d6970	FUN_008d6970	.text	6		clean	unknown		unanalyzed	
 008d6990	FUN_008d6990	.text	19		clean	unknown		unanalyzed	
-008d69b0	FUN_008d69b0	.text	29		clean	unknown		unanalyzed	
+008d69b0	FUN_008d69b0	.text	29		clean	asset	recon/vclass	reversed	name=AssetHandlerTemplate::create_instance; slot=1; shared_by=20 handlers; field_offsets=0x10; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义
 008d69d0	FUN_008d69d0	.text	63		clean	unknown		unanalyzed	
 008d6a10	FUN_008d6a10	.text	245		clean	unknown		unanalyzed	
 008d6b10	FUN_008d6b10	.text	68		clean	unknown		unanalyzed	
@@ -24638,8 +24638,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e5e40	FUN_008e5e40	.text	43		clean	unknown		unanalyzed	
 008e5e70	FUN_008e5e70	.text	14		clean	unknown		unanalyzed	
 008e5e80	FUN_008e5e80	.text	60		clean	unknown		unanalyzed	
-008e5ec0	FUN_008e5ec0	.text	48		clean	unknown		unanalyzed	
-008e5ef0	FUN_008e5ef0	.text	37		clean	unknown		unanalyzed	
+008e5ec0	FUN_008e5ec0	.text	48		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandlerTemplate::create_instance; slot=1; shared_by=2 handlers; allocation_size=16; field_offsets=0x4,0x8,0xC; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+008e5ef0	FUN_008e5ef0	.text	37		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandlerTemplate::copy_construct_in_place; slot=2; shared_by=2 handlers; field_offsets=0x4,0x8,0xC; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 008e5f20	FUN_008e5f20	.text	31		clean	unknown		unanalyzed	
 008e5f40	FUN_008e5f40	.text	42		clean	unknown		unanalyzed	
 008e5f70	FUN_008e5f70	.text	115		clean	unknown		unanalyzed	
@@ -26203,9 +26203,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00935930	FUN_00935930	.text	353		clean	unknown		unanalyzed	
 00935aa0	FUN_00935aa0	.text	684	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00935d50	FUN_00935d50	.text	283		clean	unknown		unanalyzed	
-00935e70	FUN_00935e70	.text	86		clean	unknown		unanalyzed	
-00935ed0	FUN_00935ed0	.text	76		clean	unknown		unanalyzed	
-00935f20	FUN_00935f20	.text	30		clean	unknown		unanalyzed	
+00935e70	FUN_00935e70	.text	86		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<OnDemandTexture>::create_instance; slot=1; shared_by=1 handlers; allocation_size=12; field_offsets=0x4,0x8; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+00935ed0	FUN_00935ed0	.text	76		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<OnDemandTexture>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0x4,0x8; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+00935f20	FUN_00935f20	.text	30		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<OnDemandTexture>::destroy_instance; slot=3; shared_by=1 handlers; field_offsets=0x8; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 00935f40	MSVCR80.DLL::malloc	.text	6		clean	unknown		unanalyzed	
 00935f50	MSVCR80.DLL::realloc	.text	6		clean	unknown		unanalyzed	
 00935f60	FUN_00935f60	.text	20		clean	unknown		unanalyzed	
@@ -28654,7 +28654,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009ab670	FUN_009ab670	.text	87		clean	unknown		unanalyzed	
 009ab6d0	FUN_009ab6d0	.text	131		clean	unknown		unanalyzed	
 009ab760	FUN_009ab760	.text	81		clean	unknown		unanalyzed	
-009ab7c0	FUN_009ab7c0	.text	3		clean	unknown		unanalyzed	
+009ab7c0	FUN_009ab7c0	.text	3		clean	asset	recon/vclass	reversed	name=AssetHandlerTemplate::copy_construct_in_place; slot=2; shared_by=21 handlers; small_constants=0xC; 已由 Ghidra 反编译并结合调用约定确认语义
 009ab7d0	FUN_009ab7d0	.text	161		clean	unknown		unanalyzed	
 009ab880	FUN_009ab880	.text	36		clean	unknown		unanalyzed	
 009ab8b0	FUN_009ab8b0	.text	37		clean	unknown		unanalyzed	
@@ -29441,7 +29441,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009ccb60	FUN_009ccb60	.text	36		clean	unknown		unanalyzed	
 009ccb90	FUN_009ccb90	.text	338		clean	unknown		unanalyzed	
 009cccf0	FUN_009cccf0	.text	165		clean	unknown		unanalyzed	
-009ccda0	AptRenderItem::Manager_SetNextRevision	.text	3		clean	unknown		unanalyzed	
+009ccda0	AptRenderItem::Manager_SetNextRevision	.text	3		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<TerrainVisualSettings>::destroy_instance; slot=3; shared_by=1 handlers; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 009ccdb0	FUN_009ccdb0	.text	5		clean	unknown		unanalyzed	
 009ccdc0	FUN_009ccdc0	.text	7		clean	unknown		unanalyzed	
 009ccdd0	FUN_009ccdd0	.text	36		clean	unknown		unanalyzed	
@@ -32364,8 +32364,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a795f0	FUN_00a795f0	.text	232		clean	unknown		unanalyzed	
 00a796e0	FUN_00a796e0	.text	8		clean	unknown		unanalyzed	
 00a796f0	FUN_00a796f0	.text	51		clean	unknown		unanalyzed	
-00a79730	FUN_00a79730	.text	28		clean	unknown		unanalyzed	
-00a79750	FUN_00a79750	.text	53		clean	unknown		unanalyzed	
+00a79730	FUN_00a79730	.text	28		clean	asset	recon/vclass	reversed	name=AssetHandlerTemplate::create_instance; slot=1; shared_by=9 handlers; allocation_size=4; 已由 Ghidra 反编译并结合调用约定确认语义
+00a79750	FUN_00a79750	.text	53		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<PlayerTechStoreTemplate>::create_instance; slot=1; shared_by=1 handlers; allocation_size=4; field_offsets=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 00a79790	FUN_00a79790	.text	105		clean	unknown		unanalyzed	
 00a79800	FUN_00a79800	.text	90		clean	unknown		unanalyzed	
 00a79860	FUN_00a79860	.text	52		clean	unknown		unanalyzed	
@@ -32554,8 +32554,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a7e610	FUN_00a7e610	.text	474		clean	unknown		unanalyzed	
 00a7e7f0	FUN_00a7e7f0	.text	84		clean	unknown		unanalyzed	
 00a7e850	FUN_00a7e850	.text	106		clean	unknown		unanalyzed	
-00a7e8c0	FUN_00a7e8c0	.text	68		clean	unknown		unanalyzed	
-00a7e910	FUN_00a7e910	.text	48		clean	unknown		unanalyzed	
+00a7e8c0	FUN_00a7e8c0	.text	68		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<PlayerTechStoreTemplate>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0x4; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
+00a7e910	FUN_00a7e910	.text	48		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<PlayerTechStoreTemplate>::destroy_instance; slot=3; shared_by=1 handlers; field_offsets=0x4; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 00a7e940	FUN_00a7e940	.text	85		clean	unknown		unanalyzed	
 00a7e9a0	FUN_00a7e9a0	.text	111		clean	unknown		unanalyzed	
 00a7ea10	FUN_00a7ea10	.text	132		clean	unknown		unanalyzed	
@@ -33818,7 +33818,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00aac5f0	FUN_00aac5f0	.text	32		clean	unknown		unanalyzed	
 00aac610	FUN_00aac610	.text	61		clean	unknown		unanalyzed	
 00aac650	FUN_00aac650	.text	59		clean	unknown		unanalyzed	
-00aac690	FUN_00aac690	.text	30		clean	unknown		unanalyzed	
+00aac690	FUN_00aac690	.text	30		clean	asset	recon/vclass	reversed	name=AssetHandlerTemplate::scalar_deleting_destructor; slot=0; shared_by=162 handlers; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义
 00aac6b0	FUN_00aac6b0	.text	59		clean	unknown		unanalyzed	
 00aac6f0	FUN_00aac6f0	.text	81		clean	unknown		unanalyzed	
 00aac750	FUN_00aac750	.text	23		clean	unknown		unanalyzed	

@@ -103,6 +103,7 @@ EA 已以 GPL v3（附加条款）公开两份材料，克隆在 `work/reference
 - [x] 资源类型目录与名称哈希 — 已合并（recon/types）。`asset_types.tsv` 266 个类型全部有名（9 个只在程序里出现的用 XSD 标识符反查）；instanceId = 转小写的 SuperFastHash 变体（0x00417DB0），typeId = 不转小写的同一算法；C++ `ra3/asset/NameHash.h`，`ra3tool streams` 全量 118,232 条两项 0 不等。typeHash 语义未知（docs/design/asset_types.md）
 - [ ] Ghidra 函数导出刷新（types agent 用 -Save 补建了 0x004B1C80 等，台账尚未收录）
 - [x] 模块归属工具 `tools/analysis/attribute_modules.py` → `module_estimates.tsv`：台账/虚表/64 KiB 邻近三级归属，留出验证虚表 4/4、邻近 35/38（92%）；仍未归属 26,050。模块映射已按新台账刷新。asset 的邻近估计（961，留出 1/2）偏粗，慎用
-- [ ] 虚函数按虚表归类到 C++ 类：先做 164 个资源处理器虚表的接口，再全量 2,977 个（查 RTTI） — 子 agent，分支 recon/vclass，用 Ghidra 工程副本 work/ghidra_vclass
+- [x] 虚表 → 类（recon/vclass，已合并）：没有 RTTI；164 个资源处理器是 5 槽接口（析构 / create / 原位复制 / destroy / 缺失原型解析），分属 3 个模板族（多态 119、单例设置 20、4 字节值 9）加少量特化；`classes.tsv` 3,126 行、805 条候选继承边（启发式）。注意 `vtables.tsv` 是“连续代码指针段”，相邻虚表会被合并（docs/design/class_map.md）
+- [ ] 精确虚表边界：用构造/析构写入点与直接虚调用重新切分 vtables.tsv 的连续段
 - [ ] hook 候选目录：全部 clean 函数按叶/纯度/序言可搬/调用约定分级，并刷新 Ghidra 函数导出 — 子 agent，分支 recon/hookcat，独占 work/ghidra
 - [ ] 资源二进制布局：由 XSD 推导每个类型的实例布局，用全部实例的重定位/导入表验证（只写 Python） — 子 agent，分支 recon/xsdlayout
