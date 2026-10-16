@@ -7,17 +7,22 @@
 当前唯一登记的游戏目标是一次性 RefPack 解码器
 `ra3_1.0.game Decode (0x009F72E0)`。
 
-`Ra3::hook` 在目标入口写入五字节 `jmp rel32`。可执行 trampoline 先执行完整的
-stolen bytes，再跳回原函数。入口跳转先到目标附近的 relay，relay 再跳到任意
-32 位地址，因此 DLL 地址与目标相距超过 2 GiB 时仍可工作。
+`Ra3::hook` 在目标入口写入五字节 `jmp rel32`，直接跳到替换函数；32 位下 rel32
+按 2^32 回绕，任意两地址之间都可达。可执行 trampoline 先执行完整的 stolen bytes，
+再跳回原函数。trampoline 从共享的 64 KiB 可执行块里按 16 字节切槽：每次
+`VirtualAlloc` 都要占 64 KiB 地址空间，32 位进程装不下成千上万个独立分配。
 
 安装和卸载都执行以下事务：
 
-1. 创建 Toolhelp32 线程快照，挂起当前进程的其他线程。
-2. 读取每个线程的 EIP；EIP 落在待改写范围时恢复所有线程并重试，持续出现则失败。
-3. 在所有线程保持挂起时比较内存中的完整 expected bytes。
-4. 临时把代码页设为可写，写入补丁，刷新指令缓存并恢复原页保护。
-5. 恢复所有线程。
+1. 先在堆上准备好全部数据（trampoline、原字节、补丁字节、Detour 对象）。
+2. 创建 Toolhelp32 线程快照，挂起当前进程的其他线程。
+3. 读取每个线程的 EIP；EIP 落在待改写范围时恢复所有线程并重试，持续出现则失败。
+4. 在所有线程保持挂起时比较内存中的 expected bytes。
+5. 临时把代码页设为可写，写入补丁，刷新指令缓存并恢复原页保护。
+6. 恢复所有线程。
+
+第 2–6 步不得使用堆（线程句柄放在定长数组里，错误信息在恢复线程后才拼）：被挂起的
+游戏线程可能正持有堆锁，此时再分配内存会让安装线程永久卡死。
 
 expected bytes 必须覆盖全部 stolen bytes。RefPack 目标固定校验前 16 字节：
 `51 8B 4C 24 0C 85 C9 56 8B 74 24 0C 75 07 33 C0`，只偷取前五字节的两条完整、
@@ -106,7 +111,14 @@ summary_interval_ms=1000
 Remove-Item "$env:LOCALAPPDATA\Ra3Source\logs\ra3hook.log" -ErrorAction SilentlyContinue
 ```
 
-用原版启动器正常启动 RA3，不加启动参数。进入主菜单并确认主窗口可见后执行：
+用原版启动器正常启动 RA3。启动器 `RA3.exe` 本身没有 SecuROM 区段（只有
+`.text/.rdata/.data/.rsrc`）；按它的字符串，它按语言挑一个 `*_*.SkuDef`，以
+`-config "<SkuDef 路径>"`（可选 `-runver`）启动 SkuDef 里 `set-exe` 指定的
+`Data\ra3_1.0.game`。
+
+游戏进程出现后立即执行下面的注入命令：`--wait-window` 会在第一个可见顶层窗口出现时
+注入。这时保护代码的启动阶段已经结束（窗口由游戏代码创建），而大部分 BIG 压缩成员
+还没读，正好让 RefPack hook 覆盖整个加载过程。等到主菜单再注入，多数解码已经做完。
 
 ```
 build\win32\bin\Debug\ra3inject.exe --name ra3_1.0.game --dll D:\Game\Ra3\RevRa3-hook\Ra3Source\build\win32\bin\Debug\ra3hook.dll --wait-window
@@ -139,5 +151,6 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 - 无输入长度的原 ABI 无法在坏指针或截断流上提供内存安全保证。
 - shadow 会额外分配输出缓冲并增加解码开销，不用于性能结论。
 - 当前 DLL 面向“注入后随进程退出”的实验，不支持 `FreeLibrary` 热卸载。撤销方式
-  是退出目标进程。
+  是退出目标进程。进程退出时 worker 线程先被系统终止，可能正持有日志锁，所以
+  `DLL_PROCESS_DETACH` 只在拿得到锁时写最后一次汇总。
 - 代码完整性检查属于必须尊重的外部约束，不在本项目规避范围内。

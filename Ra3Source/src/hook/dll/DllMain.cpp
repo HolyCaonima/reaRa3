@@ -354,7 +354,12 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, void*)
             CloseHandle(thread);
         }
     } else if (reason == DLL_PROCESS_DETACH) {
-        writeSummary();
+        // At process exit the worker has already been killed, possibly while
+        // holding the log lock.
+        if (g_logMutex.try_lock()) {
+            g_logMutex.unlock();
+            writeSummary();
+        }
     }
     return TRUE;
 }

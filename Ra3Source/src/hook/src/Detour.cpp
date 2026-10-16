@@ -4,8 +4,9 @@
 #include <TlHelp32.h>
 
 #include <algorithm>
+#include <array>
 #include <cstring>
-#include <limits>
+#include <mutex>
 #include <string>
 #include <utility>
 
@@ -13,174 +14,159 @@ namespace ra3::hook {
 namespace {
 
 constexpr std::size_t jumpSize = 5;
-constexpr std::size_t absoluteJumpSize = 6;
-constexpr unsigned suspendAttempts = 20;
+constexpr unsigned patchAttempts = 20;
+constexpr std::size_t maxSuspendedThreads = 1024;
 
-std::string windowsError(const char* operation, DWORD error = GetLastError())
+std::string windowsError(const char* operation, DWORD error)
 {
     return std::string(operation) + " failed with Windows error " + std::to_string(error);
 }
 
-class SuspendedThreads {
-public:
-    ~SuspendedThreads()
-    {
-        for (HANDLE thread : m_threads) {
-            ResumeThread(thread);
-            CloseHandle(thread);
+// rel32 displacements wrap around the 32-bit address space, so a 5-byte jump
+// reaches any destination from any source.
+void writeJump(std::uint8_t* output, const void* source, const void* destination)
+{
+    const auto from = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(source)) + jumpSize;
+    const auto to = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(destination));
+    const std::uint32_t relative = to - from;
+    output[0] = 0xE9;
+    std::memcpy(output + 1, &relative, sizeof(relative));
+}
+
+// Trampolines are carved from shared executable blocks: every VirtualAlloc
+// takes 64 KiB of address space, which thousands of hooks in a 32-bit process
+// cannot afford. Slots are never returned.
+std::uint8_t* allocateTrampoline(std::size_t size)
+{
+    constexpr std::size_t blockSize = 64 * 1024;
+    constexpr std::size_t alignment = 16;
+    static std::mutex mutex;
+    static std::uint8_t* block = nullptr;
+    static std::size_t used = blockSize;
+
+    const std::size_t slot = (size + alignment - 1) / alignment * alignment;
+    std::lock_guard<std::mutex> lock(mutex);
+    if (blockSize - used < slot) {
+        block = static_cast<std::uint8_t*>(
+            VirtualAlloc(nullptr, blockSize, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE));
+        if (block == nullptr) {
+            return nullptr;
         }
+        used = 0;
     }
+    std::uint8_t* result = block + used;
+    used += slot;
+    return result;
+}
 
-    SuspendedThreads(const SuspendedThreads&) = delete;
-    SuspendedThreads& operator=(const SuspendedThreads&) = delete;
+enum class PatchStatus { written, busy, changed, failed };
 
-    static Result<std::unique_ptr<SuspendedThreads>> acquire(const void* address, std::size_t length)
-    {
-        for (unsigned attempt = 0; attempt < suspendAttempts; ++attempt) {
-            auto suspended = std::unique_ptr<SuspendedThreads>(new SuspendedThreads());
-            const auto result = suspended->suspendOnce(address, length);
-            if (result.ok() && result.value()) {
-                return suspended;
-            }
-            if (!result.ok()) {
-                return result.error();
-            }
-            suspended.reset();
-            Sleep(1);
-        }
-        return makeError("a thread instruction pointer remained inside the patch range");
-    }
-
-private:
-    SuspendedThreads() = default;
-
-    Result<bool> suspendOnce(const void* address, std::size_t length)
-    {
-        const DWORD processId = GetCurrentProcessId();
-        const DWORD currentThreadId = GetCurrentThreadId();
-        HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
-        if (snapshot == INVALID_HANDLE_VALUE) {
-            return makeError(windowsError("CreateToolhelp32Snapshot"));
-        }
-
-        THREADENTRY32 entry{};
-        entry.dwSize = sizeof(entry);
-        BOOL found = Thread32First(snapshot, &entry);
-        while (found) {
-            if (entry.th32OwnerProcessID == processId && entry.th32ThreadID != currentThreadId) {
-                HANDLE thread = OpenThread(
-                    THREAD_SUSPEND_RESUME | THREAD_GET_CONTEXT | THREAD_QUERY_INFORMATION,
-                    FALSE,
-                    entry.th32ThreadID);
-                if (thread == nullptr) {
-                    const DWORD error = GetLastError();
-                    if (error != ERROR_INVALID_PARAMETER) {
-                        CloseHandle(snapshot);
-                        return makeError(windowsError("OpenThread", error));
-                    }
-                } else if (SuspendThread(thread) == static_cast<DWORD>(-1)) {
-                    const DWORD error = GetLastError();
-                    CloseHandle(thread);
-                    CloseHandle(snapshot);
-                    return makeError(windowsError("SuspendThread", error));
-                } else {
-                    m_threads.push_back(thread);
-                }
-            }
-            found = Thread32Next(snapshot, &entry);
-        }
-        const DWORD enumerationError = GetLastError();
-        CloseHandle(snapshot);
-        if (enumerationError != ERROR_NO_MORE_FILES) {
-            return makeError(windowsError("Thread32Next", enumerationError));
-        }
-
-        const auto begin = reinterpret_cast<std::uintptr_t>(address);
-        const auto end = begin + length;
-        for (HANDLE thread : m_threads) {
-            CONTEXT context{};
-            context.ContextFlags = CONTEXT_CONTROL;
-            if (!GetThreadContext(thread, &context)) {
-                return makeError(windowsError("GetThreadContext"));
-            }
-            const auto instruction = static_cast<std::uintptr_t>(context.Eip);
-            if (instruction >= begin && instruction < end) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    std::vector<HANDLE> m_threads;
+struct PatchOutcome {
+    PatchStatus status = PatchStatus::failed;
+    const char* operation = "";
+    DWORD error = ERROR_SUCCESS;
 };
 
-bool makeJump(std::uint8_t* output, const void* source, const void* destination)
+// Suspends every other thread, checks that none is executing the range and
+// that it still holds `expected`, then writes `bytes`. Nothing here may use the
+// heap: a suspended thread may own its lock.
+PatchOutcome patchWithThreadsSuspended(
+    std::uint8_t* target, const std::uint8_t* expected, const std::uint8_t* bytes, std::size_t size)
 {
-    const auto from =
-        static_cast<std::int64_t>(reinterpret_cast<std::uintptr_t>(source)) + jumpSize;
-    const auto to = static_cast<std::int64_t>(reinterpret_cast<std::uintptr_t>(destination));
-    const std::int64_t displacement = to - from;
-    if (displacement < std::numeric_limits<std::int32_t>::min()
-        || displacement > std::numeric_limits<std::int32_t>::max()) {
-        return false;
-    }
-    output[0] = 0xE9;
-    const auto relative = static_cast<std::int32_t>(displacement);
-    std::memcpy(output + 1, &relative, sizeof(relative));
-    return true;
-}
+    std::array<HANDLE, maxSuspendedThreads> threads{};
+    std::size_t count = 0;
+    PatchOutcome outcome;
+    const auto fail = [&](const char* operation) {
+        outcome = {PatchStatus::failed, operation, GetLastError()};
+    };
 
-void* allocateNear(const void* target, std::size_t size)
-{
-    SYSTEM_INFO system{};
-    GetSystemInfo(&system);
-    const std::uintptr_t granularity = system.dwAllocationGranularity;
-    const std::uintptr_t address = reinterpret_cast<std::uintptr_t>(target);
-    const std::uintptr_t base = address - (address % granularity);
-    const std::uintptr_t maximumDistance =
-        static_cast<std::uintptr_t>(std::numeric_limits<std::int32_t>::max());
-    for (std::uintptr_t distance = granularity; distance < maximumDistance; distance += granularity) {
-        if (base >= distance) {
-            void* allocation = VirtualAlloc(
-                reinterpret_cast<void*>(base - distance),
-                size,
-                MEM_COMMIT | MEM_RESERVE,
-                PAGE_READWRITE);
-            if (allocation != nullptr) {
-                return allocation;
-            }
+    HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
+    if (snapshot == INVALID_HANDLE_VALUE) {
+        fail("CreateToolhelp32Snapshot");
+        return outcome;
+    }
+    const DWORD processId = GetCurrentProcessId();
+    const DWORD currentThreadId = GetCurrentThreadId();
+    THREADENTRY32 entry{};
+    entry.dwSize = sizeof(entry);
+    bool ok = true;
+    for (BOOL found = Thread32First(snapshot, &entry); found && ok; found = Thread32Next(snapshot, &entry)) {
+        if (entry.th32OwnerProcessID != processId || entry.th32ThreadID == currentThreadId) {
+            continue;
         }
-        if (base <= std::numeric_limits<std::uintptr_t>::max() - distance) {
-            void* allocation = VirtualAlloc(
-                reinterpret_cast<void*>(base + distance),
-                size,
-                MEM_COMMIT | MEM_RESERVE,
-                PAGE_READWRITE);
-            if (allocation != nullptr) {
-                return allocation;
-            }
+        HANDLE thread = OpenThread(THREAD_SUSPEND_RESUME | THREAD_GET_CONTEXT, FALSE, entry.th32ThreadID);
+        if (thread == nullptr) {
+            continue;  // the thread exited after the snapshot
+        }
+        if (count == threads.size()) {
+            CloseHandle(thread);
+            outcome = {PatchStatus::failed, "suspending more than 1024 threads", ERROR_SUCCESS};
+            ok = false;
+        } else if (SuspendThread(thread) == static_cast<DWORD>(-1)) {
+            fail("SuspendThread");
+            CloseHandle(thread);
+            ok = false;
+        } else {
+            threads[count++] = thread;
         }
     }
-    return nullptr;
+    CloseHandle(snapshot);
+
+    const auto begin = reinterpret_cast<std::uintptr_t>(target);
+    for (std::size_t i = 0; ok && i < count; ++i) {
+        CONTEXT context{};
+        context.ContextFlags = CONTEXT_CONTROL;
+        if (!GetThreadContext(threads[i], &context)) {
+            fail("GetThreadContext");
+            ok = false;
+        } else if (context.Eip >= begin && context.Eip < begin + size) {
+            outcome.status = PatchStatus::busy;
+            ok = false;
+        }
+    }
+    if (ok && std::memcmp(target, expected, size) != 0) {
+        outcome.status = PatchStatus::changed;
+        ok = false;
+    }
+    if (ok) {
+        DWORD oldProtection = 0;
+        DWORD ignored = 0;
+        if (!VirtualProtect(target, size, PAGE_EXECUTE_READWRITE, &oldProtection)) {
+            fail("VirtualProtect");
+        } else {
+            std::memcpy(target, bytes, size);
+            FlushInstructionCache(GetCurrentProcess(), target, size);
+            VirtualProtect(target, size, oldProtection, &ignored);
+            outcome.status = PatchStatus::written;
+        }
+    }
+
+    for (std::size_t i = 0; i < count; ++i) {
+        ResumeThread(threads[i]);
+        CloseHandle(threads[i]);
+    }
+    return outcome;
 }
 
-Result<bool> writeCode(void* target, const std::vector<std::uint8_t>& bytes)
+Result<bool> patch(
+    std::uint8_t* target, const std::vector<std::uint8_t>& expected, const std::vector<std::uint8_t>& bytes)
 {
-    DWORD oldProtection = 0;
-    if (!VirtualProtect(target, bytes.size(), PAGE_EXECUTE_READWRITE, &oldProtection)) {
-        return makeError(windowsError("VirtualProtect"));
+    for (unsigned attempt = 0; attempt < patchAttempts; ++attempt) {
+        const PatchOutcome outcome =
+            patchWithThreadsSuspended(target, expected.data(), bytes.data(), bytes.size());
+        switch (outcome.status) {
+        case PatchStatus::written:
+            return true;
+        case PatchStatus::busy:
+            Sleep(1);
+            continue;
+        case PatchStatus::changed:
+            return makeError("target bytes do not match the expected game build");
+        case PatchStatus::failed:
+            return makeError(windowsError(outcome.operation, outcome.error));
+        }
     }
-    std::memcpy(target, bytes.data(), bytes.size());
-    const BOOL flushed = FlushInstructionCache(GetCurrentProcess(), target, bytes.size());
-    DWORD ignored = 0;
-    const BOOL restored = VirtualProtect(target, bytes.size(), oldProtection, &ignored);
-    if (!flushed) {
-        return makeError(windowsError("FlushInstructionCache"));
-    }
-    if (!restored) {
-        return makeError(windowsError("VirtualProtect restore"));
-    }
-    return true;
+    return makeError("a thread instruction pointer remained inside the patch range");
 }
 
 }  // namespace
@@ -193,21 +179,14 @@ Detour::Detour(
     : m_target(target),
       m_trampoline(trampoline),
       m_originalBytes(std::move(originalBytes)),
-      m_patchBytes(std::move(patchBytes)),
-      m_installed(true)
+      m_patchBytes(std::move(patchBytes))
 {
 }
 
 Detour::~Detour()
 {
     if (m_installed) {
-        const auto result = uninstall();
-        if (!result.ok()) {
-            return;
-        }
-    }
-    if (m_trampoline != nullptr) {
-        VirtualFree(m_trampoline, 0, MEM_RELEASE);
+        (void)uninstall();
     }
 }
 
@@ -216,16 +195,9 @@ Result<bool> Detour::uninstall()
     if (!m_installed) {
         return true;
     }
-    auto suspended = SuspendedThreads::acquire(m_target, m_originalBytes.size());
-    if (!suspended.ok()) {
-        return suspended.error();
-    }
-    if (!std::equal(m_patchBytes.begin(), m_patchBytes.end(), static_cast<std::uint8_t*>(m_target))) {
-        return makeError("target bytes no longer match this detour");
-    }
-    auto written = writeCode(m_target, m_originalBytes);
-    if (!written.ok()) {
-        return written.error();
+    auto restored = patch(static_cast<std::uint8_t*>(m_target), m_patchBytes, m_originalBytes);
+    if (!restored.ok()) {
+        return restored.error();
     }
     m_installed = false;
     return true;
@@ -243,69 +215,36 @@ Result<std::unique_ptr<Detour>> installDetour(const HookSpec& spec)
     if (spec.expectedBytes.size() < spec.stolenLength) {
         return makeError("expected bytes must cover every stolen byte");
     }
-
-    const std::size_t trampolineSize = spec.stolenLength + jumpSize + absoluteJumpSize;
-    void* trampoline = allocateNear(spec.target, trampolineSize);
-    if (trampoline == nullptr) {
-        return makeError(windowsError("VirtualAlloc"));
-    }
-    std::memcpy(trampoline, spec.target, spec.stolenLength);
-    auto* trampolineBytes = static_cast<std::uint8_t*>(trampoline);
-    if (!makeJump(
-            trampolineBytes + spec.stolenLength,
-            trampolineBytes + spec.stolenLength,
-            static_cast<std::uint8_t*>(spec.target) + spec.stolenLength)) {
-        VirtualFree(trampoline, 0, MEM_RELEASE);
-        return makeError("trampoline jump is outside rel32 range");
-    }
-    std::uint8_t* relay = trampolineBytes + spec.stolenLength + jumpSize;
-    relay[0] = 0x68;
-    const auto replacement = static_cast<std::uint32_t>(
-        reinterpret_cast<std::uintptr_t>(spec.replacement));
-    std::memcpy(relay + 1, &replacement, sizeof(replacement));
-    relay[5] = 0xC3;
-    DWORD oldProtection = 0;
-    if (!VirtualProtect(trampoline, trampolineSize, PAGE_EXECUTE_READ, &oldProtection)) {
-        const auto error = makeError(windowsError("VirtualProtect trampoline"));
-        VirtualFree(trampoline, 0, MEM_RELEASE);
-        return error;
-    }
-    FlushInstructionCache(GetCurrentProcess(), trampoline, trampolineSize);
-
-    auto suspended = SuspendedThreads::acquire(spec.target, spec.stolenLength);
-    if (!suspended.ok()) {
-        VirtualFree(trampoline, 0, MEM_RELEASE);
-        return suspended.error();
-    }
-    if (!std::equal(
-            spec.expectedBytes.begin(),
-            spec.expectedBytes.end(),
-            static_cast<const std::uint8_t*>(spec.target))) {
-        VirtualFree(trampoline, 0, MEM_RELEASE);
+    auto* target = static_cast<std::uint8_t*>(spec.target);
+    if (!std::equal(spec.expectedBytes.begin(), spec.expectedBytes.end(), target)) {
         return makeError("target bytes do not match the expected game build");
     }
 
-    std::vector<std::uint8_t> original(
-        static_cast<const std::uint8_t*>(spec.target),
-        static_cast<const std::uint8_t*>(spec.target) + spec.stolenLength);
-    std::vector<std::uint8_t> patch(spec.stolenLength, 0x90);
-    if (!makeJump(patch.data(), spec.target, relay)) {
-        VirtualFree(trampoline, 0, MEM_RELEASE);
-        return makeError("replacement jump is outside rel32 range");
+    std::uint8_t* trampoline = allocateTrampoline(spec.stolenLength + jumpSize);
+    if (trampoline == nullptr) {
+        return makeError(windowsError("VirtualAlloc", GetLastError()));
     }
+    std::memcpy(trampoline, target, spec.stolenLength);
+    writeJump(trampoline + spec.stolenLength, trampoline + spec.stolenLength, target + spec.stolenLength);
+    FlushInstructionCache(GetCurrentProcess(), trampoline, spec.stolenLength + jumpSize);
+
+    std::vector<std::uint8_t> original(target, target + spec.stolenLength);
+    std::vector<std::uint8_t> patchBytes(spec.stolenLength, 0x90);
+    writeJump(patchBytes.data(), target, spec.replacement);
+    auto detour = std::unique_ptr<Detour>(new Detour(target, trampoline, original, patchBytes));
+
     if (spec.trampolineOut != nullptr) {
         *spec.trampolineOut = trampoline;
     }
-    auto written = writeCode(spec.target, patch);
+    auto written = patch(target, original, patchBytes);
     if (!written.ok()) {
         if (spec.trampolineOut != nullptr) {
             *spec.trampolineOut = nullptr;
         }
-        VirtualFree(trampoline, 0, MEM_RELEASE);
         return written.error();
     }
-    return std::unique_ptr<Detour>(
-        new Detour(spec.target, trampoline, std::move(original), std::move(patch)));
+    detour->m_installed = true;
+    return detour;
 }
 
 }  // namespace ra3::hook
