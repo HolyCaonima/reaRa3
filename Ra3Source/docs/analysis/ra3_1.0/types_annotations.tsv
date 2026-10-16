@@ -1,0 +1,6 @@
+address	status	owner	module	notes
+00417220	reversed	recon/types	asset	Libraries\Source\assetmanager\resourcemanager.cpp: registers handler descriptors; 164 clean direct callers exported
+00417db0	reversed	recon/types	asset	resourcemanager.cpp neighborhood: lowercase 32-bit SuperFastHash-family core (bytes,length,seed,finalize)
+0047be90	reversed	recon/types	asset	runtime string-to-instanceId wrapper: strlen, then 00417DB0(name,length,length,1)
+004b1c80	reversed	recon/types	asset	type-factory leaf created with -Save; four cases and allocation sizes exported
+00540b50	reversed	recon/types	asset	dynamic handler descriptor for typeId 86682E78, typeHash 6C5977BB, vtable 00BDFD04
