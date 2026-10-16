@@ -9,6 +9,9 @@ Outputs:
   docs/analysis/ra3_1.0/vclass_annotations.tsv
   docs/analysis/ra3_1.0/classes.tsv
   docs/analysis/ra3_1.0/class_recovery_stats.tsv
+
+By default class recovery consumes vtables_split.tsv when it exists.  Pass
+``--vtables`` to select another table explicitly.
 """
 from __future__ import annotations
 
@@ -240,6 +243,13 @@ def recover_vtable_stores(
                 elif destination.type == x86.X86_OP_REG:
                     registers.pop(destination.reg, None)
                 if destination.type == x86.X86_OP_MEM:
+                    memory = destination.mem
+                    if (
+                        memory.base in (x86.X86_REG_ESP, x86.X86_REG_EBP)
+                        or memory.index != 0
+                        or not (0 <= memory.disp <= 0x1000)
+                    ):
+                        continue
                     value = None
                     if source.type == x86.X86_OP_IMM:
                         value = source.imm
@@ -268,6 +278,11 @@ def main() -> None:
         default=Path(__file__).resolve().parents[2],
         help="Ra3Source directory",
     )
+    parser.add_argument(
+        "--vtables",
+        type=Path,
+        help="vtable table (default: vtables_split.tsv if present, otherwise vtables.tsv)",
+    )
     args = parser.parse_args()
     root = args.source_root.resolve()
     analysis = root / "docs" / "analysis" / "ra3_1.0"
@@ -280,8 +295,17 @@ def main() -> None:
         if row["section"] == ".text" and row["securom"] == "clean"
     }
     assets = [row for row in read_tsv(analysis / "asset_types.tsv") if row["handler_vtable"]]
-    original_vtables = read_tsv(analysis / "vtables.tsv")
-    candidate_vtables = {int(row["vtable"], 16) for row in original_vtables}
+    contiguous_vtables = read_tsv(analysis / "vtables.tsv")
+    vtable_path = args.vtables or (
+        analysis / "vtables_split.tsv"
+        if (analysis / "vtables_split.tsv").exists()
+        else analysis / "vtables.tsv"
+    )
+    selected_vtables = read_tsv(vtable_path)
+    split_format = bool(selected_vtables and "start" in selected_vtables[0])
+    candidate_vtables = {
+        int(row["start" if split_format else "vtable"], 16) for row in selected_vtables
+    }
     handler_types = {int(row["handler_vtable"], 16): row["typeName"] for row in assets}
     all_vtables = candidate_vtables | set(handler_types)
 
@@ -457,6 +481,9 @@ def main() -> None:
     )
 
     stores_by_function, edge_counts = recover_vtable_stores(image, ledger, all_vtables)
+    edge_kinds: dict[tuple[int, int], set[str]] = {
+        edge: {"ordered_vptr_overwrite"} for edge in edge_counts
+    }
     constructors: dict[int, list[int]] = defaultdict(list)
     for function, stores in stores_by_function.items():
         constructors[stores[-1]].append(function)
@@ -464,11 +491,58 @@ def main() -> None:
     for (base, derived), count in edge_counts.items():
         incoming[derived].append((base, count))
 
+    # A derived constructor commonly calls the base constructor before writing
+    # its own vptr.  Restrict this to direct calls where both functions already
+    # have independent vptr-write evidence.
+    final_table = {function: stores[-1] for function, stores in stores_by_function.items()}
+    for function, derived in final_table.items():
+        size = clean_sizes.get(function, 0)
+        for insn in instructions(image, function, size):
+            if (
+                insn.mnemonic == "call"
+                and insn.operands
+                and insn.operands[0].type == x86.X86_OP_IMM
+            ):
+                target = insn.operands[0].imm & 0xFFFFFFFF
+                base = final_table.get(target)
+                edge = (base, derived)
+                if base is not None and base != derived and edge in edge_counts:
+                    edge_kinds[edge].add("calls_base_vptr_writer")
+
+    # Destructor-chain evidence: the first virtual function of a derived table
+    # directly invokes the first virtual function of a base table.
+    dtor_to_tables: dict[int, set[int]] = defaultdict(set)
+    for vtable in all_vtables:
+        dtor = image.u32(vtable)
+        if dtor in clean_sizes:
+            dtor_to_tables[dtor].add(vtable)
+    for derived in all_vtables:
+        dtor = image.u32(derived)
+        if dtor not in clean_sizes:
+            continue
+        for insn in instructions(image, dtor, clean_sizes[dtor]):
+            if (
+                insn.mnemonic == "call"
+                and insn.operands
+                and insn.operands[0].type == x86.X86_OP_IMM
+            ):
+                target = insn.operands[0].imm & 0xFFFFFFFF
+                for base in dtor_to_tables.get(target, ()):
+                    edge = (base, derived)
+                    if base != derived and edge in edge_counts:
+                        edge_kinds[edge].add("destructor_chain")
+
+    incoming.clear()
+    for (base, derived), count in edge_counts.items():
+        incoming[derived].append((base, count))
+
     rtti = {vtable: valid_col(image, vtable) for vtable in all_vtables}
     class_rows: list[dict[str, object]] = []
-    original_by_vtable = {int(row["vtable"], 16): row for row in original_vtables}
+    selected_by_vtable = {
+        int(row["start" if split_format else "vtable"], 16): row for row in selected_vtables
+    }
     for vtable in sorted(all_vtables):
-        original = original_by_vtable.get(vtable)
+        original = selected_by_vtable.get(vtable)
         rtti_entry = rtti[vtable]
         if vtable in handler_types:
             class_name = f"AssetHandler<{handler_types[vtable]}>"
@@ -494,16 +568,34 @@ def main() -> None:
         ]
         evidence_parts = []
         if original:
-            evidence_parts.append("RecoverVtables 连续指针段")
+            evidence_parts.append(
+                "切分虚表: " + original.get("evidence_kinds", "RecoverVtables 连续指针段")
+            )
         if vtable in handler_types:
             evidence_parts.append("00417220 注册描述符")
         if rtti_entry:
             evidence_parts.append(f"COL={rtti_entry[0]:08X}")
         if bases:
             evidence_parts.append(
-                "有序 vptr 写入 "
-                + ",".join(f"{candidate:08X}->{vtable:08X}({count})" for candidate, count in bases)
+                "继承候选 "
+                + ",".join(
+                    f"{candidate:08X}->{vtable:08X}({count};"
+                    f"{'+'.join(sorted(edge_kinds.get((candidate, vtable), {'unknown'})))})"
+                    for candidate, count in bases
+                )
             )
+            base_targets = [
+                image.u32(base + slot * 4)
+                for slot in range(min(slot_count, int(selected_by_vtable.get(base, {}).get("slots", 0))))
+            ]
+            derived_targets = [image.u32(vtable + slot * 4) for slot in range(len(base_targets))]
+            shared_prefix = 0
+            for base_target, derived_target in zip(base_targets, derived_targets):
+                if base_target != derived_target:
+                    break
+                shared_prefix += 1
+            if shared_prefix:
+                evidence_parts.append(f"与首选基表共享前缀槽={shared_prefix}")
         if len(bases) > 1:
             evidence_parts.append("多基类候选，仅最高出现次数写入 base_vtable")
         class_rows.append(
@@ -536,20 +628,29 @@ def main() -> None:
     )
 
     stats = [
-        {"metric": "original_vtable_candidates", "value": len(candidate_vtables)},
+        {"metric": "original_contiguous_runs", "value": len(contiguous_vtables)},
+        {"metric": "selected_split_vtables", "value": len(candidate_vtables)},
         {"metric": "registered_handler_boundaries", "value": len(handler_types)},
         {"metric": "class_rows", "value": len(class_rows)},
         {"metric": "rtti_complete_object_locators", "value": sum(value is not None for value in rtti.values())},
         {"metric": "named_classes", "value": sum(not row["class_name"].startswith("Class_") for row in class_rows)},
         {"metric": "synthetic_classes", "value": sum(row["class_name"].startswith("Class_") for row in class_rows)},
         {"metric": "hierarchy_edges", "value": len(edge_counts)},
+        {
+            "metric": "edges_with_base_ctor_call",
+            "value": sum("calls_base_vptr_writer" in kinds for kinds in edge_kinds.values()),
+        },
+        {
+            "metric": "edges_with_destructor_chain",
+            "value": sum("destructor_chain" in kinds for kinds in edge_kinds.values()),
+        },
         {"metric": "constructor_store_functions", "value": len(stores_by_function)},
         {"metric": "handler_method_rows", "value": len(method_rows)},
         {"metric": "annotation_rows", "value": len(merged_annotations)},
     ]
     write_tsv(analysis / "class_recovery_stats.tsv", ("metric", "value"), stats)
     print(
-        f"class rows={len(class_rows)}, named={stats[4]['value']}, "
+        f"class rows={len(class_rows)}, named={sum(not row['class_name'].startswith('Class_') for row in class_rows)}, "
         f"edges={len(edge_counts)}, annotations={len(merged_annotations)}"
     )
 
