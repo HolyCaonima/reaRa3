@@ -6877,12 +6877,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005a9220	FUN_005a9220	.text	6		clean	unknown		unanalyzed	
 005a9230	FUN_005a9230	.text	6		clean	unknown		unanalyzed	
 005a9240	FUN_005a9240	.text	205		clean	unknown		unanalyzed	
-005a9310	FUN_005a9310	.text	127		clean	sim	recon/simrng	reversed	six-dword add-with-carry RNG step; Generals randomValue counterpart; ra3::sim::nextRandom; oracle 400000 consecutive transitions from four seeds, Debug+Release
+005a9310	FUN_005a9310	.text	127		clean	sim	recon/simrng	verified	six-dword add-with-carry RNG step; Generals randomValue counterpart; ra3::sim::nextRandom; oracle 400000 consecutive transitions from four seeds, Debug+Release; live shadow 256113/256113, replace 221723 calls in a skirmish (运行 22/23)
 005a93b0	FUN_005a93b0	.text	188		clean	sim	recon/simrng	reversed	seed all three RNG streams and logic base seed; Generals InitRandom(seed) counterpart; ra3::sim::seedRandom; oracle 10000/10000 Debug+Release
 005a9470	FUN_005a9470	.text	10		inner-patched	unknown		unanalyzed	
-005a94c0	FUN_005a94c0	.text	48		clean	sim	recon/simrng	reversed	logic inclusive integer range; differs from Generals by low>=high early return without state advance; ra3::sim::logicRandomInteger; oracle 10006/10006 Debug+Release (earlier: hook candidate: 生成闭区间 [min,max] 的伪随机整数)
-005a94f0	FUN_005a94f0	.text	40		clean	sim	recon/simrng	reversed	client inclusive integer range; Generals GetGameClientRandomValue counterpart; ra3::sim::clientRandomInteger; oracle 10006/10006 Debug+Release
-005a9520	FUN_005a9520	.text	40		clean	sim	recon/simrng	reversed	audio inclusive integer range; Generals GetGameAudioRandomValue counterpart; ra3::sim::clientRandomInteger; oracle 10006/10006 Debug+Release
+005a94c0	FUN_005a94c0	.text	48		clean	sim	recon/simrng	verified	logic inclusive integer range; differs from Generals by low>=high early return without state advance; ra3::sim::logicRandomInteger; oracle 10006/10006 Debug+Release (earlier: hook candidate: 生成闭区间 [min,max] 的伪随机整数); live shadow 23888/23888, replace 22174 calls in a skirmish (运行 22/23)
+005a94f0	FUN_005a94f0	.text	40		clean	sim	recon/simrng	verified	client inclusive integer range; Generals GetGameClientRandomValue counterpart; ra3::sim::clientRandomInteger; oracle 10006/10006 Debug+Release; live shadow 248/248, replace 109 calls in a skirmish (运行 22/23)
+005a9520	FUN_005a9520	.text	40		clean	sim	recon/simrng	verified	audio inclusive integer range; Generals GetGameAudioRandomValue counterpart; ra3::sim::clientRandomInteger; oracle 10006/10006 Debug+Release; live shadow 278/278, replace 159 calls in a skirmish (运行 22/23)
 005a9550	FUN_005a9550	.text	75		clean	unknown	recon/hookcat	reversed	hook candidate: 生成区间内伪随机浮点数
 005a95a0	FUN_005a95a0	.text	75		clean	unknown		unanalyzed	
 005a95f0	FUN_005a95f0	.text	75		clean	unknown		unanalyzed	

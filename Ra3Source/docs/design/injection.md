@@ -131,11 +131,11 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `gametextmanager` | `0x0053B500` GameText 三表优先级查询 | thiscall | 6 | `ra3::text::findGameText(GameTextManager*)` | live verified；仅显式键启用 |
 | `bigseek` | `0x009F5E00` BIG 文件 seek | thiscall（6 stack dword） | 6 | `ra3::io::seekGameBigFile` | live verified；仅显式键启用 |
 | `bigclose` | `0x009F5DB0` BIG 文件 close | thiscall | 5 | `ra3::io::closeGameBigFile` | live replace-only（运行 18，341 次，对局正常）；仅显式键启用；shadow 仅转发 |
-| `randomstep` | `0x005A9310` 六 dword RNG 核心步进 | thiscall | 5 | `ra3::sim::nextRandom` | offline-verified, live pending；仅显式键启用 |
+| `randomstep` | `0x005A9310` 六 dword RNG 核心步进 | thiscall | 5 | `ra3::sim::nextRandom` | live verified；仅显式键启用 |
 | `randominit` | `0x005A93B0` 三随机流统一播种 | cdecl | 10 | `ra3::sim::seedRandom` | offline-verified, live pending；仅显式键启用 |
-| `logicrandomint` | `0x005A94C0` 逻辑流闭区间整数 | cdecl | 5 | `ra3::sim::logicRandomInteger` | offline-verified, live pending；仅显式键启用 |
-| `clientrandomint` | `0x005A94F0` 客户端流闭区间整数 | cdecl | 5 | `ra3::sim::clientRandomInteger` | offline-verified, live pending；仅显式键启用 |
-| `audiorandomint` | `0x005A9520` 音频流闭区间整数 | cdecl | 5 | `ra3::sim::clientRandomInteger` | offline-verified, live pending；仅显式键启用 |
+| `logicrandomint` | `0x005A94C0` 逻辑流闭区间整数 | cdecl | 5 | `ra3::sim::logicRandomInteger` | live verified；仅显式键启用 |
+| `clientrandomint` | `0x005A94F0` 客户端流闭区间整数 | cdecl | 5 | `ra3::sim::clientRandomInteger` | live verified；仅显式键启用 |
+| `audiorandomint` | `0x005A9520` 音频流闭区间整数 | cdecl | 5 | `ra3::sim::clientRandomInteger` | live verified；仅显式键启用 |
 
 上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节
@@ -315,6 +315,8 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 19 | 53 目标 shadow（Release，新增 ports2 的 17 个数学目标，bigclose 也开），遭遇战加一个 Easy AI | `--wait-window` | 崩溃前全部 0 不一致；normalize2 1/1 | BEGIN 后约 60 秒 `ra3_1.0.game` 在 0x005869B3 访问违例；同样设置不注入的基线对局正常 |
 | 20 | 同运行 19，修复 4 个包装的 EAX 返回值后 | `--wait-window` | 53 个目标全部 0 不一致；normalize2 570/570、distance3 919/919（80-bit 比较）、transformdirection3 1208/1208、scalevector3 225/225、clampoffset68 31/31、vectorrangeequal2 4/4、vectorequal3 1/1；游戏 CW 0x007F、MXCSR 0x1FA0，`cw_changes=0` | 对局 2 分钟正常；ports2 另 10 个目标未被调用 |
 | 21 | 53 目标 replace（Release），遭遇战加 Easy AI | `--wait-window` | normalize2 570、distance3 262、scalevector3 224、transformdirection3 198、clampoffset68 30、bigclose 388、bigseek 3761、gametextmanager 875、bigfindentry 2661046 次由 Ra3Source 处理 | 对局 2 分钟正常，无崩溃事件 |
+| 22 | 58 目标 shadow（Release，新增 simrng 的 5 个显式键），遭遇战加 Easy AI | `--wait-window` | 58 个目标全部 0 不一致；randomstep 256113/256113、logicrandomint 23888/23888、clientrandomint 248/248、audiorandomint 278/278（返回值与六 dword 状态都比较） | randominit 0 次（播种早于注入或走别的路径）；对局 2 分钟正常 |
+| 23 | 58 目标 replace（Release），遭遇战加 Easy AI | `--wait-window` | randomstep 221723、logicrandomint 22174、clientrandomint 109、audiorandomint 159、bigfindentry 2632560 次由 Ra3Source 处理 | 对局 2 分钟正常，无崩溃事件 |
 
 运行 19 的崩溃点紧跟 `call 0x0056F370`（normalize2）：调用者把 EAX 当作结果指针
 解引用（`mov edx, [eax]`）。原函数按 MSVC 返回结构体的惯例把 `output` 留在 EAX，
