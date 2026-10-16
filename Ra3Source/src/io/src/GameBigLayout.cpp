@@ -1,6 +1,7 @@
 #include <ra3/io/GameBigLayout.h>
 
 #include <ra3/io/PathCompare.h>
+#include <ra3/io/RefPack.h>
 
 #include <algorithm>
 #include <cctype>
@@ -157,7 +158,7 @@ std::uint32_t hashGameBigPath(const char* path, std::uint32_t seed) noexcept
 
 std::uint64_t gameBigStoredSize(const GameBigFile* file) noexcept
 {
-    return file->storedSize;
+    return file->logicalSize;
 }
 
 std::uint64_t gameBigAbsoluteDataOffset(const GameBigFile* file) noexcept
@@ -167,7 +168,7 @@ std::uint64_t gameBigAbsoluteDataOffset(const GameBigFile* file) noexcept
 
 bool applyGameBigSeekState(GameBigFile* file, std::uint64_t position) noexcept
 {
-    if (position != 0 && file->expandedSize != 0) {
+    if (position != 0 && file->compressedSize != 0) {
         file->logicalPosition = position;
         return false;
     }
@@ -179,6 +180,129 @@ bool applyGameBigSeekState(GameBigFile* file, std::uint64_t position) noexcept
         file->temporaryBuffer = nullptr;
     }
     return reset;
+}
+
+bool prepareGameBigFile(
+    const GameBigHandler* handler,
+    const char* path,
+    std::uint32_t ownerToken,
+    std::uint32_t openMode,
+    GameBigRangeRead read,
+    void* readContext,
+    GameBigFile* output) noexcept
+{
+    if (handler == nullptr || path == nullptr || output == nullptr) {
+        return false;
+    }
+    if (std::strncmp(path, "big:", 4) == 0) {
+        path += 4;
+    }
+    if (*path == '/' || *path == '\\') {
+        ++path;
+    }
+
+    const char* member = path;
+    const char* separator = std::strchr(path, '|');
+    const std::size_t archiveLength =
+        separator == nullptr ? 0u : static_cast<std::size_t>(separator - path);
+    if (separator != nullptr) {
+        member = separator + 1;
+    }
+
+    for (GameBigArchive* archive = handler->head;
+         archive != nullptr;
+         archive = archive->next) {
+        if (separator != nullptr) {
+            const char* name = std::strchr(archive->archiveName, ':');
+            name = name == nullptr ? archive->archiveName : name + 1;
+            if (std::strlen(name) != archiveLength
+                || std::memcmp(name, path, archiveLength) != 0) {
+                continue;
+            }
+        }
+
+        std::uint64_t offset = 0;
+        std::uint64_t size = 0;
+        if (findGameBigEntry(
+                &archive->index, member, 0, &offset, &size, nullptr, nullptr)
+            == nullptr) {
+            // A qualified archive never falls through to a later archive.
+            if (separator != nullptr) {
+                return false;
+            }
+            continue;
+        }
+
+        std::uint64_t decodedSize = 0;
+        if (read != nullptr && size >= 5) {
+            std::uint8_t prefix[16]{};
+            const std::uint32_t wanted =
+                static_cast<std::uint32_t>(std::min<std::uint64_t>(sizeof(prefix), size));
+            if (read(readContext, archive, offset, prefix, wanted) == wanted) {
+                decodedSize = probeRefPackSize(prefix);
+            }
+        }
+
+        *output = {};
+        output->archive = archive;
+        output->ownerToken = ownerToken;
+        output->openMode = openMode;
+        output->dataOffset = offset;
+        output->logicalSize = decodedSize == 0 ? size : decodedSize;
+        output->compressedSize = decodedSize == 0 ? 0 : size;
+        output->sourcePosition = offset;
+        return true;
+    }
+    return false;
+}
+
+std::uint64_t seekGameBigFile(
+    GameBigFile* file,
+    std::uint64_t position,
+    const GameBigReleaseOps& operations) noexcept
+{
+    void* const inflater = file->inflater;
+    void* const temporary = file->temporaryBuffer;
+    if (applyGameBigSeekState(file, position)) {
+        if (operations.destroyInflater != nullptr) {
+            operations.destroyInflater(operations.context, inflater);
+        }
+        if (operations.release != nullptr) {
+            operations.release(operations.context, temporary);
+        }
+    }
+    return position;
+}
+
+void closeGameBigFile(
+    GameBigFile* file,
+    const GameBigReleaseOps& operations) noexcept
+{
+    if (file == nullptr) {
+        return;
+    }
+    if (file->inflater != nullptr) {
+        if (operations.destroyInflater != nullptr) {
+            operations.destroyInflater(operations.context, file->inflater);
+        }
+        if (operations.release != nullptr) {
+            operations.release(operations.context, file->temporaryBuffer);
+        }
+        file->inflater = nullptr;
+        file->temporaryBuffer = nullptr;
+    }
+    if (operations.release != nullptr) {
+        operations.release(operations.context, file);
+    }
+}
+
+void applyGameBigReadResult(GameBigFile* file, std::uint32_t actual) noexcept
+{
+    if (file->compressedSize == 0) {
+        file->sourcePosition += actual;
+    } else {
+        file->logicalPosition += actual;
+    }
 }
 
 const std::uint8_t* findGameBigHashedEntry(

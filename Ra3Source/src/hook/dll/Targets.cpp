@@ -50,6 +50,8 @@ TargetState g_bigEntryCount;
 TargetState g_bigTrailerSize;
 TargetState g_bigStoredSize;
 TargetState g_bigAbsoluteOffset;
+TargetState g_bigSeek;
+TargetState g_bigClose;
 
 // ra3_1.0.game 0x009F72E0: one-shot RefPack decoder, returns the decoded size.
 using DecodeFunction = int(__stdcall*)(std::uint8_t*, const std::uint8_t*);
@@ -899,6 +901,83 @@ std::uint64_t __stdcall bigAbsoluteOffset(const ra3::io::GameBigFile* file)
     return game;
 }
 
+using BigSeekFunction = std::uint64_t(__thiscall*)(
+    ra3::io::GameBigHandler*,
+    ra3::io::GameBigFile*,
+    std::uint64_t,
+    std::uint32_t,
+    std::uint32_t,
+    std::uint32_t);
+
+void destroyGameInflater(void*, void* inflater)
+{
+    const auto vtable = *static_cast<void***>(inflater);
+    reinterpret_cast<void(__thiscall*)(void*, int)>(vtable[0])(inflater, 1);
+}
+
+void releaseGameAllocation(void* context, void* allocation)
+{
+    auto* allocator = static_cast<ra3::io::GameAllocator*>(context);
+    reinterpret_cast<void(__thiscall*)(
+        ra3::io::GameAllocator*, void*, std::uint32_t)>(
+        allocator->vtable->freeTagged)(allocator, allocation, 0);
+}
+
+std::uint64_t __fastcall bigSeek(
+    ra3::io::GameBigHandler* handler,
+    void*,
+    ra3::io::GameBigFile* file,
+    std::uint64_t position,
+    std::uint32_t argument3,
+    std::uint32_t argument4,
+    std::uint32_t argument5)
+{
+    TargetState& state = g_bigSeek;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::replace) {
+        const ra3::io::GameBigReleaseOps operations{
+            handler->allocator, &destroyGameInflater, &releaseGameAllocation};
+        state.matches.fetch_add(1, relaxed);
+        return ra3::io::seekGameBigFile(file, position, operations);
+    }
+
+    ra3::io::GameBigFile expected = *file;
+    const std::uint64_t game = reinterpret_cast<BigSeekFunction>(state.original)(
+        handler, file, position, argument3, argument4, argument5);
+    const bool reset = ra3::io::applyGameBigSeekState(&expected, position);
+    const bool equal = game == position
+        && std::memcmp(file, &expected, sizeof(expected)) == 0;
+    if (equal) {
+        state.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch(
+            "bigseek", state,
+            std::string("position=") + std::to_string(position)
+                + (reset ? " reset" : " logical"));
+    }
+    return game;
+}
+
+using BigCloseFunction = void(__thiscall*)(
+    ra3::io::GameBigHandler*, ra3::io::GameBigFile*);
+
+void __fastcall bigClose(
+    ra3::io::GameBigHandler* handler, void*, ra3::io::GameBigFile* file)
+{
+    TargetState& state = g_bigClose;
+    state.calls.fetch_add(1, relaxed);
+    if (state.mode == Mode::shadow) {
+        // The original releases `file`; there is no safe post-call object to compare.
+        reinterpret_cast<BigCloseFunction>(state.original)(handler, file);
+        state.matches.fetch_add(1, relaxed);
+        return;
+    }
+    const ra3::io::GameBigReleaseOps operations{
+        handler->allocator, &destroyGameInflater, &releaseGameAllocation};
+    ra3::io::closeGameBigFile(file, operations);
+    state.matches.fetch_add(1, relaxed);
+}
+
 }  // namespace
 
 const char* modeName(Mode mode)
@@ -1057,6 +1136,14 @@ const std::vector<Target>& targets()
          {0x83, 0xEC, 0x10, 0x8B, 0x44, 0x24, 0x28, 0x53,
           0x55, 0x56, 0x8B, 0xE9, 0x83, 0xC9, 0xFF, 0x33},
          7, reinterpret_cast<void*>(&bigFindEntry), &g_bigFindEntry, true},
+        {"bigseek", 0x005F5E00,
+         {0x51, 0x53, 0x8B, 0x5C, 0x24, 0x14, 0x56, 0x8B,
+          0x74, 0x24, 0x10, 0x57, 0x8B, 0x7C, 0x24, 0x18},
+         6, reinterpret_cast<void*>(&bigSeek), &g_bigSeek, true},
+        {"bigclose", 0x005F5DB0,
+         {0x56, 0x8B, 0x74, 0x24, 0x08, 0x57, 0x8B, 0xF9,
+          0x8B, 0x4E, 0x0C, 0x85, 0xC9, 0x74, 0x26, 0x8B},
+         5, reinterpret_cast<void*>(&bigClose), &g_bigClose, true},
     };
     return table;
 }

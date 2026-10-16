@@ -89,10 +89,29 @@ struct GameBigFile {
     void* temporaryBuffer;
     std::uint32_t unknown14;
     std::uint64_t dataOffset;
-    std::uint64_t storedSize;
-    std::uint64_t expandedSize;
+    union {
+        std::uint64_t logicalSize;
+        std::uint64_t storedSize;  // Compatibility name used by the round-2 helper.
+    };
+    union {
+        std::uint64_t compressedSize;
+        std::uint64_t expandedSize;  // Compatibility name used by the round-2 seek port.
+    };
     std::uint64_t sourcePosition;
     std::uint64_t logicalPosition;
+};
+
+using GameBigRangeRead = std::uint32_t (*)(
+    void* context,
+    const GameBigArchive* archive,
+    std::uint64_t memberOffset,
+    void* destination,
+    std::uint32_t count);
+
+struct GameBigReleaseOps {
+    void* context = nullptr;
+    void (*destroyInflater)(void* context, void* inflater) = nullptr;
+    void (*release)(void* context, void* pointer) = nullptr;
 };
 
 static_assert(sizeof(GameBigSearchEntry) == 0x08);
@@ -113,8 +132,8 @@ static_assert(offsetof(GameBigHandler, allocator) == 0x1C);
 static_assert(sizeof(GameBigFile) == 0x40);
 static_assert(offsetof(GameBigFile, inflater) == 0x0C);
 static_assert(offsetof(GameBigFile, dataOffset) == 0x18);
-static_assert(offsetof(GameBigFile, storedSize) == 0x20);
-static_assert(offsetof(GameBigFile, expandedSize) == 0x28);
+static_assert(offsetof(GameBigFile, logicalSize) == 0x20);
+static_assert(offsetof(GameBigFile, compressedSize) == 0x28);
 static_assert(offsetof(GameBigFile, sourcePosition) == 0x30);
 static_assert(offsetof(GameBigFile, logicalPosition) == 0x38);
 
@@ -135,9 +154,33 @@ std::uint32_t hashGameBigPath(const char* path, std::uint32_t seed = 0x1505) noe
 std::uint64_t gameBigStoredSize(const GameBigFile* file) noexcept;
 std::uint64_t gameBigAbsoluteDataOffset(const GameBigFile* file) noexcept;
 
+// ra3_1.0.game 0x009F5F80 state construction without allocation. The range
+// reader is optional; without it compressed-size probing is skipped.
+bool prepareGameBigFile(
+    const GameBigHandler* handler,
+    const char* path,
+    std::uint32_t ownerToken,
+    std::uint32_t openMode,
+    GameBigRangeRead read,
+    void* readContext,
+    GameBigFile* output) noexcept;
+
 // State-only part of ra3_1.0.game 0x009F5E00. Returns true when the caller must
 // destroy inflater and release temporaryBuffer after applying the transition.
 bool applyGameBigSeekState(GameBigFile* file, std::uint64_t position) noexcept;
+
+// Stateful release portions of ra3_1.0.game 0x009F5E00 / 0x009F5DB0.
+std::uint64_t seekGameBigFile(
+    GameBigFile* file,
+    std::uint64_t position,
+    const GameBigReleaseOps& operations) noexcept;
+void closeGameBigFile(
+    GameBigFile* file,
+    const GameBigReleaseOps& operations) noexcept;
+
+// Bookkeeping prediction used by bounded Read shadow verification. `actual`
+// is the number of bytes returned by the archive/decoder.
+void applyGameBigReadResult(GameBigFile* file, std::uint32_t actual) noexcept;
 
 // ra3_1.0.game 0x009F6B90. Returns the start of an entry record or nullptr.
 const std::uint8_t* findGameBigHashedEntry(

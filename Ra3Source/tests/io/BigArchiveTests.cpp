@@ -15,6 +15,40 @@ using ra3::test::BigLayout;
 using ra3::test::buildBig;
 using ra3::test::TempDir;
 
+namespace {
+
+std::uint32_t readGameBigRange(
+    void* context,
+    const ra3::io::GameBigArchive*,
+    std::uint64_t offset,
+    void* destination,
+    std::uint32_t count)
+{
+    const auto& bytes = *static_cast<const std::string*>(context);
+    if (offset + count > bytes.size()) {
+        return 0;
+    }
+    std::memcpy(destination, bytes.data() + static_cast<std::size_t>(offset), count);
+    return count;
+}
+
+struct ReleaseCounts {
+    int destroyed = 0;
+    int released = 0;
+};
+
+void countDestroy(void* context, void*)
+{
+    ++static_cast<ReleaseCounts*>(context)->destroyed;
+}
+
+void countRelease(void* context, void*)
+{
+    ++static_cast<ReleaseCounts*>(context)->released;
+}
+
+}  // namespace
+
 RA3_TEST(BigArchive_ReadsIndexTrailerAndData)
 {
     TempDir dir("big");
@@ -202,4 +236,49 @@ RA3_TEST(GameBigLayout_MatchesHeaderHelpersAndSeekState)
     RA3_CHECK_EQ(file.sourcePosition, std::uint64_t{100});
     RA3_CHECK(file.inflater == nullptr);
     RA3_CHECK(file.temporaryBuffer == nullptr);
+}
+
+RA3_TEST(GameBigLayout_PreparesAndReleasesFileState)
+{
+    const std::string bytes = buildBig({{"data\\plain.bin", "PLAIN-DATA"}});
+    const auto* header = reinterpret_cast<const std::uint8_t*>(bytes.data());
+    ra3::io::GameBigArchive archive{};
+    archive.index = {header, header, nullptr};
+    archive.archiveName = "Data\\Test.big";
+    ra3::io::GameBigHandler handler{};
+    handler.head = &archive;
+    handler.tail = &archive;
+    handler.archiveCount = 1;
+
+    ra3::io::GameBigFile file{};
+    RA3_REQUIRE(ra3::io::prepareGameBigFile(
+        &handler,
+        "big:/data\\plain.bin",
+        0x1234,
+        0x10000,
+        &readGameBigRange,
+        const_cast<std::string*>(&bytes),
+        &file));
+    RA3_CHECK(file.archive == &archive);
+    RA3_CHECK_EQ(file.ownerToken, std::uint32_t{0x1234});
+    RA3_CHECK_EQ(file.logicalSize, std::uint64_t{10});
+    RA3_CHECK_EQ(file.compressedSize, std::uint64_t{0});
+    RA3_CHECK_EQ(file.sourcePosition, file.dataOffset);
+
+    ReleaseCounts counts;
+    file.inflater = reinterpret_cast<void*>(1);
+    file.temporaryBuffer = reinterpret_cast<void*>(2);
+    file.compressedSize = 8;
+    const ra3::io::GameBigReleaseOps operations{
+        &counts, &countDestroy, &countRelease};
+    RA3_CHECK_EQ(
+        ra3::io::seekGameBigFile(&file, 0, operations), std::uint64_t{0});
+    RA3_CHECK_EQ(counts.destroyed, 1);
+    RA3_CHECK_EQ(counts.released, 1);
+
+    file.inflater = reinterpret_cast<void*>(1);
+    file.temporaryBuffer = reinterpret_cast<void*>(2);
+    ra3::io::closeGameBigFile(&file, operations);
+    RA3_CHECK_EQ(counts.destroyed, 2);
+    RA3_CHECK_EQ(counts.released, 3);
 }

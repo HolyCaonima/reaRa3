@@ -75,12 +75,14 @@ class Emulator:
         self.uc.mem_map(STUB_BASE, PAGE, unicorn.UC_PROT_READ | unicorn.UC_PROT_EXEC)
         self.uc.mem_write(STUB_BASE, b"\xC3" * PAGE)
         self._heap = HEAP_BASE
-        self._stubs: dict[int, Callable[["Emulator"], int]] = {}
+        self._stubs: dict[int, tuple[Callable[["Emulator"], int], int]] = {}
         self._next_stub = STUB_BASE
+        self._function_stubs: dict[int, tuple[Callable[["Emulator"], int], int]] = {}
         self._fault: Optional[str] = None
         self.uc.hook_add(unicorn.UC_HOOK_MEM_UNMAPPED, self._on_unmapped)
         self.uc.hook_add(unicorn.UC_HOOK_CODE, self._on_stub, begin=STUB_BASE,
                          end=STUB_BASE + PAGE - 1)
+        self.uc.hook_add(unicorn.UC_HOOK_CODE, self._on_function_stub)
 
     def _on_unmapped(self, uc, access, address, size, value, data) -> bool:
         eip = uc.reg_read(r.UC_X86_REG_EIP)
@@ -91,23 +93,59 @@ class Emulator:
         if address == RETURN_SENTINEL:
             uc.emu_stop()
             return
-        stub = self._stubs.get(address)
-        if stub is None:
+        binding = self._stubs.get(address)
+        if binding is None:
             self._fault = f"call into unbound stub 0x{address:08X}"
             uc.emu_stop()
             return
-        uc.reg_write(r.UC_X86_REG_EAX, stub(self) & 0xFFFFFFFF)
+        self._return_from_stub(*binding)
 
-    def bind_import(self, iat_slot: int, stub: Callable[["Emulator"], int]) -> None:
+    def _on_function_stub(self, uc, address, size, data) -> None:
+        binding = self._function_stubs.get(address)
+        if binding is not None:
+            self._return_from_stub(*binding)
+
+    def _return_from_stub(
+        self, stub: Callable[["Emulator"], int], stack_cleanup: int
+    ) -> None:
+        esp = self.uc.reg_read(r.UC_X86_REG_ESP)
+        return_address = struct.unpack("<I", self.uc.mem_read(esp, 4))[0]
+        self.uc.reg_write(r.UC_X86_REG_EAX, stub(self) & 0xFFFFFFFF)
+        self.uc.reg_write(r.UC_X86_REG_ESP, esp + 4 + stack_cleanup)
+        self.uc.reg_write(r.UC_X86_REG_EIP, return_address)
+
+    def bind_stub(
+        self, stub: Callable[["Emulator"], int], stack_cleanup: int = 0
+    ) -> int:
         address = self._next_stub
         self._next_stub += 0x10
-        self._stubs[address] = stub
+        self._stubs[address] = (stub, stack_cleanup)
+        return address
+
+    def bind_import(
+        self,
+        iat_slot: int,
+        stub: Callable[["Emulator"], int],
+        stack_cleanup: int = 0,
+    ) -> None:
+        address = self.bind_stub(stub, stack_cleanup)
         self.uc.mem_write(iat_slot, struct.pack("<I", address))
+
+    def bind_function(
+        self,
+        address: int,
+        stub: Callable[["Emulator"], int],
+        stack_cleanup: int = 0,
+    ) -> None:
+        self._function_stubs[address] = (stub, stack_cleanup)
 
     def stack_arg(self, index: int) -> int:
         """Argument ``index`` of a cdecl call as seen from inside an import stub."""
         esp = self.uc.reg_read(r.UC_X86_REG_ESP)
         return struct.unpack("<I", self.uc.mem_read(esp + 4 + 4 * index, 4))[0]
+
+    def register(self, register: int) -> int:
+        return self.uc.reg_read(register)
 
     def reset_data(self) -> None:
         for start, image in self._initial.items():
