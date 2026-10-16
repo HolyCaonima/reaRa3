@@ -1,0 +1,4 @@
+/build/
+/Testing/
+/config/*.local.ini
+__pycache__/
