@@ -1,0 +1,10 @@
+ra3_add_module(asset
+    SOURCES
+        include/ra3/asset/AssetId.h
+        include/ra3/asset/AssetStream.h
+        include/ra3/asset/Manifest.h
+        src/AssetStream.cpp
+        src/Manifest.cpp
+    PUBLIC_DEPS
+        Ra3::core
+        Ra3::io)

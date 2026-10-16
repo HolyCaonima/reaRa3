@@ -1,5 +1,6 @@
 #include <ra3/io/RefPack.h>
 
+#include <algorithm>
 #include <string>
 
 namespace ra3::io {
@@ -118,6 +119,93 @@ Result<std::vector<std::uint8_t>> decompressRefPack(const std::uint8_t* data, st
     }
     if (out.size() != limit) {
         return fail("output shorter than declared size");
+    }
+    return out;
+}
+
+Result<std::vector<std::uint8_t>> decompressRefPackPrefix(
+    const std::uint8_t* data, std::size_t size, std::size_t maxOutput)
+{
+    const auto header = readRefPackHeader(data, size);
+    if (!header) {
+        return makeError("not a RefPack stream");
+    }
+    const std::size_t target = std::min<std::size_t>(maxOutput, header->decompressedSize);
+    std::vector<std::uint8_t> out;
+    out.reserve(target);
+    std::size_t in = header->headerSize;
+
+    const auto fail = [&](const char* what) {
+        return makeError(std::string("RefPack: ") + what + " at input offset " + std::to_string(in));
+    };
+    while (out.size() < target) {
+        if (in >= size) {
+            return fail("truncated before requested prefix");
+        }
+        const std::uint8_t b0 = data[in];
+        std::size_t literal = 0;
+        std::size_t length = 0;
+        std::size_t distance = 0;
+        std::size_t commandSize = 1;
+        bool stop = false;
+
+        if (b0 < 0x80) {
+            commandSize = 2;
+        } else if (b0 < 0xC0) {
+            commandSize = 3;
+        } else if (b0 < 0xE0) {
+            commandSize = 4;
+        }
+        if (size - in < commandSize) {
+            return fail("truncated command");
+        }
+        const std::uint8_t* c = data + in;
+        if (b0 < 0x80) {
+            literal = b0 & 0x03;
+            length = ((b0 & 0x1C) >> 2) + 3;
+            distance = ((b0 & 0x60) << 3) + c[1] + 1;
+        } else if (b0 < 0xC0) {
+            literal = (c[1] >> 6) & 0x03;
+            length = (b0 & 0x3F) + 4;
+            distance = ((c[1] & 0x3F) << 8) + c[2] + 1;
+        } else if (b0 < 0xE0) {
+            literal = b0 & 0x03;
+            length = ((b0 & 0x0C) << 6) + c[3] + 5;
+            distance = ((b0 & 0x10) << 12) + (c[1] << 8) + c[2] + 1;
+        } else if (b0 < 0xFC) {
+            literal = ((b0 & 0x1F) << 2) + 4;
+        } else {
+            literal = b0 & 0x03;
+            stop = true;
+        }
+        in += commandSize;
+
+        const std::size_t literalNeeded = std::min(literal, target - out.size());
+        if (size - in < literalNeeded) {
+            return fail("literal run past available input");
+        }
+        out.insert(out.end(), data + in, data + in + literalNeeded);
+        if (out.size() == target) {
+            return out;
+        }
+        if (literalNeeded != literal) {
+            return fail("internal prefix accounting error");
+        }
+        in += literal;
+
+        if (length != 0) {
+            if (distance > out.size()) {
+                return fail("back-reference before start of output");
+            }
+            const std::size_t copyNeeded = std::min(length, target - out.size());
+            const std::size_t from = out.size() - distance;
+            for (std::size_t i = 0; i < copyNeeded; ++i) {
+                out.push_back(out[from + i]);
+            }
+        }
+        if (stop && out.size() < target) {
+            return fail("stream ends before requested prefix");
+        }
     }
     return out;
 }

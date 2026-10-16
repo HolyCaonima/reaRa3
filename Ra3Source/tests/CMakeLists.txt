@@ -4,6 +4,7 @@ ra3_add_executable(ra3_unit_tests
         support/TempDir.h
         support/TestHarness.h
         support/TestMain.cpp
+        asset/ManifestTests.cpp
         core/GameConfigTests.cpp
         core/IniFileTests.cpp
         core/SkuDefTests.cpp
@@ -12,6 +13,7 @@ ra3_add_executable(ra3_unit_tests
         io/RefPackTests.cpp
         text/CsfTests.cpp
     DEPS
+        Ra3::asset
         Ra3::core
         Ra3::io
         Ra3::text)
@@ -22,9 +24,11 @@ ra3_add_executable(ra3_game_data_tests
     SOURCES
         support/TestHarness.h
         support/TestMain.cpp
+        data/AssetGameDataTests.cpp
         data/CsfGameDataTests.cpp
         data/GameDataTests.cpp
     DEPS
+        Ra3::asset
         Ra3::core
         Ra3::io
         Ra3::text)
