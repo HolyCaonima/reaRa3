@@ -1,0 +1,18 @@
+address	status	owner	module	notes
+009f3470	reversed	recon/ports1	common	copy at most count bytes without padding; ra3::common::copyStringLimited; emulator 2008/2008
+009f34b0	reversed	recon/ports1	common	append at most count bytes and terminate when needed; ra3::common::appendStringLimited; emulator 2007/2007
+009f3500	reversed	recon/ports1	common	signed-byte string compare with limit; ra3::common::compareStringsLimited; emulator 2008/2008
+009f3560	reversed	recon/ports1	common	opposite-case ASCII string compare with limit and signed ordering; ra3::common::compareStringsCaseInsensitiveLimited; emulator 2008/2008
+009f35e0	reversed	recon/ports1	common	NUL-terminated byte string copy; ra3::common::copyString; emulator 2007/2007
+009f3610	reversed	recon/ports1	common	NUL-terminated signed-byte string compare; ra3::common::compareStrings; emulator 2007/2007
+009f36c0	reversed	recon/ports1	common	NUL-terminated byte string length; ra3::common::stringLength; emulator 2007/2007
+009f36e0	reversed	recon/ports1	common	copy while folding ASCII A-Z; ra3::common::copyStringLowercase; emulator 2007/2007
+009f3720	reversed	recon/ports1	common	find last byte including the NUL terminator; ra3::common::findLastCharacter; emulator 2007/2007
+009f3f10	reversed	recon/ports1	common	widen unsigned bytes to uint16; ra3::common::widenBytes; emulator 2007/2007
+004c9ea0	reversed	recon/ports1	common	fixed-length unsigned byte comparison returning -1/0/1; ra3::common::compareBytes; emulator 2006/2006
+004cb3a0	reversed	recon/ports1	common	compare uint16-length-prefixed bytes to a C string; ra3::common::compareLengthPrefixedToCString; emulator 2006/2006
+004cb400	reversed	recon/ports1	common	compare two uint16-length-prefixed byte strings; ra3::common::compareLengthPrefixed; emulator 2006/2006
+00a28290	reversed	recon/ports1	common	lowercase ASCII FNV-1a with signed high bytes and low-word sentinel; ra3::common::hashLowercaseFnv1a; emulator 2007/2007
+00a282d0	reversed	recon/ports1	common	permissive one-to-four-byte UTF-8 decoder; ra3::common::decodeUtf8; emulator 2010/2010
+00a28350	reversed	recon/ports1	common	legacy one-to-four-byte UTF-8 encoder; ra3::common::encodeUtf8; emulator 2010/2010
+00a284b0	reversed	recon/ports1	common	permissive UTF-8 decode and advance; ra3::common::decodeUtf8AndAdvance; emulator 2010/2010
