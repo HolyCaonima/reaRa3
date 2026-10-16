@@ -8,6 +8,9 @@ ra3_add_module(hook
 ra3_add_shared_library(ra3hook
     SOURCES
         dll/DllMain.cpp
+        dll/Targets.cpp
+        dll/Targets.h
     DEPS
+        Ra3::asset
         Ra3::hook
         Ra3::io)

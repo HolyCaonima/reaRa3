@@ -1,54 +1,40 @@
+#include "Targets.h"
+
 #include <ra3/hook/Detour.h>
-#include <ra3/io/RefPack.h>
 
 #include <Windows.h>
 
-#include <array>
-#include <atomic>
 #include <chrono>
 #include <cstdint>
-#include <cstring>
 #include <exception>
 #include <filesystem>
 #include <fstream>
 #include <limits>
+#include <map>
+#include <memory>
 #include <mutex>
 #include <sstream>
 #include <string>
 #include <thread>
 #include <vector>
 
+namespace ra3hook {
 namespace {
 
-using DecodeFunction = int(__stdcall*)(std::uint8_t*, const std::uint8_t*);
-
-constexpr std::array<std::uint8_t, 16> refPackExpected = {
-    0x51, 0x8B, 0x4C, 0x24, 0x0C, 0x85, 0xC9, 0x56,
-    0x8B, 0x74, 0x24, 0x0C, 0x75, 0x07, 0x33, 0xC0};
-// ra3_1.0.game one-shot RefPack decoder (0x009F72E0).
-constexpr std::uintptr_t refPackRva = 0x005F72E0;
-
-enum class Mode {
-    shadow,
-    replace
-};
-
+// Config (ra3hook.ini next to the DLL, or RA3_HOOK_CONFIG):
+//   mode=shadow|replace|off       default for every target
+//   <target key>=shadow|replace|off
+//   target=0x...                  dummy process only: absolute address for "refpack"
+//   log=PATH, summary_interval_ms=N
 struct Config {
-    Mode mode = Mode::shadow;
-    std::uintptr_t target = 0;
+    Mode defaultMode = Mode::shadow;
+    std::map<std::string, Mode> modes;
+    std::uintptr_t testAddress = 0;
     std::filesystem::path logPath;
     unsigned summaryIntervalMs = 1000;
-    bool testTarget = false;
 };
 
 HMODULE g_module = nullptr;
-void* g_originalAddress = nullptr;
-ra3::hook::Detour* g_detour = nullptr;
-Mode g_mode = Mode::shadow;
-std::atomic<std::uint64_t> g_calls{0};
-std::atomic<std::uint64_t> g_matches{0};
-std::atomic<std::uint64_t> g_mismatches{0};
-std::atomic<unsigned> g_mismatchDetails{0};
 std::mutex g_logMutex;
 std::ofstream g_log;
 
@@ -62,10 +48,10 @@ std::string trim(std::string value)
     return value.substr(first, last - first + 1);
 }
 
-std::filesystem::path modulePath()
+std::filesystem::path modulePath(HMODULE module)
 {
     std::vector<wchar_t> buffer(32768);
-    const DWORD length = GetModuleFileNameW(g_module, buffer.data(), static_cast<DWORD>(buffer.size()));
+    const DWORD length = GetModuleFileNameW(module, buffer.data(), static_cast<DWORD>(buffer.size()));
     return std::filesystem::path(std::wstring(buffer.data(), length));
 }
 
@@ -81,21 +67,18 @@ std::filesystem::path defaultLogPath()
     return root / L"Ra3Source" / L"logs" / L"ra3hook.log";
 }
 
-void writeLine(const std::string& text)
-{
-    std::lock_guard<std::mutex> lock(g_logMutex);
-    if (g_log) {
-        g_log << text << '\n';
-        g_log.flush();
-    }
-}
-
 void writeSummary()
 {
-    std::ostringstream out;
-    out << "summary calls=" << g_calls.load() << " matches=" << g_matches.load()
-        << " mismatches=" << g_mismatches.load();
-    writeLine(out.str());
+    for (const Target& target : targets()) {
+        const TargetState& state = *target.state;
+        if (state.mode == Mode::off) {
+            continue;
+        }
+        std::ostringstream out;
+        out << "summary " << target.key << " calls=" << state.calls.load()
+            << " matches=" << state.matches.load() << " mismatches=" << state.mismatches.load();
+        writeLine(out.str());
+    }
 }
 
 bool parseUnsigned(const std::string& text, std::uintptr_t& value)
@@ -113,6 +96,33 @@ bool parseUnsigned(const std::string& text, std::uintptr_t& value)
     }
 }
 
+bool parseMode(const std::string& text, Mode& mode)
+{
+    for (const Mode candidate : {Mode::off, Mode::shadow, Mode::replace}) {
+        if (text == modeName(candidate)) {
+            mode = candidate;
+            return true;
+        }
+    }
+    return false;
+}
+
+const Target* findTarget(const std::string& key)
+{
+    for (const Target& target : targets()) {
+        if (key == target.key) {
+            return &target;
+        }
+    }
+    return nullptr;
+}
+
+bool isDummyHost()
+{
+    const auto name = modulePath(nullptr).filename();
+    return _wcsicmp(name.c_str(), L"ra3_hook_dummy.exe") == 0;
+}
+
 bool loadConfig(Config& config, std::string& error)
 {
     std::filesystem::path path;
@@ -122,7 +132,7 @@ bool loadConfig(Config& config, std::string& error)
     if (length != 0 && static_cast<std::size_t>(length) < environment.size()) {
         path = std::wstring(environment.data(), length);
     } else {
-        path = modulePath().parent_path() / L"ra3hook.ini";
+        path = modulePath(g_module).parent_path() / L"ra3hook.ini";
     }
 
     std::ifstream input(path);
@@ -131,7 +141,6 @@ bool loadConfig(Config& config, std::string& error)
         return false;
     }
     std::string line;
-    bool targetSet = false;
     while (std::getline(input, line)) {
         line = trim(line);
         if (line.empty() || line[0] == '#' || line[0] == ';') {
@@ -144,30 +153,22 @@ bool loadConfig(Config& config, std::string& error)
         }
         const std::string key = trim(line.substr(0, separator));
         const std::string value = trim(line.substr(separator + 1));
-        if (key == "mode") {
-            if (value == "shadow") {
-                config.mode = Mode::shadow;
-            } else if (value == "replace") {
-                config.mode = Mode::replace;
-            } else {
-                error = "mode must be shadow or replace";
+        if (key == "mode" || findTarget(key) != nullptr) {
+            Mode mode = Mode::off;
+            if (!parseMode(value, mode)) {
+                error = key + " must be off, shadow or replace";
                 return false;
             }
+            if (key == "mode") {
+                config.defaultMode = mode;
+            } else {
+                config.modes[key] = mode;
+            }
         } else if (key == "target") {
-            if (!parseUnsigned(value, config.target)) {
+            if (!parseUnsigned(value, config.testAddress) || config.testAddress == 0) {
                 error = "invalid target address";
                 return false;
             }
-            config.testTarget = true;
-            targetSet = true;
-        } else if (key == "target_rva") {
-            std::uintptr_t rva = 0;
-            if (!parseUnsigned(value, rva) || rva != refPackRva) {
-                error = "target_rva is not the registered clean RefPack target";
-                return false;
-            }
-            config.target = reinterpret_cast<std::uintptr_t>(GetModuleHandleW(nullptr)) + rva;
-            targetSet = true;
         } else if (key == "log") {
             config.logPath = value;
         } else if (key == "summary_interval_ms") {
@@ -182,25 +183,12 @@ bool loadConfig(Config& config, std::string& error)
             return false;
         }
     }
-    if (!targetSet) {
-        config.target = reinterpret_cast<std::uintptr_t>(GetModuleHandleW(nullptr)) + refPackRva;
+    if (config.testAddress != 0 && !isDummyHost()) {
+        error = "absolute target addresses are allowed only in the dummy target";
+        return false;
     }
     if (config.logPath.empty()) {
         config.logPath = defaultLogPath();
-    }
-    if (config.testTarget) {
-        std::vector<wchar_t> executable(32768);
-        const DWORD executableLength = GetModuleFileNameW(
-            nullptr, executable.data(), static_cast<DWORD>(executable.size()));
-        if (executableLength == 0
-            || _wcsicmp(
-                   std::filesystem::path(
-                       std::wstring(executable.data(), executableLength)).filename().c_str(),
-                   L"ra3_hook_dummy.exe")
-                != 0) {
-            error = "absolute target addresses are allowed only in the dummy target";
-            return false;
-        }
     }
     return true;
 }
@@ -225,68 +213,52 @@ void logHostImage()
     writeLine(out.str());
 }
 
-int __stdcall hookedDecode(std::uint8_t* destination, const std::uint8_t* source)
+Mode modeFor(const Config& config, const Target& target)
 {
-    g_calls.fetch_add(1);
-    if (g_mode == Mode::shadow) {
-        const int size = reinterpret_cast<DecodeFunction>(g_originalAddress)(destination, source);
-        bool equal = size >= 0;
-        try {
-            std::vector<std::uint8_t> decoded;
-            if (source == nullptr) {
-                equal = size == 0;
-            } else if (equal) {
-                auto result = ra3::io::decompressRefPackPrefix(
-                    source, std::numeric_limits<std::size_t>::max(), static_cast<std::size_t>(size));
-                equal = result.ok();
-                if (equal) {
-                    decoded = std::move(result).value();
-                    equal = decoded.empty()
-                        || std::memcmp(destination, decoded.data(), decoded.size()) == 0;
-                }
-            }
-        } catch (...) {
-            equal = false;
-        }
-        if (equal) {
-            g_matches.fetch_add(1);
-        } else {
-            g_mismatches.fetch_add(1);
-            if (g_mismatchDetails.fetch_add(1) < 5) {
-                try {
-                    writeLine("shadow mismatch size=" + std::to_string(size));
-                } catch (...) {
-                }
-            }
-        }
-        return size;
+    if (config.testAddress != 0 && std::string(target.key) != "refpack") {
+        return Mode::off;
     }
+    const auto found = config.modes.find(target.key);
+    return found != config.modes.end() ? found->second : config.defaultMode;
+}
 
-    if (source == nullptr) {
-        g_matches.fetch_add(1);
-        return 0;
-    }
-    try {
-        const auto header =
-            ra3::io::readRefPackHeader(source, std::numeric_limits<std::size_t>::max());
-        if (!header) {
-            g_mismatches.fetch_add(1);
-            return 0;
+// Installs every enabled target or none of them.
+bool installTargets(const Config& config)
+{
+    const auto base = reinterpret_cast<std::uintptr_t>(GetModuleHandleW(nullptr));
+    std::vector<std::pair<const Target*, std::unique_ptr<ra3::hook::Detour>>> installed;
+    for (const Target& target : targets()) {
+        target.state->mode = modeFor(config, target);
+        if (target.state->mode == Mode::off) {
+            continue;
         }
-        auto result = ra3::io::decompressRefPackPrefix(
-            source, std::numeric_limits<std::size_t>::max(), header->decompressedSize);
-        if (!result.ok()) {
-            g_mismatches.fetch_add(1);
-            return 0;
+        ra3::hook::HookSpec spec;
+        spec.target = reinterpret_cast<void*>(
+            config.testAddress != 0 ? config.testAddress : base + target.rva);
+        spec.expectedBytes = target.expected;
+        spec.stolenLength = target.stolenLength;
+        spec.replacement = target.replacement;
+        spec.trampolineOut = &target.state->original;
+        auto detour = ra3::hook::installDetour(spec);
+        if (!detour.ok()) {
+            writeLine(std::string("install failed: ") + target.key + ": " + detour.error().message);
+            for (auto it = installed.rbegin(); it != installed.rend(); ++it) {
+                if (!it->second->uninstall().ok()) {
+                    writeLine(std::string("uninstall failed: ") + it->first->key);
+                }
+                it->first->state->mode = Mode::off;
+            }
+            target.state->mode = Mode::off;
+            return false;
         }
-        const auto& decoded = result.value();
-        std::memcpy(destination, decoded.data(), decoded.size());
-        g_matches.fetch_add(1);
-        return static_cast<int>(decoded.size());
-    } catch (...) {
-        g_mismatches.fetch_add(1);
-        return 0;
+        installed.emplace_back(&target, std::move(detour).value());
     }
+    for (auto& item : installed) {
+        writeLine(std::string("installed ") + item.first->key + " mode=" + modeName(item.first->state->mode));
+        // Patches stay in place for the life of the process.
+        (void)item.second.release();
+    }
+    return true;
 }
 
 DWORD runWorker()
@@ -307,21 +279,9 @@ DWORD runWorker()
         return 1;
     }
     logHostImage();
-    g_mode = config.mode;
-
-    ra3::hook::HookSpec spec;
-    spec.target = reinterpret_cast<void*>(config.target);
-    spec.expectedBytes.assign(refPackExpected.begin(), refPackExpected.end());
-    spec.stolenLength = 5;
-    spec.replacement = reinterpret_cast<void*>(&hookedDecode);
-    spec.trampolineOut = &g_originalAddress;
-    auto installed = ra3::hook::installDetour(spec);
-    if (!installed.ok()) {
-        writeLine("install failed: " + installed.error().message);
+    if (!installTargets(config)) {
         return 1;
     }
-    g_detour = installed.value().release();
-    writeLine(std::string("installed mode=") + (g_mode == Mode::shadow ? "shadow" : "replace"));
 
     for (;;) {
         std::this_thread::sleep_for(std::chrono::milliseconds(config.summaryIntervalMs));
@@ -344,21 +304,32 @@ DWORD WINAPI worker(void*)
 
 }  // namespace
 
+void writeLine(const std::string& text)
+{
+    std::lock_guard<std::mutex> lock(g_logMutex);
+    if (g_log) {
+        g_log << text << '\n';
+        g_log.flush();
+    }
+}
+
+}  // namespace ra3hook
+
 BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, void*)
 {
     if (reason == DLL_PROCESS_ATTACH) {
-        g_module = instance;
+        ra3hook::g_module = instance;
         DisableThreadLibraryCalls(instance);
-        HANDLE thread = CreateThread(nullptr, 0, &worker, nullptr, 0, nullptr);
+        HANDLE thread = CreateThread(nullptr, 0, &ra3hook::worker, nullptr, 0, nullptr);
         if (thread != nullptr) {
             CloseHandle(thread);
         }
     } else if (reason == DLL_PROCESS_DETACH) {
         // At process exit the worker has already been killed, possibly while
         // holding the log lock.
-        if (g_logMutex.try_lock()) {
-            g_logMutex.unlock();
-            writeSummary();
+        if (ra3hook::g_logMutex.try_lock()) {
+            ra3hook::g_logMutex.unlock();
+            ra3hook::writeSummary();
         }
     }
     return TRUE;

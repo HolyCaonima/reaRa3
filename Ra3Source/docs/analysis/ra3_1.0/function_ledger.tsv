@@ -654,7 +654,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00417d80	thunk_FUN_01d7d000	.text	6		entry-lost	unknown		unanalyzed	
 00417d86	FUN_00417d86	.text	23		clean	unknown		unanalyzed	
 00417d9d	FUN_00417d9d	.text	11		clean	unknown		unanalyzed	
-00417db0	FUN_00417db0	.text	360		clean	asset	recon/types	verified	resourcemanager.cpp neighborhood: lowercase SuperFastHash core (bytes,length,seed,finalize); ra3::asset::hashName; 118,232/118,232 instanceIds
+00417db0	FUN_00417db0	.text	360		clean	asset	recon/types	verified	resourcemanager.cpp neighborhood: lowercase SuperFastHash core (bytes,length,seed,finalize); ra3::asset::hashName; 118,232/118,232 instanceIds; live hook namehash shadow 5579/5579, replace 5554/5554 (injection.md 5.4)
 00417fe0	FUN_00417fe0	.text	61		clean	unknown		unanalyzed	
 00418090	thunk_FUN_019742c0	.text	6		entry-lost	unknown		unanalyzed	
 00418096	FUN_00418096	.text	10		clean	unknown		unanalyzed	

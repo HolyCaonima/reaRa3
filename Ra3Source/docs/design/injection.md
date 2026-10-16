@@ -4,8 +4,7 @@
 
 本设计用于把已经重建并验证的函数逐个接入正在运行的 32 位
 `ra3_1.0.game`。注入不是启动器，不修改磁盘上的游戏文件，也不处理保护代码。
-当前唯一登记的游戏目标是一次性 RefPack 解码器
-`ra3_1.0.game Decode (0x009F72E0)`。
+登记的游戏目标在 `src/hook/dll/Targets.cpp` 的目标表里（见 §4.1）。
 
 `Ra3::hook` 在目标入口写入五字节 `jmp rel32`，直接跳到替换函数；32 位下 rel32
 按 2^32 回绕，任意两地址之间都可达。可执行 trampoline 先执行完整的 stolen bytes，
@@ -24,10 +23,9 @@
 第 2–6 步不得使用堆（线程句柄放在定长数组里，错误信息在恢复线程后才拼）：被挂起的
 游戏线程可能正持有堆锁，此时再分配内存会让安装线程永久卡死。
 
-expected bytes 必须覆盖全部 stolen bytes。RefPack 目标固定校验前 16 字节：
-`51 8B 4C 24 0C 85 C9 56 8B 74 24 0C 75 07 33 C0`，只偷取前五字节的两条完整、
-位置无关指令。任何字节不同都会拒绝安装。卸载也要求入口仍然等于本实例写入的
-补丁，避免覆盖其他工具的改动。
+expected bytes 必须覆盖全部 stolen bytes。每个目标固定校验入口前 16 字节，只偷取
+开头若干条完整、位置无关的指令（§4.1）。任何字节不同都会拒绝安装。卸载也要求入口
+仍然等于本实例写入的补丁，避免覆盖其他工具的改动。
 
 ## 2. SecuROM 边界
 
@@ -56,15 +54,18 @@ expected bytes 必须覆盖全部 stolen bytes。RefPack 目标固定校验前 1
 
 ```
 mode=shadow
-target_rva=0x005F72E0
+namehash=replace
 summary_interval_ms=1000
 ```
 
-可选 `log=绝对路径`；默认写入
-`%LOCALAPPDATA%\Ra3Source\logs\ra3hook.log`。日志记录主模块基址、PE 时间戳、
-镜像大小、安装结果以及原子计数 `calls/matches/mismatches`。前五次 shadow
-不一致另写明返回大小。`target=绝对地址` 只用于无游戏集成测试；
-真实实验保持 `target_rva=0x005F72E0` 或省略该行。
+`mode` 是所有目标的默认模式（`off|shadow|replace`），`<目标键>=模式` 单独覆盖
+某个目标。地址和期望字节只来自编译进 DLL 的目标表，配置不能指定游戏内地址。
+所有启用的目标要么全部安装成功，要么一个都不留（已装的会被卸载）。可选
+`log=绝对路径`；默认写入 `%LOCALAPPDATA%\Ra3Source\logs\ra3hook.log`。日志记录
+主模块基址、PE 时间戳、镜像大小、每个目标的 `installed <键> mode=<模式>`，以及每个
+目标一行的原子计数 `summary <键> calls/matches/mismatches`。每个目标的前五次
+shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于无游戏集成测试，
+只作用于 `refpack`，其他目标自动关闭。
 
 注入器 `ra3inject` 接受 `--pid` 或 `--name`。名称匹配多个进程时拒绝猜测；
 `--wait-window` 最多等 60 秒可见顶层窗口。它先确认目标是 32 位进程，再在目标中
@@ -72,6 +73,19 @@ summary_interval_ms=1000
 的 `GetLastError` 写回注入器。
 
 ## 4. shadow 到 replace
+
+### 4.1 目标表
+
+| 键 | 函数 | 签名 | stolen | Ra3Source 实现 |
+|---|---|---|---|---|
+| `refpack` | `0x009F72E0` 一次性 RefPack 解码 | `int __stdcall (uint8_t* dest, const uint8_t* src)` | 5（`push ecx; mov ecx,[esp+0Ch]`） | `ra3::io::decompressRefPackPrefix` |
+| `namehash` | `0x00417DB0` 名称哈希 | `uint32_t __cdecl (const char*, uint32_t len, uint32_t seed, char finalize)` | 8（`push ebx/ebp/esi/edi; mov edi,[esp+14h]`） | `ra3::asset::hashName` |
+
+新增目标：在 `Targets.cpp` 写一个与原函数同 ABI 的 hook（shadow 调原函数并比较，
+replace 只调我们的实现），在表里加一行 `{键, RVA, 前 16 字节, stolen 长度, hook,
+状态}`，并在本表登记。RVA 以 0x00400000 为基址；文件偏移 = VA − 0x00400000。
+
+### 4.2 refpack
 
 RefPack hook 的签名是
 `int __stdcall Decode(uint8_t* dest, const uint8_t* src)`。
@@ -83,6 +97,19 @@ RefPack hook 的签名是
 `replace` 不调用原函数。`src == nullptr` 时返回 0；否则读取 RefPack 声明大小，
 用重建解码器写入 `dest` 并返回大小。无长度 ABI 意味着它和原函数一样信任输入是
 可访问的完整 RefPack 流；当前只应用于游戏内部已验证的调用链。
+
+### 4.3 namehash
+
+`shadow` 用原函数结果作返回值，同时用同一参数调用 `ra3::asset::hashName` 比较；
+不一致时记录名字（最多 64 字节，不可打印字节转义）、长度、seed、finalize 和两边
+结果。`replace` 只调用我们的实现。原函数里的 `tolower` 走 CRT（IAT `0x00BBA4D4`），
+所以 shadow 也同时检验了“游戏运行时是默认 C locale”这一假设。
+
+相邻的 RefPack 大小探测 `0x009F74F0`（`int __stdcall (const uint8_t*)`）是下一个
+候选：它在 flag 0x01 时也直接读紧跟签名的大小字段，与 `readRefPackHeader` 不同，
+需要先在 io 里按原语义移植。
+
+### 4.4 收缩流程
 
 逐函数收缩流程固定为：
 
@@ -104,7 +131,6 @@ RefPack hook 的签名是
 ```
 @'
 mode=shadow
-target_rva=0x005F72E0
 summary_interval_ms=1000
 '@ | Set-Content -Encoding ASCII build\win32\bin\Debug\ra3hook.ini
 
@@ -128,16 +154,17 @@ Get-Content "$env:LOCALAPPDATA\Ra3Source\logs\ra3hook.log" -Wait
 若同名进程不止一个，先运行 `Get-Process ra3_1.0.game` 查 PID（镜像扩展名不是
 `.exe`，进程名保留 `.game`），再把 `--name
 ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW result` 和
-`GetLastError=0`。日志必须显示基址 `0x400000`、发行版时间戳和镜像大小，随后是
-`installed mode=shadow`。进入一次会读取 BIG 压缩成员的正常流程；只接受
-`calls` 增长且 `mismatches=0`。
+`GetLastError=0`。日志必须显示基址 `0x400000`、发行版时间戳和镜像大小，随后每个
+目标一行 `installed <键> mode=shadow`。进入一次会读取 BIG 压缩成员的正常流程；
+只接受每个目标的 `calls` 增长且 `mismatches=0`。
 
 ### 5.2 replace
 
 完全退出游戏。把配置第一行改成 `mode=replace`，清空日志，重新正常启动一个新
 游戏进程，再执行同一条注入命令。重复 shadow 的场景，确认
-`installed mode=replace`、`calls` 增长、`mismatches=0`，并检查加载、主菜单和
-进入对局没有可见偏差。
+`installed <键> mode=replace`、`calls` 增长、`mismatches=0`，并检查加载、主菜单和
+进入对局没有可见偏差。也可以只把某个目标设为 replace（如 `namehash=replace`），
+其余保持 shadow。
 
 ### 5.3 撤销
 
@@ -148,8 +175,8 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 ### 5.4 结果（2026-10-16，`RA3.exe -win`，英文 SkuDef）
 
 实际游戏命令行：`D:\Game\Ra3\Game\Data\ra3_1.0.game -win -config
-"D:\Game\Ra3\Game\RA3_english_1.0.SkuDef"`。三次注入都报告
-`LoadLibraryW result=0x7be20000 GetLastError=0`，日志首行均为
+"D:\Game\Ra3\Game\RA3_english_1.0.SkuDef"`。每次注入都报告非零
+`LoadLibraryW result` 与 `GetLastError=0`，日志首行均为
 `host base=0x400000 timestamp=0x48ef023a image_size=0x26a14f0`，没有出现完整性
 检查拒绝或崩溃。
 
@@ -158,13 +185,15 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 1 | shadow | 主菜单之后（按 PID） | `calls=0` | 安装成功；菜单期间不再解码 RefPack |
 | 2 | shadow | `--wait-window`，进程出现约 1 秒 | `calls=38 matches=38 mismatches=0` | 加载期全部调用逐字节一致 |
 | 3 | replace | `--wait-window`，进程出现约 3 秒 | `calls=38 matches=38 mismatches=0` | 原函数不再执行；主菜单正常渲染 |
+| 4 | 两目标 shadow | `--wait-window` | refpack 38/38；namehash `calls=5579 matches=5579 mismatches=0` | 加载期名称哈希全部一致（含运行时 C locale 假设） |
+| 5 | 两目标 replace | `--wait-window` | refpack 38/38；namehash 5554/5554 | 两个原函数都不再执行；完整主菜单正常渲染 |
 
 replace 模式下 `matches` 表示 Ra3Source 解码成功并把结果交给游戏。运行 3 的主菜单
 截图中字体、贴图和菜单框体完整；弹出的 "Failed to connect to servers" 是 GameSpy
 下线后的离线提示，与 hook 无关。
 
 结论：路线 A 在真实进程上成立——注入时机在保护启动阶段之后，`.text` 内联补丁
-未被拒绝，一个已复刻的函数可以整体替换原实现。尚未覆盖：进入对局（地图加载可能
+未被拒绝，已复刻的函数可以整体替换原实现，多个目标可以同时替换。尚未覆盖：进入对局（地图加载可能
 产生更多 RefPack 调用）；窗口出现前的少量解码可能早于注入，shadow 无法证明覆盖了
 全部调用。
 

@@ -118,7 +118,7 @@ bool runMode(
             CloseHandle(injection.hProcess);
         }
     }
-    success = success && waitForText(log, "installed mode=" + mode);
+    success = success && waitForText(log, "installed refpack mode=" + mode);
     if (success) {
         SetEvent(run);
         success = WaitForSingleObject(target.hProcess, 10000) == WAIT_OBJECT_0;
@@ -134,7 +134,9 @@ bool runMode(
     CloseHandle(run);
 
     const std::string contents = readText(log);
-    success = success && contents.find("summary calls=20 matches=20 mismatches=0") != std::string::npos;
+    success = success
+        && contents.find("summary refpack calls=20 matches=20 mismatches=0") != std::string::npos
+        && contents.find("namehash") == std::string::npos;
     if (!success) {
         std::cerr << mode << " integration log:\n" << contents;
     }
