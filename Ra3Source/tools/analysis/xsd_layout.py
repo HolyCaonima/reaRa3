@@ -371,27 +371,114 @@ class SchemaModel:
 
     def _layout_impl(self, name: str, root: bool,
                      tokenized: bool) -> Layout:
+        if name == "AudioEvent" and root:
+            # All 5,234 shipped events use the AudioEventInfo runtime form:
+            # the three phase lists start at +0x80 and contain 12-byte
+            # {AudioFile import, weight, volume} records.  Their non-empty
+            # pointers are exactly the relo slots +0x84/+0x8C/+0x94 and their
+            # item imports form 12-byte strides from +0x98.  The runtime wrapper
+            # also moves MinRangeShift ahead of VolumeSliderMultiplier.
+            fields = [
+                LayoutField(field_name, field_offset, 4, kind, type_name)
+                for field_name, field_offset, kind, type_name in (
+                    ("base.Volume", 4, "scalar", "Percentage"),
+                    ("base.VolumeShift", 8, "scalar", "Percentage"),
+                    ("base.PerFileVolumeShift", 12, "scalar", "Percentage"),
+                    ("base.MinVolume", 16, "scalar", "Percentage"),
+                    ("base.ShrunkenPitchModifier", 20, "scalar", "SageReal"),
+                    ("base.ShrunkenVolumeModifier", 24, "scalar", "Percentage"),
+                    ("base.PlayPercent", 28, "scalar", "Percentage"),
+                    ("base.Limit", 32, "scalar", "SageInt"),
+                    ("base.Priority", 36, "enum", "AudioPriority"),
+                    ("base.Type", 40, "scalar", "AudioTypeFlags"),
+                    ("base.Control", 44, "scalar", "AudioControlFlags"),
+                    ("base.MinRange", 48, "scalar", "SageReal"),
+                    ("base.MaxRange", 52, "scalar", "SageReal"),
+                    ("base.LowPassCutoff", 56, "scalar", "Percentage"),
+                    ("base.ZoomedInOffscreenVolumePercent", 60, "scalar", "Percentage"),
+                    ("base.ZoomedInOffscreenMinVolumePercent", 64, "scalar", "Percentage"),
+                    ("base.ZoomedInOffscreenOcclusionPercent", 68, "scalar", "Percentage"),
+                    ("base.ReverbEffectLevel", 72, "scalar", "Percentage"),
+                    ("base.DryLevel", 76, "scalar", "Percentage"),
+                    ("base.RuntimeReserved", 120, "scalar", "unsignedInt"),
+                )
+            ]
+            # The range slots point at the first value of a compact runtime
+            # range.  Equal/default ranges may contain only that one u32 (66
+            # shipped PitchShift targets are the final four bytes), so treating
+            # these as the source XSD's fixed 8-byte pair is incorrect.
+            compact_range = Layout("AudioCompactRange", 4, [
+                LayoutField("Value", 0, 4, "scalar", "unsignedInt"),
+            ])
+            for field_name, field_offset, type_name in (
+                    ("base.PitchShift", 80, "RealRange"),
+                    ("base.PerFilePitchShift", 84, "RealRange"),
+                    ("base.Delay", 88, "IntRange"),
+                    ("base.InitialDelay", 92, "IntRange"),
+                    ("base.MinRangeShift", 96, "RealRange"),
+                    ("base.MaxRangeShift", 108, "RealRange"),
+                    ("base.NonInterruptibleTime", 124, "TimeRange")):
+                fields.append(LayoutField(
+                    field_name, field_offset, 4, "pointer-struct", type_name,
+                    child=compact_range))
+            fields.append(LayoutField(
+                "base.VolumeSliderMultiplier", 100, 8, "list",
+                "AudioVolumeSliderMultiplier",
+                item=self.layout("AudioVolumeSliderMultiplier", False)))
+            fields.append(LayoutField(
+                "base.LimitGroup", 112, 8, "list",
+                "AudioEventLimitGroupRef",
+                item=self.layout("AudioEventLimitGroupRef", False)))
+            audio_file = Layout("AudioFileRefWithWeightRuntime", 12, [
+                LayoutField("File", 0, 4, "reference", "AudioFileRef"),
+                LayoutField("Weight", 4, 4, "scalar", "SageUnsignedInt"),
+                LayoutField("Volume", 8, 4, "scalar", "Percentage"),
+            ])
+            for field_name, field_offset in (
+                    ("Attack", 128), ("Sound", 136), ("Decay", 144)):
+                fields.append(LayoutField(
+                    field_name, field_offset, 8, "list",
+                    "AudioFileRefWithWeightRuntime", item=audio_file))
+            return Layout(name, 156, sorted(fields, key=lambda item: item.offset))
         if name == "FXParticleSystemTemplate" and root:
             # 0x00673A50 直接按这些偏移读取构建块：六个
             # ClientRandomVariable 内联，模块槽则保留指针/多态列表。
             scalar_fields = [
-                ("Priority", 4, "enum"), ("IsOneShot", 8, "scalar"),
-                ("Shader", 12, "enum"),
-                ("SystemLifetime", 32, "scalar"), ("SortLevel", 36, "scalar"),
-                ("IsGroundAligned", 40, "scalar"),
-                ("IsEmitAboveGroundOnly", 44, "scalar"),
-                ("IsParticleUpTowardsEmitter", 48, "scalar"),
-                ("UseMaximumHeight", 52, "scalar"),
+                ("Priority", 4, "enum", "FXParticleSystem_Priority"),
+                # These two runtime words are not the source bool/enum: shipped
+                # values include 2/3/8 and Shader value 9.  Keep their raw
+                # encoding until the runtime conversion is fully named.
+                ("RuntimeMode0", 8, "scalar", "unsignedInt"),
+                ("RuntimeMode1", 12, "scalar", "unsignedInt"),
+                ("SystemLifetime", 32, "scalar", "SageUnsignedInt"),
+                ("SortLevel", 36, "scalar", "SageUnsignedInt"),
+                ("IsGroundAligned", 44, "scalar", "SageBool"),
+                ("IsEmitAboveGroundOnly", 48, "scalar", "SageBool"),
+                ("IsParticleUpTowardsEmitter", 52, "scalar", "SageBool"),
             ]
             fields = [
-                LayoutField(field_name, field_offset, 4, kind, kind)
-                for field_name, field_offset, kind in scalar_fields
+                LayoutField(field_name, field_offset, 4, kind, type_name)
+                for field_name, field_offset, kind, type_name in scalar_fields
             ]
             for field_name, field_offset in (
-                    ("ParticleTexture", 16), ("Drawable", 20),
-                    ("SlaveSystem", 24), ("PerParticleAttachedSystem", 28)):
+                    ("ParticleTexture", 16), ("Drawable", 20)):
                 fields.append(LayoutField(
                     field_name, field_offset, 4, "reference", "AssetReference"))
+            # Weak particle-system links remain instance tokens rather than
+            # manifest imports (seven shipped non-zero values at +0x1C).
+            for field_name, field_offset in (
+                    ("SlaveSystem", 24), ("PerParticleAttachedSystem", 28)):
+                fields.append(LayoutField(
+                    field_name, field_offset, 4, "token", "AssetToken"))
+            # Six shipped EmitterSound values use a pointer at +0x28 to a
+            # separately imported reference cell; the pointer and target are
+            # respectively present in relo and imp.
+            emitter = Layout("FXParticleEmitterSound", 4, [
+                LayoutField("Sound", 0, 4, "reference", "AudioEventInfoRef"),
+            ])
+            fields.append(LayoutField(
+                "EmitterSound", 40, 4, "pointer-struct",
+                "FXParticleEmitterSound", child=emitter))
             random_layout = self.layout("ClientRandomVariable", False)
             for index, field_name in enumerate((
                     "Lifetime", "Size", "StartSizeRate", "BurstDelay",
@@ -408,28 +495,151 @@ class SchemaModel:
                 fields.append(LayoutField(
                     field_name, field_offset, 4, "pointer-struct",
                     type_name, child=child))
+            def runtime_alternatives(wrapper_name: str) -> list[Layout]:
+                # 0x00673A50 dereferences these slots, reads a concrete typeId
+                # at target +0 and dispatches to its constructor.  The XSD
+                # wrapper choice itself does not occupy storage.
+                def runtime_payload(layout: Layout, shift: int = 0,
+                                    preserve_name: bool = False) -> Layout:
+                    payload_fields = []
+                    for item in layout.fields:
+                        kind = item.kind
+                        type_name = item.type_name
+                        target = self.types.get(type_name)
+                        if (kind == "enum"
+                                or (kind == "scalar" and (
+                                    type_name in ("boolean", "SageBool")
+                                    or (target is not None
+                                        and target.list_item
+                                        and self.types.get(target.list_item)
+                                        is not None
+                                        and self.types[target.list_item].enum)))):
+                            # Concrete particle payloads have runtime-reordered
+                            # scalar words; strict C++ checking proved source
+                            # bool/enum names do not describe these offsets.
+                            kind = "scalar"
+                            type_name = "unsignedInt"
+                        child = (
+                            runtime_payload(item.child)
+                            if item.child is not None else None)
+                        list_item = (
+                            runtime_payload(item.item)
+                            if item.item is not None else None)
+                        alternatives = [
+                            runtime_payload(value)
+                            for value in item.alternatives
+                        ]
+                        payload_fields.append(LayoutField(
+                            item.path, item.offset + shift, item.size, kind,
+                            type_name, child, list_item, alternatives))
+                    return Layout(
+                        (layout.name if preserve_name
+                         else layout.name + "ParticleRuntime"),
+                        layout.size + shift, payload_fields,
+                        layout.supported, layout.reason)
+
+                wrapper = self.types[wrapper_name]
+                result = []
+                for source in wrapper.fields:
+                    child = self.layout(source.type_name, False)
+                    runtime = runtime_payload(child, 4, True)
+                    runtime.fields = [
+                        LayoutField(
+                            f"runtime.{item.path}", item.offset, item.size,
+                            item.kind, item.type_name, item.child, item.item,
+                            item.alternatives)
+                        for item in runtime.fields
+                    ]
+                    result.append(runtime)
+                return result
+
             for field_name, field_offset, type_name in (
                     ("Physics", 0x8C, "FXParticlePhysicsModule"),
                     ("Draw", 0x90, "FXParticleDrawModule"),
                     ("Volume", 0x94, "FXParticleVolumeModule"),
                     ("Velocity", 0x98, "FXParticleVelocityModule"),
-                    ("Event", 0x9C, "FXParticleEventModule"),
                     ("Update", 0xA4, "FXParticleUpdateModule")):
-                child = self.layout(type_name, False)
+                alternatives = runtime_alternatives(type_name)
                 fields.append(LayoutField(
-                    field_name, field_offset, child.size, "struct",
-                    type_name, child=child))
-            return Layout(name, 0xA8, fields)
+                    field_name, field_offset, 4, "polymorphic-pointer",
+                    "|".join(item.name for item in alternatives),
+                    alternatives=alternatives))
+            event_alternatives = runtime_alternatives("FXParticleEventModule")
+            fields.append(LayoutField(
+                "Event", 0x9C, 8, "polymorphic-list",
+                "|".join(item.name for item in event_alternatives),
+                alternatives=event_alternatives))
+            return Layout(name, 0xA8, sorted(fields, key=lambda item: item.offset))
         if name == "W3DAnimation" and root:
             # W3D 管线把源标量/四元数帧压缩为 runtime 的 Timecoded/Delta 通道。
             runtime = self.layout("W3DAnimationRuntime", True)
             return Layout(name, runtime.size, runtime.fields,
                           runtime.supported, runtime.reason)
+        if name == "AnimationChannelTimecoded":
+            # 0x009AF0F0 reads the runtime channel at +4/+8/+0C, the u16 pivot
+            # at +10, then {count,pointer} arrays at +14/+18 and +1C/+20.
+            # The concrete typeId occupies +0 and is not part of the XSD base.
+            u16 = self.layout("unsignedShort", False)
+            f32 = self.layout("float", False)
+            return Layout(name, 36, [
+                LayoutField("Type", 4, 4, "enum", "AnimationChannelType"),
+                LayoutField("NumFrames", 8, 4, "scalar", "unsignedInt"),
+                LayoutField("VectorLen", 12, 4, "scalar", "unsignedInt"),
+                LayoutField("Pivot", 16, 2, "scalar", "unsignedShort"),
+                LayoutField("FrameAndBinaryFlag", 20, 8, "list",
+                            "unsignedShort", item=u16),
+                LayoutField("Values", 28, 8, "list", "float", item=f32),
+            ])
+        if name == "AnimationChannelDelta":
+            # 0x009AD5A0 reads the same reordered base, Scale at +14, Init at
+            # +18/+1C, NumBits at +20 and compressed bytes at +24/+28.
+            f32 = self.layout("float", False)
+            u8 = self.layout("unsignedByte", False)
+            return Layout(name, 44, [
+                LayoutField("Type", 4, 4, "enum", "AnimationChannelType"),
+                LayoutField("NumFrames", 8, 4, "scalar", "unsignedInt"),
+                LayoutField("VectorLen", 12, 4, "scalar", "unsignedInt"),
+                LayoutField("Pivot", 16, 2, "scalar", "unsignedShort"),
+                LayoutField("Scale", 20, 4, "scalar", "float"),
+                LayoutField("Init", 24, 8, "list", "float", item=f32),
+                LayoutField("NumBits", 32, 4, "scalar", "unsignedInt"),
+                LayoutField("CompressedValues", 36, 8, "list",
+                            "unsignedByte", item=u8),
+            ])
         if name == "RenderSubObjectReference":
             # 两个 choice 分支都是 AssetReference，BAB 合并为同一个引用槽；
             # 目标 typeId 由该资源的引用目录携带，不另存 discriminant。
             return Layout(name, 4, [
                 LayoutField("RenderObject", 0, 4, "reference", "AssetReference"),
+            ])
+        if name == "FXParticleColor":
+            # Every non-null shipped color block places its Color list pointer
+            # at +8 (1,291/1,291 relo hits), with saturation before the list and
+            # the by-value random scale plus house-color flag after it.
+            color_item = self.layout("RGBColorKeyframe", False)
+            scale = self.layout("ClientRandomVariable", False)
+            return Layout(name, 28, [
+                LayoutField("HouseColorSaturation", 0, 4, "scalar", "SageReal"),
+                LayoutField("Color", 4, 8, "list", "RGBColorKeyframe",
+                            item=color_item),
+                LayoutField("ColorScale", 12, scale.size, "struct",
+                            "ClientRandomVariable", child=scale),
+                LayoutField("UseHouseColor", 24, 4, "scalar", "SageBool"),
+            ])
+        if name == "FXParticleDrawRenderObject":
+            # The 163 shipped non-empty RenderObject draw modules put the
+            # fixed-three ObjectSet list before the two trailing bools; its
+            # pointer is module +0x0C after the concrete typeId.
+            object_set = next(
+                field_item for field_item in self.types[name].fields
+                if field_item.name == "ObjectSet")
+            child = self.layout(object_set.type_name, False)
+            return Layout(name, 20, [
+                LayoutField("SinkRate", 0, 4, "scalar", "SageReal"),
+                LayoutField("ObjectSet", 4, 8, "list",
+                            object_set.type_name, item=child),
+                LayoutField("MultiRenderObjects", 12, 4, "scalar", "SageBool"),
+                LayoutField("SinkOnTerrainCollision", 16, 4, "scalar", "SageBool"),
             ])
         # AssetTypeAudio.xsd 同时给出源类型 AudioFile 与构建后
         # AudioFileRuntime；注释明确 HeaderData 经 xsd2cpp 配置转换。
@@ -684,7 +894,10 @@ class InstanceValidator:
                 self.errors.append(f"{path}: 非零数量使用空指针")
             return None
         self.relo.add(field_offset)
-        if target >= len(self.data):
+        # Empty arrays may use the canonical one-past-end address.  The shipped
+        # corpus has 3,250 such relo targets, including 35 empty W3DAnimation
+        # channel arrays; non-empty extents are still checked below.
+        if target > len(self.data):
             self.errors.append(f"{path}: 指针 {target} 越界")
             return None
         total = count * extent

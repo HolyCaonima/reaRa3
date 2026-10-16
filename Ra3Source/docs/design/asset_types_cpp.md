@@ -6,9 +6,9 @@
 `Layout`，再以
 `docs/analysis/ra3_1.0/asset_layout_coverage.tsv` 中
 `fully_validated=yes` 为唯一根类型清单。布局工具以后新增完全通过的类型时，生成器
-会自动纳入，不维护手写类型表。当前生成结果是 157 个根类型、230 个
-根/内联/列表元素结构和 37 个枚举，位于
-`src/asset/include/ra3/asset/types/GeneratedTypes.h`，生成头为 413,085 字节。
+会自动纳入，不维护手写类型表。当前生成结果是 160 个根类型、283 个
+根/内联/列表元素结构和 45 个枚举，位于
+`src/asset/include/ra3/asset/types/GeneratedTypes.h`，生成头为 503,548 字节。
 
 生成文件派生自 EA GPL v3 Mod SDK 的 `AssetType*.xsd`、`Includes/*.xsd` 及其引用
 schema；文件首行列出实际使用的 schema 文件，未把 XSD 本身复制进仓库。每个结构
@@ -85,19 +85,19 @@ ra3tool types-check
 覆盖；反向也要求表中每一项命中一个反射字段。零长依赖占位计入实例数，但没有可遍历
 对象。
 
-2026-10-17 的 Win32 Release 全量结果：
+2026-10-17 layout3 的 Win32 Release 全量结果：
 
 | 指标 | 结果 |
 |---|---:|
-| 生成类型 | 157 / 157 |
-| 遍历 manifest 实例（含零长占位） | 58,925 |
-| 反射字段访问 | 1,197,896 |
+| 生成类型 | 160 / 160 |
+| 遍历 manifest 实例（含零长占位） | 74,193 |
+| 反射字段访问 | 19,915,581 |
 | 失败 | 0 |
-| wall time | 18,329 ms |
+| wall time | 23,336 ms |
 
-布局文档中的 93,200 是所有 257 类中“通过的记录”总数，其中包含尚未整类通过的
-类型；本工具只统计 157 个 `fully_validated=yes` 类型的全部记录，所以实例数是
-58,925。
+布局文档中的 101,583 是所有 257 类中“通过的记录”总数，其中包含尚未整类通过的
+类型；本工具只统计 160 个 `fully_validated=yes` 类型的全部记录，所以实例数是
+74,193。
 
 严格 bool 检查发现了原布局验证器只凭尺寸/relo/imp 无法发现的字段顺序缺口：
 `OnDemandTextureImage`、`PackedTextureImage`、`RadarTerrainImage` 的 `Rotated`
@@ -108,3 +108,10 @@ ra3tool types-check
 
 严格枚举检查还证实 `DamageFXGroup.Type` 的首条发行记录允许
 `0xFFFFFFFF` unset sentinel；共享模型将它作为发行 runtime 枚举值记录。
+
+layout3 新纳入的 `AudioEvent`、`W3DAnimation` 和
+`FXParticleSystemTemplate` 也经过同一严格检查。粒子 concrete module 的 source
+bool/enum 不能直接套到 runtime payload 偏移：首次生成后出现 3,755 个严格失败，
+包括 float 位型被误读为 bool/enum。模型因此只在已由构造函数或发行值证实的根字段
+保留语义类型；runtime-reordered scalar 保留原始 `u32`，而指针、列表、typeId、
+relo/imp 和边界仍逐项严格检查。修正后 19,915,581 次字段访问为 0 失败。

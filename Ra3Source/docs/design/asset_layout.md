@@ -94,6 +94,27 @@ sizeof = 20
   `0x00673A50` 直接读取 `+0x80..+0xA4` 的模块槽并按 typeId 构造运行时模块；
   当前根偏移已吻合，嵌套模块仍有未解差异。
 
+第三轮闭环了三种专用 runtime wrapper：
+
+- `AudioEvent` 的根是 156 字节。Attack/Sound/Decay 仍是三个独立列表，但从
+  `+0x80/+0x88/+0x90` 开始，每项固定 12 字节
+  `{AudioFile import, weight, volume}`；非空列表指针恰为
+  `+0x84/+0x8C/+0x94` 的 relo，全部 item import 从 `+0x98` 起按 12 字节步进。
+  range 指针指向紧凑运行时值；66 个 PitchShift 目标位于实例最后 4 字节，证明
+  不能强制套用源 XSD 的固定 8 字节 `RealRange`。
+- `W3DAnimation` 的 Timecoded 通道为 36 字节、Delta 通道为 44 字节，均含开头
+  typeId。clean 构造函数 `0x009AF0F0` 直接读取 Timecoded 的 pivot `+0x10`、
+  两个列表 `+0x14/+0x18` 和 `+0x1C/+0x20`；`0x009AD5A0` 读取 Delta 的
+  scale `+0x14`、init `+0x18/+0x1C`、numBits `+0x20`、压缩字节
+  `+0x24/+0x28`。35 个空 channel 数组使用合法的一过尾指针 24，与全量
+  3,250 个一过尾 relo 目标的不变量一致。
+- `FXParticleSystemTemplate` 的模块槽是指向“typeId + concrete payload”的多态
+  指针，Event 是多态指针数组；这与 `0x00673A50` 的分派完全一致。
+  1,291 个 Color 块的列表指针全部位于块 `+8`，RenderObject draw 模块的
+  163 个 ObjectSet 指针全部位于模块 `+0x0C`。6 个 EmitterSound 使用根
+  `+0x28` 指针指向单独的 import cell；7 个非零粒子系统弱引用是 token，
+  不在 `.imp`。上述槽集合与 4,110 条记录的 relo/imp 完全相等。
+
 ### 2.1 程序中的 relocation / detokenizer 边界
 
 发行字节与 clean 函数共同表明，流程不是“在同一个槽里区分相对指针和 token”：
@@ -141,17 +162,17 @@ attribute、element、匿名类型、enum、XSD list、choice 和引用类型目
 
 ### 3.1 当前覆盖
 
-第二轮全量结果（2026-10-16）：
+第三轮全量结果（2026-10-17）：
 
 | 指标 | 结果 |
 |---|---:|
 | 四件套流 | 257 / 257 |
-| 发行资源类型完全通过 | **157 / 257** |
-| 发行 manifest 记录通过 | **93,200 / 118,232** |
-| 未通过记录 | 25,032 |
+| 发行资源类型完全通过 | **160 / 257** |
+| 发行 manifest 记录通过 | **101,583 / 118,232** |
+| 未通过记录 | 16,649 |
 
-相对第一轮的 **132 / 257、87,592 / 118,232**，增加 25 个完全通过类型和
-5,608 条通过记录。第一轮 132 个完全通过类型没有回归。
+相对第二轮的 **157 / 257、93,200 / 118,232**，增加 3 个完全通过类型和
+8,383 条通过记录。原有 157 个完全通过类型没有回归。
 
 这里“类型完全通过”要求该类型每条发行记录（包括零长外部占位）都通过；“记录通过”
 不等于已经理解其上层游戏语义，只表示本文列出的二进制布局、边界、relo 和 imp
@@ -163,17 +184,22 @@ attribute、element、匿名类型、enum、XSD list、choice 和引用类型目
 
 | 类型 | 通过 / 总数 | 原因 |
 |---|---:|---|
-| AudioEvent | 46 / 5,234 | 根已从 244 修正到 148 字节；Attack/Sound/Decay 三组运行时列表仍有额外重排 |
 | W3DMesh | 12,033 / 17,058 | `W3D` 顶点块是专用压缩/指针目录，且 FXShader 内部仍有运行时差异 |
 | GameObject | 8,511 / 12,280 | Tokenized 字符串已收缩，但 Browser、GameDependency 和模块集合仍是专用表示 |
-| W3DAnimation | 4,099 / 5,924 | 根和 typeId 工厂已证实；Timecoded/Delta 通道内部 list/padding 尚差 4–8 字节 |
-| FXParticleSystemTemplate | 2,740 / 4,110 | 168 字节根及模块 token 已证实；Color/Alpha 和各模块内部可选数组仍有差异 |
 | ObjectCreationList | 901 / 1,787 | 56 字节根已吻合；CreateObject nugget 的可选 Vector/引用列表并非通用表示 |
 | AIStrategicStateDefinition | 0 / 704 | Tactic/Heuristic 的嵌套多态与可选对象仍未建模 |
 | VideoEventList | 0 / 690 | Movie/TitleCard 多态事件的运行时对象布局未解 |
 
-`W3DContainer` 已从 5,053 / 7,014 提升到 **7,014 / 7,014**，
-`W3DHierarchy` 从 5,009 / 6,946 提升到 **6,946 / 6,946**。
+本轮优先类型的前后对比：
+
+| 类型 | 第二轮 | 第三轮 |
+|---|---:|---:|
+| AudioEvent | 46 / 5,234 | **5,234 / 5,234** |
+| W3DMesh | 12,033 / 17,058 | 12,033 / 17,058 |
+| GameObject | 8,511 / 12,280 | 8,511 / 12,280 |
+| W3DAnimation | 4,099 / 5,924 | **5,924 / 5,924** |
+| FXParticleSystemTemplate | 2,740 / 4,110 | **4,110 / 4,110** |
+| ObjectCreationList | 901 / 1,787 | 901 / 1,787 |
 
 这些失败不是越界后继续“猜读”；验证器在第一层不一致时记录失败。TSV 中部分
 大类型的通过数来自合法零长依赖占位，不能据此声称其非空 runtime 布局已解决。
@@ -201,10 +227,10 @@ python Ra3Source/tools/analysis/xsd_layout.py `
 
 ## 6. 未决问题与下一步
 
-1. `AudioEvent` 三个文件引用列表为什么在运行时合并/重排，需继续对照音频构造函数；
-   当前 148 字节静态根正确，但列表槽语义尚未闭环。
-2. `W3DMesh` 的 VertexData 专用块和 FXShader 常量数组、`W3DAnimation` 两种压缩
-   通道的内部 padding，需分别建模，不能套普通 XSD list。
+1. `W3DMesh` 的 VertexData 专用块和 FXShader 常量数组仍需分别建模，不能套普通
+   XSD list。其 5,025 个非占位实例全部保留失败。
+2. `ObjectCreationList` 的 248 字节 CreateObject runtime nugget 和其他 nugget
+   仍有专用可选 Vector/token 列表；在字段语义闭环前不以 opaque 槽放宽验证。
 3. `GameObject/WeaponTemplate` 的 Tokenized 不只影响字符串，还会重写模块集合和
    若干 tagged 数值；当前递归字符串 token 规则只是已证实子集。
 4. 原始 `.relo` 逐项循环的精确入口落在台账 `entry-lost` 边界内；后续只有出现
