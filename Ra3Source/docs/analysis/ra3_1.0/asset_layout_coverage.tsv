@@ -34,11 +34,11 @@ typeId	typeName	instances	passed	failed	fully_validated	root_size	min_instance_s
 22B4748B	TerrainAssetCollection	3	2	1	no	12	0	41896	TerrainAsset[0].WBFolder: 字符串无 NUL (1); TerrainAsset[1].WBFolder: 字符串无 NUL (1); TerrainAsset[2].Texture: 字符串无 NUL (1)
 230236F6	Video	719	719	0	yes	28	44	80	
 242FF6D4	AIStrategicStateDefinition	704	0	704	no	64	144	672	Tactic[0].TeamTemplate: 非零数量使用空指针 (564); Tactic[0].TargetBaseCriteria: 指针 16842752 越界 (543); 导入未命中布局:236 (324)
-2448AE30	W3DAnimation	5924	4099	1825	no	24	0	288176	非空指针缺重定位:48,56 (40); 重定位未命中布局:52,60 (40); 非空指针缺重定位:356,364,400,408,444,452,488,496 (38)
+2448AE30	W3DAnimation	5924	5924	0	yes	24	0	288176	
 246D0C65	UIMouseDragSelectionFeedback	3	2	1	no	44	0	20	实例 20 小于根布局 44 (1)
 246F4433	BasicMouseCursors	1	1	0	yes	20	20	20	
 2893E309	Environment	3	2	1	no	164	0	156	实例 156 小于根布局 164 (1)
-28E7FD7F	FXParticleSystemTemplate	4110	2740	1370	no	168	0	748	Colors.Color: 非零数量使用空指针 (763); Colors.Color: 指向数据 1+4080 越界 (479); 非空指针缺重定位:188 (479)
+28E7FD7F	FXParticleSystemTemplate	4110	4110	0	yes	168	0	748	
 296A6335	UIMouseTacticalForceAttackMoveButton	3	3	0	yes	36	0	76	
 2B9FE633	CampaignEnumerator	3	3	0	yes	12	0	24	
 2C358B80	MpGameRules	1	1	0	yes	24	24	24	
@@ -127,7 +127,7 @@ typeId	typeName	instances	passed	failed	fully_validated	root_size	min_instance_s
 7F96D96D	PlayerTechUpgradeBinding	3	3	0	yes	12	28	36	
 81583E8B	UIJoypadCommandBarTopMenu	3	3	0	yes	8	0	8	
 81D85EFA	SpecialPowerTemplate	611	348	263	no	264	0	744	ForbiddenObjectFilter.ExcludeThing: 非零数量使用空指针 (218); 重定位未命中布局:536,544,568 (72); 导入未命中布局:244,308 (71)
-844D7B9F	AudioEvent	5234	46	5188	no	148	156	1696	Decay: 非零数量使用空指针 (5155); 重定位未命中布局:140 (4800); 导入未命中布局:152 (3474)
+844D7B9F	AudioEvent	5234	5234	0	yes	156	156	1696	
 86682E78	FXList	1594	1061	533	no	32	0	2320	导入未命中布局:76 (140); 重定位未命中布局:20 (138); 重定位未命中布局:20,32,36,40 (72)
 87C8CD72	UIMouseTacticalPlanningModeButton	3	3	0	yes	36	0	76	
 88011B0E	MusicScriptConditionNugget_Or	2	2	0	yes	12	20	20	
