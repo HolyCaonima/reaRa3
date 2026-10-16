@@ -250,6 +250,12 @@ Beta，单人，阵营随机）→ BEGIN。点击由 `SetCursorPos`/`mouse_event
 窗口，截图核对每一步。运行 9 之前有一次注入在进程出现约 1 秒时失败（远程模块快照
 尚未就绪，游戏未被注入，结果作废）；注入器现对远程函数解析重试 5 秒。
 
+四个未被调用的目标的直接调用点（扫描 .text 的 `call/jmp rel32`，无函数指针引用）：
+stringfindlast 只被 `AddArchiveFromFile` 0x009F5AF0 调用，挂载档案发生在第一个窗口
+之前，按注入时机永远观察不到；bytewiden 只被 0x009F1F80–0x009F47F0 的 9 个格式化
+辅助函数调用（它们用常量 "(null)" 代替空字符串指针）；utf8decode 的唯一调用点在
+0x00A3EB32，utf8encode 的在 0x00A34300/0x00A34370，遭遇战流程都没有走到。
+
 运行 12、13 的 DLL 是 Debug 构建：bigfindentry 在加载期约 220 万次调用，加载到主菜单
 要数分钟。Release 构建（`cmake --build build/win32 --config Release`，同样零警告、
 ctest 全过）在运行 14 中约 50 秒到主菜单，此后实机运行默认用 `bin/Release`。运行 13 之前有一次作废：配置脚本与启动命令并行执行，DLL
