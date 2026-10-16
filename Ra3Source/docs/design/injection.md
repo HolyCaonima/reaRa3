@@ -101,15 +101,15 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `utf8next` | `0x00A284B0` UTF-8 解码并前移 | cdecl | 6 | `ra3::common::decodeUtf8AndAdvance` | live verified |
 | `bigfindhash` | `0x009F6B90` 单档案哈希表查找 | thiscall | 5 | `ra3::io::findGameBigHashedEntry` | live verified（shadow；replace 时唯一调用者已被替换）; 仅显式键启用 |
 | `bigfindentry` | `0x009F6D00` 单档案路径/序号查找 | thiscall | 7 | `ra3::io::findGameBigEntry` | live verified; 仅显式键启用 |
-| `bigreadbe32` | `0x009F6810` 变宽大端 32 位读取 | cdecl | 7 | `ra3::io::readGameBigEndian32` | offline-verified, live pending |
-| `bigreadbe64` | `0x009F6880` 变宽大端 64 位读取 | cdecl | 5 | `ra3::io::readGameBigEndian64` | offline-verified, live pending |
-| `bigformat` | `0x009F6910` BIG/C0FB/Viv4 格式判别 | cdecl | 7 | `ra3::io::detectGameBigFormat` | offline-verified, live pending |
-| `bighashpath` | `0x009F6990` BIG 路径 hash | cdecl | 7 | `ra3::io::hashGameBigPath` | offline-verified, live pending |
-| `bigheadersize` | `0x009F6A50` 目录头长度 | cdecl | 5 | `ra3::io::gameBigHeaderSize` | offline-verified, live pending |
-| `bigentrycount` | `0x009F6AA0` 目录条目数 | thiscall | 6 | `ra3::io::gameBigEntryCount` | offline-verified, live pending；仅显式键启用 |
-| `bigtrailersize` | `0x009F6B00` 目录尾标识 | thiscall | 5 | `ra3::io::gameBigTrailerSize` | offline-verified, live pending；仅显式键启用 |
-| `bigstoredsize` | `0x009F5E80` 文件 stored size | stdcall | 7 | `ra3::io::gameBigStoredSize` | offline-verified, live pending；仅显式键启用 |
-| `bigabsoluteoffset` | `0x009F5E90` 文件绝对数据偏移 | stdcall | 6 | `ra3::io::gameBigAbsoluteDataOffset` | offline-verified, live pending；仅显式键启用 |
+| `bigreadbe32` | `0x009F6810` 变宽大端 32 位读取 | cdecl | 7 | `ra3::io::readGameBigEndian32` | live verified |
+| `bigreadbe64` | `0x009F6880` 变宽大端 64 位读取 | cdecl | 5 | `ra3::io::readGameBigEndian64` | live verified |
+| `bigformat` | `0x009F6910` BIG/C0FB/Viv4 格式判别 | cdecl | 7 | `ra3::io::detectGameBigFormat` | live verified |
+| `bighashpath` | `0x009F6990` BIG 路径 hash | cdecl | 7 | `ra3::io::hashGameBigPath` | live verified |
+| `bigheadersize` | `0x009F6A50` 目录头长度 | cdecl | 5 | `ra3::io::gameBigHeaderSize` | live verified |
+| `bigentrycount` | `0x009F6AA0` 目录条目数 | thiscall | 6 | `ra3::io::gameBigEntryCount` | live verified；仅显式键启用 |
+| `bigtrailersize` | `0x009F6B00` 目录尾标识 | thiscall | 5 | `ra3::io::gameBigTrailerSize` | live verified；仅显式键启用 |
+| `bigstoredsize` | `0x009F5E80` 文件 stored size | stdcall | 7 | `ra3::io::gameBigStoredSize` | live verified；仅显式键启用 |
+| `bigabsoluteoffset` | `0x009F5E90` 文件绝对数据偏移 | stdcall | 6 | `ra3::io::gameBigAbsoluteDataOffset` | live verified；仅显式键启用 |
 
 上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节
@@ -257,6 +257,8 @@ ra3_1.0.game` 换成 `--pid <PID>`。注入器应报告非零 `LoadLibraryW resu
 | 12 | 23 目标 shadow（含显式启用的 bigfind*），进入遭遇战 | `--wait-window` | 对局中 19 个目标被调用，全部 0 不一致；如 bigfindentry 2632470/2632470、pathcompare 762327/762327、stringlength 273450/273450、bytecompare 269853/269853、fnvhash 45230/45230、bigfindhash 4627/4627 | stringfindlast、bytewiden、utf8decode、utf8encode 未被调用 |
 | 13 | 23 目标 replace，进入遭遇战 | `--wait-window` | 对局中 bigfindentry 2694036、pathcompare 763499、stringlength 276354、bytecompare 257685 次全部由 Ra3Source 处理；bigfindhash 0 次（唯一调用者 bigfindentry 已被替换） | 对局正常运行 |
 | 14 | 同运行 13，改用 Release 构建的 DLL | `--wait-window` | 对局中 bigfindentry 2694111、stringlength 309882、pathcompare 348589、bytecompare 257687 次全部由 Ra3Source 处理 | 约 50 秒到主菜单，对局正常运行 |
+| 15 | 32 目标 shadow（Release；6 个 explicitOnly 键全开），进入遭遇战 | `--wait-window` | 28 个目标被调用，全部 0 不一致；bigfindentry 内部的辅助函数如 bigformat 10778341/10778341、bigheadersize 5388212/5388212、bigreadbe64 2689159/2689159、bigentrycount 2696023/2696023、bigtrailersize 2678773/2678773，另 bigabsoluteoffset 7150/7150、bighashpath 4947/4947、bigstoredsize 368/368 | 未被调用的仍是 stringfindlast、bytewiden、utf8decode、utf8encode |
+| 16 | 32 目标 replace（Release），进入遭遇战 | `--wait-window` | bigfindentry 2632470、bigentrycount 2629704、bigabsoluteoffset 7006、bigstoredsize 340 次由 Ra3Source 处理；bigformat 等 6 个辅助函数 0 次（调用者已被替换，改走同一份 C++） | 对局正常运行 |
 
 运行 8、9 的操作：主菜单点掉离线提示 → Versus → Skirmish → 默认设置（Battlebase
 Beta，单人，阵营随机）→ BEGIN。点击由 `SetCursorPos`/`mouse_event` 发往前台游戏
