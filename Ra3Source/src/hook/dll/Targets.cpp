@@ -5,6 +5,7 @@
 #include <ra3/io/GameBigLayout.h>
 #include <ra3/io/PathCompare.h>
 #include <ra3/io/RefPack.h>
+#include <ra3/sim/Random.h>
 #include <ra3/text/GameTextLayout.h>
 
 #include <algorithm>
@@ -55,6 +56,11 @@ TargetState g_gameTextTable;
 TargetState g_gameTextManager;
 TargetState g_bigSeek;
 TargetState g_bigClose;
+TargetState g_randomStep;
+TargetState g_randomInit;
+TargetState g_logicRandomInt;
+TargetState g_clientRandomInt;
+TargetState g_audioRandomInt;
 
 // ra3_1.0.game 0x009F72E0: one-shot RefPack decoder, returns the decoded size.
 using DecodeFunction = int(__stdcall*)(std::uint8_t*, const std::uint8_t*);
@@ -1031,6 +1037,141 @@ void __fastcall bigClose(
     state.matches.fetch_add(1, relaxed);
 }
 
+ra3::sim::RandomState* gameClientRandomState()
+{
+    return reinterpret_cast<ra3::sim::RandomState*>(0x00CB73F0);
+}
+
+ra3::sim::RandomState* gameAudioRandomState()
+{
+    return reinterpret_cast<ra3::sim::RandomState*>(0x00CB7408);
+}
+
+ra3::sim::RandomState* gameLogicRandomState()
+{
+    return reinterpret_cast<ra3::sim::RandomState*>(0x00CB7420);
+}
+
+void recordRandomTransition(
+    const char* key,
+    TargetState& target,
+    std::uint32_t gameResult,
+    std::uint32_t ourResult,
+    const ra3::sim::RandomState& gameState,
+    const ra3::sim::RandomState& ourState)
+{
+    if (gameResult == ourResult
+        && std::memcmp(&gameState, &ourState, sizeof(gameState)) == 0) {
+        target.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch(key, target, "return value or six-dword state differs");
+    }
+}
+
+// ra3_1.0.game 0x005A9310: generic six-dword add-with-carry step.
+using RandomStepFunction = std::uint32_t(__thiscall*)(ra3::sim::RandomState*);
+
+std::uint32_t __fastcall randomStep(ra3::sim::RandomState* random, void*)
+{
+    TargetState& target = g_randomStep;
+    target.calls.fetch_add(1, relaxed);
+    if (target.mode == Mode::replace) {
+        target.matches.fetch_add(1, relaxed);
+        return ra3::sim::nextRandom(*random);
+    }
+
+    ra3::sim::RandomState expected = *random;
+    const std::uint32_t game =
+        reinterpret_cast<RandomStepFunction>(target.original)(random);
+    const std::uint32_t ours = ra3::sim::nextRandom(expected);
+    recordRandomTransition("randomstep", target, game, ours, *random, expected);
+    return game;
+}
+
+// ra3_1.0.game 0x005A93B0: seed client, audio and logic streams together.
+using RandomInitFunction = void(__cdecl*)(std::uint32_t);
+
+void __cdecl randomInit(std::uint32_t seed)
+{
+    TargetState& target = g_randomInit;
+    target.calls.fetch_add(1, relaxed);
+    if (target.mode == Mode::replace) {
+        ra3::sim::seedRandom(*gameClientRandomState(), seed);
+        ra3::sim::seedRandom(*gameAudioRandomState(), seed);
+        ra3::sim::seedRandom(*gameLogicRandomState(), seed);
+        *reinterpret_cast<std::uint32_t*>(0x00DF60CC) = seed;
+        target.matches.fetch_add(1, relaxed);
+        return;
+    }
+
+    ra3::sim::RandomState client{};
+    ra3::sim::RandomState audio{};
+    ra3::sim::RandomState logic{};
+    ra3::sim::seedRandom(client, seed);
+    ra3::sim::seedRandom(audio, seed);
+    ra3::sim::seedRandom(logic, seed);
+    reinterpret_cast<RandomInitFunction>(target.original)(seed);
+    const bool equal =
+        std::memcmp(gameClientRandomState(), &client, sizeof(client)) == 0
+        && std::memcmp(gameAudioRandomState(), &audio, sizeof(audio)) == 0
+        && std::memcmp(gameLogicRandomState(), &logic, sizeof(logic)) == 0
+        && *reinterpret_cast<const std::uint32_t*>(0x00DF60CC) == seed;
+    if (equal) {
+        target.matches.fetch_add(1, relaxed);
+    } else {
+        reportMismatch("randominit", target, "one or more seeded globals differ");
+    }
+}
+
+using RandomIntegerFunction = int(__cdecl*)(int, int);
+
+int randomInteger(
+    const char* key,
+    TargetState& target,
+    ra3::sim::RandomState* random,
+    int low,
+    int high,
+    bool logicRules)
+{
+    target.calls.fetch_add(1, relaxed);
+    if (target.mode == Mode::replace) {
+        const int result = logicRules
+            ? ra3::sim::logicRandomInteger(*random, low, high)
+            : ra3::sim::clientRandomInteger(*random, low, high);
+        target.matches.fetch_add(1, relaxed);
+        return result;
+    }
+
+    ra3::sim::RandomState expected = *random;
+    const int game =
+        reinterpret_cast<RandomIntegerFunction>(target.original)(low, high);
+    const int ours = logicRules
+        ? ra3::sim::logicRandomInteger(expected, low, high)
+        : ra3::sim::clientRandomInteger(expected, low, high);
+    recordRandomTransition(
+        key, target, static_cast<std::uint32_t>(game), static_cast<std::uint32_t>(ours),
+        *random, expected);
+    return game;
+}
+
+int __cdecl logicRandomInteger(int low, int high)
+{
+    return randomInteger(
+        "logicrandomint", g_logicRandomInt, gameLogicRandomState(), low, high, true);
+}
+
+int __cdecl clientRandomInteger(int low, int high)
+{
+    return randomInteger(
+        "clientrandomint", g_clientRandomInt, gameClientRandomState(), low, high, false);
+}
+
+int __cdecl audioRandomInteger(int low, int high)
+{
+    return randomInteger(
+        "audiorandomint", g_audioRandomInt, gameAudioRandomState(), low, high, false);
+}
+
 }  // namespace
 
 const char* modeName(Mode mode)
@@ -1205,6 +1346,26 @@ const std::vector<Target>& targets()
          {0x56, 0x8B, 0x74, 0x24, 0x08, 0x57, 0x8B, 0xF9,
           0x8B, 0x4E, 0x0C, 0x85, 0xC9, 0x74, 0x26, 0x8B},
          5, reinterpret_cast<void*>(&bigClose), &g_bigClose, true},
+        {"randomstep", 0x001A9310,
+         {0x8B, 0x51, 0x10, 0x53, 0x56, 0x57, 0x8B, 0x79,
+          0x14, 0x8D, 0x04, 0x3A, 0x3B, 0xC7, 0xBB, 0x01},
+         5, reinterpret_cast<void*>(&randomStep), &g_randomStep, true},
+        {"randominit", 0x001A93B0,
+         {0x8B, 0x54, 0x24, 0x04, 0x8D, 0x8A, 0x56, 0x0E,
+          0x2D, 0xF2, 0x8B, 0xC1, 0xA3, 0x08, 0x74, 0xCB},
+         10, reinterpret_cast<void*>(&randomInit), &g_randomInit, true},
+        {"logicrandomint", 0x001A94C0,
+         {0x8B, 0x44, 0x24, 0x08, 0x57, 0x8B, 0x7C, 0x24,
+          0x08, 0x3B, 0xF8, 0x7C, 0x04, 0x8B, 0xC7, 0x5F},
+         5, reinterpret_cast<void*>(&logicRandomInteger), &g_logicRandomInt, true},
+        {"clientrandomint", 0x001A94F0,
+         {0x8B, 0x44, 0x24, 0x08, 0x56, 0x57, 0x8B, 0x7C,
+          0x24, 0x0C, 0x8B, 0xF0, 0x2B, 0xF7, 0x83, 0xC6},
+         5, reinterpret_cast<void*>(&clientRandomInteger), &g_clientRandomInt, true},
+        {"audiorandomint", 0x001A9520,
+         {0x8B, 0x44, 0x24, 0x08, 0x56, 0x57, 0x8B, 0x7C,
+          0x24, 0x0C, 0x8B, 0xF0, 0x2B, 0xF7, 0x83, 0xC6},
+         5, reinterpret_cast<void*>(&audioRandomInteger), &g_audioRandomInt, true},
     };
     return table;
 }

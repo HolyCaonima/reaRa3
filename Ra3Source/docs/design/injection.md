@@ -114,6 +114,11 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `gametextmanager` | `0x0053B500` GameText 三表优先级查询 | thiscall | 6 | `ra3::text::findGameText(GameTextManager*)` | live verified；仅显式键启用 |
 | `bigseek` | `0x009F5E00` BIG 文件 seek | thiscall（6 stack dword） | 6 | `ra3::io::seekGameBigFile` | live verified；仅显式键启用 |
 | `bigclose` | `0x009F5DB0` BIG 文件 close | thiscall | 5 | `ra3::io::closeGameBigFile` | live replace-only（运行 18，341 次，对局正常）；仅显式键启用；shadow 仅转发 |
+| `randomstep` | `0x005A9310` 六 dword RNG 核心步进 | thiscall | 5 | `ra3::sim::nextRandom` | offline-verified, live pending；仅显式键启用 |
+| `randominit` | `0x005A93B0` 三随机流统一播种 | cdecl | 10 | `ra3::sim::seedRandom` | offline-verified, live pending；仅显式键启用 |
+| `logicrandomint` | `0x005A94C0` 逻辑流闭区间整数 | cdecl | 5 | `ra3::sim::logicRandomInteger` | offline-verified, live pending；仅显式键启用 |
+| `clientrandomint` | `0x005A94F0` 客户端流闭区间整数 | cdecl | 5 | `ra3::sim::clientRandomInteger` | offline-verified, live pending；仅显式键启用 |
+| `audiorandomint` | `0x005A9520` 音频流闭区间整数 | cdecl | 5 | `ra3::sim::clientRandomInteger` | offline-verified, live pending；仅显式键启用 |
 
 上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节
@@ -135,6 +140,12 @@ Unicorn 与 `bigcheck --stdio` 对 1000 例比较，均为 0 mismatch。
 override/primary/map 三表叠加的管理器执行：Unicorn 中的原函数与 `textcheck` 中的
 C++ 各 208,782 例，均与同一模型 0 不一致；
 shadow 只比较返回指针，不进入或创建缺失字符串回退。
+
+五个 RNG 目标都修改全局或调用方提供的随机状态，因此均为 `explicitOnly`。shadow
+在调用原函数前快照完整的 6×32-bit 状态，原函数返回后只对快照应用 Ra3Source
+转移，再比较返回值和完整后状态，不回写游戏内存；`randominit` 比较三个状态块及
+逻辑基种子。整数 helper 的原函数可能再次经过已安装的 `randomstep` hook，这只产生
+嵌套观测，不会额外推进状态。
 
 新增目标：在 `Targets.cpp` 写一个与原函数同 ABI 的 hook（shadow 调原函数并比较，
 replace 只调我们的实现），在表里加一行 `{键, RVA, 前 16 字节, stolen 长度, hook,

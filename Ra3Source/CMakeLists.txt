@@ -33,6 +33,7 @@ add_subdirectory(src/io)
 add_subdirectory(src/text)
 add_subdirectory(src/asset)
 add_subdirectory(src/common)
+add_subdirectory(src/sim)
 add_subdirectory(src/hook)
 
 if(RA3_BUILD_TOOLS)
