@@ -23,6 +23,7 @@ ra3_add_shared_library(ra3hook
         dll/targets/AudioTargets.cpp
         dll/targets/BehaviorTargets.cpp
         dll/targets/ObjectLogicTargets.cpp
+        dll/targets/GameClient92Targets.cpp
     DEPS
         Ra3::audio
         Ra3::asset

@@ -1,6 +1,8 @@
 ra3_add_module(gameclient
     SOURCES
+        include/ra3/gameclient/GameClient92.h
         include/ra3/gameclient/ParticleModules.h
+        src/GameClient92.cpp
         src/ParticleModules.cpp
     PUBLIC_DEPS
         Ra3::math
