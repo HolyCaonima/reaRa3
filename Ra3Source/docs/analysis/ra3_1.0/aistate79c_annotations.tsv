@@ -44,5 +44,5 @@ address	status	owner	module	notes
 0079f0c0	reversed	recon/aistate79c	gamelogic	ra3::gamelogic::unitAIFollowWaypointPathOnExit; 00c2e850 slot 6; slot 2 returns UnitAIFollowWaypointPathState
 0079f240	reversed	recon/aistate79c	gamelogic	ra3::gamelogic::unitAIForceAttackObjectOnEnter; 00c2e9b8 slot 4; slot 2 returns UnitAIForceAttackObjectState
 0079f880	reversed	recon/aistate79c	gamelogic	ra3::gamelogic::unitAIHordeExitGoalOnEnter; 00c2ec38 slot 4; slot 2 returns UnitAIHordeExitGoalState
-0079fd20	reversed	recon/aistate79c	gamelogic	ra3::gamelogic::unitAIMoveToGoalOnEnter; 00c31668 slot 4; slot 2 returns UnitAIMoveToGoalState
-0079fee0	reversed	recon/aistate79c	gamelogic	ra3::gamelogic::unitAIMoveToGoalCopyOnEnter; 00c2ef40 slot 4; slot 2 returns UnitAIMoveToGoalState
+0079fd20	reversed	recon/aistate79c	gamelogic	ra3::gamelogic::unitAIMoveToGoalOnEnter; 00c31668 slot 4; slot 2 returns UnitAIMoveToGoalState; slot-2 getter 0079fed0 is shared by 00c31668 and 00c2ef40, so one table is a subclass inheriting the name (controller)
+0079fee0	reversed	recon/aistate79c	gamelogic	ra3::gamelogic::unitAIMoveToGoalCopyOnEnter; 00c2ef40 slot 4; slot 2 returns UnitAIMoveToGoalState; slot-2 getter 0079fed0 is shared by 00c31668 and 00c2ef40, so one table is a subclass inheriting the name (controller)
