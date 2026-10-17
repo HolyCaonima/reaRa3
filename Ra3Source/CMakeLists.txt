@@ -80,6 +80,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/obj6acheck)
     add_subdirectory(tools/protcavecheck)
     add_subdirectory(tools/luavmcheck)
+    add_subdirectory(tools/gamelogic82check)
 endif()
 
 if(RA3_BUILD_TESTS)
