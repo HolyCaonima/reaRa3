@@ -1869,3 +1869,46 @@ address	status	owner	module	notes
 00563460		recon/render56	render	Deferred W3DTerrainLogic slot 26 (`0x00be39f8` slot 26) wrapper calling `0x008e4db0` -> `0x0056dab0`
 00563480		recon/render56	render	Deferred W3DTerrainLogic slot 22 (`0x00be39f8` slot 22) wrapper calling `0x008e4e30` -> `0x0056db20`
 005634a0		recon/render56	render	Deferred W3DTerrainLogic slot 23 (`0x00be39f8` slot 23) wrapper calling `0x008e4eb0` -> `0x0056db80`
+00680260	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::GarrisonContain_clearReservedIfOccupied; 00c21e90 slot 10; slot 2 returns GarrisonContain
+00680690	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::OpenContain_clearClosingByte; 00c1fb90 slot 10; slot 2 returns OpenContain
+00680730	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::TransportContain_passengerFlag; 00c200a0 slot 24; slot 2 returns TransportContain
+00680b70	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::IdleState_busyMask; 00bf7a20 slot 5; slot 2 returns IdleState
+00680bb0	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::MoveInStraightLineState_xfer; 00c00cf0 slot 3; slot 2 returns MoveInStraightLineState
+00680c10	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::MoveToGroundState_xfer; 00c00d58 slot 3; slot 2 returns MoveToGroundState
+00680dc0	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::BeamSpecialAbilityUpdate_templateFlag; 00c1ba58 slot 41; slot 2 returns BeamSpecialAbilityUpdate
+00680e70	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::DominateEnemySpecialPower_storeRadius80; 00c1c0e8 slot 33; slot 2 returns DominateEnemySpecialPower
+00681670	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::ToggleStatusSpecialAbilityUpdate_entryPointer; 00c1e6f0 slot 30; slot 2 returns ToggleStatusSpecialAbilityUpdate
+00681690	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::ToggleStatusSpecialAbilityUpdate_nextEntryPointer; 00c1e6f0 slot 31; slot 2 returns ToggleStatusSpecialAbilityUpdate
+00681b50	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::DozerPrimaryIdleState_xfer; 00bf7f08 slot 3; slot 2 returns DozerPrimaryIdleState
+00682670	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::SupplyWarehouseDockUpdate_dispatch; 00c0c5a8 slot 6; slot 2 returns SupplyWarehouseDockUpdate
+00682c70	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::AIUpdateInterface_ensureLocomotor; 00c22118 slot 6; slot 2 returns AIUpdateInterface
+00682cf0	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::AIUpdateInterface_setGoal; 00c22118 slot 121; slot 2 returns AIUpdateInterface
+00682d00	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::AIUpdateInterface_setGoalAux; 00c22118 slot 122; slot 2 returns AIUpdateInterface
+00682dd0	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::AIUpdateInterface_query34; 00c22118 slot 109; slot 2 returns AIUpdateInterface
+00682ec0	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::AIUpdateInterface_wantsAdvance; 00c22118 slot 170; slot 2 returns AIUpdateInterface
+00682f70	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::AIUpdateInterface_query24; 00c22118 slot 131; slot 2 returns AIUpdateInterface
+00682fa0	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::AIUpdateInterface_query2C; 00c22118 slot 134; slot 2 returns AIUpdateInterface
+00682fc0	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::AIUpdateInterface_query30; 00c22118 slot 135; slot 2 returns AIUpdateInterface
+00683220	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::AIUpdateInterface_enterState4D; 00c22118 slot 105; slot 2 returns AIUpdateInterface
+006834e0	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::AIUpdateInterface_forwardOrZero20; 00c22118 slot 124; slot 2 returns AIUpdateInterface
+00683500	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::AIUpdateInterface_forwardOrZero24; 00c22118 slot 125; slot 2 returns AIUpdateInterface
+00683e20	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::LeechTargetingAttachUpdate_notify; 00c209e8 slot 27; slot 2 returns LeechTargetingAttachUpdate
+00683ee0	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::MissileUpdate_clearTimer; 00c13f50 slot 9; slot 2 returns MissileUpdate
+006844e0	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::ProjectileUpdate_addFrames; 00bf8cd8 slot 23; slot 2 returns ProjectileUpdate
+006846b0	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::RepairUpdate_notify; 00c056a0 slot 9; slot 2 returns RepairUpdate
+00684c90	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::SpecialAbilityUpdate_countdown; 00c142d8 slot 28; slot 2 returns SpecialAbilityUpdate
+00685940	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::EncloseBehavior_relayIfArmed; 00c08a48 slot 27; slot 2 returns EncloseBehavior
+00685960	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::EncloseBehavior_tryOpen; 00c08a48 slot 23; slot 2 returns EncloseBehavior
+00687460	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::findModuleByInterfaceKey; called from ReconstituteStateSpecialAbility 00c1d2b8 slot 32 at 006ca87e
+00689e80	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::storeCoordAndSentinelSign; called from StrafeAreaUpdate 00bf90f0 slot 23 at 00743b10
+0068a140	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::AreaRestrictSpecialPowerBehavior_xfer; 00bf64e0 slot 3; slot 2 returns AreaRestrictSpecialPowerBehavior
+0068a680	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::SupplyCenterCreate_xfer; 00bf7938 slot 3; slot 2 returns SupplyCenterCreate
+0068a6b0	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::AutoAbilityBehavior_xfer; 00c08080 slot 3; slot 2 returns AutoAbilityBehavior
+0068b180	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::BridgeBuilderBehavior_countSpanSegments; called from BridgeBuilderBehavior 00c1aab8 slot 3 at 0071fe18
+0068bfa0	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::DistributedMoneyBehavior_xfer; 00c08870 slot 3; slot 2 returns DistributedMoneyBehavior
+0068c210	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::EnergyDisablingBehavior_notifyOwner; 00bfaec0 slot 6; slot 2 returns EnergyDisablingBehavior
+0068c520	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::copyPackedDamageBlock; called from 0074aa60 at 0074ab6e; 0074aa60 pushes FireWeaponWhenDeadBehavior.cpp (00c226a8)
+0068d650	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::sumStride8Keys; called from UnitAIDeliverToRefineryState 00c29fa8 slot 5 at 0079d1b9
+0068dc20	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::PlayerPowerManagerBehavior_xfer; 00c11420 slot 3; slot 2 returns PlayerPowerManagerBehavior
+0068eb00	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::SlaveWatcherBehavior_xfer; 00c14738 slot 3; slot 2 returns SlaveWatcherBehavior
+0068f170	reversed	recon/objbehav68	gamelogic	ra3::gamelogic::StancesBehavior_xfer; 00c11840 slot 3; slot 2 returns StancesBehavior
