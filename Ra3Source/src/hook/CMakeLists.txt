@@ -29,6 +29,7 @@ ra3_add_shared_library(ra3hook
         dll/targets/AIStateTargets.cpp
         dll/targets/WeaponLogicTargets.cpp
         dll/targets/TerrainLogicTargets.cpp
+        dll/targets/Drawable52Targets.cpp
     DEPS
         Ra3::audio
         Ra3::asset

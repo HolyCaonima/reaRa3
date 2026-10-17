@@ -1,9 +1,11 @@
 ra3_add_module(gameclient
     SOURCES
         include/ra3/gameclient/DisplayExtent.h
+        include/ra3/gameclient/DrawableAccess.h
         include/ra3/gameclient/GameClient92.h
         include/ra3/gameclient/ParticleModules.h
         src/DisplayExtent.cpp
+        src/DrawableAccess.cpp
         src/GameClient92.cpp
         src/ParticleModules.cpp
     PUBLIC_DEPS
