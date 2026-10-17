@@ -19643,7 +19643,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e0a70	FUN_007e0a70	.text	166		clean	unknown		unanalyzed	
 007e0b20	FUN_007e0b20	.text	31		clean	unknown		unanalyzed	
 007e0b40	FUN_007e0b40	.text	92		clean	unknown		unanalyzed	
-007e0ba0	FUN_007e0ba0	.text	6		clean	unknown		unanalyzed	
+007e0ba0	FUN_007e0ba0	.text	6		clean	common	recon/common7e	reversed	disguiseGuardName; vtable 00c348c8 slot 2; mov eax, 0x00C34910 DisguiseGuardPositionStateMachine
 007e0bb0	FUN_007e0bb0	.text	40		clean	unknown		unanalyzed	
 007e0be0	FUN_007e0be0	.text	694		clean	unknown		unanalyzed	
 007e0ea0	FUN_007e0ea0	.text	551		clean	unknown		unanalyzed	
@@ -19660,7 +19660,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e1390	FUN_007e1390	.text	21		clean	unknown		unanalyzed	
 007e13b0	FUN_007e13b0	.text	57		clean	unknown		unanalyzed	
 007e13f0	FUN_007e13f0	.text	122		clean	unknown		unanalyzed	
-007e1470	FUN_007e1470	.text	6		clean	unknown		unanalyzed	
+007e1470	FUN_007e1470	.text	6		clean	common	recon/common7e	reversed	engagementTrackerName; vtable 00c35008 slot 2; mov eax, 0x00C34C44 EngagementTracker
 007e1480	FUN_007e1480	.text	44		clean	common	recon/player	reversed	player_port::hasCapacity; oracle 500
 007e14b0	FUN_007e14b0	.text	20		clean	unknown		unanalyzed	
 007e14d0	FUN_007e14d0	.text	72		clean	unknown		unanalyzed	
@@ -19670,14 +19670,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e15d0	FUN_007e15d0	.text	13		clean	common	recon/player	reversed	Player::setValue1258; oracle 50
 007e15e0	FUN_007e15e0	.text	17		clean	unknown		unanalyzed	
 007e1600	FUN_007e1600	.text	25		clean	unknown		unanalyzed	
-007e1620	FUN_007e1620	.text	48		clean	unknown		unanalyzed	
+007e1620	FUN_007e1620	.text	48		clean	common	recon/common7e	unanalyzed	rejected: vtable 00c35320 slot 4 returns through x87 fld and a virtual call
 007e1650	FUN_007e1650	.text	25		clean	unknown		unanalyzed	
 007e1670	FUN_007e1670	.text	38		clean	unknown		unanalyzed	
 007e16a0	FUN_007e16a0	.text	38		clean	unknown		unanalyzed	
 007e16d0	FUN_007e16d0	.text	27		clean	unknown		unanalyzed	
-007e16f0	FUN_007e16f0	.text	27		clean	unknown		unanalyzed	
-007e1710	FUN_007e1710	.text	42		clean	unknown		unanalyzed	
-007e1740	FUN_007e1740	.text	25		clean	unknown		unanalyzed	
+007e16f0	FUN_007e16f0	.text	27		clean	common	recon/common7e	reversed	forwardNested34; vtable 00c35320 slot 5; null nested clears AL and ret 8, else jmp [nested+0]+0x34
+007e1710	FUN_007e1710	.text	42		clean	common	recon/common7e	reversed	copyNestedTriple; vtable 00c35320 slot 6; copies nested +0x44/+0x48/+0x4C then AL from +0x50; null writes nothing and clears AL
+007e1740	FUN_007e1740	.text	25		clean	common	recon/common7e	reversed	forwardNested38; vtable 00c35320 slot 7; null nested ret 4 with EAX unchanged, else jmp [nested+0]+0x38
 007e1760	FUN_007e1760	.text	20		clean	unknown		unanalyzed	
 007e1780	FUN_007e1780	.text	18		clean	unknown		unanalyzed	
 007e17a0	FUN_007e17a0	.text	20		clean	unknown		unanalyzed	
@@ -19747,12 +19747,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e2420	FUN_007e2420	.text	8		clean	unknown		unanalyzed	
 007e2470	FUN_007e2470	.text	19		clean	common	recon/player	reversed	player_port::indexIsOutsideBinaryRange; oracle 500
 007e2490	FUN_007e2490	.text	30		clean	unknown		unanalyzed	
-007e24b0	FUN_007e24b0	.text	6		clean	unknown		unanalyzed	
+007e24b0	FUN_007e24b0	.text	6		clean	common	recon/common7e	reversed	redAlertName; vtable 00c34c6c slot 2; mov eax, 0x00C34C7C RedAlert
 007e24c0	FUN_007e24c0	.text	149		clean	unknown		unanalyzed	
 007e2560	FUN_007e2560	.text	97		clean	unknown		unanalyzed	
 007e25d0	FUN_007e25d0	.text	16		clean	common	recon/player	reversed	ScoreKeeper::setValue04IfUnlocked; oracle 500
 007e25e0	FUN_007e25e0	.text	16		clean	common	recon/player	reversed	ScoreKeeper::setValue0cIfUnlocked; oracle 500
-007e25f0	FUN_007e25f0	.text	6		clean	unknown		unanalyzed	
+007e25f0	FUN_007e25f0	.text	6		clean	common	recon/common7e	reversed	scoredKillTrackerName; vtable 00c350ec slot 2; mov eax, 0x00C34C9C ScoredKillTracker
 007e2600	FUN_007e2600	.text	27		clean	common	recon/player	reversed	ScoreKeeper::addD0; oracle 500; hook scoreaddd0
 007e2620	FUN_007e2620	.text	39		clean	common	recon/player	reversed	ScoreKeeper::addFloat11c; oracle 500
 007e2650	FUN_007e2650	.text	22		clean	common	recon/player	reversed	ScoreKeeper::increment100; oracle 500; hook scoreincrement100
@@ -19794,7 +19794,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e2d50	FUN_007e2d50	.text	76		clean	unknown		unanalyzed	
 007e2da0	FUN_007e2da0	.text	7		clean	unknown		unanalyzed	
 007e2db0	FUN_007e2db0	.text	7		clean	unknown		unanalyzed	
-007e2dd0	FUN_007e2dd0	.text	21		clean	unknown		unanalyzed	
+007e2dd0	FUN_007e2dd0	.text	21		clean	common	recon/common7e	reversed	adjustTunnelCount; vtable 00c35154 slot 0; dword +0x10 += 1 or -1 from the argument byte; EAX preserved; ret 4
 007e2df0	FUN_007e2df0	.text	39		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<RedAlertTemplate>::create_instance; slot=1; shared_by=1 handlers; allocation_size=92; small_constants=0x4,0x17; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 007e2e20	FUN_007e2e20	.text	26		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<RedAlertTemplate>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0xC,0x17; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 007e2e40	FUN_007e2e40	.text	7		clean	asset	recon/vclass	reversed	name=AssetHandlerTemplate::destroy_instance; slot=3; shared_by=119 handlers; field_offsets=0x18; 已由 Ghidra 反编译并结合调用约定确认语义
@@ -19935,8 +19935,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e7170	FUN_007e7170	.text	90		clean	unknown		unanalyzed	
 007e71d0	FUN_007e71d0	.text	94		clean	unknown		unanalyzed	
 007e7230	FUN_007e7230	.text	113		clean	unknown		unanalyzed	
-007e72b0	FUN_007e72b0	.text	6		clean	unknown		unanalyzed	
-007e72c0	FUN_007e72c0	.text	6		clean	unknown		unanalyzed	
+007e72b0	FUN_007e72b0	.text	6		clean	common	recon/common7e	reversed	moneyName; vtable 00c34ed0 slot 2; mov eax, 0x00C34EE0 Money
+007e72c0	FUN_007e72c0	.text	6		clean	common	recon/common7e	reversed	commandName; vtable 00c34ee8 slot 2; mov eax, 0x00C34EF8 Command
 007e72d0	FUN_007e72d0	.text	120		clean	unknown		unanalyzed	
 007e73b0	FUN_007e73b0	.text	42		clean	unknown		unanalyzed	
 007e73e0	FUN_007e73e0	.text	87		clean	unknown		unanalyzed	
@@ -19956,8 +19956,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e7b70	FUN_007e7b70	.text	13		clean	unknown		unanalyzed	
 007e7b80	FUN_007e7b80	.text	13		clean	unknown		unanalyzed	
 007e7b90	FUN_007e7b90	.text	102		clean	unknown		unanalyzed	
-007e7c00	FUN_007e7c00	.text	6		clean	unknown		unanalyzed	
-007e7c10	FUN_007e7c10	.text	8		clean	unknown		unanalyzed	
+007e7c00	FUN_007e7c00	.text	6		clean	common	recon/common7e	reversed	playerListName; vtable 00c34f84 slot 2; mov eax, 0x00C34FDC PlayerList
+007e7c10	FUN_007e7c10	.text	8		clean	common	recon/common7e	unanalyzed	rejected: adjustor thunk sub ecx, 0x24; jmp 0x007eab30; no distinct body
 007e7c20	FUN_007e7c20	.text	38		clean	unknown		unanalyzed	
 007e7c50	FUN_007e7c50	.text	243		clean	unknown		unanalyzed	
 007e7d50	FUN_007e7d50	.text	249		clean	unknown		unanalyzed	
@@ -19999,9 +19999,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e9510	FUN_007e9510	.text	60		clean	unknown		unanalyzed	
 007e95b0	FUN_007e95b0	.text	122		clean	unknown		unanalyzed	
 007e9630	FUN_007e9630	.text	129	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-007e96c0	FUN_007e96c0	.text	19		clean	unknown		unanalyzed	
+007e96c0	FUN_007e96c0	.text	19		clean	common	recon/common7e	reversed	linkedTextLength; vtable 00c34eb0 slot 1; uint16 at buffer-4 through two pointers at +4, or 0
 007e96e0	FUN_007e96e0	.text	44		clean	unknown		unanalyzed	
-007e9710	FUN_007e9710	.text	27		clean	unknown		unanalyzed	
+007e9710	FUN_007e9710	.text	27		clean	common	recon/common7e	reversed	linkedTextLengthPlus; vtable 00c34ec0 slot 1; dword at node+4 plus that uint16, or the dword when the buffer is null
 007e9730	FUN_007e9730	.text	89		clean	unknown		unanalyzed	
 007e9740	FUN_007e9740	.text	121		clean	unknown		unanalyzed	
 007e9750	FUN_007e9750	.text	88	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
@@ -20014,20 +20014,20 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e9a30	FUN_007e9a30	.text	64		clean	unknown		unanalyzed	
 007e9a70	FUN_007e9a70	.text	82		clean	unknown		unanalyzed	
 007e9ad0	FUN_007e9ad0	.text	56		clean	unknown		unanalyzed	
-007e9b10	FUN_007e9b10	.text	47		clean	unknown		unanalyzed	
-007e9b60	FUN_007e9b60	.text	77		clean	unknown		unanalyzed	
+007e9b10	FUN_007e9b10	.text	47		clean	common	recon/common7e	unanalyzed	rejected: destructor calls free 0x004166B0
+007e9b60	FUN_007e9b60	.text	77		clean	common	recon/common7e	unanalyzed	rejected: destructor walks a range then calls free 0x004166B0
 007e9bb0	FUN_007e9bb0	.text	15		clean	unknown		unanalyzed	
-007e9bc0	FUN_007e9bc0	.text	6		clean	unknown		unanalyzed	
+007e9bc0	FUN_007e9bc0	.text	6		clean	common	recon/common7e	reversed	energyName; vtable 00c34fe8 slot 2; mov eax, 0x00C34FF8 Energy
 007e9bd0	FUN_007e9bd0	.text	107		clean	unknown		unanalyzed	
 007e9c50	FUN_007e9c50	.text	84		clean	unknown		unanalyzed	
 007e9cb0	FUN_007e9cb0	.text	120		clean	unknown		unanalyzed	
-007e9d30	FUN_007e9d30	.text	67		clean	unknown		unanalyzed	
+007e9d30	FUN_007e9d30	.text	67		clean	common	recon/common7e	unanalyzed	rejected: destructor calls free 0x004166B0
 007e9d80	FUN_007e9d80	.text	209		clean	unknown		unanalyzed	
 007e9e60	FUN_007e9e60	.text	68		clean	unknown		unanalyzed	
 007e9eb0	FUN_007e9eb0	.text	96		clean	unknown		unanalyzed	
 007e9f10	FUN_007e9f10	.text	119		clean	unknown		unanalyzed	
 007e9f90	FUN_007e9f90	.text	84		clean	unknown		unanalyzed	
-007e9ff0	FUN_007e9ff0	.text	6		clean	unknown		unanalyzed	
+007e9ff0	FUN_007e9ff0	.text	6		clean	common	recon/common7e	reversed	playerRelationMapName; vtable 00c35028 slot 2; mov eax, 0x00C35038 PlayerRelationMap
 007ea000	FUN_007ea000	.text	187		clean	unknown		unanalyzed	
 007ea0c0	FUN_007ea0c0	.text	231		clean	unknown		unanalyzed	
 007ea1b0	FUN_007ea1b0	.text	196		clean	unknown		unanalyzed	
@@ -20047,22 +20047,22 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007eaa90	FUN_007eaa90	.text	74		clean	unknown		unanalyzed	
 007eaae0	FUN_007eaae0	.text	53		clean	unknown		unanalyzed	
 007eab20	FUN_007eab20	.text	11		clean	unknown		unanalyzed	
-007eab30	FUN_007eab30	.text	30		clean	unknown		unanalyzed	
+007eab30	FUN_007eab30	.text	30		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls free 0x004166B0
 007eab50	FUN_007eab50	.text	419		clean	unknown		unanalyzed	
 007ead00	FUN_007ead00	.text	352		clean	unknown		unanalyzed	
-007eae70	FUN_007eae70	.text	6		clean	unknown		unanalyzed	
+007eae70	FUN_007eae70	.text	6		clean	common	recon/common7e	reversed	playerTechManagerName; vtable 00c3504c slot 2; mov eax, 0x00C3505C PlayerTechManager
 007eae80	FUN_007eae80	.text	99		clean	unknown		unanalyzed	
 007eaef0	FUN_007eaef0	.text	31		clean	unknown		unanalyzed	
 007eaf10	FUN_007eaf10	.text	633		clean	unknown		unanalyzed	
 007eb190	FUN_007eb190	.text	112		clean	unknown		unanalyzed	
-007eb200	FUN_007eb200	.text	6		clean	unknown		unanalyzed	
+007eb200	FUN_007eb200	.text	6		clean	common	recon/common7e	reversed	resourceGatheringManagerName; vtable 00c350c0 slot 2; mov eax, 0x00C350D0 ResourceGatheringManager
 007eb210	FUN_007eb210	.text	73		clean	unknown		unanalyzed	
 007eb260	FUN_007eb260	.text	67		clean	unknown		unanalyzed	
 007eb2b0	FUN_007eb2b0	.text	188		clean	unknown		unanalyzed	
 007eb370	FUN_007eb370	.text	21		clean	unknown		unanalyzed	
 007eb3e0	FUN_007eb3e0	.text	51		clean	unknown		unanalyzed	
 007eb420	FUN_007eb420	.text	84		clean	unknown		unanalyzed	
-007eb480	FUN_007eb480	.text	6		clean	unknown		unanalyzed	
+007eb480	FUN_007eb480	.text	6		clean	common	recon/common7e	reversed	teamRelationMapName; vtable 00c350fc slot 2; mov eax, 0x00C3510C TeamRelationMap
 007eb490	FUN_007eb490	.text	1144		clean	unknown		unanalyzed	
 007eb910	FUN_007eb910	.text	563		clean	unknown		unanalyzed	
 007ebb50	FUN_007ebb50	.text	380		clean	unknown		unanalyzed	
@@ -20070,7 +20070,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007ebd60	FUN_007ebd60	.text	119		clean	unknown		unanalyzed	
 007ebde0	FUN_007ebde0	.text	68		clean	unknown		unanalyzed	
 007ebe30	FUN_007ebe30	.text	316		clean	unknown		unanalyzed	
-007ebfc0	FUN_007ebfc0	.text	6		clean	unknown		unanalyzed	
+007ebfc0	FUN_007ebfc0	.text	6		clean	common	recon/common7e	reversed	tunnelTrackerName; vtable 00c35158 slot 2; mov eax, 0x00C35168 TunnelTracker
 007ebfd0	FUN_007ebfd0	.text	172		clean	unknown		unanalyzed	
 007ec090	FUN_007ec090	.text	69		clean	unknown		unanalyzed	
 007ec0e0	FUN_007ec0e0	.text	93		clean	unknown		unanalyzed	
@@ -20085,14 +20085,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007ec880	FUN_007ec880	.text	194		clean	unknown		unanalyzed	
 007ec950	FUN_007ec950	.text	97		clean	unknown		unanalyzed	
 007ec9c0	FUN_007ec9c0	.text	97		clean	unknown		unanalyzed	
-007eca30	FUN_007eca30	.text	30		clean	unknown		unanalyzed	
+007eca30	FUN_007eca30	.text	30		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls free 0x004166B0
 007eca50	FUN_007eca50	.text	71		clean	unknown		unanalyzed	
 007ecaa0	FUN_007ecaa0	.text	350		clean	unknown		unanalyzed	
 007ecc00	FUN_007ecc00	.text	503		clean	unknown		unanalyzed	
 007ece00	FUN_007ece00	.text	172		clean	unknown		unanalyzed	
 007eceb0	FUN_007eceb0	.text	100		clean	unknown		unanalyzed	
 007ecf20	FUN_007ecf20	.text	97		clean	unknown		unanalyzed	
-007ecf90	FUN_007ecf90	.text	30		clean	unknown		unanalyzed	
+007ecf90	FUN_007ecf90	.text	30		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls free 0x004166B0
 007ecfb0	FUN_007ecfb0	.text	68		clean	unknown		unanalyzed	
 007ed000	FUN_007ed000	.text	89		clean	unknown		unanalyzed	
 007ed060	FUN_007ed060	.text	56		clean	unknown		unanalyzed	
@@ -20127,12 +20127,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007ee730	FUN_007ee730	.text	276		clean	unknown		unanalyzed	
 007ee850	FUN_007ee850	.text	267		clean	unknown		unanalyzed	
 007ee960	FUN_007ee960	.text	65		clean	unknown		unanalyzed	
-007ee9b0	FUN_007ee9b0	.text	6		clean	unknown		unanalyzed	
+007ee9b0	FUN_007ee9b0	.text	6		clean	common	recon/common7e	reversed	playerTeamListName; vtable 00c351b4 slot 2; mov eax, 0x00C351C4 PlayerTeamList
 007ee9c0	FUN_007ee9c0	.text	117		clean	unknown		unanalyzed	
 007eea40	FUN_007eea40	.text	802	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 007eed70	FUN_007eed70	.text	259		clean	unknown		unanalyzed	
 007eee80	FUN_007eee80	.text	90		clean	unknown		unanalyzed	
-007eeee0	FUN_007eeee0	.text	30		clean	unknown		unanalyzed	
+007eeee0	FUN_007eeee0	.text	30		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls free 0x004166B0
 007eef00	FUN_007eef00	.text	65		clean	unknown		unanalyzed	
 007eef50	FUN_007eef50	.text	100	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 007eefc0	FUN_007eefc0	.text	119	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
@@ -20158,17 +20158,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007f0350	FUN_007f0350	.text	92	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 007f03b0	FUN_007f03b0	.text	81		clean	unknown		unanalyzed	
 007f0410	FUN_007f0410	.text	109	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-007f0480	FUN_007f0480	.text	30		clean	unknown		unanalyzed	
+007f0480	FUN_007f0480	.text	30		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls free 0x004166B0
 007f04a0	FUN_007f04a0	.text	620		clean	unknown		unanalyzed	
 007f0710	FUN_007f0710	.text	170		clean	unknown		unanalyzed	
 007f07c0	FUN_007f07c0	.text	409	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 007f0960	FUN_007f0960	.text	260		clean	unknown		unanalyzed	
 007f0a70	FUN_007f0a70	.text	975	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 007f0e40	FUN_007f0e40	.text	195		clean	unknown		unanalyzed	
-007f0f90	FUN_007f0f90	.text	6		clean	unknown		unanalyzed	
-007f0fa0	FUN_007f0fa0	.text	8		clean	unknown		unanalyzed	
+007f0f90	FUN_007f0f90	.text	6		clean	common	recon/common7e	reversed	teamFactoryName; vtable 00c351dc slot 2; mov eax, 0x00C35224 TeamFactory
+007f0fa0	FUN_007f0fa0	.text	8		clean	common	recon/common7e	unanalyzed	rejected: adjustor thunk sub ecx, 0x24; jmp 0x007fcb20
 007f0fb0	FUN_007f0fb0	.text	125		clean	unknown		unanalyzed	
-007f1030	FUN_007f1030	.text	30		clean	unknown		unanalyzed	
+007f1030	FUN_007f1030	.text	30		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls free 0x004166B0
 007f1050	FUN_007f1050	.text	279		clean	unknown		unanalyzed	
 007f11c0	FUN_007f11c0	.text	240		clean	unknown		unanalyzed	
 007f12b0	FUN_007f12b0	.text	293	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
@@ -20222,11 +20222,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007f36e0	FUN_007f36e0	.text	66		clean	unknown		unanalyzed	
 007f3730	FUN_007f3730	.text	86		clean	unknown		unanalyzed	
 007f3790	FUN_007f3790	.text	329		clean	unknown		unanalyzed	
-007f38e0	FUN_007f38e0	.text	30		clean	unknown		unanalyzed	
+007f38e0	FUN_007f38e0	.text	30		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls free 0x004166B0
 007f3900	FUN_007f3900	.text	320		clean	unknown		unanalyzed	
 007f3a50	FUN_007f3a50	.text	83		clean	unknown		unanalyzed	
 007f3ab0	FUN_007f3ab0	.text	291		clean	unknown		unanalyzed	
-007f3be0	FUN_007f3be0	.text	30		clean	unknown		unanalyzed	
+007f3be0	FUN_007f3be0	.text	30		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls free 0x004166B0
 007f3c00	FUN_007f3c00	.text	70		clean	unknown		unanalyzed	
 007f3c50	FUN_007f3c50	.text	35		clean	unknown		unanalyzed	
 007f3c80	FUN_007f3c80	.text	3022	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
@@ -20254,7 +20254,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007f5a90	FUN_007f5a90	.text	273		clean	unknown		unanalyzed	
 007f5bb0	FUN_007f5bb0	.text	93		clean	unknown		unanalyzed	
 007f5c10	FUN_007f5c10	.text	904		clean	unknown		unanalyzed	
-007f5fa0	FUN_007f5fa0	.text	6		clean	unknown		unanalyzed	
+007f5fa0	FUN_007f5fa0	.text	6		clean	common	recon/common7e	reversed	playerName; vtable 00c35320 slot 2; mov eax, 0x00C35340 Player
 007f5fb0	FUN_007f5fb0	.text	220		clean	unknown		unanalyzed	
 007f6090	FUN_007f6090	.text	65		clean	unknown		unanalyzed	
 007f60e0	FUN_007f60e0	.text	141		clean	unknown		unanalyzed	
@@ -20286,10 +20286,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007f6f60	FUN_007f6f60	.text	221		clean	unknown		unanalyzed	
 007f7040	FUN_007f7040	.text	273		clean	unknown		unanalyzed	
 007f7160	FUN_007f7160	.text	830		clean	unknown		unanalyzed	
-007f74a0	FUN_007f74a0	.text	6		clean	unknown		unanalyzed	
-007f74b0	FUN_007f74b0	.text	30		clean	unknown		unanalyzed	
+007f74a0	FUN_007f74a0	.text	6		clean	common	recon/common7e	reversed	teamTemplateInfoName; vtable 00c35380 slot 2; mov eax, 0x00C35390 TeamTemplateInfo
+007f74b0	FUN_007f74b0	.text	30		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls free 0x004166B0
 007f74d0	FUN_007f74d0	.text	880		clean	unknown		unanalyzed	
-007f7850	FUN_007f7850	.text	6		clean	unknown		unanalyzed	
+007f7850	FUN_007f7850	.text	6		clean	common	recon/common7e	reversed	teamName; vtable 00c353c0 slot 2; mov eax, 0x00BD1240 Team
 007f7860	FUN_007f7860	.text	618		clean	unknown		unanalyzed	
 007f7ae0	FUN_007f7ae0	.text	135		clean	unknown		unanalyzed	
 007f7b70	FUN_007f7b70	.text	172		clean	unknown		unanalyzed	
@@ -20318,7 +20318,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007f8bc0	FUN_007f8bc0	.text	105		clean	unknown		unanalyzed	
 007f8c30	FUN_007f8c30	.text	166		clean	unknown		unanalyzed	
 007f8ce0	FUN_007f8ce0	.text	265		clean	unknown		unanalyzed	
-007f8df0	FUN_007f8df0	.text	38		clean	unknown		unanalyzed	
+007f8df0	FUN_007f8df0	.text	38		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls freelist 0x005a9130
 007f8e20	FUN_007f8e20	.text	55		clean	unknown		unanalyzed	
 007f8e60	FUN_007f8e60	.text	110		clean	unknown		unanalyzed	
 007f8ed0	FUN_007f8ed0	.text	95		clean	unknown		unanalyzed	
@@ -20334,19 +20334,19 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007f94b0	FUN_007f94b0	.text	137		clean	unknown		unanalyzed	
 007f9630	FUN_007f9630	.text	30		clean	unknown		unanalyzed	
 007f9650	FUN_007f9650	.text	59		clean	unknown		unanalyzed	
-007f9690	FUN_007f9690	.text	30		clean	unknown		unanalyzed	
+007f9690	FUN_007f9690	.text	30		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls free 0x004166B0
 007f96b0	FUN_007f96b0	.text	585		clean	unknown		unanalyzed	
 007f9900	FUN_007f9900	.text	38		clean	unknown		unanalyzed	
 007f9930	FUN_007f9930	.text	249		clean	unknown		unanalyzed	
 007f9a30	FUN_007f9a30	.text	290		clean	unknown		unanalyzed	
 007f9b60	FUN_007f9b60	.text	103		clean	unknown		unanalyzed	
-007f9bd0	thunk_FUN_007f7e40	.text	5		clean	unknown		unanalyzed	
-007f9be0	FUN_007f9be0	.text	13		clean	unknown		unanalyzed	
+007f9bd0	thunk_FUN_007f7e40	.text	5		clean	common	recon/common7e	unanalyzed	rejected: thunk jmp 0x007f7e40 with no distinct body
+007f9be0	FUN_007f9be0	.text	13		clean	common	recon/common7e	unanalyzed	rejected: zeros +0x64 and +0x68 then tail-jumps unreconstructed 0x007f7e40
 007f9bf0	FUN_007f9bf0	.text	122		clean	unknown		unanalyzed	
 007f9c70	FUN_007f9c70	.text	175		clean	unknown		unanalyzed	
 007f9d20	FUN_007f9d20	.text	86		clean	unknown		unanalyzed	
 007f9d80	FUN_007f9d80	.text	478		clean	unknown		unanalyzed	
-007f9f70	FUN_007f9f70	.text	6		clean	unknown		unanalyzed	
+007f9f70	FUN_007f9f70	.text	6		clean	common	recon/common7e	reversed	teamPrototypeName; vtable 00c353dc slot 2; mov eax, 0x00C353EC TeamPrototype
 007f9f80	FUN_007f9f80	.text	508		clean	unknown		unanalyzed	
 007fa180	FUN_007fa180	.text	115		clean	unknown		unanalyzed	
 007fa200	FUN_007fa200	.text	155		clean	unknown		unanalyzed	
@@ -20378,12 +20378,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007fc1c0	FUN_007fc1c0	.text	77		clean	unknown		unanalyzed	
 007fc210	FUN_007fc210	.text	44		clean	unknown		unanalyzed	
 007fc240	FUN_007fc240	.text	341		clean	unknown		unanalyzed	
-007fc3a0	FUN_007fc3a0	.text	6		clean	unknown		unanalyzed	
+007fc3a0	FUN_007fc3a0	.text	6		clean	common	recon/common7e	reversed	scoreKeeperName; vtable 00c354f0 slot 2; mov eax, 0x00C35500 ScoreKeeper; name slot only
 007fc3b0	FUN_007fc3b0	.text	1272		clean	unknown		unanalyzed	
 007fc950	FUN_007fc950	.text	276		clean	unknown		unanalyzed	
 007fca70	FUN_007fca70	.text	171		clean	unknown		unanalyzed	
-007fcb20	FUN_007fcb20	.text	30		clean	unknown		unanalyzed	
-007fcb40	FUN_007fcb40	.text	38		clean	unknown		unanalyzed	
+007fcb20	FUN_007fcb20	.text	30		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls free 0x004166B0
+007fcb40	FUN_007fcb40	.text	38		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls freelist 0x005a9110
 007fcb70	FUN_007fcb70	.text	51		clean	unknown		unanalyzed	
 007fcc40	FUN_007fcc40	.text	231		clean	unknown		unanalyzed	
 007fcdc0	FUN_007fcdc0	.text	56		clean	unknown		unanalyzed	
@@ -20393,7 +20393,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007fcf50	FUN_007fcf50	.text	126		clean	unknown		unanalyzed	
 007fcfd0	FUN_007fcfd0	.text	93		clean	unknown		unanalyzed	
 007fd030	FUN_007fd030	.text	591		clean	unknown		unanalyzed	
-007fd280	FUN_007fd280	.text	30		clean	unknown		unanalyzed	
+007fd280	FUN_007fd280	.text	30		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls free 0x004166B0
 007fd2a0	FUN_007fd2a0	.text	655		clean	unknown		unanalyzed	
 007fd530	FUN_007fd530	.text	244		clean	unknown		unanalyzed	
 007fd630	FUN_007fd630	.text	123		clean	unknown		unanalyzed	
@@ -20426,16 +20426,16 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00802690	FUN_00802690	.text	106		clean	unknown		unanalyzed	
 00802700	FUN_00802700	.text	177		clean	unknown		unanalyzed	
 008027c0	FUN_008027c0	.text	292	SageEngine\source\GameEngine\common\rts\PlayerList.cpp	clean	common		unanalyzed	
-008028f0	FUN_008028f0	.text	6		clean	unknown		unanalyzed	
-00802900	FUN_00802900	.text	6		clean	unknown		unanalyzed	
-00802910	FUN_00802910	.text	6		clean	unknown		unanalyzed	
+008028f0	FUN_008028f0	.text	6		clean	common	recon/common7e	reversed	logicEvaTrackerName; vtable 00c4e084 slot 2; mov eax, 0x00C35A8C LogicEvaTracker
+00802900	FUN_00802900	.text	6		clean	common	recon/common7e	reversed	logicPlayingAudioTrackerName; vtable 00c4e0cc slot 2; mov eax, 0x00C35AC0 LogicPlayingAudioTracker
+00802910	FUN_00802910	.text	6		clean	common	recon/common7e	reversed	logicViewTrackerName; vtable 00c4dcf0 slot 2; mov eax, 0x00C35ADC LogicViewTracker
 00802920	FUN_00802920	.text	75		clean	unknown		unanalyzed	
 00802970	FUN_00802970	.text	25		clean	unknown		unanalyzed	
 00802990	FUN_00802990	.text	46		clean	unknown		unanalyzed	
-008029c0	FUN_008029c0	.text	36		clean	unknown		unanalyzed	
-00802f60	FUN_00802f60	.text	36		clean	unknown		unanalyzed	
+008029c0	FUN_008029c0	.text	36		clean	common	recon/common7e	unanalyzed	rejected: destructor calls free 0x004166B0
+00802f60	FUN_00802f60	.text	36		clean	common	recon/common7e	unanalyzed	rejected: destructor calls free 0x004166B0
 00802f90	FUN_00802f90	.text	77		clean	unknown		unanalyzed	
-00802fe0	FUN_00802fe0	.text	7		clean	unknown		unanalyzed	
+00802fe0	FUN_00802fe0	.text	7		clean	common	recon/common7e	unanalyzed	rejected: thunk jmp [vtable+0x10] with no distinct body
 00802ff0	FUN_00802ff0	.text	24		clean	unknown		unanalyzed	
 00803010	FUN_00803010	.text	10		clean	unknown		unanalyzed	
 00803020	FUN_00803020	.text	67		clean	unknown		unanalyzed	
@@ -20553,7 +20553,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008051e0	FUN_008051e0	.text	68		clean	unknown		unanalyzed	
 00805230	FUN_00805230	.text	71		clean	unknown		unanalyzed	
 00805280	FUN_00805280	.text	69		clean	unknown		unanalyzed	
-008052d0	FUN_008052d0	.text	13		clean	unknown		unanalyzed	
+008052d0	FUN_008052d0	.text	13		clean	common	recon/common7e	reversed	storeFlagCf; vtable 00c4def8 slot 31; stores argument low byte at +0xCF and returns it in AL; ret 4
 008052e0	FUN_008052e0	.text	189		clean	unknown		unanalyzed	
 008053a0	FUN_008053a0	.text	65		clean	unknown		unanalyzed	
 008053f0	FUN_008053f0	.text	234		clean	unknown		unanalyzed	
@@ -20561,13 +20561,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00805540	FUN_00805540	.text	98		clean	unknown		unanalyzed	
 008055b0	FUN_008055b0	.text	113		clean	unknown		unanalyzed	
 00805630	FUN_00805630	.text	150		clean	unknown		unanalyzed	
-008056d0	FUN_008056d0	.text	68		clean	unknown		unanalyzed	
-00805720	FUN_00805720	.text	56		clean	unknown		unanalyzed	
-00805760	FUN_00805760	.text	19		clean	unknown		unanalyzed	
+008056d0	FUN_008056d0	.text	68		clean	common	recon/common7e	unanalyzed	rejected: vtable 00c4def8 slot 20 reads global 0x00DF6B1C and forwards
+00805720	FUN_00805720	.text	56		clean	common	recon/common7e	reversed	availabilityByte; vtable 00c4def8 slot 21; +0xB9 when +0xBA is nonzero and dword +0xBC > 0, else indexed virtual +0x44 or AL cleared
+00805760	FUN_00805760	.text	19		clean	common	recon/common7e	reversed	byteB8UnlessBa; vtable 00c4def8 slot 22; AL is byte +0xB8 when byte +0xBA is 0, otherwise 0
 00805780	FUN_00805780	.text	127		clean	unknown		unanalyzed	
 00805810	FUN_00805810	.text	34		clean	unknown		unanalyzed	
-00805840	FUN_00805840	.text	7		clean	unknown		unanalyzed	
-00805850	FUN_00805850	.text	4		clean	unknown		unanalyzed	
+00805840	FUN_00805840	.text	7		clean	common	recon/common7e	reversed	byteAtD0; vtable 00c4def8 slot 39; mov al, [ecx+0xD0]
+00805850	FUN_00805850	.text	4		clean	common	recon/common7e	reversed	byteAt40; vtable 00c4def8 slot 40; mov al, [ecx+0x40]
 00805860	FUN_00805860	.text	45		clean	unknown		unanalyzed	
 00805890	FUN_00805890	.text	14		clean	unknown		unanalyzed	
 008058a0	FUN_008058a0	.text	62		clean	unknown		unanalyzed	
@@ -20580,7 +20580,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00805ae0	FUN_00805ae0	.text	85		clean	unknown		unanalyzed	
 00805c50	FUN_00805c50	.text	5		clean	unknown		unanalyzed	
 00805c60	FUN_00805c60	.text	5		clean	unknown		unanalyzed	
-00805cd0	FUN_00805cd0	.text	30		clean	unknown		unanalyzed	
+00805cd0	FUN_00805cd0	.text	30		clean	common	recon/common7e	unanalyzed	rejected: deleting destructor calls free 0x004166B0
 00805cf0	FUN_00805cf0	.text	825		clean	unknown		unanalyzed	
 00806030	FUN_00806030	.text	154		clean	unknown		unanalyzed	
 00806420	FUN_00806420	.text	36		clean	unknown		unanalyzed	
