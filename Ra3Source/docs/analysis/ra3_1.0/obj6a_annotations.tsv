@@ -1,0 +1,111 @@
+address	status	owner	module	notes
+006a16a0	reversed	recon/obj6a	gamelogic	weaponSetCallSlot1C. 00C1F320 slot 1. Slot 2 of 00C1F320 is 007194B0, which returns the class-name string WeaponSetUpdate at 00C1F378. The function at 00743F50 writes this vtable at 00743F66 after call 004D6790.
+006a1aa0	reversed	recon/obj6a	gamelogic	audioLoopUpgradeXfer. 00BF9318 slot 3. Slot 2 of 00BF9318 returns the class-name string AudioLoopUpgrade.
+006a1c80	reversed	recon/obj6a	gamelogic	techUpgradeXfer. 00C10AA0 slot 3. Slot 2 of 00C10AA0 returns the class-name string TechUpgrade.
+006a2220	reversed	recon/obj6a	gamelogic	techUpgradeReceiverXfer. 00BF9580 slot 3. Slot 2 of 00BF9580 returns the class-name string TechUpgradeReceiver.
+006a23a0	reversed	recon/obj6a	gamelogic	encloseContainsId. 00C08A48 slot 30. Slot 2 of 00C08A48 returns the class-name string EncloseBehavior. The same body is also installed on other named vtables and is counted once.
+006a3e90	reversed	recon/obj6a	gamelogic	experienceTrackerObjectXfer. 00C07BA4 slot 3. Slot 2 of 00C07BA4 returns the class-name string ExperienceTrackerObject.
+006aed50	reversed	recon/obj6a	gamelogic	clearanceSlowDeathXfer. 00C1AC90 slot 3. Slot 2 of 00C1AC90 returns the class-name string ClearanceTestingSlowDeathBehavior.
+006afcb0	reversed	recon/obj6a	gamelogic	veterancyCrateCanPass. 00C1A4E0 slot 22. Slot 2 of 00C1A4E0 returns the class-name string VeterancyCrateCollide.
+006b13f0	reversed	recon/obj6a	gamelogic	slaughterContainedFlag. 00C22E28 slot 32. Slot 2 of 00C22E28 returns the class-name string SlaughterHordeContain.
+006b37c0	reversed	recon/obj6a	gamelogic	createAndEnterXfer. 00C1A7D8 slot 3. Slot 2 of 00C1A7D8 returns the class-name string CreateAndEnterObjectSpecialPower.
+006b5050	reversed	recon/obj6a	gamelogic	dozerPickXfer. 00BF7D60 slot 3. Slot 2 of 00BF7D60 returns the class-name string DozerActionPickActionPosState.
+006b50a0	reversed	recon/obj6a	gamelogic	dozerMoveToXfer. 00BF7DD0 slot 3. Slot 2 of 00BF7DD0 returns the class-name string DozerActionMoveToActionPosState.
+006b50e0	reversed	recon/obj6a	gamelogic	dozerDoXfer. 00BF7E40 slot 3. Slot 2 of 00BF7E40 returns the class-name string DozerActionDoActionState.
+006b5130	reversed	recon/obj6a	gamelogic	dozerStateMachineXfer. 00BF7EA8 slot 3. Slot 2 of 00BF7EA8 returns the class-name string DozerActionStateMachine.
+006b5170	reversed	recon/obj6a	gamelogic	dozerActionXfer. 00BF7F70 slot 3. Slot 2 of 00BF7F70 returns the class-name string DozerActionState.
+006bc4a0	reversed	recon/obj6a	gamelogic	subObjectsUpgradeXfer. 00C1F4E8 slot 3. Slot 2 of 00C1F4E8 returns the class-name string SubObjectsUpgrade.
+006a0bf0		recon/obj6a	gamelogic	Deferred. Draft StructureUnpack start. Not a slot of the StructureUnpackUpdate vtable 00C063C8, and the body calls several engine helpers the draft did not match.
+006a0c80		recon/obj6a	gamelogic	Deferred. Draft unpack pause. Direct callee of 006A70F0, which is not a class-name vtable slot.
+006a15c0		recon/obj6a	gamelogic	Deferred. Draft key search. Two callers, neither is a class-name vtable slot.
+006a1640		recon/obj6a	gamelogic	Deferred. 00C1F1DC slot 0. That vtable's slot 2 is not a class-name return, so the secondary install was not used as an anchor.
+006a16d0		recon/obj6a	gamelogic	Deferred. Draft slot-0x30 dispatch. Its only caller is not a class-name vtable slot.
+006a1720		recon/obj6a	gamelogic	Deferred. Draft tag search. Callers were not reduced to one named class with a matched write set.
+006a1770		recon/obj6a	gamelogic	Deferred. Draft tag search. Same unfinished caller chain as 006A1720.
+006a17c0		recon/obj6a	gamelogic	Deferred. Draft active-weapon scan. No direct call site; the draft tail-call claim was not oracle-matched.
+006a17f0		recon/obj6a	gamelogic	Deferred. Draft positive-tag scan. Not given a single named-class anchor.
+006a1820		recon/obj6a	gamelogic	Deferred. Draft tag scan. Callers are outside the named-slot closure used for this batch.
+006a18a0		recon/obj6a	gamelogic	Deferred. Draft reload query. Calls 007D2120; the draft result model was not matched.
+006a18e0		recon/obj6a	gamelogic	Deferred. Draft target-id scan. Single caller is not a class-name vtable slot.
+006a1930		recon/obj6a	gamelogic	Deferred. Draft slot-0x34 dispatch. Not reduced to one named class.
+006a19e0		recon/obj6a	gamelogic	Deferred. Draft ready-slot scan. Not a class-name vtable slot.
+006a1a10		recon/obj6a	gamelogic	Deferred. Draft target update. Calls 007DCAA0 and 007DF660; not matched.
+006a1a50		recon/obj6a	gamelogic	Deferred. Draft field clear. Calls 0079C0F0; not matched.
+006a3b80		recon/obj6a	gamelogic	Deferred. Draft id search. No class-name vtable slot.
+006a3bd0		recon/obj6a	gamelogic	Deferred. Draft first-id read. No class-name vtable slot.
+006a3bf0		recon/obj6a	gamelogic	Deferred. Draft scale lookup. No class-name vtable slot.
+006a3c30		recon/obj6a	gamelogic	Deferred. Draft null-tracker wrapper. No class-name vtable slot.
+006a4130		recon/obj6a	gamelogic	Deferred. Draft contained-state predicate. Caller 00769C00 has no class-name slot.
+006a4180		recon/obj6a	gamelogic	Deferred. Draft vision copy. Same unanchored caller as 006A4130.
+006a4cf0		recon/obj6a	gamelogic	Deferred. Draft mask scan. No class-name vtable slot.
+006a4e70		recon/obj6a	gamelogic	Deferred. Draft mobility predicate. No class-name vtable slot.
+006a4ed0		recon/obj6a	gamelogic	Deferred. Draft crush predicate. No single named-class anchor.
+006a4f20		recon/obj6a	gamelogic	Deferred. Draft weapon-ignore predicate. Not oracle-matched.
+006a4f60		recon/obj6a	gamelogic	Deferred. Draft tail jump into 006A19E0. 006A19E0 is deferred.
+006a4fb0		recon/obj6a	gamelogic	Deferred. Draft dirty-list link. Writes a global and was not matched.
+006a5030		recon/obj6a	gamelogic	Deferred. Draft bit test. No class-name vtable slot.
+006a5060		recon/obj6a	gamelogic	Deferred. Draft status update. Calls 00522880 and 004D5B10; not matched.
+006a50f0		recon/obj6a	gamelogic	Deferred. Draft status assign. Not matched.
+006a51c0		recon/obj6a	gamelogic	Deferred. Draft weapon lookup wrapper around deferred 006A1770 and 006A1720.
+006a51f0		recon/obj6a	gamelogic	Deferred. Draft tail jump into deferred 006A17C0.
+006a5240		recon/obj6a	gamelogic	Deferred. Draft interact predicate. No class-name vtable slot.
+006a5270		recon/obj6a	gamelogic	Deferred. Draft airborne predicate. No class-name vtable slot.
+006a52a0		recon/obj6a	gamelogic	Deferred. Draft falling predicate. No class-name vtable slot.
+006a52c0		recon/obj6a	gamelogic	Deferred. Draft crushable predicate. No class-name vtable slot.
+006a5320		recon/obj6a	gamelogic	Deferred. Draft id-list scan. No class-name vtable slot.
+006a5450		recon/obj6a	gamelogic	Deferred. Draft producer id store. Not matched.
+006a5530		recon/obj6a	gamelogic	Deferred. Draft visibility read. Not matched.
+006a5590		recon/obj6a	gamelogic	Deferred. Draft visibility read. Not matched.
+006a56f0		recon/obj6a	gamelogic	Deferred. Draft disabled-type propagate. No class-name vtable slot.
+006a5750		recon/obj6a	gamelogic	Deferred. Draft disabled-until read. Not matched.
+006a5810		recon/obj6a	gamelogic	Deferred. Draft slot-table compact. No class-name vtable slot.
+006a5890		recon/obj6a	gamelogic	Deferred. Draft slot-table remove. No class-name vtable slot.
+006a5a60		recon/obj6a	gamelogic	Deferred. Draft command gate. No class-name vtable slot.
+006a5b10		recon/obj6a	gamelogic	Deferred. Draft recent-flag scan. No class-name vtable slot.
+006a5b70		recon/obj6a	gamelogic	Deferred. Draft active-entry scan. No class-name vtable slot.
+006a5bc0		recon/obj6a	gamelogic	Deferred. 00C27558 slot 0 reads terrain through 00DFC190. Slot 2 of 00C27558 is not a class-name return.
+006a5f50		recon/obj6a	gamelogic	Deferred. Draft selectability predicate. The adjustor 006A78F0 jumps here, but 00C274B0 slot 2 is not a class-name return.
+006a60a0		recon/obj6a	gamelogic	Deferred. Draft body-module swap. Not matched.
+006a6210		recon/obj6a	gamelogic	Deferred. Draft reload wrapper. Not matched.
+006a6250		recon/obj6a	gamelogic	Deferred. Draft target clear. Not matched.
+006a6280		recon/obj6a	gamelogic	Deferred. Draft construction predicate. Call site is not inside a ledger function.
+006a6510		recon/obj6a	gamelogic	Deferred. Draft vision range. x87 altitude formula was not matched.
+006a65e0		recon/obj6a	gamelogic	Deferred. Draft shroud range. x87 formula was not matched.
+006a6770		recon/obj6a	gamelogic	Deferred. Draft formation value. No class-name vtable slot.
+006a68e0		recon/obj6a	gamelogic	Deferred. 00C27514 slot 6. Slot 2 of 00C27514 is not a class-name return.
+006a6b10		recon/obj6a	gamelogic	Deferred. 00C274EC slot 5. Slot 2 of 00C274EC is not a class-name return.
+006a6c10		recon/obj6a	gamelogic	Deferred. 00C274EC slot 9. Same unanchored vtable as 006A6B10.
+006a6c80		recon/obj6a	gamelogic	Deferred. Draft transform read. No class-name vtable slot.
+006a71a0		recon/obj6a	gamelogic	Deferred. Draft bit predicate. No class-name vtable slot.
+006a72a0		recon/obj6a	gamelogic	Deferred. Draft matrix multiply. Not matched.
+006a73a0		recon/obj6a	gamelogic	Deferred. Draft module-id scan. Not matched.
+006a7510		recon/obj6a	gamelogic	Deferred. Draft tri-state. Not given a named-class method name beyond the bit test.
+006a7540		recon/obj6a	gamelogic	Deferred. Draft status bit test. No class-name vtable slot.
+006a7560		recon/obj6a	gamelogic	Deferred. Draft tri-state validity. No class-name vtable slot.
+006a75a0		recon/obj6a	gamelogic	Deferred. Draft crush composite. No class-name vtable slot.
+006a7620		recon/obj6a	gamelogic	Deferred. Draft module search. No class-name vtable slot.
+006a7780		recon/obj6a	gamelogic	Deferred. Draft dirty-list flush. Not matched.
+006a78d0		recon/obj6a	gamelogic	Deferred. 00C274B0 slot 1. Slot 2 of 00C274B0 is not a class-name return.
+006a7900		recon/obj6a	gamelogic	Deferred. 00C274B0 slot 13. Same unanchored vtable as 006A78D0.
+006a7930		recon/obj6a	gamelogic	Deferred. Draft global mask test. No class-name vtable slot.
+006a7970		recon/obj6a	gamelogic	Deferred. Draft behind-target test. Calls 0078BFB0 and was not matched.
+006abc00		recon/obj6a	gamelogic	Deferred. Draft status transition. Not matched.
+006abce0		recon/obj6a	gamelogic	Deferred. Draft distance squared. Call sites are not inside ledger functions.
+006a0720		recon/obj6a	gamelogic	Deferred. NameKey cache for StructureUnpackUpdate. mov eax, 1 / test byte / call 00986150. Boilerplate, not counted.
+006ac230		recon/obj6a	gamelogic	Deferred. NameKey cache for AutoAbilityBehavior. Same 47-byte cache shape, not counted.
+006b77e0		recon/obj6a	gamelogic	Deferred. NameKey cache for AutoDepositUpdate. Not counted.
+006ac680		recon/obj6a	gamelogic	Deferred. NameKey cache for BeamTargetModule. Not counted.
+006a1a80		recon/obj6a	gamelogic	Deferred. Deleting destructor of AudioLoopUpgrade. Calls 004166B0. Not counted.
+006b7ae0		recon/obj6a	gamelogic	Deferred. Deleting destructor of FlammableUpdate. Calls 004166B0. Not counted.
+006ada40		recon/obj6a	gamelogic	Deferred. Deleting destructor of HelicopterSlowDeathBehavior. Calls 004166B0. Not counted.
+006b9830		recon/obj6a	gamelogic	Deferred. Deleting destructor of RepairUpdate. Calls 004166B0. Not counted.
+006bad70		recon/obj6a	gamelogic	Deferred. Deleting destructor of StructureUnpackUpdate. Calls 004166B0. Not counted.
+006a2ca0		recon/obj6a	gamelogic	Deferred. WeaponFireState slot 0 writes a base vtable and frees. Destructor, not counted.
+006a44b0		recon/obj6a	gamelogic	Deferred. Locomotor slot 0 writes a base vtable and frees. Destructor, not counted.
+006a3e10		recon/obj6a	gamelogic	Deferred. ExperienceTrackerObject slot 0 writes a vtable and frees. Destructor, not counted.
+006baa30		recon/obj6a	gamelogic	Deferred. StrafeAreaUpdate 00BF90F0 slot 24. 207-byte body was not reduced to a matched write set.
+006bab00		recon/obj6a	gamelogic	Deferred. StrafeAreaUpdate 00BF90F0 slot 25. Null AI path dereferences EAX. Not matched.
+006b2b10		recon/obj6a	gamelogic	Deferred. TunnelContain 00C23A98 slot 10. Global and virtual tail were not matched.
+006b7390		recon/obj6a	gamelogic	Deferred. AIUpdateInterface 00C22118 slot 89. One path calls through a null pointer. Not matched.
+006b73f0		recon/obj6a	gamelogic	Deferred. AIUpdateInterface 00C22118 slot 164. Calls deferred 006A5060. Not matched.
+006ac110		recon/obj6a	gamelogic	Deferred. AreaRestrictSpecialPowerBehavior 00BF64E0 slot 1. Reads global 00DFC190. Not matched.
