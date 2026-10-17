@@ -1,0 +1,42 @@
+address	status	owner	module	notes
+00690740	reversed	recon/obj69	gamelogic	ra3::gamelogic::stancesBehaviorFirstNodeValue; 00c11840 slot 31; slot 2 returns StancesBehavior
+006911d0	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainDecayRange; 00c21520 slot 138; 0073cb3b stores primary 00c21a98 whose slot 2 returns HordeContain; 0073cb8a stores 00c21520 at this+0x16c
+00691350	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainInvertSlotF4; 00c21784 slot 0; 0073cb72 stores 00c21784 at this+0x38 in the constructor that stores HordeContain at 0073cb3b
+006914b0	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainFirstPassengerId; 00c21520 slot 8; same HordeContain constructor store as 006911d0
+006914e0	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainField5cClear; 00c21520 slot 62; same HordeContain constructor store as 006911d0
+006914f0	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainNotifyPassengerList; 00c21520 slot 121; same HordeContain constructor store as 006911d0
+00691550	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainNotifyPassengerListShort; 00c21520 slot 122; same HordeContain constructor store as 006911d0
+00691990	reversed	recon/obj69	gamelogic	ra3::gamelogic::slaughterHordeContainPasses; 00c22e28 slot 43; slot 2 returns SlaughterHordeContain
+006919e0	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainMarkRecord; 00c0a7d0 slot 12; 0074d2c6 stores HordeContain 00c21a98; 0074d555 stores 00c0a7d0; 0074d570 publishes that object at this+0x294
+00691a30	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainCopyRecordVector; 00c0a7d0 slot 13; same constructor stores as 006919e0
+006923a0	reversed	recon/obj69	gamelogic	ra3::gamelogic::infiltratorContainZeroSevenDwords; 00bfe530 slot 53; 006922f3 stores primary 00bfe7e8 whose slot 2 returns InfiltratorContain; 0069230e stores 00bfe530 at this+0x18
+00692500	reversed	recon/obj69	gamelogic	ra3::gamelogic::openContainStorePairIds; 00c1f8f0 slot 42; 0072782b stores primary 00c1fb90 whose slot 2 returns OpenContain; 0072783f stores 00c1f8f0 at this+0x24
+00692580	reversed	recon/obj69	gamelogic	ra3::gamelogic::openContainPlaneAccepts; 00c1f8f0 slot 45; same OpenContain constructor store as 00692500
+006925f0	reversed	recon/obj69	gamelogic	ra3::gamelogic::openContainPairPlaneAccepts; 00c1f8f0 slot 46; same OpenContain constructor store as 00692500
+006926d0	reversed	recon/obj69	gamelogic	ra3::gamelogic::openContainHasField78; 00c1f8f0 slot 17; same OpenContain constructor store as 00692500
+00692850	reversed	recon/obj69	gamelogic	ra3::gamelogic::openContainBitClear; 00c1f8f0 slot 4; same OpenContain constructor store as 00692500
+00692890	reversed	recon/obj69	gamelogic	ra3::gamelogic::openContainCopySevenDwords; 00c1f8f0 slot 43; same OpenContain constructor store as 00692500
+00694670	reversed	recon/obj69	gamelogic	ra3::gamelogic::beamSpecialAbilityAllowsTarget; 00c1ba58 slot 43; slot 2 returns BeamSpecialAbilityUpdate
+00694710	reversed	recon/obj69	gamelogic	ra3::gamelogic::specialPowerUpdateIdMatches; 00bf7d10 slot 5; 006b479a sets edi to this+0x28; 006b479d stores primary 00c0b860 whose slot 2 returns SpecialPowerUpdateModule; 006b47b4 stores 00bf7d10 at this+0x24
+00694730	reversed	recon/obj69	gamelogic	ra3::gamelogic::specialPowerUpdateReadFieldC; 00bf7c68 slot 38; 006b47bb stores 00bf7c68 through edi in the SpecialPowerUpdateModule constructor
+00695670	reversed	recon/obj69	gamelogic	ra3::gamelogic::table00C00F4CStoreByte39; 00c00f4c slot 18; slot 2 is 0067e580 and is not a name getter; the image has no store of 00c00f4c
+00695690	reversed	recon/obj69	gamelogic	ra3::gamelogic::table00C00F4CReadField54; 00c00f4c slot 31; slot 2 is 0067e580 and is not a name getter; the image has no store of 00c00f4c
+006966b0	reversed	recon/obj69	gamelogic	ra3::gamelogic::specialPowerUpdateIdEquals; 00bf7c68 slot 0; same 006b47bb store as 00694730
+00696870	reversed	recon/obj69	gamelogic	ra3::gamelogic::specialPowerUpdateReadSlot1; 00bf7c68 slot 6; same 006b47bb store as 00694730
+00697100	reversed	recon/obj69	gamelogic	ra3::gamelogic::uncombineSpecialPowerHasEntries; 00c13440 slot 30; 006cb444 stores primary 00c13640 whose slot 2 returns UncombineSpecialPower; 006cb46d stores 00c13440 at this+0x28; slot 130 of 00c13440 returns UncombineSpecialPower
+00697130	reversed	recon/obj69	gamelogic	ra3::gamelogic::weaponFireSpecialAbilityFlagBit8; 00c1e918 slot 42; slot 2 returns WeaponFireSpecialAbilityUpdate
+00697720	reversed	recon/obj69	gamelogic	ra3::gamelogic::supplyTruckSumDwords; 00c251a8 slot 2; 007522bb stores primary 00c25398 whose slot 2 returns SupplyTruckAIUpdate; 007522eb stores 00c251a8 at this+0x51c; this slot 2 is the sum, not a name getter
+006978d0	reversed	recon/obj69	gamelogic	ra3::gamelogic::supplyTruckRangeScale; 00c251a8 slot 19; same SupplyTruckAIUpdate constructor store as 00697720
+006979e0	reversed	recon/obj69	gamelogic	ra3::gamelogic::dockUpdateIdPresentOrOpen; 00c0bbb0 slot 0; 00740541 stores primary 00c0bd58 whose slot 2 returns DockUpdate; 00740555 stores 00c0bbb0 at this+0x24
+00697a40	reversed	recon/obj69	gamelogic	ra3::gamelogic::dockUpdateSlotReady; 00c0bbb0 slot 4; same DockUpdate constructor store as 006979e0
+00697aa0	reversed	recon/obj69	gamelogic	ra3::gamelogic::dockUpdateMarkId; 00c0bbb0 slot 8; same DockUpdate constructor store as 006979e0
+006981b0	reversed	recon/obj69	gamelogic	ra3::gamelogic::defaultProductionExitTransformPoint; 00c01460 slot 98; slot 2 is 0065f220 and is not a name getter; slot 78 returns DefaultProductionExitUpdate
+00699710	reversed	recon/obj69	gamelogic	ra3::gamelogic::aiUpdatePathGoalActive; 00c22118 slot 158; slot 2 returns AIUpdateInterface
+006997b0	reversed	recon/obj69	gamelogic	ra3::gamelogic::aiUpdateClearGoalFloats; 00c22118 slot 151; slot 2 returns AIUpdateInterface
+006997e0	reversed	recon/obj69	gamelogic	ra3::gamelogic::aiUpdateSetGoalPosition; 00c22118 slot 153; slot 2 returns AIUpdateInterface
+00699840	reversed	recon/obj69	gamelogic	ra3::gamelogic::aiUpdateSetGoalFloat; 00c22118 slot 155; slot 2 returns AIUpdateInterface
+00699860	reversed	recon/obj69	gamelogic	ra3::gamelogic::aiUpdateLocomotorAllowsMove; 00c22118 slot 157; slot 2 returns AIUpdateInterface
+00699ca0	reversed	recon/obj69	gamelogic	ra3::gamelogic::aiUpdatePulseModule3c; 00c22118 slot 66; slot 2 returns AIUpdateInterface
+0069b5a0	reversed	recon/obj69	gamelogic	ra3::gamelogic::fireWeaponUpdateReadFieldC; 00c0ce84 slot 2; 006cd898 stores primary 00c0cfc8 whose slot 2 returns FireWeaponUpdate; 006cd8a5 stores 00c0ce84 at this+0x10; this slot 2 is the read, not a name getter
+0069c1b0	reversed	recon/obj69	gamelogic	ra3::gamelogic::invisibilityBroadcastAdjustor24; 00c03dc0 slot 92; slot 2 is 0065f220 and is not a name getter; slot 78 returns InvisibilityBroadcastUpdate
+0069e5b0	reversed	recon/obj69	gamelogic	ra3::gamelogic::productionUpdateConsumeMatchingLink; 00c19580 slot 37; 006e8ed7 stores primary 00c19788 whose slot 2 returns ProductionUpdate; 006e8eeb stores 00c19580 at this+0x24
