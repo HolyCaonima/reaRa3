@@ -1,0 +1,91 @@
+address	status	owner	module	notes
+0069a250	verified	recon/weaponlogic	gamelogic	AssistedTargetingUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069a260	verified	recon/weaponlogic	gamelogic	AssistedTargetingUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069a3c0	verified	recon/weaponlogic	gamelogic	AttachUpdate module name; vtable 00c01e40 and exact pointer oracle
+0069a3d0	verified	recon/weaponlogic	gamelogic	AttachUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069a610	verified	recon/weaponlogic	gamelogic	weapon target controlling-player filter; direct callers 00741720/00752d30; full EAX/cleanup oracle; explicit hook
+0069a640	verified	recon/weaponlogic	gamelogic	weapon source-exclusion and candidate-kind seven-word masks; direct callers 00741720/00752d30; oracle; explicit hook
+0069a710	verified	recon/weaponlogic	gamelogic	weapon line-of-sight template flag; direct caller 007c9730; EAX/EDX/cleanup oracle; explicit hook
+0069aa10	verified	recon/weaponlogic	gamelogic	BoredUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069aa20	verified	recon/weaponlogic	gamelogic	BoredUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069ab60	verified	recon/weaponlogic	gamelogic	ChargeWeaponUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069ab70	verified	recon/weaponlogic	gamelogic	ChargeWeaponUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069aba0	verified	recon/weaponlogic	gamelogic	ChargeWeaponUpdate clamped progress; full 80-bit x87 ST0 at three control words and cleanup oracle; not hooked
+0069ac90	verified	recon/weaponlogic	gamelogic	ClusterBombUpdate target exclusion predicate; exact upper-EAX residue/callback/cleanup oracle
+0069ae80	verified	recon/weaponlogic	gamelogic	DeletionUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069ae90	verified	recon/weaponlogic	gamelogic	DeletionUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069af60	verified	recon/weaponlogic	gamelogic	DemoTrapUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069af70	verified	recon/weaponlogic	gamelogic	DemoTrapUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069b040	verified	recon/weaponlogic	gamelogic	DestroyObjectsUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b050	verified	recon/weaponlogic	gamelogic	DestroyObjectsUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069b0c0	verified	recon/weaponlogic	gamelogic	DestructibleEnvironmentUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b0d0	verified	recon/weaponlogic	gamelogic	DestructibleEnvironmentUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069b100	verified	recon/weaponlogic	gamelogic	DestructibleEnvironmentUpdate two-point 3x4 transform; vtable 00c028e8; SSE order/exact writes/input-output alias oracle
+0069b2e0	verified	recon/weaponlogic	gamelogic	DieOnProducerDeathUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b2f0	verified	recon/weaponlogic	gamelogic	DieOnProducerDeathUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069b480	verified	recon/weaponlogic	gamelogic	EMPUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b490	verified	recon/weaponlogic	gamelogic	EMPUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069b560	verified	recon/weaponlogic	gamelogic	FireSpreadUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b570	verified	recon/weaponlogic	gamelogic	FireSpreadUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069b630	verified	recon/weaponlogic	gamelogic	FlammableUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b640	verified	recon/weaponlogic	gamelogic	FlammableUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069b830	verified	recon/weaponlogic	gamelogic	FreefallUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b840	verified	recon/weaponlogic	gamelogic	FreefallUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069b930	verified	recon/weaponlogic	gamelogic	FreefallUpdate nested target-range search; direct caller 0077e7f0; full pointer-residue EAX oracle
+0069b9e0	verified	recon/weaponlogic	gamelogic	GatherSlavesUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b9f0	verified	recon/weaponlogic	gamelogic	GatherSlavesUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069baf0	verified	recon/weaponlogic	gamelogic	GrapplingHookUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069bb00	verified	recon/weaponlogic	gamelogic	GrapplingHookUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069bc80	verified	recon/weaponlogic	gamelogic	HeightDieUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069bc90	verified	recon/weaponlogic	gamelogic	HeightDieUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069bdc0	verified	recon/weaponlogic	gamelogic	HijackerUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069bdd0	verified	recon/weaponlogic	gamelogic	HijackerUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069bee0	verified	recon/weaponlogic	gamelogic	HordeNotifyTargetsOfImminentProbableCrushingUpdate module name; exact pointer oracle
+0069bef0	verified	recon/weaponlogic	gamelogic	HordeNotifyTargetsOfImminentProbableCrushingUpdate guarded module key; exact state oracle
+0069bf90	verified	recon/weaponlogic	gamelogic	InitiateRepairDie module name; exact string pointer/EAX/EDX/cleanup oracle
+0069bfa0	verified	recon/weaponlogic	gamelogic	InitiateRepairDie guarded module key; exact guard/cache writes and resolver call oracle
+0069c170	verified	recon/weaponlogic	gamelogic	InvisibilityBroadcastUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069c180	verified	recon/weaponlogic	gamelogic	InvisibilityBroadcastUpdate guarded module key; exact state/resolver oracle
+0069c4b0	verified	recon/weaponlogic	gamelogic	InvisibilityUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069c4c0	verified	recon/weaponlogic	gamelogic	InvisibilityUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069c7f0	verified	recon/weaponlogic	gamelogic	LargeGroupBonusUpdate module name; vtable 00c042d8 and exact pointer oracle
+0069c800	verified	recon/weaponlogic	gamelogic	LargeGroupBonusUpdate guarded module key; exact state/resolver oracle
+0069ca10	verified	recon/weaponlogic	gamelogic	LaserScatterUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069ca20	verified	recon/weaponlogic	gamelogic	LaserScatterUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069ca50	verified	recon/weaponlogic	gamelogic	LaserScatterUpdate initialization; scheduler args, object status and exact state writes oracle
+0069cd30	verified	recon/weaponlogic	gamelogic	LifetimeUpdate secondary deadline; direct callers 0069ce8a/00753ff0; x87 truncation and exact writes oracle
+0069ce80	verified	recon/weaponlogic	gamelogic	LifetimeUpdate range scheduling entry with native continuation 0069ce8a; exact ABI/random/deadline oracle; dispatcher not analyzed
+0069cef0	verified	recon/weaponlogic	gamelogic	LifetimeUpdate pause; vtable 00bf89a0 path; exact scheduler args/state/cleanup oracle
+0069cf20	verified	recon/weaponlogic	gamelogic	LifetimeUpdate resume; vtable 00bf89a0 path; exact scheduler args/state/cleanup oracle
+0069d0f0	verified	recon/weaponlogic	gamelogic	LoseHealthUpdate capped pulse count; imported ceil/x87 conversion and full EAX/cleanup oracle
+0069d1d0	verified	recon/weaponlogic	gamelogic	LoseHealthUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069d1e0	verified	recon/weaponlogic	gamelogic	LoseHealthUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069e0d0	verified	recon/weaponlogic	gamelogic	PhysicsUpdate collision-mask flag set callback; exact virtual result/state/cleanup oracle
+0069e120	verified	recon/weaponlogic	gamelogic	PhysicsUpdate collision-mask flag clear callback; exact virtual result/state/cleanup oracle
+0069e190	verified	recon/weaponlogic	gamelogic	PhysicsUpdate transform capture; direct callers 00714e30/00762080; exact 97-byte writes and native x87 SNaN quieting oracle
+0069e2d0	verified	recon/weaponlogic	gamelogic	PowerUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069e2e0	verified	recon/weaponlogic	gamelogic	PowerUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069e3c0	verified	recon/weaponlogic	gamelogic	PhysicsUpdate group scaling; direct callers 007311d0/00763bc0; SSE bits and exact writes oracle
+0069e400	verified	recon/weaponlogic	gamelogic	object status bit 9 query; full EAX/EDX/cleanup oracle; explicit hook
+0069e420	verified	recon/weaponlogic	gamelogic	PhysicsUpdate controller identifier copy; vtable 00c19788 slot 6; exact write-range oracle
+0069e820	verified	recon/weaponlogic	gamelogic	PhysicsUpdate overlap count; vtable 00c19580 slot 23; linked-list oracle; explicit hook
+0069e850	verified	recon/weaponlogic	gamelogic	PhysicsUpdate controller/height predicate; direct caller 00763bc0; upper-EAX/float oracle; explicit hook
+0069e8e0	verified	recon/weaponlogic	gamelogic	PowerUpdate wake scheduling; exact deadline/scheduler/state/cleanup oracle
+0069ea50	verified	recon/weaponlogic	gamelogic	ProneUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069ea60	verified	recon/weaponlogic	gamelogic	ProneUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069eb30	verified	recon/weaponlogic	gamelogic	RadarUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069eb40	verified	recon/weaponlogic	gamelogic	RadarUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069ece0	verified	recon/weaponlogic	gamelogic	RepairUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069ecf0	verified	recon/weaponlogic	gamelogic	RepairUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069f270	verified	recon/weaponlogic	gamelogic	SetLocomotorSpeedUpdate module name; vtable 00c05a88 and exact pointer oracle
+0069f280	verified	recon/weaponlogic	gamelogic	SetLocomotorSpeedUpdate guarded module key; exact state/resolver oracle
+0069f450	verified	recon/weaponlogic	gamelogic	ShieldBodyUpdate sphere/segment intersection; callers 007178d0/00717d50; SSE/x87 exact output/full EAX/cleanup/start-output alias oracle
+0069f760	verified	recon/weaponlogic	gamelogic	object slave-link clear; vtable 00c05cb4 slot 4; exact two writes/EAX/EDX oracle; explicit hook
+0069f770	verified	recon/weaponlogic	gamelogic	SlavedUpdate pinned position plus optional offset; direct caller 006e9b80; exact output/alias-order oracle
+0069f840	verified	recon/weaponlogic	gamelogic	SlavedUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069f850	verified	recon/weaponlogic	gamelogic	SlavedUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069f8d0	verified	recon/weaponlogic	gamelogic	SlavedUpdate guard-point proximity scan; direct caller 00718620; full pointer-residue EAX/SSE oracle; explicit hook
+0069f9e0	verified	recon/weaponlogic	gamelogic	SlavedUpdate state predicate; direct caller 0069fa90; all upper-EAX paths/cleanup oracle; explicit hook
+0069fc50	verified	recon/weaponlogic	gamelogic	SlavedUpdate configuration bit 22; direct caller 005252b0; EAX/EDX oracle; explicit hook
+0069fc60	verified	recon/weaponlogic	gamelogic	SlavedUpdate rider predicate; direct caller 007aa550; pointer-residue EAX oracle; explicit hook
+0069fd30	verified	recon/weaponlogic	gamelogic	SlavedUpdate template-field copy; vtable/caller ownership; exact write/EAX/EDX/cleanup oracle
