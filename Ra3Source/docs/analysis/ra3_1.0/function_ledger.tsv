@@ -6798,7 +6798,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005a8110	FUN_005a8110	.text	267		clean	unknown		unanalyzed	
 005a8230	FUN_005a8230	.text	141		clean	unknown		unanalyzed	
 005a82c0	FUN_005a82c0	.text	20		clean	unknown		unanalyzed	
-005a82e0	FUN_005a82e0	.text	17		clean	unknown		unanalyzed	
+005a82e0	FUN_005a82e0	.text	17		clean	common	recon/common5a	reversed	currentStateId; direct callee of 006ffc00 at 006ffc56; 006ffc00 is vtable 00c22118 slot 99; slot 2 00740f10 returns AIUpdateInterface at 00c223cc
 005a8300	FUN_005a8300	.text	31		clean	unknown		unanalyzed	
 005a8320	FUN_005a8320	.text	316		clean	unknown		unanalyzed	
 005a8460	FUN_005a8460	.text	36		clean	unknown		unanalyzed	
@@ -6911,25 +6911,25 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005a9f00	FUN_005a9f00	.text	73		clean	unknown		unanalyzed	
 005a9f50	FUN_005a9f50	.text	5		clean	unknown		unanalyzed	
 005a9f60	FUN_005a9f60	.text	43		clean	unknown	recon/hookcat	reversed	hook candidate: 写虚表并以 999999/0 初始化对象字段
-005a9f90	FUN_005a9f90	.text	3		clean	unknown		unanalyzed	
-005a9fa0	FUN_005a9fa0	.text	55		clean	unknown		unanalyzed	
-005a9fe0	FUN_005a9fe0	.text	81		clean	unknown		unanalyzed	
-005aa040	FUN_005aa040	.text	118		clean	unknown		unanalyzed	
-005aa0c0	FUN_005aa0c0	.text	121		clean	unknown		unanalyzed	
-005aa140	FUN_005aa140	.text	65		clean	unknown		unanalyzed	
-005aa190	FUN_005aa190	.text	7		clean	unknown		unanalyzed	
-005aa1a0	FUN_005aa1a0	.text	26		clean	unknown		unanalyzed	
-005aa1c0	FUN_005aa1c0	.text	19		clean	unknown		unanalyzed	
-005aa1e0	FUN_005aa1e0	.text	32		clean	unknown		unanalyzed	
-005aa200	FUN_005aa200	.text	20		clean	unknown		unanalyzed	
-005aa220	FUN_005aa220	.text	17		clean	unknown		unanalyzed	
-005aa240	FUN_005aa240	.text	7		clean	unknown		unanalyzed	
-005aa250	FUN_005aa250	.text	5		clean	unknown		unanalyzed	
-005aa260	FUN_005aa260	.text	20		clean	unknown		unanalyzed	
-005aa280	FUN_005aa280	.text	20		clean	unknown		unanalyzed	
-005aa2a0	FUN_005aa2a0	.text	10		clean	unknown		unanalyzed	
-005aa2b0	FUN_005aa2b0	.text	43		clean	unknown		unanalyzed	
-005aa2e0	FUN_005aa2e0	.text	6		clean	unknown		unanalyzed	
+005a9f90	FUN_005a9f90	.text	3		clean	common	recon/common5a	unanalyzed	rejected: three-byte empty body shared across FailureState slots, not a distinct method
+005a9fa0	FUN_005a9fa0	.text	55		clean	common	recon/common5a	reversed	failureStateExit; vtable 00be6cb0 slot 16; slot 2 005aa2e0 returns FailureState at 00be6cfc
+005a9fe0	FUN_005a9fe0	.text	81		clean	common	recon/common5a	reversed	applyTransitionId; direct callee of 005aa0c0 at 005aa115; 005aa0c0 is direct callee of 005ac420 at 005ac492; 005ac420 is vtable 00be8178 slot 4; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa040	FUN_005aa040	.text	118		clean	common	recon/common5a	reversed	scanConditions; direct callee of 005aa140 at 005aa16e; 005aa140 is direct callee of 005ac420 at 005ac455; 005ac420 is vtable 00be8178 slot 4; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa0c0	FUN_005aa0c0	.text	121		clean	common	recon/common5a	reversed	checkTransitions; direct callee of 005ac420 at 005ac492; 005ac420 is vtable 00be8178 slot 4; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa140	FUN_005aa140	.text	65		clean	common	recon/common5a	reversed	checkSleepTransitions; direct callee of 005ac420 at 005ac455; 005ac420 is vtable 00be8178 slot 4; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa190	FUN_005aa190	.text	7		clean	common	recon/common5a	unanalyzed	rejected: vtable 00be8178 slot 15 is fld dword ptr [0x00be68e8]; ret, an x87 constant with no distinct object behavior
+005aa1a0	FUN_005aa1a0	.text	26		clean	common	recon/common5a	reversed	isInIdleState; vtable 00be8178 slot 10; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa1c0	FUN_005aa1c0	.text	19		clean	common	recon/common5a	unanalyzed	rejected: forwards to the current state's vtable +0x38, but neither caller is a vtable slot or an anchored callee
+005aa1e0	FUN_005aa1e0	.text	32		clean	common	recon/common5a	reversed	notifyStateThenMachine; direct callee of 006d8040 at 006d80d1; 006d8040 is vtable 00c114e8 slot 15; vtable installed by mov dword ptr [esi+0x18], 0x00C114E8 at 006c7840
+005aa200	FUN_005aa200	.text	20		clean	common	recon/common5a	unanalyzed	rejected: forwards to the current state's vtable +0x44; its only caller is not a vtable slot
+005aa220	FUN_005aa220	.text	17		clean	common	recon/common5a	reversed	forwardStateSlot48; vtable 00be8178 slot 11; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa240	FUN_005aa240	.text	7		clean	common	recon/common5a	reversed	lockMachine; direct callee of 00683080 at 006830c5; 00683080 is vtable 00c22118 slot 136; slot 2 00740f10 returns AIUpdateInterface at 00c223cc
+005aa250	FUN_005aa250	.text	5		clean	common	recon/common5a	reversed	unlockMachine; direct callee of 00683080 at 0068308a; 00683080 is vtable 00c22118 slot 136; slot 2 00740f10 returns AIUpdateInterface at 00c223cc
+005aa260	FUN_005aa260	.text	20		clean	common	recon/common5a	reversed	callWhileUnlocked; vtable 00be8178 slot 12; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa280	FUN_005aa280	.text	20		clean	common	recon/common5a	reversed	storeGoalScalar; direct callee of 006cc1e0 at 006cc244; 006cc1e0 is vtable 00c22118 slot 87; slot 2 00740f10 returns AIUpdateInterface at 00c223cc
+005aa2a0	FUN_005aa2a0	.text	10		clean	common	recon/common5a	reversed	storeGoalDword; direct callee of 00699c10 at 00699c3c; 00699c10 is vtable 00c22118 slot 56; slot 2 00740f10 returns AIUpdateInterface at 00c223cc
+005aa2b0	FUN_005aa2b0	.text	43		clean	common	recon/common5a	unanalyzed	rejected: writes FailureState vtable 00be6cb0 at 005aa2d4, but the body is not a vtable slot, assertion site, or direct callee of an anchored function
+005aa2e0	FUN_005aa2e0	.text	6		clean	common	recon/common5a	unanalyzed	rejected: vtable 00be6cb0 slot 2 identity fingerprint, mov eax, 0x00be6cfc; ret
 005aa320	FUN_005aa320	.text	91		clean	unknown		unanalyzed	
 005aa380	FUN_005aa380	.text	432		clean	unknown		unanalyzed	
 005aa530	FUN_005aa530	.text	6		clean	unknown		unanalyzed	
@@ -7015,10 +7015,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005ac370	FUN_005ac370	.text	13		clean	unknown		unanalyzed	
 005ac380	FUN_005ac380	.text	24		clean	unknown		unanalyzed	
 005ac3a0	FUN_005ac3a0	.text	114		clean	unknown		unanalyzed	
-005ac420	FUN_005ac420	.text	152		clean	unknown		unanalyzed	
-005ac4c0	FUN_005ac4c0	.text	36		clean	unknown		unanalyzed	
-005ac4f0	FUN_005ac4f0	.text	66		clean	unknown		unanalyzed	
-005ac540	FUN_005ac540	.text	54		clean	unknown		unanalyzed	
+005ac420	FUN_005ac420	.text	152		clean	common	recon/common5a	reversed	updateStateMachine; vtable 00be8178 slot 4; slot 2 005b2440 returns StateMachine at 00be81c0
+005ac4c0	FUN_005ac4c0	.text	36		clean	common	recon/common5a	reversed	setGoalObject; vtable 00be8178 slot 14; slot 2 005b2440 returns StateMachine at 00be81c0
+005ac4f0	FUN_005ac4f0	.text	66		clean	common	recon/common5a	reversed	setGoalPosition; direct callee of 006831d0 at 006831fe; 006831d0 is vtable 00c22118 slot 103; slot 2 00740f10 returns AIUpdateInterface at 00c223cc
+005ac540	FUN_005ac540	.text	54		clean	common	recon/common5a	reversed	pathPointAt; direct callee of 007c98e0 at 007c98fd; 007c98e0 is vtable 00c2b920 slot 4; slot 2 007987f0 returns UnitAIStartPathMoveState at 00c2b96c
 005ac580	FUN_005ac580	.text	167		clean	unknown		unanalyzed	
 005ac630	FUN_005ac630	.text	337		clean	unknown		unanalyzed	
 005ac790	FUN_005ac790	.text	34		clean	unknown		unanalyzed	
@@ -7049,9 +7049,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005acf40	FUN_005acf40	.text	372		clean	unknown		unanalyzed	
 005ad0c0	FUN_005ad0c0	.text	60		clean	unknown		unanalyzed	
 005ad100	FUN_005ad100	.text	72		clean	unknown		unanalyzed	
-005ad150	FUN_005ad150	.text	68		clean	unknown		unanalyzed	
+005ad150	FUN_005ad150	.text	68		clean	common	recon/common5a	reversed	resetGoalPosition; direct callee of 007a0f30 at 007a1002; 007a0f30 is vtable 00c2bc78 slot 5; slot 2 007a1050 returns AIGuardIdleState at 00c2bcc4
 005ad1a0	FUN_005ad1a0	.text	13		clean	unknown		unanalyzed	
-005ad1b0	FUN_005ad1b0	.text	13		clean	unknown		unanalyzed	
+005ad1b0	FUN_005ad1b0	.text	13		clean	common	recon/common5a	unanalyzed	rejected: vtable 00be7124 slot 8 calls virtual slot 0 with argument 1, a delete path
 005ad200	FUN_005ad200	.text	178		clean	unknown		unanalyzed	
 005ad2c0	FUN_005ad2c0	.text	69		clean	unknown		unanalyzed	
 005ad310	FUN_005ad310	.text	139		inner-patched	unknown		unanalyzed	
@@ -7071,7 +7071,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005ad750	FUN_005ad750	.text	50		clean	unknown		unanalyzed	
 005ad790	FUN_005ad790	.text	51		clean	unknown		unanalyzed	
 005ad7d0	FUN_005ad7d0	.text	51		clean	unknown		unanalyzed	
-005ad810	FUN_005ad810	.text	389	SageEngine\source\GameEngine\common\GameStart.cpp	patched	common		unanalyzed	
+005ad810	FUN_005ad810	.text	389	SageEngine\source\GameEngine\common\GameStart.cpp	patched	common	recon/common5a	unanalyzed	rejected: ledger securom=patched, GameStart.cpp, not a clean StateMachine body
 005ada40	FUN_005ada40	.text	93		clean	unknown		unanalyzed	
 005adaa0	FUN_005adaa0	.text	39		clean	unknown		unanalyzed	
 005adad0	FUN_005adad0	.text	386		clean	unknown		unanalyzed	
@@ -7180,13 +7180,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005b21f6	FUN_005b21f6	.text	108		clean	unknown		unanalyzed	
 005b2270	FUN_005b2270	.text	133		clean	unknown		unanalyzed	
 005b2300	FUN_005b2300	.text	111		clean	unknown		unanalyzed	
-005b2370	FUN_005b2370	.text	199		clean	unknown		unanalyzed	
-005b2440	FUN_005b2440	.text	6		clean	unknown		unanalyzed	
-005b2450	FUN_005b2450	.text	120		clean	unknown		unanalyzed	
-005b24d0	FUN_005b24d0	.text	47		clean	unknown		unanalyzed	
-005b2500	FUN_005b2500	.text	190		clean	unknown		unanalyzed	
-005b25c0	FUN_005b25c0	.text	26		clean	unknown		unanalyzed	
-005b25e0	thunk_FUN_004ca930	.text	5		clean	unknown		unanalyzed	
+005b2370	FUN_005b2370	.text	199		clean	common	recon/common5a	unanalyzed	rejected: destructor called from StateMachine vtable slot 0; writes 00be8178 then frees nodes through 0x004166b0
+005b2440	FUN_005b2440	.text	6		clean	common	recon/common5a	unanalyzed	rejected: vtable 00be8178 slot 2 identity fingerprint, mov eax, 0x00be81c0; ret
+005b2450	FUN_005b2450	.text	120		clean	common	recon/common5a	reversed	copyGoalFields; direct callee of 0079fee0 at 0079fef3; 0079fee0 is vtable 00c2ef40 slot 4; slot 2 0079fed0 returns UnitAIMoveToGoalState at 00c2ef90
+005b24d0	FUN_005b24d0	.text	47		clean	common	recon/common5a	reversed	internalGetState; direct callee of 005c0a6a at 005c0ae9; 005c0a6a references assertion string 00be95d8 StateMachine.cpp:1379
+005b2500	FUN_005b2500	.text	190		clean	common	recon/common5a	reversed	internalSetState; direct callee of 005b25c0 at 005b25d4; 005b25c0 is vtable 00be8178 slot 5; slot 2 005b2440 returns StateMachine at 00be81c0
+005b25c0	FUN_005b25c0	.text	26		clean	common	recon/common5a	reversed	initDefaultState; vtable 00be8178 slot 5; slot 2 005b2440 returns StateMachine at 00be81c0
+005b25e0	thunk_FUN_004ca930	.text	5		clean	common	recon/common5a	unanalyzed	rejected: jmp 0x004ca930 destructor thunk
 005b25f0	FUN_005b25f0	.text	286		clean	unknown		unanalyzed	
 005b2710	FUN_005b2710	.text	453		clean	unknown		unanalyzed	
 005b28e0	FUN_005b28e0	.text	30		clean	unknown		unanalyzed	
@@ -7279,9 +7279,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005b6100	FUN_005b6100	.text	8		clean	unknown		unanalyzed	
 005b6110	FUN_005b6110	.text	51		clean	unknown		unanalyzed	
 005b6150	FUN_005b6150	.text	173		clean	unknown	recon/hookcat	reversed	hook candidate: 大型对象构造初始化（SSE 仅用于批量清零）
-005b6200	FUN_005b6200	.text	45		clean	unknown		unanalyzed	
-005b6230	FUN_005b6230	.text	16		clean	unknown		unanalyzed	
-005b6240	FUN_005b6240	.text	39		clean	unknown		unanalyzed	
+005b6200	FUN_005b6200	.text	45		clean	common	recon/common5a	unanalyzed	rejected: map lookup sibling of 005b24d0 with no vtable-slot caller
+005b6230	FUN_005b6230	.text	16		clean	common	recon/common5a	reversed	setState; vtable 00be8178 slot 7; slot 2 005b2440 returns StateMachine at 00be81c0
+005b6240	FUN_005b6240	.text	39		clean	common	recon/common5a	reversed	stateMapContains; direct callee of 007db090 at 007db13b; 007db090 is vtable 00c2c520 slot 5; slot 2 00799810 returns AIIdleState at 00c2c56c
 005b6270	FUN_005b6270	.text	166		clean	unknown		unanalyzed	
 005b6320	FUN_005b6320	.text	161		clean	unknown		unanalyzed	
 005b63d0	FUN_005b63d0	.text	188		clean	unknown		unanalyzed	
@@ -7354,11 +7354,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005b9560	FUN_005b9560	.text	1984		clean	unknown		unanalyzed	
 005b9d60	FUN_005b9d60	.text	273		clean	unknown		unanalyzed	
 005b9e80	FUN_005b9e80	.text	169		clean	unknown		unanalyzed	
-005b9f30	FUN_005b9f30	.text	135		clean	unknown		unanalyzed	
+005b9f30	FUN_005b9f30	.text	135		clean	common	recon/common5a	unanalyzed	rejected: ledger extent overlaps 005b9f4b and jumps outside its own body
 005b9f4b	FUN_005b9f4b	.text	103		clean	unknown		unanalyzed	
-005ba020	FUN_005ba020	.text	238	SageEngine\source\GameEngine\common\StateMachine.cpp	clean	common		unanalyzed	
-005ba110	FUN_005ba110	.text	211		clean	unknown		unanalyzed	
-005ba1f0	FUN_005ba1f0	.text	30		clean	unknown		unanalyzed	
+005ba020	FUN_005ba020	.text	238	SageEngine\source\GameEngine\common\StateMachine.cpp	clean	common	recon/common5a	reversed	goalQuery; assertion string 00be90a8 StateMachine.cpp:1075 referenced at 005ba037
+005ba110	FUN_005ba110	.text	211		clean	common	recon/common5a	reversed	publishGoalPosition; direct callee of 0079e0c0 at 0079e0d2; 0079e0c0 is 00c2aa80 slot 4; slot 2 returns UnitAIAttemptSkipMoveState; also calls 005ba020 at 005ba122 with the same this
+005ba1f0	FUN_005ba1f0	.text	30		clean	common	recon/common5a	unanalyzed	rejected: destructor tail that calls 0x004166b0
 005ba210	FUN_005ba210	.text	211		clean	unknown		unanalyzed	
 005ba2f0	FUN_005ba2f0	.text	82		clean	unknown		unanalyzed	
 005ba350	FUN_005ba350	.text	129	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
@@ -7446,17 +7446,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005bd710	thunk_FUN_004473b1	.text	5		clean	unknown		unanalyzed	
 005bd715	FUN_005bd715	.text	573		clean	unknown		unanalyzed	
 005bd960	FUN_005bd960	.text	547		clean	unknown		unanalyzed	
-005bdb90	FUN_005bdb90	.text	22		clean	unknown		unanalyzed	
+005bdb90	FUN_005bdb90	.text	22		clean	common	recon/common5a	unanalyzed	rejected: register setup then jmp 0x00411ca2, a thunk into a shared body
 005bdba6	FUN_005bdba6	.text	116		clean	unknown		unanalyzed	
-005bdc20	FUN_005bdc20	.text	120		clean	unknown		unanalyzed	
-005bdca0	FUN_005bdca0	.text	30		clean	unknown		unanalyzed	
-005bdcc0	FUN_005bdcc0	.text	8		clean	unknown		unanalyzed	
+005bdc20	FUN_005bdc20	.text	120		clean	common	recon/common5a	unanalyzed	rejected: erases a map node and calls 0x004166b0
+005bdca0	FUN_005bdca0	.text	30		clean	common	recon/common5a	reversed	goalObjectLive; direct callee of 007a2e50 at 007a2e61; 007a2e50 is 00c2c7d0 slot 4; slot 2 returns AIAttackMeleeHordeWaitState; also calls 005ba020 at 005bdca9 with the same this
+005bdcc0	FUN_005bdcc0	.text	8		clean	common	recon/common5a	reversed	assignGoalPath; direct callee of 00683080 at 0068309f; 00683080 is vtable 00c22118 slot 136; slot 2 00740f10 returns AIUpdateInterface at 00c223cc; adds 0x58 to this then jumps to 005ba670
 005bdcd0	FUN_005bdcd0	.text	74		clean	unknown		unanalyzed	
 005bdd20	FUN_005bdd20	.text	25		clean	unknown		unanalyzed	
 005bdd40	FUN_005bdd40	.text	67		clean	unknown		unanalyzed	
 005bdd90	FUN_005bdd90	.text	228		clean	unknown		unanalyzed	
 005bde80	FUN_005bde80	.text	86		clean	unknown		unanalyzed	
-005bdf30	FUN_005bdf30	.text	307		clean	unknown		unanalyzed	
+005bdf30	FUN_005bdf30	.text	307		clean	common	recon/common5a	reversed	xferGoalPath; direct callee of 005c0a6a at 005c0cbf; 005c0a6a references assertion string 00be95d8 StateMachine.cpp:1379
 005be070	FUN_005be070	.text	259		clean	unknown		unanalyzed	
 005be180	FUN_005be180	.text	112		clean	unknown		unanalyzed	
 005be1f0	FUN_005be1f0	.text	89		clean	unknown		unanalyzed	
