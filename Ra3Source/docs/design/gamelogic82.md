@@ -12,6 +12,13 @@ On a hit it reads the tracker at object `+0x3CC`, compares the signed rank at tr
 
 Every other counted function is tied to this anchor by `calls 00837420 at <site> with the same this`: the lookup's `ecx` is the same engine pointer. `0083CDD0` is a thiscall; it saves the incoming `this` and still performs the lookup on `[0x00DFC058]`.
 
+Ownership edges (controller, checked with `work/probe/verify_ownership.py`, `fails=0`): sharing a callee is not an ownership edge, so each counted function is additionally tied to a vtable method that calls it directly. All 51 are direct callees of one of two script dispatchers:
+
+- `0x0084E110` (vtable `0x00C35F30` slot 14): the action dispatcher.
+- `0x008477A0`, called from `0x0084C460` at `0x0084C466`, which is vtable `0x00C48898` slot 14: the condition dispatcher. `0x008477A0` also calls the `ScriptConditions::evaluateNamedUnitRankLevel` anchor at `0x008478E5`, so `0x00C48898` is the ScriptConditions table.
+
+Both tables' slot 2 is the shared base getter `0x004D6430`, not a class-name getter. The per-function call site is in the `dispatcher edge` part of each row in `gamelogic82_annotations.tsv`.
+
 Generals `ScriptConditions.cpp` and `ScriptActions.cpp` (`work/references/generals/GeneralsMD/Code/GameEngine/Source/GameLogic/ScriptEngine/`) supply vocabulary only. The bodies follow the RA3 instructions. `0x004CA930` is inner-patched, so the oracle stubs it and does not execute it.
 
 ## Counted functions
