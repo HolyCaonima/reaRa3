@@ -103,6 +103,8 @@ This batch reconstructs **58 clean (`securom=clean`) functions** in `0x004D0000.
 
 ## Rejected Candidates and Deferred Boundaries
 
+- **Controller review — implicit special members**: `0x004D4400` (DamageInfoInput copy assignment, member-wise from `+0x04`, vptr untouched), `0x004D5DF0` (DamageInfoInput copy constructor: vptr `0x00BDC178` then member-wise copy), `0x004D6FF0` and `0x004DA690` (DamageInfoShort / DOTInfoRecord copy assignments: call `0x004D4400`, then copy the tail) are compiler-generated and carry no written logic, so they are annotated as rejected and the batch counts **54**. Their ports stay because the oracle exercises them. The four default constructors (`0x004D6550`, `0x004DA780`, `0x004DD390`, `0x004DD3D0`) set non-trivial defaults and remain counted. Ownership was re-derived by the controller with `work/probe/verify_ownership.py` (`fails=0`); `0x004D4EA0` has no call/vt line but pushes its own `GameLogic.cpp:4254` assertion path.
+
 - **Mid-function loop tail**: `0x004D5AE3` (inner loop continuation of `0x004D5AB0`) was excluded as a non-entry address.
 - **EASTL / STL vector & red-black tree helpers**: `0x004D5C20`, `0x004D5F00`, `0x004D6050`, and `0x004DF940` (`eastl::rbtree` erase fixup) were excluded per batch rules.
 - **Static `NAMEKEY` initializer leaf**: `0x004D6800` (`UpdateModule::getModuleNameKey`) was excluded to keep the batch focused on behavioral GameLogic and Core functions.
