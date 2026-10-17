@@ -152,15 +152,20 @@ std::uint32_t __fastcall clearSlaveLinksHook(void* self, void*)
         ra3::gamelogic::clearObjectSlaveLinks(self);
         return 0;
     }
-    std::array<std::uint8_t, 0x12F8> ours{};
-    std::memcpy(ours.data(), self, ours.size());
-    ra3::gamelogic::clearObjectSlaveLinks(ours.data());
+    std::array<std::uint32_t, 2> ours{
+        load<std::uint32_t>(self, 0x12F4),
+        load<std::uint32_t>(self, 0x34C)};
+    ours[0] = 0;
+    ours[1] = 0;
     using Original = std::uint32_t(__thiscall*)(void*);
     const auto game = reinterpret_cast<Original>(clearSlaveLinksState.original)(self);
+    const std::array<std::uint32_t, 2> gameState{
+        load<std::uint32_t>(self, 0x12F4),
+        load<std::uint32_t>(self, 0x34C)};
     if (game == 0) {
         recordOutput(
             "objectclearslavelinks", clearSlaveLinksState,
-            self, ours.data(), ours.size());
+            gameState.data(), ours.data(), sizeof(gameState));
     } else {
         reportMismatch(
             "objectclearslavelinks", clearSlaveLinksState,
