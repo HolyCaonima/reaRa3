@@ -79,6 +79,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/particles65check)
     add_subdirectory(tools/obj6acheck)
     add_subdirectory(tools/protcavecheck)
+    add_subdirectory(tools/luavmcheck)
 endif()
 
 if(RA3_BUILD_TESTS)
