@@ -361,3 +361,56 @@ address	status	owner	module	notes
 0066abb0	reversed	recon/fxps	gameclient	gpuEnableSoftParticles; oracle 500 cases
 0066abc0	reversed	recon/fxps	gameclient	gpuMiscValues; oracle 500 cases
 0066cdd0	reversed	recon/fxps	gameclient	windTypeName; oracle 50 cases
+008e4610	reversed	recon/render8e	render	ra3::render::setDrawableWord104; W3D drawable state; exact writes and thiscall ABI covered by render8e oracle
+008e4620	reversed	recon/render8e	render	ra3::render::setDrawableWord108; W3D drawable state; exact writes and thiscall ABI covered by render8e oracle
+008e4680	reversed	recon/render8e	render	ra3::render::setDrawableExtent; W3D drawable state; SSE bit-copy and exact writes covered by render8e oracle
+008e46a0	reversed	recon/render8e	render	ra3::render::setDrawableViewport; W3D drawable viewport state; both mode branches and exact writes covered by render8e oracle
+008e4820	reversed	recon/render8e	render	ra3::render::disableDrawableMode; exact sparse writes covered by render8e oracle
+008e4840	reversed	recon/render8e	render	ra3::render::configureDrawableMode; mode validation and exact sparse writes covered by render8e oracle
+008e4910	reversed	recon/render8e	render	ra3::render::enableDrawableMode2; exact sparse writes covered by render8e oracle
+008e4950	reversed	recon/render8e	render	ra3::render::copyDrawableState68; normalized boolean and self-alias covered by render8e oracle
+008e49e0	reversed	recon/render8e	render	ra3::render::normalizedToPixel; SSE truncation, output writes and cdecl ABI covered by render8e oracle
+008e4a40	reversed	recon/render8e	render	ra3::render::pixelToNormalized; output writes and cdecl ABI covered by render8e oracle
+008e4aa0	reversed	recon/render8e	render	ra3::render::assignPassMask; flag preservation and self-alias covered by render8e oracle
+008e4ae0	reversed	recon/render8e	render	ra3::render::equalPassMask; count-masked comparison and return ABI covered by render8e oracle
+008e4b30	reversed	recon/render8e	render	ra3::render::assignDrawablePassMask; embedded-source alias and exact writes covered by render8e oracle
+008e5550	reversed	recon/render8e	render	ra3::render::approachWrappedAngle; wrap and step branches covered by render8e oracle
+008e56b0	reversed	recon/render8e	render	ra3::render::setAnimationVisible; W3D animation visibility state and exact writes covered by render8e oracle
+008e5710	reversed	recon/render8e	render	ra3::render::consumeCachedProperty50; W3D cached vtable property and return/write behavior covered by render8e oracle
+008e5740	reversed	recon/render8e	render	ra3::render::refreshCachedProperty54; W3D cached vtable property and return/write behavior covered by render8e oracle
+008e5b00	reversed	recon/render8e	render	ra3::render::modulatePackedColor; custom register/stack ABI and packed channels covered by render8e oracle
+008e5b80	reversed	recon/render8e	render	ra3::render::addPackedColor; saturated packed channels and cdecl ABI covered by render8e oracle
+008e5f70	reversed	recon/render8e	render	ra3::render::copyFloatWords18; x87 m32 copy sequence and overlap alias covered by render8e oracle
+008e62e0	reversed	recon/render8e	render	ra3::render::copyRecords24Backward; backward overlap alias and exact writes covered by render8e oracle
+008e6330	reversed	recon/render8e	render	ra3::render::equalMatrix3x4; ordered float comparisons and return behavior covered by render8e oracle
+008e6620	reversed	recon/render8e	render	ra3::render::quaternionToMatrix3x4; WWMath matrix construction and exact output covered by render8e oracle
+008e6770	reversed	recon/render8e	render	ra3::render::copyDrawableDescriptor; partial layout and overlap alias covered by render8e oracle
+008e6800	reversed	recon/render8e	render	ra3::render::initializeDrawableDescriptor; full sparse initialization writes covered by render8e oracle
+008e6dd0	reversed	recon/render8e	render	ra3::render::terrainLineMaximum; W3D terrain sampling, ABI and full ST0 at CW 007f/027f/037f covered by render8e oracle
+008e7000	reversed	recon/render8e	render	ra3::render::terrainCellMaximum; W3D terrain clamping, ABI and full ST0 at CW 007f/027f/037f covered by render8e oracle
+008e70f0	reversed	recon/render8e	render	ra3::render::terrainExtent; relocated terrain layout and exact output writes covered by render8e oracle
+008e71e0	reversed	recon/render8e	render	ra3::render::terrainCorners; relocated terrain layout and exact output writes covered by render8e oracle
+008e87d0	reversed	recon/render8e	render	ra3::render::compatibleRenderFlags; W3DScriptedModelDraw call ownership and pointer ABI covered by render8e oracle
+008e88a0	reversed	recon/render8e	render	ra3::render::copyFloatWords13; x87 m32 copy sequence and overlap alias covered by render8e oracle
+008e89d0	reversed	recon/render8e	render	ra3::render::modelHasTextureSlots; W3DScriptedModelDraw model layout and return ABI covered by render8e oracle
+008e8a00	reversed	recon/render8e	render	ra3::render::chooseWeightedModel; W3DScriptedModelDraw.cpp assertion ownership and deterministic RNG-stub oracle
+008e8ab0	reversed	recon/render8e	render	ra3::render::copyFloatWords15; x87 m32 copy sequence and overlap alias covered by render8e oracle
+008e8b20	reversed	recon/render8e	render	ra3::render::findConditionSubset260; W3DScriptedModelDraw condition-vector layout and pointer return covered by render8e oracle
+008e8c10	reversed	recon/render8e	render	ra3::render::findConditionSubset2c; W3DScriptedModelDraw condition-vector layout and pointer return covered by render8e oracle
+008e92a0	reversed	recon/render8e	render	ra3::render::modelConditionStateDifferent; relocated model vectors and return ABI covered by render8e oracle
+008e9350	reversed	recon/render8e	render	ra3::render::setDrawableSelectable; owner/render-object pointer aliases and exact writes covered by render8e oracle
+008e95f0	reversed	recon/render8e	render	ra3::render::setAnimationFrame; animation frame reversal and exact writes covered by render8e oracle
+008e96b0	reversed	recon/render8e	render	ra3::render::animationBlendActive; animation state and return ABI covered by render8e oracle
+008e98a0	reversed	recon/render8e	render	ra3::render::buildHermiteTangents; WWMath hermitespline tangent writes covered by render8e oracle
+008e9980	reversed	recon/render8e	render	ra3::render::evaluateHermite; WWMath hermitespline interpolation writes covered by render8e oracle
+008e9be0	reversed	recon/render8e	render	ra3::render::advanceTextureFrames; W3D animation record stride and exact writes covered by render8e oracle
+008eadd0	reversed	recon/render8e	render	ra3::render::renderTreeLowerBound; relocated tree aliases and pointer return covered by render8e oracle
+008eae00	reversed	recon/render8e	render	ra3::render::renderTreeUpperBound; relocated tree aliases and pointer return covered by render8e oracle
+008eaf70	reversed	recon/render8e	render	ra3::render::copyRenderState201; x87 m32 copies, tail byte and overlap alias covered by render8e oracle
+008eb160	reversed	recon/render8e	render	ra3::render::interpolateQuaternion; WWMath shortest-path interpolation and exact writes covered by render8e oracle
+008eb2c0	reversed	recon/render8e	render	ra3::render::copyRenderRecord68; byte/float layout, x87 m32 copies and overlap alias covered by render8e oracle
+008eb620	reversed	recon/render8e	render	ra3::render::copyRenderRecords68; record range, output pointer and exact writes covered by render8e oracle
+008eb6d0	reversed	recon/render8e	render	ra3::render::copyRenderRecords68Backward; backward record range, output pointer and exact writes covered by render8e oracle
+008ed5b0	reversed	recon/render8e	render	ra3::render::hasExtendedRenderFlags; called twice by W3DScriptedModelDraw.cpp body 0x0090ce30; pointer ABI covered by render8e oracle
+008ee0b0	reversed	recon/render8e	render	ra3::render::buildDrawableTransform; WWMath affine transform and exact output writes covered by render8e oracle
+008efe00	reversed	recon/render8e	render	ra3::render::emitSegmentQuad; exact SSE order, x87 reciprocal square root, cursor alias and vertex writes covered by render8e oracle
