@@ -76,6 +76,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/common7echeck)
     add_subdirectory(tools/gamelogic72check)
     add_subdirectory(tools/particles65check)
+    add_subdirectory(tools/gamelogic82check)
 endif()
 
 if(RA3_BUILD_TESTS)
