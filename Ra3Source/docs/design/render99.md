@@ -2,7 +2,7 @@
 
 ## Scope and ownership
 
-This batch keeps 40 clean ledger entries whose starts lie in `0x00990000-0x009AFFFF`.
+This batch ports 40 clean ledger entries whose starts lie in `0x00990000-0x009AFFFF` and counts 27 of them (13 EASTL instantiations are rejected; see Dropped candidates).
 Each counted VA is a named-vtable slot, a slot of a secondary vtable stored by an
 owned function, or a direct callee on a chain that reaches one of those slots or
 one of the three source-path anchors. Class names were read from the binary:
@@ -110,6 +110,8 @@ pointer. `009A8EA0`'s tested path is the failed lookup, which releases the
 asset and returns false.
 
 ## Dropped candidates
+
+Controller review: 13 of the 40 ported entries are EASTL container or algorithm instantiations, or compiler-generated element copies, reached only through the EASTL growth helpers below. The brief excludes EASTL code, so they are annotated as rejected and the batch counts 27. Their C++ stays as helpers of the counted ports and the oracle still covers them: `00997EF0` (uninitialized_fill, 0x48-byte ShaderParam), `00997FD0` (copy), `009980D0` (copy_backward), `00998F40` (element copy assignment, 0x3C-byte record), `0099BD10` and `0099BD70` (uninitialized_copy), `0099BE10` (ShaderParam member-wise copy assignment), `0099C0A0` (uninitialized_copy through that assignment), `0099C160` and `009A0640` (copy_backward), `009A0500` (uninitialized_fill_n), `009AB8E0` (`vector<ShaderParam>::resize`, divides by 72), `009ACFE0` (`vector<SubObjectRecord>::push_back` with refcount increment). The partition and collision vtables `00C5D6D0`/`00C5D774` have no slot-2 name getter, so those class names are inference; ownership rests on the verified slot and call chains.
 
 - `009AE110` calls `009B9290` to fill a stack record, then `009ACFE0`. `009B9290` is outside this range, so the body was not counted. It remains the call-chain link for `009ACFE0`, `0099BD10`, and `009A0640`.
 - `009A8AB0`, `009AA210`, `009AB980` are EASTL growth helpers. Counted callees hang off them; the helpers themselves were not ported.

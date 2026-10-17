@@ -11,31 +11,31 @@ address	status	owner	module	notes
 009938a0	reversed	recon/render99	render	ra3::render::updateCollisionRegistration; callee of 00993b80 at 00993b9a; 00993b80 is the callee of 00994300 at 0099431a; CollisionManager 00c5d764 slot 0
 00995d00	reversed	recon/render99	render	ra3::render::matrix3x3ToQuaternion; callee of 009a2df0 at 009a2e01; 009a2df0 is the callee of 009a82b0 at 009a82c0; 009a82b0 is the callee of 009af530 at 009af8fe; 009af530 pushes RenderObject.cpp string 00c5e498
 00997720	reversed	recon/render99	render	ra3::render::runVisibleObjectsCommand; 00c5da5c slot 4; slot 2 returns visibleobjects - sets objects to be visible
-00997ef0	reversed	recon/render99	render	ra3::render::fillShaderParamRange; callee of 009a8ab0 at 009a8b4a; 009a8ab0 is the callee of 009ab8e0 at 009ab933; 009ab8e0 is the callee of 009acb60 at 009acba8; 009acb60 is the callee of 009af530 at 009af659; 009af530 pushes 00c5e498
-00997fd0	reversed	recon/render99	render	ra3::render::copyShaderParamsForward; callee of 009ab8e0 at 009ab94c; 009ab8e0 is the callee of 009acb60 at 009acba8; 009acb60 is the callee of 009af530 at 009af659; 009af530 pushes RenderObject.cpp string 00c5e498
-009980d0	reversed	recon/render99	render	ra3::render::copyShaderParamsBackward; callee of 009a8ab0 at 009a8b3c; 009a8ab0 is the callee of 009ab8e0 at 009ab933; 009ab8e0 is the callee of 009af530 through 009acb60; 009af530 pushes 00c5e498
+00997ef0		recon/render99	render	rejected: EASTL uninitialized_fill over 0x48-byte ShaderParam elements; fillShaderParamRange; kept only as a helper of counted ports (controller)
+00997fd0		recon/render99	render	rejected: EASTL copy over 0x48-byte ShaderParam elements; copyShaderParamsForward; kept only as a helper of counted ports (controller)
+009980d0		recon/render99	render	rejected: EASTL copy_backward over 0x48-byte ShaderParam elements; copyShaderParamsBackward; kept only as a helper of counted ports (controller)
 009984f0	reversed	recon/render99	render	ra3::render::defaultShaderParam; callee of 009ab8e0 at 009ab90f; 009ab8e0 is the callee of 009acb60 at 009acba8; 009acb60 is the callee of 009af530 at 009af659; 009af530 pushes 00c5e498
-00998f40	reversed	recon/render99	render	ra3::render::assignShaderParamRelaxed; callee of 009aa210 at 009aa26d; 009aa210 is the callee of 009af530 at 009af870; 009af530 pushes RenderObject.cpp string 00c5e498
+00998f40		recon/render99	render	rejected: compiler-generated element copy assignment (0x3c-byte record); assignShaderParamRelaxed; kept only as a helper of counted ports (controller)
 0099a790	reversed	recon/render99	render	ra3::render::parseVisibleObjectsCommand; 00c5da5c slot 3; slot 2 returns visibleobjects - sets objects to be visible
 0099a850	reversed	recon/render99	render	ra3::render::runRenderBinCommand; 00c5daac slot 4; slot 2 returns renderbin [name] - renders all objects in the named bin
 0099a8e0	reversed	recon/render99	render	ra3::render::readNestedNameWord; callee of 009a2660 at 009a2942; 009a2660 pushes ShaderFactory.cpp string 00c5e0e8
 0099b010	reversed	recon/render99	render	ra3::render::assignRefCountedPointer; callee of 009a2660 at 009a29e3; 009a2660 pushes ShaderFactory.cpp string 00c5e0e8
-0099bd10	reversed	recon/render99	render	ra3::render::copySubObjectRecords; callee of 009ab980 at 009aba85; 009ab980 is the callee of 009acfe0 at 009ad02d; 009acfe0 is the callee of 009ae110 at 009ae15c; 009ae110 is the callee of 009af530 at 009af767; 009af530 pushes 00c5e498
-0099bd70	reversed	recon/render99	render	ra3::render::copyExtendedRecords; callee of 009aa210 at 009aa2de; 009aa210 is the callee of 009af530 at 009af870; 009af530 pushes RenderObject.cpp string 00c5e498
-0099be10	reversed	recon/render99	render	ra3::render::assignShaderParam; callee of 009a8ab0 at 009a8aef; 009a8ab0 is the callee of 009ab8e0 at 009ab933; 009af530 pushes 00c5e498
-0099c0a0	reversed	recon/render99	render	ra3::render::constructShaderParamRange; callee of 009a8ab0 at 009a8b2d; 009a8ab0 is the callee of 009ab8e0 at 009ab933; 009af530 pushes 00c5e498
-0099c160	reversed	recon/render99	render	ra3::render::copyExtendedRecordsBackward; callee of 009aa210 at 009aa254; 009aa210 is the callee of 009af530 at 009af870; 009af530 pushes 00c5e498
+0099bd10		recon/render99	render	rejected: EASTL uninitialized_copy over 0x14-byte sub-object records; copySubObjectRecords; kept only as a helper of counted ports (controller)
+0099bd70		recon/render99	render	rejected: EASTL uninitialized_copy over extended records; copyExtendedRecords; kept only as a helper of counted ports (controller)
+0099be10		recon/render99	render	rejected: compiler-generated ShaderParam copy assignment (member-wise copy); assignShaderParam; kept only as a helper of counted ports (controller)
+0099c0a0		recon/render99	render	rejected: EASTL uninitialized_copy calling the ShaderParam copy assignment; constructShaderParamRange; kept only as a helper of counted ports (controller)
+0099c160		recon/render99	render	rejected: EASTL copy_backward over extended records; copyExtendedRecordsBackward; kept only as a helper of counted ports (controller)
 0099c290	reversed	recon/render99	render	ra3::render::composeShaderTransform; callee of 009a2df0 at 009a2ef1; 009a2df0 is the callee of 009a82b0 at 009a82c0; 009a82b0 is the callee of 009af530 at 009af8fe; 009af530 pushes 00c5e498
 0099c440	reversed	recon/render99	render	ra3::render::composeShaderTransformInPlace; callee of 009a2df0 at 009a2f03; 009a2df0 is the callee of 009a82b0 at 009a82c0; 009af530 pushes RenderObject.cpp string 00c5e498
 0099f1c0	reversed	recon/render99	render	ra3::render::resolveRegisteredShader; callee of 009a8fd0 at 009a8ff1; 009a8fd0 pushes MaterialFactory.cpp string 00c5e270
 0099f310	reversed	recon/render99	render	ra3::render::bindShaderConstantIds; callee of 009a2660 at 009a2a03; 009a2660 pushes ShaderFactory.cpp string 00c5e0e8
-009a0500	reversed	recon/render99	render	ra3::render::replicateShaderParam; callee of 009a8ab0 at 009a8b65; 009a8ab0 is the callee of 009ab8e0 at 009ab933; 009af530 pushes 00c5e498
-009a0640	reversed	recon/render99	render	ra3::render::moveSubObjectRecordsBackward; callee of 009ab980 at 009ab9df; 009ab980 is the callee of 009acfe0 at 009ad02d; 009ae110 is the callee of 009af530 at 009af767; 009af530 pushes 00c5e498
+009a0500		recon/render99	render	rejected: EASTL uninitialized_fill_n calling the ShaderParam copy assignment; replicateShaderParam; kept only as a helper of counted ports (controller)
+009a0640		recon/render99	render	rejected: EASTL copy_backward over 0x14-byte sub-object records; moveSubObjectRecordsBackward; kept only as a helper of counted ports (controller)
 009a1990	reversed	recon/render99	render	ra3::render::parseRenderBinCommand; 00c5daac slot 3; slot 2 returns renderbin [name] - renders all objects in the named bin
 009a2540	reversed	recon/render99	render	ra3::render::shaderSemanticNames; callee of 009a2660 at 009a28a7; 009a2660 pushes ShaderFactory.cpp string 00c5e0e8
 009a2df0	reversed	recon/render99	render	ra3::render::refreshShaderParamChain; callee of 009a82b0 at 009a82c0; 009a82b0 is the callee of 009af530 at 009af8fe; 009af530 pushes RenderObject.cpp string 00c5e498
 009a82b0	reversed	recon/render99	render	ra3::render::skinShaderInstances; callee of 009af530 at 009af8fe; 009af530 pushes RenderObject.cpp string 00c5e498
 009a8ea0	reversed	recon/render99	render	ra3::render::bindShaderAsset; callee of 009a8fd0 at 009a90bf; 009a8fd0 pushes MaterialFactory.cpp string 00c5e270
-009ab8e0	reversed	recon/render99	render	ra3::render::resizeShaderParamVector; callee of 009acb60 at 009acba8; 009acb60 is the callee of 009af530 at 009af659; 009af530 pushes RenderObject.cpp string 00c5e498
+009ab8e0		recon/render99	render	rejected: EASTL vector<ShaderParam>::resize (divides by the 72-byte element size); resizeShaderParamVector; kept only as a helper of counted ports (controller)
 009acb60	reversed	recon/render99	render	ra3::render::importShaderParamBlock; callee of 009af530 at 009af659; 009af530 pushes RenderObject.cpp string 00c5e498
-009acfe0	reversed	recon/render99	render	ra3::render::appendSubObjectRecord; callee of 009ae110 at 009ae15c; 009ae110 is the callee of 009af530 at 009af767; 009af530 pushes RenderObject.cpp string 00c5e498
+009acfe0		recon/render99	render	rejected: EASTL vector<SubObjectRecord>::push_back with refcount increment; appendSubObjectRecord; kept only as a helper of counted ports (controller)
