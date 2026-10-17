@@ -20532,9 +20532,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00804490	FUN_00804490	.text	85		clean	unknown		unanalyzed	
 008044f0	FUN_008044f0	.text	66		clean	unknown		unanalyzed	
 00804540	FUN_00804540	.text	80		clean	unknown		unanalyzed	
-00804590	FUN_00804590	.text	68		clean	unknown		unanalyzed	
-00804780	FUN_00804780	.text	104		clean	unknown		unanalyzed	
-008049a0	FUN_008049a0	.text	73		clean	unknown		unanalyzed	
+00804590	FUN_00804590	.text	68		clean	gamelogic	recon/scripts82	reversed	ScriptAction::isUnitAction; 90-entry predicate and full EAX verified against shipped code
+00804780	FUN_00804780	.text	104		clean	gamelogic	recon/scripts82	reversed	ScriptAction::isTeamAction; 106-entry predicate and full EAX verified against shipped code
+008049a0	FUN_008049a0	.text	73		clean	gamelogic	recon/scripts82	reversed	ScriptAction::isTeamOrUnitAction; 104-entry predicate and full EAX verified against shipped code
 00804b80	FUN_00804b80	.text	67		clean	unknown		unanalyzed	
 00804bd0	FUN_00804bd0	.text	49		clean	unknown		unanalyzed	
 00804c10	FUN_00804c10	.text	114		clean	unknown		unanalyzed	
@@ -20605,23 +20605,23 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0081a3a0	FUN_0081a3a0	.text	31		clean	unknown		unanalyzed	
 0081a3c0	FUN_0081a3c0	.text	53		clean	unknown		unanalyzed	
 0081a400	FUN_0081a400	.text	18		clean	unknown		unanalyzed	
-0081a420	FUN_0081a420	.text	106		clean	unknown		unanalyzed	
-0081a4a0	FUN_0081a4a0	.text	45		clean	unknown		unanalyzed	
-0081a4d0	FUN_0081a4d0	.text	65		clean	unknown		unanalyzed	
-0081a520	FUN_0081a520	.text	52		clean	unknown		unanalyzed	
+0081a420	FUN_0081a420	.text	106		clean	gamelogic	recon/scripts82	reversed	ScriptEngine::canEvaluateScript; gate state writes and ret 4 verified
+0081a4a0	FUN_0081a4a0	.text	45		clean	gamelogic	recon/scripts82	reversed	ScriptEngine::clearTrackedObjectPointer; tracked range clear and ret 4 verified
+0081a4d0	FUN_0081a4d0	.text	65		clean	gamelogic	recon/scripts82	reversed	ScriptEngine::setSequentialTimerForObject; object ID match and ret 8 verified
+0081a520	FUN_0081a520	.text	52		clean	gamelogic	recon/scripts82	reversed	ScriptEngine::setSequentialTimerForTeam; team match and ret 8 verified
 0081a560	FUN_0081a560	.text	75		clean	unknown		unanalyzed	
-0081a5b0	FUN_0081a5b0	.text	82		clean	unknown		unanalyzed	
+0081a5b0	FUN_0081a5b0	.text	82		clean	gamelogic	recon/scripts82	reversed	ScriptEngine::notifyOfObjectDestruction; tracked and cached pointer clears verified
 0081a610	FUN_0081a610	.text	82		clean	unknown		unanalyzed	
 0081a670	FUN_0081a670	.text	96		clean	unknown		unanalyzed	
 0081a6d0	FUN_0081a6d0	.text	38		clean	unknown		unanalyzed	
-0081a700	FUN_0081a700	.text	73		clean	unknown		unanalyzed	
-0081a750	FUN_0081a750	.text	46		clean	unknown		unanalyzed	
+0081a700	FUN_0081a700	.text	73		clean	gamelogic	recon/scripts82	reversed	ScriptList::markAllScriptsAndGroupsActive; script/group table byte writes verified
+0081a750	FUN_0081a750	.text	46		clean	gamelogic	recon/scripts82	reversed	Parameter::getCoord3D; type gate, output zero/copy and ret 4 verified
 0081a780	FUN_0081a780	.text	265		clean	unknown		unanalyzed	
 0081a890	FUN_0081a890	.text	427		clean	unknown		unanalyzed	
-0081aa40	FUN_0081aa40	.text	26		clean	unknown		unanalyzed	
-0081aa60	FUN_0081aa60	.text	63		clean	unknown		unanalyzed	
-0081aaa0	FUN_0081aaa0	.text	184		clean	unknown		unanalyzed	
-0081ab60	FUN_0081ab60	.text	103		clean	unknown		unanalyzed	
+0081aa40	FUN_0081aa40	.text	26		clean	gamelogic	recon/scripts82	reversed	IntVector::sumElements; int32 range accumulation verified
+0081aa60	FUN_0081aa60	.text	63		clean	gamelogic	recon/scripts82	reversed	SightingKey::less; 16-byte key ordering and ret 8 verified
+0081aaa0	FUN_0081aaa0	.text	184		clean	gamelogic	recon/scripts82	reversed	SightingTree::find; red-black tree key lookup and ret 8 verified
+0081ab60	FUN_0081ab60	.text	103		clean	gamelogic	recon/scripts82	reversed	SightingTree::lowerBound; red-black tree lower_bound and ret 8 verified
 0081abe0	FUN_0081abe0	.text	77		clean	unknown		unanalyzed	
 0081ac30	FUN_0081ac30	.text	58		clean	unknown		unanalyzed	
 0081ac70	FUN_0081ac70	.text	59		clean	unknown		unanalyzed	
@@ -20634,7 +20634,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0081af40	FUN_0081af40	.text	134		clean	unknown		unanalyzed	
 0081afd0	FUN_0081afd0	.text	193		clean	unknown		unanalyzed	
 0081b0b0	FUN_0081b0b0	.text	117		clean	unknown		unanalyzed	
-0081b130	FUN_0081b130	.text	70		clean	unknown		unanalyzed	
+0081b130	FUN_0081b130	.text	70		clean	gamelogic	recon/scripts82	reversed	Parameter::Parameter; complete 48-byte constructor and ret 8 verified
 0081b180	FUN_0081b180	.text	68		clean	unknown		unanalyzed	
 0081b1d0	thunk_FUN_00805cf0	.text	5		clean	unknown		unanalyzed	
 0081b1e0	FUN_0081b1e0	.text	288		clean	unknown		unanalyzed	
@@ -20660,22 +20660,22 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0081bce0	FUN_0081bce0	.text	84		clean	unknown		unanalyzed	
 0081bd40	FUN_0081bd40	.text	48		clean	unknown		unanalyzed	
 0081bd70	FUN_0081bd70	.text	140		clean	unknown		unanalyzed	
-0081be00	FUN_0081be00	.text	44		clean	unknown		unanalyzed	
+0081be00	FUN_0081be00	.text	44		clean	gamelogic	recon/scripts82	reversed	SequentialScript::SequentialScript; 44-byte constructor and sentinels verified
 0081be30	FUN_0081be30	.text	6		clean	unknown		unanalyzed	
 0081be40	FUN_0081be40	.text	119		clean	unknown		unanalyzed	
 0081bec0	FUN_0081bec0	.text	37		clean	unknown		unanalyzed	
 0081bef0	FUN_0081bef0	.text	42		clean	unknown		unanalyzed	
 0081bf20	FUN_0081bf20	.text	88		clean	unknown		unanalyzed	
 0081bf80	FUN_0081bf80	.text	6		clean	unknown		unanalyzed	
-0081bf90	FUN_0081bf90	.text	82		clean	unknown		unanalyzed	
-0081bff0	FUN_0081bff0	.text	97		clean	unknown		unanalyzed	
+0081bf90	FUN_0081bf90	.text	82		clean	gamelogic	recon/scripts82	reversed	ScriptCounterDefaultMap::lookupOrDefault; tree/default branches and x87 ST0 verified
+0081bff0	FUN_0081bff0	.text	97		clean	gamelogic	recon/scripts82	reversed	ScriptEngine::isTrackedObjectDestroyedByName; FNV-1a query and ret 4 verified
 0081c060	FUN_0081c060	.text	294		clean	unknown		unanalyzed	
 0081c190	FUN_0081c190	.text	236		clean	unknown		unanalyzed	
 0081c280	FUN_0081c280	.text	107		clean	unknown		unanalyzed	
 0081c2f0	FUN_0081c2f0	.text	6		clean	unknown		unanalyzed	
 0081c300	FUN_0081c300	.text	107		clean	unknown		unanalyzed	
 0081c370	FUN_0081c370	.text	97		clean	unknown		unanalyzed	
-0081c3e0	FUN_0081c3e0	.text	95		clean	unknown		unanalyzed	
+0081c3e0	FUN_0081c3e0	.text	95		clean	gamelogic	recon/scripts82	reversed	Script::Script; 80-byte constructor defaults verified
 0081c440	FUN_0081c440	.text	6		clean	unknown		unanalyzed	
 0081c450	FUN_0081c450	.text	106		clean	unknown		unanalyzed	
 0081c4c0	FUN_0081c4c0	.text	107		clean	unknown		unanalyzed	
@@ -20688,10 +20688,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0081dd80	FUN_0081dd80	.text	51		clean	unknown		unanalyzed	
 0081ddc0	FUN_0081ddc0	.text	27		clean	unknown		unanalyzed	
 0081dde0	FUN_0081dde0	.text	52		clean	unknown		unanalyzed	
-0081de20	FUN_0081de20	.text	76		clean	unknown		unanalyzed	
-0081de70	FUN_0081de70	.text	204		clean	unknown		unanalyzed	
-0081df50	FUN_0081df50	.text	97		clean	unknown		unanalyzed	
-0081dfc0	FUN_0081dfc0	.text	61		clean	unknown		unanalyzed	
+0081de20	FUN_0081de20	.text	76		clean	gamelogic	recon/scripts82	reversed	ScriptIndexedEntry::lowerBoundById; 12-byte record binary search verified
+0081de70	FUN_0081de70	.text	204		clean	gamelogic	recon/scripts82	reversed	ScriptListIndex::lowerBoundByName; sorted index binary search and ret 4 verified
+0081df50	FUN_0081df50	.text	97		clean	gamelogic	recon/scripts82	reversed	DualHashTree::find; 64-bit key tree lookup and ret 8 verified
+0081dfc0	FUN_0081dfc0	.text	61		clean	gamelogic	recon/scripts82	reversed	ScriptWaypointInfo::copyFrom; exact 36-byte assignment and ret 4 verified
 0081e000	FUN_0081e000	.text	44		clean	unknown		unanalyzed	
 0081e030	FUN_0081e030	.text	57		clean	unknown		unanalyzed	
 0081e070	FUN_0081e070	.text	77		clean	unknown		unanalyzed	
@@ -20731,34 +20731,34 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0081f580	FUN_0081f580	.text	147		clean	unknown		unanalyzed	
 0081f620	FUN_0081f620	.text	149		clean	unknown		unanalyzed	
 0081f6c0	FUN_0081f6c0	.text	69		clean	unknown		unanalyzed	
-0081f710	FUN_0081f710	.text	156		clean	unknown		unanalyzed	
-0081f7b0	FUN_0081f7b0	.text	111		clean	unknown		unanalyzed	
+0081f710	FUN_0081f710	.text	156		clean	gamelogic	recon/scripts82	reversed	ScriptConditions::evaluateSkirmishCommandButtonIsReady; lazy ID registration and ready-vector query verified
+0081f7b0	FUN_0081f7b0	.text	111		clean	gamelogic	recon/scripts82	reversed	ScriptConditions::evaluateBridgeBroken; waypoint and bridge damage-state query verified
 0081f820	FUN_0081f820	.text	114		clean	unknown		unanalyzed	
-0081f8a0	FUN_0081f8a0	.text	91		clean	unknown		unanalyzed	
+0081f8a0	FUN_0081f8a0	.text	91		clean	gamelogic	recon/scripts82	reversed	ScriptConditions::evaluatePlatform; PC/360/PS3 branches and ret 4 verified
 0081f900	FUN_0081f900	.text	242		clean	unknown		unanalyzed	
-0081fa00	FUN_0081fa00	.text	209		clean	unknown		unanalyzed	
-0081fae0	FUN_0081fae0	.text	90		clean	unknown		unanalyzed	
-0081fb40	FUN_0081fb40	.text	247		clean	unknown		unanalyzed	
-0081fc40	FUN_0081fc40	.text	107		clean	unknown		unanalyzed	
+0081fa00	FUN_0081fa00	.text	209		clean	gamelogic	recon/scripts82	reversed	ScriptEngine::findFlagByName; side-qualified dual-hash tree lookup verified
+0081fae0	FUN_0081fae0	.text	90		clean	gamelogic	recon/scripts82	reversed	ScriptEngine::qualifyWithCurrentSidePrefix; split/prefix paths and ret 8 verified
+0081fb40	FUN_0081fb40	.text	247		clean	gamelogic	recon/scripts82	reversed	ScriptEngine::findAttackInfo; lookup/append behavior and ret 8 verified
+0081fc40	FUN_0081fc40	.text	107		clean	gamelogic	recon/scripts82	reversed	ScriptEngine::getObjectCount; active-player tree lookup and ret 8 verified
 0081fcb0	FUN_0081fcb0	.text	47		clean	unknown		unanalyzed	
 0081fce0	FUN_0081fce0	.text	117		clean	unknown		unanalyzed	
-0081fd60	FUN_0081fd60	.text	43		clean	unknown		unanalyzed	
+0081fd60	FUN_0081fd60	.text	43		clean	gamelogic	recon/scripts82	reversed	ScriptEngine::hasSightingEntry; sighting-tree membership and ret 4 verified
 0081fd90	FUN_0081fd90	.text	236		clean	unknown		unanalyzed	
 0081fe80	FUN_0081fe80	.text	616		clean	unknown		unanalyzed	
 008200f0	FUN_008200f0	.text	183		clean	unknown		unanalyzed	
-008201b0	FUN_008201b0	.text	197		clean	unknown		unanalyzed	
-00820280	FUN_00820280	.text	140		clean	unknown		unanalyzed	
+008201b0	FUN_008201b0	.text	197		clean	gamelogic	recon/scripts82	reversed	ScriptEngine::isSpecialPowerTriggeredOrComplete; event search/unlink and ret 14 verified
+00820280	FUN_00820280	.text	140		clean	gamelogic	recon/scripts82	reversed	ScriptEngine::isScienceAcquiredOrUpgradeComplete; event search/unlink and ret 0C verified
 00820370	FUN_00820370	.text	337		clean	unknown		unanalyzed	
 008204d0	FUN_008204d0	.text	91		clean	unknown		unanalyzed	
 00820530	FUN_00820530	.text	30		clean	unknown		unanalyzed	
 00820550	FUN_00820550	.text	102		clean	unknown		unanalyzed	
 008205c0	FUN_008205c0	.text	111		clean	unknown		unanalyzed	
-00820630	FUN_00820630	.text	317		clean	unknown		unanalyzed	
+00820630	FUN_00820630	.text	317		clean	gamelogic	recon/scripts82	reversed	Parameter::qualifyPlayerSide; SIDE token remapping verified
 00820780	FUN_00820780	.text	992	SageEngine\source\GameEngine\gamelogic\scriptengine\Scripts.cpp	clean	gamelogic		unanalyzed	
-00820b70	FUN_00820b70	.text	239		clean	unknown		unanalyzed	
+00820b70	FUN_00820b70	.text	239		clean	gamelogic	recon/scripts82	reversed	ScriptAction::setActionType; template clamp/allocation/parameter initialization verified
 00820c60	FUN_00820c60	.text	102		clean	unknown		unanalyzed	
 00820cd0	FUN_00820cd0	.text	289		clean	unknown		unanalyzed	
-00820e00	FUN_00820e00	.text	175		clean	unknown		unanalyzed	
+00820e00	FUN_00820e00	.text	175		clean	gamelogic	recon/scripts82	reversed	ScriptAction::getTeamInvolved; action-table parameter selection verified
 00821080	FUN_00821080	.text	1942		clean	unknown		unanalyzed	
 008219d0	FUN_008219d0	.text	72		clean	unknown		unanalyzed	
 00821a20	FUN_00821a20	.text	44		clean	unknown		unanalyzed	

@@ -729,3 +729,39 @@ address	status	owner	module	notes
 00a75570	reversed	recon/uicontrols	ui	forwardUiMessage106; nested handle traversal and alias verified
 00a759f0	reversed	recon/uicontrols	ui	routePrimaryDoubleClick; timing/position boundary and callback trace verified
 00a75a60	reversed	recon/uicontrols	ui	routeSecondaryDoubleClick; timing/position boundary and callback trace verified
+00804590	reversed	recon/scripts82	gamelogic	ScriptAction::isUnitAction; 90-entry predicate and full EAX verified against shipped code
+00804780	reversed	recon/scripts82	gamelogic	ScriptAction::isTeamAction; 106-entry predicate and full EAX verified against shipped code
+008049a0	reversed	recon/scripts82	gamelogic	ScriptAction::isTeamOrUnitAction; 104-entry predicate and full EAX verified against shipped code
+0081a420	reversed	recon/scripts82	gamelogic	ScriptEngine::canEvaluateScript; gate state writes and ret 4 verified
+0081a4a0	reversed	recon/scripts82	gamelogic	ScriptEngine::clearTrackedObjectPointer; tracked range clear and ret 4 verified
+0081a4d0	reversed	recon/scripts82	gamelogic	ScriptEngine::setSequentialTimerForObject; object ID match and ret 8 verified
+0081a520	reversed	recon/scripts82	gamelogic	ScriptEngine::setSequentialTimerForTeam; team match and ret 8 verified
+0081a5b0	reversed	recon/scripts82	gamelogic	ScriptEngine::notifyOfObjectDestruction; tracked and cached pointer clears verified
+0081a700	reversed	recon/scripts82	gamelogic	ScriptList::markAllScriptsAndGroupsActive; script/group table byte writes verified
+0081a750	reversed	recon/scripts82	gamelogic	Parameter::getCoord3D; type gate, output zero/copy and ret 4 verified
+0081aa40	reversed	recon/scripts82	gamelogic	IntVector::sumElements; int32 range accumulation verified
+0081aa60	reversed	recon/scripts82	gamelogic	SightingKey::less; 16-byte key ordering and ret 8 verified
+0081aaa0	reversed	recon/scripts82	gamelogic	SightingTree::find; red-black tree key lookup and ret 8 verified
+0081ab60	reversed	recon/scripts82	gamelogic	SightingTree::lowerBound; red-black tree lower_bound and ret 8 verified
+0081b130	reversed	recon/scripts82	gamelogic	Parameter::Parameter; complete 48-byte constructor and ret 8 verified
+0081be00	reversed	recon/scripts82	gamelogic	SequentialScript::SequentialScript; 44-byte constructor and sentinels verified
+0081bf90	reversed	recon/scripts82	gamelogic	ScriptCounterDefaultMap::lookupOrDefault; tree/default branches and x87 ST0 verified
+0081bff0	reversed	recon/scripts82	gamelogic	ScriptEngine::isTrackedObjectDestroyedByName; FNV-1a query and ret 4 verified
+0081c3e0	reversed	recon/scripts82	gamelogic	Script::Script; 80-byte constructor defaults verified
+0081de20	reversed	recon/scripts82	gamelogic	ScriptIndexedEntry::lowerBoundById; 12-byte record binary search verified
+0081de70	reversed	recon/scripts82	gamelogic	ScriptListIndex::lowerBoundByName; sorted index binary search and ret 4 verified
+0081df50	reversed	recon/scripts82	gamelogic	DualHashTree::find; 64-bit key tree lookup and ret 8 verified
+0081dfc0	reversed	recon/scripts82	gamelogic	ScriptWaypointInfo::copyFrom; exact 36-byte assignment and ret 4 verified
+0081f710	reversed	recon/scripts82	gamelogic	ScriptConditions::evaluateSkirmishCommandButtonIsReady; lazy ID registration and ready-vector query verified
+0081f7b0	reversed	recon/scripts82	gamelogic	ScriptConditions::evaluateBridgeBroken; waypoint and bridge damage-state query verified
+0081f8a0	reversed	recon/scripts82	gamelogic	ScriptConditions::evaluatePlatform; PC/360/PS3 branches and ret 4 verified
+0081fa00	reversed	recon/scripts82	gamelogic	ScriptEngine::findFlagByName; side-qualified dual-hash tree lookup verified
+0081fae0	reversed	recon/scripts82	gamelogic	ScriptEngine::qualifyWithCurrentSidePrefix; split/prefix paths and ret 8 verified
+0081fb40	reversed	recon/scripts82	gamelogic	ScriptEngine::findAttackInfo; lookup/append behavior and ret 8 verified
+0081fc40	reversed	recon/scripts82	gamelogic	ScriptEngine::getObjectCount; active-player tree lookup and ret 8 verified
+0081fd60	reversed	recon/scripts82	gamelogic	ScriptEngine::hasSightingEntry; sighting-tree membership and ret 4 verified
+008201b0	reversed	recon/scripts82	gamelogic	ScriptEngine::isSpecialPowerTriggeredOrComplete; event search/unlink and ret 14 verified
+00820280	reversed	recon/scripts82	gamelogic	ScriptEngine::isScienceAcquiredOrUpgradeComplete; event search/unlink and ret 0C verified
+00820630	reversed	recon/scripts82	gamelogic	Parameter::qualifyPlayerSide; SIDE token remapping verified
+00820b70	reversed	recon/scripts82	gamelogic	ScriptAction::setActionType; template clamp/allocation/parameter initialization verified
+00820e00	reversed	recon/scripts82	gamelogic	ScriptAction::getTeamInvolved; action-table parameter selection verified
