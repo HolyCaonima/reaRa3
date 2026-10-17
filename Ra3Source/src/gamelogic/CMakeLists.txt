@@ -12,6 +12,7 @@ ra3_add_module(gamelogic
         include/ra3/gamelogic/ObjectUpdate69B.h
         include/ra3/gamelogic/ProtectedCaveLogic.h
         include/ra3/gamelogic/ProtectedCaveLogic2.h
+        include/ra3/gamelogic/ProtectedCaveLogic3.h
         include/ra3/gamelogic/BehaviorModules68.h
         include/ra3/gamelogic/ObjectModules6E.h
         include/ra3/gamelogic/ObjectModules74.h
@@ -43,6 +44,7 @@ ra3_add_module(gamelogic
         src/ObjectUpdate69B.cpp
         src/ProtectedCaveLogic.cpp
         src/ProtectedCaveLogic2.cpp
+        src/ProtectedCaveLogic3.cpp
         src/BehaviorModules68.cpp
         src/ObjectModules6E.cpp
         src/ObjectModules74.cpp
