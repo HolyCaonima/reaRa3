@@ -264,7 +264,7 @@ const GameDispatch& noOpDispatch() noexcept
 }
 
 // 1. 0x007C0AD0 - AIInternalMoveToState::onEnter
-std::uint32_t internalMoveToStateOnEnter_007C0AD0(
+std::uint32_t aiMoveToStateOnEnter_007C0AD0(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine0 = readPtr(statePtr, 0x18);
@@ -314,7 +314,7 @@ std::uint32_t internalMoveToStateOnEnter_007C0AD0(
 }
 
 // 2. 0x007C0BD0 - AIMoveOutOfTheWayState::onEnter
-std::uint32_t moveOutOfTheWayStateOnEnter_007C0BD0(
+std::uint32_t aiMoveToStateSAOnEnter_007C0BD0(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine0 = readPtr(statePtr, 0x18);
@@ -350,7 +350,7 @@ std::uint32_t moveOutOfTheWayStateOnEnter_007C0BD0(
 }
 
 // 3. 0x007C0C80 - AIMoveAndTightenState::onEnter
-std::uint32_t moveAndTightenStateOnEnter_007C0C80(
+std::uint32_t aiMoveOutOfTheWayStateOnEnter_007C0C80(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine = readPtr(statePtr, 0x18);
@@ -376,7 +376,7 @@ std::uint32_t moveAndTightenStateOnEnter_007C0C80(
 }
 
 // 4. 0x007C0D00 - AIMoveAwayFromRepulsorsState::onEnter
-std::uint32_t moveAwayFromRepulsorsStateOnEnter_007C0D00(
+std::uint32_t aiMoveAndTightenStateOnEnter_007C0D00(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine0 = readPtr(statePtr, 0x18);
@@ -397,7 +397,7 @@ std::uint32_t moveAwayFromRepulsorsStateOnEnter_007C0D00(
 }
 
 // 5. 0x007C0D70 - AIAttackApproachTargetState::onEnter
-std::uint32_t attackApproachTargetStateOnEnter_007C0D70(
+std::uint32_t aiMoveAwayPanicStateOnEnter_007C0D70(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine0 = readPtr(statePtr, 0x18);
@@ -422,7 +422,7 @@ std::uint32_t attackApproachTargetStateOnEnter_007C0D70(
 }
 
 // 6. 0x007C0DF0 - AIAttackPursueTargetState::onEnter
-std::uint32_t attackPursueTargetStateOnEnter_007C0DF0(
+std::uint32_t aiMoveAwayFromRepulsorsStateOnEnter_007C0DF0(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine0 = readPtr(statePtr, 0x18);
@@ -450,7 +450,7 @@ std::uint32_t attackPursueTargetStateOnEnter_007C0DF0(
 }
 
 // 7. 0x007C0E80 - AIStateSubMachine0E80::onEnter
-std::uint32_t subMachineStateOnEnter_007C0E80(
+std::uint32_t aiBackAwayAndCowerStateOnEnter_007C0E80(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     if (readU32(statePtr, 0x20) != 0) {
@@ -473,7 +473,7 @@ std::uint32_t subMachineStateOnEnter_007C0E80(
 }
 
 // 8. 0x007C0EE0 - AIMoveToTargetObjectState0EE0::onEnter
-std::uint32_t moveToTargetObjectStateOnEnter_007C0EE0(
+std::uint32_t aiMoveAwayAndCowerStateOnEnter_007C0EE0(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine0 = readPtr(statePtr, 0x18);
@@ -494,7 +494,7 @@ std::uint32_t moveToTargetObjectStateOnEnter_007C0EE0(
 }
 
 // 9. 0x007C2C80 - AIDelayedMoveToState2C80::update
-std::uint32_t delayedMoveToStateUpdate_007C2C80(
+std::uint32_t aiPickUpCrateStateUpdate_007C2C80(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     const std::uint32_t count = readU32(statePtr, 0x50);
@@ -510,7 +510,7 @@ std::uint32_t delayedMoveToStateUpdate_007C2C80(
 }
 
 // 10. 0x007C3520 - AIMoveAndEvacuateState::onEnter
-std::uint32_t moveAndEvacuateStateOnEnter_007C3520(
+std::uint32_t aiMoveAndEvacuateStateOnEnter_007C3520(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine0 = readPtr(statePtr, 0x18);
@@ -529,7 +529,7 @@ std::uint32_t moveAndEvacuateStateOnEnter_007C3520(
 }
 
 // 11. 0x007C3680 - AIMoveWithStatusFlagsState3680::onEnter
-std::uint32_t moveWithStatusFlagsStateOnEnter_007C3680(
+std::uint32_t aiMoveAndDeleteStateOnEnter_007C3680(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine0 = readPtr(statePtr, 0x18);
@@ -564,7 +564,7 @@ std::uint32_t moveWithStatusFlagsStateOnEnter_007C3680(
 }
 
 // 12. 0x007C39C0 - AIInternalMoveWrapperState39C0::onEnter
-std::uint32_t internalMoveWrapperStateOnEnter_007C39C0(
+std::uint32_t aiFollowWaypointPathStateAndEvacuateOnEnter_007C39C0(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine = readPtr(statePtr, 0x18);
@@ -575,7 +575,7 @@ std::uint32_t internalMoveWrapperStateOnEnter_007C39C0(
 }
 
 // 13. 0x007C3B50 - AISubMachineResetMoveState3B50::onEnter
-std::uint32_t subMachineResetMoveStateOnEnter_007C3B50(
+std::uint32_t aiAttackFollowWaypointPathStateOnEnter_007C3B50(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const subMach0 = readPtr(statePtr, 0x6C);
@@ -586,7 +586,7 @@ std::uint32_t subMachineResetMoveStateOnEnter_007C3B50(
 }
 
 // 14. 0x007C42E0 - AIGuardState::xfer
-void guardStateXfer_007C42E0(
+void aiDockStateXfer_007C42E0(
     void* statePtr, void* xferPtr, AIStateMachine7CMemoryView& view,
     const GameDispatch& dispatch) noexcept
 {
@@ -619,7 +619,7 @@ void guardStateXfer_007C42E0(
 }
 
 // 15. 0x007C43A0 - AIGuardState::onEnter
-std::uint32_t guardStateOnEnter_007C43A0(
+std::uint32_t aiDockStateOnEnter_007C43A0(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine0 = readPtr(statePtr, 0x18);
@@ -657,7 +657,7 @@ std::uint32_t guardStateOnEnter_007C43A0(
 }
 
 // 16. 0x007C4450 - AIGuardRetaliateState::xfer
-void guardRetaliateStateXfer_007C4450(
+void aiHarvestStateXfer_007C4450(
     void* statePtr, void* xferPtr, AIStateMachine7CMemoryView& view,
     const GameDispatch& dispatch) noexcept
 {
@@ -690,7 +690,7 @@ void guardRetaliateStateXfer_007C4450(
 }
 
 // 17. 0x007C4510 - AIGuardRetaliateState::onEnter
-std::uint32_t guardRetaliateStateOnEnter_007C4510(
+std::uint32_t aiHarvestStateOnEnter_007C4510(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const rawMem = dispatch.operatorNew_00416820(0x80, view);
@@ -726,7 +726,7 @@ std::uint32_t guardRetaliateStateOnEnter_007C4510(
 }
 
 // 18. 0x007C4820 - AIAreaGuardSubMachineState4820::xfer
-void areaGuardSubMachineStateXfer_007C4820(
+void aiGuardRetaliateStateXfer_007C4820(
     void* statePtr, void* xferPtr, AIStateMachine7CMemoryView& view,
     const GameDispatch& dispatch) noexcept
 {
@@ -756,7 +756,7 @@ void areaGuardSubMachineStateXfer_007C4820(
 }
 
 // 19. 0x007C48C0 - AIAreaGuardSubMachineState4820::onEnter
-std::uint32_t areaGuardSubMachineStateOnEnter_007C48C0(
+std::uint32_t aiGuardRetaliateStateOnEnter_007C48C0(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine0 = readPtr(statePtr, 0x18);
@@ -785,7 +785,7 @@ std::uint32_t areaGuardSubMachineStateOnEnter_007C48C0(
 }
 
 // 20. 0x007C4BE0 - AIMoveValidatedState4BE0::onEnter
-std::uint32_t moveValidatedStateOnEnter_007C4BE0(
+std::uint32_t aiMoveToPositionAndDieStateOnEnter_007C4BE0(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine0 = readPtr(statePtr, 0x18);
@@ -805,7 +805,7 @@ std::uint32_t moveValidatedStateOnEnter_007C4BE0(
 }
 
 // 21. 0x007C4D30 - AIMoveIfBeyondDistanceState4D30::onEnter
-std::uint32_t moveIfBeyondDistanceStateOnEnter_007C4D30(
+std::uint32_t aiMoveToAndEvacuateStateOnEnter_007C4D30(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine = readPtr(statePtr, 0x18);
@@ -822,13 +822,13 @@ std::uint32_t moveIfBeyondDistanceStateOnEnter_007C4D30(
                           static_cast<double>(dx) * static_cast<double>(dx);
     const double dist = std::sqrt(distSq);
     if (dist > static_cast<double>(view.minMoveDistance)) {
-        return internalMoveToStateOnEnter_007C0AD0(statePtr, view, dispatch);
+        return aiMoveToStateOnEnter_007C0AD0(statePtr, view, dispatch);
     }
     return 0u;
 }
 
 // 22. 0x007C4DC0 - AIStopAndFollowPathState4DC0::onEnter
-std::uint32_t stopAndFollowPathStateOnEnter_007C4DC0(
+std::uint32_t aiFollowPathAndEvacuateStateOnEnter_007C4DC0(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine = readPtr(statePtr, 0x18);
@@ -839,14 +839,14 @@ std::uint32_t stopAndFollowPathStateOnEnter_007C4DC0(
 }
 
 // 23. 0x007C4DE0 - AIStopAndInternalMoveState4DE0::onEnter
-std::uint32_t stopAndInternalMoveStateOnEnter_007C4DE0(
+std::uint32_t aiMoveForBoardingOnEnter_007C4DE0(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine = readPtr(statePtr, 0x18);
     void* const owner = readPtr(machine, 0x24);
     void* const aiUpdate = readPtr(owner, 0x374);
     dispatch.aiUpdateMode_007527C0(aiUpdate, 5, view);
-    return internalMoveToStateOnEnter_007C0AD0(statePtr, view, dispatch);
+    return aiMoveToStateOnEnter_007C0AD0(statePtr, view, dispatch);
 }
 
 // 24. 0x007C6B80 - AIStateMachineDerived6B80::createSubMachine19
@@ -962,7 +962,7 @@ std::uint32_t initDefaultStateWithProducerCheck_007C6E90(
 }
 
 // 30. 0x007C86E0 - AIStateWithTargetObject86E0::onExit
-void stateWithTargetObjectOnExit_007C86E0(
+void unitAIAttackBlockingObjectStateOnExit_007C86E0(
     void* statePtr, std::int32_t /*exitType*/, AIStateMachine7CMemoryView& view,
     const GameDispatch& dispatch) noexcept
 {
@@ -986,7 +986,7 @@ void stateWithTargetObjectOnExit_007C86E0(
 }
 
 // 31. 0x007C8C90 - AIExitInstantlyState::onEnter
-std::uint32_t exitInstantlyStateOnEnter_007C8C90(
+std::uint32_t unitAIEnterAndDieStateOnEnter_007C8C90(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine = readPtr(statePtr, 0x18);
@@ -1009,7 +1009,7 @@ std::uint32_t exitInstantlyStateOnEnter_007C8C90(
 }
 
 // 32. 0x007C8D40 - AIResolveGoalTargetState8D40::onEnter
-std::uint32_t resolveGoalTargetStateOnEnter_007C8D40(
+std::uint32_t unitAIFindReplacementStateOnEnter_007C8D40(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const machine0 = readPtr(statePtr, 0x18);
@@ -1054,7 +1054,7 @@ std::uint32_t* queryWeaponClipOffset_007C8DE0(
 }
 
 // 34. 0x007C9150 - AIStateFactory9150::createSubMachine
-void* stateCreateSubMachine_007C9150(
+void* unitAIGarrisonedStateCreateSubMachine_007C9150(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const rawMem = dispatch.operatorNew_00416820(0x80, view);
@@ -1066,7 +1066,7 @@ void* stateCreateSubMachine_007C9150(
 }
 
 // 35. 0x007C9280 - AIStateFactory9280::createSubMachine
-void* stateCreateSubMachine_007C9280(
+void* unitAIHoldGroundStateCreateSubMachine_007C9280(
     void* statePtr, AIStateMachine7CMemoryView& view, const GameDispatch& dispatch) noexcept
 {
     void* const rawMem = dispatch.operatorNew_00416820(0x80, view);
@@ -1257,7 +1257,7 @@ std::uint32_t aiStateMachineSetState_007CCBC0(
 }
 
 // 43. 0x007CE280 - AIEnterState::onExit
-void enterStateOnExit_007CE280(
+void aiEnterStateOnExit_007CE280(
     void* statePtr, std::int32_t exitType, AIStateMachine7CMemoryView& view,
     const GameDispatch& dispatch) noexcept
 {
@@ -1288,7 +1288,7 @@ void enterStateOnExit_007CE280(
 }
 
 // 44. 0x007CE460 - AIExitState::onExit
-void exitStateOnExit_007CE460(
+void aiExitStateOnExit_007CE460(
     void* statePtr, std::int32_t /*exitType*/, AIStateMachine7CMemoryView& view,
     const GameDispatch& dispatch) noexcept
 {
@@ -1311,11 +1311,11 @@ void exitStateOnExit_007CE460(
 }
 
 // 45. 0x007CE500 - AIExitInstantlyState::onExit
-void exitInstantlyStateOnExit_007CE500(
+void aiExitSiegeEngineStateOnExit_007CE500(
     void* statePtr, std::int32_t exitType, AIStateMachine7CMemoryView& view,
     const GameDispatch& dispatch) noexcept
 {
-    exitStateOnExit_007CE460(statePtr, exitType, view, dispatch);
+    aiExitStateOnExit_007CE460(statePtr, exitType, view, dispatch);
     void* const machine = readPtr(statePtr, 0x18);
     callVtable1<void>(machine, 0x38, static_cast<void*>(nullptr));
 }

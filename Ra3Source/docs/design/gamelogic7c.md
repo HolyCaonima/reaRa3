@@ -5,59 +5,59 @@
 This batch reconstructs **45 clean (`securom=clean`) functions** in the `0x007C0000..0x007CFFFF` address range belonging to `AIStateMachine` and concrete `State` subclasses (`AIMoveToState`, `AIMoveToStateSA`, `AIMoveOutOfTheWayState`, `AIMoveAndTightenState`, `AIMoveAwayPanicState`, `AIMoveAwayFromRepulsorsState`, `AIBackAwayAndCowerState`, `AIMoveAwayAndCowerState`, `AIPickUpCrateState`, `AIMoveAndEvacuateState`, `AIMoveAndDeleteState`, `AIFollowWaypointPathStateAndEvacuate`, `AIAttackFollowWaypointPathState`, `AIDockState`, `AIHarvestState`, `AIGuardRetaliateState`, `AIMoveToPositionAndDieState`, `AIMoveToAndEvacuateState`, `AIFollowPathAndEvacuateState`, `AIMoveForBoarding`, `UnitAIAttackBlockingObjectState`, `UnitAIEnterAndDieState`, `UnitAIFindReplacementState`, `UnitAIFollowWaypointPathAsTeamState`, `UnitAIGarrisonedState`, `UnitAIHoldGroundState`, `AIEnterState`, `AIExitState`, and `AIExitSiegeEngineState`).
 
 Ownership is proven from the shipped `ra3_1.0.game` binary by:
-1. **Vtable slot membership and RTTI/class-name getters (`slot[2]`)**: Every state and state-machine vtable in `.rdata` (`0x00C2AF38..0x00C326D0`) has a class-name getter in `slot[2]` (`+0x08`) returning the exact class name string (e.g., `"AIMoveToState"`, `"AIDockState"`, `"AIHarvestState"`, `"AIGuardRetaliateState"`, `"AIStateMachine"`, `"AIEnterState"`, `"AIExitState"`, `"AIExitSiegeEngineState"`).
-2. **Source path assertions**: Embedded debug path strings at `0x00C297D0` (`c:\aur\build\ra3_1.0\sage\run\game\gamelogic\statemachine\ai\aistates.cpp`) and `0x00C338D8` (`AIInternalMoveToState::onEnter`) are passed directly into lock/diagnostic helpers (`0x00A21BE0`, `0x005AA240`) by methods in this cluster.
-3. **Direct caller/callee closure**: `0x007CCA30` (`AIStateMachine::exitTemporaryState`) is called directly by `AIStateMachine::clear` (`0x007CCB00`), `AIStateMachine::resetToDefaultState` (`0x007CCB70`), and `AIStateMachine::setState` (`0x007CCBC0`); `0x007C0AD0` (`AIMoveToState::onEnter`) is tail-called by `AIMoveToAndEvacuateState::onEnter` (`0x007C4D30`) and `AIMoveForBoarding::onEnter` (`0x007C4DE0`).
+1. **Vtable slot membership and class-name getters (`slot[2]`)**: every function except `0x007CCA30` is a slot of one or more `.rdata` vtables listed below (resolved through `vtables_split.tsv`); each such vtable's `slot[2]` returns the class-name string shown in the table (e.g. `0x00C2F388` -> `"AIMoveToState"`, `0x00C2CDE8` -> `"AIDockState"`, `0x00C2C4C8` -> `"AIStateMachine"`).
+2. **Diagnostic label string**: `0x00C338D8` (`"AIMoveAndDeleteState::onEnter"`) is pushed to `0x005AA240` by `0x007C3680` and `0x007C4BE0`.
+3. **Direct caller/callee closure**: `0x007CCA30` (`AIStateMachine::exitTemporaryState`) is called directly by `AIStateMachine::clear` (`0x007CCB00`), `AIStateMachine::resetToDefaultState` (`0x007CCB70`), and `AIStateMachine::setState` (`0x007CCBC0`); `0x007C0AD0` (`AIMoveToState::onEnter`) is tail-called by `AIMoveToAndEvacuateState::onEnter` (`0x007C4D30`, jump at `0x007C4DA5`).
 
 ## Reconstructed Function Inventory (45 Functions)
 
 | VA | Size | Class / Vtable Slot | Function | Oracle Cases |
 |---|---:|---|---|---:|
-| `0x007C0AD0` | 248 | `AIMoveToState` (`0x00C2AF38` slot 4) | `internalMoveToStateOnEnter_007C0AD0` | 12 |
-| `0x007C0BD0` | 172 | `AIMoveToStateSA` (`0x00C2AF98` slot 4) | `moveOutOfTheWayStateOnEnter_007C0BD0` | 8 |
-| `0x007C0C80` | 115 | `AIMoveOutOfTheWayState` (`0x00C2AFC0` slot 4) | `moveAndTightenStateOnEnter_007C0C80` | 8 |
-| `0x007C0D00` | 107 | `AIMoveAndTightenState` (`0x00C2B010` slot 4) | `moveAwayFromRepulsorsStateOnEnter_007C0D00` | 6 |
-| `0x007C0D70` | 126 | `AIMoveAwayPanicState` (`0x00C2B060` slot 4) | `attackApproachTargetStateOnEnter_007C0D70` | 8 |
-| `0x007C0DF0` | 141 | `AIMoveAwayFromRepulsorsState` (`0x00C2B090` slot 4) | `attackMoveApproachTargetStateOnEnter_007C0DF0` | 8 |
-| `0x007C0E80` | 91 | `AIBackAwayAndCowerState` (`0x00C2B0B8` slot 4) | `subMachineOwnerStateOnEnter_007C0E80` | 8 |
-| `0x007C0EE0` | 81 | `AIMoveAwayAndCowerState` (`0x00C2B108` slot 4) | `moveToTargetObjectStateOnEnter_007C0EE0` | 8 |
-| `0x007C2C80` | 20 | `AIPickUpCrateState` (`0x00C2B740` slot 5) | `delayedMoveStateUpdate_007C2C80` | 6 |
-| `0x007C3520` | 86 | `AIMoveAndEvacuateState` (`0x00C2BAE8` slot 4) | `moveAndEvacuateStateOnEnter_007C3520` | 6 |
-| `0x007C3680` | 178 | `AIMoveAndDeleteState` (`0x00C2BB10` slot 4) | `moveWithStatusFlagsStateOnEnter_007C3680` | 10 |
-| `0x007C39C0` | 28 | `AIFollowWaypointPathStateAndEvacuate` (`0x00C2BB88` slot 4) | `internalMoveWrapperStateOnEnter_007C39C0` | 4 |
-| `0x007C3B50` | 41 | `AIAttackFollowWaypointPathState` (`0x00C2BC00` slot 4) | `subMachineResetMoveStateOnEnter_007C3B50` | 4 |
-| `0x007C42E0` | 179 | `AIDockState` (`0x00C2BF78` slot 1) | `guardStateXfer_007C42E0` | 10 |
-| `0x007C43A0` | 172 | `AIDockState` (`0x00C2BF78` slot 4) | `guardStateOnEnter_007C43A0` | 10 |
-| `0x007C4450` | 179 | `AIHarvestState` (`0x00C2BFA8` slot 1) | `guardRetaliateStateXfer_007C4450` | 10 |
-| `0x007C4510` | 164 | `AIHarvestState` (`0x00C2BFA8` slot 4) | `guardRetaliateStateOnEnter_007C4510` | 10 |
-| `0x007C4820` | 145 | `AIGuardRetaliateState` (`0x00C2C000` slot 1) | `areaGuardSubMachineStateXfer_007C4820` | 10 |
-| `0x007C48C0` | 127 | `AIGuardRetaliateState` (`0x00C2C000` slot 4) | `areaGuardSubMachineStateOnEnter_007C48C0` | 8 |
-| `0x007C4BE0` | 89 | `AIMoveToPositionAndDieState` (`0x00C2C0C0` slot 4) | `moveValidatedStateOnEnter_007C4BE0` | 6 |
-| `0x007C4D30` | 129 | `AIMoveToAndEvacuateState` (`0x00C2C0E8` slot 4) | `moveIfBeyondDistanceStateOnEnter_007C4D30` | 12 |
-| `0x007C4DC0` | 28 | `AIFollowPathAndEvacuateState` (`0x00C2C110` slot 4) | `followPathMode5StateOnEnter_007C4DC0` | 4 |
-| `0x007C4DE0` | 28 | `AIMoveForBoarding` (`0x00C2C180` slot 4) | `internalMoveMode5StateOnEnter_007C4DE0` | 8 |
-| `0x007C6B80` | 41 | `AIStateMachine` derived (`0x00C2CD90` slot 19) | `stateMachineCreateSubMachine19_007C6B80` | 6 |
-| `0x007C6BB0` | 41 | `AIStateMachine` derived (`0x00C2CD90` slot 20) | `stateMachineCreateSubMachine20_007C6BB0` | 6 |
-| `0x007C6BE0` | 39 | `AIStateMachine` derived (`0x00C2CD90` slot 21) | `stateMachineCreateSubMachine21_007C6BE0` | 6 |
-| `0x007C6C10` | 97 | `AIStateMachine` derived (`0x00C2CDE8` slot 19) | `stateMachineCreateSubMachine19_007C6C10` | 8 |
-| `0x007C6C80` | 97 | `AIStateMachine` derived (`0x00C2CDE8` slot 20) | `stateMachineCreateSubMachine20_007C6C80` | 8 |
-| `0x007C6E90` | 269 | `AIStateMachine` derived (`0x00C2CE88` slot 5) | `stateMachineInitDefaultState_007C6E90` | 12 |
-| `0x007C86E0` | 150 | `UnitAIAttackBlockingObjectState` (`0x00C2D9F0` slot 6) | `unitAttackTargetStateOnExit_007C86E0` | 8 |
-| `0x007C8C90` | 172 | `UnitAIEnterAndDieState` (`0x00C2DA58` slot 4) | `unitEnterContainerStateOnEnter_007C8C90` | 8 |
-| `0x007C8D40` | 157 | `UnitAIFindReplacementState` (`0x00C2DA80` slot 4) | `unitNotifyContainerStateOnEnter_007C8D40` | 8 |
-| `0x007C8DE0` | 83 | `UnitAIFollowWaypointPathAsTeamState` (`0x00C2DAB0` slot 11) | `unitQueryWeaponClipOffset_007C8DE0` | 8 |
-| `0x007C9150` | 39 | `UnitAIGarrisonedState` (`0x00C2DBE0` slot 15) | `stateCreateSubMachine_007C9150` | 6 |
-| `0x007C9280` | 39 | `UnitAIHoldGroundState` (`0x00C2DC38` slot 15) | `stateCreateSubMachine_007C9280` | 6 |
-| `0x007CC8A0` | 44 | `AIStateMachine` (`0x00C31FB0` slot 19) | `aiStateMachineCreateSubMachine19_007CC8A0` | 6 |
-| `0x007CC8D0` | 37 | `AIStateMachine` (`0x00C31FB0` slot 20) | `aiStateMachineCreateSubMachine20_007CC8D0` | 6 |
-| `0x007CC920` | 269 | `AIStateMachine` (`0x00C31FB0` slot 4) | `aiStateMachineUpdate_007CC920` | 14 |
-| `0x007CCA30` | 206 | `AIStateMachine` (called by `0x007CCB00`/`B70`/`BC0`) | `aiStateMachineExitTemporaryState_007CCA30` | 10 |
-| `0x007CCB00` | 112 | `AIStateMachine` (`0x00C31FB0` slot 13) | `aiStateMachineClear_007CCB00` | 10 |
-| `0x007CCB70` | 73 | `AIStateMachine` (`0x00C31FB0` slot 6) | `aiStateMachineResetToDefaultState_007CCB70` | 8 |
-| `0x007CCBC0` | 162 | `AIStateMachine` (`0x00C31FB0` slot 7) | `aiStateMachineSetState_007CCBC0` | 10 |
-| `0x007CE280` | 184 | `AIEnterState` (`0x00C32530` slot 6) | `enterContainerStateOnExit_007CE280` | 10 |
-| `0x007CE460` | 158 | `AIExitState` (`0x00C32680` slot 6) | `exitContainerStateOnExit_007CE460` | 8 |
-| `0x007CE500` | 68 | `AIExitSiegeEngineState` (`0x00C326D0` slot 6) | `exitOpenContainerStateOnExit_007CE500` | 8 |
+| `0x007C0AD0` | 248 | `AIMoveToState` (0x00C2F388 slot 4, 0x00C32468 slot 4) | `aiMoveToStateOnEnter_007C0AD0` | 12 |
+| `0x007C0BD0` | 172 | `AIMoveToStateSA` (0x00C2F3E8 slot 4) | `aiMoveToStateSAOnEnter_007C0BD0` | 8 |
+| `0x007C0C80` | 115 | `AIMoveOutOfTheWayState` (0x00C2F448 slot 4) | `aiMoveOutOfTheWayStateOnEnter_007C0C80` | 8 |
+| `0x007C0D00` | 107 | `AIMoveAndTightenState` (0x00C2F4B0 slot 4) | `aiMoveAndTightenStateOnEnter_007C0D00` | 6 |
+| `0x007C0D70` | 126 | `AIMoveAwayPanicState` (0x00C2F518 slot 4) | `aiMoveAwayPanicStateOnEnter_007C0D70` | 8 |
+| `0x007C0DF0` | 141 | `AIMoveAwayFromRepulsorsState` (0x00C2F580 slot 4) | `aiMoveAwayFromRepulsorsStateOnEnter_007C0DF0` | 8 |
+| `0x007C0E80` | 91 | `AIBackAwayAndCowerState` (0x00C2C638 slot 4) | `aiBackAwayAndCowerStateOnEnter_007C0E80` | 8 |
+| `0x007C0EE0` | 81 | `AIMoveAwayAndCowerState` (0x00C2F650 slot 4) | `aiMoveAwayAndCowerStateOnEnter_007C0EE0` | 8 |
+| `0x007C2C80` | 20 | `AIPickUpCrateState` (0x00C2FAA8 slot 5, 0x00C30160 slot 5) | `aiPickUpCrateStateUpdate_007C2C80` | 6 |
+| `0x007C3520` | 86 | `AIMoveAndEvacuateState` (0x00C2FBE0 slot 4) | `aiMoveAndEvacuateStateOnEnter_007C3520` | 6 |
+| `0x007C3680` | 178 | `AIMoveAndDeleteState` (0x00C2FC48 slot 4) | `aiMoveAndDeleteStateOnEnter_007C3680` | 10 |
+| `0x007C39C0` | 28 | `AIFollowWaypointPathStateAndEvacuate` (0x00C324D0 slot 4) | `aiFollowWaypointPathStateAndEvacuateOnEnter_007C39C0` | 4 |
+| `0x007C3B50` | 41 | `AIAttackFollowWaypointPathState` (0x00C321E8 slot 4) | `aiAttackFollowWaypointPathStateOnEnter_007C3B50` | 4 |
+| `0x007C42E0` | 179 | `AIDockState` (0x00C2CDE8 slot 3) | `aiDockStateXfer_007C42E0` | 10 |
+| `0x007C43A0` | 172 | `AIDockState` (0x00C2CDE8 slot 4) | `aiDockStateOnEnter_007C43A0` | 10 |
+| `0x007C4450` | 179 | `AIHarvestState` (0x00C2CE40 slot 3) | `aiHarvestStateXfer_007C4450` | 10 |
+| `0x007C4510` | 164 | `AIHarvestState` (0x00C2CE40 slot 4) | `aiHarvestStateOnEnter_007C4510` | 10 |
+| `0x007C4820` | 145 | `AIGuardRetaliateState` (0x00C2D1C8 slot 3) | `aiGuardRetaliateStateXfer_007C4820` | 10 |
+| `0x007C48C0` | 127 | `AIGuardRetaliateState` (0x00C2D1C8 slot 4) | `aiGuardRetaliateStateOnEnter_007C48C0` | 8 |
+| `0x007C4BE0` | 89 | `AIMoveToPositionAndDieState` (0x00C2FFB8 slot 4) | `aiMoveToPositionAndDieStateOnEnter_007C4BE0` | 6 |
+| `0x007C4D30` | 129 | `AIMoveToAndEvacuateState` (0x00C30228 slot 4, 0x00C30298 slot 4) | `aiMoveToAndEvacuateStateOnEnter_007C4D30` | 12 |
+| `0x007C4DC0` | 28 | `AIFollowPathAndEvacuateState` (0x00C30028 slot 4) | `aiFollowPathAndEvacuateStateOnEnter_007C4DC0` | 4 |
+| `0x007C4DE0` | 28 | `AIMoveForBoarding` (0x00C30310 slot 4) | `aiMoveForBoardingOnEnter_007C4DE0` | 8 |
+| `0x007C6B80` | 41 | `AIStateMachine` derived (0x00C326D0 slot 19) | `createSubMachine19_007C6B80` | 6 |
+| `0x007C6BB0` | 41 | `AIStateMachine` derived (0x00C326D0 slot 20) | `createSubMachine20_007C6BB0` | 6 |
+| `0x007C6BE0` | 39 | `AIStateMachine` derived (0x00C326D0 slot 21) | `createSubMachine21_007C6BE0` | 6 |
+| `0x007C6C10` | 97 | `AIStateMachine` derived (0x00C303D0 slot 19, 0x00C30530 slot 19) | `createSubMachine19_007C6C10` | 8 |
+| `0x007C6C80` | 97 | `AIStateMachine` derived (0x00C303D0 slot 20, 0x00C30530 slot 20) | `createSubMachine20_007C6C80` | 8 |
+| `0x007C6E90` | 269 | `AIStateMachine` derived (0x00C30428 slot 5, 0x00C30480 slot 5) | `initDefaultStateWithProducerCheck_007C6E90` | 12 |
+| `0x007C86E0` | 150 | `UnitAIAttackBlockingObjectState` (0x00C30EE0 slot 6) | `unitAIAttackBlockingObjectStateOnExit_007C86E0` | 8 |
+| `0x007C8C90` | 172 | `UnitAIEnterAndDieState` (0x00C2AF38 slot 4) | `unitAIEnterAndDieStateOnEnter_007C8C90` | 8 |
+| `0x007C8D40` | 157 | `UnitAIFindReplacementState` (0x00C2B0D8 slot 4) | `unitAIFindReplacementStateOnEnter_007C8D40` | 8 |
+| `0x007C8DE0` | 83 | `UnitAIFollowWaypointPathAsTeamState` (0x00C2E8C8 slot 20, 0x00C2E940 slot 20) | `queryWeaponClipOffset_007C8DE0` | 8 |
+| `0x007C9150` | 39 | `UnitAIGarrisonedState` (0x00C2EA28 slot 19) | `unitAIGarrisonedStateCreateSubMachine_007C9150` | 6 |
+| `0x007C9280` | 39 | `UnitAIHoldGroundState` (0x00C2EB68 slot 19) | `unitAIHoldGroundStateCreateSubMachine_007C9280` | 6 |
+| `0x007CC8A0` | 44 | `AIStateMachine` (0x00C2C4C8 slot 19, 0x00C30428 slot 19, 0x00C30480 slot 19, 0x00C304D8 slot 19, 0x00C30588 slot 19, 0x00C30638 slot 19, 0x00C32678 slot 19, 0x00C32808 slot 19, 0x00C32940 slot 19) | `aiStateMachineCreateSubMachine19_007CC8A0` | 6 |
+| `0x007CC8D0` | 37 | `AIStateMachine` (0x00C2C4C8 slot 20, 0x00C30428 slot 20, 0x00C30480 slot 20, 0x00C304D8 slot 20, 0x00C30588 slot 20, 0x00C30638 slot 20, 0x00C32678 slot 20, 0x00C32808 slot 20, 0x00C32940 slot 20) | `aiStateMachineCreateSubMachine20_007CC8D0` | 6 |
+| `0x007CC920` | 269 | `AIStateMachine` (0x00C2C4C8 slot 4, 0x00C30378 slot 4, 0x00C303D0 slot 4, 0x00C30428 slot 4, 0x00C30480 slot 4, 0x00C304D8 slot 4, 0x00C30530 slot 4, 0x00C30588 slot 4, 0x00C305E0 slot 4, 0x00C30638 slot 4, 0x00C32620 slot 4, 0x00C32678 slot 4, 0x00C326D0 slot 4, 0x00C32808 slot 4, 0x00C32940 slot 4) | `aiStateMachineUpdate_007CC920` | 14 |
+| `0x007CCA30` | 206 | `AIStateMachine` (called by `0x007CCB00`/`0x007CCB70`/`0x007CCBC0`) | `aiStateMachineExitTemporaryState_007CCA30` | 10 |
+| `0x007CCB00` | 112 | `AIStateMachine` (0x00C2C4C8 slot 13, 0x00C30378 slot 13, 0x00C303D0 slot 13, 0x00C30428 slot 13, 0x00C30480 slot 13, 0x00C304D8 slot 13, 0x00C30530 slot 13, 0x00C30588 slot 13, 0x00C305E0 slot 13, 0x00C30638 slot 13, 0x00C32620 slot 13, 0x00C32678 slot 13, 0x00C326D0 slot 13, 0x00C32808 slot 13, 0x00C32940 slot 13) | `aiStateMachineClear_007CCB00` | 10 |
+| `0x007CCB70` | 73 | `AIStateMachine` (0x00C2C4C8 slot 6, 0x00C30378 slot 6, 0x00C303D0 slot 6, 0x00C30428 slot 6, 0x00C30480 slot 6, 0x00C304D8 slot 6, 0x00C30530 slot 6, 0x00C30588 slot 6, 0x00C305E0 slot 6, 0x00C30638 slot 6, 0x00C32620 slot 6, 0x00C32678 slot 6, 0x00C326D0 slot 6, 0x00C32808 slot 6, 0x00C32940 slot 6) | `aiStateMachineResetToDefaultState_007CCB70` | 8 |
+| `0x007CCBC0` | 162 | `AIStateMachine` (0x00C2C4C8 slot 7, 0x00C30378 slot 7, 0x00C303D0 slot 7, 0x00C30428 slot 7, 0x00C30480 slot 7, 0x00C304D8 slot 7, 0x00C30530 slot 7, 0x00C30588 slot 7, 0x00C305E0 slot 7, 0x00C30638 slot 7, 0x00C32620 slot 7, 0x00C32678 slot 7, 0x00C326D0 slot 7, 0x00C32808 slot 7, 0x00C32940 slot 7) | `aiStateMachineSetState_007CCBC0` | 10 |
+| `0x007CE280` | 184 | `AIEnterState` (0x00C2FE00 slot 6) | `aiEnterStateOnExit_007CE280` | 10 |
+| `0x007CE460` | 158 | `AIExitState` (0x00C2CF60 slot 6, 0x00C2D818 slot 6, 0x00C2D880 slot 6) | `aiExitStateOnExit_007CE460` | 8 |
+| `0x007CE500` | 68 | `AIExitSiegeEngineState` (0x00C2D8E8 slot 6) | `aiExitSiegeEngineStateOnExit_007CE500` | 8 |
 
 ## Recovered Structure Layouts
 
@@ -99,14 +99,14 @@ All 8 hooks are registered with `explicitOnly = true` because each target is an 
 
 | Key | VA | Expected 16 Bytes | Stolen | explicitOnly |
 |---|---|---|---:|---|
-| `gamelogic.aistatemachine7c.move_out_of_the_way_on_enter_007c0bd0` | `0x007C0BD0` | `53 56 8B F1 8B 4E 18 C6 46 4C 01 8B 41 24 57 8B` | 7 | `true` |
-| `gamelogic.aistatemachine7c.move_and_tighten_on_enter_007c0c80` | `0x007C0C80` | `53 56 57 8B F9 8B 47 18 C6 47 4C 01 8B 70 24 8B` | 5 | `true` |
-| `gamelogic.aistatemachine7c.move_away_from_repulsors_on_enter_007c0d00` | `0x007C0D00` | `56 8B F1 8B 46 18 C6 46 4C 00 8B 48 24 B8 01 00` | 6 | `true` |
-| `gamelogic.aistatemachine7c.attack_approach_target_on_enter_007c0d70` | `0x007C0D70` | `53 55 56 8B F1 8B 4E 18 57 C6 46 4C 00 8B 79 24` | 5 | `true` |
-| `gamelogic.aistatemachine7c.move_to_target_object_on_enter_007c0ee0` | `0x007C0EE0` | `53 56 8B F1 8B 4E 18 57 E8 43 90 DF FF 8B D8 85` | 7 | `true` |
-| `gamelogic.aistatemachine7c.move_and_evacuate_on_enter_007c3520` | `0x007C3520` | `56 8B F1 8B 4E 18 8B 41 24 8B 50 38 83 C0 38 89` | 6 | `true` |
-| `gamelogic.aistatemachine7c.move_with_status_flags_on_enter_007c3680` | `0x007C3680` | `56 8B F1 8B 4E 18 57 68 D8 38 C3 00 C6 46 4C 00` | 6 | `true` |
-| `gamelogic.aistatemachine7c.move_validated_on_enter_007c4be0` | `0x007C4BE0` | `56 8B F1 8B 4E 18 68 D8 38 C3 00 C6 46 4C 00 E8` | 6 | `true` |
+| `aimovetostatesaenter` | `0x007C0BD0` | `53 56 8B F1 8B 4E 18 C6 46 4C 01 8B 41 24 57 8B` | 7 | `true` |
+| `aimoveoutofthewayenter` | `0x007C0C80` | `53 56 57 8B F9 8B 47 18 C6 47 4C 01 8B 70 24 8B` | 5 | `true` |
+| `aimoveandtightenenter` | `0x007C0D00` | `56 8B F1 8B 46 18 C6 46 4C 00 8B 48 24 B8 01 00` | 6 | `true` |
+| `aimoveawaypanicenter` | `0x007C0D70` | `53 55 56 8B F1 8B 4E 18 57 C6 46 4C 00 8B 79 24` | 5 | `true` |
+| `aimoveawayandcowerenter` | `0x007C0EE0` | `53 56 8B F1 8B 4E 18 57 E8 43 90 DF FF 8B D8 85` | 7 | `true` |
+| `aimoveandevacuateenter` | `0x007C3520` | `56 8B F1 8B 4E 18 8B 41 24 8B 50 38 83 C0 38 89` | 6 | `true` |
+| `aimoveanddeleteenter` | `0x007C3680` | `56 8B F1 8B 4E 18 57 68 D8 38 C3 00 C6 46 4C 00` | 6 | `true` |
+| `aimovetopositionanddieenter` | `0x007C4BE0` | `56 8B F1 8B 4E 18 68 D8 38 C3 00 C6 46 4C 00 E8` | 6 | `true` |
 
 ## Deferred Boundaries
 

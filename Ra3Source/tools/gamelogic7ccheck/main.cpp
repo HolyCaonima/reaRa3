@@ -649,54 +649,54 @@ std::uint32_t runFunction(std::uint32_t va, std::uint8_t* base, AIStateMachine7C
 
     switch (va) {
     case 0x007C0AD0:
-        return internalMoveToStateOnEnter_007C0AD0(self, view, disp);
+        return aiMoveToStateOnEnter_007C0AD0(self, view, disp);
     case 0x007C0BD0:
-        return moveOutOfTheWayStateOnEnter_007C0BD0(self, view, disp);
+        return aiMoveToStateSAOnEnter_007C0BD0(self, view, disp);
     case 0x007C0C80:
-        return moveAndTightenStateOnEnter_007C0C80(self, view, disp);
+        return aiMoveOutOfTheWayStateOnEnter_007C0C80(self, view, disp);
     case 0x007C0D00:
-        return moveAwayFromRepulsorsStateOnEnter_007C0D00(self, view, disp);
+        return aiMoveAndTightenStateOnEnter_007C0D00(self, view, disp);
     case 0x007C0D70:
-        return attackApproachTargetStateOnEnter_007C0D70(self, view, disp);
+        return aiMoveAwayPanicStateOnEnter_007C0D70(self, view, disp);
     case 0x007C0DF0:
-        return attackPursueTargetStateOnEnter_007C0DF0(self, view, disp);
+        return aiMoveAwayFromRepulsorsStateOnEnter_007C0DF0(self, view, disp);
     case 0x007C0E80:
-        return subMachineStateOnEnter_007C0E80(self, view, disp);
+        return aiBackAwayAndCowerStateOnEnter_007C0E80(self, view, disp);
     case 0x007C0EE0:
-        return moveToTargetObjectStateOnEnter_007C0EE0(self, view, disp);
+        return aiMoveAwayAndCowerStateOnEnter_007C0EE0(self, view, disp);
     case 0x007C2C80:
-        return delayedMoveToStateUpdate_007C2C80(self, view, disp);
+        return aiPickUpCrateStateUpdate_007C2C80(self, view, disp);
     case 0x007C3520:
-        return moveAndEvacuateStateOnEnter_007C3520(self, view, disp);
+        return aiMoveAndEvacuateStateOnEnter_007C3520(self, view, disp);
     case 0x007C3680:
-        return moveWithStatusFlagsStateOnEnter_007C3680(self, view, disp);
+        return aiMoveAndDeleteStateOnEnter_007C3680(self, view, disp);
     case 0x007C39C0:
-        return internalMoveWrapperStateOnEnter_007C39C0(self, view, disp);
+        return aiFollowWaypointPathStateAndEvacuateOnEnter_007C39C0(self, view, disp);
     case 0x007C3B50:
-        return subMachineResetMoveStateOnEnter_007C3B50(self, view, disp);
+        return aiAttackFollowWaypointPathStateOnEnter_007C3B50(self, view, disp);
     case 0x007C42E0:
-        guardStateXfer_007C42E0(self, base + arg0, view, disp);
+        aiDockStateXfer_007C42E0(self, base + arg0, view, disp);
         return 0u;
     case 0x007C43A0:
-        return guardStateOnEnter_007C43A0(self, view, disp);
+        return aiDockStateOnEnter_007C43A0(self, view, disp);
     case 0x007C4450:
-        guardRetaliateStateXfer_007C4450(self, base + arg0, view, disp);
+        aiHarvestStateXfer_007C4450(self, base + arg0, view, disp);
         return 0u;
     case 0x007C4510:
-        return guardRetaliateStateOnEnter_007C4510(self, view, disp);
+        return aiHarvestStateOnEnter_007C4510(self, view, disp);
     case 0x007C4820:
-        areaGuardSubMachineStateXfer_007C4820(self, base + arg0, view, disp);
+        aiGuardRetaliateStateXfer_007C4820(self, base + arg0, view, disp);
         return 0u;
     case 0x007C48C0:
-        return areaGuardSubMachineStateOnEnter_007C48C0(self, view, disp);
+        return aiGuardRetaliateStateOnEnter_007C48C0(self, view, disp);
     case 0x007C4BE0:
-        return moveValidatedStateOnEnter_007C4BE0(self, view, disp);
+        return aiMoveToPositionAndDieStateOnEnter_007C4BE0(self, view, disp);
     case 0x007C4D30:
-        return moveIfBeyondDistanceStateOnEnter_007C4D30(self, view, disp);
+        return aiMoveToAndEvacuateStateOnEnter_007C4D30(self, view, disp);
     case 0x007C4DC0:
-        return stopAndFollowPathStateOnEnter_007C4DC0(self, view, disp);
+        return aiFollowPathAndEvacuateStateOnEnter_007C4DC0(self, view, disp);
     case 0x007C4DE0:
-        return stopAndInternalMoveStateOnEnter_007C4DE0(self, view, disp);
+        return aiMoveForBoardingOnEnter_007C4DE0(self, view, disp);
     case 0x007C6B80:
         return g_ctx->rel(createSubMachine19_007C6B80(
             self, static_cast<std::int32_t>(arg0), static_cast<std::int32_t>(arg1),
@@ -718,19 +718,19 @@ std::uint32_t runFunction(std::uint32_t va, std::uint8_t* base, AIStateMachine7C
     case 0x007C6E90:
         return initDefaultStateWithProducerCheck_007C6E90(self, view, disp);
     case 0x007C86E0:
-        stateWithTargetObjectOnExit_007C86E0(self, static_cast<std::int32_t>(arg0), view, disp);
+        unitAIAttackBlockingObjectStateOnExit_007C86E0(self, static_cast<std::int32_t>(arg0), view, disp);
         return 0u;
     case 0x007C8C90:
-        return exitInstantlyStateOnEnter_007C8C90(self, view, disp);
+        return unitAIEnterAndDieStateOnEnter_007C8C90(self, view, disp);
     case 0x007C8D40:
-        return resolveGoalTargetStateOnEnter_007C8D40(self, view, disp);
+        return unitAIFindReplacementStateOnEnter_007C8D40(self, view, disp);
     case 0x007C8DE0:
         return g_ctx->rel(queryWeaponClipOffset_007C8DE0(
             self, reinterpret_cast<std::uint32_t*>(base + arg0), view, disp));
     case 0x007C9150:
-        return g_ctx->rel(stateCreateSubMachine_007C9150(self, view, disp));
+        return g_ctx->rel(unitAIGarrisonedStateCreateSubMachine_007C9150(self, view, disp));
     case 0x007C9280:
-        return g_ctx->rel(stateCreateSubMachine_007C9280(self, view, disp));
+        return g_ctx->rel(unitAIHoldGroundStateCreateSubMachine_007C9280(self, view, disp));
     case 0x007CC8A0:
         return g_ctx->rel(aiStateMachineCreateSubMachine19_007CC8A0(
             self, static_cast<std::int32_t>(arg0), static_cast<std::int32_t>(arg1),
@@ -751,13 +751,13 @@ std::uint32_t runFunction(std::uint32_t va, std::uint8_t* base, AIStateMachine7C
     case 0x007CCBC0:
         return aiStateMachineSetState_007CCBC0(self, arg0, view, disp);
     case 0x007CE280:
-        enterStateOnExit_007CE280(self, static_cast<std::int32_t>(arg0), view, disp);
+        aiEnterStateOnExit_007CE280(self, static_cast<std::int32_t>(arg0), view, disp);
         return 0u;
     case 0x007CE460:
-        exitStateOnExit_007CE460(self, static_cast<std::int32_t>(arg0), view, disp);
+        aiExitStateOnExit_007CE460(self, static_cast<std::int32_t>(arg0), view, disp);
         return 0u;
     case 0x007CE500:
-        exitInstantlyStateOnExit_007CE500(self, static_cast<std::int32_t>(arg0), view, disp);
+        aiExitSiegeEngineStateOnExit_007CE500(self, static_cast<std::int32_t>(arg0), view, disp);
         return 0u;
     default:
         throw std::runtime_error("unknown VA");

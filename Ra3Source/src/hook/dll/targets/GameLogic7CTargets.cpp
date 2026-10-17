@@ -173,7 +173,7 @@ std::uint32_t __fastcall moveOutOfTheWayOnEnter_007C0BD0(void* statePtr, void*)
 
     AIStateMachine7CMemoryView view = liveMemoryView();
     if (state.mode == Mode::replace) {
-        const std::uint32_t ours = ra3::gamelogic::moveOutOfTheWayStateOnEnter_007C0BD0(
+        const std::uint32_t ours = ra3::gamelogic::aiMoveToStateSAOnEnter_007C0BD0(
             statePtr, view, liveReplaceDispatch());
         state.matches.fetch_add(1, kRelaxed);
         return ours;
@@ -182,17 +182,17 @@ std::uint32_t __fastcall moveOutOfTheWayOnEnter_007C0BD0(void* statePtr, void*)
     std::array<std::uint8_t, kMoveStateShadowSize> copy{};
     std::memcpy(copy.data(), statePtr, copy.size());
     copy[0x54] = 0;  // suppress post-startMove checkMoveOut side effect in shadow dry-run
-    ra3::gamelogic::moveOutOfTheWayStateOnEnter_007C0BD0(
+    ra3::gamelogic::aiMoveToStateSAOnEnter_007C0BD0(
         copy.data(), view, liveShadowReadDispatch());
 
     const std::uint32_t game =
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_out_of_the_way_on_enter_007c0bd0",
+        "aimovetostatesaenter",
         state, gameBytes + 0x20, copy.data() + 0x20, 12);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_out_of_the_way_on_enter_007c0bd0",
+        "aimovetostatesaenter",
         state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
     return game;
 }
@@ -204,7 +204,7 @@ std::uint32_t __fastcall moveAndTightenOnEnter_007C0C80(void* statePtr, void*)
 
     AIStateMachine7CMemoryView view = liveMemoryView();
     if (state.mode == Mode::replace) {
-        const std::uint32_t ours = ra3::gamelogic::moveAndTightenStateOnEnter_007C0C80(
+        const std::uint32_t ours = ra3::gamelogic::aiMoveOutOfTheWayStateOnEnter_007C0C80(
             statePtr, view, liveReplaceDispatch());
         state.matches.fetch_add(1, kRelaxed);
         return ours;
@@ -228,7 +228,7 @@ std::uint32_t __fastcall moveAndTightenOnEnter_007C0C80(void* statePtr, void*)
         }
     }
 
-    const std::uint32_t ours = ra3::gamelogic::moveAndTightenStateOnEnter_007C0C80(
+    const std::uint32_t ours = ra3::gamelogic::aiMoveOutOfTheWayStateOnEnter_007C0C80(
         copy.data(), view, liveShadowReadDispatch());
     if (owner != nullptr) {
         std::memcpy(static_cast<std::uint8_t*>(owner) + 0xB0, &savedOwnerFlags, 4);
@@ -238,15 +238,15 @@ std::uint32_t __fastcall moveAndTightenOnEnter_007C0C80(void* statePtr, void*)
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_and_tighten_on_enter_007c0c80",
+        "aimoveoutofthewayenter",
         state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
     if (targetSubObj != 0) {
         recordOutput(
-            "gamelogic.aistatemachine7c.move_and_tighten_on_enter_007c0c80",
+            "aimoveoutofthewayenter",
             state, gameBytes + 0x20, copy.data() + 0x20, 12);
     } else {
         recordScalar(
-            "gamelogic.aistatemachine7c.move_and_tighten_on_enter_007c0c80",
+            "aimoveoutofthewayenter",
             state, game, ours);
     }
     return game;
@@ -259,7 +259,7 @@ std::uint32_t __fastcall moveAwayFromRepulsorsOnEnter_007C0D00(void* statePtr, v
 
     AIStateMachine7CMemoryView view = liveMemoryView();
     if (state.mode == Mode::replace) {
-        const std::uint32_t ours = ra3::gamelogic::moveAwayFromRepulsorsStateOnEnter_007C0D00(
+        const std::uint32_t ours = ra3::gamelogic::aiMoveAndTightenStateOnEnter_007C0D00(
             statePtr, view, liveReplaceDispatch());
         state.matches.fetch_add(1, kRelaxed);
         return ours;
@@ -267,20 +267,20 @@ std::uint32_t __fastcall moveAwayFromRepulsorsOnEnter_007C0D00(void* statePtr, v
 
     std::array<std::uint8_t, kMoveStateShadowSize> copy{};
     std::memcpy(copy.data(), statePtr, copy.size());
-    ra3::gamelogic::moveAwayFromRepulsorsStateOnEnter_007C0D00(
+    ra3::gamelogic::aiMoveAndTightenStateOnEnter_007C0D00(
         copy.data(), view, liveShadowReadDispatch());
 
     const std::uint32_t game =
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_away_from_repulsors_on_enter_007c0d00",
+        "aimoveandtightenenter",
         state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_away_from_repulsors_on_enter_007c0d00",
+        "aimoveandtightenenter",
         state, gameBytes + 0x50, copy.data() + 0x50, 4);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_away_from_repulsors_on_enter_007c0d00",
+        "aimoveandtightenenter",
         state, gameBytes + 0x54, copy.data() + 0x54, 1);
     return game;
 }
@@ -292,7 +292,7 @@ std::uint32_t __fastcall attackApproachTargetOnEnter_007C0D70(void* statePtr, vo
 
     AIStateMachine7CMemoryView view = liveMemoryView();
     if (state.mode == Mode::replace) {
-        const std::uint32_t ours = ra3::gamelogic::attackApproachTargetStateOnEnter_007C0D70(
+        const std::uint32_t ours = ra3::gamelogic::aiMoveAwayPanicStateOnEnter_007C0D70(
             statePtr, view, liveReplaceDispatch());
         state.matches.fetch_add(1, kRelaxed);
         return ours;
@@ -300,25 +300,25 @@ std::uint32_t __fastcall attackApproachTargetOnEnter_007C0D70(void* statePtr, vo
 
     std::array<std::uint8_t, kMoveStateShadowSize> copy{};
     std::memcpy(copy.data(), statePtr, copy.size());
-    const std::uint32_t ours = ra3::gamelogic::attackApproachTargetStateOnEnter_007C0D70(
+    const std::uint32_t ours = ra3::gamelogic::aiMoveAwayPanicStateOnEnter_007C0D70(
         copy.data(), view, liveShadowReadDispatch());
 
     const std::uint32_t game =
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
     recordOutput(
-        "gamelogic.aistatemachine7c.attack_approach_target_on_enter_007c0d70",
+        "aimoveawaypanicenter",
         state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
     if (ours != 0xFFFFFFFEu) {
         recordOutput(
-            "gamelogic.aistatemachine7c.attack_approach_target_on_enter_007c0d70",
+            "aimoveawaypanicenter",
             state, gameBytes + 0x50, copy.data() + 0x50, 4);
         recordOutput(
-            "gamelogic.aistatemachine7c.attack_approach_target_on_enter_007c0d70",
+            "aimoveawaypanicenter",
             state, gameBytes + 0x54, copy.data() + 0x54, 1);
     } else {
         recordScalar(
-            "gamelogic.aistatemachine7c.attack_approach_target_on_enter_007c0d70",
+            "aimoveawaypanicenter",
             state, game, ours);
     }
     return game;
@@ -331,7 +331,7 @@ std::uint32_t __fastcall moveToTargetObjectOnEnter_007C0EE0(void* statePtr, void
 
     AIStateMachine7CMemoryView view = liveMemoryView();
     if (state.mode == Mode::replace) {
-        const std::uint32_t ours = ra3::gamelogic::moveToTargetObjectStateOnEnter_007C0EE0(
+        const std::uint32_t ours = ra3::gamelogic::aiMoveAwayAndCowerStateOnEnter_007C0EE0(
             statePtr, view, liveReplaceDispatch());
         state.matches.fetch_add(1, kRelaxed);
         return ours;
@@ -339,7 +339,7 @@ std::uint32_t __fastcall moveToTargetObjectOnEnter_007C0EE0(void* statePtr, void
 
     std::array<std::uint8_t, kMoveStateShadowSize> copy{};
     std::memcpy(copy.data(), statePtr, copy.size());
-    const std::uint32_t ours = ra3::gamelogic::moveToTargetObjectStateOnEnter_007C0EE0(
+    const std::uint32_t ours = ra3::gamelogic::aiMoveAwayAndCowerStateOnEnter_007C0EE0(
         copy.data(), view, liveShadowReadDispatch());
 
     const std::uint32_t game =
@@ -347,14 +347,14 @@ std::uint32_t __fastcall moveToTargetObjectOnEnter_007C0EE0(void* statePtr, void
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
     if (ours != 0xFFFFFFFEu) {
         recordOutput(
-            "gamelogic.aistatemachine7c.move_to_target_object_on_enter_007c0ee0",
+            "aimoveawayandcowerenter",
             state, gameBytes + 0x50, copy.data() + 0x50, 4);
         recordOutput(
-            "gamelogic.aistatemachine7c.move_to_target_object_on_enter_007c0ee0",
+            "aimoveawayandcowerenter",
             state, gameBytes + 0x54, copy.data() + 0x54, 1);
     } else {
         recordScalar(
-            "gamelogic.aistatemachine7c.move_to_target_object_on_enter_007c0ee0",
+            "aimoveawayandcowerenter",
             state, game, ours);
     }
     return game;
@@ -367,7 +367,7 @@ std::uint32_t __fastcall moveAndEvacuateOnEnter_007C3520(void* statePtr, void*)
 
     AIStateMachine7CMemoryView view = liveMemoryView();
     if (state.mode == Mode::replace) {
-        const std::uint32_t ours = ra3::gamelogic::moveAndEvacuateStateOnEnter_007C3520(
+        const std::uint32_t ours = ra3::gamelogic::aiMoveAndEvacuateStateOnEnter_007C3520(
             statePtr, view, liveReplaceDispatch());
         state.matches.fetch_add(1, kRelaxed);
         return ours;
@@ -375,20 +375,20 @@ std::uint32_t __fastcall moveAndEvacuateOnEnter_007C3520(void* statePtr, void*)
 
     std::array<std::uint8_t, kMoveStateShadowSize> copy{};
     std::memcpy(copy.data(), statePtr, copy.size());
-    ra3::gamelogic::moveAndEvacuateStateOnEnter_007C3520(
+    ra3::gamelogic::aiMoveAndEvacuateStateOnEnter_007C3520(
         copy.data(), view, liveShadowReadDispatch());
 
     const std::uint32_t game =
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_and_evacuate_on_enter_007c3520",
+        "aimoveandevacuateenter",
         state, gameBytes + 0x20, copy.data() + 0x20, 12);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_and_evacuate_on_enter_007c3520",
+        "aimoveandevacuateenter",
         state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_and_evacuate_on_enter_007c3520",
+        "aimoveandevacuateenter",
         state, gameBytes + 0x50, copy.data() + 0x50, 12);
     return game;
 }
@@ -400,7 +400,7 @@ std::uint32_t __fastcall moveWithStatusFlagsOnEnter_007C3680(void* statePtr, voi
 
     AIStateMachine7CMemoryView view = liveMemoryView();
     if (state.mode == Mode::replace) {
-        const std::uint32_t ours = ra3::gamelogic::moveWithStatusFlagsStateOnEnter_007C3680(
+        const std::uint32_t ours = ra3::gamelogic::aiMoveAndDeleteStateOnEnter_007C3680(
             statePtr, view, liveReplaceDispatch());
         state.matches.fetch_add(1, kRelaxed);
         return ours;
@@ -418,7 +418,7 @@ std::uint32_t __fastcall moveWithStatusFlagsOnEnter_007C3680(void* statePtr, voi
     if (owner != nullptr) {
         std::memcpy(&savedOwnerFlags, static_cast<const std::uint8_t*>(owner) + 0xB0, 4);
     }
-    ra3::gamelogic::moveWithStatusFlagsStateOnEnter_007C3680(
+    ra3::gamelogic::aiMoveAndDeleteStateOnEnter_007C3680(
         copy.data(), view, liveShadowReadDispatch());
     if (machine != nullptr) {
         *(static_cast<std::uint8_t*>(machine) + 0x78) = savedLock;
@@ -431,13 +431,13 @@ std::uint32_t __fastcall moveWithStatusFlagsOnEnter_007C3680(void* statePtr, voi
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_with_status_flags_on_enter_007c3680",
+        "aimoveanddeleteenter",
         state, gameBytes + 0x20, copy.data() + 0x20, 12);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_with_status_flags_on_enter_007c3680",
+        "aimoveanddeleteenter",
         state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_with_status_flags_on_enter_007c3680",
+        "aimoveanddeleteenter",
         state, gameBytes + 0x50, copy.data() + 0x50, 1);
     return game;
 }
@@ -449,7 +449,7 @@ std::uint32_t __fastcall moveValidatedOnEnter_007C4BE0(void* statePtr, void*)
 
     AIStateMachine7CMemoryView view = liveMemoryView();
     if (state.mode == Mode::replace) {
-        const std::uint32_t ours = ra3::gamelogic::moveValidatedStateOnEnter_007C4BE0(
+        const std::uint32_t ours = ra3::gamelogic::aiMoveToPositionAndDieStateOnEnter_007C4BE0(
             statePtr, view, liveReplaceDispatch());
         state.matches.fetch_add(1, kRelaxed);
         return ours;
@@ -462,7 +462,7 @@ std::uint32_t __fastcall moveValidatedOnEnter_007C4BE0(void* statePtr, void*)
     if (machine != nullptr) {
         savedLock = *(static_cast<const std::uint8_t*>(machine) + 0x78);
     }
-    ra3::gamelogic::moveValidatedStateOnEnter_007C4BE0(
+    ra3::gamelogic::aiMoveToPositionAndDieStateOnEnter_007C4BE0(
         copy.data(), view, liveShadowReadDispatch());
     if (machine != nullptr) {
         *(static_cast<std::uint8_t*>(machine) + 0x78) = savedLock;
@@ -472,13 +472,13 @@ std::uint32_t __fastcall moveValidatedOnEnter_007C4BE0(void* statePtr, void*)
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_validated_on_enter_007c4be0",
+        "aimovetopositionanddieenter",
         state, gameBytes + 0x20, copy.data() + 0x20, 12);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_validated_on_enter_007c4be0",
+        "aimovetopositionanddieenter",
         state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
     recordOutput(
-        "gamelogic.aistatemachine7c.move_validated_on_enter_007c4be0",
+        "aimovetopositionanddieenter",
         state, gameBytes + 0x50, copy.data() + 0x50, 1);
     return game;
 }
@@ -488,42 +488,42 @@ std::uint32_t __fastcall moveValidatedOnEnter_007C4BE0(void* statePtr, void*)
 void appendGameLogic7CTargets(std::vector<Target>& table)
 {
     table.insert(table.end(), {
-        {"gamelogic.aistatemachine7c.move_out_of_the_way_on_enter_007c0bd0", 0x003C0BD0,
+        {"aimovetostatesaenter", 0x003C0BD0,
          {0x53, 0x56, 0x8B, 0xF1, 0x8B, 0x4E, 0x18, 0xC6,
           0x46, 0x4C, 0x01, 0x8B, 0x41, 0x24, 0x57, 0x8B},
          7, reinterpret_cast<void*>(&moveOutOfTheWayOnEnter_007C0BD0),
          &g_moveOutOfTheWayOnEnter, true},
-        {"gamelogic.aistatemachine7c.move_and_tighten_on_enter_007c0c80", 0x003C0C80,
+        {"aimoveoutofthewayenter", 0x003C0C80,
          {0x53, 0x56, 0x57, 0x8B, 0xF9, 0x8B, 0x47, 0x18,
           0xC6, 0x47, 0x4C, 0x01, 0x8B, 0x70, 0x24, 0x8B},
          5, reinterpret_cast<void*>(&moveAndTightenOnEnter_007C0C80),
          &g_moveAndTightenOnEnter, true},
-        {"gamelogic.aistatemachine7c.move_away_from_repulsors_on_enter_007c0d00", 0x003C0D00,
+        {"aimoveandtightenenter", 0x003C0D00,
          {0x56, 0x8B, 0xF1, 0x8B, 0x46, 0x18, 0xC6, 0x46,
           0x4C, 0x00, 0x8B, 0x48, 0x24, 0xB8, 0x01, 0x00},
          6, reinterpret_cast<void*>(&moveAwayFromRepulsorsOnEnter_007C0D00),
          &g_moveAwayFromRepulsorsOnEnter, true},
-        {"gamelogic.aistatemachine7c.attack_approach_target_on_enter_007c0d70", 0x003C0D70,
+        {"aimoveawaypanicenter", 0x003C0D70,
          {0x53, 0x55, 0x56, 0x8B, 0xF1, 0x8B, 0x4E, 0x18,
           0x57, 0xC6, 0x46, 0x4C, 0x00, 0x8B, 0x79, 0x24},
          5, reinterpret_cast<void*>(&attackApproachTargetOnEnter_007C0D70),
          &g_attackApproachTargetOnEnter, true},
-        {"gamelogic.aistatemachine7c.move_to_target_object_on_enter_007c0ee0", 0x003C0EE0,
+        {"aimoveawayandcowerenter", 0x003C0EE0,
          {0x53, 0x56, 0x8B, 0xF1, 0x8B, 0x4E, 0x18, 0x57,
           0xE8, 0x43, 0x90, 0xDF, 0xFF, 0x8B, 0xD8, 0x85},
          7, reinterpret_cast<void*>(&moveToTargetObjectOnEnter_007C0EE0),
          &g_moveToTargetObjectOnEnter, true},
-        {"gamelogic.aistatemachine7c.move_and_evacuate_on_enter_007c3520", 0x003C3520,
+        {"aimoveandevacuateenter", 0x003C3520,
          {0x56, 0x8B, 0xF1, 0x8B, 0x4E, 0x18, 0x8B, 0x41,
           0x24, 0x8B, 0x50, 0x38, 0x83, 0xC0, 0x38, 0x89},
          6, reinterpret_cast<void*>(&moveAndEvacuateOnEnter_007C3520),
          &g_moveAndEvacuateOnEnter, true},
-        {"gamelogic.aistatemachine7c.move_with_status_flags_on_enter_007c3680", 0x003C3680,
+        {"aimoveanddeleteenter", 0x003C3680,
          {0x56, 0x8B, 0xF1, 0x8B, 0x4E, 0x18, 0x57, 0x68,
           0xD8, 0x38, 0xC3, 0x00, 0xC6, 0x46, 0x4C, 0x00},
          6, reinterpret_cast<void*>(&moveWithStatusFlagsOnEnter_007C3680),
          &g_moveWithStatusFlagsOnEnter, true},
-        {"gamelogic.aistatemachine7c.move_validated_on_enter_007c4be0", 0x003C4BE0,
+        {"aimovetopositionanddieenter", 0x003C4BE0,
          {0x56, 0x8B, 0xF1, 0x8B, 0x4E, 0x18, 0x68, 0xD8,
           0x38, 0xC3, 0x00, 0xC6, 0x46, 0x4C, 0x00, 0xE8},
          6, reinterpret_cast<void*>(&moveValidatedOnEnter_007C4BE0),
