@@ -30,9 +30,9 @@
 | `0x007F7850` | `teamName` | vtable `00c353c0` slot 2 |
 | `0x007F9F70` | `teamPrototypeName` | vtable `00c353dc` slot 2 |
 | `0x007FC3A0` | `scoreKeeperName` | vtable `00c354f0` slot 2 |
-| `0x008028F0` | `logicEvaTrackerName` | vtable `00c4dfc8` slot 49 |
-| `0x00802900` | `logicPlayingAudioTrackerName` | vtable `00c4dfc8` slot 67 |
-| `0x00802910` | `logicViewTrackerName` | vtable `00c4dcec` slot 3 |
+| `0x008028F0` | `logicEvaTrackerName` | vtable `00c4e084` slot 2 |
+| `0x00802900` | `logicPlayingAudioTrackerName` | vtable `00c4e0cc` slot 2 |
+| `0x00802910` | `logicViewTrackerName` | vtable `00c4dcf0` slot 2 |
 | `0x007E96C0` | `linkedTextLength` | vtable `00c34eb0` slot 1 |
 | `0x007E9710` | `linkedTextLengthPlus` | vtable `00c34ec0` slot 1 |
 | `0x007E2DD0` | `adjustTunnelCount` | vtable `00c35154` slot 0 |

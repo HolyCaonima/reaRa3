@@ -25,9 +25,9 @@ address	status	owner	module	notes
 007f7850	reversed	recon/common7e	common	teamName; vtable 00c353c0 slot 2; mov eax, 0x00BD1240 Team
 007f9f70	reversed	recon/common7e	common	teamPrototypeName; vtable 00c353dc slot 2; mov eax, 0x00C353EC TeamPrototype
 007fc3a0	reversed	recon/common7e	common	scoreKeeperName; vtable 00c354f0 slot 2; mov eax, 0x00C35500 ScoreKeeper; name slot only
-008028f0	reversed	recon/common7e	common	logicEvaTrackerName; vtable 00c4dfc8 slot 49; mov eax, 0x00C35A8C LogicEvaTracker
-00802900	reversed	recon/common7e	common	logicPlayingAudioTrackerName; vtable 00c4dfc8 slot 67; mov eax, 0x00C35AC0 LogicPlayingAudioTracker
-00802910	reversed	recon/common7e	common	logicViewTrackerName; vtable 00c4dcec slot 3; mov eax, 0x00C35ADC LogicViewTracker
+008028f0	reversed	recon/common7e	common	logicEvaTrackerName; vtable 00c4e084 slot 2; mov eax, 0x00C35A8C LogicEvaTracker
+00802900	reversed	recon/common7e	common	logicPlayingAudioTrackerName; vtable 00c4e0cc slot 2; mov eax, 0x00C35AC0 LogicPlayingAudioTracker
+00802910	reversed	recon/common7e	common	logicViewTrackerName; vtable 00c4dcf0 slot 2; mov eax, 0x00C35ADC LogicViewTracker
 008052d0	reversed	recon/common7e	common	storeFlagCf; vtable 00c4def8 slot 31; stores argument low byte at +0xCF and returns it in AL; ret 4
 00805720	reversed	recon/common7e	common	availabilityByte; vtable 00c4def8 slot 21; +0xB9 when +0xBA is nonzero and dword +0xBC > 0, else indexed virtual +0x44 or AL cleared
 00805760	reversed	recon/common7e	common	byteB8UnlessBa; vtable 00c4def8 slot 22; AL is byte +0xB8 when byte +0xBA is 0, otherwise 0
