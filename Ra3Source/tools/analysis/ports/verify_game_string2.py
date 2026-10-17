@@ -115,6 +115,11 @@ POOL_SIZE = 8 << 20
 ASCII_ALPHABET = list(range(0x20, 0x7F)) + [0x80, 0xC4, 0xE4, 0xFF]
 WIDE_ALPHABET = list(range(0x20, 0x7F)) + [
     0x80, 0xC4, 0xE4, 0x130, 0x3A3, 0x3C3, 0x410, 0x430, 0x4E2D, 0xFF21, 0xFFFF]
+ADVERSARIAL_CASE_START = 64
+ADVERSARIAL_OPERATIONS = {
+    "trim1", "trim2", "token1", "token2",
+    "replace1", "replace2", "replaceobj2",
+}
 
 
 def encode(width: int, values: Optional[list[int]]) -> str:
@@ -153,6 +158,7 @@ class Case:
     blocks: list[BlockSpec] = field(default_factory=list)
     slots: list[int] = field(default_factory=list)
     arguments: list[str] = field(default_factory=list)
+    adversarial: bool = False
 
 
 class Original:
@@ -765,16 +771,26 @@ class Generator:
         alphabet = ASCII_ALPHABET if width == 1 else WIDE_ALPHABET
         return [self.rng.choice(alphabet) for _ in range(count)]
 
-    def block(self, width: int, values: Optional[list[int]] = None) -> BlockSpec:
+    def block(
+        self,
+        width: int,
+        values: Optional[list[int]] = None,
+        minimum_slack: int = 0,
+    ) -> BlockSpec:
         rng = self.rng
         if values is None:
             length = rng.choice([0, 1, 2, 3, 5, 8, 15])
             values = self.values(width, length)
         length = len(values)
-        capacity = length + 1 + rng.choice([0, 0, 1, 3, 8])
+        slack = (max)(minimum_slack, rng.choice([0, 0, 1, 3, 8]))
+        capacity = length + 1 + slack
         area = b"".join(value.to_bytes(width, "little") for value in values)
         area += bytes(width)
-        area += bytes(rng.randrange(256) for _ in range((capacity - length - 1) * width))
+        # Make unused capacity observably nonzero. This catches implementations
+        # which scan the allocation instead of honoring either NUL or length.
+        area += bytes(
+            rng.randrange(1, 256)
+            for _ in range((capacity - length - 1) * width))
         return BlockSpec(rng.choice([1, 1, 1, 2, 3]), length, capacity, area)
 
     def pure(self, operation: str, index: int) -> Case:
@@ -917,25 +933,47 @@ class Generator:
             if operation == "constructtranslated2":
                 slots[target] = -1
         elif operation in {"trim1", "trim2"}:
-            values = (
-                [rng.choice([9, 10, 13, 32]) for _ in range(index % 4)]
-                + self.values(width, rng.choice([0, 1, 4]))
-                + [rng.choice([9, 10, 13, 32]) for _ in range((index // 2) % 4)]
-            )
-            blocks.append(self.block(width, values))
+            if index >= ADVERSARIAL_CASE_START:
+                # NUL is inside the recorded range; characters after it are
+                # deliberately nonzero and can include trailing whitespace.
+                values = (
+                    [rng.choice([9, 32]) for _ in range(index % 3)]
+                    + [ord("A"), 0, ord("B")]
+                    + [rng.choice([9, 10, 13, 32]) for _ in range(1 + index % 3)]
+                )
+            else:
+                values = (
+                    [rng.choice([9, 10, 13, 32]) for _ in range(index % 4)]
+                    + self.values(width, rng.choice([0, 1, 4]))
+                    + [rng.choice([9, 10, 13, 32]) for _ in range((index // 2) % 4)]
+                )
+            blocks.append(self.block(
+                width,
+                values,
+                3 if index >= ADVERSARIAL_CASE_START else 0))
             slots[target] = len(blocks) - 1
         elif operation in {"token1", "token2"}:
             token = (target + 1) % len(slots)
             separators = [ord(","), ord(";"), ord(" ")]
-            values = (
-                [rng.choice(separators) for _ in range(index % 3)]
-                + self.values(width, rng.choice([0, 1, 3, 6]))
-                + [rng.choice(separators)]
-                + self.values(width, rng.choice([0, 2, 4]))
-            )
-            blocks.append(self.block(width, values))
+            if index >= ADVERSARIAL_CASE_START:
+                values = (
+                    [rng.choice(separators) for _ in range(index % 3)]
+                    + [ord("A"), ord("B"), 0, ord("C")]
+                    + [rng.choice(separators), ord("D")]
+                )
+            else:
+                values = (
+                    [rng.choice(separators) for _ in range(index % 3)]
+                    + self.values(width, rng.choice([0, 1, 3, 6]))
+                    + [rng.choice(separators)]
+                    + self.values(width, rng.choice([0, 2, 4]))
+                )
+            blocks.append(self.block(
+                width,
+                values,
+                3 if index >= ADVERSARIAL_CASE_START else 0))
             slots[target] = len(blocks) - 1
-            if index % 13 == 0:
+            if index < ADVERSARIAL_CASE_START and index % 13 == 0:
                 token = target
             args += [
                 str(token),
@@ -959,8 +997,17 @@ class Generator:
         elif operation in {"replace1", "replace2"}:
             unit_a = ord("a")
             unit_b = ord("b")
-            values = ([unit_a, unit_b] * rng.choice([0, 1, 2, 4])) + self.values(width, 2)
-            blocks.append(self.block(width, values))
+            if index >= ADVERSARIAL_CASE_START:
+                # Matching text occurs on both sides of an embedded NUL.
+                values = [unit_a, unit_b, unit_a, 0, unit_a, unit_b, unit_a]
+            else:
+                values = (
+                    [unit_a, unit_b] * rng.choice([0, 1, 2, 4])
+                    + self.values(width, 2))
+            blocks.append(self.block(
+                width,
+                values,
+                3 if index >= ADVERSARIAL_CASE_START else 0))
             slots[target] = len(blocks) - 1
             search = [unit_a, unit_b] if index % 2 else [unit_a]
             replacement = self.values(width, rng.choice([0, 1, 3]))
@@ -968,7 +1015,10 @@ class Generator:
         elif operation == "replaceobj2":
             search_slot = (target + 1) % len(slots)
             replacement_slot = (target + 2) % len(slots)
-            source_values = [ord("a"), ord("b"), ord("a"), ord("b"), ord("x")]
+            source_values = (
+                [ord("a"), ord("b"), 0, ord("a"), ord("b"), ord("x")]
+                if index >= ADVERSARIAL_CASE_START
+                else [ord("a"), ord("b"), ord("a"), ord("b"), ord("x")])
             search_values = [ord("a"), ord("b")]
             replacement_values = self.values(2, rng.choice([0, 1, 3]))
             for slot_index, values in (
@@ -976,7 +1026,12 @@ class Generator:
                 (search_slot, search_values),
                 (replacement_slot, replacement_values),
             ):
-                blocks.append(self.block(2, values))
+                blocks.append(self.block(
+                    2,
+                    values,
+                    3 if (
+                        index >= ADVERSARIAL_CASE_START
+                        and slot_index == target) else 0))
                 slots[slot_index] = len(blocks) - 1
             args += [str(search_slot), str(replacement_slot)]
         elif operation == "constructchar2":
@@ -1012,7 +1067,10 @@ class Generator:
             width=width,
             blocks=blocks,
             slots=slots,
-            arguments=args)
+            arguments=args,
+            adversarial=(
+                operation in ADVERSARIAL_OPERATIONS
+                and index >= ADVERSARIAL_CASE_START))
 
 
 def checker_outputs(
@@ -1062,7 +1120,7 @@ def main() -> int:
         type=Path,
         default=SOURCE / "build" / "win32" / "bin" / "Debug"
         / "ra3_stringbase2check.exe")
-    parser.add_argument("--cases", type=int, default=64)
+    parser.add_argument("--cases", type=int, default=80)
     parser.add_argument("--seed", type=int, default=0x534232)
     args = parser.parse_args()
 
@@ -1103,6 +1161,7 @@ def main() -> int:
         f"restore={'ok' if restored else 'failed'}")
     print(
         f"functions={len(FUNCTIONS)} scenarios={len(cases)} "
+        f"adversarial={sum(case.adversarial for case in cases)} "
         f"mismatches={mismatches}")
     return 1 if mismatches or not mutation_detected or not restored else 0
 

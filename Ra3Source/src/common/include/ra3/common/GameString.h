@@ -254,6 +254,9 @@ int compareNoCaseGameString(
 // work/references/generals/GeneralsMD/Code/GameEngine/Source/Common/System/UnicodeString.cpp
 // This implementation is independently derived
 // from the RA3 1.0 bytes and preserves RA3's header lengths and allocation API.
+// 0x004CB730 / 0x004CBA50 trim and 0x004CB8E0 / 0x004CBBE0 nextToken
+// intentionally use NUL-terminated forward scans; subsequent mutation lengths
+// are derived from the recorded StringBase length.
 bool trimGameString(
     GameAsciiString* self, GameCharacterPredicate isSpace, const GameStringOps& ops) noexcept;
 bool trimGameString(
@@ -270,6 +273,8 @@ bool nextGameStringToken(
     const char16_t* separators,
     const char16_t* defaultSeparators,
     const GameStringOps& ops) noexcept;
+
+// 0x004CB990.
 bool isNoneGameString(const GameAsciiString* self) noexcept;
 
 // 0x004CBB40. `arguments` is the original x86 va_list pointer at the ABI

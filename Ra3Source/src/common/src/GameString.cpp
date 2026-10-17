@@ -5,7 +5,6 @@
 #include <algorithm>
 #include <array>
 #include <cstring>
-#include <limits>
 
 // Structure follows the reference-counted AsciiString of the GPL Generals
 // source (GeneralsMD/Code/GameEngine/Source/Common/System/AsciiString.cpp);
@@ -305,6 +304,8 @@ bool trimString(
         return true;
     }
 
+    // The shipped trim's leading scan is a C-string walk and therefore stops
+    // at an embedded NUL; its trailing pass below starts from recorded length.
     Char* leading = self->data;
     while (*leading != 0
         && isSpace(static_cast<int>(*leading)) != 0) {
@@ -350,6 +351,8 @@ bool nextToken(
     }
     const Char* const activeSeparators =
         separators == nullptr ? defaultSeparators : separators;
+    // The recovered separator helpers are NUL-terminated scans. The amount
+    // retained in `self`, however, is computed from the recorded block length.
     const Char* const start = skipSeparatorsImpl(self->data, activeSeparators);
     const Char* const end = skipNonSeparatorsImpl(start, activeSeparators);
     if (end <= start) {
@@ -438,6 +441,8 @@ int replaceAll(
 
     while (true) {
         const Char* const current = dataOrEmpty(self->data, empty);
+        // The original calls strstr/wcsstr, so neither matches nor the
+        // current source length extend beyond an embedded NUL.
         const Char* const found = findSubsequence(current + offset, search);
         if (found == nullptr) {
             break;

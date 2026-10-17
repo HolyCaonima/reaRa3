@@ -15,9 +15,12 @@ The object remains one 32-bit data pointer. A non-null data pointer has:
 | -2 | unsigned 16-bit capacity, including the terminator |
 
 Null is the normal empty representation, but a non-null block with recorded
-length zero is also empty. Read/search methods use the recorded length rather
-than rescanning for NUL. Static empty character arrays are `0x00BD282C`
-(ASCII) and `0x00BDAAD0` (Unicode).
+length zero is also empty. Fixed-range searches and comparisons use the
+recorded length rather than rescanning for NUL. Trim, tokenization, and
+replace-all retain the shipped hybrid contract: their forward character,
+separator, and `strstr`/`wcsstr` scans stop at NUL, while later copy/removal
+lengths use the recorded header length. Static empty character arrays are
+`0x00BD282C` (ASCII) and `0x00BDAAD0` (Unicode).
 
 The reconstructed code uses `char16_t` for the game's two-byte `wchar_t`.
 Member entries receive `this` in ECX. Hook replacements therefore use
@@ -130,7 +133,14 @@ Substring bounds use signed 32-bit `start + count`: a negative start is clamped
 to zero while preserving the computed end, an end beyond the input is clamped,
 and an invalid start/end releases the destination. Replace-all follows the
 original repeated substring/assignment/append sequence, preserving aliases,
-reference-count changes, and allocation order.
+reference-count changes, and allocation order. Its source search and length
+queries are C-string operations, so content beyond an embedded NUL is not a
+match candidate even when the block records a longer length.
+
+Trim and tokenization likewise call the recovered NUL-terminated whitespace /
+separator helpers for their forward scans. Trim's trailing pass starts at the
+recorded length, and tokenization computes the retained suffix length from the
+recorded length. This mixed behavior is observed rather than normalized.
 
 `0x004CBB40` uses a 0x2000-unit local buffer and passes 0x1FFF to
 `_vsnwprintf`. The framework isolates CRT and `va_list` behavior behind a
@@ -142,20 +152,28 @@ callback and then applies the observed StringBase set/release semantics.
 
 `Emulator(capture=D:\Game\Ra3\RevRa3\work\runtime_dump\run35\snapshot_3_240s)`
 
-and `ra3_stringbase2check`. For each of the 50 entries, 64 edge/random cases
+and `ra3_stringbase2check`. For each of the 50 entries, 80 edge/random cases
 compare return values, callee cleanup, aliases, full live block headers and
-areas, and ordered lock/allocation/free writes: 3,200 scenarios per
-configuration, zero mismatches. There are no floating or x87 results in this
-cluster. A checker-only deliberate mutation changes the no-case comparator;
-the oracle requires that mismatch, removes the mutation, and rechecks the
-restored result.
+areas, and ordered lock/allocation/free writes: 4,000 scenarios per
+configuration, zero mismatches. Of these, 112 dedicated trim/token/replace
+cases put an embedded NUL below the recorded length and guarantee nonzero bytes
+in unused capacity. They establish the hybrid NUL/recorded-length behavior
+above against shipped/captured execution. There are no floating or x87 results
+in this cluster. A checker-only deliberate mutation changes the no-case
+comparator; the oracle requires that mismatch, removes the mutation, and
+rechecks the restored result.
 
 Unresolved dependencies are modeled only at their observed game-level
 contracts: ASCII set `0x004CB690`, ASCII writable buffer `0x004CA970`, and
 conversion entries `0x004C9FE0` / `0x004CD890`. The accepted callers still
 execute their original shipped/captured bytes. For `0x004CA930`, the unresolved
-six-byte site is replaced only with the observed `self->data = 0` effect; lock,
-decrement, free, and unlock execute from clean shipped bytes.
+six-byte site is replaced only with the observed `self->data = 0` effect. The
+emulator therefore runs the clean shipped lock, decrement, conditional free,
+and unlock instructions around that site and compares the complete resulting
+object/block/write trace. The checker independently runs the full framework
+release. This closes the full release contract at the caller boundary, but
+claims only pointer clearing—not an implementation—for the protected six-byte
+site itself.
 
 ## Hook boundary
 
