@@ -1,0 +1,43 @@
+address	status	owner	module	notes
+006c72e0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::PassiveAreaEffectBehavior_apply; 00c11230 slot 25; slot 2 returns PassiveAreaEffectBehavior
+006c8450	reversed	recon/obj6c	gamelogic	ra3::gamelogic::StancesBehavior_latchGoal; 00c11840 slot 50; slot 2 returns StancesBehavior
+006c84e0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::HighlanderBody_readIfUnset; 00c11d28 slot 23; slot 2 returns HighlanderBody; same body at 00c11fb0 ImmortalBody, 00c12238 ManagedActiveBody, 00c124c8 ManagerBody
+006c8500	reversed	recon/obj6c	gamelogic	ra3::gamelogic::StancesBehavior_setBit; 00c11840 slot 45; slot 2 returns StancesBehavior
+006c8530	reversed	recon/obj6c	gamelogic	ra3::gamelogic::StancesBehavior_clearBit; 00c11840 slot 46; slot 2 returns StancesBehavior
+006c85e0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::HighlanderBody_applyTemplate; 00c11d28 slot 22; slot 2 returns HighlanderBody; same body at 00c11fb0 ImmortalBody, 00c12238 ManagedActiveBody, 00c124c8 ManagerBody
+006c89b0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AttributeCrateCollide_onCollide; 00c1b3f8 slot 23; slot 2 returns AttributeCrateCollide
+006c8e90	reversed	recon/obj6c	gamelogic	ra3::gamelogic::HordeContain_removeMember; 00c21a98 slot 50; slot 2 returns HordeContain
+006c9cc0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::OpenContain_removeByKey; 00c1fb90 slot 23; slot 2 returns OpenContain
+006cb3c0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::ToggleDeploySpecialAbilityUpdate_tryDeploy; 00c1e010 slot 44; slot 2 returns ToggleDeploySpecialAbilityUpdate
+006cc0c0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_followPosition; 00c22118 slot 26; slot 2 returns AIUpdateInterface
+006cc150	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_followObject; 00c22118 slot 28; slot 2 returns AIUpdateInterface
+006cc4d0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_steerState1B; 00c22118 slot 36; slot 2 returns AIUpdateInterface
+006cc530	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_tryCommand59; 00c22118 slot 60; slot 2 returns AIUpdateInterface
+006cc570	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_tryCommand5A; 00c22118 slot 61; slot 2 returns AIUpdateInterface
+006cc5b0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_weaponOrFollow; 00c22118 slot 62; slot 2 returns AIUpdateInterface
+006cc670	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_locoState0E; 00c22118 slot 67; slot 2 returns AIUpdateInterface
+006cc6b0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_placeState2D; 00c22118 slot 69; slot 2 returns AIUpdateInterface
+006cc700	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_locoState2D; 00c22118 slot 68; slot 2 returns AIUpdateInterface
+006cc740	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_locoState69; 00c22118 slot 70; slot 2 returns AIUpdateInterface
+006cc780	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_notifyPassenger; 00c22118 slot 78; slot 2 returns AIUpdateInterface
+006cc7f0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_aimState11; 00c22118 slot 93; slot 2 returns AIUpdateInterface
+006cc830	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_tailState29; 00c22118 slot 94; slot 2 returns AIUpdateInterface
+006cc870	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_tailState48; 00c22118 slot 95; slot 2 returns AIUpdateInterface
+006cc8b0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_aimState12; 00c22118 slot 96; slot 2 returns AIUpdateInterface
+006cc8f0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_locoState13; 00c22118 slot 97; slot 2 returns AIUpdateInterface
+006cc930	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_locoState14; 00c22118 slot 101; slot 2 returns AIUpdateInterface
+006cc970	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_guardRect; 00c22118 slot 81; slot 2 returns AIUpdateInterface
+006cca90	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_state18; 00c22118 slot 80; slot 2 returns AIUpdateInterface
+006ccae0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_followActor50; 00c22118 slot 82; slot 2 returns AIUpdateInterface
+006ccb50	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_followPoint50; 00c22118 slot 83; slot 2 returns AIUpdateInterface
+006ccbd0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_guardPoint4F; 00c22118 slot 85; slot 2 returns AIUpdateInterface
+006cccc0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_weaponMove3C; 00c22118 slot 84; slot 2 returns AIUpdateInterface
+006ccd40	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_matchRoster; 00c22118 slot 90; slot 2 returns AIUpdateInterface
+006ccdd0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_walkRoster; 00c22118 slot 91; slot 2 returns AIUpdateInterface
+006cce40	reversed	recon/obj6c	gamelogic	ra3::gamelogic::AIUpdateInterface_locoState38; 00c22118 slot 102; slot 2 returns AIUpdateInterface
+006d7cb0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::SpawnBehavior_update; 00c11688 slot 9; slot 2 returns SpawnBehavior
+006d9540	reversed	recon/obj6c	gamelogic	ra3::gamelogic::UnifiedControlBehavior_relay; 00bfd820 slot 9; slot 2 returns UnifiedControlBehavior
+006d9a40	reversed	recon/obj6c	gamelogic	ra3::gamelogic::StancesBehavior_setLinkedFlag; 00c11840 slot 74; slot 2 returns StancesBehavior
+006d9aa0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::StancesBehavior_setLinkedByte; 00c11840 slot 24; slot 2 returns StancesBehavior
+006d9ac0	reversed	recon/obj6c	gamelogic	ra3::gamelogic::HighlanderBody_noteHit; 00c11d28 slot 26; slot 2 returns HighlanderBody; same body at 00c11fb0 ImmortalBody, 00c12238 ManagedActiveBody, 00c124c8 ManagerBody
+006d9b80	reversed	recon/obj6c	gamelogic	ra3::gamelogic::StancesBehavior_releaseRecord; 00c11840 slot 30; slot 2 returns StancesBehavior

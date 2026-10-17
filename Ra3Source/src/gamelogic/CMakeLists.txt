@@ -58,12 +58,14 @@ ra3_add_module(gamelogic
         src/SkirmishAI8B.cpp
         include/ra3/gamelogic/ObjectUpdates78.h
         include/ra3/gamelogic/ObjectModules72.h
+        include/ra3/gamelogic/ObjectModules6C.h
         src/ObjectUpdates78.cpp
         src/AIState7B.cpp
         src/AIState79B.cpp
         src/ObjectModules72.cpp
         src/AIState7C.cpp
         src/AIState79C.cpp
+        src/ObjectModules6C.cpp
     PUBLIC_DEPS
         Ra3::sim
         Ra3::common)
