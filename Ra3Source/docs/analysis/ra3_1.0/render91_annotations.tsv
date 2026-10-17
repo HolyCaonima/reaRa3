@@ -1,0 +1,37 @@
+address	status	owner	module	notes
+008e52a0	reversed	recon/render91	render	ra3::render::setDynamicsDrawWord2FC; 00c55b00 slot 59; slot 2 returns W3DDynamicsDraw
+008e5690	reversed	recon/render91	render	ra3::render::releaseScriptedModelTerrainDecal; 00c55668 slot 17; slot 2 returns W3DScriptedModelDraw
+008e5a60	reversed	recon/render91	render	ra3::render::notifySimpleDrawBoundToObject; 00c54698 slot 3; slot 2 returns W3DLaserDraw; same pointer at 00c54790 slot 3, 00c54890 slot 3, 00c54988 slot 3
+008e8900	reversed	recon/render91	render	ra3::render::getFirstAnimationName; direct callee of 008ed6f0 at 008ed706; 008ed6f0 is 00c55668 slot 64
+008e8d50	reversed	recon/render91	render	ra3::render::isAnimationLayerComplete; direct callee of 0090ce30 at 0090d097; 0090ce30 references assertion string 00c54190
+008e8dc0	reversed	recon/render91	render	ra3::render::getScriptedModelModuleKeyOrOverride; 00c55668 slot 5
+008e8e90	reversed	recon/render91	render	ra3::render::updatePrimaryShadowTransform; 00c55668 slot 23
+008e8ec0	reversed	recon/render91	render	ra3::render::updatePrimaryShadowVisibility; 00c55668 slot 24
+008e8fd0	reversed	recon/render91	render	ra3::render::releasePrimaryShadow; 00c55668 slot 26
+008e9000	reversed	recon/render91	render	ra3::render::updateAuxShadowModule200; 00c55668 slot 29
+008e9020	reversed	recon/render91	render	ra3::render::updateSecondaryShadowTransform; 00c55668 slot 30
+008e9050	reversed	recon/render91	render	ra3::render::updateSecondaryShadowVisibility; 00c55668 slot 31
+008e9240	reversed	recon/render91	render	ra3::render::releaseSecondaryShadow; 00c55668 slot 34
+008e9270	reversed	recon/render91	render	ra3::render::releaseAuxShadowModule200; 00c55668 slot 35
+008e93b0	reversed	recon/render91	render	ra3::render::applyScriptedModelHouseColor; 00c555f0 slot 15; 009108f0 stores 00c555f0 at object+0x14 beside primary 00c55668
+008eda20	reversed	recon/render91	render	ra3::render::propagateSubObjectBoneVisibility; direct callee of 008ee8e0 at 008ee954; 008ee8e0 is direct callee of 008f3d60 at 008f3dcd; 008f3d60 is 00c555f0 slot 23
+008edb30	reversed	recon/render91	render	ra3::render::applyNamedSubObjectVisibility; direct callee of 008f70e0 at 008f72b1; 008f70e0 is 00c555f0 slot 16
+008ee860	reversed	recon/render91	render	ra3::render::applySubObjectOpacityAndRelease; direct callee of 008ee990 at 008eea0b; 008ee990 is direct callee of 008f3d60 at 008f3e2f; 008f3d60 is 00c555f0 slot 23
+008ee8e0	reversed	recon/render91	render	ra3::render::applySubObjectHideState; direct callee of 008f3d60 at 008f3dcd; 008f3d60 is 00c555f0 slot 23
+008ee990	reversed	recon/render91	render	ra3::render::updateSubObjectFadeAndVisibility; direct callee of 008f3d60 at 008f3e2f; 008f3d60 is 00c555f0 slot 23
+008eeed0	reversed	recon/render91	render	ra3::render::resetAnimationLayerSlot; direct callee of 0090ce30 at 0090ced3; 0090ce30 references assertion string 00c54190
+008f0b90	reversed	recon/render91	render	ra3::render::rbTreeEqualRangeIntKey; direct callee of 008f5cb0 at 008f5cbf; 008f5cb0 is direct callee of 008f6ed0 at 008f6f18; 008f6ed0 is 00c555f0 slot 18
+008f2700	reversed	recon/render91	render	ra3::render::stopAttachedParticleSystemsInVector; direct callee of 008f4290 at 008f42ac; 008f4290 is 00c557e8 slot 19; slot 2 returns W3DTankDraw
+008f2c10	reversed	recon/render91	render	ra3::render::updateAttachedParticleSystemsVisibility; direct callee of 008f2c60 at 008f2ce2; 008f2c60 is 00c55668 slot 19
+008f3d60	reversed	recon/render91	render	ra3::render::updateScriptedModelSubObjects; 00c555f0 slot 23
+008f5cb0	reversed	recon/render91	render	ra3::render::rbTreeCountIntKey; direct callee of 008f6ed0 at 008f6f18; 008f6ed0 is 00c555f0 slot 18
+008f6ed0	reversed	recon/render91	render	ra3::render::getSubObjectBoneCountForState; 00c555f0 slot 18
+008f95d0	reversed	recon/render91	render	ra3::render::eraseSubObjectRecords28Range; direct callee of 0090d780 at 0090d9b9; 0090d780 is 00c55668 slot 3
+00910e50	reversed	recon/render91	render	ra3::render::setScriptedModelFlag6D; 00c55668 slot 12
+00910e60	reversed	recon/render91	render	ra3::render::getScriptedModelDataFlagD3; 00c55668 slot 57
+00910e70	reversed	recon/render91	render	ra3::render::isScriptedModelActive6DOrDataD4; 00c55668 slot 22
+00910e90	reversed	recon/render91	render	ra3::render::setScriptedModelFlag6C; 00c55668 slot 20
+00910eb0	reversed	recon/render91	render	ra3::render::setScriptedModelFlag216; 00c55668 slot 56
+00910ed0	reversed	recon/render91	render	ra3::render::getScriptedModelSubInterface18; 00c55668 slot 10; same pointer also 00c55668 slot 11
+00910ee0	reversed	recon/render91	render	ra3::render::setScriptedModelFlag215; 00c55668 slot 55
+00911250	reversed	recon/render91	render	ra3::render::getDynamicsDrawSubInterface290; 00c55b00 slot 48; same pointer also 00c55b00 slot 49

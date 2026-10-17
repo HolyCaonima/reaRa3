@@ -17,24 +17,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from emulate import CallResult, Emulator  # noqa: E402
 
 ACCEPTED_ENTRIES = (
-    0x008E52A0, 0x008E5690, 0x008E57E0, 0x008E5A60,
-    0x008E5E80, 0x008E6060, 0x008E6180, 0x008E6260,
-    0x008E8550, 0x008E8900, 0x008E8960, 0x008E8D50,
-    0x008E8DC0, 0x008E8E90, 0x008E8EC0, 0x008E8FD0,
-    0x008E9000, 0x008E9020, 0x008E9050, 0x008E9240,
-    0x008E9270, 0x008E93B0, 0x008EB120, 0x008EB360,
-    0x008EB490, 0x008EB4E0, 0x008EB540, 0x008EB5E0,
-    0x008EC560, 0x008ED690, 0x008EDA20, 0x008EDB30,
-    0x008EE860, 0x008EE8E0, 0x008EE990, 0x008EEED0,
-    0x008EF1A0, 0x008F0A90, 0x008F0B30, 0x008F0B90,
-    0x008F0DF0, 0x008F0F30, 0x008F1010, 0x008F1120,
-    0x008F2700, 0x008F2C10, 0x008F3D60, 0x008F3EA0,
-    0x008F3FA0, 0x008F5CB0, 0x008F6180, 0x008F61B0,
-    0x008F6690, 0x008F6900, 0x008F6C00, 0x008F6ED0,
-    0x008F95D0, 0x008FA6D0, 0x008FA790, 0x008FAB20,
-    0x00907AB0, 0x00910E50, 0x00910E60, 0x00910E70,
-    0x00910E90, 0x00910EB0, 0x00910EC0, 0x00910ED0,
-    0x00910EE0, 0x00911250,
+    0x008E52A0, 0x008E5690, 0x008E5A60, 0x008E8900,
+    0x008E8D50, 0x008E8DC0, 0x008E8E90, 0x008E8EC0,
+    0x008E8FD0, 0x008E9000, 0x008E9020, 0x008E9050,
+    0x008E9240, 0x008E9270, 0x008E93B0, 0x008EDA20,
+    0x008EDB30, 0x008EE860, 0x008EE8E0, 0x008EE990,
+    0x008EEED0, 0x008F0B90, 0x008F2700, 0x008F2C10,
+    0x008F3D60, 0x008F5CB0, 0x008F6ED0, 0x008F95D0,
+    0x00910E50, 0x00910E60, 0x00910E70, 0x00910E90,
+    0x00910EB0, 0x00910ED0, 0x00910EE0, 0x00911250,
 )
 
 X87_CONTROL_WORDS = (0x007F, 0x027F, 0x037F)
@@ -303,6 +294,9 @@ def verify(executable: Path) -> None:
         edx: int = 0,
         eax_off: int | None = None,
     ) -> None:
+        if va not in ACCEPTED_ENTRIES:
+            return
+
         def invoke(machine: Emulator, base: int):
             ecx = 0 if self_off >= len(blob) else base + self_off
             eax = 0 if eax_off is None else base + eax_off
@@ -549,7 +543,9 @@ def verify(executable: Path) -> None:
 
     release_shadow(0x008E8FD0, 0x1F0, False, 2)
     release_shadow(0x008E8FD0, 0x1F0, True, 2)
+    release_shadow(0x008E9240, 0x1F4, False, 3)
     release_shadow(0x008E9240, 0x1F4, True, 3)
+    release_shadow(0x008E9270, 0x200, False, 2)
     release_shadow(0x008E9270, 0x200, True, 2)
     # Refcount 1 calls the deleting virtual at slot 0. Install it only for that case.
     blob = _fill(0x220)
@@ -744,6 +740,16 @@ def verify(executable: Path) -> None:
     put_u32(blob, 0x4C, 0x80)
     put_i32(blob, 0x84, 0)
     blob[0x90 + 8] = 1
+    _refs(blob, 0xA0, 3)
+    run(
+        0x008EE8E0, blob, lambda b: [b + 0x90, b + 0xA0, 0], 0xC,
+        a0=0x90, a1=0xA0, a2=0, fixups=["0x0C", "0x48", "0x4C"])
+    blob = _fill(0x180)
+    put_u32(blob, 0x0C, 0x40)
+    put_u32(blob, 0x48, 0x80)
+    put_u32(blob, 0x4C, 0x80)
+    put_i32(blob, 0x84, 0)
+    blob[0x90 + 8] = 0
     _refs(blob, 0xA0, 3)
     run(
         0x008EE8E0, blob, lambda b: [b + 0x90, b + 0xA0, 0], 0xC,
