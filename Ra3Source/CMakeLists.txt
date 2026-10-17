@@ -68,6 +68,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/displaycheck)
     add_subdirectory(tools/aistatecheck)
     add_subdirectory(tools/weaponlogiccheck)
+    add_subdirectory(tools/particles65check)
 endif()
 
 if(RA3_BUILD_TESTS)
