@@ -202,6 +202,47 @@ def claimed_rows(ref: str, base: str, head: str) -> dict[str, str]:
     return claims
 
 
+LIFTED_MARK = re.compile(r"stk\[--sp\]|wr\(env, frame|doTest\(|\bFlags fl\b|goto L_00[0-9a-fA-F]{6}"
+                         r"|std::uint32_t ecx = addressOf\(self\)")
+LIFTED_HDR = re.compile(r"^\s*//\s*0x([0-9A-Fa-f]{8})\b")
+LIFTED_INS = re.compile(r"^\s*//\s*([0-9a-f]{8})\s+[a-z]")
+CONTAINER = re.compile(r"^\s*(namespace\b|extern\s+\"C\"|(struct|class|union|enum)\b[^;(]*$)")
+
+
+def lifted_bodies(text: str) -> list[str]:
+    """VAs (or line tags) of function bodies that emulate registers/stack/flags instead of reconstructing."""
+    found: list[str] = []
+    stack: list[str] = []
+    start = None
+    lifted, first_ins, last_hdr, prev = False, None, None, ""
+    for i, line in enumerate(text.splitlines()):
+        code = line.split("//")[0]
+        m = LIFTED_HDR.match(line)
+        if m and start is None:
+            last_hdr = m.group(1).lower()
+        if start is not None:
+            lifted = lifted or bool(LIFTED_MARK.search(line))
+            mi = LIFTED_INS.match(line)
+            if mi and first_ins is None:
+                first_ins = mi.group(1)
+        for ch in code:
+            if ch == "{":
+                head = code if code.strip() != "{" else prev
+                kind = "c" if CONTAINER.match(head) else "b"
+                if start is None and kind == "b" and all(k == "c" for k in stack):
+                    start, lifted, first_ins = i, bool(LIFTED_MARK.search(line)), None
+                    stack.append("f")
+                else:
+                    stack.append(kind)
+            elif ch == "}" and stack and stack.pop() == "f":
+                if lifted:
+                    found.append(first_ins or last_hdr or f"line{start + 1}")
+                start, last_hdr = None, None
+        if code.strip():
+            prev = code
+    return found
+
+
 def changed_files(base: str, head: str) -> list[tuple[str, str]]:
     out = []
     for line in git("diff", "--name-status", "--no-renames", base, head).splitlines():
@@ -287,6 +328,7 @@ def main() -> int:
     statuses = collections.Counter()
     protection = collections.Counter()
     seen: set[str] = set()
+    counted: set[str] = set()
     annotation_files = [p for p, s in changes if s != "D" and p.startswith(DOCS)
                         and p.endswith("_annotations.tsv") and p != MAIN_ANNOTATIONS]
     for path in annotation_files:
@@ -315,6 +357,7 @@ def main() -> int:
                 continue
             if not status:
                 continue
+            counted.add(addr)
             protection[ledger[addr]["securom"] or "(none)"] += 1
             if not (row["notes"] or "").strip():
                 report.error(f"{path}: {addr} has no notes")
@@ -322,6 +365,15 @@ def main() -> int:
                 report.error(f"{path}: {addr} already claimed on {main_ref} by {main_claims[addr]}")
             if addr in sibling_claims:
                 report.error(f"{path}: {addr} also claimed by {sibling_claims[addr]}")
+
+    for path, status in changes:
+        if status == "D" or not path.startswith("Ra3Source/src/") or Path(path).suffix not in (".cpp", ".h", ".inc"):
+            continue
+        for tag in lifted_bodies(show(head, path) or ""):
+            if tag in counted:
+                report.error(f"{path}: {tag} is register/stack-emulating lifted code, not a reconstruction")
+            else:
+                report.warn(f"{path}: lifted body {tag} (not a counted row)")
 
     explicit = sum(1 for e in new_entries.values() if e["explicit"])
     print(f"branch {head}  base {base[:10]}  changed files {len(changes)}")

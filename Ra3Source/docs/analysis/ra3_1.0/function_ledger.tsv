@@ -18858,12 +18858,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007b0990	FUN_007b0990	.text	87		clean	unknown		unanalyzed	
 007b09f0	FUN_007b09f0	.text	542		clean	unknown		unanalyzed	
 007b0c10	FUN_007b0c10	.text	305		clean	unknown		unanalyzed	
-007b0d50	FUN_007b0d50	.text	200		clean	unknown		unanalyzed	
-007b0e20	FUN_007b0e20	.text	257	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
-007b0f30	FUN_007b0f30	.text	104		clean	unknown		unanalyzed	
-007b1090	FUN_007b1090	.text	180		clean	unknown		unanalyzed	
+007b0d50	FUN_007b0d50	.text	200		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::moveOntoWallMachineCtor; call 007B0E20 @007B0E89 and 007B0F30 @007B0F52; writes 00C2C400 MoveOntoWallStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007b0e20	FUN_007b0e20	.text	257	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiMoveOntoWallXfer; 00C2C468 slot 3; slot 2 returns AIMoveOntoWallState
+007b0f30	FUN_007b0f30	.text	104		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiMoveOntoWallOnEnter; 00C2C468 slot 4; slot 2 returns AIMoveOntoWallState
+007b1090	FUN_007b1090	.text	180		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiDeadOnEnter; 00C2C578 slot 4; slot 2 returns AIDeadState
 007b1150	FUN_007b1150	.text	51		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::unitAIDeadOnExit; 00c2ace0 slot 6; slot 2 returns UnitAIDeadState; also 00c2c578 slot 6 AIDeadState
-007b1190	FUN_007b1190	.text	308		clean	unknown		unanalyzed	
+007b1190	FUN_007b1190	.text	308		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiMoveAndTightenOnExit; 00C2D6D8 slot 6 AIInternalMoveToState and 00C2F4B0 slot 6 AIMoveAndTightenState; the two tables use different slot-2 getters 0079C430 and 007A2510
 007b12d0	FUN_007b12d0	.text	1071		clean	unknown		unanalyzed	
 007b1700	FUN_007b1700	.text	205		clean	unknown		unanalyzed	
 007b17d0	FUN_007b17d0	.text	62		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveToOnExit; 00c2f388 slot 6; slot 2 returns AIMoveToState
@@ -18895,7 +18895,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007b3270	FUN_007b3270	.text	475		clean	unknown		unanalyzed	
 007b3450	FUN_007b3450	.text	585		clean	unknown		unanalyzed	
 007b36a0	thunk_FUN_007b3450	.text	5		clean	unknown		unanalyzed	
-007b36b0	FUN_007b36b0	.text	165		clean	unknown		unanalyzed	
+007b36b0	FUN_007b36b0	.text	165		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiAttackMeleeHordeApproachOnExit; 00C2F800 slot 6; slot 2 returns AIAttackMeleeHordeApproachTargetState
 007b3760	FUN_007b3760	.text	476		clean	unknown		unanalyzed	
 007b3940	thunk_FUN_007b3760	.text	5		clean	unknown		unanalyzed	
 007b3950	FUN_007b3950	.text	21		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiAttackPursueTargetOnExit; 00c2f878 slot 6; slot 2 returns AIAttackPursueTargetState
@@ -18909,14 +18909,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007b3f30	FUN_007b3f30	.text	930		clean	unknown		unanalyzed	
 007b42e0	FUN_007b42e0	.text	1183		clean	unknown		unanalyzed	
 007b4780	FUN_007b4780	.text	36		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiAttackMeleeEngageUpdate; 00c2fa38 slot 5; slot 2 returns AIAttackMeleeEngageState
-007b47b0	FUN_007b47b0	.text	105		clean	unknown		unanalyzed	
-007b4820	FUN_007b4820	.text	147		clean	unknown		unanalyzed	
+007b47b0	FUN_007b47b0	.text	105		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiAttackMeleeEngageOnExit; 00C2FA38 slot 6; slot 2 returns AIAttackMeleeEngageState
+007b4820	FUN_007b4820	.text	147		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiFollowPathOnExit; 00C2FB10 slot 6; slot 2 returns AIFollowPathState
 007b48c0	FUN_007b48c0	.text	513		clean	unknown		unanalyzed	
 007b4ad0	FUN_007b4ad0	.text	214		clean	unknown		unanalyzed	
 007b4bb0	FUN_007b4bb0	.text	30		clean	unknown		unanalyzed	
-007b4bd0	FUN_007b4bd0	.text	101		clean	unknown		unanalyzed	
+007b4bd0	FUN_007b4bd0	.text	101		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiFollowPathAsTeamOnExit; 00C2FB78 slot 6; slot 2 returns AIFollowPathAsTeamState
 007b4c40	FUN_007b4c40	.text	483		clean	unknown		unanalyzed	
-007b4e30	FUN_007b4e30	.text	49		clean	unknown		unanalyzed	
+007b4e30	FUN_007b4e30	.text	49		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiMoveAndEvacuateOnExit; 00C2FBE0 slot 6; slot 2 returns AIMoveAndEvacuateState
 007b4e70	FUN_007b4e70	.text	190		clean	unknown		unanalyzed	
 007b4f30	FUN_007b4f30	.text	6		clean	unknown		unanalyzed	
 007b4f40	FUN_007b4f40	.text	78		clean	unknown		unanalyzed	
@@ -18940,7 +18940,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007b5830	FUN_007b5830	.text	72		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiPanicOnExit; 00c322b8 slot 6; slot 2 returns AIPanicState
 007b5880	FUN_007b5880	.text	292		clean	unknown		unanalyzed	
 007b59b0	FUN_007b59b0	.text	879		clean	unknown		unanalyzed	
-007b5d20	FUN_007b5d20	.text	259		clean	unknown		unanalyzed	
+007b5d20	FUN_007b5d20	.text	259		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiAttackOnExit; 00C2CCE0 slot 6; slot 2 returns AIAttackState
 007b5e30	FUN_007b5e30	.text	22		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiCombineUpdate; 00c2fe60 slot 5; slot 2 returns AICombineState
 007b5e50	FUN_007b5e50	.text	627		clean	unknown		unanalyzed	
 007b60d0	FUN_007b60d0	.text	67		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiChargeTargetOnExit; 00c2ff50 slot 6; slot 2 returns AIChargeTargetState
@@ -18949,7 +18949,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007b62d0	FUN_007b62d0	.text	27		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveAndDeleteOnExit; 00c2fc48 slot 6; slot 2 returns AIMoveAndDeleteState; also 00c2ffb8 slot 6 AIMoveToPositionAndDieState
 007b62f0	FUN_007b62f0	.text	81		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveToAndEvacuateOnExit; 00c30228 slot 6; slot 2 returns AIMoveToAndEvacuateState; also 00c30298 slot 6 AIAttackMoveToAndEvacuateState; also 00c30310 slot 6 AIMoveForBoarding
 007b6350	FUN_007b6350	.text	36		clean	unknown		unanalyzed	
-007b6380	FUN_007b6380	.text	103		clean	unknown		unanalyzed	
+007b6380	FUN_007b6380	.text	103		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiMoveForBoardingUpdate; 00C30310 slot 5; slot 2 returns AIMoveForBoarding
 007b63f0	FUN_007b63f0	.text	161		clean	unknown		unanalyzed	
 007b64a0	FUN_007b64a0	.text	131		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiDeployOnEnter; 00c2d3c8 slot 4; slot 2 returns AIDeployState
 007b6530	FUN_007b6530	.text	123		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiDeployOnExit; 00c2d3c8 slot 6; slot 2 returns AIDeployState
@@ -18957,7 +18957,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007b6670	FUN_007b6670	.text	112		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiUnDeployOnExit; 00c2d428 slot 6; slot 2 returns AIUnDeployState
 007b66e0	FUN_007b66e0	.text	105		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiTNGuardMachineXfer; 00c2d488 slot 3; slot 2 returns AITNGuardMachine
 007b6750	FUN_007b6750	.text	236		clean	unknown		unanalyzed	
-007b6840	FUN_007b6840	.text	38		clean	unknown		unanalyzed	
+007b6840	FUN_007b6840	.text	38		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::squadCtor; call 007BC050 @007BC0C8; writes 00C32318 Squad
 007b6870	FUN_007b6870	.text	6		clean	unknown		unanalyzed	
 007b6880	FUN_007b6880	.text	69		clean	unknown		unanalyzed	
 007b68d0	FUN_007b68d0	.text	73		clean	unknown		unanalyzed	
@@ -19000,24 +19000,24 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007b8410	FUN_007b8410	.text	1549		clean	unknown		unanalyzed	
 007b8a20	FUN_007b8a20	.text	32		clean	unknown		unanalyzed	
 007b8a40	FUN_007b8a40	.text	1065		clean	unknown		unanalyzed	
-007b8e70	FUN_007b8e70	.text	708		clean	unknown		unanalyzed	
+007b8e70	FUN_007b8e70	.text	708		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::aiStateMachine30480Slot18; 00C30480 slot 18; slot 2 getter 00799570 is shared with 00C30530, 00C30638 and 00C32808 and returns AIStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007b9140	FUN_007b9140	.text	888		clean	unknown		unanalyzed	
 007b94c0	FUN_007b94c0	.text	578		clean	unknown		unanalyzed	
-007b9710	FUN_007b9710	.text	266		clean	unknown		unanalyzed	
+007b9710	FUN_007b9710	.text	266		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::aiStateMachine30530Slot18; 00C30530 slot 18; slot 2 getter 00799570 is shared with 00C30480, 00C30638 and 00C32808 and returns AIStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007b9820	FUN_007b9820	.text	175		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiStateMachineSlot18; 00c305e0 slot 18; slot 2 returns AIStateMachine
-007b98d0	FUN_007b98d0	.text	1840		clean	unknown		unanalyzed	
+007b98d0	FUN_007b98d0	.text	1840		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::aiStateMachine30638Slot18; 00C30638 slot 18 and 00C32808 slot 18; both tables share slot-2 getter 00799570 (AIStateMachine), also shared with 00C30480 and 00C30530; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ba000	FUN_007ba000	.text	60		clean	unknown		unanalyzed	
 007ba03c	FUN_007ba03c	.text	26		clean	unknown		unanalyzed	
 007ba054	thunk_FUN_007ba058	.text	2		clean	unknown		unanalyzed	
 007ba058	FUN_007ba058	.text	311		clean	unknown		unanalyzed	
-007ba190	FUN_007ba190	.text	92		clean	unknown		unanalyzed	
+007ba190	FUN_007ba190	.text	92		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::disguiseAggressiveMachineCtor; call 007BA230 @007BA24D; writes 00C32B20 DisguiseAggressiveStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ba1f0	FUN_007ba1f0	.text	6		clean	unknown		unanalyzed	
 007ba200	FUN_007ba200	.text	36		clean	unknown		unanalyzed	
-007ba230	FUN_007ba230	.text	40		clean	unknown		unanalyzed	
-007ba260	FUN_007ba260	.text	306		clean	unknown		unanalyzed	
+007ba230	FUN_007ba230	.text	40		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::unitAIDisguiseAggressiveSlot19; 00C30690 slot 19; slot 2 returns UnitAIDisguiseAggressiveState
+007ba260	FUN_007ba260	.text	306		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::heliEvacuateMachineCtor; call 007BA3E0 @007BA3FD; writes 00C32B88 HeliEvacuateStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ba3a0	FUN_007ba3a0	.text	6		clean	unknown		unanalyzed	
 007ba3b0	FUN_007ba3b0	.text	36		clean	unknown		unanalyzed	
-007ba3e0	FUN_007ba3e0	.text	40		clean	unknown		unanalyzed	
+007ba3e0	FUN_007ba3e0	.text	40		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::unitAIHeliEvacuateSlot19; 00C2D9A8 slot 19; slot 2 returns UnitAIHeliEvacuateState
 007ba410	FUN_007ba410	.text	349		clean	unknown		unanalyzed	
 007ba570	FUN_007ba570	.text	6		clean	unknown		unanalyzed	
 007ba580	FUN_007ba580	.text	36		clean	unknown		unanalyzed	
@@ -19030,17 +19030,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007ba784	FUN_007ba784	.text	35		clean	unknown		unanalyzed	
 007ba7b0	FUN_007ba7b0	.text	6		clean	unknown		unanalyzed	
 007ba7c0	FUN_007ba7c0	.text	36		clean	unknown		unanalyzed	
-007ba7f0	FUN_007ba7f0	.text	315		clean	unknown		unanalyzed	
+007ba7f0	FUN_007ba7f0	.text	315		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::jetAttackMoveFollowPathMachineCtor; call 007BA940 @007BA95D; writes 00C32D30 JetAttackMoveFollowPathAsTeamStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ba930	FUN_007ba930	.text	6		clean	unknown		unanalyzed	
-007ba940	FUN_007ba940	.text	40		clean	unknown		unanalyzed	
-007ba970	FUN_007ba970	.text	317		clean	unknown		unanalyzed	
+007ba940	FUN_007ba940	.text	40		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::jetAIAttackMoveFollowPathSlot19; 00C30A10 slot 19; slot 2 returns JetAIAttackMoveFollowPathAsTeamState
+007ba970	FUN_007ba970	.text	317		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::jetAttackMoveFollowWaypointMachineCtor; call 007BAAF0 @007BAB0D; writes 00C32DE0 JetAttackMoveFollowWaypointPathStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007baab0	FUN_007baab0	.text	6		clean	unknown		unanalyzed	
 007baac0	FUN_007baac0	.text	36		clean	unknown		unanalyzed	
-007baaf0	FUN_007baaf0	.text	40		clean	unknown		unanalyzed	
-007bab20	FUN_007bab20	.text	264		clean	unknown		unanalyzed	
+007baaf0	FUN_007baaf0	.text	40		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::jetAIAttackMoveFollowWaypointSlot19; 00C30A88 slot 19; slot 2 returns JetAIAttackMoveFollowWaypointPathState
+007bab20	FUN_007bab20	.text	264		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::jetAttackMoveToGoalMachineCtor; call 007BAC70 @007BAC8D; writes 00C32E80 JetAttackMoveToGoalStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bac30	FUN_007bac30	.text	6		clean	unknown		unanalyzed	
 007bac40	FUN_007bac40	.text	36		clean	unknown		unanalyzed	
-007bac70	FUN_007bac70	.text	40		clean	unknown		unanalyzed	
+007bac70	FUN_007bac70	.text	40		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::jetAIAttackMoveToGoalSlot19; 00C2DBD0 slot 19; slot 2 returns JetAIAttackMoveToGoalState
 007baca0	FUN_007baca0	.text	210		clean	unknown		unanalyzed	
 007bad80	FUN_007bad80	.text	6		clean	unknown		unanalyzed	
 007bad90	FUN_007bad90	.text	36		clean	unknown		unanalyzed	
@@ -19055,38 +19055,38 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007bb180	FUN_007bb180	.text	236		clean	unknown		unanalyzed	
 007bb270	FUN_007bb270	.text	6		clean	unknown		unanalyzed	
 007bb280	FUN_007bb280	.text	36		clean	unknown		unanalyzed	
-007bb2b0	FUN_007bb2b0	.text	382		clean	unknown		unanalyzed	
+007bb2b0	FUN_007bb2b0	.text	382		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::jetMoveToGoalMachineCtor; call 007BB470 @007BB48D; writes 00C33208 JetMoveToGoalStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bb430	FUN_007bb430	.text	6		clean	unknown		unanalyzed	
 007bb440	FUN_007bb440	.text	36		clean	unknown		unanalyzed	
-007bb470	FUN_007bb470	.text	40		clean	unknown		unanalyzed	
+007bb470	FUN_007bb470	.text	40		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::jetAIMoveToGoalSlot19; 00C2DCB0 slot 19; slot 2 returns JetAIMoveToGoalState
 007bb4a0	FUN_007bb4a0	.text	83		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::unitAILandOnExit; 00c30b70 slot 6; slot 2 returns UnitAILandState
-007bb500	FUN_007bb500	.text	205		clean	unknown		unanalyzed	
+007bb500	FUN_007bb500	.text	205		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::moveToRallyPointMachineCtor; call 007BB610 @007BB62D; writes 00C33270 MoveToRallyPointStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bb5d0	FUN_007bb5d0	.text	6		clean	unknown		unanalyzed	
 007bb5e0	FUN_007bb5e0	.text	36		clean	unknown		unanalyzed	
-007bb610	FUN_007bb610	.text	40		clean	unknown		unanalyzed	
+007bb610	FUN_007bb610	.text	40		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::unitAIMoveToRallyPointSlot19; 00C2DD18 slot 19; slot 2 returns UnitAIMoveToRallyPointState
 007bb640	FUN_007bb640	.text	601		clean	unknown		unanalyzed	
 007bb8a0	FUN_007bb8a0	.text	6		clean	unknown		unanalyzed	
 007bb8b0	FUN_007bb8b0	.text	36		clean	unknown		unanalyzed	
 007bb8e0	FUN_007bb8e0	.text	77		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::unitAIReturnForLandingSlot19; 00c2de50 slot 19; slot 2 returns UnitAIReturnForLandingState
 007bb930	FUN_007bb930	.text	137		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::unitAITakeOffOnExit; 00c30bd0 slot 6; slot 2 returns UnitAITakeOffState
 007bb9c0	FUN_007bb9c0	.text	525		clean	unknown		unanalyzed	
-007bbbd0	FUN_007bbbd0	.text	162		clean	unknown		unanalyzed	
-007bbc80	FUN_007bbc80	.text	160		clean	unknown		unanalyzed	
-007bbd20	FUN_007bbd20	.text	171		clean	unknown		unanalyzed	
+007bbbd0	FUN_007bbbd0	.text	162		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::turretAIIdleScanUpdate; 00C29B80 slot 5; slot 2 returns TurretAIIdleScanState
+007bbc80	FUN_007bbc80	.text	160		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::turretAIRecenterUpdate; 00C29BE8 slot 5; slot 2 returns TurretAIRecenterTurretState
+007bbd20	FUN_007bbd20	.text	171		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::attackMoveFollowPathMachineCtor; call 007BBE10 @007BBE2D; writes 00C333D0 AttackMoveFollowPathAsTeamStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bbdd0	FUN_007bbdd0	.text	6		clean	unknown		unanalyzed	
 007bbde0	FUN_007bbde0	.text	36		clean	unknown		unanalyzed	
-007bbe10	FUN_007bbe10	.text	40		clean	unknown		unanalyzed	
-007bbe40	FUN_007bbe40	.text	175		clean	unknown		unanalyzed	
+007bbe10	FUN_007bbe10	.text	40		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::unitAIAttackMoveFollowPathSlot19; 00C30F50 slot 19; slot 2 returns UnitAIAttackMoveFollowPathAsTeamState
+007bbe40	FUN_007bbe40	.text	175		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::attackMoveFollowWaypointMachineCtor; call 007BBF00 @007BBF1D; writes 00C33478 AttackMoveFollowWaypointPathStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bbef0	FUN_007bbef0	.text	6		clean	unknown		unanalyzed	
-007bbf00	FUN_007bbf00	.text	40		clean	unknown		unanalyzed	
-007bbf30	FUN_007bbf30	.text	168		clean	unknown		unanalyzed	
+007bbf00	FUN_007bbf00	.text	40		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::unitAIAttackMoveFollowWaypointSlot19; 00C30FC8 slot 19; slot 2 returns UnitAIAttackMoveFollowWaypointPathState
+007bbf30	FUN_007bbf30	.text	168		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::attackMoveToGoalMachineCtor; call 007BC020 @007BC03D; writes 00C33518 AttackMoveToGoalStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bbfe0	FUN_007bbfe0	.text	6		clean	unknown		unanalyzed	
 007bbff0	FUN_007bbff0	.text	36		clean	unknown		unanalyzed	
-007bc020	FUN_007bc020	.text	40		clean	unknown		unanalyzed	
-007bc050	FUN_007bc050	.text	168		clean	unknown		unanalyzed	
-007bc100	FUN_007bc100	.text	162		clean	unknown		unanalyzed	
+007bc020	FUN_007bc020	.text	40		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::unitAIAttackMoveToGoalSlot19; 00C2E2F8 slot 19; slot 2 returns UnitAIAttackMoveToGoalState
+007bc050	FUN_007bc050	.text	168		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::attackSquadMachineXfer; 00C2E440 slot 3; slot 2 returns AttackSquadStateMachine
+007bc100	FUN_007bc100	.text	162		clean	gamelogic	recon/aistate7b2	unanalyzed	ra3::gamelogic::combinedUnitMachineCtor; call 007BC1C0 @007BC1DD; writes 00C33580 AICombinedUnitStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bc1b0	FUN_007bc1b0	.text	6		clean	unknown		unanalyzed	
-007bc1c0	FUN_007bc1c0	.text	40		clean	unknown		unanalyzed	
+007bc1c0	FUN_007bc1c0	.text	40		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::unitAICombinedUnitSlot19; 00C2E508 slot 19; slot 2 returns UnitAICombinedUnitState
 007bc1f0	FUN_007bc1f0	.text	304		clean	unknown		unanalyzed	
 007bc320	FUN_007bc320	.text	53		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiFollowExitProductionPathSlot19; 00c31210 slot 19; slot 2 returns AIFollowExitProductionPathState
 007bc360	FUN_007bc360	.text	344		clean	unknown		unanalyzed	
@@ -19098,13 +19098,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007bc6e0	FUN_007bc6e0	.text	2450		clean	unknown		unanalyzed	
 007bd080	FUN_007bd080	.text	1094		clean	unknown		unanalyzed	
 007bd4d0	FUN_007bd4d0	.text	471		clean	unknown		unanalyzed	
-007bd6b0	FUN_007bd6b0	.text	177		clean	unknown		unanalyzed	
+007bd6b0	FUN_007bd6b0	.text	177		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiDockApproachUpdate; 00C31AA8 slot 5; slot 2 returns AIDockApproachState
 007bd770	FUN_007bd770	.text	48		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiInternalMoveTo31B10Update; 00c31b10 slot 5; slot 2 returns AIInternalMoveToState
 007bd7a0	FUN_007bd7a0	.text	130		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiDockApproachOnExit; 00c31aa8 slot 6; slot 2 returns AIDockApproachState; also 00c31b10 slot 6 AIInternalMoveToState
 007bd830	FUN_007bd830	.text	79		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiInternalMoveTo31B60Update; 00c31b60 slot 5; slot 2 returns AIInternalMoveToState
 007bd880	FUN_007bd880	.text	130		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiInternalMoveTo31B60OnExit; 00c31b60 slot 6; slot 2 returns AIInternalMoveToState
 007bd910	FUN_007bd910	.text	97		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiInternalMoveTo31BB0Update; 00c31bb0 slot 5; slot 2 returns AIInternalMoveToState
-007bd980	FUN_007bd980	.text	184		clean	unknown		unanalyzed	
+007bd980	FUN_007bd980	.text	184		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiInternalMoveTo31BB0OnExit; 00C31BB0 slot 6; slot 2 returns AIInternalMoveToState
 007bda40	FUN_007bda40	.text	79		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiInternalMoveTo31C00Update; 00c31c00 slot 5; slot 2 returns AIInternalMoveToState
 007bda90	FUN_007bda90	.text	107		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiInternalMoveTo31C00OnExit; 00c31c00 slot 6; slot 2 returns AIInternalMoveToState
 007bdb00	FUN_007bdb00	.text	130		clean	unknown		unanalyzed	
@@ -19113,8 +19113,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007bdc20	FUN_007bdc20	.text	106		clean	unknown		unanalyzed	
 007bdce0	FUN_007bdce0	.text	135		clean	unknown		unanalyzed	
 007bdd70	FUN_007bdd70	.text	105		clean	unknown		unanalyzed	
-007bdde0	FUN_007bdde0	.text	218		clean	unknown		unanalyzed	
-007bdec0	FUN_007bdec0	.text	36		clean	unknown		unanalyzed	
+007bdde0	FUN_007bdde0	.text	218		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiGroupXfer; 00C33664 slot 3; slot 2 returns AIGroup
+007bdec0	FUN_007bdec0	.text	36		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiGuardMoveToAttackOnExit; 00C31CA0 slot 6; slot 2 returns AIGuardMoveToAttack
 007bdef0	FUN_007bdef0	.text	33		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiGuardReturnUpdate; 00c31d08 slot 5; slot 2 returns AIGuardReturnState
 007bdf20	thunk_FUN_007b1190	.text	5		clean	unknown		unanalyzed	
 007bdf30	FUN_007bdf30	.text	231		clean	unknown		unanalyzed	
@@ -19129,7 +19129,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007beb40	FUN_007beb40	.text	122		clean	unknown		unanalyzed	
 007bebc0	FUN_007bebc0	.text	6		clean	unknown		unanalyzed	
 007bebd0	FUN_007bebd0	.text	686		clean	unknown		unanalyzed	
-007bee80	FUN_007bee80	.text	100		clean	unknown		unanalyzed	
+007bee80	FUN_007bee80	.text	100		clean	gamelogic	recon/aistate7b2	reversed	ra3::gamelogic::aiSkirmishPlayerSlot12; 00C33718 slot 12; slot 2 returns AISkirmishPlayer
 007beef0	FUN_007beef0	.text	611	SageEngine\source\GameEngine\gamelogic\ai\AISkirmishPlayer.cpp	clean	gamelogic		unanalyzed	
 007bf160	FUN_007bf160	.text	108		clean	unknown		unanalyzed	
 007bf1d0	FUN_007bf1d0	.text	6		clean	unknown		unanalyzed	
@@ -19155,9 +19155,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007c1d20	FUN_007c1d20	.text	1323		clean	unknown		unanalyzed	
 007c2250	FUN_007c2250	.text	482		clean	unknown		unanalyzed	
 007c2440	FUN_007c2440	.text	456		clean	unknown		unanalyzed	
-007c2610	FUN_007c2610	.text	195		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIAttackFireDuringApproachState_onEnter; 00c2f8e8 slot 4; slot 2 returns AIAttackFireDuringApproachState
+007c2610	FUN_007c2610	.text	195		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIAttackFireDuringApproachState_onEnter; 00c2f8e8 slot 4; slot 2 returns AIAttackFireDuringApproachState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c26e0	FUN_007c26e0	.text	755		clean	unknown		unanalyzed	
-007c29e0	FUN_007c29e0	.text	214		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIAttackMeleeSquishState_onEnter; 00c2f9c8 slot 4; slot 2 returns AIAttackMeleeSquishState
+007c29e0	FUN_007c29e0	.text	214		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIAttackMeleeSquishState_onEnter; 00c2f9c8 slot 4; slot 2 returns AIAttackMeleeSquishState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c2ac0	FUN_007c2ac0	.text	440		clean	unknown		unanalyzed	
 007c2c80	FUN_007c2c80	.text	28		clean	gamelogic	recon/gamelogic7c	reversed	AIPickUpCrateState::update (vtable 0x00C2FAA8 slot 5, 0x00C30160 slot 5; decrements delay counter at +0x50 while positive, then delegates to 0x007B12D0; 6 oracle cases)
 007c2ca0	FUN_007c2ca0	.text	300		clean	unknown		unanalyzed	
@@ -19165,11 +19165,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007c2f80	FUN_007c2f80	.text	1424		clean	unknown		unanalyzed	
 007c3520	FUN_007c3520	.text	87		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveAndEvacuateState::onEnter (vtable 0x00C2FBE0 slot 4; caches owner position at +0x50..+0x58, resolves goal or machine position into +0x20..+0x28, and starts move via 0x007C08A0; 6 oracle cases; explicitOnly hook)
 007c3580	FUN_007c3580	.text	30		clean	unknown		unanalyzed	
-007c35a0	FUN_007c35a0	.text	209		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIAttackMoveToState_onEnter; 00c32180 slot 4; slot 2 returns AIAttackMoveToState
+007c35a0	FUN_007c35a0	.text	209		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIAttackMoveToState_onEnter; 00c32180 slot 4; slot 2 returns AIAttackMoveToState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c3680	FUN_007c3680	.text	181		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveAndDeleteState::onEnter (vtable 0x00C2FC48 slot 4; locks parent machine via 0x005AA240, sets +0x50=1 and owner status bits 0x8F/0x97, and starts move via 0x007C08A0; 10 oracle cases; explicitOnly hook)
 007c3740	FUN_007c3740	.text	630		clean	unknown		unanalyzed	
 007c39c0	FUN_007c39c0	.text	30		clean	gamelogic	recon/gamelogic7c	reversed	AIFollowWaypointPathStateAndEvacuate::onEnter (vtable 0x00C324D0 slot 4; sets AIUpdate mode 5 via 0x007527C0 and delegates to base waypoint onEnter 0x007C3740; 4 oracle cases)
-007c39e0	FUN_007c39e0	.text	330		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIFollowWaypointPathExactState_onEnter; 00c2fd20 slot 4; slot 2 returns AIFollowWaypointPathExactState
+007c39e0	FUN_007c39e0	.text	330		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIFollowWaypointPathExactState_onEnter; 00c2fd20 slot 4; slot 2 returns AIFollowWaypointPathExactState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c3b30	FUN_007c3b30	.text	30		clean	unknown		unanalyzed	
 007c3b50	FUN_007c3b50	.text	33		clean	gamelogic	recon/gamelogic7c	reversed	AIAttackFollowWaypointPathState::onEnter (vtable 0x00C321E8 slot 4; clears and resets sub-machine at +0x6C to state 0 before delegating to 0x007C3740; 4 oracle cases)
 007c3b80	FUN_007c3b80	.text	297	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
@@ -19177,25 +19177,25 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007c3dd0	FUN_007c3dd0	.text	315	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
 007c3f10	FUN_007c3f10	.text	294	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
 007c4040	FUN_007c4040	.text	370		clean	unknown		unanalyzed	
-007c41c0	FUN_007c41c0	.text	93		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIAimFireState_onEnter; 00c2c910 slot 4; slot 2 returns AIAimFireState
-007c4220	FUN_007c4220	.text	188		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIAimFireState_update; 00c2c910 slot 5; slot 2 returns AIAimFireState
+007c41c0	FUN_007c41c0	.text	93		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIAimFireState_onEnter; 00c2c910 slot 4; slot 2 returns AIAimFireState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007c4220	FUN_007c4220	.text	188		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIAimFireState_update; 00c2c910 slot 5; slot 2 returns AIAimFireState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c42e0	FUN_007c42e0	.text	184		clean	gamelogic	recon/gamelogic7c	reversed	AIDockState::xfer (vtable 0x00C2CDE8 slot 3; serializes version 1, lazily constructs 0x84-byte dock sub-machine via 0x007BD4D0 on load, and xfers +0x24/+0x25 flags; 10 oracle cases)
 007c43a0	FUN_007c43a0	.text	161		clean	gamelogic	recon/gamelogic7c	reversed	AIDockState::onEnter (vtable 0x00C2CDE8 slot 4; saves/updates AIUpdate +0x434 via sub-module vtable +0x1C4/+0x84, checks target via 0x00687810, and initializes 0x84-byte sub-machine; 10 oracle cases)
 007c4450	FUN_007c4450	.text	184		clean	gamelogic	recon/gamelogic7c	reversed	AIHarvestState::xfer (vtable 0x00C2CE40 slot 3; serializes version 1, lazily constructs 0x80-byte harvest sub-machine via 0x007BE020 on load, and xfers +0x24/+0x25 flags; 10 oracle cases)
 007c4510	FUN_007c4510	.text	161		clean	gamelogic	recon/gamelogic7c	reversed	AIHarvestState::onEnter (vtable 0x00C2CE40 slot 4; constructs 0x80-byte sub-machine via 0x007BE020, sets goal position/object, updates AIUpdate +0x434, and invokes sub-machine slot +0x14; 10 oracle cases)
-007c45c0	FUN_007c45c0	.text	314		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIEnterState_onEnter; 00c2fe00 slot 4; slot 2 returns AIEnterState
-007c4700	FUN_007c4700	.text	282		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIEnterAndAttackState_onEnter; 00c2fec0 slot 4; slot 2 returns AIEnterAndAttackState
+007c45c0	FUN_007c45c0	.text	314		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIEnterState_onEnter; 00c2fe00 slot 4; slot 2 returns AIEnterState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007c4700	FUN_007c4700	.text	282		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIEnterAndAttackState_onEnter; 00c2fec0 slot 4; slot 2 returns AIEnterAndAttackState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c4820	FUN_007c4820	.text	148		clean	gamelogic	recon/gamelogic7c	reversed	AIGuardRetaliateState::xfer (vtable 0x00C2D1C8 slot 3; serializes version 1 and lazily constructs 0x90-byte retaliate sub-machine via 0x007BDF30; 10 oracle cases)
 007c48c0	FUN_007c48c0	.text	124		clean	gamelogic	recon/gamelogic7c	reversed	AIGuardRetaliateState::onEnter (vtable 0x00C2D1C8 slot 4; constructs 0x90-byte sub-machine via 0x007BDF30, copies unit machine goal position/ID via 0x00683570/0x00683550, and enters slot +0x14; 8 oracle cases)
 007c4940	FUN_007c4940	.text	329		clean	unknown		unanalyzed	
-007c4a90	FUN_007c4a90	.text	333		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIChargeTargetState_update; 00c2ff50 slot 5; slot 2 returns AIChargeTargetState
+007c4a90	FUN_007c4a90	.text	333		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIChargeTargetState_update; 00c2ff50 slot 5; slot 2 returns AIChargeTargetState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c4be0	FUN_007c4be0	.text	80		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveToPositionAndDieState::onEnter (vtable 0x00C2FFB8 slot 4; locks machine via 0x005AA240, copies goal or machine position to +0x20, sets +0x50=1, and starts move via 0x007C08A0; 6 oracle cases; explicitOnly hook)
-007c4c30	FUN_007c4c30	.text	243		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIMoveToPositionAndEnterState_onEnter; 00c301b8 slot 4; slot 2 returns AIMoveToPositionAndEnterState
+007c4c30	FUN_007c4c30	.text	243		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIMoveToPositionAndEnterState_onEnter; 00c301b8 slot 4; slot 2 returns AIMoveToPositionAndEnterState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c4d30	FUN_007c4d30	.text	129		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveToAndEvacuateState::onEnter (vtable 0x00C30228 slot 4, 0x00C30298 slot 4; sets AIUpdate mode 5 via 0x007527C0 and chains to AIMoveToState::onEnter_007C0AD0 when 3D distance exceeds 0.1f; 12 oracle cases)
 007c4dc0	FUN_007c4dc0	.text	30		clean	gamelogic	recon/gamelogic7c	reversed	AIFollowPathAndEvacuateState::onEnter (vtable 0x00C30028 slot 4; sets AIUpdate mode 5 via 0x007527C0 and chains to follow-path onEnter 0x007C2CA0; 4 oracle cases)
 007c4de0	FUN_007c4de0	.text	30		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveForBoarding::onEnter (vtable 0x00C30310 slot 4; sets AIUpdate mode 5 via 0x007527C0 and chains to AIMoveToState::onEnter_007C0AD0; 8 oracle cases)
-007c4e00	FUN_007c4e00	.text	220		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIBurningDeathState_onEnter; 00c30098 slot 4; slot 2 returns AIBurningDeathState
-007c4ee0	FUN_007c4ee0	.text	120		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIBurningDeathState_update; 00c30098 slot 5; slot 2 returns AIBurningDeathState
+007c4e00	FUN_007c4e00	.text	220		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIBurningDeathState_onEnter; 00c30098 slot 4; slot 2 returns AIBurningDeathState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007c4ee0	FUN_007c4ee0	.text	120		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIBurningDeathState_update; 00c30098 slot 5; slot 2 returns AIBurningDeathState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c4f60	FUN_007c4f60	.text	450		clean	unknown		unanalyzed	
 007c5170	FUN_007c5170	.text	120		clean	unknown		unanalyzed	
 007c5210	FUN_007c5210	.text	100		clean	unknown		unanalyzed	
@@ -19250,24 +19250,24 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007c7370	FUN_007c7370	.text	36		clean	unknown		unanalyzed	
 007c73a0	FUN_007c73a0	.text	399		clean	unknown		unanalyzed	
 007c7530	FUN_007c7530	.text	669		clean	unknown		unanalyzed	
-007c77d0	FUN_007c77d0	.text	203		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::UnitAIMoveToRallyPointState_onEnter; 00c2dd18 slot 4; slot 2 returns UnitAIMoveToRallyPointState
+007c77d0	FUN_007c77d0	.text	203		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::UnitAIMoveToRallyPointState_onEnter; 00c2dd18 slot 4; slot 2 returns UnitAIMoveToRallyPointState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c78a0	FUN_007c78a0	.text	221		clean	unknown		unanalyzed	
-007c7980	FUN_007c7980	.text	151		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::UnitAIReturnForLandingState_onEnter; 00c2de50 slot 4; slot 2 returns UnitAIReturnForLandingState
+007c7980	FUN_007c7980	.text	151		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::UnitAIReturnForLandingState_onEnter; 00c2de50 slot 4; slot 2 returns UnitAIReturnForLandingState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c7a20	FUN_007c7a20	.text	519		clean	unknown		unanalyzed	
 007c7c30	FUN_007c7c30	.text	693		clean	unknown		unanalyzed	
 007c7ef0	FUN_007c7ef0	.text	139		clean	unknown		unanalyzed	
 007c7f80	FUN_007c7f80	.text	345		clean	unknown		unanalyzed	
 007c80e0	FUN_007c80e0	.text	468		clean	unknown		unanalyzed	
 007c82c0	FUN_007c82c0	.text	389		clean	unknown		unanalyzed	
-007c8450	FUN_007c8450	.text	212		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::SA_AIApproachTargetState_onEnter; 00c30e48 slot 4; slot 2 returns SA_AIApproachTargetState
+007c8450	FUN_007c8450	.text	212		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::SA_AIApproachTargetState_onEnter; 00c30e48 slot 4; slot 2 returns SA_AIApproachTargetState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c8530	FUN_007c8530	.text	132		clean	unknown		unanalyzed	
-007c85c0	FUN_007c85c0	.text	277		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::UnitAIAttackBlockingObjectState_onEnter; 00c30ee0 slot 4; slot 2 returns UnitAIAttackBlockingObjectState
+007c85c0	FUN_007c85c0	.text	277		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::UnitAIAttackBlockingObjectState_onEnter; 00c30ee0 slot 4; slot 2 returns UnitAIAttackBlockingObjectState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c86e0	FUN_007c86e0	.text	145		clean	gamelogic	recon/gamelogic7c	reversed	UnitAIAttackBlockingObjectState::onExit (vtable 0x00C30EE0 slot 6; cleans up blocking target via 0x0050B5F0/0x006C0F40, clears +0x2C, and clears sub-machine at +0x20; 8 oracle cases)
 007c8780	FUN_007c8780	.text	360		clean	unknown		unanalyzed	
 007c88f0	FUN_007c88f0	.text	6		clean	unknown		unanalyzed	
 007c8900	FUN_007c8900	.text	36		clean	unknown		unanalyzed	
 007c89e0	FUN_007c89e0	.text	36		clean	unknown		unanalyzed	
-007c8a10	FUN_007c8a10	.text	187		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::UnitAICombinedUnitState_update; 00c2e508 slot 5; slot 2 returns UnitAICombinedUnitState
+007c8a10	FUN_007c8a10	.text	187		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::UnitAICombinedUnitState_update; 00c2e508 slot 5; slot 2 returns UnitAICombinedUnitState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c8ad0	FUN_007c8ad0	.text	440		clean	unknown		unanalyzed	
 007c8c90	FUN_007c8c90	.text	169		clean	gamelogic	recon/gamelogic7c	reversed	UnitAIEnterAndDieState::onEnter (vtable 0x00C2AF38 slot 4; resolves goal object via 0x005B9F30/0x004DE030/0x0050B5F0 and invokes contain module vtable +0x40(owner, 0); 8 oracle cases)
 007c8d40	FUN_007c8d40	.text	153		clean	gamelogic	recon/gamelogic7c	reversed	UnitAIFindReplacementState::onEnter (vtable 0x00C2B0D8 slot 4; resolves replacement target via 0x005B9F30/0x004DE030/0x0050B5F0 and invokes contain module vtable +0x98(owner); 8 oracle cases)
@@ -19283,13 +19283,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007c9180	FUN_007c9180	.text	81		clean	unknown		unanalyzed	
 007c91e0	FUN_007c91e0	.text	159		clean	unknown		unanalyzed	
 007c9280	FUN_007c9280	.text	40		clean	gamelogic	recon/gamelogic7c	reversed	UnitAIHoldGroundState::createSubMachine (vtable 0x00C2EB68 slot 19; allocates 0x80 bytes via 0x00416820 and constructs hold-ground sub-machine via 0x007C91E0; 6 oracle cases)
-007c92b0	FUN_007c92b0	.text	190		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::UnitAIIsBlockedByWall_onEnter; 00c2b560 slot 4; slot 2 returns UnitAIIsBlockedByWall
-007c9370	FUN_007c9370	.text	134		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIMoveToAndCollectState_onEnter; 00c31488 slot 4; slot 2 returns AIMoveToAndCollectState
-007c9400	FUN_007c9400	.text	275		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::UnitAIMoveToGoalState_update; 00c31668 slot 5; slot 2 returns UnitAIMoveToGoalState
+007c92b0	FUN_007c92b0	.text	190		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::UnitAIIsBlockedByWall_onEnter; 00c2b560 slot 4; slot 2 returns UnitAIIsBlockedByWall; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007c9370	FUN_007c9370	.text	134		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIMoveToAndCollectState_onEnter; 00c31488 slot 4; slot 2 returns AIMoveToAndCollectState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007c9400	FUN_007c9400	.text	275		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::UnitAIMoveToGoalState_update; 00c31668 slot 5; slot 2 returns UnitAIMoveToGoalState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c9520	FUN_007c9520	.text	271		clean	unknown		unanalyzed	
-007c9630	FUN_007c9630	.text	243		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::UnitAIReturnToSourceAndEnterState_onEnter; 00c2f1d0 slot 4; slot 2 returns UnitAIReturnToSourceAndEnterState
+007c9630	FUN_007c9630	.text	243		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::UnitAIReturnToSourceAndEnterState_onEnter; 00c2f1d0 slot 4; slot 2 returns UnitAIReturnToSourceAndEnterState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c9730	FUN_007c9730	.text	245		clean	unknown		unanalyzed	
-007c9830	FUN_007c9830	.text	162		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::UnitAIStartMoveState_onEnter; 00c2b8b8 slot 4; slot 2 returns UnitAIStartMoveState
+007c9830	FUN_007c9830	.text	162		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::UnitAIStartMoveState_onEnter; 00c2b8b8 slot 4; slot 2 returns UnitAIStartMoveState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007c98e0	FUN_007c98e0	.text	188		clean	unknown		unanalyzed	
 007c99a0	FUN_007c99a0	.text	540		clean	unknown		unanalyzed	
 007c9bc0	FUN_007c9bc0	.text	148		clean	unknown		unanalyzed	
@@ -19297,27 +19297,27 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007c9cc0	FUN_007c9cc0	.text	45		clean	unknown		unanalyzed	
 007c9cf0	FUN_007c9cf0	.text	100		clean	unknown		unanalyzed	
 007c9d60	FUN_007c9d60	.text	140		clean	unknown		unanalyzed	
-007c9df0	FUN_007c9df0	.text	162		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIDockApproachState_onEnter; 00c31aa8 slot 4; slot 2 returns AIDockApproachState
-007c9ea0	FUN_007c9ea0	.text	153		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIInternalMoveToState_onEnter; 00c31b10 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller)
-007c9f40	FUN_007c9f40	.text	174		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIInternalMoveToState_onEnter_007c9f40; 00c31b60 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller)
-007c9ff0	FUN_007c9ff0	.text	215		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIInternalMoveToState_onEnter_007c9ff0; 00c31bb0 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller)
+007c9df0	FUN_007c9df0	.text	162		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIDockApproachState_onEnter; 00c31aa8 slot 4; slot 2 returns AIDockApproachState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007c9ea0	FUN_007c9ea0	.text	153		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIInternalMoveToState_onEnter; 00c31b10 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller); demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007c9f40	FUN_007c9f40	.text	174		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIInternalMoveToState_onEnter_007c9f40; 00c31b60 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller); demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007c9ff0	FUN_007c9ff0	.text	215		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIInternalMoveToState_onEnter_007c9ff0; 00c31bb0 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller); demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ca0d0	FUN_007ca0d0	.text	176		clean	unknown		unanalyzed	
-007ca180	FUN_007ca180	.text	159		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIInternalMoveToState_onEnter_007ca180; 00c31c00 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller)
+007ca180	FUN_007ca180	.text	159		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIInternalMoveToState_onEnter_007ca180; 00c31c00 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller); demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ca220	FUN_007ca220	.text	30		clean	unknown		unanalyzed	
 007ca240	FUN_007ca240	.text	182	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 007ca300	FUN_007ca300	.text	346		clean	unknown		unanalyzed	
-007ca460	FUN_007ca460	.text	195		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIGuardMoveToAttack_onEnter; 00c31ca0 slot 4; slot 2 returns AIGuardMoveToAttack
+007ca460	FUN_007ca460	.text	195		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIGuardMoveToAttack_onEnter; 00c31ca0 slot 4; slot 2 returns AIGuardMoveToAttack; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ca530	FUN_007ca530	.text	321		clean	unknown		unanalyzed	
-007ca680	FUN_007ca680	.text	305		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIGuardReturnState_onEnter; 00c31d70 slot 4; slot 2 returns AIGuardReturnState
-007ca7c0	FUN_007ca7c0	.text	252		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIGuardReturnState_update; 00c31d70 slot 5; slot 2 returns AIGuardReturnState
+007ca680	FUN_007ca680	.text	305		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIGuardReturnState_onEnter; 00c31d70 slot 4; slot 2 returns AIGuardReturnState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007ca7c0	FUN_007ca7c0	.text	252		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIGuardReturnState_update; 00c31d70 slot 5; slot 2 returns AIGuardReturnState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ca8c0	FUN_007ca8c0	.text	273	SageEngine\source\GameEngine\gamelogic\ai\AIGuardRetaliate.cpp	clean	gamelogic		unanalyzed	
 007ca9e0	FUN_007ca9e0	.text	348		clean	unknown		unanalyzed	
 007cab40	FUN_007cab40	.text	185		clean	unknown		unanalyzed	
 007cac00	FUN_007cac00	.text	690		clean	unknown		unanalyzed	
 007caec0	FUN_007caec0	.text	430		clean	unknown		unanalyzed	
-007cb070	FUN_007cb070	.text	147		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIHarvestApproachSiteState_onEnter; 00c31e38 slot 4; slot 2 returns AIHarvestApproachSiteState
+007cb070	FUN_007cb070	.text	147		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIHarvestApproachSiteState_onEnter; 00c31e38 slot 4; slot 2 returns AIHarvestApproachSiteState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007cb110	FUN_007cb110	.text	572		clean	unknown		unanalyzed	
-007cb350	FUN_007cb350	.text	203		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIHarvestWorkSiteState_onExit; 00c2bec8 slot 6; slot 2 returns AIHarvestWorkSiteState
+007cb350	FUN_007cb350	.text	203		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIHarvestWorkSiteState_onExit; 00c2bec8 slot 6; slot 2 returns AIHarvestWorkSiteState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007cb420	FUN_007cb420	.text	30		clean	unknown		unanalyzed	
 007cb440	FUN_007cb440	.text	348		clean	unknown		unanalyzed	
 007cb5a0	FUN_007cb5a0	.text	42		clean	unknown		unanalyzed	
@@ -19350,7 +19350,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007cce40	FUN_007cce40	.text	639		clean	unknown		unanalyzed	
 007cd0c0	thunk_FUN_007cce40	.text	5		clean	unknown		unanalyzed	
 007cd0d0	FUN_007cd0d0	.text	726		clean	unknown		unanalyzed	
-007cd3b0	FUN_007cd3b0	.text	161		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIMoveAndDeleteState_update; 00c2fc48 slot 5; slot 2 returns AIMoveAndDeleteState
+007cd3b0	FUN_007cd3b0	.text	161		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIMoveAndDeleteState_update; 00c2fc48 slot 5; slot 2 returns AIMoveAndDeleteState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007cd460	FUN_007cd460	.text	710		clean	unknown		unanalyzed	
 007cd730	FUN_007cd730	.text	347		clean	unknown		unanalyzed	
 007cd890	FUN_007cd890	.text	983		clean	unknown		unanalyzed	
@@ -19358,23 +19358,23 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007cde90	FUN_007cde90	.text	224		clean	unknown		unanalyzed	
 007cdf70	FUN_007cdf70	.text	774		clean	unknown		unanalyzed	
 007ce280	FUN_007ce280	.text	182		clean	gamelogic	recon/gamelogic7c	reversed	AIEnterState::onExit (vtable 0x00C2FE00 slot 6; clears AIUpdate+0x214->+0x40, notifies contain module vtable +0x40(owner, 0) for target +0x50, and calls base 0x007B1190; 10 oracle cases)
-007ce340	FUN_007ce340	.text	287		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIEnterAndAttackState_onExit; 00c2fec0 slot 6; slot 2 returns AIEnterAndAttackState
+007ce340	FUN_007ce340	.text	287		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIEnterAndAttackState_onExit; 00c2fec0 slot 6; slot 2 returns AIEnterAndAttackState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ce460	FUN_007ce460	.text	154		clean	gamelogic	recon/gamelogic7c	reversed	AIExitState::onExit (vtable 0x00C2CF60 slot 6, 0x00C2D818 slot 6, 0x00C2D880 slot 6; calls 0x006E6360(aiUpdate, 0) and notifies contain module vtable +0x40(owner, 0) for container +0x20; 8 oracle cases)
 007ce500	FUN_007ce500	.text	32		clean	gamelogic	recon/gamelogic7c	reversed	AIExitSiegeEngineState::onExit (vtable 0x00C2D8E8 slot 6; calls 0x006E6360(aiUpdate, 0) and notifies siege contain module via 0x006A7600 vtable +0x40(owner, 0); 8 oracle cases)
-007ce520	FUN_007ce520	.text	310		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIMoveToPositionAndDieState_update; 00c2ffb8 slot 5; slot 2 returns AIMoveToPositionAndDieState
-007ce660	FUN_007ce660	.text	291		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AIMoveToPositionAndEnterState_onExit; 00c301b8 slot 6; slot 2 returns AIMoveToPositionAndEnterState
+007ce520	FUN_007ce520	.text	310		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIMoveToPositionAndDieState_update; 00c2ffb8 slot 5; slot 2 returns AIMoveToPositionAndDieState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007ce660	FUN_007ce660	.text	291		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AIMoveToPositionAndEnterState_onExit; 00c301b8 slot 6; slot 2 returns AIMoveToPositionAndEnterState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ce860	FUN_007ce860	.text	235		clean	unknown		unanalyzed	
 007ce950	FUN_007ce950	.text	473		clean	unknown		unanalyzed	
 007ceb30	FUN_007ceb30	.text	706		clean	unknown		unanalyzed	
-007cee00	FUN_007cee00	.text	226		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AITNGuardInnerState_onEnter; 00c2d4e8 slot 4; slot 2 returns AITNGuardInnerState
+007cee00	FUN_007cee00	.text	226		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AITNGuardInnerState_onEnter; 00c2d4e8 slot 4; slot 2 returns AITNGuardInnerState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ceef0	FUN_007ceef0	.text	403		clean	unknown		unanalyzed	
-007cf090	FUN_007cf090	.text	243		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AITNGuardOuterState_onEnter; 00c2d548 slot 4; slot 2 returns AITNGuardOuterState
-007cf190	FUN_007cf190	.text	227		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AITNGuardOuterState_update; 00c2d548 slot 5; slot 2 returns AITNGuardOuterState
+007cf090	FUN_007cf090	.text	243		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AITNGuardOuterState_onEnter; 00c2d548 slot 4; slot 2 returns AITNGuardOuterState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007cf190	FUN_007cf190	.text	227		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AITNGuardOuterState_update; 00c2d548 slot 5; slot 2 returns AITNGuardOuterState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007cf280	FUN_007cf280	.text	196	SageEngine\source\GameEngine\gamelogic\ai\AITNGuard.cpp	clean	gamelogic		unanalyzed	
 007cf350	thunk_FUN_007ce280	.text	5		clean	unknown		unanalyzed	
 007cf360	FUN_007cf360	.text	459		clean	unknown		unanalyzed	
-007cf530	FUN_007cf530	.text	313		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AITNGuardAttackAggressorState_onEnter; 00c2d610 slot 4; slot 2 returns AITNGuardAttackAggressorState
-007cf670	FUN_007cf670	.text	177		clean	gamelogic	recon/aistate7c	reversed	ra3::gamelogic::AITNGuardAttackAggressorState_update; 00c2d610 slot 5; slot 2 returns AITNGuardAttackAggressorState
+007cf530	FUN_007cf530	.text	313		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AITNGuardAttackAggressorState_onEnter; 00c2d610 slot 4; slot 2 returns AITNGuardAttackAggressorState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007cf670	FUN_007cf670	.text	177		clean	gamelogic	recon/aistate7c	unanalyzed	ra3::gamelogic::AITNGuardAttackAggressorState_update; 00c2d610 slot 5; slot 2 returns AITNGuardAttackAggressorState; demoted by the controller (re-audit 18:55): the body in AIState7C.cpp is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007cf730	FUN_007cf730	.text	97		clean	unknown		unanalyzed	
 007cf7a0	FUN_007cf7a0	.text	166		clean	unknown		unanalyzed	
 007cf850	FUN_007cf850	.text	466		clean	unknown		unanalyzed	
