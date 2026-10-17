@@ -7,7 +7,7 @@ namespace ra3::gameclient {
 // Drawable accessor and predicate cluster from ra3_1.0.game, image range
 // 0x00520000-0x0052FFFF.  Ownership is a Drawable vtable slot or a direct
 // call edge to one of those slots or to the Drawable.cpp anchors, not
-// address adjacency.  The anchors are the helper constructor 0x0051FCB0
+// address adjacency.  The anchors are the Drawable.cpp-asserting helper 0x0051FCB0
 // (source path SageEngine\source\GameEngine\gameclient\Drawable.cpp) and
 // Drawable::xfer at 0x0053EE30 (string "Drawable::xfer").
 //
@@ -101,7 +101,7 @@ std::uint32_t publishArgument(
     void* self, std::uint32_t argument, DrawableServices& services, std::uint32_t eax);
 
 // 0x00520170.  Direct callee of 0x0052C3D0 and 0x0052BAD0, both of which
-// call the Drawable.cpp constructor 0x0051FCB0 and store it at +0x208.
+// call the Drawable.cpp-asserting helper 0x0051FCB0 and store it at +0x208.
 std::uint32_t addSwayOffset(void* self, void* record, void* point, std::uint32_t eax);
 
 // 0x00520220.  Same callers as addSwayOffset.  Integrates [sway+0x18] and
@@ -169,7 +169,7 @@ std::uint32_t refreshModuleGate(
 // 0x0052DEF0 secondary vtable 0x00BE1048 slot 1.  `secondary` is primary+0x60.
 std::uint32_t syncSecondary(void* secondary, DrawableServices& services, std::uint32_t eax);
 
-// 0x00524310.  Direct caller of the Drawable.cpp constructor 0x0051FCB0.
+// 0x00524310.  Direct caller of the Drawable.cpp-asserting helper 0x0051FCB0.
 // ret 8.  `logicFrame` is the dword at [[0x00DEBA64]+0x58].
 std::uint32_t updateSwayState(
     void* self, void* record, void* out, std::uint32_t logicFrame, DrawableServices& services);

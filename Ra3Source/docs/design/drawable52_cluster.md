@@ -28,7 +28,7 @@ Primary vtable `0x00BE1058` is installed by `0x0053CAF0` and `0x00542A10`. The c
 | `0x00524310` | `updateSwayState` | direct call to constructor `0x0051FCB0` |
 | `0x00520170` | `addSwayOffset` | called from constructor callers `0x0052BAD0` and `0x0052C3D0` |
 | `0x00520220` | `integrateSwayAngle` | called from those same constructor callers |
-| `0x00525CF0` | `positionPointer` | called from `0x0052C3D0` at `0x0052C273` |
+| `0x00525CF0` | `positionPointer` | called from Drawable.cpp-asserting `0x0052C1C0` at `0x0052C273` |
 | `0x00524050` | `publishCondition` | called by secondary slot `0x0052DEF0` |
 | `0x0052A800` | `copyTwelveDwords` | called by secondary slot `0x0052DEF0` |
 | `0x00524010` | `publishArgument` | caller `0x005371D0` also calls secondary-vtable `publishCondition` at `0x0053721E` |

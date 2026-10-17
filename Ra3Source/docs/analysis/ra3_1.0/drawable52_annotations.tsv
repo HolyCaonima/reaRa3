@@ -1,16 +1,16 @@
 address	status	owner	module	notes
-00520170	reversed	recon/drawable52	gameclient	addSwayOffset. Called from constructor callers 0x0052BAD0 (0x0052C13E) and 0x0052C3D0 (0x0052CA3F); those functions call Drawable.cpp constructor 0x0051FCB0.
+00520170	reversed	recon/drawable52	gameclient	addSwayOffset. Called from constructor callers 0x0052BAD0 (0x0052C13E) and 0x0052C3D0 (0x0052CA3F); those functions call the Drawable.cpp-asserting function 0x0051FCB0 (at 0x0052BAF2 / 0x0052C3F1).
 00520220	reversed	recon/drawable52	gameclient	integrateSwayAngle. Called from the same constructor callers at 0x0052C0DC and 0x0052C938.
 00520380	reversed	recon/drawable52	gameclient	ensureAuxRecord. Direct call from Drawable::xfer 0x0053EE30 at 0x0053FB0D.
 005209b0	reversed	recon/drawable52	gameclient	visitModules20. Primary Drawable vtable 0x00BE1058 slot 8, pointer stored at 0x00BE1078.
 00520cb0	reversed	recon/drawable52	gameclient	readTintEnvelope. TintEnvelope vtable 0x00BDFFD4 slot 3, pointer stored at 0x00BDFFE0; that vtable is installed by Drawable::xfer.
 00520f50	reversed	recon/drawable52	gameclient	queryModulesB0. Primary Drawable vtable 0x00BE1058 slot 9, pointer stored at 0x00BE107C.
 00523140	reversed	recon/drawable52	gameclient	readCountedBlock. Direct call from Drawable::xfer at 0x0053EEFF.
-00524010	reversed	recon/drawable52	gameclient	publishArgument. Direct caller 0x005371D0 also calls secondary-vtable callee publishCondition 0x00524050 at 0x0053721E.
+00524010	reversed	recon/drawable52	gameclient	publishArgument. 0x005371D0 calls it at 0x00537217 with the same this (esi) it passes to secondary-vtable callee publishCondition 0x00524050 at 0x0053721E.
 00524050	reversed	recon/drawable52	gameclient	publishCondition. Direct call from secondary Drawable vtable slot syncSecondary 0x0052DEF0 at 0x0052DF3F.
-00524310	reversed	recon/drawable52	gameclient	updateSwayState. Direct call to Drawable.cpp constructor 0x0051FCB0.
+00524310	reversed	recon/drawable52	gameclient	updateSwayState. Direct call to the Drawable.cpp-asserting function 0x0051FCB0.
 00525bd0	reversed	recon/drawable52	gameclient	publishScalar. Primary Drawable vtable 0x00BE1058 slot 5, pointer stored at 0x00BE106C.
-00525cf0	reversed	recon/drawable52	gameclient	positionPointer. Direct call from constructor caller 0x0052C3D0 at 0x0052C273.
+00525cf0	reversed	recon/drawable52	gameclient	positionPointer. Direct call from Drawable.cpp-asserting function 0x0052C1C0 at 0x0052C273.
 00525d40	reversed	recon/drawable52	gameclient	releaseTracked. Direct call from Drawable::xfer at 0x0053FEB7.
 00525da0	reversed	recon/drawable52	gameclient	clearAttachedBit. Direct call to xfer callee releaseTracked 0x00525D40.
 005261a0	reversed	recon/drawable52	gameclient	tintEnvelopeStatic. TintEnvelope vtable 0x00BDFFD4 slot 2, pointer stored at 0x00BDFFDC.
