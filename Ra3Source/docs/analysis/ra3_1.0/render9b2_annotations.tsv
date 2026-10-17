@@ -1,0 +1,37 @@
+address	status	owner	module	notes
+009bcc40	reversed	recon/render9b2	render	ra3::render::parseSetIntCommand; 00c6162c slot 3; slot 2 returns setint [scopeblock] [parmName] [value] - sets the value of specified scope parameter
+009bcd20	reversed	recon/render9b2	render	ra3::render::parseSetBoolCommand; 00c616a0 slot 3; slot 2 returns setbool [scopeblock] [parmName] [value] - sets the values of specified scope parameter
+009bcb10	reversed	recon/render9b2	render	ra3::render::parseSetFloatCommand; 00c61534 slot 3; slot 2 returns setfloat [scopeblock] [parmName] [value] [(optional) value] [(optional) value] [(optional) value] - sets the values of specified scope parameter
+009b9d50	reversed	recon/render9b2	render	ra3::render::parseSetDepthCommand; 00c60db8 slot 3; slot 2 returns setdepth [name] - sets the current depth buffer to surface specified by name. name can be NULL to unset depth buffer.
+009bbfa0	reversed	recon/render9b2	render	ra3::render::parseGotoCommand; 00c609ec slot 3; slot 2 returns goto [name] - jump to label (set with : Label) and continue execution
+009bc070	reversed	recon/render9b2	render	ra3::render::parseBeginEventCommand; 00c61050 slot 3; slot 2 returns beginevent [name] - tags an event for profiling system (PIX)
+009bc310	reversed	recon/render9b2	render	ra3::render::parseCallProcCommand; 00c612c4 slot 3; slot 2 returns callproc [name] - calls the named procedure
+009bd1d0	reversed	recon/render9b2	render	ra3::render::parseSetShaderCommand; 00c5f010 slot 3; slot 2 returns setshader [name] [(optional) technique]- sets the current shader to use during process
+009bd380	reversed	recon/render9b2	render	ra3::render::parseSetShaderOverrideCommand; 00c5f164 slot 3; slot 2 returns setshaderoverride [name] [technique] - sets the technique for the shader to use.
+009bd460	reversed	recon/render9b2	render	ra3::render::parseSetTextureCommand; 00c5f26c slot 3; slot 2 returns settexture [scopeBlock] [scopeParm] [name] - set the texture specified by [name] into the specific Scope Block and Scope Parm
+009bd560	reversed	recon/render9b2	render	ra3::render::parseSetToSizeCommand; 00c5f310 slot 3; slot 2 returns settosize [scopeBlock] [scopeParm] [texture or surface name] - set the size of the texture or surface into the specific Scope Block and Scope Parm
+009bace0	reversed	recon/render9b2	render	ra3::render::execSetToSizeCommand; 00c5f310 slot 4; slot 2 returns settosize [scopeBlock] [scopeParm] [texture or surface name] - set the size of the texture or surface into the specific Scope Block and Scope Parm
+009bbe20	reversed	recon/render9b2	render	ra3::render::parseElifCommand; 00c60860 slot 3; slot 2 returns elif [scopeBlock] [scopeParm] - additional conditional execution block.  Needs matching if and endif commands
+009bb930	reversed	recon/render9b2	render	ra3::render::parseIfNotCommand; 00c606f0 slot 3; slot 2 returns ifnot [scopeBlock] [scopeParm] - start of conditional execution block.  Needs matching endif command
+009bba80	reversed	recon/render9b2	render	ra3::render::execIfNotCommand; 00c606f0 slot 4; slot 2 returns ifnot [scopeBlock] [scopeParm] - start of conditional execution block.  Needs matching endif command
+009bbb30	reversed	recon/render9b2	render	ra3::render::parseIfCommand; 00c60778 slot 3; slot 2 returns if [scopeBlock] [scopeParm] - start of conditional execution block.  Needs matching endif command
+009bbc80	reversed	recon/render9b2	render	ra3::render::execIfCommand; 00c60778 slot 4; slot 2 returns if [scopeBlock] [scopeParm] - start of conditional execution block.  Needs matching endif command
+009bbd30	reversed	recon/render9b2	render	ra3::render::parseEndIfCommand; 00c607f4 slot 3; slot 2 returns endif - end of conditional execution block.  Needs matching if/ifnot command
+009bbdb0	reversed	recon/render9b2	render	ra3::render::execEndIfCommand; 00c607f4 slot 4; slot 2 returns endif - end of conditional execution block.  Needs matching if/ifnot command
+009b9c40	reversed	recon/render9b2	render	ra3::render::parseSetCameraCommand; 00c6065c slot 3; slot 2 returns setcamera [name] - sets the current camera to use.  Camera will set view and projection matrices on the device.
+009b6d70	reversed	recon/render9b2	render	ra3::render::execSetCameraCommand; 00c6065c slot 4; slot 2 returns setcamera [name] - sets the current camera to use.  Camera will set view and projection matrices on the device.
+009b6bd0	reversed	recon/render9b2	render	ra3::render::execSetViewportCommand; 00c60368 slot 4; slot 2 returns setviewport [value] [value] [value] [value] - sets the extents of render viewport with 4 int values specified (left, top, right, bottom)
+009b6ca0	reversed	recon/render9b2	render	ra3::render::execSetScissorCommand; 00c604e4 slot 4; slot 2 returns setscissor [value] [value] [value] [value] - sets the extents of render scissor with 4 int values specified (left, top, right, bottom)
+009b58c0	reversed	recon/render9b2	render	ra3::render::flushConstantsHalf; 00c600f0 slot 3; slot 2 is 009b58a0 and is not a usage getter, so the flush grouping is inferred
+009b5960	reversed	recon/render9b2	render	ra3::render::flushConstantsAll; 00c60108 slot 3; slot 2 is 009b58a0 and is not a usage getter, so the flush grouping is inferred
+009b59d0	reversed	recon/render9b2	render	ra3::render::flushConstantsMinusOne; 00c60120 slot 3; slot 2 is 009b58a0 and is not a usage getter, so the flush grouping is inferred
+009b5a40	reversed	recon/render9b2	render	ra3::render::flushConstantsThird; 00c60138 slot 3; slot 2 is 009b58a0 and is not a usage getter, so the flush grouping is inferred
+009b5af0	reversed	recon/render9b2	render	ra3::render::flushConstantsMinusTwoMode5; 00c60150 slot 3; slot 2 is 009b58a0 and is not a usage getter, so the flush grouping is inferred
+009b5b60	reversed	recon/render9b2	render	ra3::render::flushConstantsMinusTwoMode6; 00c60168 slot 3; slot 2 is 009b58a0 and is not a usage getter, so the flush grouping is inferred
+009b3910	reversed	recon/render9b2	render	ra3::render::dispatchDirtyState; 00c5f4c8 slot 4; slot 2 is 009b38a0 and is not a usage getter, so the class name is inferred
+009b5380	reversed	recon/render9b2	render	ra3::render::classifyPrimitive; 00c5db18 slot 17; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b5430	reversed	recon/render9b2	render	ra3::render::readMatrixOrder; 00c5db18 slot 16; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009bb040	reversed	recon/render9b2	render	ra3::render::selectConstantRoutine; 00c5db18 slot 18; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b9630	reversed	recon/render9b2	render	ra3::render::bindDynamicStream; 00c60338 slot 1; slot 2 is 009b60d0 and is not a usage getter, so the class name is inferred
+009bc420	reversed	recon/render9b2	render	ra3::render::execRenderQuadCommand; 00c6136c slot 4; slot 2 returns renderquad [(optional) red] [(optional) green] [(optional) blue] [(optional) alpha] - renders a large triangle to fill current viewport dimensions
+009bc780	reversed	recon/render9b2	render	ra3::render::execRenderFullQuadCommand; 00c61450 slot 4; slot 2 returns renderfullquad [(optional) red] [(optional) green] [(optional) blue] [(optional) alpha] - renders a quad based on current viewport dimensions
