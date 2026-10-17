@@ -11547,56 +11547,56 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00681980	FUN_00681980	.text	6		clean	unknown		unanalyzed	
 00681990	FUN_00681990	.text	6		clean	unknown		unanalyzed	
 006819a0	FUN_006819a0	.text	6		clean	unknown		unanalyzed	
-006819b0	FUN_006819b0	.text	75		clean	unknown		unanalyzed	
-00681a00	FUN_00681a00	.text	42		clean	unknown		unanalyzed	
+006819b0	FUN_006819b0	.text	75		clean	gamelogic	recon/aistates	reversed	StateView::enterDozerAction; Dozer state vtable closure; oracle 64
+00681a00	FUN_00681a00	.text	42		clean	gamelogic	recon/aistates	reversed	StateView::exitDozerAction; Dozer state vtable closure; oracle 64
 00681a30	FUN_00681a30	.text	245		clean	unknown		unanalyzed	
 00681b30	FUN_00681b30	.text	6		clean	unknown		unanalyzed	
 00681b40	FUN_00681b40	.text	6		clean	unknown		unanalyzed	
 00681b50	FUN_00681b50	.text	81		clean	unknown		unanalyzed	
-00681bb0	FUN_00681bb0	.text	18		clean	unknown		unanalyzed	
-00681bd0	FUN_00681bd0	.text	20		clean	unknown		unanalyzed	
+00681bb0	FUN_00681bb0	.text	18		clean	gamelogic	recon/aistates	reversed	StateView::enterDozerPrimaryIdle; vtable 00BF7F54 family; oracle 64
+00681bd0	FUN_00681bd0	.text	20		clean	gamelogic	recon/aistates	reversed	StateView::exitDozerPrimaryIdle; vtable 00BF7F54 family; oracle 64
 00681bf0	FUN_00681bf0	.text	11		clean	unknown		unanalyzed	
 00681bfb	FUN_00681bfb	.text	93		clean	unknown		unanalyzed	
 00681c60	FUN_00681c60	.text	10		clean	unknown		unanalyzed	
 00681c70	FUN_00681c70	.text	6		clean	unknown		unanalyzed	
-00681c80	FUN_00681c80	.text	61		clean	unknown		unanalyzed	
-00681cc0	FUN_00681cc0	.text	53		clean	unknown		unanalyzed	
+00681c80	FUN_00681c80	.text	61		clean	gamelogic	recon/aistates	reversed	StateView::enterNestedDozerAction; vtable 00BF7FBC family; oracle 64
+00681cc0	FUN_00681cc0	.text	53		clean	gamelogic	recon/aistates	reversed	StateView::exitNestedDozerAction; vtable 00BF7FBC family; oracle 64
 00681d00	FUN_00681d00	.text	6		clean	unknown		unanalyzed	
 00681d10	FUN_00681d10	.text	6		clean	unknown		unanalyzed	
 00681e40	FUN_00681e40	.text	62		clean	unknown		unanalyzed	
-00681e80	FUN_00681e80	.text	15		clean	unknown		unanalyzed	
-00681e90	FUN_00681e90	.text	36		clean	unknown		unanalyzed	
-00681ec0	FUN_00681ec0	.text	11		clean	unknown		unanalyzed	
+00681e80	FUN_00681e80	.text	15		clean	gamelogic	recon/aistates	reversed	DozerAIView::hasTask; Dozer primary state-machine interface; oracle 64
+00681e90	FUN_00681e90	.text	36		clean	gamelogic	recon/aistates	reversed	DozerAIView::hasAnyTask; virtual hasTask dispatch retained; oracle 64
+00681ec0	FUN_00681ec0	.text	11		clean	gamelogic	recon/aistates	reversed	DozerAIView::taskTarget; oracle 64
 00681ed0	FUN_00681ed0	.text	61		clean	unknown		unanalyzed	
-00681f10	FUN_00681f10	.text	70		clean	unknown		unanalyzed	
-00681f60	FUN_00681f60	.text	51		clean	unknown		unanalyzed	
-00681fa0	FUN_00681fa0	.text	10		clean	unknown		unanalyzed	
-00681fb0	FUN_00681fb0	.text	10		clean	unknown		unanalyzed	
+00681f10	FUN_00681f10	.text	70		clean	gamelogic	recon/aistates	reversed	DozerAIView::mostRecentTask; virtual hasTask dispatch retained; oracle 64
+00681f60	FUN_00681f60	.text	51		clean	gamelogic	recon/aistates	reversed	DozerAIView::dockPoint; 3x3 transition cell; oracle 64
+00681fa0	FUN_00681fa0	.text	10		clean	gamelogic	recon/aistates	reversed	DozerAIView::repairHealthPerSecond; explicit adjusted-this module view; oracle 64
+00681fb0	FUN_00681fb0	.text	10		clean	gamelogic	recon/aistates	reversed	DozerAIView::boredTime; explicit adjusted-this module view; oracle 64
 00681fc0	FUN_00681fc0	.text	85		clean	unknown		unanalyzed	
 00682020	FUN_00682020	.text	29		clean	unknown		unanalyzed	
 00682040	FUN_00682040	.text	66		clean	unknown		unanalyzed	
-00682090	FUN_00682090	.text	35		clean	unknown		unanalyzed	
-006820d0	FUN_006820d0	.text	53		clean	unknown		unanalyzed	
+00682090	FUN_00682090	.text	35		clean	gamelogic	recon/aistates	reversed	SupplyTruckAIView::isCurrentlyFerryingSupplies; oracle 64
+006820d0	FUN_006820d0	.text	53		clean	gamelogic	recon/aistates	reversed	SupplyTruckAIView::loseOneBox; drawable callback and EAX provenance; oracle 64
 00682110	FUN_00682110	.text	90		clean	unknown		unanalyzed	
-00682170	FUN_00682170	.text	10		clean	unknown		unanalyzed	
-00682180	FUN_00682180	.text	10		clean	unknown		unanalyzed	
-00682190	FUN_00682190	.text	24		clean	unknown		unanalyzed	
-006821b0	FUN_006821b0	.text	10		clean	unknown		unanalyzed	
-006821c0	FUN_006821c0	.text	10		clean	unknown		unanalyzed	
-006821d0	FUN_006821d0	.text	10		clean	unknown		unanalyzed	
-006821e0	FUN_006821e0	.text	10		clean	unknown		unanalyzed	
-006821f0	FUN_006821f0	.text	10		clean	unknown		unanalyzed	
-00682200	FUN_00682200	.text	122		clean	unknown		unanalyzed	
-00682280	FUN_00682280	.text	122		clean	unknown		unanalyzed	
+00682170	FUN_00682170	.text	10		clean	gamelogic	recon/aistates	reversed	SupplyTruckAIView::forceWanting; adjusted-this module byte; oracle 64
+00682180	FUN_00682180	.text	10		clean	gamelogic	recon/aistates	reversed	SupplyTruckAIView::forceBusy; adjusted-this module byte; oracle 64
+00682190	FUN_00682190	.text	24		clean	gamelogic	recon/aistates	reversed	SupplyTruckAIView::copyPosition24; output alias covered; oracle 64
+006821b0	FUN_006821b0	.text	10		clean	gamelogic	recon/aistates	reversed	SupplyTruckAIView::warehouseScanDistance; x87 return; oracle 64
+006821c0	FUN_006821c0	.text	10		clean	gamelogic	recon/aistates	reversed	SupplyTruckAIView::dataFlag6c; byte-register provenance; oracle 64
+006821d0	FUN_006821d0	.text	10		clean	gamelogic	recon/aistates	reversed	SupplyTruckAIView::dataFlag6d; byte-register provenance; oracle 64
+006821e0	FUN_006821e0	.text	10		clean	gamelogic	recon/aistates	reversed	SupplyTruckAIView::dataFlag6e; byte-register provenance; oracle 64
+006821f0	FUN_006821f0	.text	10		clean	gamelogic	recon/aistates	reversed	SupplyTruckAIView::dataFloat60; x87 return; oracle 64
+00682200	FUN_00682200	.text	122		clean	gamelogic	recon/aistates	reversed	SupplyTruckAIView::centerDelay; x87 qword conversion edges; oracle 64
+00682280	FUN_00682280	.text	122		clean	gamelogic	recon/aistates	reversed	SupplyTruckAIView::warehouseDelay; x87 qword conversion edges; oracle 64
 00682300	FUN_00682300	.text	6		clean	unknown		unanalyzed	
-00682310	FUN_00682310	.text	48		clean	unknown		unanalyzed	
+00682310	FUN_00682310	.text	48		clean	gamelogic	recon/aistates	reversed	StateView::enterSupplyBusy; SupplyTruckBusyState vtable closure; oracle 64
 00682340	FUN_00682340	.text	6		clean	unknown		unanalyzed	
-00682350	FUN_00682350	.text	35		clean	unknown		unanalyzed	
+00682350	FUN_00682350	.text	35		clean	gamelogic	recon/aistates	reversed	StateView::enterSupplyIdle; SupplyTruckIdleState vtable closure; oracle 64
 00682380	FUN_00682380	.text	6		clean	unknown		unanalyzed	
 00682390	FUN_00682390	.text	6		clean	unknown		unanalyzed	
 006823a0	FUN_006823a0	.text	6		clean	unknown		unanalyzed	
 006823b0	FUN_006823b0	.text	6		clean	unknown		unanalyzed	
-006823c0	FUN_006823c0	.text	46		clean	unknown		unanalyzed	
+006823c0	FUN_006823c0	.text	46		clean	gamelogic	recon/aistates	reversed	StateView::enterSupplyDocking; DockingState vtable closure; oracle 64
 006823f0	FUN_006823f0	.text	6		clean	unknown		unanalyzed	
 00682510	FUN_00682510	.text	66		clean	unknown		unanalyzed	
 00682560	FUN_00682560	.text	66		clean	unknown		unanalyzed	
@@ -11621,7 +11621,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00682820	FUN_00682820	.text	6		clean	unknown		unanalyzed	
 00682830	FUN_00682830	.text	47		clean	unknown		unanalyzed	
 00682860	FUN_00682860	.text	9		inner-patched	unknown		unanalyzed	
-00682890	FUN_00682890	.text	106		clean	unknown		unanalyzed	
+00682890	FUN_00682890	.text	106		clean	gamelogic	recon/aistates	reversed	ai_port::oneSecondFrames; GameLogic timing helper called by AI states; oracle 64
 00682900	FUN_00682900	.text	76		clean	unknown		unanalyzed	
 00682950	FUN_00682950	.text	33		clean	unknown		unanalyzed	
 00682c20	FUN_00682c20	.text	10		clean	unknown		unanalyzed	
@@ -11636,33 +11636,33 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00682d00	FUN_00682d00	.text	13		clean	unknown		unanalyzed	
 00682d10	FUN_00682d10	.text	11		clean	unknown		unanalyzed	
 00682d20	FUN_00682d20	.text	8		inner-patched	unknown		unanalyzed	
-00682d30	FUN_00682d30	.text	13		clean	unknown		unanalyzed	
+00682d30	FUN_00682d30	.text	13		clean	gamelogic	recon/aistates	reversed	UnitAIView::setValue0144; AIUpdateInterface vtable closure; oracle 64
 00682d40	FUN_00682d40	.text	44		clean	unknown		unanalyzed	
-00682d70	FUN_00682d70	.text	22		clean	unknown		unanalyzed	
+00682d70	FUN_00682d70	.text	22		clean	gamelogic	recon/aistates	reversed	UnitAIView::resetStateFlags; AIUpdateInterface vtable closure; oracle 64
 00682d90	FUN_00682d90	.text	52		clean	unknown		unanalyzed	
 00682dd0	FUN_00682dd0	.text	28		clean	unknown		unanalyzed	
-00682df0	FUN_00682df0	.text	20		clean	unknown		unanalyzed	
-00682e40	FUN_00682e40	.text	43		clean	unknown		unanalyzed	
-00682e70	FUN_00682e70	.text	11		clean	unknown		unanalyzed	
-00682e80	FUN_00682e80	.text	61		clean	unknown		unanalyzed	
+00682df0	FUN_00682df0	.text	20		clean	gamelogic	recon/aistates	reversed	UnitAIView::nestedFlag1e; null and byte-register provenance; oracle 64
+00682e40	FUN_00682e40	.text	43		clean	gamelogic	recon/aistates	reversed	UnitAIView::setGoalPosition; overlapping input alias order covered; oracle 64
+00682e70	FUN_00682e70	.text	11		clean	gamelogic	recon/aistates	reversed	UnitAIView::clearGoal; oracle 64
+00682e80	FUN_00682e80	.text	61		clean	gamelogic	recon/aistates	reversed	UnitAIView::selectedWeaponUsable; nested weapon layout; oracle 64
 00682ec0	FUN_00682ec0	.text	63		clean	unknown		unanalyzed	
-00682f00	FUN_00682f00	.text	21		clean	unknown		unanalyzed	
+00682f00	FUN_00682f00	.text	21		clean	gamelogic	recon/aistates	reversed	UnitAIView::clearPendingObjectIds; oracle 64
 00682f20	FUN_00682f20	.text	75		clean	unknown		unanalyzed	
 00682f70	FUN_00682f70	.text	22		clean	unknown		unanalyzed	
 00682f90	FUN_00682f90	.text	10		clean	unknown		unanalyzed	
 00682fa0	FUN_00682fa0	.text	22		clean	unknown		unanalyzed	
 00682fc0	FUN_00682fc0	.text	22		clean	unknown		unanalyzed	
-00682fe0	FUN_00682fe0	.text	71		clean	unknown		unanalyzed	
-00683030	FUN_00683030	.text	67		clean	unknown		unanalyzed	
+00682fe0	FUN_00682fe0	.text	71		clean	gamelogic	recon/aistates	reversed	UnitAIView::objectMatchesAttackIds; state/object ID branches; oracle 64
+00683030	FUN_00683030	.text	67		clean	gamelogic	recon/aistates	reversed	UnitAIView::currentStateIs69Or6a; exact EAX provenance; oracle 64
 00683080	FUN_00683080	.text	100		clean	unknown		unanalyzed	
-006830f0	FUN_006830f0	.text	7		clean	unknown		unanalyzed	
-00683100	FUN_00683100	.text	57		clean	unknown		unanalyzed	
+006830f0	FUN_006830f0	.text	7		clean	gamelogic	recon/aistates	reversed	UnitAIView::value0250; oracle 64
+00683100	FUN_00683100	.text	57		clean	gamelogic	recon/aistates	reversed	UnitAIView::currentOrQueuedStateId; null/default branches; oracle 64
 00683140	FUN_00683140	.text	10		inner-patched	unknown		unanalyzed	
 00683150	FUN_00683150	.text	119		clean	unknown		unanalyzed	
 006831d0	FUN_006831d0	.text	75		clean	unknown		unanalyzed	
 00683220	FUN_00683220	.text	57		clean	unknown		unanalyzed	
 006832f0	FUN_006832f0	.text	34		clean	unknown		unanalyzed	
-00683320	FUN_00683320	.text	34		clean	unknown		unanalyzed	
+00683320	FUN_00683320	.text	34		clean	gamelogic	recon/aistates	reversed	UnitAIView::hasQueuedState; oracle 64
 00683360	FUN_00683360	.text	82		clean	unknown		unanalyzed	
 006833c0	FUN_006833c0	.text	75		clean	unknown		unanalyzed	
 00683410	FUN_00683410	.text	60		clean	unknown		unanalyzed	
@@ -11670,18 +11670,18 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006834c0	FUN_006834c0	.text	17		clean	unknown		unanalyzed	
 006834e0	FUN_006834e0	.text	21		clean	unknown		unanalyzed	
 00683500	FUN_00683500	.text	21		clean	unknown		unanalyzed	
-00683520	FUN_00683520	.text	20		clean	unknown		unanalyzed	
+00683520	FUN_00683520	.text	20		clean	gamelogic	recon/aistates	reversed	UnitAIView::currentStateId; null/default branches; oracle 64
 00683540	FUN_00683540	.text	8		clean	unknown		unanalyzed	
 00683550	FUN_00683550	.text	8		clean	unknown		unanalyzed	
 00683560	FUN_00683560	.text	8		clean	unknown		unanalyzed	
-00683570	FUN_00683570	.text	7		clean	unknown		unanalyzed	
-00683580	FUN_00683580	.text	7		clean	unknown		unanalyzed	
-00683590	FUN_00683590	.text	17		clean	unknown		unanalyzed	
-006835b0	FUN_006835b0	.text	76		clean	unknown		unanalyzed	
+00683570	FUN_00683570	.text	7		clean	gamelogic	recon/aistates	reversed	UnitAIView::currentStateConditionBlock; pointer relocation covered; oracle 64
+00683580	FUN_00683580	.text	7		clean	gamelogic	recon/aistates	reversed	UnitAIView::currentStateTransitionBlock; pointer relocation covered; oracle 64
+00683590	FUN_00683590	.text	17		clean	gamelogic	recon/aistates	reversed	UnitAIView::setDesiredSpeedBits; exact float-bit write; oracle 64
+006835b0	FUN_006835b0	.text	76		clean	gamelogic	recon/aistates	reversed	UnitAIView::scaledModuleTime; x87 qword conversion edges; oracle 64
 00683600	FUN_00683600	.text	40		clean	unknown		unanalyzed	
 00683630	thunk_FUN_01954cc0	.text	6		entry-lost	unknown		unanalyzed	
-00683650	FUN_00683650	.text	21		clean	unknown		unanalyzed	
-00683670	FUN_00683670	.text	155		clean	unknown		unanalyzed	
+00683650	FUN_00683650	.text	21		clean	gamelogic	recon/aistates	reversed	UnitAIView::clearCommandLatch; virtual cancel callback retained; oracle 64
+00683670	FUN_00683670	.text	155		clean	gamelogic	recon/aistates	reversed	UnitAIView::randomizedDelay; module timing plus object-ID modulus; oracle 64
 00683710	FUN_00683710	.text	122	SageEngine\source\GameEngine\gamelogic\object\Update\DeletionUpdate.cpp	clean	gamelogic		unanalyzed	
 00683790	FUN_00683790	.text	21		clean	unknown		unanalyzed	
 006837b0	FUN_006837b0	.text	31		clean	unknown		unanalyzed	
@@ -11829,14 +11829,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00685c40	FUN_00685c40	.text	87		clean	unknown		unanalyzed	
 00685ca0	FUN_00685ca0	.text	6		clean	unknown		unanalyzed	
 00685cb0	FUN_00685cb0	.text	6		clean	unknown		unanalyzed	
-00685cc0	FUN_00685cc0	.text	40		clean	unknown		unanalyzed	
+00685cc0	FUN_00685cc0	.text	40		clean	gamelogic	recon/aistates	reversed	WeaponStateView::updateReady; WeaponReadyState vtable 00BF9710; oracle 64
 00685cf0	FUN_00685cf0	.text	6		clean	unknown		unanalyzed	
 00685d00	FUN_00685d00	.text	6		clean	unknown		unanalyzed	
 00685d10	FUN_00685d10	.text	6		clean	unknown		unanalyzed	
-00685d20	FUN_00685d20	.text	88		clean	unknown		unanalyzed	
+00685d20	FUN_00685d20	.text	88		clean	gamelogic	recon/aistates	reversed	WeaponStateView::updateCoolDown; WeaponCoolDownState vtable 00BF9840; oracle 64
 00685d80	FUN_00685d80	.text	6		clean	unknown		unanalyzed	
 00685d90	FUN_00685d90	.text	6		clean	unknown		unanalyzed	
-00685da0	FUN_00685da0	.text	23		clean	unknown		unanalyzed	
+00685da0	FUN_00685da0	.text	23		clean	gamelogic	recon/aistates	reversed	WeaponStateView::updateReload; WeaponReloadState vtable 00BF9910; oracle 64
 00685dc0	FUN_00685dc0	.text	5		clean	unknown		unanalyzed	
 00685dd0	FUN_00685dd0	.text	145		clean	unknown		unanalyzed	
 00685e70	FUN_00685e70	.text	40		clean	unknown		unanalyzed	
