@@ -245,7 +245,7 @@
   - `recon/skirmishai89`：`0x00890000–0x0089FFFF` skirmish AI 簇，base `5d16a5b`。两个 Gemini
     worker 先后中断（断连、重启），按惯例第三次改由 Grok 接手，并补 verify_ownership 声明。
   - `recon/logic4d`（Gemini，claims 121 条 fails=0、尚无代码）、`recon/obj69`、`recon/aistate79`
-    （Grok，尚在分析）：重启后重派。当前 Grok 9 路、Gemini 1 路，下次补位优先开 Gemini 以回到约 7:3。
+    （Grok，尚在分析）：重启后重派。当前 Grok 9 路、Gemini 1 路，正好符合 16:28 定下的 9:1。
   - 14:00 补足 10 路，base 均为 `86baa8d`：`recon/objbehav68`（`0x00680000–0x0068FFFF`
     对象 behavior/update 模块，Gemini）、`recon/protentry`（已合并；由
     `recon/protentry2` 接续剩余 entry-lost 原生体）、`recon/protcave`（全部站点为 cave 的
@@ -301,6 +301,10 @@
   oracle，但 3 批证据均有编造、约 10 次断连，交付一律由主控脚本重推证据。
   两个 Grok 低风险批次均经主控反汇编抽查后无需实质返工；后续简单叶簇可按普通强度
   使用 Grok，复杂 ABI、构造器和状态机仍优先 Gemini。
+- **模型分流再调整**（用户 16:28 决定，取代上面的 7:3）：固定 9 路 Grok、1 路 Gemini。理由是
+  Grok 更稳（不断连、交付与代码一致）。唯一的 Gemini 位只给最难的簇（受保护代码、GameLogic 核心、
+  重 x87/ABI）；Gemini 批次完成或中断后，若没有这类难簇，空位也补 Grok。Gemini 交付仍一律由主控
+  脚本重推证据。
 - **验收按风险分级**（用户 12:13、12:15 决定，避免重复验证）：
   - 低风险直线访问器/常量写入：2–4 个有区别的场景，覆盖正常值、边界值、ABI、实际写集
     和 sentinel 即可；不做随机数量竞赛。
