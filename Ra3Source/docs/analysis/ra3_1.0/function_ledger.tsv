@@ -24546,24 +24546,24 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e4310	FUN_008e4310	.text	119		clean	unknown		unanalyzed	
 008e4390	FUN_008e4390	.text	66		clean	unknown		unanalyzed	
 008e44c0	FUN_008e44c0	.text	329		clean	unknown		unanalyzed	
-008e4610	FUN_008e4610	.text	13		clean	unknown		unanalyzed	
-008e4620	FUN_008e4620	.text	13		clean	unknown		unanalyzed	
+008e4610	FUN_008e4610	.text	13		clean	render	recon/render8e	reversed	ra3::render::setDrawableWord104; W3D drawable state; exact writes and thiscall ABI covered by render8e oracle
+008e4620	FUN_008e4620	.text	13		clean	render	recon/render8e	reversed	ra3::render::setDrawableWord108; W3D drawable state; exact writes and thiscall ABI covered by render8e oracle
 008e4630	FUN_008e4630	.text	32		clean	unknown		unanalyzed	
 008e4650	FUN_008e4650	.text	42		clean	unknown		unanalyzed	
-008e4680	FUN_008e4680	.text	31		clean	unknown		unanalyzed	
-008e46a0	FUN_008e46a0	.text	241		clean	unknown		unanalyzed	
+008e4680	FUN_008e4680	.text	31		clean	render	recon/render8e	reversed	ra3::render::setDrawableExtent; W3D drawable state; SSE bit-copy and exact writes covered by render8e oracle
+008e46a0	FUN_008e46a0	.text	241		clean	render	recon/render8e	reversed	ra3::render::setDrawableViewport; W3D drawable viewport state; both mode branches and exact writes covered by render8e oracle
 008e47a0	FUN_008e47a0	.text	120		clean	unknown		unanalyzed	
-008e4820	FUN_008e4820	.text	25		clean	unknown		unanalyzed	
-008e4840	FUN_008e4840	.text	197		clean	unknown		unanalyzed	
-008e4910	FUN_008e4910	.text	25		clean	unknown		unanalyzed	
+008e4820	FUN_008e4820	.text	25		clean	render	recon/render8e	reversed	ra3::render::disableDrawableMode; exact sparse writes covered by render8e oracle
+008e4840	FUN_008e4840	.text	197		clean	render	recon/render8e	reversed	ra3::render::configureDrawableMode; mode validation and exact sparse writes covered by render8e oracle
+008e4910	FUN_008e4910	.text	25		clean	render	recon/render8e	reversed	ra3::render::enableDrawableMode2; exact sparse writes covered by render8e oracle
 008e4930	FUN_008e4930	.text	23		clean	unknown		unanalyzed	
-008e4950	FUN_008e4950	.text	112		clean	unknown		unanalyzed	
+008e4950	FUN_008e4950	.text	112		clean	render	recon/render8e	reversed	ra3::render::copyDrawableState68; normalized boolean and self-alias covered by render8e oracle
 008e49c0	FUN_008e49c0	.text	18		clean	unknown		unanalyzed	
-008e49e0	FUN_008e49e0	.text	81		clean	unknown		unanalyzed	
-008e4a40	FUN_008e4a40	.text	93		clean	unknown		unanalyzed	
-008e4aa0	FUN_008e4aa0	.text	57		clean	unknown		unanalyzed	
-008e4ae0	FUN_008e4ae0	.text	68		clean	unknown		unanalyzed	
-008e4b30	FUN_008e4b30	.text	63		clean	unknown		unanalyzed	
+008e49e0	FUN_008e49e0	.text	81		clean	render	recon/render8e	reversed	ra3::render::normalizedToPixel; SSE truncation, output writes and cdecl ABI covered by render8e oracle
+008e4a40	FUN_008e4a40	.text	93		clean	render	recon/render8e	reversed	ra3::render::pixelToNormalized; output writes and cdecl ABI covered by render8e oracle
+008e4aa0	FUN_008e4aa0	.text	57		clean	render	recon/render8e	reversed	ra3::render::assignPassMask; flag preservation and self-alias covered by render8e oracle
+008e4ae0	FUN_008e4ae0	.text	68		clean	render	recon/render8e	reversed	ra3::render::equalPassMask; count-masked comparison and return ABI covered by render8e oracle
+008e4b30	FUN_008e4b30	.text	63		clean	render	recon/render8e	reversed	ra3::render::assignDrawablePassMask; embedded-source alias and exact writes covered by render8e oracle
 008e4b70	FUN_008e4b70	.text	17		clean	unknown		unanalyzed	
 008e4b90	FUN_008e4b90	.text	31		clean	unknown		unanalyzed	
 008e4bb0	FUN_008e4bb0	.text	31		clean	unknown		unanalyzed	
@@ -24601,14 +24601,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e5400	FUN_008e5400	.text	133		clean	unknown		unanalyzed	
 008e5490	FUN_008e5490	.text	133		clean	unknown		unanalyzed	
 008e5520	FUN_008e5520	.text	43		clean	unknown		unanalyzed	
-008e5550	FUN_008e5550	.text	185		clean	unknown		unanalyzed	
+008e5550	FUN_008e5550	.text	185		clean	render	recon/render8e	reversed	ra3::render::approachWrappedAngle; wrap and step branches covered by render8e oracle
 008e5620	FUN_008e5620	.text	43		clean	unknown		unanalyzed	
 008e5650	FUN_008e5650	.text	54		clean	unknown		unanalyzed	
 008e5690	FUN_008e5690	.text	26		clean	unknown		unanalyzed	
-008e56b0	FUN_008e56b0	.text	56		clean	unknown		unanalyzed	
+008e56b0	FUN_008e56b0	.text	56		clean	render	recon/render8e	reversed	ra3::render::setAnimationVisible; W3D animation visibility state and exact writes covered by render8e oracle
 008e56f0	FUN_008e56f0	.text	23		clean	unknown		unanalyzed	
-008e5710	FUN_008e5710	.text	44		clean	unknown		unanalyzed	
-008e5740	FUN_008e5740	.text	28		clean	unknown		unanalyzed	
+008e5710	FUN_008e5710	.text	44		clean	render	recon/render8e	reversed	ra3::render::consumeCachedProperty50; W3D cached vtable property and return/write behavior covered by render8e oracle
+008e5740	FUN_008e5740	.text	28		clean	render	recon/render8e	reversed	ra3::render::refreshCachedProperty54; W3D cached vtable property and return/write behavior covered by render8e oracle
 008e5760	FUN_008e5760	.text	25		clean	unknown		unanalyzed	
 008e5780	FUN_008e5780	.text	70		clean	unknown		unanalyzed	
 008e57d0	FUN_008e57d0	.text	8		clean	unknown		unanalyzed	
@@ -24626,8 +24626,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e5ad0	FUN_008e5ad0	.text	6		clean	unknown		unanalyzed	
 008e5ae0	FUN_008e5ae0	.text	6		clean	unknown		unanalyzed	
 008e5af0	FUN_008e5af0	.text	6		clean	unknown		unanalyzed	
-008e5b00	FUN_008e5b00	.text	119		clean	unknown		unanalyzed	
-008e5b80	FUN_008e5b80	.text	137		clean	unknown		unanalyzed	
+008e5b00	FUN_008e5b00	.text	119		clean	render	recon/render8e	reversed	ra3::render::modulatePackedColor; custom register/stack ABI and packed channels covered by render8e oracle
+008e5b80	FUN_008e5b80	.text	137		clean	render	recon/render8e	reversed	ra3::render::addPackedColor; saturated packed channels and cdecl ABI covered by render8e oracle
 008e5ca0	FUN_008e5ca0	.text	49		clean	unknown		unanalyzed	
 008e5d00	FUN_008e5d00	.text	29		clean	unknown		unanalyzed	
 008e5d20	FUN_008e5d20	.text	18		clean	unknown		unanalyzed	
@@ -24643,7 +24643,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e5ef0	FUN_008e5ef0	.text	37		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandlerTemplate::copy_construct_in_place; slot=2; shared_by=2 handlers; field_offsets=0x4,0x8,0xC; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 008e5f20	FUN_008e5f20	.text	31		clean	unknown		unanalyzed	
 008e5f40	FUN_008e5f40	.text	42		clean	unknown		unanalyzed	
-008e5f70	FUN_008e5f70	.text	115		clean	unknown		unanalyzed	
+008e5f70	FUN_008e5f70	.text	115		clean	render	recon/render8e	reversed	ra3::render::copyFloatWords18; x87 m32 copy sequence and overlap alias covered by render8e oracle
 008e5ff0	FUN_008e5ff0	.text	29		clean	unknown		unanalyzed	
 008e6010	FUN_008e6010	.text	75		clean	unknown		unanalyzed	
 008e6060	FUN_008e6060	.text	72		clean	unknown		unanalyzed	
@@ -24652,8 +24652,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e6180	FUN_008e6180	.text	105		clean	unknown		unanalyzed	
 008e61f0	FUN_008e61f0	.text	104		clean	unknown		unanalyzed	
 008e6260	FUN_008e6260	.text	108		clean	unknown		unanalyzed	
-008e62e0	FUN_008e62e0	.text	65		clean	unknown		unanalyzed	
-008e6330	FUN_008e6330	.text	69		clean	unknown		unanalyzed	
+008e62e0	FUN_008e62e0	.text	65		clean	render	recon/render8e	reversed	ra3::render::copyRecords24Backward; backward overlap alias and exact writes covered by render8e oracle
+008e6330	FUN_008e6330	.text	69		clean	render	recon/render8e	reversed	ra3::render::equalMatrix3x4; ordered float comparisons and return behavior covered by render8e oracle
 008e6380	FUN_008e6380	.text	39		clean	unknown		unanalyzed	
 008e63b0	FUN_008e63b0	.text	28		clean	unknown		unanalyzed	
 008e63d0	FUN_008e63d0	.text	16		clean	unknown		unanalyzed	
@@ -24663,16 +24663,16 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e6510	FUN_008e6510	.text	71		clean	unknown		unanalyzed	
 008e6560	FUN_008e6560	.text	36		clean	unknown		unanalyzed	
 008e6590	FUN_008e6590	.text	133		clean	unknown		unanalyzed	
-008e6620	FUN_008e6620	.text	327		clean	unknown		unanalyzed	
-008e6770	FUN_008e6770	.text	133		clean	unknown		unanalyzed	
-008e6800	FUN_008e6800	.text	162		clean	unknown		unanalyzed	
+008e6620	FUN_008e6620	.text	327		clean	render	recon/render8e	reversed	ra3::render::quaternionToMatrix3x4; WWMath matrix construction and exact output covered by render8e oracle
+008e6770	FUN_008e6770	.text	133		clean	render	recon/render8e	reversed	ra3::render::copyDrawableDescriptor; partial layout and overlap alias covered by render8e oracle
+008e6800	FUN_008e6800	.text	162		clean	render	recon/render8e	reversed	ra3::render::initializeDrawableDescriptor; full sparse initialization writes covered by render8e oracle
 008e68b0	FUN_008e68b0	.text	31		clean	unknown		unanalyzed	
 008e68d0	FUN_008e68d0	.text	97		clean	unknown		unanalyzed	
 008e6940	FUN_008e6940	.text	1159		clean	unknown		unanalyzed	
-008e6dd0	FUN_008e6dd0	.text	550		clean	unknown		unanalyzed	
-008e7000	FUN_008e7000	.text	239		clean	unknown		unanalyzed	
-008e70f0	FUN_008e70f0	.text	231		clean	unknown		unanalyzed	
-008e71e0	FUN_008e71e0	.text	187		clean	unknown		unanalyzed	
+008e6dd0	FUN_008e6dd0	.text	550		clean	render	recon/render8e	reversed	ra3::render::terrainLineMaximum; W3D terrain sampling, ABI and full ST0 at CW 007f/027f/037f covered by render8e oracle
+008e7000	FUN_008e7000	.text	239		clean	render	recon/render8e	reversed	ra3::render::terrainCellMaximum; W3D terrain clamping, ABI and full ST0 at CW 007f/027f/037f covered by render8e oracle
+008e70f0	FUN_008e70f0	.text	231		clean	render	recon/render8e	reversed	ra3::render::terrainExtent; relocated terrain layout and exact output writes covered by render8e oracle
+008e71e0	FUN_008e71e0	.text	187		clean	render	recon/render8e	reversed	ra3::render::terrainCorners; relocated terrain layout and exact output writes covered by render8e oracle
 008e72a0	FUN_008e72a0	.text	379		clean	unknown		unanalyzed	
 008e7430	FUN_008e7430	.text	78		clean	unknown		unanalyzed	
 008e7480	FUN_008e7480	.text	20		clean	unknown		unanalyzed	
@@ -24689,16 +24689,16 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e85c0	FUN_008e85c0	.text	231		clean	unknown		unanalyzed	
 008e86b0	FUN_008e86b0	.text	124		clean	unknown		unanalyzed	
 008e8730	FUN_008e8730	.text	150		clean	unknown		unanalyzed	
-008e87d0	FUN_008e87d0	.text	95		clean	unknown		unanalyzed	
+008e87d0	FUN_008e87d0	.text	95		clean	render	recon/render8e	reversed	ra3::render::compatibleRenderFlags; W3DScriptedModelDraw call ownership and pointer ABI covered by render8e oracle
 008e8830	FUN_008e8830	.text	108		clean	unknown		unanalyzed	
-008e88a0	FUN_008e88a0	.text	85		clean	unknown		unanalyzed	
+008e88a0	FUN_008e88a0	.text	85		clean	render	recon/render8e	reversed	ra3::render::copyFloatWords13; x87 m32 copy sequence and overlap alias covered by render8e oracle
 008e8900	FUN_008e8900	.text	89		clean	unknown		unanalyzed	
 008e8960	FUN_008e8960	.text	105		clean	unknown		unanalyzed	
-008e89d0	FUN_008e89d0	.text	44		clean	unknown		unanalyzed	
-008e8a00	FUN_008e8a00	.text	160	SageEngine\source\GameEngineDevice\W3DDevice\GameClient\Drawable\W3DScriptedModelDraw.cpp	clean	render		unanalyzed	
-008e8ab0	FUN_008e8ab0	.text	97		clean	unknown		unanalyzed	
-008e8b20	FUN_008e8b20	.text	231		clean	unknown		unanalyzed	
-008e8c10	FUN_008e8c10	.text	155		clean	unknown		unanalyzed	
+008e89d0	FUN_008e89d0	.text	44		clean	render	recon/render8e	reversed	ra3::render::modelHasTextureSlots; W3DScriptedModelDraw model layout and return ABI covered by render8e oracle
+008e8a00	FUN_008e8a00	.text	160	SageEngine\source\GameEngineDevice\W3DDevice\GameClient\Drawable\W3DScriptedModelDraw.cpp	clean	render	recon/render8e	reversed	ra3::render::chooseWeightedModel; W3DScriptedModelDraw.cpp assertion ownership and deterministic RNG-stub oracle
+008e8ab0	FUN_008e8ab0	.text	97		clean	render	recon/render8e	reversed	ra3::render::copyFloatWords15; x87 m32 copy sequence and overlap alias covered by render8e oracle
+008e8b20	FUN_008e8b20	.text	231		clean	render	recon/render8e	reversed	ra3::render::findConditionSubset260; W3DScriptedModelDraw condition-vector layout and pointer return covered by render8e oracle
+008e8c10	FUN_008e8c10	.text	155		clean	render	recon/render8e	reversed	ra3::render::findConditionSubset2c; W3DScriptedModelDraw condition-vector layout and pointer return covered by render8e oracle
 008e8cb0	FUN_008e8cb0	.text	160		clean	unknown		unanalyzed	
 008e8d50	FUN_008e8d50	.text	78		clean	unknown		unanalyzed	
 008e8dc0	FUN_008e8dc0	.text	36		clean	unknown		unanalyzed	
@@ -24714,19 +24714,19 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e9160	FUN_008e9160	.text	213		clean	unknown		unanalyzed	
 008e9240	FUN_008e9240	.text	37		clean	unknown		unanalyzed	
 008e9270	FUN_008e9270	.text	37		clean	unknown		unanalyzed	
-008e92a0	FUN_008e92a0	.text	163		clean	unknown		unanalyzed	
-008e9350	FUN_008e9350	.text	83		clean	unknown		unanalyzed	
+008e92a0	FUN_008e92a0	.text	163		clean	render	recon/render8e	reversed	ra3::render::modelConditionStateDifferent; relocated model vectors and return ABI covered by render8e oracle
+008e9350	FUN_008e9350	.text	83		clean	render	recon/render8e	reversed	ra3::render::setDrawableSelectable; owner/render-object pointer aliases and exact writes covered by render8e oracle
 008e93b0	FUN_008e93b0	.text	126		clean	unknown		unanalyzed	
 008e9430	FUN_008e9430	.text	269		clean	unknown		unanalyzed	
 008e9540	FUN_008e9540	.text	169		clean	unknown		unanalyzed	
-008e95f0	FUN_008e95f0	.text	83		clean	unknown		unanalyzed	
+008e95f0	FUN_008e95f0	.text	83		clean	render	recon/render8e	reversed	ra3::render::setAnimationFrame; animation frame reversal and exact writes covered by render8e oracle
 008e9650	FUN_008e9650	.text	96		clean	unknown		unanalyzed	
-008e96b0	FUN_008e96b0	.text	24		clean	unknown		unanalyzed	
+008e96b0	FUN_008e96b0	.text	24		clean	render	recon/render8e	reversed	ra3::render::animationBlendActive; animation state and return ABI covered by render8e oracle
 008e96d0	FUN_008e96d0	.text	318		clean	unknown		unanalyzed	
 008e9810	FUN_008e9810	.text	135		clean	unknown		unanalyzed	
-008e98a0	FUN_008e98a0	.text	223		clean	unknown		unanalyzed	
-008e9980	FUN_008e9980	.text	597		clean	unknown		unanalyzed	
-008e9be0	FUN_008e9be0	.text	208		clean	unknown		unanalyzed	
+008e98a0	FUN_008e98a0	.text	223		clean	render	recon/render8e	reversed	ra3::render::buildHermiteTangents; WWMath hermitespline tangent writes covered by render8e oracle
+008e9980	FUN_008e9980	.text	597		clean	render	recon/render8e	reversed	ra3::render::evaluateHermite; WWMath hermitespline interpolation writes covered by render8e oracle
+008e9be0	FUN_008e9be0	.text	208		clean	render	recon/render8e	reversed	ra3::render::advanceTextureFrames; W3D animation record stride and exact writes covered by render8e oracle
 008e9cb0	FUN_008e9cb0	.text	677		clean	unknown		unanalyzed	
 008e9f60	FUN_008e9f60	.text	141		clean	unknown		unanalyzed	
 008e9ff0	FUN_008e9ff0	.text	35		clean	unknown		unanalyzed	
@@ -24745,14 +24745,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008eac70	FUN_008eac70	.text	99		clean	unknown		unanalyzed	
 008eace0	FUN_008eace0	.text	106		clean	unknown		unanalyzed	
 008ead50	FUN_008ead50	.text	113		clean	unknown		unanalyzed	
-008eadd0	FUN_008eadd0	.text	43		clean	unknown		unanalyzed	
-008eae00	FUN_008eae00	.text	43		clean	unknown		unanalyzed	
+008eadd0	FUN_008eadd0	.text	43		clean	render	recon/render8e	reversed	ra3::render::renderTreeLowerBound; relocated tree aliases and pointer return covered by render8e oracle
+008eae00	FUN_008eae00	.text	43		clean	render	recon/render8e	reversed	ra3::render::renderTreeUpperBound; relocated tree aliases and pointer return covered by render8e oracle
 008eae30	FUN_008eae30	.text	203		clean	unknown		unanalyzed	
 008eaf00	FUN_008eaf00	.text	100		clean	unknown		unanalyzed	
-008eaf70	FUN_008eaf70	.text	427		clean	unknown		unanalyzed	
+008eaf70	FUN_008eaf70	.text	427		clean	render	recon/render8e	reversed	ra3::render::copyRenderState201; x87 m32 copies, tail byte and overlap alias covered by render8e oracle
 008eb120	FUN_008eb120	.text	61		clean	unknown		unanalyzed	
-008eb160	FUN_008eb160	.text	345		clean	unknown		unanalyzed	
-008eb2c0	FUN_008eb2c0	.text	109		clean	unknown		unanalyzed	
+008eb160	FUN_008eb160	.text	345		clean	render	recon/render8e	reversed	ra3::render::interpolateQuaternion; WWMath shortest-path interpolation and exact writes covered by render8e oracle
+008eb2c0	FUN_008eb2c0	.text	109		clean	render	recon/render8e	reversed	ra3::render::copyRenderRecord68; byte/float layout, x87 m32 copies and overlap alias covered by render8e oracle
 008eb330	FUN_008eb330	.text	38		clean	unknown		unanalyzed	
 008eb360	FUN_008eb360	.text	64		clean	unknown		unanalyzed	
 008eb3a0	FUN_008eb3a0	.text	79	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
@@ -24763,8 +24763,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008eb540	FUN_008eb540	.text	60		clean	unknown		unanalyzed	
 008eb580	FUN_008eb580	.text	94	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 008eb5e0	FUN_008eb5e0	.text	56		clean	unknown		unanalyzed	
-008eb620	FUN_008eb620	.text	161		clean	unknown		unanalyzed	
-008eb6d0	FUN_008eb6d0	.text	161		clean	unknown		unanalyzed	
+008eb620	FUN_008eb620	.text	161		clean	render	recon/render8e	reversed	ra3::render::copyRenderRecords68; record range, output pointer and exact writes covered by render8e oracle
+008eb6d0	FUN_008eb6d0	.text	161		clean	render	recon/render8e	reversed	ra3::render::copyRenderRecords68Backward; backward record range, output pointer and exact writes covered by render8e oracle
 008eb780	FUN_008eb780	.text	74		clean	unknown		unanalyzed	
 008eb980	FUN_008eb980	.text	99		clean	unknown		unanalyzed	
 008eb9f0	FUN_008eb9f0	.text	84		clean	unknown		unanalyzed	
@@ -24794,7 +24794,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008ed530	FUN_008ed530	.text	13		clean	unknown		unanalyzed	
 008ed570	FUN_008ed570	.text	6		clean	unknown		unanalyzed	
 008ed580	FUN_008ed580	.text	47		clean	unknown		unanalyzed	
-008ed5b0	FUN_008ed5b0	.text	49		clean	unknown		unanalyzed	
+008ed5b0	FUN_008ed5b0	.text	49		clean	render	recon/render8e	reversed	ra3::render::hasExtendedRenderFlags; called twice by W3DScriptedModelDraw.cpp body 0x0090ce30; pointer ABI covered by render8e oracle
 008ed5f0	FUN_008ed5f0	.text	160		clean	unknown		unanalyzed	
 008ed690	FUN_008ed690	.text	89		clean	unknown		unanalyzed	
 008ed6f0	FUN_008ed6f0	.text	46		clean	unknown		unanalyzed	
@@ -24809,7 +24809,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008edd60	FUN_008edd60	.text	153		clean	unknown		unanalyzed	
 008ede00	FUN_008ede00	.text	163		clean	unknown		unanalyzed	
 008edeb0	FUN_008edeb0	.text	496		clean	unknown		unanalyzed	
-008ee0b0	FUN_008ee0b0	.text	1008		clean	unknown		unanalyzed	
+008ee0b0	FUN_008ee0b0	.text	1008		clean	render	recon/render8e	reversed	ra3::render::buildDrawableTransform; WWMath affine transform and exact output writes covered by render8e oracle
 008ee4a0	FUN_008ee4a0	.text	160		clean	unknown		unanalyzed	
 008ee540	FUN_008ee540	.text	345		clean	unknown		unanalyzed	
 008ee6a0	FUN_008ee6a0	.text	81		clean	unknown		unanalyzed	
@@ -24836,7 +24836,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008efb70	FUN_008efb70	.text	6		clean	unknown		unanalyzed	
 008efb80	FUN_008efb80	.text	382		clean	unknown		unanalyzed	
 008efd00	FUN_008efd00	.text	250		clean	unknown		unanalyzed	
-008efe00	FUN_008efe00	.text	879		clean	unknown		unanalyzed	
+008efe00	FUN_008efe00	.text	879		clean	render	recon/render8e	reversed	ra3::render::emitSegmentQuad; exact SSE order, x87 reciprocal square root, cursor alias and vertex writes covered by render8e oracle
 008f0170	FUN_008f0170	.text	137		clean	unknown		unanalyzed	
 008f0200	FUN_008f0200	.text	13		clean	unknown		unanalyzed	
 008f0210	FUN_008f0210	.text	120		clean	unknown		unanalyzed	

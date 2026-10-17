@@ -204,6 +204,21 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `behaviorphysicsflags` | `0x006B8C70` PhysicsBehavior 标志 | stdcall（1） | 10 | `physicsBehaviorFlags` | offline-verified, live pending；仅显式键启用 |
 | `behaviorphysicsruntime` | `0x006B8EC0` Physics 运行时构造 | thiscall（2） | 6 | `initializePhysicsRuntime` | offline-verified, live pending；仅显式键启用 |
 | `behaviorhasmotivetarget` | `0x006B91E0` motive target 谓词 | thiscall | 5 | `hasMotiveTarget` | offline-verified, live pending；仅显式键启用 |
+| `render8eword104` | `0x008E4610` drawable `+0x104` 状态 | thiscall（1） | 10 | `setDrawableWord104` | offline-verified, live pending；仅显式键启用 |
+| `render8eword108` | `0x008E4620` drawable `+0x108` 状态 | thiscall（1） | 10 | `setDrawableWord108` | offline-verified, live pending；仅显式键启用 |
+| `render8eextent` | `0x008E4680` drawable extent | thiscall（2） | 6 | `setDrawableExtent` | offline-verified, live pending；仅显式键启用 |
+| `render8edisablemode` | `0x008E4820` drawable mode 禁用 | thiscall | 12 | `disableDrawableMode` | offline-verified, live pending；仅显式键启用 |
+| `render8eenablemode2` | `0x008E4910` drawable mode 2 启用 | thiscall | 12 | `enableDrawableMode2` | offline-verified, live pending；仅显式键启用 |
+| `render8eassignpassmask` | `0x008E4AA0` pass mask 赋值 | thiscall（1） | 6 | `assignPassMask` | offline-verified, live pending；仅显式键启用 |
+| `render8eequalpassmask` | `0x008E4AE0` pass mask 比较 | thiscall（1） | 7 | `equalPassMask` | offline-verified, live pending；仅显式键启用 |
+| `render8edrawablepassmask` | `0x008E4B30` drawable pass mask 赋值 | thiscall（1） | 6 | `assignDrawablePassMask` | offline-verified, live pending；仅显式键启用 |
+| `render8eaddcolor` | `0x008E5B80` packed color 饱和相加 | cdecl（2） | 5 | `addPackedColor` | offline-verified, live pending；仅显式键启用 |
+| `render8ecompatibleflags` | `0x008E87D0` render flags 兼容性 | cdecl（2） | 6 | `compatibleRenderFlags` | offline-verified, live pending；仅显式键启用 |
+| `render8etextureslots` | `0x008E89D0` model texture slots 谓词 | thiscall | 7 | `modelHasTextureSlots` | offline-verified, live pending；仅显式键启用 |
+| `render8econdition260` | `0x008E8B20` condition subset `+0x260` | thiscall（1） | 8 | `findConditionSubset260` | offline-verified, live pending；仅显式键启用 |
+| `render8econdition2c` | `0x008E8C10` condition subset `+0x2C` | thiscall（1） | 6 | `findConditionSubset2c` | offline-verified, live pending；仅显式键启用 |
+| `render8eblendactive` | `0x008E96B0` animation blend 谓词 | thiscall | 7 | `animationBlendActive` | offline-verified, live pending；仅显式键启用 |
+| `render8eextendedflags` | `0x008ED5B0` extended render flags 谓词 | cdecl（1） | 5 | `hasExtendedRenderFlags` | offline-verified, live pending；仅显式键启用 |
 | `playeradjustcounter` | `0x007E1530` Player `+0x125c` 饱和计数 | thiscall（1） | 10 | `Player::adjustCounter125c` | offline-verified, live pending；仅显式键启用 |
 | `playeractive` | `0x007E1BA0` Player 活跃状态 | thiscall | 7 | `Player::isPlayerActive` | offline-verified, live pending；仅显式键启用 |
 | `scoreaddd0` | `0x007E2600` ScoreKeeper 增量 | thiscall（1） | 5 | `ScoreKeeper::addD0` | offline-verified, live pending；仅显式键启用 |
@@ -271,6 +286,11 @@ AudioEvent 的 15 个目标均逐项复核 expected16、完整指令边界和 sh
 Behavior6B 的 8 个目标来自 57 个 clean 语义入口；Release 集成 oracle 共 627 场景
 0 不一致，覆盖 ABI、别名、浮点和精确写集。目标均为无分配的叶状态查询、标志写入或
 固定布局构造，只认显式键，尚未实机验证。
+
+Render8e 的 15 个目标来自 53 个 clean render 入口；强化后的 Debug/Release oracle
+各 3,480 场景 0 不一致，并检出 setter 写入及 angle-wrap 两种语义突变。目标仅包含
+稀疏状态写入和无副作用查询，不含 D3D、分配、引用计数或 render-thread 边界；只认显式键，
+尚未实机验证。
 
 FXPS 的 15 个目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关。构造函数
 在副本上应用重建变换后比较实际布局，getter 只比较返回值或原函数写出的缓冲，全部要求
