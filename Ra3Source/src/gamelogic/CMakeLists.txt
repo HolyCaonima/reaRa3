@@ -7,6 +7,7 @@ ra3_add_module(gamelogic
         include/ra3/gamelogic/GameLogicCore4D.h
         include/ra3/gamelogic/ObjectCore6A.h
         include/ra3/gamelogic/ObjectUpdate69.h
+        include/ra3/gamelogic/ObjectUpdate69B.h
         include/ra3/gamelogic/ProtectedCaveLogic.h
         include/ra3/gamelogic/BehaviorModules68.h
         include/ra3/gamelogic/ScriptsCluster.h
@@ -24,6 +25,7 @@ ra3_add_module(gamelogic
         src/GameLogicCore4D.cpp
         src/ObjectCore6A.cpp
         src/ObjectUpdate69.cpp
+        src/ObjectUpdate69B.cpp
         src/ProtectedCaveLogic.cpp
         src/BehaviorModules68.cpp
         src/ScriptsCluster.cpp
