@@ -67,17 +67,25 @@
 
 ## 4. 建议的下一步（按优先级）
 
-1. **一次运行时采集，之后全部离线做。** 跑一次游戏，注入后只读地：
-   - 解析每个 entry-lost thunk（6 字节，跳到 `0x0197xxxx`、`0x01Dxxxxx`、`0x02xxxxxx`
-     这类运行时区域）的真实目标；
-   - 解析 inner-patched 函数中被替换指令的去向；
-   - 判定每个目标是原生 x86（可解码、有正常序言和返回）还是虚拟化（解释器分派形态）；
-   - 把原生函数体及其所在运行时区域转储到 `work/runtime_dump/`，附带地址映射清单。
-   可以给 `ra3hook.dll` 加一个只读转储模式，或用 REA MCP 的 Frida 工具
-   （`start_frida_session`/`instrument_with_frida`）。只读游戏自身代码；不分析 SecuROM
-   插入的检查逻辑，把它们当黑盒。
-2. **扩展离线 oracle**：让 `tools/analysis/emulate.py` 能按运行时地址映射转储区域，
-   受保护函数就能和 clean 函数一样做 Unicorn 差分。
+1. **一次运行时采集，之后全部离线做。** ✅ 已完成（运行 35，`work/runtime_dump/run35`）。
+   `ra3hook.dll` 加了只读转储模式（`dump=DIR`，见 §6）：全程 hook 全关，只扫描 `.text`
+   里槽在 `.securom` 的 `jmp [slot]` 站点，轮询槽值变化，并在 0/45/120/240 秒各转储一次
+   `.text/.rdata/.data/.securom` 原文与槽表。结论：**游戏不就地改 `.text`**（四次快照与磁盘
+   逐字节相同），而是惰性地把槽从 `.securom` 的 VM 桩解析成真实目标——首次执行某站点时
+   SecuROM 把真目标写进槽。`.securom` 节自身在运行时含：解析后的槽表（`0x018EDxxx` 段）与
+   被重定位/解密出来的函数体（`0x0190xxxx` 段）。
+   - `tools/analysis/securom_sites.py` 把一次或多次转储合并成
+     `docs/analysis/ra3_1.0/securom_sites.tsv`：每个站点的槽、磁盘目标、运行时目标、目标所在
+     节、分类（`body` 整个函数体 / `cave` 只跑被替换指令再跳回站点后 / `unresolved` 本次没执行
+     或仍虚拟化）、cave 的被替换指令与跳回地址。运行 35 里 656 个槽被解析，其中 282 个
+     entry-site thunk 恢复出真实函数体（266 entry-lost + entry-recoverable 等）。
+2. **扩展离线 oracle**：✅ 已完成。`tools/analysis/emulate.py` 的 `Emulator(capture=快照目录)`
+   会把该快照的 `.securom` 原文叠加映射到 `0x01882000`——它同时带着解析后的槽表和解密后的
+   函数体，于是 `jmp [slot]` 能正确跳转、`0x0190xxxx` 的体能执行、cave 读的 `.securom` 常量
+   也拿到运行时值。受保护函数就能和 clean 函数一样做 Unicorn 差分。`entry_targets(sites_tsv)`
+   返回 `thunk VA → 真实体 VA`：移植 entry-lost 函数时要 oracle 真实体，而不是那 6 字节 thunk。
+   `.text/.rdata/.data` 仍取磁盘（运行时 `.text` 与磁盘逐字节相同；`.data` 保持装载期值）；
+   SecuROM 自己的节（`Stext` 等）永不映射。
 3. **大批量并行移植**：3–5 个 gpt-5.6-sol 子 agent，每个负责一个成块子系统，每批
    50–200 个函数，每批带 oracle 脚本。优先成块的 gamelogic/gameclient 簇，例如
    `0x0065xxxx–0x0066xxxx` 粒子/特效（大量调用 client RandomVariable），用 Generals 源码
@@ -97,6 +105,11 @@
   `.text/.rdata/.data` 执行单个原函数（不映射 SecuROM 节）。
   - 接口：`alloc/read/write/call(addr, args, ecx=)`、`call_float80(...)` 取完整 80 位
     ST0，桩用 `bind_import/bind_function/bind_stub`，`reset_data()` 复原 `.data` 和堆。
+  - **受保护函数**：`Emulator(capture="work/runtime_dump/run35/snapshot_3_240s")` 叠加该快照
+    的 `.securom`（解析后的槽 + 解密后的体），受保护函数即可照常 `call`。用
+    `entry_targets("docs/analysis/ra3_1.0/securom_sites.tsv")[thunk_va]` 取真实体地址再
+    `call`（entry-lost thunk 本身也能 call，会经解析后的槽跳进体）。详见 `securom_sites.py`
+    文件头与 §4。
   - 各模块的 oracle 在 `tools/analysis/ports/verify_*.py`，与 C++ 端
     `tools/portcheck`（行协议）或 `tools/stringcheck`、`tools/bigcheck`、
     `tools/textcheck` 对比。

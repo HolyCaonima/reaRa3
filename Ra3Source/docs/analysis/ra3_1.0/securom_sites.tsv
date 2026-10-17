@@ -1,0 +1,2418 @@
+site	slot	file_target	stub	runtime_target	target_section	resolution	continuation	replaced	function	function_securom	runs
+00401159	018f2508	01955360	vm-indirect			unresolved			00401140	inner-patched	0/1
+00401180	018fadc4	027d0000	native			unresolved			00401180	entry-recoverable	0/1
+004011a0	018fbe70	0197feb0	vm	0040a6b0	.text	body			004011a0	entry-lost	1/1
+00401a90	018f6fd4	019852c0	vm	0046fb50	.text	body					1/1
+00401ad0	018fae00	01977a30	vm-indirect	00421720	.text	body			00401ad0	entry-lost	1/1
+00401b00	018fbf50	0197bce0	vm			unresolved			00401b00	entry-recoverable	0/1
+00401b40	018f5cc0	0197fe90	vm	0044cbc0	.text	body			00401b40	entry-lost	1/1
+00401b80	018f7108	01985290	vm-indirect	0047ff00	.text	body			00401b80	entry-recoverable	1/1
+00401bc0	018faf18	01977a00	vm-indirect			unresolved					0/1
+00401bf0	018fbf88	0197bcc0	vm			unresolved					0/1
+00401c30	018f5e2c	0197fe60	vm-indirect			unresolved			00401c30	entry-lost	0/1
+00401c60	018f5e24	0197fe40	vm			unresolved			00401c60	entry-lost	0/1
+00401ca0	018f72c8	01985270	vm			unresolved			00401ca0	entry-recoverable	0/1
+00401cd0	018fb050	019779e0	vm			unresolved			00401cd0	entry-lost	0/1
+00401d10	018fc184	0197bc90	vm-indirect	0043ed60	.text	body			00401d10	entry-lost	1/1
+00401d50	018f5f44	0197fe10	vm-indirect	004554b0	.text	body			00401d50	entry-lost	1/1
+00401d90	018f73c4	01985240	vm-indirect	0046dc20	.text	body			00401d90	entry-lost	1/1
+00401dd0	018fc1b4	0197bc60	vm-indirect			unresolved			00401dd0	entry-lost	0/1
+00401e10	018f6088	0197fdf0	vm			unresolved			00401e10	entry-recoverable	0/1
+00401e50	018fa048	01985210	vm-indirect			unresolved			00401e50	entry-lost	0/1
+00401e90	018fb2a0	019779c0	vm			unresolved			00401e90	entry-lost	0/1
+00401ed0	018fc2f4	0197bc30	vm-indirect			unresolved			00401ed0	entry-lost	0/1
+00401f10	018f624c	0197fdc0	vm-indirect			unresolved					0/1
+00401f50	018fa1f4	019851f0	vm			unresolved			00401f50	entry-recoverable	0/1
+00401f90	018fb3d8	01977990	vm-indirect	0042d4b0	.text	body			00401f90	entry-lost	1/1
+00401fd0	018fc444	0197bc00	vm-indirect	004440f0	.text	body					1/1
+00402010	018fbd68	0197fd90	vm-indirect	0042a210	.text	body					1/1
+00402040	018fbd64	0197fd70	vm			unresolved					0/1
+00402070	018f5a9c	019851d0	vm			unresolved					0/1
+004020b0	018f6f00	01977970	vm			unresolved					0/1
+004020f0	018fad18	0197bbe0	vm			unresolved			004020f0	entry-lost	0/1
+00402130	018fbe48	0197fd50	vm			unresolved					0/1
+00402170	018f5b84	019851a0	vm-indirect			unresolved					0/1
+004021a0	018fadf0	0197bbb0	vm-indirect			unresolved					0/1
+004021d0	018fbe8c	0197fd30	vm			unresolved			004021d0	entry-recoverable	0/1
+00402210	018f5cb0	01985170	vm-indirect			unresolved			00402210	entry-lost	0/1
+00402250	018f7150	01977950	vm	0045bfc0	.text	body					1/1
+00402290	018faf14	0197bb90	vm	004217a0	.text	body			00402290	entry-recoverable	1/1
+004022d0	018fbfd4	0197fd00	vm-indirect			unresolved			004022d0	entry-lost	0/1
+00402310	018f5e1c	01985140	vm-indirect			unresolved					0/1
+00402350	018f72c4	01977930	vm			unresolved			00402350	entry-lost	0/1
+00402390	018fb044	0197bb60	vm-indirect			unresolved			00402390	entry-lost	0/1
+004023d0	018fc0d8	0197fcd0	vm-indirect			unresolved			004023d0	entry-lost	0/1
+00402410	018fc17c	0197fcb0	vm			unresolved			00402410	entry-recoverable	0/1
+00402450	018f5f80	01985120	vm			unresolved					0/1
+00402490	018f73ec	01977900	vm-indirect	00481530	.text	body			00402490	entry-lost	1/1
+004024d0	018fb1d4	0197bb30	vm-indirect			unresolved					0/1
+00402510	018fc2e4	0197fc80	vm-indirect	00443080	.text	body					1/1
+00402550	018f60ac	019850f0	vm-indirect	00469990	.text	body			00402550	entry-recoverable	1/1
+00402590	018fb298	0197bb10	vm			unresolved					0/1
+004025d0	018fc33c	0197fc50	vm-indirect			unresolved					0/1
+00402610	018f6298	019850d0	vm			unresolved					0/1
+00402650	018fa240	019778d0	vm-indirect	004072a0	.text	body					1/1
+00402690	018fb3d0	0197baf0	vm	0041aae0	.text	body					1/1
+004026d0	018f4ff4	0197fc30	vm	00445c80	.text	body			004026d0	entry-lost	1/1
+00402710	018f63e8	019850b0	vm	00471ea0	.text	body					1/1
+00402780	018fa3f0	02350000	native			unresolved			00402780	entry-lost	0/1
+004027b0	018fb598	0197bac0	vm-indirect	0041fa80	.text	body			004027b0	entry-lost	1/1
+004027f0	018f5170	0197fc10	vm			unresolved			004027f0	entry-lost	0/1
+00402820	018f52b0	0197fbf0	vm			unresolved			00402820	entry-lost	0/1
+00402850	018f65ac	01985090	vm	00445b20	.text	body			00402850	entry-lost	1/1
+00402880	018fa510	01d79000	native			unresolved			00402880	entry-lost	0/1
+004028b0	018fb678	0197baa0	vm			unresolved			004028b0	entry-recoverable	0/1
+004028e0	018f52e8	0197fbd0	vm	0043b070	.text	body			004028e0	entry-lost	1/1
+00402910	018f66a4	01985070	vm			unresolved			00402910	entry-lost	0/1
+00402940	018fb754	0197c160	vm			unresolved			00402940	entry-lost	0/1
+00402970	018f53b8	01980420	vm-indirect			unresolved			00402970	entry-lost	0/1
+004029a0	018f66d4	01985880	vm			unresolved			004029a0	entry-lost	0/1
+004029d0	018fa65c	01d83000	native			unresolved			004029d0	entry-recoverable	0/1
+00402a00	018fbe64	0197c140	vm			unresolved			00402a00	entry-lost	0/1
+00402a30	018f5b80	019803f0	vm-indirect			unresolved			00402a30	entry-lost	0/1
+00402a60	018f6ffc	01985860	vm			unresolved			00402a60	entry-recoverable	0/1
+00402a90	018fade8	02800000	native			unresolved			00402a90	entry-lost	0/1
+00402ac0	018fbe88	0197c120	vm			unresolved			00402ac0	entry-lost	0/1
+00402af0	018f5bc0	019803c0	vm-indirect			unresolved			00402af0	entry-recoverable	0/1
+00402b20	018f5ce4	019803a0	vm			unresolved			00402b20	entry-lost	0/1
+00402b50	018f7140	01985830	vm-indirect			unresolved			00402b50	entry-lost	0/1
+00402b80	018faf08	01977e40	vm-indirect			unresolved			00402b80	entry-recoverable	0/1
+00402bb0	018fbfcc	0197c0f0	vm-indirect			unresolved			00402bb0	entry-lost	0/1
+00402be0	018f5d40	01980370	vm-indirect			unresolved					0/1
+00402c10	018f72b8	01985810	vm			unresolved			00402c10	entry-lost	0/1
+00402c40	018fc09c	0197c0c0	vm-indirect			unresolved			00402c40	entry-lost	0/1
+00402c70	018f5e90	01980350	vm			unresolved			00402c70	patched	0/1
+00402ca0	018f7320	019857f0	vm			unresolved			00402ca0	entry-lost	0/1
+00402cd0	018fb0ac	01ddd000	native			unresolved			00402cd0	entry-lost	0/1
+00402d00	018fc1b0	0197c0a0	vm			unresolved			00402d00	entry-lost	0/1
+00402d30	018f5f78	01980330	vm			unresolved			00402d30	entry-lost	0/1
+00402d60	018f740c	019857c0	vm-indirect			unresolved			00402d60	entry-lost	0/1
+00402d90	018fb1c8	01de5000	native			unresolved			00402d90	entry-lost	0/1
+00402dc0	018fc1f0	0197c070	vm-indirect			unresolved			00402dc0	entry-lost	0/1
+00402df0	018f5ffc	01980300	vm-indirect			unresolved			00402df0	entry-lost	0/1
+00402e20	018f609c	0197f950	vm-indirect			unresolved			00402e20	entry-lost	0/1
+00402e50	018fa0e8	02200000	native			unresolved			00402e50	entry-lost	0/1
+00402e80	018fb2ec	01977dc0	vm			unresolved			00402e80	entry-lost	0/1
+00402eb0	018fc334	0197c050	vm	004384a0	.text	body			00402eb0	entry-lost	1/1
+00402ee0	018f6168	019802e0	vm	0046cec0	.text	body			00402ee0	entry-lost	1/1
+004034a0	018f5fd0	01985790	vm-indirect			unresolved			004034a0	entry-lost	0/1
+00403660	018fb434	0197c030	vm	004a3130	.text	body			00403660	entry-lost	1/1
+004036d0	018f504c	019802c0	vm	019082a0	.securom	body			004036d0	entry-lost	1/1
+00403740	018f640c	01985770	vm	00466f20	.text	body			00403740	entry-lost	1/1
+004037d0	018fa450	01977d90	vm-indirect			unresolved			004037d0	entry-recoverable	0/1
+004038b0	018fb698	0197c000	vm-indirect	004a4010	.text	body			004038b0	entry-lost	1/1
+00403910	018f53b4	019802a0	vm	0045da50	.text	body			00403910	patched	1/1
+00403960	018f66c4	01985750	vm			unresolved			00403960	entry-lost	0/1
+00403ca0	018fb0a4	01977d70	vm	004252f0	.text	body			00403ca0	entry-lost	1/1
+00403cf0	018fc11c	0197bfe0	vm	004dde30	.text	body					1/1
+00403d50	018f5fcc	01980280	vm			unresolved					0/1
+00403e70	018f6124	01980250	vm-indirect			unresolved			00403e70	entry-lost	0/1
+00403ec0	018fa148	01985720	vm-indirect	00406550	.text	body			00403ec0	entry-lost	1/1
+00403f50	018fb424	01977d40	vm-indirect			unresolved			00403f50	entry-lost	0/1
+00403f80	018f4fe8	0197bfc0	vm			unresolved			00403f80	entry-lost	0/1
+00404030	018fbda4	01980220	vm-indirect			unresolved					0/1
+004041a0	018fae44	0197bfa0	vm			unresolved			004041a0	entry-lost	0/1
+00404330	018fc0d0	019801f0	vm-indirect			unresolved					0/1
+00404370	018f5e88	019856f0	vm-indirect	019149f0	.securom	body			00404370	entry-lost	1/1
+004043f0	018f7340	01977d20	vm	004a58a0	.text	body			004043f0	entry-lost	1/1
+00404450	018fb1b8	0197bf80	vm	004a1440	.text	body			00404450	entry-lost	1/1
+00404500	018fc324	019801d0	vm	00443a60	.text	body					1/1
+00404550	018f6120	019856c0	vm-indirect	00474880	.text	body			00404550	entry-lost	1/1
+00404610	018fa290	022c0000	native			unresolved					0/1
+00404670	018fb418	0197bf60	vm	00440020	.text	body			00404670	entry-recoverable	1/1
+00404739	018ed96c	019569e0	vm-indirect	00402aae	.text	cave	00404740	lea esp, [esp]	00404730	inner-patched	1/1
+00404770	018f5168	019801a0	vm-indirect	004dad60	.text	body					1/1
+004047e0	018f51c4	01980180	vm			unresolved					0/1
+00404860	018f65ec	01985690	vm-indirect			unresolved					0/1
+004048e0	018fa584	01977cc0	vm	00439ca0	.text	body			004048e0	entry-lost	1/1
+00404940	018fb768	0197bf30	vm-indirect	004d8c90	.text	body					1/1
+004049d0	018f5424	01980150	vm-indirect	0190b3c0	.securom	body					1/1
+00404a60	018f7040	01985660	vm-indirect	00494a20	.text	body					1/1
+00404ac0	018fbeac	0197c370	vm	019026a0	.securom	body			00404ac0	entry-lost	1/1
+00404ba0	018f5d68	019806f0	vm-indirect	01913770	.securom	body			00404ba0	entry-lost	1/1
+00404ec0	018fa138	01985b40	vm-indirect			unresolved					0/1
+00404fb0	018fb474	019780e0	vm			unresolved					0/1
+004050a0	018fad28	01dc0000	native			unresolved			004050a0	entry-lost	0/1
+00405260	018fbfc8	019806c0	vm-indirect	01903860	.securom	body					1/1
+004053e0	018f5ec0	01985b10	vm-indirect			unresolved			004053e0	entry-lost	0/1
+00405470	018f7404	019780b0	vm-indirect	01935b00	.securom	body					1/1
+00405560	018fb2dc	0197c310	vm	004a22e0	.text	body			00405560	entry-lost	1/1
+00405620	018f4fe4	019806a0	vm			unresolved					0/1
+004056f0	018f5040	01980670	vm-indirect			unresolved			004056f0	entry-lost	0/1
+00405b10	018f71a0	01985af0	vm	01933830	.securom	body			00405b10	entry-lost	1/1
+00405b80	018faf54	01978080	vm-indirect	0049fa70	.text	body					1/1
+00405f10	018f4fe0	0197c2f0	vm	01907ae0	.securom	body			00405f10	entry-lost	1/1
+00406410	018fc1ec	01980650	vm			unresolved			00406410	entry-lost	0/1
+00406540	018f6114	01985ac0	vm-indirect			unresolved			00406540	entry-lost	0/1
+00406c00	018fc0c4	0197c2d0	vm			unresolved			00406c00	entry-lost	0/1
+00406cf0	018f5ee8	01980620	vm-indirect	01915010	.securom	body			00406cf0	entry-lost	1/1
+00406d70	018f9ff4	01985aa0	vm	00404ed0	.text	body			00406d70	entry-lost	1/1
+00406e00	018fb2d4	01978060	vm	0040e1e0	.text	body			00406e00	entry-recoverable	1/1
+00406e20	018fc314	0197c2b0	vm			unresolved			00406e20	entry-lost	0/1
+00406f10	018f62c4	01980600	vm			unresolved			00406f10	entry-lost	0/1
+00407020	018f5ab0	01985a80	vm	019119d0	.securom	body			00407020	entry-lost	1/1
+004070c0	018f6f54	01978040	vm	01931360	.securom	body			004070c0	entry-lost	1/1
+004071e0	018fae94	0197c290	vm			unresolved			004071e0	entry-lost	0/1
+00407260	018fc020	019805d0	vm-indirect			unresolved			00407260	entry-lost	0/1
+00407290	018fc014	019805b0	vm			unresolved			00407290	entry-lost	0/1
+00407d86	018f299c	019569b0	vm-indirect	00455df1	.text	cave	00407d8d	lea ecx, [eax + ebx*4 - 0x7fffffc]	004076cb	inner-patched	1/1
+004083f0	018f5ee4	01985a60	vm			unresolved					0/1
+00408460	018f9fe4	01978020	vm			unresolved					0/1
+004084f0	018fb22c	0197c270	vm			unresolved					0/1
+004085b0	018fc364	01980580	vm-indirect			unresolved					0/1
+004086c0	018f62f0	01985a40	vm			unresolved			004086c0	entry-lost	0/1
+00408bd0	018fc060	0197c6e0	vm-indirect	00442bb0	.text	body					1/1
+00408db0	018f6040	01980ae0	vm	00467b40	.text	body			00408db0	entry-lost	1/1
+00408df0	018fa02c	01985fa0	vm	00404950	.text	body			00408df0	entry-lost	1/1
+00408e30	018fb34c	01978470	vm-indirect	004a2490	.text	body			00408e30	entry-lost	1/1
+00408ed0	018fc3f0	0197c6b0	vm-indirect	01906b30	.securom	body			00408ed0	entry-lost	1/1
+00408f70	018f636c	01980ac0	vm	019195d0	.securom	body			00408f70	entry-lost	1/1
+00408fe0	018fa350	01985f70	vm-indirect	00422ac0	.text	body			00408fe0	entry-lost	1/1
+004090e0	018f6fa4	01978440	vm-indirect			unresolved			004090e0	entry-lost	0/1
+00409120	018fae84	0197c680	vm-indirect	0049f310	.text	body			00409120	entry-lost	1/1
+00409380	018fc150	01980aa0	vm			unresolved			00409380	entry-lost	0/1
+004093b0	018f5f1c	01985f40	vm-indirect	019151a0	.securom	body					1/1
+00409450	018fa010	01978420	vm			unresolved			00409450	entry-lost	0/1
+004094b0	018fb270	0197c660	vm			unresolved			004094b0	entry-lost	0/1
+00409530	018fc3a8	01980a80	vm			unresolved			00409530	entry-lost	0/1
+004095d0	018f621c	01985f20	vm			unresolved			004095d0	entry-lost	0/1
+00409660	018fb4d0	0197c640	vm			unresolved					0/1
+004096b0	018f50f0	01980a60	vm			unresolved					0/1
+00409710	018f6514	01985f00	vm			unresolved			00409710	entry-lost	0/1
+004098c4	018f2834	01958400	vm-indirect			unresolved			004097a0	inner-patched	0/1
+00409b20	018fafc4	019783f0	vm-indirect			unresolved			00409b20	entry-lost	0/1
+00409b80	018fc054	0197c610	vm-indirect			unresolved			00409b80	entry-recoverable	0/1
+00409bb0	018f5dd4	01980a40	vm			unresolved			00409bb0	entry-lost	0/1
+00409d60	018fa000	01985ed0	vm-indirect	00403de0	.text	body					1/1
+00409db0	018fb274	01de8000	native			unresolved					0/1
+00409e90	018fc3d0	0197c5e0	vm-indirect	00443dc0	.text	body			00409e90	entry-lost	1/1
+00409ef0	018f6218	01980a10	vm-indirect			unresolved					0/1
+00409f20	018f6364	019809e0	vm-indirect			unresolved			00409f20	entry-lost	0/1
+0040a070	018f5b20	01985ea0	vm-indirect	0043b020	.text	body			0040a070	entry-lost	1/1
+0040a090	018f6f94	01978390	vm			unresolved					0/1
+0040a120	018faeb8	0197c5b0	vm-indirect	0049f650	.text	body			0040a120	entry-lost	1/1
+0040a1f0	018fbf04	019809b0	vm-indirect			unresolved					0/1
+0040a280	018f5db8	01985e70	vm-indirect			unresolved					0/1
+0040a2d0	018faff8	0197c580	vm-indirect			unresolved			0040a2d0	entry-lost	0/1
+0040a340	018fc148	01980990	vm	004431e0	.text	body			0040a340	entry-lost	1/1
+0040a3e0	018f73b8	01978370	vm			unresolved			0040a3e0	entry-lost	0/1
+0040a440	018fb260	0197c550	vm-indirect	0041aa80	.text	body			0040a440	entry-lost	1/1
+0040a480	018fc298	01980970	vm			unresolved			0040a480	entry-lost	0/1
+0040a4c0	018f606c	01985e40	vm-indirect			unresolved			0040a4c0	entry-recoverable	0/1
+0040a500	018fa194	01978340	vm-indirect			unresolved			0040a500	entry-lost	0/1
+0040a5c0	018fb380	0197c520	vm-indirect	00426e30	.text	body			0040a5c0	entry-lost	1/1
+0040a600	018f50b8	01980950	vm	004461a0	.text	body			0040a600	entry-lost	1/1
+0040a650	018f50b0	01980920	vm-indirect			unresolved			0040a650	entry-lost	0/1
+0040a6a0	018f638c	01985e10	vm-indirect			unresolved			0040a6a0	entry-lost	0/1
+0040a6e0	018fa344	01978310	vm-indirect			unresolved			0040a6e0	entry-lost	0/1
+0040a727	018f2c30	01954440	vm-indirect	004163a6	.text	cave	0040a72d	mov dword ptr [eax], 1	0040a720	inner-patched	1/1
+0040a750	018fb614	0197c4f0	vm-indirect			unresolved			0040a750	entry-recoverable	0/1
+0040a7b0	018f5220	01980900	vm			unresolved			0040a7b0	entry-lost	0/1
+0040a860	018f6608	01985df0	vm	0191b790	.securom	body			0040a860	entry-lost	1/1
+0040a8c0	018fb6f4	0197ca80	vm-indirect	0043e3b0	.text	body			0040a8c0	entry-lost	1/1
+0040a910	018f5450	01980ef0	vm			unresolved			0040a910	entry-lost	0/1
+0040a960	018f67a0	019863a0	vm-indirect			unresolved			0040a960	entry-lost	0/1
+0040aa20	018faea8	01dce000	native			unresolved			0040aa20	entry-lost	0/1
+0040aa50	018fbed8	0197ca50	vm-indirect			unresolved			0040aa50	entry-lost	0/1
+0040aad0	018f5c50	01980ed0	vm	0045edc0	.text	body			0040aad0	entry-lost	1/1
+0040ab80	018f7248	01986370	vm-indirect			unresolved			0040ab80	entry-lost	0/1
+0040abd0	018faff0	01978790	vm-indirect			unresolved			0040abd0	entry-lost	0/1
+0040ad30	018fc290	0197ca20	vm-indirect			unresolved			0040ad30	entry-lost	0/1
+0040ad60	018f6060	01980ea0	vm-indirect			unresolved			0040ad60	entry-lost	0/1
+0040adb0	018f6058	01980e70	vm-indirect			unresolved			0040adb0	entry-lost	0/1
+0040aec0	018fa1c4	01d5f000	native			unresolved			0040aec0	entry-recoverable	0/1
+0040aef0	018fb394	01978770	vm	0043d6e0	.text	body			0040aef0	entry-lost	1/1
+0040af40	018f50a8	0197c9f0	vm-indirect	0043a260	.text	body					1/1
+0040afd0	018f6380	01980e50	vm			unresolved					0/1
+0040b240	018fafe4	0197c9c0	vm-indirect			unresolved			0040b240	entry-lost	0/1
+0040b380	018fc178	01980e20	vm-indirect	01904ad0	.securom	body					1/1
+0040b410	018f603c	01986310	vm-indirect	00470720	.text	body			0040b410	entry-lost	1/1
+0040b470	018fa01c	01978750	vm			unresolved					0/1
+0040b4b0	018fb278	0197c990	vm-indirect	004a1cd0	.text	body					1/1
+0040b570	018fc3e8	01980e00	vm	019069f0	.securom	body			0040b570	entry-lost	1/1
+0040b6d0	018f63a8	019862e0	vm-indirect			unresolved					0/1
+0040b720	018fa4b8	01d77000	native			unresolved			0040b720	entry-lost	0/1
+0040b760	018fb63c	0197c960	vm-indirect			unresolved					0/1
+0040b7e0	018f524c	01980120	vm-indirect			unresolved			0040b7e0	entry-lost	0/1
+0040b960	018f6790	01985630	vm-indirect			unresolved			0040b960	entry-lost	0/1
+0040bce0	018fb184	019786f0	vm-indirect	00425170	.text	body			0040bce0	entry-recoverable	1/1
+0040c900	018fb7b0	0197c930	vm-indirect			unresolved			0040c900	entry-lost	0/1
+0040c920	018f5474	01980dd0	vm-indirect	0045a730	.text	body			0040c920	entry-lost	1/1
+0040c980	018f6788	019862c0	vm	0047aa50	.text	body			0040c980	entry-lost	1/1
+0040ca60	018fbefc	0197c910	vm	00435790	.text	body			0040ca60	entry-lost	1/1
+0040caa0	018f5c84	01980da0	vm-indirect	01913030	.securom	body			0040caa0	entry-lost	1/1
+0040cba0	018f7268	01986290	vm-indirect	019343b0	.securom	body			0040cba0	entry-recoverable	1/1
+0040ccf0	018fb174	019786d0	vm			unresolved					0/1
+0040d200	018fafe0	0197c8f0	vm	0040ad70	.text	body					1/1
+0040d220	018fc078	01980d80	vm	0042ce50	.text	body			0040d220	entry-lost	1/1
+0040d240	018f5dcc	01986260	vm-indirect	019142b0	.securom	body			0040d240	entry-lost	1/1
+0040d2f0	018f725c	019786b0	vm	004975d0	.text	body			0040d2f0	entry-lost	1/1
+0040d330	018fb168	0197c8c0	vm-indirect	004a1040	.text	body					1/1
+0040d5b0	018fc418	01980d50	vm-indirect	01907050	.securom	body			0040d5b0	entry-lost	1/1
+0040d990	018f5468	01980d20	vm-indirect	0190b7a0	.securom	body			0040d990	entry-lost	1/1
+0040db40	018f7240	01986230	vm-indirect	019341d0	.securom	body					1/1
+0040dc40	018fb15c	01978680	vm-indirect	0040b6e0	.text	body			0040dc40	entry-lost	1/1
+0040dc70	018fc16c	0197c890	vm-indirect	01904560	.securom	body			0040dc70	entry-lost	1/1
+0040dff0	018f6398	01980cf0	vm-indirect	019198d0	.securom	body			0040dff0	entry-lost	1/1
+0040e1d0	018f5c74	01986210	vm	0045ef60	.text	body			0040e1d0	entry-lost	1/1
+0040e220	018fb3a0	0197ce60	vm	004a2bd0	.text	body			0040e220	entry-lost	1/1
+0040e2f0	018f4fdc	01981480	vm-indirect	0044de30	.text	body			0040e2f0	entry-lost	1/1
+0040e340	018f63c0	01973dc0	vm			unresolved			0040e340	entry-recoverable	0/1
+0040e380	018fa3e4	01978c10	vm-indirect	00408be0	.text	body					1/1
+0040e3c0	018fb54c	0197ce40	vm	004a43b0	.text	body					1/1
+0040e480	018f52a0	01981450	vm-indirect	0190a290	.securom	body			0040e480	entry-lost	1/1
+0040e600	018f682c	01973da0	vm	0191ca90	.securom	body					1/1
+0040e690	018fa718	01978be0	vm-indirect	0044ef30	.text	body					1/1
+0040e750	018fb978	0197ce10	vm-indirect	0041e2e0	.text	body			0040e750	entry-recoverable	1/1
+0040e780	018f5630	01981420	vm-indirect			unresolved					0/1
+0040e7c0	018f5628	01981400	vm	0044a840	.text	body					1/1
+0040e800	018f6a64	01973d80	vm	004811c0	.text	body					1/1
+0040e8a0	018fba4c	0197cdf0	vm			unresolved			0040e8a0	entry-lost	0/1
+0040e930	018f57c8	019813e0	vm	0043bf70	.text	body					1/1
+0040eb30	018fc440	0197cdc0	vm-indirect			unresolved			0040eb30	entry-lost	0/1
+0040eb60	018f6288	019813c0	vm			unresolved			0040eb60	entry-lost	0/1
+0040ebf6	018ed6b4	01956980	vm-indirect			unresolved			0040ebf0	inner-patched	0/1
+0040f124	018ed794	019583e0	vm			unresolved			0040f120	inner-patched	0/1
+0040fed6	018f2548	01955330	vm-indirect			unresolved			0040fec0	inner-patched	0/1
+00410040	018f5fc8	01973d50	vm-indirect			unresolved			00410040	entry-lost	0/1
+004100d0	018f9fe0	01978bb0	vm-indirect			unresolved			004100d0	entry-lost	0/1
+004101d0	018fc360	01981390	vm-indirect			unresolved					0/1
+00410260	018f62e4	01973d20	vm-indirect			unresolved			00410260	entry-lost	0/1
+004102a0	018fa2a8	01978b80	vm-indirect			unresolved			004102a0	entry-lost	0/1
+00410320	018fb588	0197cda0	vm			unresolved			00410320	entry-lost	0/1
+004106e0	018f555c	01981370	vm			unresolved			004106e0	entry-lost	0/1
+00410a79	018f2d58	01956960	vm			unresolved			00410840	inner-patched	0/1
+004114b0	018f5308	01981340	vm-indirect			unresolved					0/1
+00411bf0	018fa2d8	01973cf0	vm-indirect			unresolved			00411bf0	entry-lost	0/1
+00411e90	018fb77c	01978b60	vm	0043e910	.text	body			00411e90	entry-lost	1/1
+00411ee0	018f5418	0197cd80	vm	0190b070	.securom	body			00411ee0	entry-lost	1/1
+00412150	018fc35c	01981310	vm-indirect			unresolved			00412150	entry-lost	0/1
+00412280	018f62d8	01973cc0	vm-indirect			unresolved					0/1
+00412730	018fb9ac	0197cd60	vm			unresolved			00412730	entry-lost	0/1
+00412780	018f5684	019812e0	vm-indirect			unresolved			00412780	entry-lost	0/1
+004127e0	018f69d8	01973c90	vm-indirect			unresolved			004127e0	entry-lost	0/1
+00413050	018f9fd4	01978b40	vm			unresolved			00413050	entry-lost	0/1
+004131b0	018fb340	0197cd40	vm			unresolved			004131b0	entry-lost	0/1
+00413220	018f503c	019812c0	vm			unresolved			00413220	entry-lost	0/1
+00414160	018f6164	01973c60	vm-indirect			unresolved			00414160	entry-lost	0/1
+004155b3	018ed3bc	01955300	vm-indirect	0040c906	.text	cave	004155b9	sub esp, 0x1ac	004155b0	inner-patched	1/1
+00415960	018faa1c	01da5000	native			unresolved			00415960	entry-lost	0/1
+00415b90	018f5038	0197cd10	vm-indirect			unresolved			00415b90	entry-lost	0/1
+00416300	018f5160	01981290	vm-indirect			unresolved			00416300	entry-lost	0/1
+004163a0	018f51fc	01981260	vm-indirect			unresolved			004163a0	entry-lost	0/1
+004163c0	018f64b4	01973c40	vm	0191a940	.securom	body			004163c0	entry-lost	1/1
+00416410	018fa540	01978af0	vm-indirect	0041f690	.text	body					1/1
+00416580	018fb778	0197ccf0	vm	0041f250	.text	body			00416580	entry-lost	1/1
+00416620	018f5558	01981240	vm			unresolved			00416620	entry-lost	0/1
+00416700	018f699c	01973c10	vm-indirect	0047b1f0	.text	body			00416700	entry-lost	1/1
+00416730	018fb9a8	0197ccc0	vm-indirect	004da080	.text	body			00416730	entry-lost	1/1
+00416880	018f5768	01981210	vm-indirect			unresolved			00416880	entry-lost	0/1
+004168b0	018f6aec	01973be0	vm-indirect	0047b430	.text	body			004168b0	entry-lost	1/1
+004169b0	018faa54	01978ac0	vm-indirect	0048d960	.text	body			004169b0	entry-lost	1/1
+00416a70	018fc34c	0197cca0	vm	019060c0	.securom	body			00416a70	entry-lost	1/1
+00416c50	018f645c	019811e0	vm-indirect	0191a410	.securom	body					1/1
+00416d40	018fa57c	01973bb0	vm-indirect	004393d0	.text	body			00416d40	entry-lost	1/1
+00416ed0	018fb790	01978aa0	vm	004416e0	.text	body			00416ed0	entry-lost	1/1
+00417060	018ed6a8	01954420	vm			unresolved			00417060	entry-lost	0/1
+00417160	018f6158	01973b90	vm	00447880	.text	body					1/1
+00417190	018fa130	01978a80	vm			unresolved					0/1
+004171d0	018fb330	0197cc70	vm-indirect	0042ca20	.text	body					1/1
+00417200	018f502c	019811b0	vm-indirect	0043a1d0	.text	body			00417200	entry-lost	1/1
+00417300	018f644c	01973b60	vm-indirect			unresolved			00417300	entry-lost	0/1
+00417340	018fb5cc	0197d2c0	vm	0043d640	.text	body					1/1
+00417380	018f51bc	01981a00	vm	0043e450	.text	body			00417380	entry-lost	1/1
+00417550	018f6724	01974340	vm	0047a780	.text	body			00417550	entry-lost	1/1
+004175a4	018f2e88	019552e0	vm	0041a526	.text	cave	004175ab	cmp dword ptr [eax + 4], 0x5d448fd8	004175a0	inner-patched	1/1
+004176b0	018fa7a4	01979080	vm	00424730	.text	body			004176b0	entry-lost	1/1
+00417700	018fb9a4	0197d290	vm-indirect	018fe250	.securom	body			00417700	entry-lost	1/1
+00417830	018f575c	019819d0	vm-indirect			unresolved					0/1
+004178c0	018f6adc	01974310	vm-indirect			unresolved					0/1
+00417950	018faa14	01979060	vm			unresolved					0/1
+004179f0	018fbb40	0197d270	vm			unresolved					0/1
+00417c10	018f6444	019819a0	vm-indirect			unresolved			00417c10	entry-lost	0/1
+00417d30	018f65fc	01981970	vm-indirect	0047ad90	.text	body			00417d30	entry-recoverable	1/1
+00417d80	018fa588	01d7d000	native			unresolved			00417d80	entry-lost	0/1
+00417f20	018fb890	01979040	vm	0043fb10	.text	body					1/1
+00417f60	018f5554	0197d250	vm			unresolved					0/1
+00417fa0	018f68e4	01981940	vm-indirect			unresolved					0/1
+00418090	018f6020	019742c0	vm	0043b110	.text	body			00418090	entry-lost	1/1
+00418670	018fb8b0	0197d230	vm	004937c0	.text	body					1/1
+00418810	018f5754	01981910	vm-indirect			unresolved					0/1
+00418890	018f6ad0	01974290	vm-indirect			unresolved			00418890	entry-lost	0/1
+00418b50	018fb49c	01979020	vm	004a3770	.text	body					1/1
+00418d20	018f5304	0197d210	vm			unresolved					0/1
+00419bb0	018f6324	019818e0	vm-indirect			unresolved					0/1
+00419c10	018fa44c	01974260	vm-indirect			unresolved					0/1
+00419cf0	018fb604	01979000	vm			unresolved					0/1
+0041a080	018fb220	0197d1e0	vm-indirect	004a1860	.text	body					1/1
+0041a180	018fc3a0	019818c0	vm			unresolved					0/1
+0041a1e0	018fc3c0	01980f10	vm-indirect			unresolved					0/1
+0041a250	018f6318	019737f0	vm-indirect			unresolved					0/1
+0041a2c0	018fa2cc	01978fd0	vm-indirect			unresolved					0/1
+0041a390	018fb5f0	0197d1c0	vm			unresolved					0/1
+0041a4c0	018f5338	019818a0	vm			unresolved					0/1
+0041a760	018f69c8	01974240	vm			unresolved					0/1
+0041a960	018fbb34	0197d190	vm-indirect			unresolved					0/1
+0041aa40	018f61c0	01981880	vm			unresolved					0/1
+0041aa70	018fa160	01974210	vm-indirect			unresolved					0/1
+0041aad0	018fb350	01978fa0	vm-indirect			unresolved					0/1
+0041ab30	018f5070	0197d160	vm-indirect			unresolved					0/1
+0041ab90	018f6314	01981860	vm			unresolved					0/1
+0041abf0	018fa320	019741e0	vm-indirect			unresolved					0/1
+0041ac50	018fb5e0	01978f70	vm-indirect			unresolved			0041ac50	entry-lost	0/1
+0041b0b0	018fb258	0197d130	vm-indirect			unresolved					0/1
+0041b2a0	018f5098	01981840	vm			unresolved					0/1
+0041b6e0	018f55a4	01981810	vm-indirect			unresolved					0/1
+0041c190	018f61b4	019741c0	vm			unresolved					0/1
+0041c7c0	018fa908	01978f50	vm			unresolved					0/1
+0041cf20	018f556c	0197d100	vm-indirect	0190c480	.securom	body			0041cf20	entry-lost	1/1
+0041cf90	018f68dc	019817e0	vm-indirect			unresolved					0/1
+0041d010	018f6010	019741a0	vm	01915c50	.securom	body					1/1
+0041d0b0	018fb250	0197d0e0	vm	0046dc80	.text	body			0041d0b0	entry-lost	1/1
+0041d130	018fc390	019817c0	vm			unresolved					0/1
+0041d1b0	018f61f4	01974180	vm			unresolved					0/1
+0041d1e0	018fa184	01978f30	vm	004086d0	.text	body					1/1
+0041d2d0	018fb4c8	0197d0c0	vm			unresolved					0/1
+0041d450	018f5320	019817a0	vm			unresolved					0/1
+0041d6a0	018f68f8	01974160	vm			unresolved					0/1
+0041d760	018fa8e8	01d99000	native			unresolved					0/1
+0041d940	018fbb30	0197d090	vm-indirect			unresolved					0/1
+0041dbe0	018f6360	01981780	vm			unresolved					0/1
+0041dce0	018f6508	01981760	vm			unresolved					0/1
+0041e2d0	018f6350	01974130	vm-indirect			unresolved					0/1
+0041ed60	018fb6b8	01978ef0	vm			unresolved					0/1
+0041efd0	018f5594	0197d070	vm			unresolved					0/1
+0041f060	018fc254	01981740	vm			unresolved					0/1
+0041f180	018f61f0	01974110	vm			unresolved					0/1
+0041f240	018fb490	0197d4d0	vm-indirect			unresolved					0/1
+0041f340	018f51f0	01981ce0	vm			unresolved					0/1
+0041f5c0	018f6750	019745f0	vm-indirect			unresolved					0/1
+0041f630	018fa7a0	019792e0	vm-indirect			unresolved					0/1
+0041f680	018fb8d4	0197d4a0	vm-indirect			unresolved					0/1
+0041f740	018f56a8	01981cc0	vm			unresolved					0/1
+0041f800	018f6ac0	019745d0	vm			unresolved					0/1
+0041f860	018fa97c	019792b0	vm-indirect			unresolved					0/1
+0041fa70	018fc3b8	0197d480	vm			unresolved					0/1
+0041fb50	018f6344	01981ca0	vm			unresolved					0/1
+00420530	018f5464	01981c70	vm-indirect			unresolved					0/1
+00420570	018f6778	019745a0	vm-indirect			unresolved					0/1
+00420a00	018fb378	01deb000	native			unresolved					0/1
+00420ef0	018f54ac	0197d460	vm			unresolved					0/1
+00420f20	018f6918	01981c40	vm-indirect			unresolved					0/1
+00421080	018f6054	01974570	vm-indirect			unresolved					0/1
+00421110	018fb36c	0197d440	vm			unresolved					0/1
+00421360	018f5244	01981c20	vm			unresolved					0/1
+00421580	018f67e4	01974540	vm-indirect			unresolved					0/1
+00421610	018fa7d4	01979250	vm-indirect			unresolved					0/1
+004216b0	018fb918	0197d410	vm-indirect			unresolved					0/1
+00421710	018f56d0	01981bf0	vm-indirect			unresolved					0/1
+00421790	018f6a24	01974520	vm			unresolved					0/1
+00421810	018fa994	01979220	vm-indirect			unresolved					0/1
+00421880	018fbaa8	0197d3e0	vm-indirect			unresolved					0/1
+00421940	018f5838	01981bc0	vm-indirect			unresolved					0/1
+00421ab0	018f6228	01981b90	vm-indirect			unresolved					0/1
+00421d90	018fa5d0	01974500	vm			unresolved					0/1
+00422100	018fa1b8	01d5e000	native			unresolved					0/1
+00422ab0	018fc408	0197d3c0	vm			unresolved			0042295e	clean	0/1
+00422e80	018f67d4	01981b70	vm			unresolved					0/1
+00422f80	018fa814	019744e0	vm			unresolved					0/1
+004231f0	018fb40c	0197d810	vm			unresolved					0/1
+00423310	018f5260	019820f0	vm-indirect			unresolved					0/1
+004234a0	018f6694	01974a30	vm			unresolved					0/1
+004234f0	018fa654	01979680	vm			unresolved					0/1
+00423560	018fb844	0197d7f0	vm			unresolved					0/1
+00423630	018f55f8	019820d0	vm			unresolved					0/1
+004236b0	018f6978	01974a00	vm-indirect			unresolved					0/1
+00423860	018fa9d0	01979660	vm	0047bb90	.text	body					1/1
+00423fb0	018f5618	0197d7d0	vm			unresolved					0/1
+00424270	018f514c	019820a0	vm-indirect			unresolved					0/1
+00424380	018f5290	01982080	vm			unresolved					0/1
+004243d0	018f65a4	019749e0	vm			unresolved					0/1
+00424480	018fa624	01d81000	native			unresolved					0/1
+00424550	018fb838	0197d7b0	vm			unresolved					0/1
+004246e0	018f5654	01982060	vm			unresolved					0/1
+00424720	018f6a54	019749b0	vm-indirect			unresolved					0/1
+00424910	018fbbc4	0197d780	vm-indirect			unresolved					0/1
+00424980	018f58e4	01982040	vm			unresolved					0/1
+00424c10	018fa500	01974980	vm-indirect			unresolved					0/1
+00425130	018fa238	01d63000	native			unresolved					0/1
+00425160	018fb3c0	0197d750	vm-indirect			unresolved					0/1
+004252e0	018f515c	01982020	vm			unresolved					0/1
+00425400	018f6660	01974960	vm			unresolved					0/1
+00425450	018fa614	019795d0	vm-indirect			unresolved					0/1
+00425530	018fb82c	0197d720	vm-indirect			unresolved					0/1
+00425570	018f5528	01981ff0	vm-indirect			unresolved					0/1
+004255f0	018f5550	01981fd0	vm			unresolved					0/1
+00425670	018f6970	01974940	vm			unresolved					0/1
+004256f0	018fa8a0	019795a0	vm-indirect			unresolved					0/1
+00425810	018fbad8	0197d700	vm			unresolved					0/1
+00425960	018f58d8	01981fa0	vm-indirect			unresolved					0/1
+00425b60	018fa3d8	01974910	vm-indirect			unresolved					0/1
+00425e40	018f5518	0197d6d0	vm-indirect			unresolved					0/1
+00425ea0	018f68a0	01981f80	vm			unresolved					0/1
+00425fe0	018fa89c	019748e0	vm-indirect			unresolved					0/1
+00426020	018fa094	01979580	vm			unresolved					0/1
+00426ba0	018f5158	0197d6a0	vm-indirect			unresolved					0/1
+00426e20	018f6868	01981f50	vm-indirect			unresolved					0/1
+00426e90	018fa708	019748b0	vm-indirect			unresolved					0/1
+00426ee0	018fb854	01979560	vm			unresolved					0/1
+00426f90	018f5608	0197d680	vm			unresolved					0/1
+00427050	018fc2dc	01981f30	vm			unresolved					0/1
+004271b0	018f4fcc	01981f00	vm-indirect			unresolved					0/1
+0042756e	018ed810	019552b0	vm-indirect			unresolved			00427540	inner-patched	0/1
+004275a0	018f6894	01974880	vm-indirect			unresolved					0/1
+00427800	018fa9c8	01da2000	native			unresolved			0042767b	clean	0/1
+004278b0	018fbaf4	0197d660	vm			unresolved					0/1
+00428360	018f5284	01981ee0	vm			unresolved					0/1
+004290a0	018f6110	01974860	vm			unresolved					0/1
+00429650	018fb974	0197db80	vm			unresolved					0/1
+00429780	018f5730	01982540	vm			unresolved					0/1
+00429800	018f6b88	01974e40	vm			unresolved					0/1
+00429850	018fa9c4	01979a00	vm			unresolved					0/1
+00429a50	018fc430	0197db50	vm-indirect			unresolved					0/1
+00429b10	018f63dc	01982520	vm			unresolved					0/1
+00429da0	018fa648	01974e20	vm			unresolved					0/1
+0042a0a0	018fa0e0	01d56000	native			unresolved					0/1
+0042a0e0	018fb2d0	0197db30	vm			unresolved					0/1
+0042a200	018f5140	01982500	vm			unresolved					0/1
+0042a3c0	018f52d8	019824e0	vm	004471a0	.text	body					1/1
+0042a410	018f6688	01974df0	vm-indirect	0191bb80	.securom	body					1/1
+0042a730	018fa950	025d0000	native			unresolved					0/1
+0042b130	018fb3b4	0197db00	vm-indirect			unresolved					0/1
+0042b1a0	018f4fc4	019824b0	vm-indirect	019076a0	.securom	body					1/1
+0042ba90	018fa288	022b0000	native			unresolved					0/1
+0042bd80	018f53e0	0197dae0	vm			unresolved					0/1
+0042bdf0	018f6714	01982490	vm	00481330	.text	body					1/1
+0042c120	018f62c0	01974da0	vm	01918630	.securom	body			0042c120	entry-lost	1/1
+0042c8b0	018faa0c	01979970	vm-indirect	00492ca0	.text	body			0042c8b0	entry-lost	1/1
+0042ca10	018fc42c	0197dac0	vm			unresolved					0/1
+0042cdc0	018f6710	01982470	vm	0191bde0	.securom	body			0042cdc0	entry-lost	1/1
+0042ce40	018fa74c	01d8d000	native			unresolved					0/1
+0042d430	018fa638	01979950	vm			unresolved					0/1
+0042d4a0	018fb770	0197daa0	vm			unresolved					0/1
+0042dbc0	018f6438	01982440	vm-indirect			unresolved					0/1
+0042e390	018f52cc	01981710	vm-indirect	0190a560	.securom	body					1/1
+0042eb70	018fa418	019740e0	vm-indirect	00419c20	.text	body					1/1
+0042f800	018fa9bc	01979930	vm			unresolved			0042f800	entry-lost	0/1
+0042f860	018fbae4	0197da70	vm-indirect			unresolved					0/1
+0042fba0	018f6434	01982420	vm			unresolved					0/1
+004301cb	018ed4b4	01958480	vm			unresolved			004301c0	inner-patched	0/1
+004307a0	018f6abc	01974d40	vm-indirect			unresolved					0/1
+00430b10	018f51b4	0197da50	vm			unresolved					0/1
+00430bc0	018f6504	019823f0	vm-indirect			unresolved					0/1
+00431709	018edb64	01956a60	vm-indirect			unresolved			004316f0	inner-patched	0/1
+00432120	018f6310	01974d20	vm	01918da0	.securom	body					1/1
+004321b0	018fa318	01979900	vm-indirect			unresolved					0/1
+00432770	018fba90	0197da20	vm-indirect			unresolved					0/1
+00432860	018f5828	019823c0	vm-indirect			unresolved					0/1
+004328f0	018f6c04	01974cf0	vm-indirect			unresolved					0/1
+00432a10	018fb464	019798e0	vm			unresolved					0/1
+00432a90	018f5068	0197d9f0	vm-indirect			unresolved					0/1
+00432ea0	018f68d0	01982390	vm-indirect			unresolved					0/1
+00433bf0	018f64f4	01982360	vm-indirect			unresolved					0/1
+00433d80	018fa678	01974cd0	vm			unresolved					0/1
+00433df0	018fb7a0	019798c0	vm			unresolved					0/1
+00433f00	018f5680	0197d9c0	vm-indirect			unresolved					0/1
+00433fe0	018f69f0	01982340	vm			unresolved					0/1
+00434010	018f61ac	01974ca0	vm-indirect			unresolved					0/1
+004351c0	018fb804	0197dfb0	vm-indirect			unresolved			0043505f	clean	0/1
+00435380	018f56c8	01982b20	vm			unresolved			0043505f	clean	0/1
+004354e0	018f6b30	01975440	vm-indirect			unresolved					0/1
+00435550	018faa9c	01979e80	vm-indirect			unresolved					0/1
+004356b0	018fbc5c	0197df90	vm			unresolved					0/1
+00435710	018f5a48	01982af0	vm-indirect			unresolved					0/1
+00435780	018f6e9c	01975420	vm			unresolved					0/1
+004357f0	018facac	01dba000	native			unresolved					0/1
+00435820	018fbe00	0197df60	vm-indirect			unresolved					0/1
+004358f0	018f5b3c	01982ad0	vm			unresolved					0/1
+00435920	018f5c40	01982ab0	vm			unresolved					0/1
+00435dc0	018fa9a0	019753f0	vm-indirect			unresolved					0/1
+00435e10	018fbb7c	01979e20	vm-indirect			unresolved					0/1
+00435e90	018f5874	0197df40	vm			unresolved					0/1
+00435f30	018f6d6c	01982a90	vm			unresolved					0/1
+004362f0	018f6938	019753c0	vm-indirect			unresolved					0/1
+004369be	018ed708	019544a0	vm			unresolved					0/1
+00436a70	018f54a0	0197df20	vm			unresolved			00436a70	entry-lost	0/1
+00436ad0	018f67c8	01982a60	vm-indirect			unresolved					0/1
+00436b60	018fa80c	01975390	vm-indirect			unresolved					0/1
+00436d30	018fbaa4	01979df0	vm-indirect			unresolved					0/1
+00436f0e	018f2810	01955430	vm			unresolved					0/1
+004372f0	018fb940	0197df00	vm			unresolved			00437255	clean	0/1
+00437640	018f5984	01982a30	vm-indirect			unresolved					0/1
+00437a80	018fa6a8	01975360	vm-indirect			unresolved					0/1
+00437b30	018fb8e0	01979dd0	vm			unresolved					0/1
+004381a0	018fb7f4	0197dee0	vm			unresolved					0/1
+00438490	018f5790	01982a10	vm			unresolved					0/1
+004386a0	018f59a4	019829e0	vm-indirect			unresolved					0/1
+00438890	018f6fb4	01975330	vm-indirect			unresolved					0/1
+00438920	018faec4	01979db0	vm			unresolved					0/1
+00438940	018fbf0c	0197dec0	vm			unresolved					0/1
+00438990	018f5c68	019829b0	vm-indirect			unresolved					0/1
+004389e0	018f7100	01975310	vm			unresolved					0/1
+00438a10	018f549c	0197de90	vm-indirect			unresolved					0/1
+00438a30	018f67c0	01982980	vm-indirect			unresolved					0/1
+00438ae0	018fa6cc	024a0000	native			unresolved					0/1
+00438b50	018fb908	01979d90	vm			unresolved					0/1
+00438b80	018f55bc	0197de70	vm	0044cff0	.text	body					1/1
+00438bf0	018f6950	01982960	vm			unresolved					0/1
+00438c20	018fa90c	01d9a000	native			unresolved					0/1
+00438c60	018fba20	01979d70	vm			unresolved					0/1
+00438c90	018f56e8	0197de50	vm			unresolved					0/1
+00438e50	018f6c48	01982940	vm			unresolved					0/1
+00438e80	018f6c44	01982920	vm			unresolved					0/1
+00438ea0	018faacc	02670000	native			unresolved					0/1
+00438f60	018fbc50	01979d40	vm-indirect			unresolved					0/1
+00438f80	018f599c	0197de20	vm-indirect			unresolved					0/1
+00438fc0	018f6db0	019828f0	vm-indirect			unresolved					0/1
+00439000	018f6628	01975260	vm			unresolved					0/1
+00439100	018fb7f0	0197ddf0	vm-indirect			unresolved					0/1
+00439140	018f5494	019828d0	vm			unresolved					0/1
+004391a0	018f6828	01975240	vm			unresolved					0/1
+004392a0	018fa84c	01979d10	vm-indirect			unresolved					0/1
+004392d0	018fb93c	0197ddc0	vm-indirect			unresolved					0/1
+004392f0	018f55e8	019828b0	vm			unresolved					0/1
+00439340	018f6a1c	01975220	vm			unresolved					0/1
+004393c0	018fa92c	01979cf0	vm			unresolved					0/1
+00439520	018fbba4	0197dd90	vm-indirect			unresolved					0/1
+00439550	018f586c	01982880	vm-indirect			unresolved					0/1
+00439570	018f5860	01982850	vm-indirect			unresolved					0/1
+004395c0	018f6c6c	019751f0	vm-indirect			unresolved					0/1
+00439612	018ed600	01955400	vm-indirect			unresolved					0/1
+00439650	018fab90	01979cd0	vm			unresolved					0/1
+004396f0	018fbc80	0197dd70	vm			unresolved					0/1
+00439770	018f5a64	01982830	vm			unresolved					0/1
+004397a0	018f6edc	019751c0	vm-indirect			unresolved					0/1
+004397d0	018fbd54	0197e420	vm			unresolved					0/1
+004397f0	018f5a84	01983090	vm-indirect			unresolved					0/1
+00439880	018f6fc4	01975a30	vm			unresolved					0/1
+004398a0	018fadb4	0197a2c0	vm			unresolved					0/1
+004398e0	018fbe40	0197e3f0	vm-indirect			unresolved					0/1
+00439930	018f5c60	01983070	vm			unresolved					0/1
+00439950	018f70e4	01975a10	vm			unresolved					0/1
+00439980	018faef4	0197a290	vm-indirect			unresolved					0/1
+004399a0	018fbf44	0197e3d0	vm			unresolved					0/1
+004399c0	018f5ca0	01983050	vm			unresolved					0/1
+00439a40	018f67bc	01983020	vm-indirect			unresolved					0/1
+00439ab0	018fa6c0	019759e0	vm-indirect			unresolved					0/1
+00439b00	018fb900	0197a260	vm-indirect			unresolved					0/1
+00439b40	018f55b8	0197e3a0	vm-indirect			unresolved			00439b40	entry-lost	0/1
+00439c40	018f6a0c	01983000	vm			unresolved					0/1
+00439c90	018fa920	019759c0	vm			unresolved					0/1
+00439d80	018f57b8	0197e370	vm-indirect			unresolved					0/1
+00439da0	018f6b64	01982fd0	vm-indirect			unresolved					0/1
+00439dd0	018fa9b8	019759a0	vm			unresolved					0/1
+00439e30	018fbb9c	0197a230	vm-indirect			unresolved			00439e30	entry-lost	0/1
+00439fc0	018f59b0	0197e340	vm-indirect			unresolved			00439fc0	entry-lost	0/1
+0043a060	018f5388	01982fa0	vm-indirect			unresolved					0/1
+0043a0d0	018f667c	01975970	vm-indirect			unresolved					0/1
+0043a0f0	018fa610	01d80000	native			unresolved					0/1
+0043a130	018fb820	0197e310	vm-indirect			unresolved					0/1
+0043a160	018f54e4	01982f70	vm-indirect			unresolved					0/1
+0043a180	018f54dc	01982560	vm-indirect			unresolved					0/1
+0043a1a0	018f6818	01975940	vm-indirect			unresolved					0/1
+0043a1c0	018fa6f8	01d8a000	native			unresolved					0/1
+0043a220	018fb938	0197e2f0	vm			unresolved					0/1
+0043a250	018f55d8	01982f40	vm-indirect			unresolved					0/1
+0043a2a0	018f6948	01975910	vm-indirect			unresolved					0/1
+0043a2d0	018fb96c	0197e2d0	vm			unresolved					0/1
+0043a2f0	018f5600	01982f10	vm-indirect			unresolved					0/1
+0043a310	018f6a4c	019758e0	vm-indirect			unresolved					0/1
+0043a330	018fa91c	01d9c000	native			unresolved					0/1
+0043a350	018fba30	0197e2a0	vm-indirect			unresolved					0/1
+0043a370	018f5710	01982ee0	vm-indirect			unresolved					0/1
+0043a390	018f6a40	019758b0	vm-indirect			unresolved					0/1
+0043a3b0	018fa948	01d9d000	native			unresolved					0/1
+0043a3d0	018fba3c	0197e280	vm			unresolved					0/1
+0043a470	018f57a8	01982ec0	vm			unresolved					0/1
+0043a490	018f57a0	01982ea0	vm			unresolved					0/1
+0043a4b0	018f6b84	01975890	vm			unresolved					0/1
+0043a4d0	018fa9b0	0197a160	vm-indirect			unresolved					0/1
+0043a4f0	018fbacc	0197e260	vm			unresolved					0/1
+0043a510	018f58a0	01982e70	vm-indirect			unresolved					0/1
+0043a540	018f6c60	01975860	vm-indirect			unresolved					0/1
+0043a590	018fbbb4	0197e230	vm-indirect			unresolved					0/1
+0043a5c0	018f58cc	01982e50	vm			unresolved					0/1
+0043a5e0	018f6c84	01975830	vm-indirect			unresolved					0/1
+0043a600	018faba4	01daf000	native			unresolved					0/1
+0043a6c0	018fbcc8	0197e200	vm-indirect			unresolved					0/1
+0043a6f0	018f59e4	01982e30	vm			unresolved					0/1
+0043a730	018f6ed8	01975800	vm-indirect			unresolved					0/1
+0043a760	018facb8	0197a120	vm			unresolved					0/1
+0043a7a0	018fbd8c	0197e1d0	vm-indirect			unresolved					0/1
+0043a7f0	018f5a90	01982e00	vm-indirect			unresolved					0/1
+0043a850	018f5b4c	01982dd0	vm-indirect			unresolved					0/1
+0043a8b0	018f6ff0	019757e0	vm			unresolved					0/1
+0043a920	018faeec	0197a100	vm			unresolved					0/1
+0043a940	018fbf3c	0197e1a0	vm-indirect			unresolved					0/1
+0043a970	018f5c9c	01982db0	vm			unresolved					0/1
+0043a9b0	018f713c	019757c0	vm			unresolved					0/1
+0043aa70	018f550c	0197e640	vm			unresolved					0/1
+0043aad0	018f6858	01983310	vm			unresolved					0/1
+0043aaf0	018fa748	01975ca0	vm			unresolved					0/1
+0043ab10	018fb928	0197a490	vm-indirect			unresolved					0/1
+0043ab40	018f55d4	0197e620	vm			unresolved					0/1
+0043ab80	018f696c	019832f0	vm			unresolved					0/1
+0043abc0	018fa898	01975c70	vm-indirect			unresolved					0/1
+0043abe0	018fb964	0197a460	vm-indirect			unresolved					0/1
+0043ac00	018f5708	0197e5f0	vm-indirect			unresolved			0043ac00	entry-lost	0/1
+0043ad20	018f6b58	019832c0	vm-indirect			unresolved					0/1
+0043ad50	018f6b54	019832a0	vm			unresolved					0/1
+0043add0	018fa9a8	01975c50	vm			unresolved					0/1
+0043ae00	018fbbb0	0197a440	vm			unresolved					0/1
+0043ae40	018f5894	0197e5c0	vm-indirect			unresolved					0/1
+0043ae60	018f6c80	01983270	vm-indirect			unresolved					0/1
+0043ae90	018faae8	02680000	native			unresolved					0/1
+0043aec0	018f5918	0197e5a0	vm			unresolved					0/1
+0043af00	018f6da4	01983250	vm			unresolved					0/1
+0043af20	018fabac	01975bf0	vm-indirect			unresolved					0/1
+0043af50	018fbcc0	0197a410	vm-indirect			unresolved					0/1
+0043af70	018f59d4	0197e580	vm			unresolved					0/1
+0043afa0	018f6dd8	01983220	vm-indirect			unresolved					0/1
+0043afc0	018fabd4	01975bd0	vm			unresolved					0/1
+0043afe0	018fbcd4	0197a3f0	vm			unresolved					0/1
+0043b010	018fb728	0197e550	vm-indirect			unresolved					0/1
+0043b060	018f53a8	019831f0	vm-indirect			unresolved					0/1
+0043b0b0	018f53d8	019831d0	vm			unresolved					0/1
+0043b100	018f680c	01975bb0	vm			unresolved					0/1
+0043b140	018fa6f0	01d89000	native			unresolved					0/1
+0043b190	018fb828	0197e530	vm			unresolved					0/1
+0043b250	018fb9a0	0197e870	vm			unresolved					0/1
+0043b470	018faa04	02610000	native			unresolved					0/1
+0043b542	018edc08	01956a40	vm			unresolved					0/1
+0043b860	018f706c	01976040	vm-indirect			unresolved					0/1
+0043b8f0	018fae78	01dcc000	native			unresolved					0/1
+0043b910	018fc010	0197e840	vm-indirect			unresolved			0043b910	entry-lost	0/1
+0043b94a	018edc9c	01956900	vm-indirect			unresolved			0043b940	inner-patched	0/1
+0043b970	018f5d5c	01983650	vm	01913690	.securom	body					1/1
+0043bad0	018fb8a0	0197a720	vm-indirect	0043fbc0	.text	body			0043bad0	entry-lost	1/1
+0043bb10	018f567c	0197e810	vm-indirect			unresolved			0043bb10	entry-lost	0/1
+0043bb60	018f6998	01983630	vm	00486fc0	.text	body					1/1
+0043bbb0	018f69b8	01983600	vm-indirect	0191dea0	.securom	body					1/1
+0043bc50	018fa970	01d9e000	native			unresolved					0/1
+0043bd00	018fbb0c	0197a700	vm			unresolved					0/1
+0043bd80	018f57f8	0197e7e0	vm-indirect	0190ef50	.securom	body					1/1
+0043be20	018f6ce0	019835e0	vm	0192f290	.securom	body					1/1
+0043bec0	018fab54	026a0000	native			unresolved					0/1
+0043bf60	018f5a18	0197e7b0	vm-indirect	00455d70	.text	body			0043bf60	entry-lost	1/1
+0043bfb0	018f6e64	019835b0	vm-indirect	0048f3f0	.text	body			0043bfb0	entry-lost	1/1
+0043bff0	018fac34	02720000	native			unresolved					0/1
+0043c130	018fa774	01d90000	native			unresolved					0/1
+0043c180	018fb880	0197e790	vm			unresolved					0/1
+0043c1d0	018f5568	01983580	vm-indirect			unresolved					0/1
+0043c270	018f6990	01975f80	vm-indirect			unresolved					0/1
+0043c2c0	018fa8e4	025a0000	native			unresolved					0/1
+0043c370	018fba74	0197e770	vm			unresolved					0/1
+0043c410	018f57e8	01983550	vm-indirect			unresolved					0/1
+0043c4b0	018f5824	01983530	vm	00453e50	.text	body					1/1
+0043c500	018f6cd0	01975f50	vm-indirect			unresolved					0/1
+0043c550	018fab1c	0197a680	vm			unresolved					0/1
+0043c6d0	018fbd0c	0197e740	vm-indirect			unresolved					0/1
+0043c770	018f5af0	01983510	vm			unresolved					0/1
+0043c820	018f7064	01975f20	vm-indirect			unresolved					0/1
+0043c8c0	018fbed0	0197eb50	vm-indirect			unresolved					0/1
+0043c960	018f5d8c	019839c0	vm-indirect			unresolved					0/1
+0043c9b0	018f7214	01976440	vm-indirect			unresolved					0/1
+0043ca00	018fb874	0197aa80	vm			unresolved					0/1
+0043cad0	018f5564	0197eb30	vm			unresolved					0/1
+0043cb20	018f6984	01983990	vm-indirect			unresolved					0/1
+0043cbc0	018fa8d4	01976420	vm			unresolved					0/1
+0043ccc0	018fba80	0197aa60	vm			unresolved					0/1
+0043cd70	018f5820	0197eb10	vm			unresolved					0/1
+0043cdc0	018f6bc4	01983970	vm	0192e600	.securom	body					1/1
+0043ce60	018f6d04	01983950	vm			unresolved					0/1
+0043cf00	018fabfc	019763f0	vm-indirect			unresolved					0/1
+0043d30f	018f2638	01958370	vm			unresolved					0/1
+0043d4f0	018faa74	02630000	native			unresolved					0/1
+0043d590	018fbc40	0197eaf0	vm	019005a0	.securom	body					1/1
+0043d630	018f5a0c	01983930	vm	019111d0	.securom	body					1/1
+0043d6d0	018f6e54	019763d0	vm	01930ab0	.securom	body			0043d6d0	entry-lost	1/1
+0043d780	018fbdc8	0197ead0	vm	01901810	.securom	body			0043d780	entry-lost	1/1
+0043d830	018f5bf4	01983900	vm-indirect	0045ea50	.text	body			0043d830	entry-lost	1/1
+0043d880	018f70b0	019763a0	vm-indirect	019322f0	.securom	body					1/1
+0043d930	018fafb4	01dd7000	native			unresolved					0/1
+0043d990	018fc034	0197eaa0	vm-indirect			unresolved					0/1
+0043da00	018f68c0	019838d0	vm-indirect			unresolved					0/1
+0043da60	018fa790	02500000	native			unresolved					0/1
+0043dad0	018fb8c4	0197a9d0	vm-indirect	018fd900	.securom	body					1/1
+0043db70	018f5698	0197ea80	vm	00451db0	.text	body					1/1
+0043dbc0	018f69e0	019838a0	vm-indirect	0047b280	.text	body					1/1
+0043dc10	018f6aac	01982d90	vm			unresolved					0/1
+0043dd60	018faa4c	02620000	native			unresolved					0/1
+0043de00	018fbbfc	0197a9b0	vm			unresolved					0/1
+0043de50	018f592c	0197ea60	vm			unresolved					0/1
+0043dea0	018f6d40	01983880	vm			unresolved					0/1
+0043df50	018fac30	01db4000	native			unresolved			0043df50	entry-lost	0/1
+0043e120	018fb898	0197ea40	vm			unresolved					0/1
+0043e1c0	018f558c	01983850	vm-indirect			unresolved					0/1
+0043e260	018f69a8	019762e0	vm-indirect			unresolved					0/1
+0043e300	018fa974	01d9f000	native			unresolved					0/1
+0043e3a0	018fba9c	0197ea10	vm-indirect			unresolved					0/1
+0043e440	018f581c	01983830	vm			unresolved					0/1
+0043e4a0	018f6bfc	019762c0	vm			unresolved					0/1
+0043e4f0	018faa6c	01da7000	native			unresolved					0/1
+0043e590	018fbc30	0197e9e0	vm-indirect			unresolved					0/1
+0043e659	018f2c4c	01954470	vm-indirect			unresolved			0043e630	inner-patched	0/1
+0043e680	018f5a34	01983800	vm-indirect			unresolved			0043e630	inner-patched	0/1
+0043e710	018f5afc	019837e0	vm			unresolved					0/1
+0043e7b0	018f6f8c	01976290	vm-indirect			unresolved					0/1
+0043e860	018fae68	02840000	native			unresolved					0/1
+0043e900	018fc028	0197e9b0	vm-indirect			unresolved					0/1
+0043ea10	018f68cc	019837c0	vm			unresolved					0/1
+0043eab0	018fa7cc	02520000	native			unresolved					0/1
+0043eb60	018f5990	0197eed0	vm			unresolved					0/1
+0043ec10	018f6e94	01983e60	vm			unresolved					0/1
+0043ecb0	018faca0	02780000	native			unresolved					0/1
+0043ed50	018fbe1c	0197ade0	vm-indirect			unresolved					0/1
+0043edc0	018f5b38	0197eea0	vm-indirect			unresolved					0/1
+0043eed0	018f70d8	01983e30	vm-indirect			unresolved					0/1
+0043ef80	018fb004	01976830	vm			unresolved					0/1
+0043f8a8	018ed3fc	019553d0	vm-indirect			unresolved					0/1
+0043fa60	018fbb98	0197adc0	vm			unresolved					0/1
+0043fb00	018f5974	0197ee80	vm			unresolved					0/1
+0043fbb0	018f6d88	01983e10	vm			unresolved					0/1
+0043fc60	018f6eb0	01983de0	vm-indirect	00490490	.text	body			0043fc60	entry-lost	1/1
+0043fcb0	018fac94	01db9000	native			unresolved			0043fcb0	entry-lost	0/1
+0043fd10	018fbdf8	0197ada0	vm			unresolved					0/1
+0043fe20	018f5c34	0197ee60	vm			unresolved					0/1
+0043fed0	018f70f0	01983db0	vm-indirect			unresolved					0/1
+00440010	018f6b50	019767e0	vm			unresolved					0/1
+00440150	018fbba8	0197ee40	vm			unresolved					0/1
+004401f0	018f58c4	01983d80	vm-indirect			unresolved			00440160	clean	0/1
+004402a0	018f6dc8	019767b0	vm-indirect			unresolved					0/1
+00440300	018facb0	02790000	native			unresolved					0/1
+004403a0	018fbd80	0197ee20	vm			unresolved					0/1
+00440400	018f5b40	01983d60	vm			unresolved					0/1
+004404a0	018f6fe0	01976790	vm	0047bb20	.text	body			004404a0	entry-lost	1/1
+004404e0	018fadd8	027f0000	native			unresolved					0/1
+00440580	018fbf80	0197ee00	vm	01903590	.securom	body			00440580	entry-lost	1/1
+00440620	018f5e14	01983d40	vm			unresolved					0/1
+004406d0	018f5e4c	01983d20	vm			unresolved					0/1
+00440780	018f73e8	01976770	vm			unresolved					0/1
+00440830	018fb290	02a10000	native			unresolved					0/1
+004408e0	018fc2d8	0197ede0	vm			unresolved					0/1
+00440990	018f6284	01983cf0	vm-indirect			unresolved					0/1
+00440a40	018faabc	02660000	native			unresolved					0/1
+00440aa0	018f58c0	0197edc0	vm			unresolved					0/1
+00440be0	018f6e18	01983cc0	vm-indirect			unresolved					0/1
+00440c90	018facec	01dbf000	native			unresolved					0/1
+00440d30	018fbe5c	0197ad00	vm-indirect			unresolved					0/1
+00440de0	018f5bb4	0197ed90	vm-indirect			unresolved					0/1
+00440e80	018f7138	01983c90	vm-indirect			unresolved					0/1
+00440f20	018fb038	028c0000	native			unresolved					0/1
+00440fc0	018fc0b8	0197acd0	vm-indirect			unresolved					0/1
+00441060	018fbac8	0197ed60	vm-indirect			unresolved					0/1
+00441110	018f588c	01983c70	vm			unresolved					0/1
+004411b0	018f5914	01983c40	vm-indirect			unresolved					0/1
+00441580	018f7130	019766d0	vm			unresolved					0/1
+00441620	018fb034	01dda000	native			unresolved					0/1
+004416d0	018fc0b4	0197ed30	vm-indirect			unresolved					0/1
+00441780	018f5f68	01983c10	vm-indirect			unresolved					0/1
+00441820	018fa084	01d53000	native			unresolved					0/1
+004418d0	018fc304	0197ed10	vm			unresolved					0/1
+004419e0	018f62b0	01983bf0	vm			unresolved					0/1
+00441a80	018faadc	01dab000	native			unresolved					0/1
+00441b20	018fbcb0	0197ac80	vm			unresolved					0/1
+00441bc0	018f59fc	0197ecf0	vm			unresolved					0/1
+00441c70	018f6ef0	01983bc0	vm-indirect			unresolved					0/1
+00441d70	018fadcc	027e0000	native			unresolved					0/1
+00441e10	018fbf70	0197ac50	vm-indirect			unresolved					0/1
+00441ec0	018f5d38	0197ecc0	vm-indirect			unresolved					0/1
+004420bf	018f2ecc	01956a10	vm-indirect			unresolved					0/1
+00442460	018f5b7c	01983ba0	vm			unresolved					0/1
+00442510	018f5cdc	01983b70	vm-indirect			unresolved					0/1
+004425b0	018f7198	01976630	vm-indirect			unresolved					0/1
+00442660	018fb030	0197ac30	vm			unresolved					0/1
+00442700	018fc1a4	0197eca0	vm			unresolved					0/1
+004427a0	018f5fb8	01983b40	vm-indirect			unresolved					0/1
+00442800	018fa074	01d52000	native			unresolved					0/1
+00442840	018fc2c8	0197f290	vm			unresolved					0/1
+004428c0	018f6100	01984390	vm-indirect	0046df20	.text	body			004428c0	entry-lost	1/1
+00442910	018fa228	02260000	native			unresolved					0/1
+004429b0	018fb404	0197b200	vm-indirect			unresolved					0/1
+00442a50	018f58b8	0197f260	vm-indirect			unresolved					0/1
+00442af0	018f6c88	01984360	vm-indirect	0192ead0	.securom	body			00442af0	entry-lost	1/1
+00442ba0	018fabc8	026f0000	native			unresolved			00442ba0	entry-lost	0/1
+00442c40	018fbd70	0197b1d0	vm-indirect			unresolved			00442c40	entry-lost	0/1
+00442cb0	018f5aa8	0197f240	vm	01911870	.securom	body			00442cb0	entry-lost	1/1
+00442d50	018f6fd8	01984330	vm-indirect	01931c00	.securom	body			00442d50	entry-lost	1/1
+00442e00	018f7124	01984300	vm-indirect			unresolved					0/1
+00442e9a	018f2984	01958450	vm-indirect			unresolved					0/1
+00442f20	018fb02c	01976cf0	vm	004a0290	.text	body					1/1
+00442fc0	018fc0ac	0197b1a0	vm-indirect	01903f50	.securom	body			00442fc0	entry-lost	1/1
+00443070	018fbabc	0197f220	vm			unresolved					0/1
+004430e0	018f57dc	019842e0	vm	0045cca0	.text	body			004430e0	entry-lost	1/1
+00443130	018f6c70	01976cd0	vm			unresolved			00443130	entry-lost	0/1
+00443180	018fbbe8	0197f1f0	vm-indirect	00440ca0	.text	body			00443180	entry-recoverable	1/1
+004431d0	018f5910	019842c0	vm	019102d0	.securom	body			004431d0	entry-lost	1/1
+00443280	018f6e0c	01976ca0	vm-indirect	01930400	.securom	body			00443280	entry-lost	1/1
+00443320	018face8	0197b180	vm			unresolved			00443320	entry-lost	0/1
+00443370	018fbd98	0197f1d0	vm	01901640	.securom	body			00443370	entry-lost	1/1
+00443410	018f5b74	019842a0	vm			unresolved					0/1
+004434b0	018f7038	01976c80	vm			unresolved			004434b0	entry-lost	0/1
+00443560	018faf50	02870000	native			unresolved					0/1
+00443600	018fc094	0197f1b0	vm	01903e60	.securom	body			004435dd	clean	1/1
+004436a0	018f5e84	01984280	vm	01914910	.securom	body			004436a0	entry-lost	1/1
+00443750	018f5fa8	019839f0	vm-indirect			unresolved					0/1
+004437c0	018f7400	01976c50	vm-indirect	01935990	.securom	body					1/1
+00443860	018fb2c0	01de9000	native			unresolved			00443860	entry-lost	0/1
+00443900	018fc420	0197f180	vm-indirect	019073c0	.securom	body					1/1
+004439b0	018f62a8	01984250	vm-indirect			unresolved			004439b0	entry-lost	0/1
+00443a50	018faaf4	01976c30	vm	00481bb0	.text	body			00443a50	entry-lost	1/1
+00443b00	018f59d0	0197f160	vm			unresolved					0/1
+00443b60	018f6dfc	01984220	vm-indirect			unresolved			00443b60	entry-lost	0/1
+00443c00	018facdc	01dbe000	native			unresolved			00443c00	entry-lost	0/1
+00443cb0	018fbdb8	0197b100	vm	01901730	.securom	body			00443cb0	entry-lost	1/1
+00443d60	018f5ba4	0197f140	vm			unresolved			00443d60	entry-lost	0/1
+00443db0	018f7060	01984200	vm			unresolved			00443db0	entry-lost	0/1
+00443e50	018faf4c	01976bf0	vm			unresolved					0/1
+00443ef0	018fc008	0197b0d0	vm-indirect			unresolved			00443ef0	entry-lost	0/1
+00443fa0	018f5e78	0197f120	vm			unresolved			00443fa0	entry-lost	0/1
+00444040	018f57d4	019841d0	vm-indirect	0190eb70	.securom	body			00444040	entry-lost	1/1
+004440e0	018f57e4	019841a0	vm-indirect			unresolved					0/1
+00445910	018fa280	022a0000	native			unresolved			00445910	entry-lost	0/1
+004459b0	018fb45c	0197b0a0	vm-indirect	004a3420	.text	body			004459b0	entry-lost	1/1
+00445a60	018f5904	0197f0f0	vm-indirect	019101d0	.securom	body			00445a60	entry-lost	1/1
+00445b10	018f6df8	01984180	vm	0048d1d0	.text	body			00445b10	entry-lost	1/1
+00445b60	018fabb8	026e0000	native			unresolved			00445b60	entry-lost	0/1
+00445bb0	018f5a04	0197f0d0	vm	0045d410	.text	body			00445bb0	entry-recoverable	1/1
+00445c10	018f6f14	01984150	vm-indirect	00490690	.text	body			00445c10	entry-lost	1/1
+00445c70	018fad14	027b0000	native			unresolved					0/1
+00445d20	018fbe7c	0197b070	vm-indirect			unresolved					0/1
+00445dd0	018f5bd8	0197f0b0	vm			unresolved					0/1
+00445e80	018f7190	01984130	vm			unresolved					0/1
+00445f20	018fb098	02910000	native			unresolved					0/1
+00446030	018fa9dc	01da4000	native			unresolved					0/1
+004460e0	018fbb08	0197f080	vm-indirect			unresolved					0/1
+00446190	018f58f8	01984110	vm			unresolved					0/1
+00446230	018f59f4	019840e0	vm-indirect			unresolved					0/1
+004462d0	018f6e28	01976b30	vm			unresolved					0/1
+00446360	018fad08	0197b010	vm-indirect			unresolved					0/1
+00446410	018fbe74	0197f060	vm			unresolved			004463eb	clean	0/1
+00446470	018f5b98	019840b0	vm-indirect			unresolved					0/1
+00446560	018fbfb8	0197f480	vm			unresolved			00446560	entry-lost	0/1
+00446600	018f5e6c	01984690	vm-indirect			unresolved					0/1
+00446660	018f7318	01977020	vm			unresolved					0/1
+00446700	018fb1b0	0197b440	vm			unresolved					0/1
+004467a0	018fc228	0197f460	vm			unresolved					0/1
+00446850	018f60f0	01984660	vm-indirect			unresolved					0/1
+004468f0	018fa124	01976ff0	vm-indirect			unresolved			004468f0	entry-lost	0/1
+004469a0	018fb454	0197b420	vm			unresolved					0/1
+00446a50	018f58f0	0197f440	vm			unresolved					0/1
+00446b00	018f6df4	01984630	vm-indirect			unresolved					0/1
+00446b70	018f6df0	01984610	vm			unresolved					0/1
+00446c60	018facfc	027a0000	native			unresolved					0/1
+00446de0	018fbe9c	0197b400	vm			unresolved					0/1
+00446e90	018f5d54	0197f410	vm-indirect			unresolved					0/1
+00446ef0	018f71d4	019845e0	vm-indirect			unresolved					0/1
+00446f90	018fb0fc	02970000	native			unresolved					0/1
+00447040	018fbadc	0197f3f0	vm			unresolved					0/1
+004470e0	018f5810	019845c0	vm	0190f210	.securom	body			004470e0	entry-lost	1/1
+00447190	018f6cc8	01976f80	vm	0192f1a0	.securom	body			00447190	entry-lost	1/1
+00447240	018fabb0	01db0000	native			unresolved			00447240	entry-lost	0/1
+004472f0	018fbd08	0197f3d0	vm	019013c0	.securom	body			004472f0	entry-lost	1/1
+004473a0	018f5ae0	019845a0	vm			unresolved					0/1
+004473f0	018f6f64	01976f60	vm	019315e0	.securom	body			004473f0	entry-lost	1/1
+00447490	018fae40	02820000	native			unresolved			00447490	entry-recoverable	0/1
+00447540	018fbfb0	0197f3b0	vm	01903680	.securom	body			00447540	entry-lost	1/1
+004475f0	018f5d88	01984570	vm-indirect	019139b0	.securom	body					1/1
+00447690	018f5eb0	01984540	vm-indirect	01914c10	.securom	body					1/1
+00447740	018f6f50	01976f30	vm-indirect	00491b00	.text	body			00447740	entry-lost	1/1
+004477b0	018fb1fc	029d0000	native			unresolved			004477b0	entry-lost	0/1
+00447810	018fc2fc	0197f390	vm	00443870	.text	body					1/1
+00447870	018f6150	01984510	vm-indirect	0046e370	.text	body			00447870	entry-lost	1/1
+00447dd0	018fae58	02830000	native			unresolved			00447dd0	entry-lost	0/1
+00447ef0	018f5dc8	0197f750	vm-indirect	01914120	.securom	body					1/1
+00448020	018f580c	01984a20	vm-indirect			unresolved					0/1
+00448070	018f6bec	01977380	vm-indirect	0047b730	.text	body			00448070	entry-recoverable	1/1
+004480d0	018faa90	02640000	native			unresolved					0/1
+004480f0	018fbb6c	0197f730	vm	00440840	.text	body					1/1
+00448170	018f594c	01984a00	vm	0045cf90	.text	body			00448170	entry-lost	1/1
+004481f0	018f6d5c	01977350	vm-indirect	0192fad0	.securom	body					1/1
+00448280	018fac60	01db5000	native			unresolved					0/1
+004482a0	018fbd2c	0197f700	vm-indirect	00440e90	.text	body			004482a0	entry-recoverable	1/1
+00448300	018f5af4	019849d0	vm-indirect			unresolved			00448300	entry-lost	0/1
+0044836b	018ed8d4	019553b0	vm	0040465d	.text	cave	00448372	mov dword ptr [ebx + 4], 3	00448360	inner-patched	1/1
+00448580	018f5db4	019849a0	vm-indirect			unresolved					0/1
+004488d0	018fa1a8	01d5d000	native			unresolved					0/1
+004489e0	018fb4e8	0197b6a0	vm			unresolved					0/1
+00449010	018fbb28	0197f6e0	vm			unresolved					0/1
+004490c0	018f5834	01984970	vm-indirect			unresolved					0/1
+004491b0	018f6d34	01977300	vm			unresolved					0/1
+00449290	018fbd24	0197f6b0	vm-indirect			unresolved					0/1
+00449500	018f5db0	01984950	vm			unresolved					0/1
+00449cc0	018fad90	01dc6000	native			unresolved					0/1
+00449ce0	018fbdec	0197b670	vm-indirect	01901910	.securom	body					1/1
+0044a200	018fbd18	0197f690	vm			unresolved					0/1
+0044a3d0	018f5b28	01984930	vm			unresolved					0/1
+0044a410	018f70c4	019772a0	vm-indirect			unresolved					0/1
+0044a770	018fb244	0197b650	vm			unresolved					0/1
+0044a830	018fc3b4	0197f670	vm			unresolved					0/1
+0044a9a0	018f637c	01984910	vm			unresolved					0/1
+0044aa70	018f6d2c	019848f0	vm			unresolved					0/1
+0044ac00	018fad6c	01dc5000	native			unresolved					0/1
+0044ae80	018fc048	0197b620	vm-indirect			unresolved					0/1
+0044aee0	018f5dc4	0197f640	vm-indirect			unresolved					0/1
+0044afc0	018f73b4	019848c0	vm-indirect			unresolved					0/1
+0044b000	018f6bdc	01977250	vm-indirect			unresolved					0/1
+0044b020	018fbb54	0197f610	vm-indirect			unresolved					0/1
+0044b100	018f5940	01984890	vm-indirect			unresolved					0/1
+0044b210	018f6e84	01977220	vm-indirect			unresolved					0/1
+0044b270	018fac58	0197b600	vm			unresolved					0/1
+0044c9c0	018f50e0	0197f5f0	vm			unresolved					0/1
+0044ca30	018f6d1c	01984860	vm-indirect			unresolved					0/1
+0044cbb0	018fac8c	01db8000	native			unresolved					0/1
+0044ce20	018fc040	0197b5e0	vm			unresolved					0/1
+0044ce50	018f5da4	0197f5d0	vm			unresolved					0/1
+0044cf20	018f7374	01984840	vm			unresolved					0/1
+0044cf90	018f73a8	01984810	vm-indirect			unresolved					0/1
+0044cfe0	018fb14c	01de2000	native			unresolved					0/1
+0044d050	018faa60	01da6000	native			unresolved					0/1
+0044d350	018fbdd0	0197f5b0	vm			unresolved					0/1
+0044d590	018f5dc0	019847f0	vm			unresolved					0/1
+0044d610	018f736c	019771c0	vm			unresolved					0/1
+0044d690	018fc15c	0197f930	vm			unresolved					0/1
+0044d830	018f61e4	01984c70	vm			unresolved					0/1
+0044d870	018fa19c	02240000	native			unresolved					0/1
+0044d940	018fb4c0	0197b860	vm-indirect			unresolved					0/1
+0044d9b0	018f50d8	0197f910	vm			unresolved					0/1
+0044dac0	018f6d50	01984c50	vm			unresolved					0/1
+0044db90	018fac88	02770000	native			unresolved					0/1
+0044dc10	018fbdcc	0197b830	vm-indirect			unresolved					0/1
+0044dc40	018f5b14	0197f8e0	vm-indirect			unresolved					0/1
+0044dcb0	018f6fa0	01984c20	vm-indirect			unresolved					0/1
+0044dcd0	018f6f98	01984c00	vm			unresolved					0/1
+0044dd60	018faebc	01dcf000	native			unresolved					0/1
+0044dda0	018fbef4	0197b810	vm			unresolved					0/1
+0044ddd0	018f5c28	0197f8b0	vm-indirect			unresolved					0/1
+0044de20	018f7224	01984be0	vm			unresolved					0/1
+0044ded0	018fafd0	01dd8000	native			unresolved					0/1
+0044df30	018f5f34	0197f880	vm-indirect			unresolved					0/1
+0044e2f0	018f5a58	01984bb0	vm-indirect			unresolved					0/1
+0044ea10	018fab8c	019774b0	vm-indirect			unresolved					0/1
+0044ecc0	018fbe10	0197b7e0	vm-indirect			unresolved					0/1
+0044eec0	018f5dec	0197f860	vm			unresolved					0/1
+0044ef20	018f739c	01984b80	vm-indirect			unresolved					0/1
+0044f0e0	018f6c3c	01977490	vm			unresolved					0/1
+0044f190	018fab88	026d0000	native			unresolved					0/1
+0044f240	018fbd44	0197f830	vm-indirect			unresolved					0/1
+0044f2a0	018f5a4c	01984b50	vm-indirect			unresolved					0/1
+0044f3e0	018f5b34	01984090	vm			unresolved					0/1
+0044f470	018f70cc	01977460	vm-indirect			unresolved					0/1
+0044f960	018fb4dc	0197b7a0	vm			unresolved					0/1
+00450020	018fbb90	0197f810	vm			unresolved			00450020	clean	0/1
+00450070	018f5884	01984b20	vm-indirect			unresolved					0/1
+00450110	018f6d7c	01977440	vm			unresolved					0/1
+00450190	018fbc78	0197f7f0	vm			unresolved					0/1
+004503c0	018f5b68	01984af0	vm-indirect			unresolved					0/1
+004505c0	018f72a8	01977420	vm			unresolved					0/1
+00450640	018fb190	029a0000	native			unresolved					0/1
+004507c0	018fc2b8	0197f7c0	vm-indirect			unresolved					0/1
+00450890	018f6248	01984ac0	vm-indirect			unresolved					0/1
+004508d0	018fa220	02250000	native			unresolved					0/1
+00450940	018fb528	0197b740	vm-indirect			unresolved					0/1
+004509d0	018f513c	0197f7a0	vm			unresolved					0/1
+00450b00	018f6ea4	01984a90	vm-indirect			unresolved					0/1
+00450b80	018f6ec8	01984a70	vm			unresolved					0/1
+00450be0	018facd4	01dbd000	native			unresolved					0/1
+00450c90	018fbe34	0197b720	vm			unresolved					0/1
+00450cc0	018f5b60	0197f780	vm			unresolved					0/1
+00450d30	018f70ec	01984a50	vm			unresolved					0/1
+00450eb0	018fb024	019773b0	vm			unresolved					0/1
+00451180	018fbfac	0197fbb0	vm			unresolved					0/1
+00451ba0	018f7338	01985050	vm			unresolved					0/1
+00451bc0	018fb0ec	02960000	native			unresolved					0/1
+00451c40	018fc1e0	0197ba70	vm-indirect			unresolved					0/1
+00451d70	018f60e4	0197fb90	vm			unresolved					0/1
+00451da0	018fa11c	01d5a000	native			unresolved			00451d76	clean	0/1
+00451e20	018fb3f8	01977820	vm-indirect			unresolved					0/1
+00451e7b	018ed860	01955390	vm			unresolved					0/1
+00451ff0	018f51a8	0197ba40	vm-indirect			unresolved					0/1
+00452370	018fc1dc	0197fb60	vm-indirect			unresolved					0/1
+004523a0	018f5ff8	01984ff0	vm-indirect			unresolved					0/1
+00452410	018f60d8	01984fc0	vm-indirect			unresolved					0/1
+00452480	018fa0dc	01d55000	native			unresolved					0/1
+004525c0	018fb44c	0197ba20	vm			unresolved					0/1
+00452710	018f52bc	0197fb30	vm-indirect			unresolved					0/1
+00452780	018f65e4	01984fa0	vm			unresolved					0/1
+00452d50	018fb2b8	019777c0	vm-indirect			unresolved					0/1
+00452dc0	018f614c	0197fb10	vm			unresolved					0/1
+00453940	018f6884	01984f70	vm-indirect			unresolved					0/1
+00453960	018fa76c	01d8f000	native			unresolved					0/1
+00453cf0	018fc250	0197b9f0	vm-indirect			unresolved					0/1
+00453d60	018f6148	0197faf0	vm			unresolved					0/1
+00453e40	018fa278	01984f40	vm-indirect			unresolved					0/1
+00454220	018f7310	01977760	vm-indirect			unresolved					0/1
+00454250	018fb0e4	02950000	native			unresolved			00454250	entry-lost	0/1
+00454670	018f51a4	0197fad0	vm			unresolved					0/1
+00454ba0	018f7334	01984f10	vm-indirect			unresolved					0/1
+00454bf0	018f7350	01984ee0	vm-indirect	004af880	.text	body			00454bf0	entry-lost	1/1
+00454c50	018fb1ec	029c0000	native			unresolved			00454c50	entry-lost	0/1
+00454cb0	018fc218	0197b990	vm-indirect			unresolved					0/1
+00454cf0	018f600c	0197fab0	vm			unresolved			00454cf0	entry-lost	0/1
+00454d50	018fa10c	01d59000	native			unresolved			00454d50	entry-lost	0/1
+00454eb0	018fb444	01977710	vm			unresolved					0/1
+00454f10	018f6404	0197fa90	vm	00478230	.text	body			00454f10	entry-lost	1/1
+00454f70	018fa444	01d70000	native			unresolved					0/1
+004550c0	018f70a4	019776e0	vm-indirect			unresolved					0/1
+004553d0	018fb21c	029f0000	native			unresolved					0/1
+004554a0	018fc38c	0197fa70	vm			unresolved					0/1
+00455510	018f62d0	01984e50	vm-indirect			unresolved					0/1
+004555b0	018fa2bc	019776b0	vm-indirect			unresolved					0/1
+004556a0	018fb5dc	0197b940	vm			unresolved					0/1
+004557a0	018f5318	0197fa40	vm-indirect			unresolved			004557a0	entry-lost	0/1
+00455800	018f66b4	01984e30	vm			unresolved					0/1
+00455850	018f6708	01984e00	vm-indirect			unresolved					0/1
+00455ab0	018fafa4	01dd6000	native			unresolved					0/1
+00455b10	018fc10c	0197b910	vm-indirect	004429c0	.text	body					1/1
+00455c40	018f5fe8	0197fa10	vm-indirect			unresolved					0/1
+00455c90	018f9fc4	021c0000	native			unresolved					0/1
+00455cd0	018fb210	01de7000	native			unresolved					0/1
+00455d20	018f613c	0197f9f0	vm			unresolved					0/1
+00455d60	018fa104	01d58000	native			unresolved			00455d60	entry-lost	0/1
+00455de0	018fb328	01dea000	native			unresolved					0/1
+00455f00	018f519c	0197b8f0	vm			unresolved					0/1
+004564a0	018fc380	0197f9d0	vm			unresolved					0/1
+004565d0	018f630c	01984d80	vm			unresolved					0/1
+00456700	018fa570	019775f0	vm-indirect			unresolved					0/1
+00456720	018fb694	0197b8c0	vm-indirect			unresolved					0/1
+00456860	018f5408	0197f9b0	vm			unresolved					0/1
+00456890	018f66fc	01984d50	vm-indirect			unresolved			00456890	entry-lost	0/1
+00456e50	018fa298	022d0000	native			unresolved					0/1
+00456f50	018fb5c0	019775d0	vm			unresolved					0/1
+004570e0	018fae4c	01dcb000	native			unresolved			004570e0	entry-lost	0/1
+00457380	018fc210	0197f980	vm-indirect			unresolved					0/1
+00457600	018f6428	01984cf0	vm-indirect			unresolved					0/1
+004576c0	018fa460	01d71000	native			unresolved			004576c0	entry-lost	0/1
+00457770	018f52f8	019800f0	vm-indirect			unresolved					0/1
+00457940	018f68b8	01985610	vm			unresolved					0/1
+00457990	018fa780	01d91000	native			unresolved					0/1
+00457e50	018f501c	0197bf00	vm-indirect			unresolved					0/1
+00458080	018fbecc	019800c0	vm-indirect			unresolved					0/1
+004580d0	018f5bf0	019855e0	vm-indirect			unresolved			004580d0	entry-lost	0/1
+00458180	018f7210	01977c70	vm			unresolved					0/1
+004581e0	018faf94	02890000	native			unresolved			004581e0	entry-recoverable	0/1
+004585c0	018f5058	019800a0	vm			unresolved					0/1
+00458620	018f6420	019855b0	vm-indirect			unresolved			00458620	entry-lost	0/1
+00458a00	018f71c4	01985580	vm-indirect			unresolved					0/1
+00458f70	018fb5b0	01977c50	vm			unresolved					0/1
+004591d0	018faf8c	02880000	native			unresolved					0/1
+00459520	018f5010	01980070	vm-indirect	01907eb0	.securom	body			00459520	entry-lost	1/1
+00459680	018f64ac	01985550	vm-indirect			unresolved					0/1
+00459c80	018fb204	029e0000	native			unresolved					0/1
+00459d70	018f619c	01980040	vm-indirect			unresolved			00459d70	entry-lost	0/1
+00459ef0	018fa308	022f0000	native			unresolved					0/1
+00459f30	018fb5ac	01977c00	vm	0047a4b0	.text	body					1/1
+00459fc0	018f51e4	0197be80	vm-indirect			unresolved					0/1
+0045a3e0	018fc288	01980020	vm			unresolved			0045a3e0	entry-lost	0/1
+0045a4d0	018f61dc	019854f0	vm-indirect			unresolved					0/1
+0045a6e0	018fa488	01d75000	native			unresolved					0/1
+0045a720	018fb6b0	0197be50	vm-indirect			unresolved			0045a720	entry-lost	0/1
+0045a7d0	018f5334	0197fff0	vm-indirect			unresolved					0/1
+0045aba0	018f734c	019854d0	vm			unresolved					0/1
+0045aeb0	018fa300	01d65000	native			unresolved					0/1
+0045b0e0	018f70b8	01977ba0	vm-indirect			unresolved					0/1
+0045b3e0	018fb238	0197be30	vm			unresolved					0/1
+0045b560	018f5054	0197ffd0	vm			unresolved					0/1
+0045b590	018f6300	019854b0	vm	004769d0	.text	body					1/1
+0045b6a0	018fa478	01d74000	native			unresolved					0/1
+0045b9e0	018f557c	0197ffb0	vm			unresolved					0/1
+0045ba00	018f7204	01985480	vm-indirect			unresolved					0/1
+0045bb20	018fb118	01ddf000	native			unresolved					0/1
+0045bbb0	018fc138	0197be00	vm-indirect			unresolved					0/1
+0045bbf0	018f5f14	0197ff80	vm-indirect			unresolved					0/1
+0045bd10	018fa158	01d5b000	native			unresolved					0/1
+0045be30	018fb484	01977b20	vm-indirect			unresolved					0/1
+0045bf30	018f51dc	0197bdd0	vm-indirect			unresolved					0/1
+0045bf80	018f64a8	0197ff60	vm			unresolved					0/1
+0045bfb0	018fa474	01d73000	native			unresolved			0045bfb0	entry-lost	0/1
+0045c020	018f5be8	01985400	vm			unresolved					0/1
+0045c090	018f70a0	01977b00	vm			unresolved					0/1
+0045c110	018faf84	01dd5000	native			unresolved					0/1
+0045ca00	018f5d7c	0197ff40	vm			unresolved					0/1
+0045caa0	018f7220	019853d0	vm-indirect			unresolved					0/1
+0045cbc0	018f7368	019853b0	vm			unresolved			0045cbc0	entry-lost	0/1
+0045cbe0	018fb12c	02990000	native			unresolved					0/1
+0045cc90	018fc240	0197bd70	vm-indirect	019054a0	.securom	body					1/1
+0045cd30	018f6190	0197ff20	vm	01916f90	.securom	body					1/1
+0045cde0	018fa180	01985380	vm-indirect			unresolved					0/1
+0045ce30	018fb47c	01977ab0	vm			unresolved					0/1
+0045ced0	018f5088	0197bd50	vm	01908720	.securom	body			0045ced0	entry-lost	1/1
+0045cf80	018f6498	0197ff00	vm	0191a740	.securom	body			0045cf80	entry-lost	1/1
+0045d020	018f5be4	01985350	vm-indirect	01912a40	.securom	body			0045d020	entry-lost	1/1
+0045d0d0	018f5c1c	01985320	vm-indirect	01912d80	.securom	body			0045d0d0	entry-lost	1/1
+0045d180	018f71f8	01977a90	vm	01933c20	.securom	body			0045d180	entry-lost	1/1
+0045d220	018fb114	01dde000	native			unresolved					0/1
+0045d280	018fc128	0197fed0	vm-indirect			unresolved					0/1
+0045d2e0	018f5f04	01985300	vm			unresolved					0/1
+0045d340	018f9ff8	01d50000	native			unresolved					0/1
+0045d3a0	018fc284	01980560	vm			unresolved					0/1
+0045d400	018f6188	01985a10	vm-indirect			unresolved					0/1
+0045d4a0	018fa178	01978000	vm			unresolved					0/1
+0045d530	018fb478	0197c240	vm-indirect			unresolved					0/1
+0045d580	018f507c	01980540	vm			unresolved					0/1
+0045d620	018f6488	019859e0	vm-indirect			unresolved					0/1
+0045d8c0	018fa680	01d85000	native			unresolved					0/1
+0045d960	018fb8b4	0197c220	vm			unresolved			0045d960	entry-recoverable	0/1
+0045d9f0	018f55b4	01980520	vm	00450950	.text	body			0045d9f0	entry-lost	1/1
+0045da40	018f71ec	019859c0	vm	01933b20	.securom	body					1/1
+0045daf0	018f7234	019859a0	vm			unresolved					0/1
+0045db70	018fb124	01de0000	native			unresolved					0/1
+0045dc50	018fc274	0197c200	vm			unresolved					0/1
+0045dcf0	018f6048	019804f0	vm-indirect			unresolved					0/1
+0045dd40	018fa154	02220000	native			unresolved					0/1
+0045dde0	018fb35c	02a90000	native			unresolved					0/1
+0045de90	018f6334	019804d0	vm			unresolved					0/1
+0045df10	018fa470	01d72000	native			unresolved					0/1
+0045dfb0	018fb62c	01977f40	vm-indirect			unresolved					0/1
+0045e030	018fae9c	01dcd000	native			unresolved					0/1
+0045e0e0	018fbee4	019804a0	vm-indirect			unresolved					0/1
+0045e440	018f61d0	01985910	vm-indirect			unresolved					0/1
+0045e570	018fa2f8	01977f20	vm	0040b970	.text	body			0045e570	entry-lost	1/1
+0045e5c0	018fb4d8	0197c1a0	vm-indirect			unresolved					0/1
+0045e670	018f5210	01980480	vm			unresolved					0/1
+0045e6d0	018f653c	019858e0	vm-indirect			unresolved					0/1
+0045e890	018f6740	019858c0	vm			unresolved					0/1
+0045ea40	018fafc0	028a0000	native			unresolved					0/1
+0045eae0	018fc070	0197c180	vm			unresolved					0/1
+0045edb0	018f6210	01980450	vm-indirect			unresolved					0/1
+0045ee50	018fa2ec	022e0000	native			unresolved					0/1
+0045ef50	018fb5f8	01977ec0	vm-indirect			unresolved					0/1
+0045f0f0	018fbf2c	019808e0	vm	01903390	.securom	body			0045f0f0	entry-lost	1/1
+0045f1a0	018f5e04	01985dc0	vm-indirect			unresolved					0/1
+0045f240	018f73c0	019782e0	vm-indirect			unresolved			0045f240	entry-lost	0/1
+0045f2e0	018fb18c	01de3000	native			unresolved					0/1
+0045f330	018fc2b0	019808c0	vm	01905930	.securom	body					1/1
+0045f460	018f6224	01985d90	vm-indirect	004724a0	.text	body			0045f460	entry-lost	1/1
+0045f4b0	018fa1e4	019782c0	vm	0040e000	.text	body					1/1
+0045f550	018fb508	0197c4a0	vm			unresolved					0/1
+0045f5d0	018f511c	01980890	vm-indirect	00446480	.text	body			0045f5d0	entry-lost	1/1
+0045f620	018f656c	01985d70	vm	0191b0c0	.securom	body			0045f620	entry-lost	1/1
+0045f710	018f6624	01985d50	vm	0191b9d0	.securom	body			0045f710	entry-lost	1/1
+0045f7c0	018fa5e4	019782a0	vm			unresolved					0/1
+0045f830	018fb7e0	0197c480	vm	004dab30	.text	body			0045f830	entry-lost	1/1
+0045f8e0	018f54d4	01980870	vm			unresolved					0/1
+00460e57	018f2550	01955450	vm			unresolved					0/1
+004617b0	018f666c	01985d20	vm-indirect	0047a6f0	.text	body			004617b0	entry-lost	1/1
+00461800	018fa6bc	01d87000	native			unresolved			00461800	entry-lost	0/1
+00461860	018f5504	01980850	vm	0044dba0	.text	body			00461860	entry-lost	1/1
+004618b0	018f6874	01985cf0	vm-indirect	0047aed0	.text	body			004618b0	entry-lost	1/1
+00461900	018fa844	02560000	native			unresolved			00461900	entry-lost	0/1
+00461960	018fb95c	0197c460	vm			unresolved					0/1
+00461a00	018f5dfc	01980820	vm-indirect			unresolved					0/1
+00461a70	018f72a0	01985cd0	vm			unresolved					0/1
+00461ad0	018fb094	02900000	native			unresolved					0/1
+00461b20	018fc198	0197c430	vm-indirect			unresolved					0/1
+00461d60	018f6274	019807f0	vm-indirect			unresolved					0/1
+00461d80	018fa210	01d62000	native			unresolved			00461d80	entry-lost	0/1
+00461e10	018fa38c	02330000	native			unresolved					0/1
+00461f90	018fb674	019781e0	vm-indirect			unresolved					0/1
+00462000	018faedc	02850000	native			unresolved			00462000	entry-lost	0/1
+00462120	018fc090	019807c0	vm-indirect			unresolved					0/1
+00466f10	018fa4f8	01985c40	vm-indirect			unresolved			00466f10	entry-lost	0/1
+00466f80	018fb670	019781b0	vm-indirect			unresolved					0/1
+00466fe0	018f65d4	01980790	vm-indirect			unresolved					0/1
+00467010	018f5cd4	01985c10	vm-indirect			unresolved					0/1
+004670b0	018f7180	01978180	vm-indirect	01933580	.securom	body					1/1
+00467240	018fb198	01de4000	native			unresolved					0/1
+00467490	018fc41c	01980770	vm			unresolved					0/1
+00467520	018f63d4	01985be0	vm-indirect	01919e00	.securom	body					1/1
+004675d0	018fa408	01d6e000	native			unresolved					0/1
+00467600	018fb660	0197c3b0	vm	004dc640	.text	body			00467600	entry-lost	1/1
+004677b0	018f53c8	01980750	vm			unresolved					0/1
+00467ae0	018f7300	01985bc0	vm			unresolved					0/1
+00467b30	018f73e0	01985b90	vm-indirect			unresolved					0/1
+00467bc0	018fb1a8	029b0000	native			unresolved					0/1
+00467de0	018f4fc0	0197c390	vm			unresolved					0/1
+00467f50	018f659c	01980720	vm-indirect			unresolved					0/1
+00468330	018f608c	01985b70	vm			unresolved			00468330	entry-lost	0/1
+004683a0	018fa0d0	021f0000	native			unresolved					0/1
+00468520	018f5138	01980cd0	vm			unresolved					0/1
+00468610	018f658c	019861e0	vm-indirect			unresolved					0/1
+00468790	018fa630	01d82000	native			unresolved					0/1
+00469180	018fb088	028f0000	native			unresolved					0/1
+004698b0	018f5548	01980ca0	vm-indirect			unresolved					0/1
+00469900	018f695c	019861b0	vm-indirect			unresolved					0/1
+00469930	018fa888	01d98000	native			unresolved					0/1
+00469980	018fb994	0197c840	vm			unresolved					0/1
+004699f0	018f5644	01980c80	vm			unresolved					0/1
+00469b20	018f73d4	01986180	vm-indirect			unresolved					0/1
+00469eb0	018fa3fc	01d6d000	native			unresolved			00469eb0	entry-lost	0/1
+00469f50	018fb654	01978620	vm			unresolved			00469f50	entry-lost	0/1
+0046a0d0	018faf3c	02860000	native			unresolved					0/1
+0046a240	018fc194	01980c60	vm			unresolved					0/1
+0046a560	018f63fc	01986120	vm-indirect			unresolved			0046a560	entry-lost	0/1
+0046a630	018fa4ec	023c0000	native			unresolved			0046a630	entry-lost	0/1
+0046a980	018f563c	01980c30	vm-indirect			unresolved			0046a980	entry-lost	0/1
+0046ad80	018fa268	019860f0	vm-indirect			unresolved					0/1
+0046b160	018f72f8	019785c0	vm-indirect			unresolved					0/1
+0046b1c0	018fb0d8	02940000	native			unresolved					0/1
+0046b220	018fc1cc	01980c00	vm-indirect			unresolved					0/1
+0046b320	018f60cc	019860d0	vm			unresolved					0/1
+0046b770	018fa62c	01978590	vm-indirect			unresolved					0/1
+0046b8c0	018fb868	0197c7b0	vm-indirect			unresolved					0/1
+0046b9c0	018f5674	01980bd0	vm-indirect			unresolved					0/1
+0046ba60	018f72f0	019860b0	vm			unresolved					0/1
+0046bcd0	018fa0fc	02210000	native			unresolved					0/1
+0046c460	018fa260	02290000	native			unresolved					0/1
+0046c5f0	018fb59c	0197c780	vm-indirect			unresolved					0/1
+0046c630	018f52b8	01980bb0	vm			unresolved					0/1
+0046c7d0	018f66f0	01986090	vm			unresolved					0/1
+0046c850	018fa73c	01978550	vm			unresolved					0/1
+0046c890	018f5538	01980b80	vm-indirect			unresolved			0046c890	entry-lost	0/1
+0046c950	018f6980	01986060	vm-indirect			unresolved					0/1
+0046c9c0	018fa8c4	02590000	native			unresolved					0/1
+0046cae0	018fc0fc	0197c760	vm			unresolved					0/1
+0046cb80	018f5f98	01980b60	vm			unresolved					0/1
+0046cc00	018fa0c0	01d54000	native			unresolved					0/1
+0046ce50	018fb578	01978500	vm-indirect			unresolved					0/1
+0046ceb0	018f5194	0197c740	vm			unresolved					0/1
+0046d3d0	018fc344	01980b30	vm-indirect			unresolved					0/1
+0046db10	018f73fc	01986010	vm			unresolved					0/1
+0046dc10	018fa0bc	01985fe0	vm-indirect			unresolved					0/1
+0046dc70	018fb2a8	02a30000	native			unresolved					0/1
+0046dd30	018f4fb4	0197c710	vm-indirect			unresolved					0/1
+0046dee0	018f6418	01980b00	vm-indirect			unresolved					0/1
+0046df10	018fa534	01985fc0	vm			unresolved					0/1
+0046dfa0	018fb690	019784a0	vm-indirect			unresolved					0/1
+0046e140	018f5050	01981190	vm			unresolved					0/1
+0046e170	018f632c	01973b30	vm-indirect			unresolved					0/1
+0046e1e0	018fa334	01d67000	native			unresolved					0/1
+0046e360	018fb6cc	0197cc40	vm-indirect			unresolved					0/1
+0046eb40	018f6478	01981170	vm			unresolved					0/1
+0046ee20	018fa778	024f0000	native			unresolved					0/1
+0046f140	018fa2ac	01d64000	native			unresolved					0/1
+0046fb40	018f51d4	0197cc20	vm			unresolved					0/1
+0046fbb0	018f64e4	01981140	vm-indirect			unresolved					0/1
+0046fd70	018fa67c	01973ad0	vm-indirect	00425820	.text	body					1/1
+0046fdf0	018fa68c	02470000	native			unresolved					0/1
+0046ff70	018fb9c0	01978a10	vm			unresolved					0/1
+004704a0	018fb7d8	0197cc00	vm			unresolved					0/1
+00470670	018f56c0	01981120	vm			unresolved					0/1
+00470710	018f6b10	01973a70	vm-indirect			unresolved			00470710	entry-lost	0/1
+004707b0	018fa998	01da1000	native			unresolved			004707b0	entry-lost	0/1
+00470870	018f5850	01981100	vm			unresolved					0/1
+004708c0	018f6c34	01973a40	vm-indirect			unresolved					0/1
+00470c10	018fb6e8	019789c0	vm			unresolved					0/1
+00470de0	018f5484	0197cbe0	vm			unresolved					0/1
+00470e30	018f690c	019810d0	vm-indirect			unresolved					0/1
+00470e60	018fa804	01973a10	vm-indirect			unresolved					0/1
+00471170	018fa36c	01d69000	native			unresolved					0/1
+00471220	018fb624	0197cbb0	vm-indirect			unresolved					0/1
+00471260	018f523c	019810a0	vm-indirect			unresolved					0/1
+004712c0	018f655c	019739e0	vm-indirect			unresolved					0/1
+004712f0	018f6570	019739c0	vm			unresolved					0/1
+00471340	018fa5c8	01d7e000	native			unresolved					0/1
+00471370	018fb714	0197cb80	vm-indirect			unresolved					0/1
+004713b0	018f536c	01981070	vm-indirect			unresolved					0/1
+004713e0	018f6618	019739a0	vm			unresolved					0/1
+00471490	018fa6a0	02490000	native			unresolved					0/1
+004714d0	018f54c4	01981040	vm-indirect			unresolved					0/1
+00471500	018f6908	01973970	vm-indirect			unresolved					0/1
+004716f0	018fa918	01978920	vm			unresolved					0/1
+00471840	018fbb88	0197cb60	vm			unresolved					0/1
+004719e0	018f59a8	01981020	vm			unresolved					0/1
+00471d20	018fa698	02480000	native			unresolved					0/1
+00471d80	018fb7c8	01978900	vm			unresolved			00471d80	entry-lost	0/1
+00471f00	018f56b4	0197cb40	vm			unresolved					0/1
+00472180	018f5114	01980ff0	vm-indirect	01908ca0	.securom	body			00472180	entry-lost	1/1
+00472200	018f652c	01973930	vm			unresolved					0/1
+00472490	018f67b8	01973910	vm			unresolved					0/1
+00472880	018faaa8	01da9000	native			unresolved					0/1
+00472cb0	018f5380	0197cb20	vm			unresolved					0/1
+00472f20	018f6a08	01980fd0	vm			unresolved					0/1
+00472ff0	018fa914	01d9b000	native			unresolved					0/1
+004730d0	018fa1d4	01d60000	native			unresolved					0/1
+00473100	018f5104	01980fb0	vm	00446370	.text	body			00473100	entry-lost	1/1
+00473570	018f6928	019738c0	vm			unresolved					0/1
+004735b0	018fa838	02550000	native			unresolved					0/1
+00473680	018fba14	0197caf0	vm-indirect			unresolved					0/1
+004736b0	018f5700	01980f80	vm-indirect			unresolved					0/1
+004739c0	018f6d98	01973890	vm-indirect			unresolved					0/1
+00473a00	018fb504	01978850	vm			unresolved					0/1
+00473a40	018f50fc	0197cad0	vm			unresolved					0/1
+00473d40	018f67b4	01980f60	vm			unresolved					0/1
+00473da0	018fa6b4	01973870	vm	0044ecd0	.text	body					1/1
+00473ee0	018fa828	02540000	native			unresolved					0/1
+00473f00	018fba04	01978830	vm			unresolved					0/1
+00473f60	018f56d8	0197cab0	vm			unresolved					0/1
+00474020	018fc400	01980f40	vm			unresolved					0/1
+00474180	018f6390	01973820	vm			unresolved					0/1
+00474560	018fa7f8	01d93000	native			unresolved			00474560	clean	0/1
+00474870	018f5848	019816f0	vm			unresolved			00474870	entry-lost	0/1
+00474920	018f6d78	019740c0	vm			unresolved					0/1
+00474a30	018fb4f8	01978ec0	vm-indirect			unresolved					0/1
+00474bc0	018f525c	0197d040	vm-indirect			unresolved					0/1
+00474cc0	018f6654	019816d0	vm			unresolved					0/1
+00474cf0	018fa5d8	02430000	native			unresolved					0/1
+00474ee0	018fb91c	01978ea0	vm			unresolved					0/1
+00475320	018fb704	0197d020	vm			unresolved					0/1
+004754d0	018f54b4	019816a0	vm-indirect			unresolved					0/1
+00475640	018f6a00	01974070	vm			unresolved			00475640	entry-lost	0/1
+00475720	018f6b20	01974050	vm			unresolved					0/1
+00475d60	018fb7c0	01978e70	vm-indirect			unresolved					0/1
+00476030	018fb38c	01dec000	native			unresolved					0/1
+00476070	018fc3fc	01981680	vm			unresolved					0/1
+004760b0	018f623c	01974030	vm			unresolved					0/1
+00476210	018fa4bc	01978e40	vm-indirect			unresolved					0/1
+00476770	018f579c	01981660	vm			unresolved					0/1
+00476800	018f6c24	01974000	vm-indirect			unresolved					0/1
+00476990	018fab98	01dae000	native			unresolved					0/1
+004769c0	018fbc70	0197cfc0	vm-indirect			unresolved					0/1
+00476a50	018f63b0	01981640	vm	01919d10	.securom	body					1/1
+00476af0	018fa3c8	01973fd0	vm-indirect			unresolved			00476af0	entry-lost	0/1
+00476ba0	018fb64c	01978de0	vm-indirect			unresolved					0/1
+00476c40	018f535c	0197cfa0	vm			unresolved					0/1
+00476cb0	018f6644	01981610	vm-indirect			unresolved					0/1
+00476de0	018fa6e4	01973fb0	vm			unresolved					0/1
+004774ac	018ed478	019554d0	vm-indirect			unresolved					0/1
+00477ae0	018fa3b8	01d6c000	native			unresolved			00477ae0	entry-lost	0/1
+00477b40	018fb648	01978db0	vm-indirect			unresolved					0/1
+00477be0	018f5274	0197cf70	vm-indirect			unresolved					0/1
+00477d90	018f67fc	019815f0	vm			unresolved			00477d90	entry-lost	0/1
+00477de0	018fa6dc	024c0000	native			unresolved			00477de0	entry-lost	0/1
+00477e30	018fb8f0	01978d80	vm-indirect			unresolved					0/1
+00477ff0	018f6a74	019815d0	vm			unresolved					0/1
+004780f0	018f6268	01973f70	vm			unresolved					0/1
+00478220	018fa4d0	023a0000	native			unresolved					0/1
+00478330	018fb724	0197cf40	vm-indirect			unresolved					0/1
+00478590	018f55cc	019815a0	vm-indirect			unresolved					0/1
+00478630	018f6a34	01973f40	vm-indirect			unresolved					0/1
+004786f0	018fa938	01978d30	vm			unresolved					0/1
+00478760	018fbab0	0197cf20	vm	018feee0	.securom	body					1/1
+00478800	018f5878	01981570	vm-indirect			unresolved					0/1
+00478890	018f6c50	01973f20	vm			unresolved					0/1
+00478910	018f6d90	01973ef0	vm-indirect			unresolved			00478910	entry-lost	0/1
+00478a40	018fb520	01978d10	vm	004a4290	.text	body			00478a40	entry-lost	1/1
+00478af0	018f512c	0197cf00	vm			unresolved					0/1
+00478ba0	018f6584	01981540	vm-indirect	0047ac00	.text	body			00478ba0	entry-lost	1/1
+00478bf0	018fa4e4	01973ec0	vm-indirect	00437b40	.text	body			00478bf0	entry-lost	1/1
+00478cf0	018fb750	01978ce0	vm-indirect	004d7860	.text	body			00478cf0	entry-lost	1/1
+00478da0	018f6854	01981520	vm	0191cd70	.securom	body			00478da0	entry-lost	1/1
+00478ea0	018fa87c	01d97000	native			unresolved			00478ea0	entry-lost	0/1
+00479b27	018edbd0	01956a90	vm			unresolved					0/1
+0047a077	018ed6bc	019584a0	vm			unresolved					0/1
+0047a3a0	018fa604	02450000	native			unresolved					0/1
+0047a450	018fb810	0197ced0	vm-indirect			unresolved					0/1
+0047a4a0	018f54f8	01981500	vm			unresolved					0/1
+0047a560	018f6944	01973e70	vm-indirect			unresolved			0047a560	entry-lost	0/1
+0047a5c0	018fa86c	02570000	native			unresolved			0047a5c0	entry-lost	0/1
+0047a650	018fba2c	0197ceb0	vm	018fe7e0	.securom	body			0047a650	entry-lost	1/1
+0047a6e0	018f5720	019814e0	vm			unresolved					0/1
+0047a770	018f6b40	01973e50	vm	0191f490	.securom	body					1/1
+0047a800	018f6c4c	01973e30	vm	0192e960	.securom	body					1/1
+0047a890	018faab8	01978c60	vm	00450650	.text	body					1/1
+0047a920	018fbc6c	0197ce80	vm-indirect	01900690	.securom	body					1/1
+0047a9b0	018f59c0	019814b0	vm-indirect			unresolved					0/1
+0047aa40	018fa37c	02320000	native			unresolved					0/1
+0047aad0	018fb540	01978c40	vm			unresolved					0/1
+0047ab60	018f6578	01981b40	vm-indirect	0191b1b0	.securom	body			0047ab60	entry-lost	1/1
+0047abf0	018fa52c	023e0000	native			unresolved					0/1
+0047ac90	018fb744	019791d0	vm			unresolved					0/1
+0047ace0	018f53a0	0197d3a0	vm			unresolved					0/1
+0047ad80	018f6848	01981b10	vm-indirect			unresolved					0/1
+0047ae30	018fa824	01d95000	native			unresolved					0/1
+0047aec0	018fb954	019791a0	vm-indirect			unresolved					0/1
+0047af50	018f56f0	0197d380	vm			unresolved					0/1
+0047afe0	018f6a68	01981af0	vm			unresolved					0/1
+0047b030	018f622c	01974460	vm-indirect			unresolved					0/1
+0047b0c0	018f6258	01974440	vm	01918070	.securom	body			0047b0c0	entry-recoverable	1/1
+0047b150	018fa370	02310000	native			unresolved			0047b150	entry-lost	0/1
+0047b1e0	018fb568	0197d360	vm	004a44c0	.text	body			0047b1e0	entry-lost	1/1
+0047b270	018f5264	01981ac0	vm-indirect	01909f30	.securom	body			0047b270	entry-lost	1/1
+0047b300	018f6638	01974420	vm	0191bac0	.securom	body					1/1
+0047b390	018fa5fc	02440000	native			unresolved			0047b390	entry-lost	0/1
+0047b420	018f54f4	01981a90	vm-indirect	0190bc80	.securom	body			0047b420	entry-lost	1/1
+0047b4b0	018f686c	019743f0	vm-indirect			unresolved			0047b4b0	entry-lost	0/1
+0047b540	018fa85c	01979110	vm-indirect	00439b50	.text	body			0047b540	entry-lost	1/1
+0047b5d0	018fb988	0197d330	vm-indirect			unresolved			0047b5d0	entry-lost	0/1
+0047b720	018f57cc	01981a70	vm	0190ea90	.securom	body			0047b720	entry-lost	1/1
+0047b7b0	018f6b9c	019743d0	vm	0191f650	.securom	body			0047b7b0	entry-lost	1/1
+0047b840	018faad8	01daa000	native			unresolved			0047b840	entry-lost	0/1
+0047b8f0	018fbbdc	0197d310	vm			unresolved					0/1
+0047b9a0	018f59b8	01981a40	vm-indirect	01910dd0	.securom	body			0047b9a0	entry-lost	1/1
+0047ba30	018fa3ac	01d6b000	native			unresolved					0/1
+0047bb10	018fa4d4	023b0000	native			unresolved					0/1
+0047bb80	018fb650	019790c0	vm	004ccb70	.text	body					1/1
+0047bc90	018f5398	0197d2e0	vm-indirect			unresolved					0/1
+0047bd50	018f6844	01981a20	vm	0191cb90	.securom	body					1/1
+0047be10	018fa854	01d96000	native			unresolved			0047be10	entry-lost	0/1
+0047be70	018fb94c	019790a0	vm	00410470	.text	body			0047be70	entry-lost	1/1
+0047c190	018f5184	01981eb0	vm-indirect	01909340	.securom	body			0047c190	entry-lost	1/1
+0047c275	018ed61c	019554a0	vm-indirect			unresolved					0/1
+0047c2c0	018f6600	01974840	vm			unresolved					0/1
+0047c460	018fa75c	024e0000	native			unresolved					0/1
+0047c630	018fba68	0197d640	vm			unresolved					0/1
+0047c660	018f574c	01981e80	vm-indirect			unresolved					0/1
+0047c840	018f6cb8	01974820	vm			unresolved					0/1
+0047c8b0	018fab44	02690000	native			unresolved					0/1
+0047c950	018fbce4	0197d610	vm-indirect			unresolved					0/1
+0047df20	018f6aa0	01981e60	vm			unresolved					0/1
+0047e0c0	018f62f8	019747f0	vm-indirect			unresolved					0/1
+0047e1f0	018f6468	019747d0	vm			unresolved					0/1
+0047e250	018fa56c	01d7c000	native			unresolved					0/1
+0047e2e0	018fb6a0	0197d5e0	vm-indirect			unresolved					0/1
+0047e340	018f53fc	01981e40	vm			unresolved					0/1
+0047e780	018f6bb4	019747b0	vm			unresolved					0/1
+0047e860	018fab0c	01dac000	native			unresolved					0/1
+0047ec80	018f66e0	01981e20	vm			unresolved					0/1
+0047eef0	018fa8cc	01974790	vm			unresolved					0/1
+0047ef30	018fba64	01979450	vm	004404f0	.text	body					1/1
+0047ef90	018f5748	0197d5b0	vm-indirect			unresolved			0047ef90	entry-lost	0/1
+0047f3b0	018f5430	01981df0	vm-indirect			unresolved					0/1
+0047f400	018f68a8	01974770	vm			unresolved					0/1
+0047f430	018fa758	01d8e000	native			unresolved					0/1
+0047f630	018fba58	0197d590	vm			unresolved					0/1
+0047f680	018f5740	01981dc0	vm-indirect	0190e210	.securom	body					1/1
+0047f7b0	018f6bc0	01974750	vm			unresolved					0/1
+0047fb10	018fa564	01d7b000	native			unresolved					0/1
+0047fcf0	018fb780	019793e0	vm-indirect			unresolved					0/1
+0047fef0	018f568c	0197d570	vm			unresolved					0/1
+00480140	018f520c	01981d90	vm-indirect			unresolved					0/1
+00480390	018f6734	019746f0	vm			unresolved					0/1
+004809d0	018fac80	02760000	native			unresolved					0/1
+00480a90	018f64d4	01981d70	vm			unresolved					0/1
+00480b70	018fa5a4	02400000	native			unresolved					0/1
+00480bd0	018fb6e0	01979380	vm-indirect	0043e310	.text	body					1/1
+00480d50	018f5578	0197d550	vm	00452dd0	.text	body			00480d50	entry-lost	1/1
+00480e20	018f69dc	01981d50	vm			unresolved			00480e20	entry-lost	0/1
+00480e40	018fa904	025c0000	native			unresolved					0/1
+00480ee0	018fb9f8	01979350	vm-indirect			unresolved					0/1
+00480f20	018f5778	0197d530	vm	004570f0	.text	body					1/1
+00480f80	018f6af8	01981d30	vm			unresolved					0/1
+00480fc0	018fa98c	01da0000	native			unresolved					0/1
+00481100	018f64cc	01974640	vm-indirect			unresolved					0/1
+004811b0	018fa4ac	02390000	native			unresolved					0/1
+004812d0	018fb6dc	0197d500	vm-indirect	0043bd10	.text	body			004812d0	entry-lost	1/1
+00481320	018f5440	01981d00	vm-indirect	0190b480	.securom	body			00481320	entry-lost	1/1
+00481420	018f68f0	01974620	vm	0191d400	.securom	body			00481420	entry-lost	1/1
+00481520	018fa8f8	025b0000	native			unresolved			00481520	entry-lost	0/1
+00481590	018f56b0	01982310	vm-indirect			unresolved			00481590	entry-lost	0/1
+00481aa0	018fa4a0	02380000	native			unresolved					0/1
+00481b40	018fb6bc	01979890	vm-indirect	0043e270	.text	body			00481b40	entry-lost	1/1
+00481ba0	018f5354	0197d990	vm-indirect	0190a950	.securom	body					1/1
+00481cb0	018f676c	019822e0	vm-indirect			unresolved					0/1
+00481d10	018fa7bc	01d92000	native			unresolved					0/1
+00481eb0	018fb9f0	01979860	vm-indirect			unresolved					0/1
+00481fc0	018f5784	0197d970	vm	0190e7e0	.securom	body					1/1
+004820d0	018f50c8	019822c0	vm			unresolved			004820d0	entry-lost	0/1
+00482190	018f64c4	01974c20	vm	00478920	.text	body					1/1
+004821f0	018f6520	01974bf0	vm-indirect			unresolved			004821f0	entry-lost	0/1
+00482400	018fa7b0	02510000	native			unresolved					0/1
+00482a00	018f5204	0197d940	vm-indirect			unresolved					0/1
+004833d0	018f545c	01982290	vm-indirect			unresolved					0/1
+00483bc0	018fa5bc	01974bd0	vm	0040e580	.text	body					1/1
+00484250	018fa594	023f0000	native			unresolved					0/1
+00486fb0	018f6b04	01982260	vm-indirect			unresolved					0/1
+00487050	018f6378	01974bb0	vm			unresolved					0/1
+00487080	018fa324	01d66000	native			unresolved					0/1
+004872a0	018fb6d0	0197d910	vm-indirect			unresolved					0/1
+00487870	018f5964	01982230	vm-indirect			unresolved					0/1
+00487940	018f6e7c	01974b90	vm			unresolved					0/1
+00487970	018fac74	01db7000	native			unresolved					0/1
+00487b20	018f5328	0197d8e0	vm-indirect			unresolved					0/1
+00487f70	018f6afc	01982200	vm-indirect			unresolved			00487f70	entry-lost	0/1
+00488120	018f64bc	01974b60	vm-indirect			unresolved					0/1
+00489cb0	018fa688	02460000	native			unresolved			00489cb0	entry-lost	0/1
+0048a430	018fa7a8	01979770	vm-indirect	0044f800	.text	body			0048a430	entry-lost	1/1
+0048a520	018fb9e0	0197d8b0	vm-indirect	018fe520	.securom	body			0048a520	entry-lost	1/1
+0048b410	018f55a8	019821e0	vm			unresolved			0048b410	entry-lost	0/1
+0048b940	018f6e88	01974b40	vm	00487b30	.text	body			0048b940	entry-lost	1/1
+0048b9ab	018f291c	01955470	vm-indirect	00417196	.text	cave	0048b9b1	lea eax, [esi + 0xf8]	0048b9a0	inner-patched	1/1
+0048d140	018fa49c	02370000	native			unresolved			0048d140	entry-lost	0/1
+0048d1c0	018f5230	019821b0	vm-indirect			unresolved			0048d1c0	entry-lost	0/1
+0048d710	018f6c1c	01974b10	vm-indirect			unresolved			0048d710	entry-lost	0/1
+0048d950	018fac6c	01db6000	native			unresolved			0048d950	entry-lost	0/1
+0048ea30	018f521c	0197d880	vm-indirect			unresolved			0048ea30	entry-lost	0/1
+0048ec90	018f6764	01982180	vm-indirect			unresolved					0/1
+0048edd0	018fa7f4	02530000	native			unresolved					0/1
+0048f3e0	018fa694	01d86000	native			unresolved			0048f3e0	entry-lost	0/1
+0048f760	018fbb5c	0197d860	vm			unresolved					0/1
+0048f7c0	018f583c	01982150	vm-indirect	0043de10	.text	body			0048f7c0	entry-lost	1/1
+0048fa70	018fa48c	01d76000	native			unresolved					0/1
+0048fb20	018fa5b8	02420000	native			unresolved					0/1
+0048fc00	018fb7b4	019796c0	vm-indirect			unresolved					0/1
+0048fcd0	018f5480	0197d830	vm-indirect			unresolved					0/1
+0048fd20	018f68fc	01982120	vm-indirect			unresolved					0/1
+0048fdc0	018fa7f0	01974a50	vm-indirect			unresolved					0/1
+0048fe60	018fb9d0	019796a0	vm			unresolved					0/1
+0048ff10	018f6ec4	01982810	vm			unresolved					0/1
+0048ffc0	018facc8	01dbc000	native			unresolved					0/1
+00490070	018fa734	01d8c000	native			unresolved			00490070	clean	0/1
+00490120	018fb984	0197dd50	vm			unresolved					0/1
+004901c0	018f5664	019827e0	vm-indirect			unresolved					0/1
+00490270	018f6a80	01975170	vm			unresolved					0/1
+00490320	018fa9d8	01da3000	native			unresolved					0/1
+004903d0	018fbb04	0197dd20	vm-indirect			unresolved					0/1
+00490480	018f58ec	019827b0	vm-indirect			unresolved					0/1
+00490520	018f6de4	01975140	vm-indirect			unresolved					0/1
+00490680	018f6f0c	01975110	vm-indirect	01931250	.securom	body			00490680	entry-lost	1/1
+00490730	018fae14	01dc9000	native			unresolved			00490730	entry-lost	0/1
+004907e0	018fbe94	0197dd00	vm			unresolved					0/1
+00490830	018f5d28	01982790	vm	019134a0	.securom	body					1/1
+00491890	018f7178	019750f0	vm	01933420	.securom	body			00491890	entry-lost	1/1
+00491930	018fb084	01ddc000	native			unresolved					0/1
+004919ba	018f2c60	01956b30	vm-indirect			unresolved			00491990	inner-patched	0/1
+004919f0	018f5ed8	01982770	vm			unresolved			004919f0	entry-lost	0/1
+00491a90	018fa8bc	02580000	native			unresolved					0/1
+00491af0	018fb9b8	01979be0	vm-indirect			unresolved					0/1
+00491ba0	018f5734	0197dce0	vm			unresolved			00491ba0	entry-lost	0/1
+00491c10	018f6b94	01982740	vm-indirect			unresolved					0/1
+00492270	018f6a90	019750a0	vm-indirect			unresolved					0/1
+004923e0	018fa9f8	01979bc0	vm			unresolved					0/1
+00492610	018fbd94	0197dcb0	vm-indirect			unresolved					0/1
+004926a0	018f5ad0	01982710	vm-indirect			unresolved					0/1
+00492bd0	018fa964	025f0000	native			unresolved					0/1
+00492c90	018fa9f0	02600000	native			unresolved					0/1
+004937b0	018fae30	01dca000	native			unresolved			004937b0	entry-lost	0/1
+00493870	018fbff8	0197dc90	vm	01903aa0	.securom	body			00493870	entry-lost	1/1
+00493920	018f5e68	019826f0	vm			unresolved					0/1
+00493ec0	018fabf4	01db2000	native			unresolved					0/1
+004943e0	018faa3c	01979b60	vm-indirect			unresolved					0/1
+00494430	018f591c	019826c0	vm-indirect	019104b0	.securom	body			00494430	entry-lost	1/1
+00494950	018f7324	01975000	vm	01934d10	.securom	body			00494950	entry-lost	1/1
+004949d0	018fb108	02980000	native			unresolved					0/1
+00494a10	018f5660	0197dc70	vm	0190d040	.securom	body			00494a10	entry-lost	1/1
+00494ab0	018f69a4	01982690	vm-indirect			unresolved					0/1
+00494b30	018fa954	025e0000	native			unresolved			00494b30	entry-lost	0/1
+00494bd0	018fba7c	01979b00	vm	018feae0	.securom	body					1/1
+00494c70	018f57e0	0197dc50	vm			unresolved					0/1
+00494d90	018f6cac	01982660	vm-indirect			unresolved					0/1
+00494e30	018fabe8	02700000	native			unresolved					0/1
+00494ed0	018fac24	01974f70	vm			unresolved					0/1
+00495180	018fa8b0	01979ad0	vm-indirect	004290b0	.text	body			00495180	entry-lost	1/1
+00495250	018fba50	0197dc20	vm-indirect	00440410	.text	body					1/1
+004952b0	018f5774	01982630	vm-indirect			unresolved					0/1
+004954a0	018f6cf8	01974f40	vm-indirect	0192f370	.securom	body					1/1
+004955b0	018fac1c	01db3000	native			unresolved			004955b0	entry-lost	0/1
+00495610	018f5acc	01982610	vm			unresolved					0/1
+00495cb0	018faa34	01974f10	vm-indirect	00499ed0	.text	body			00495cb0	entry-lost	1/1
+004973d0	018faa28	01979a80	vm			unresolved					0/1
+00497540	018fbcdc	0197dbf0	vm-indirect			unresolved					0/1
+004975c0	018f5a30	019825e0	vm-indirect			unresolved					0/1
+004993e0	018f6bb8	01974ef0	vm	0192e400	.securom	body			004993e0	entry-lost	1/1
+004995d0	018fac0c	02710000	native			unresolved			004995d0	entry-lost	0/1
+00499640	018fbdb0	0197dbd0	vm	0040a7c0	.text	body			00499640	entry-lost	1/1
+00499680	018f5ac8	019825b0	vm-indirect			unresolved					0/1
+00499730	018f705c	01974ec0	vm-indirect			unresolved					0/1
+004997d0	018f7090	01974e90	vm-indirect			unresolved					0/1
+00499810	018faf64	01dd2000	native			unresolved					0/1
+00499910	018fc0ec	0197dba0	vm-indirect	00442920	.text	body					1/1
+00499980	018f5eac	01982590	vm			unresolved					0/1
+00499a90	018fa8a8	01974e60	vm-indirect	00480150	.text	body					1/1
+00499ca0	018fbb20	01979a20	vm			unresolved					0/1
+00499da0	018f6cf0	01982d60	vm-indirect	0041d950	.text	body			00499da0	entry-lost	1/1
+00499dc0	018fab38	01dad000	native			unresolved			00499dc0	entry-lost	0/1
+00499ec0	018fbd00	0197a0e0	vm			unresolved					0/1
+0049b460	018fbc24	0197e170	vm-indirect			unresolved					0/1
+0049b570	018f5a20	01982d30	vm-indirect			unresolved					0/1
+0049b630	018f6f40	01975780	vm	004918a0	.text	body					1/1
+0049b6a0	018fad54	01dc3000	native			unresolved					0/1
+0049b760	018fbebc	0197e150	vm			unresolved					0/1
+0049bc50	018f6bac	01982d10	vm			unresolved			0049bc50	entry-lost	0/1
+004a4000	018f6a88	01975760	vm	0191e700	.securom	body			004a4000	entry-lost	1/1
+004a40e0	018f6aa8	01975740	vm			unresolved			004a40e0	entry-lost	0/1
+004a421d	018f2b70	019544e0	vm	004028e6	.text	cave	004a4225	mov dword ptr [esp + 0x2c], 0	004a41e0	inner-patched	1/1
+004a4280	018fab00	0197a080	vm	0049ca80	.text	body					1/1
+004a43a0	018fbcf0	0197e130	vm	01900b90	.securom	body			004a43a0	entry-lost	1/1
+004a4650	018f2878	01955540	vm-indirect	00403718	.text	cave	004a4656	sub esp, 0x400	004a4650	entry-recoverable	1/1
+004a4960	018f6138	01982cf0	vm			unresolved					0/1
+004a4a80	018fa9e4	01975710	vm-indirect			unresolved			004a4a80	entry-lost	0/1
+004a4b50	018fbbf0	0197a060	vm			unresolved					0/1
+004a4d40	018f6f3c	01982cc0	vm-indirect	00490840	.text	body					1/1
+004a4d90	018fad50	01dc2000	native			unresolved			004a4d90	entry-lost	0/1
+004a4e00	018edcc8	01956b00	vm-indirect	00440601	.text	cave	004a4e06	sub esp, 0x114	004a4e00	entry-recoverable	1/1
+004a54d0	018fad40	0197a040	vm			unresolved			004a54d0	entry-lost	0/1
+004a5560	018fbeb0	0197e110	vm	01902880	.securom	body					1/1
+004a55e0	018f5c10	01982c90	vm-indirect	01912cd0	.securom	body					1/1
+004a5670	018f71e0	019756b0	vm-indirect	01933a00	.securom	body					1/1
+004a5730	018fb0cc	0197a020	vm	004a07e0	.text	body			004a5730	entry-lost	1/1
+004a5890	018fc234	0197e0e0	vm-indirect			unresolved					0/1
+004a6410	018f5abc	01982c60	vm-indirect	01911ae0	.securom	body			004a6410	entry-lost	1/1
+004a65c0	018f7084	01975680	vm-indirect			unresolved					0/1
+004a67f0	018f7360	01975650	vm-indirect			unresolved					0/1
+004a6b60	018fbc14	0197a000	vm			unresolved					0/1
+004a7a50	018f5800	0197e0b0	vm-indirect			unresolved			004a7a50	entry-lost	0/1
+004a7b0b	018edd0c	01958430	vm	004591e2	.text	cave	004a7b15	mov dword ptr [esi + 0x1cc], 0	004a7b00	inner-patched	1/1
+004a7d30	018f6f38	01982c30	vm-indirect			unresolved			004a7d30	entry-lost	0/1
+004a7db0	018fad34	01dc1000	native			unresolved			004a7db0	entry-lost	0/1
+004a8280	018fab2c	01979fd0	vm-indirect	0044d880	.text	body			004a8280	entry-lost	1/1
+004a8660	018f5d78	01982c10	vm			unresolved			004a8660	entry-lost	0/1
+004a86e0	018f7218	01975600	vm			unresolved			004a86e0	entry-recoverable	0/1
+004a8a50	018fbb14	01979fb0	vm	00440590	.text	body			004a8a50	entry-lost	1/1
+004a8ea0	018f5c00	0197e080	vm-indirect	01912c20	.securom	body			004a8ea0	entry-lost	1/1
+004a94e0	018f5b08	01982bf0	vm	0045dc60	.text	body			004a94e0	entry-lost	1/1
+004a9560	018f707c	019755e0	vm	01932120	.securom	body			004a9560	entry-recoverable	1/1
+004a9600	018faf74	01979f90	vm	0049fda0	.text	body			004a9600	entry-lost	1/1
+004a98c0	018fc264	0197e050	vm-indirect			unresolved			004a98c0	entry-lost	0/1
+004a9ab0	018f6bcc	01982bd0	vm	0048fe70	.text	body			004a9ab0	entry-lost	1/1
+004a9b10	018fab28	019755c0	vm	00437a90	.text	body					1/1
+004aa50c	018ed950	019584f0	vm	0044ac06	.text	cave	004aa512	mov dword ptr [eax], 0			1/1
+004ab280	018f6ce8	01975590	vm-indirect			unresolved			004ab280	entry-lost	0/1
+004abb00	018fbc08	01979f70	vm	004d1760	.text	body					1/1
+004abb80	018f5928	0197e030	vm			unresolved					0/1
+004abc00	018f6e44	01982bb0	vm	019309b0	.securom	body			004abc00	entry-lost	1/1
+004abca0	018fac54	02740000	native			unresolved			004abca0	entry-lost	0/1
+004af870	018fb200	01979f40	vm-indirect	004a1660	.text	body			004af870	entry-lost	1/1
+004af910	018f6178	01982b80	vm-indirect	0046fd80	.text	body			004af910	entry-lost	1/1
+004b1543	018ed9bc	01955520	vm	00420ef6	.text	cave	004b1549	cmp ecx, dword ptr [0x18f9c3c]			1/1
+004c92c0	018f6dbc	01975530	vm-indirect			unresolved					0/1
+004c9410	018fada4	01dc8000	native			unresolved			004c9410	entry-lost	0/1
+004c9450	018fbe28	0197e010	vm	01901eb0	.securom	body			004c9450	entry-lost	1/1
+004c9590	018f5c8c	01982b60	vm	019130e0	.securom	body			004c9590	entry-lost	1/1
+004c96b0	018f729c	01975500	vm-indirect	01934690	.securom	body			004c96b0	entry-lost	1/1
+004c9810	018fb288	02a00000	native			unresolved			004c9810	entry-lost	0/1
+004c9864	018eda10	01956ad0	vm-indirect			unresolved			004c9860	inner-patched	0/1
+004c9c50	018f5a74	0197dfe0	vm-indirect			unresolved			004c9c50	entry-lost	0/1
+004c9d30	018fad94	01dc7000	native			unresolved			004c9d30	entry-lost	0/1
+004c9e60	018faecc	019754a0	vm-indirect			unresolved			004c9e60	entry-lost	0/1
+004c9e80	018fbf1c	01979eb0	vm-indirect			unresolved			004c9e80	entry-lost	0/1
+004c9f80	018f7278	01982b40	vm	004a9570	.text	body			004c9f80	entry-lost	1/1
+004c9fe0	018fb014	028b0000	native			unresolved			004c9fe0	entry-lost	0/1
+004ca0d0	018f6b74	01975b80	vm-indirect	0047b550	.text	body			004ca0d0	entry-lost	1/1
+004ca120	018faab0	02650000	native			unresolved			004ca120	entry-lost	0/1
+004ca170	018fbbcc	0197e500	vm-indirect	00440bf0	.text	body			004ca170	entry-lost	1/1
+004ca1d0	018f58b0	019831b0	vm	00451bd0	.text	body			004ca1d0	entry-lost	1/1
+004ca2a0	018fbca0	0197e4e0	vm			unresolved			004ca2a0	entry-lost	0/1
+004ca2e0	018f59b4	01983180	vm-indirect			unresolved					0/1
+004ca330	018f6ec0	01975b60	vm	0047f7c0	.text	body			004ca330	entry-lost	1/1
+004ca380	018f6ee8	01975b30	vm-indirect	00489cc0	.text	body			004ca380	entry-lost	1/1
+004ca3e0	018facc0	01dbb000	native			unresolved			004ca3e0	entry-lost	0/1
+004ca560	018fbf64	0197e4c0	vm			unresolved			004ca560	entry-lost	0/1
+004ca5c0	018f5ccc	01983150	vm-indirect			unresolved			004ca5c0	entry-lost	0/1
+004ca620	018f726c	01975b00	vm-indirect	004a54e0	.text	body			004ca620	entry-lost	1/1
+004ca690	018f5e3c	01983130	vm	00459690	.text	body			004ca690	entry-lost	1/1
+004ca6d0	018f72e8	01975ae0	vm			unresolved			004ca6d0	entry-lost	0/1
+004ca95c	018f27bc	019544c0	vm			unresolved			004ca930	inner-patched	0/1
+004ca970	018fb3ac	02aa0000	native			unresolved			004ca970	entry-lost	0/1
+004cadd0	018f5b8c	0197e490	vm-indirect	0044a780	.text	body			004cadd0	entry-lost	1/1
+004cae57	018f2758	01955500	vm	0044d600	.text	cave	004cae5d	mov dword ptr [esi], 0	004cae10	inner-patched	1/1
+004cafd0	018f72dc	01983100	vm-indirect			unresolved			004cafd0	entry-lost	0/1
+004cb268	018f2e38	01956ab0	vm	0044dd7f	.text	cave	004cb26e	mov dword ptr [esi], 0	004cb260	inner-patched	1/1
+004cb280	018fbc94	0197e460	vm-indirect	0040a450	.text	body			004cb280	entry-lost	1/1
+004cb460	018f5b5c	019830e0	vm	0045bb30	.text	body			004cb460	entry-lost	1/1
+004cb4c0	018f702c	01975ab0	vm-indirect	00494440	.text	body			004cb4c0	entry-lost	1/1
+004cb520	018f7118	01975a90	vm	00494da0	.text	body			004cb520	entry-lost	1/1
+004cb580	018faefc	01dd0000	native			unresolved			004cb580	entry-lost	0/1
+004cb5d0	018fbfa0	0197e440	vm			unresolved			004cb5d0	entry-lost	0/1
+004cb630	018f5e34	019830c0	vm	0045f8f0	.text	body			004cb630	entry-lost	1/1
+004cb6b7	018ed5d8	019584c0	vm-indirect			unresolved			004cb690	inner-patched	0/1
+004cb840	018fa068	01d51000	native			unresolved			004cb840	entry-lost	0/1
+004cbb40	018fbc88	0197a2e0	vm-indirect	01900970	.securom	body			004cbb40	entry-lost	1/1
+004cbbe0	018f6e38	019834f0	vm	01930820	.securom	body			004cbbe0	entry-lost	1/1
+004cbd30	018fae2c	02810000	native			unresolved			004cbd30	entry-lost	0/1
+004cbda0	018fbe90	0197a650	vm-indirect			unresolved			004cbda0	entry-lost	0/1
+004cbe10	018f5d1c	0197e710	vm-indirect			unresolved			004cbe10	entry-lost	0/1
+004cbe80	018f71b8	019834c0	vm-indirect	004db160	.text	body			004cbe80	entry-lost	1/1
+004cbef0	018faf70	01dd4000	native			unresolved			004cbef0	entry-lost	0/1
+004cbf60	018fc0e4	0197a620	vm-indirect			unresolved			004cbf60	entry-lost	0/1
+004cbfa0	018f5ea0	0197e6f0	vm			unresolved			004cbfa0	entry-lost	0/1
+004cc448	018edb54	01956dd0	vm-indirect			unresolved			004cc440	inner-patched	0/1
+004cc850	018f612c	019834a0	vm			unresolved			004cc850	entry-lost	0/1
+004cc870	018fa0f8	01d57000	native			unresolved			004cc870	entry-lost	0/1
+004cc890	018fa0f4	01975e40	vm-indirect	004036e0	.text	body			004cc890	entry-lost	1/1
+004cc8c0	018fb318	02a80000	native			unresolved			004cc8c0	entry-lost	0/1
+004cc8f0	018fc370	0197e6d0	vm			unresolved			004cc8f0	entry-lost	0/1
+004cca70	018f6ca0	01983470	vm-indirect			unresolved			004cca70	entry-lost	0/1
+004ccd20	018fae24	01975e20	vm			unresolved					0/1
+004cd033	018ed730	01953210	vm-indirect			unresolved			004cd030	inner-patched	0/1
+004cd890	018fb308	02a70000	native			unresolved			004cd890	entry-lost	0/1
+004cd940	018f62cc	01983440	vm-indirect			unresolved			004cd940	entry-lost	0/1
+004ce060	018f6ba0	01975df0	vm-indirect			unresolved			004ce060	entry-lost	0/1
+004ce260	018fabdc	01db1000	native			unresolved					0/1
+004ce51f	018f2a3c	019545d0	vm-indirect			unresolved			004ce510	inner-patched	0/1
+004ce6c0	018f5ecc	01983410	vm-indirect			unresolved			004ce6c0	entry-lost	0/1
+004ce780	018fb1e4	0197a580	vm	00425600	.text	body			004ce780	entry-lost	1/1
+004cea20	018f6c98	019833e0	vm-indirect	0048fd30	.text	body			004cea20	entry-lost	1/1
+004cf2c0	018f6e34	01975dc0	vm-indirect			unresolved			004cf2c0	entry-lost	0/1
+004cf390	018f6f34	01975d90	vm-indirect			unresolved					0/1
+004cf430	018f5bc8	019833b0	vm-indirect	00445c20	.text	body			004cf430	entry-lost	1/1
+004cf470	018f7050	01975d70	vm			unresolved			004cf470	entry-lost	0/1
+004cf700	018fb1d8	01de6000	native			unresolved			004cf700	entry-lost	0/1
+004cf830	018f6128	01983390	vm			unresolved			004cf830	entry-lost	0/1
+004cf850	018fa0f0	01975d40	vm-indirect			unresolved			004cf850	entry-lost	0/1
+004cf870	018fb300	02a60000	native			unresolved			004cf870	entry-lost	0/1
+004cf890	018f2ad0	01955730	vm-indirect			unresolved			004cf890	entry-recoverable	0/1
+004cf970	018f500c	0197e6b0	vm			unresolved					0/1
+004cfc70	018f6f24	01983370	vm	0043bae0	.text	body			004cfc70	entry-lost	1/1
+004cfc95	018f2b44	01956db0	vm			unresolved			004cfc90	inner-patched	0/1
+004d0620	018fc134	0197e690	vm			unresolved			004d0620	entry-lost	0/1
+004d0680	018f5ef8	01983350	vm	004508e0	.text	body			004d0680	entry-lost	1/1
+004d06ca	018f2f0c	019531e0	vm-indirect			unresolved			004d06c0	inner-patched	0/1
+004d0840	018fa174	02230000	native			unresolved			004d0840	entry-lost	0/1
+004d0890	018fa164	01d5c000	native			unresolved					0/1
+004d0900	018fb4b0	0197a4e0	vm-indirect	00432a20	.text	body			004d0900	entry-lost	1/1
+004d0940	018f5074	0197e660	vm-indirect	01908570	.securom	body					1/1
+004d0a40	018f6d0c	01983330	vm	00454f20	.text	body			004d0a40	entry-lost	1/1
+004d0a80	018fab6c	01975cc0	vm			unresolved					0/1
+004d0be0	018fbd40	0197a4c0	vm			unresolved					0/1
+004d0c60	018f6f80	01983790	vm-indirect	019316e0	.securom	body					1/1
+004d0cf0	018fad84	027c0000	native			unresolved					0/1
+004d0d80	018ed7fc	019545b0	vm			unresolved			004d0d80	entry-recoverable	0/1
+004d0f70	018fc12c	0197a900	vm-indirect	01904370	.securom	body			004d0f70	entry-lost	1/1
+004d1050	018fbb50	0197e990	vm			unresolved					0/1
+004d1130	018f5930	01983770	vm			unresolved					0/1
+004d1260	018f6e70	01976210	vm	00487090	.text	body			004d1260	entry-lost	1/1
+004d12b0	018fac68	02750000	native			unresolved			004d12b0	entry-lost	0/1
+004d13e0	018fbddc	0197e960	vm-indirect	00441120	.text	body			004d13e0	entry-lost	1/1
+004d1430	018ed46c	01955700	vm-indirect			unresolved			004d1430	entry-recoverable	0/1
+004d1750	018f602c	01983740	vm-indirect			unresolved			004d1750	entry-lost	0/1
+004d18f0	018f2a74	01956d80	vm-indirect	0043a170	.text	cave	004d18f6	sub esp, 0x608	004d18f0	entry-recoverable	1/1
+004d1a40	018fab5c	026b0000	native			unresolved					0/1
+004d1d50	018f26a8	01956d50	vm-indirect			unresolved			004d1d50	entry-recoverable	0/1
+004d1f00	018fb11c	019761d0	vm			unresolved			004d1f00	entry-lost	0/1
+004d27d0	018edc38	019531c0	vm	004440bc	.text	cave	004d27d6	sub esp, 0x62c	004d27d0	entry-recoverable	1/1
+004d29b0	018fb4d4	0197a8b0	vm			unresolved			004d29b0	entry-lost	0/1
+004d34fe	018fc3e0	0197a890	vm			unresolved			004d34fe	entry-lost	0/1
+004d36a0	018f5f2c	01983720	vm	0040e390	.text	body			004d36a0	entry-lost	1/1
+004d36c0	018f738c	019761b0	vm	004815a0	.text	body			004d36c0	entry-lost	1/1
+004d37d0	018fc2a8	0197e940	vm			unresolved			004d37d0	entry-lost	0/1
+004d3b20	018fac44	02730000	native			unresolved			004d3b20	entry-lost	0/1
+004d3bb0	018fbd34	0197a860	vm-indirect			unresolved			004d3bb0	entry-lost	0/1
+004d3bd0	018f5a38	0197e910	vm-indirect			unresolved			004d3bd0	entry-lost	0/1
+004d3c00	018f6f70	019836f0	vm-indirect	00422110	.text	body			004d3c00	entry-lost	1/1
+004d3c20	018fad5c	01dc4000	native			unresolved					0/1
+004d40f0	018f6c20	01976110	vm-indirect	0047b9b0	.text	body					1/1
+004d4152	018f2c08	019556d0	vm-indirect			unresolved			004d4140	inner-patched	0/1
+004d4930	018fb4a0	0197a840	vm			unresolved			004d4930	entry-lost	0/1
+004d4950	018f6370	019836d0	vm			unresolved			004d4950	entry-lost	0/1
+004d49b0	018fb4f4	0197a810	vm-indirect	004a3e00	.text	body			004d49b0	entry-lost	1/1
+004d4a30	018f5954	0197e8e0	vm-indirect	00417350	.text	body			004d4a30	entry-lost	1/1
+004d4ba0	018f6ea0	019836b0	vm	01930e20	.securom	body			004d4ba0	entry-lost	1/1
+004d4c30	018fad74	019760f0	vm	0040a490	.text	body			004d4c30	entry-lost	1/1
+004d4f30	018f5f24	0197e8b0	vm-indirect			unresolved			004d4f30	entry-lost	0/1
+004d4f80	018f7380	01983690	vm			unresolved			004d4f80	entry-lost	0/1
+004d4fa0	018fb16c	019760d0	vm			unresolved			004d4fa0	entry-lost	0/1
+004d5020	018ed774	019531a0	vm	0043fc43	.text	cave	004d5027	cmp byte ptr [ecx + 0x1ac], 0	004d5020	entry-lost	1/1
+004d5040	018f6c0c	019760a0	vm-indirect			unresolved			004d5040	entry-lost	0/1
+004d5090	018faa84	01da8000	native			unresolved			004d5090	entry-lost	0/1
+004d50f0	018fbb84	0197e890	vm	004409a0	.text	body			004d50f0	entry-lost	1/1
+004d5150	018f5950	01983670	vm	0040d300	.text	body					1/1
+004d5170	018f6d4c	01976070	vm-indirect	00402360	.text	body			004d5170	entry-lost	1/1
+004d5190	018fab78	026c0000	native			unresolved			004d5190	entry-lost	0/1
+004d5390	018f73cc	019765e0	vm			unresolved			004d5390	entry-lost	0/1
+004d5577	018ed888	019556a0	vm-indirect	00440b21	.text	cave	004d557d	mov edx, dword ptr [eax + 0x84]	004d5550	inner-patched	1/1
+004d5970	018f67f0	01983b20	vm			unresolved			004d5970	entry-lost	0/1
+004d59a0	018fa6d8	024b0000	native			unresolved					0/1
+004d5cd0	018f5f58	0197ec80	vm			unresolved			004d5cd0	entry-lost	0/1
+004d5d10	018fa038	021d0000	native			unresolved			004d5d10	entry-lost	0/1
+004d5f80	018fb53c	01976570	vm-indirect	0043d5a0	.text	body			004d5f80	entry-lost	1/1
+004d61b3	018ed4ec	01953180	vm	0044b006	.text	cave	004d61b9	cmp dword ptr [0xdea3d0], edi	004d61b0	inner-patched	1/1
+004d6620	018fb510	0197ac00	vm-indirect			unresolved			004d6620	entry-lost	0/1
+004d6650	018f5120	0197ec50	vm-indirect			unresolved			004d6650	entry-lost	0/1
+004d66d0	018f25c8	01954590	vm	00459c86	.text	cave	004d66d6	mov dword ptr [ecx], 0xbdb8e8	004d66d0	entry-recoverable	1/1
+004d6830	018f537c	0197ec20	vm-indirect	00447550	.text	body			004d6830	entry-lost	1/1
+004d6a20	018fbf18	0197abd0	vm-indirect			unresolved			004d6a20	entry-lost	0/1
+004d6b30	018fc084	0197aba0	vm-indirect			unresolved			004d6b30	entry-lost	0/1
+004d6bd0	018f5e60	0197ec00	vm			unresolved			004d6bd0	entry-lost	0/1
+004d6f20	018fa3a8	01d6a000	native			unresolved			004d6f20	entry-lost	0/1
+004d7210	018f7290	01976540	vm-indirect	01934590	.securom	body					1/1
+004d72c0	018fb078	028e0000	native			unresolved					0/1
+004d7350	018fc188	0197ebd0	vm-indirect	004de540	.text	body					1/1
+004d73d0	018f5f90	01983a80	vm-indirect	00467530	.text	body					1/1
+004d7440	018fa058	01976520	vm			unresolved			004d7440	entry-lost	0/1
+004d7490	018f2be8	01955680	vm	00408590	.text	cave	004d7496	sub esp, 0x174	004d7490	entry-recoverable	1/1
+004d7850	018fb738	0197ab50	vm			unresolved			004d7850	entry-lost	0/1
+004d7df0	018fa0ac	021e0000	native			unresolved			004d7df0	entry-lost	0/1
+004d829f	018f2f04	01956d30	vm			unresolved			004d8260	inner-patched	0/1
+004d8650	018fa3a0	02340000	native			unresolved			004d8650	entry-lost	0/1
+004d8670	018fb538	0197ab30	vm	00435e20	.text	body			004d8670	entry-lost	1/1
+004d8880	018fa5f4	01d7f000	native			unresolved			004d8880	entry-lost	0/1
+004d88c0	018fb75c	0197ab10	vm	0043e870	.text	body			004d88c0	entry-lost	1/1
+004d8c80	018f5f54	0197ebb0	vm	01915740	.securom	body			004d8c80	entry-lost	1/1
+004d90c0	018f701c	01976470	vm-indirect			unresolved			004d90c0	entry-lost	0/1
+004d90e0	018fae04	0197aae0	vm-indirect			unresolved			004d90e0	entry-recoverable	0/1
+004d9180	018fbf60	0197eb80	vm-indirect			unresolved			004d9180	entry-lost	0/1
+004d91f0	018f5d0c	01983a20	vm	0044cf30	.text	body					1/1
+004d9490	018fb294	02a20000	native			unresolved			004d9490	entry-recoverable	0/1
+004d94e0	018f60c0	01984060	vm-indirect			unresolved			004d94e0	entry-lost	0/1
+004d9530	018fa204	01d61000	native			unresolved			004d9530	entry-lost	0/1
+004d958f	018f2ac4	01953160	vm			unresolved			004d9580	inner-patched	0/1
+004d95e0	018fb3e8	0197afe0	vm-indirect	004a2d30	.text	body			004d95e0	entry-lost	1/1
+004d98a0	018f53bc	0197f040	vm			unresolved					0/1
+004d9900	018f6834	01984030	vm-indirect			unresolved					0/1
+004d9960	018fa6d4	01d88000	native			unresolved					0/1
+004d99e5	018ed488	01954560	vm-indirect	0042055a	.text	cave	004d99eb	cmp esi, dword ptr [0x18f9c38]	004d99e0	inner-patched	1/1
+004d9a90	018faf38	01976aa0	vm			unresolved			004d9a90	entry-lost	0/1
+004d9f30	018f63d0	0197f020	vm	0046c960	.text	body			004d9f30	entry-lost	1/1
+004d9f60	018fa390	01984000	vm-indirect			unresolved					0/1
+004da050	018f24f4	01955660	vm			unresolved			004da050	entry-recoverable	0/1
+004da220	018f7288	01976a80	vm			unresolved			004da220	entry-lost	0/1
+004da280	018fb068	028d0000	native			unresolved					0/1
+004da716	018f2570	01956d10	vm	0044f45b	.text	cave	004da71c	mov dword ptr [esi], 0xbdc368	004da710	inner-patched	1/1
+004da760	018f65c4	01983fe0	vm			unresolved			004da760	entry-lost	0/1
+004da7e0	018fa558	01d7a000	native			unresolved			004da7e0	entry-lost	0/1
+004daa70	018fbf98	0197af80	vm-indirect			unresolved			004daa70	entry-lost	0/1
+004daac0	018f5d44	0197eff0	vm-indirect			unresolved			004daac0	entry-lost	0/1
+004dab20	018f72d4	01983fc0	vm	01934800	.securom	body					1/1
+004dad50	018fc2f8	0197af50	vm-indirect			unresolved			004dad50	entry-recoverable	0/1
+004dae69	018f2bf8	01956cf0	vm	0040e936	.text	cave	004dae6f	pushfd; mov ecx, dword ptr [0x42c2e5]; xor ecx, dword ptr [0x18f790c]; mov ecx, dword ptr [ecx]; popfd	004dae60	inner-patched	1/1
+004db010	018fbe58	0197efd0	vm	01902060	.securom	body					1/1
+004db120	018f5d00	01983f90	vm-indirect	0043ab90	.text	body			004db120	entry-lost	1/1
+004db150	018f7170	01976a30	vm			unresolved			004db150	entry-recoverable	0/1
+004db450	018fa0a8	01976a10	vm			unresolved			004db450	entry-lost	0/1
+004db800	018f5390	0197efb0	vm			unresolved			004db800	entry-lost	0/1
+004db950	018fa72c	024d0000	native			unresolved			004db950	entry-lost	0/1
+004dba20	018fbf90	0197af30	vm			unresolved			004dba20	entry-lost	0/1
+004dba80	018f7160	01983f70	vm	01933210	.securom	body			004dba80	entry-lost	1/1
+004dbb90	018f5e5c	0197ef90	vm			unresolved			004dbb90	entry-lost	0/1
+004dc120	018f5cfc	01983f40	vm-indirect			unresolved			004dc120	entry-lost	0/1
+004dc1a0	018f71b4	019769b0	vm-indirect	00494e40	.text	body					1/1
+004dc630	018fb558	0197af10	vm	018fce80	.securom	body			004dc630	entry-lost	1/1
+004dca60	018f5cec	0197ef70	vm			unresolved			004dca60	entry-lost	0/1
+004dcab0	018f71b0	01983f20	vm			unresolved			004dcab0	entry-lost	0/1
+004dcb00	018fb058	01ddb000	native			unresolved			004dcb00	entry-lost	0/1
+004dcba0	018fb0c0	02930000	native			unresolved					0/1
+004dcc20	018fc1bc	0197aee0	vm-indirect			unresolved			004dcc20	entry-lost	0/1
+004dcd00	018f60bc	0197ef50	vm			unresolved			004dcd00	entry-lost	0/1
+004dcdc0	018fb2fc	02a50000	native			unresolved					0/1
+004dce00	018f4fb0	0197aec0	vm			unresolved					0/1
+004dce50	018fa258	02280000	native			unresolved					0/1
+004dcea0	018fb438	019768f0	vm			unresolved					0/1
+004dcf00	018f5154	0197ae90	vm-indirect			unresolved			004dcf00	entry-lost	0/1
+004dcf60	018f63f4	0197ef30	vm	004503d0	.text	body			004dcf60	entry-lost	1/1
+004dcfa0	018fa434	01d6f000	native			unresolved			004dcfa0	entry-lost	0/1
+004dd140	018f7154	019768c0	vm-indirect	00480330	.text	body			004dd140	entry-lost	1/1
+004dd180	018faf28	01dd1000	native			unresolved			004dd180	entry-lost	0/1
+004dd1c0	018fbfec	0197ef10	vm			unresolved			004dd1c0	entry-lost	0/1
+004dd270	018f5e50	01983ea0	vm	00461d90	.text	body			004dd270	entry-lost	1/1
+004dd490	018fb2f8	02a40000	native			unresolved					0/1
+004dd6f0	018f517c	0197eef0	vm			unresolved			004dd6f0	entry-lost	0/1
+004dd720	018f65b8	01983e80	vm			unresolved			004dd720	entry-lost	0/1
+004dd770	018fa520	023d0000	native			unresolved			004dd770	entry-lost	0/1
+004dd7f0	018fb684	0197ae10	vm-indirect			unresolved			004dd7f0	entry-lost	0/1
+004dd8d0	018fa66c	01d84000	native			unresolved			004dd8d0	entry-lost	0/1
+004ddc80	018fc200	0197b350	vm			unresolved			004ddc80	entry-lost	0/1
+004ddcb0	018f5fd8	0197f370	vm			unresolved			004ddcb0	entry-lost	0/1
+004ddd30	018fa0a4	019844e0	vm-indirect	00405480	.text	body			004ddd30	entry-lost	1/1
+004dde20	018f4fac	0197b320	vm-indirect	019075c0	.securom	body			004dde20	entry-lost	1/1
+004ddf20	018f63ec	0197f340	vm-indirect	01919f80	.securom	body			004ddf20	entry-lost	1/1
+004ddfe0	018fa454	02360000	native			unresolved			004ddfe0	entry-lost	0/1
+004de030	018f700c	01976ea0	vm			unresolved			004de030	entry-lost	0/1
+004de530	018fa24c	02270000	native			unresolved			004de530	entry-lost	0/1
+004de820	018fb758	0197b300	vm			unresolved			004de820	entry-lost	0/1
+004de880	018f53f0	0197f320	vm			unresolved			004de880	entry-lost	0/1
+004de8e0	018f6728	01984470	vm-indirect			unresolved			004de8e0	entry-lost	0/1
+004de940	018fa720	01d8b000	native			unresolved			004de940	entry-recoverable	0/1
+004de990	018fb858	0197b2e0	vm			unresolved			004de990	entry-lost	0/1
+004dea40	018f71ac	01984440	vm-indirect			unresolved			004dea40	entry-lost	0/1
+004deab0	018faf6c	01dd3000	native			unresolved			004deab0	entry-lost	0/1
+004dee50	018f5004	0197b2c0	vm	0043b980	.text	body			004dee50	entry-lost	1/1
+004dee90	018f62c8	0197f300	vm	0045f7d0	.text	body			004dee90	entry-lost	1/1
+004def90	018fa424	01984410	vm-indirect			unresolved			004def90	entry-lost	0/1
+004defe0	018fb5d8	01976de0	vm-indirect			unresolved			004defe0	entry-lost	0/1
+004df069	018ed93c	01955640	vm			unresolved			004df050	inner-patched	0/1
+004df110	018faf58	0197b290	vm-indirect			unresolved			004df110	entry-lost	0/1
+004df180	018fbfe0	0197f2e0	vm			unresolved			004df180	entry-lost	0/1
+004df220	018f5e9c	019843f0	vm	0044dc50	.text	body					1/1
+004df790	018fa550	01976db0	vm-indirect	004048f0	.text	body			004df790	entry-lost	1/1
+004df7cf	018edd70	01956cd0	vm	0044f951	.text	cave	004df7d5	lea ecx, [edi + 0x88]	004df7c0	inner-patched	1/1
+004dfb60	018fb0b4	02920000	native			unresolved			004dfb60	entry-lost	0/1
+004dfbe0	018fc120	0197b260	vm-indirect	00442a60	.text	body					1/1
+004e0ab0	018f5d98	0197f2b0	vm-indirect			unresolved			004e0ab0	entry-recoverable	0/1
+004e12b0	018f5eec	019843c0	vm-indirect	01915100	.securom	body			004e12b0	entry-lost	1/1
+004e15d0	018fa2dc	01976d60	vm	004095e0	.text	body			004e15d0	entry-lost	1/1
+004e1610	018fb5d0	0197b230	vm-indirect	0047bd60	.text	body			004e1610	entry-lost	1/1
+004e1670	018f6558	019847d0	vm	0191b010	.securom	body			004e1670	entry-lost	1/1
+004e1700	018fa5ac	02410000	native			unresolved					0/1
+004e1760	018fb6f8	0197b580	vm-indirect			unresolved			004e1760	entry-lost	0/1
+004e17c0	018f5358	0197f580	vm-indirect			unresolved			004e17c0	entry-recoverable	0/1
+004e1820	018f675c	019847b0	vm			unresolved			004e1820	entry-lost	0/1
+004e1880	018fa690	01977160	vm			unresolved			004e1880	entry-lost	0/1
+004e1a00	018fc068	0197b550	vm-indirect	004476a0	.text	body			004e1a00	entry-lost	1/1
+004e1a70	018f5de4	0197f550	vm-indirect			unresolved			004e1a70	entry-lost	0/1
+004e1b30	018fb140	01977130	vm-indirect			unresolved			004e1b30	entry-lost	0/1
+004e1d40	018f6208	0197f520	vm-indirect			unresolved			004e1d40	entry-lost	0/1
+004e2030	018f5c20	01984790	vm			unresolved			004e2030	entry-lost	0/1
+004e2190	018f724c	01977110	vm			unresolved			004e2190	entry-lost	0/1
+004e21f0	018fb008	01dd9000	native			unresolved			004e21f0	entry-lost	0/1
+004e2598	018f258c	01956cb0	vm	004585c6	.text	cave	004e259e	mov ebp, dword ptr [esi + 0x138]	004e2590	inner-patched	1/1
+004e2780	018f660c	01984770	vm			unresolved			004e2780	entry-lost	0/1
+004e29f0	018fa820	01d94000	native			unresolved			004e29f0	entry-lost	0/1
+004e2a80	018fc080	0197b4f0	vm	00432780	.text	body					1/1
+004e2d10	018f61fc	0197f4f0	vm-indirect			unresolved			004e2d10	entry-lost	0/1
+004e2e40	018fa364	02300000	native			unresolved			004e2e40	entry-lost	0/1
+004e2f10	018fb620	019770d0	vm	0043deb0	.text	body			004e2f10	entry-lost	1/1
+004e2f70	018f5224	0197b4c0	vm-indirect	00446f00	.text	body			004e2f70	entry-lost	1/1
+004e3710	018f5344	0197f4d0	vm	00447400	.text	body			004e3710	entry-lost	1/1
+004e3880	018f67a4	01984710	vm-indirect	0191c450	.securom	body			004e3880	entry-lost	1/1
+004e3920	018fa7e4	019770b0	vm			unresolved			004e3920	entry-recoverable	0/1
+004e3cc0	018fb284	01977080	vm-indirect			unresolved			004e3cc0	entry-lost	0/1
+004e3d00	018fc3d4	0197b490	vm-indirect	00443e60	.text	body			004e3d00	entry-lost	1/1
+004e3f30	018f654c	0197f4a0	vm-indirect			unresolved			004e3f30	entry-lost	0/1
+004e3fa0	018fa4c0	01d78000	native			unresolved			004e3fa0	entry-lost	0/1
+004e4200	018fb134	01de1000	native			unresolved			004e4200	entry-lost	0/1
+004e4340	018f607c	019846c0	vm			unresolved			004e4340	entry-lost	0/1
+004e4540	018fa354	01d68000	native			unresolved			004e4540	entry-lost	0/1
+004e48b9	018ed45c	01956c90	vm			unresolved			004e48a0	inner-patched	0/1
+004e52e0	018f29e8	01953130	vm-indirect	00441b03	.text	cave	004e52e6	sub esp, 0x88	004e52e0	entry-recoverable	1/1
+004e5c95	018f2bb4	01955620	vm	004440d2	.text	cave	004e5c9c	cmp dword ptr [esi + 0x8c], 0	004e5c90	inner-patched	1/1
+004e6d36	018edb68	01956c70	vm			unresolved			004e6d30	inner-patched	0/1
+004e7bca	018f248c	01956c40	vm-indirect			unresolved			004e7ba0	inner-patched	0/1
+004e8857	018ed524	01953110	vm			unresolved			004e8850	inner-patched	0/1
+004e9599	018ed678	01954530	vm-indirect			unresolved			004e9590	inner-patched	0/1
+004ebc94	018f2b80	019530f0	vm	0040515f	.text	cave	004ebc9c	mov dword ptr [esp + 0x10], 0	004ebc80	inner-patched	1/1
+004ec20b	018edbb8	019555f0	vm-indirect			unresolved			004ec1f0	inner-patched	0/1
+004ecc6d	018f2e60	01956c10	vm-indirect			unresolved			004ecc40	inner-patched	0/1
+004ed380	018edc1c	019530d0	vm			unresolved			004ed380	entry-recoverable	0/1
+004edd7c	018eda00	019555c0	vm-indirect	004404a6	.text	cave	004edd83	test byte ptr [edi + 0x80], 1	004edd70	inner-patched	1/1
+004efa45	018f2634	01956bf0	vm			unresolved			004efa20	inner-patched	0/1
+004f1850	018f24d8	01954500	vm-indirect	0045be4b	.text	cave	004f1856	sub esp, 0x318	004f1850	entry-recoverable	1/1
+004f2a88	018edb4c	019555a0	vm			unresolved					0/1
+004f505d	018f2b20	01956bd0	vm	00440a08	.text	cave	004f5063	pushfd; mov ecx, dword ptr [0x18f79dc]; not ecx; xor ecx, dword ptr [0x6dff45]; mov ecx, dword ptr [ecx]; popfd			1/1
+004f5b78	018edb9c	01956ba0	vm-indirect	00403e5c	.text	cave	004f5b7e	mov eax, dword ptr [ebx + 0xdc]	004f5b70	inner-patched	1/1
+004f86e9	018ed670	019530a0	vm-indirect	00417171	.text	cave	004f86f0	cmp dword ptr [ecx + 0x9c], -1	004f86d0	inner-patched	1/1
+004f9420	018edb90	01955570	vm-indirect	00409391	.text	cave	004f9426	sub esp, 0x9c	004f9420	entry-recoverable	1/1
+004f99a0	018ed76c	01956b80	vm			unresolved			004f9980	inner-patched	0/1
+004fdcb0	018f2d50	01953410	vm-indirect	00456871	.text	cave	004fdcb6	mov ecx, dword ptr [ecx + 0x5508]	004fdcb0	entry-lost	1/1
+00501d41	018edaa4	01955980	vm-indirect			unresolved			00501d40	inner-patched	0/1
+00502194	018ed98c	01957020	vm			unresolved			00502180	inner-patched	0/1
+00502703	018edc04	019533f0	vm	004258c9	.text	cave	0050270a	cmp byte ptr [esi + 0x80], 0	00502700	inner-patched	1/1
+00502d06	018edc5c	019546d0	vm			unresolved			00502d00	inner-patched	0/1
+00503329	018ed394	01955950	vm-indirect	00402036	.text	cave	00503330	lea esp, [esp]	00503310	inner-patched	1/1
+0050383e	018ed804	01957000	vm			unresolved			00503830	inner-patched	0/1
+00503fe5	018f2af4	01956fe0	vm	004398b2	.text	cave	00503fec	cmp byte ptr [ebx + 0x652c], 0	00503fc0	inner-patched	1/1
+00504522	018ed658	019533d0	vm	0040b62e	.text	cave	00504529	add dword ptr [eax + 0x98], 1	00504510	inner-patched	1/1
+00505060	018ed768	01955920	vm-indirect	0043aec6	.text	cave	00505067	cmp byte ptr [ecx + 0xec], 0	00505060	entry-recoverable	1/1
+00505762	018ed6d0	01956fb0	vm-indirect			unresolved			00505750	inner-patched	0/1
+00505ce9	018f2d40	019533a0	vm-indirect	004555c3	.text	cave	00505cef	cmp dword ptr [esi + 0x10c], ebx	00505ce0	inner-patched	1/1
+00506be2	018f2bcc	019558f0	vm-indirect			unresolved			00506bd0	inner-patched	0/1
+00507589	018f2730	01953380	vm	0044314c	.text	cave	0050758f	mov dword ptr [esi], 0xbdf2c4	00507580	inner-patched	1/1
+00508ff7	018ed820	019558d0	vm	004232f6	.text	cave	00508ffd	mov eax, dword ptr [edi + 0xe8]	00508fe0	inner-patched	1/1
+00509fc9	018f26e0	01953350	vm-indirect	00402cee	.text	cave	00509fd0	lea esp, [esp]	00509fb0	inner-patched	1/1
+0050a9d3	018ed9f8	019546b0	vm	0044026e	.text	cave	0050a9d9	imul esi, esi, 0x1fc	0050a9c0	inner-patched	1/1
+0050b2c3	018ed624	019558b0	vm			unresolved			0050b2c0	inner-patched	0/1
+0050b723	018ed390	01956f90	vm	004029a6	.text	cave	0050b72b	mov dword ptr [ebp + ebx*4], 0	0050b6e0	inner-patched	1/1
+0050beb9	018ed418	01956b60	vm			unresolved			0050be90	inner-patched	0/1
+0050c3f3	018ed3c8	01953080	vm	00416a40	.text	cave	0050c3f9	mov dword ptr [eax], 0	0050c3e0	inner-patched	1/1
+0050cfef	018f2aa8	01954690	vm	00401db6	.text	cave	0050cff5	lea esi, [edi + 0x108]	0050cfd0	inner-patched	1/1
+0050d8d4	018f277c	01955890	vm			unresolved			0050d8b0	inner-patched	0/1
+0050f0f9	018ed83c	01956f70	vm			unresolved			0050f0c0	inner-patched	0/1
+005119f3	018f2974	01955860	vm-indirect			unresolved			005119f0	inner-patched	0/1
+0051240e	018edad8	01956f40	vm-indirect			unresolved					0/1
+00512860	018f2ac8	01953330	vm			unresolved			00512850	inner-patched	0/1
+00512e05	018edaa0	01954660	vm-indirect			unresolved			00512df0	inner-patched	0/1
+00513353	018f2750	01955830	vm-indirect	0044737d	.text	cave	00513359	mov dword ptr [eax], 0xbdf428	00513340	inner-patched	1/1
+00514e66	018ed4ac	01956f20	vm	0043a356	.text	cave	00514e6d	cmp dword ptr [esi + 0x11c], 0	00514e60	inner-patched	1/1
+00517b37	018eddd8	01956f00	vm	0043a6dc	.text	cave	00517b3e	cmp byte ptr [esi + 0x81], 0	00517b30	inner-patched	1/1
+0051882d	018edbf8	01956ed0	vm-indirect			unresolved			00518820	inner-patched	0/1
+00519137	018f2718	01953310	vm	0043a2d6	.text	cave	0051913d	lea edi, [ebp + 0x2fc]	00519130	inner-patched	1/1
+00519c87	018f2cbc	01954640	vm			unresolved			00519c50	inner-patched	0/1
+0051b18b	018f2540	01955800	vm-indirect	00443262	.text	cave	0051b192	mov dword ptr [ebp], 0	0051b180	inner-patched	1/1
+0051d2b0	018ed598	01956eb0	vm			unresolved			0051d2b0	entry-recoverable	0/1
+0051ddb0	018ed60c	019532e0	vm-indirect	00429a77	.text	cave	0051ddb6	lea edx, [esi + 0x1f0]	0051dd90	inner-patched	1/1
+0051f785	018f25b8	019557e0	vm	00459ff4	.text	cave	0051f78b	mov edx, dword ptr [eax + 0x98]	0051f780	inner-patched	1/1
+0051fc60	018ed640	01956e80	vm-indirect	00402a41	.text	cave	0051fc67	lea ecx, [ecx + eax*8 + 0x80]	0051fc50	inner-patched	1/1
+00520120	018f285c	019532b0	vm-indirect	00401b26	.text	cave	00520126	mov dl, byte ptr [ecx + 0x13c]	00520120	entry-recoverable	1/1
+005208a0	018edc94	01954620	vm	00438fda	.text	cave	005208a6	mov eax, dword ptr [ecx + 0x178]	005208a0	entry-lost	1/1
+00521053	018eddec	019557b0	vm-indirect	00445994	.text	cave	00521059	mov eax, dword ptr [esi + 0x138]	00521050	inner-patched	1/1
+005215b4	018f2b64	01956e50	vm-indirect			unresolved			005215b0	inner-patched	0/1
+00521e8c	018edcbc	01953280	vm-indirect	0043b196	.text	cave	00521e94	mov dword ptr [esp + 0x24], 0	00521e50	inner-patched	1/1
+0052289b	018f29f8	01955790	vm	004488b5	.text	cave	005228a3	mov dword ptr [esp + 0x14], 3	00522880	inner-patched	1/1
+005239be	018f2e80	01956e20	vm-indirect			unresolved			005239b0	inner-patched	0/1
+00523e62	018ed3ac	01956e00	vm	0040d226	.text	cave	00523e68	mov esi, dword ptr [ecx + 0x178]	00523e60	inner-patched	1/1
+005242c3	018eda54	01953260	vm	004128b0	.text	cave	005242c9	mov ecx, dword ptr [esi + 0x224]	005242b0	inner-patched	1/1
+005259e3	018f2dd0	01954600	vm	0044056a	.text	cave	005259ea	test byte ptr [ebx + 0x13f], 8	005259e0	inner-patched	1/1
+00525e53	018f2cac	01955760	vm-indirect	004026e1	.text	cave	00525e59	mov edi, dword ptr [ecx + 0x178]	00525e50	inner-patched	1/1
+0052a45d	018f27e8	01953490	vm	0042a783	.text	cave	0052a465	mov dword ptr [esp + 0x14], 8	0052a440	inner-patched	1/1
+0052b930	018ed574	01955a70	vm			unresolved			0052b930	entry-recoverable	0/1
+0052cd70	018ed7e8	01957110	vm-indirect	00402c16	.text	cave	0052cd77	test byte ptr [0xdeedbc], 1	0052cd70	entry-recoverable	1/1
+0052d6ba	018ed3a0	01953460	vm-indirect	0040a37e	.text	cave	0052d6c0	mov dword ptr [esi + 0x384], eax	0052d6b0	inner-patched	1/1
+0052db3d	018ed960	01954780	vm-indirect			unresolved			0052db30	inner-patched	0/1
+0052e036	018edb40	01955a40	vm-indirect	00456706	.text	cave	0052e03d	or byte ptr [esi + 0x13c], 0x40	0052e030	inner-patched	1/1
+0052e7b6	018ed660	019570f0	vm			unresolved			0052e7a0	inner-patched	0/1
+0052ef45	018f2714	019570c0	vm-indirect	00439956	.text	cave	0052ef4b	pushfd; mov ecx, dword ptr [0x402411]; xor ecx, dword ptr [0x18f796c]; mov ecx, dword ptr [ecx]; popfd	0052ef30	inner-patched	1/1
+00530166	018f2ae8	01953440	vm	004397d6	.text	cave	0053016c	add esp, 0x41c	00530052	clean	1/1
+00530c05	018eda98	01954750	vm-indirect	00455dcf	.text	cave	00530c0b	lea edx, [ecx + 0x80]	00530c00	inner-patched	1/1
+0053128b	018edc28	01955a20	vm	00443673	.text	cave	00531291	mov dword ptr [esi], 0	00531270	inner-patched	1/1
+00532a88	018edc7c	01955a00	vm			unresolved			00532a79	inner-patched	0/1
+00532ff9	018f2b2c	019570a0	vm			unresolved			00532ff0	inner-patched	0/1
+005346b3	018f2dc0	01954730	vm	0043d61b	.text	cave	005346b9	mov dword ptr [eax], 0	00534690	inner-patched	1/1
+00534fb7	018f2e8c	019559e0	vm	004258be	.text	cave	00534fbd	mov eax, dword ptr [esi + 0x160]	00534fb0	inner-patched	1/1
+00535428	018ed604	01957070	vm-indirect	0042dbc6	.text	cave	0053542f	mov dword ptr [eax + 4], 0	00535410	inner-patched	1/1
+005375b3	018ed880	01954710	vm	0043bcdf	.text	cave	005375ba	cmp dword ptr [edi + 0x138], 0	005375b0	inner-patched	1/1
+00537a48	018f29b8	019559b0	vm-indirect	00420536	.text	cave	00537a4f	test byte ptr [ebx + 0x13d], 0x40	00537a40	inner-patched	1/1
+0053844a	018f2a04	01957040	vm-indirect	00456f76	.text	cave	00538450	mov dword ptr [edi], 0xbe082c	00538440	inner-patched	1/1
+0053ab4c	018edc48	019546f0	vm	00447165	.text	cave	0053ab52	pushfd; mov ecx, dword ptr [0x18f7a2c]; xor ecx, dword ptr [0x19040e0]; mov ecx, dword ptr [ecx]; popfd	0053ab40	inner-patched	1/1
+0053ce58	018f2728	01957280	vm	00440d08	.text	cave	0053ce5e	pushfd; clc; mov ecx, dword ptr [0x18f79e4]; adc ecx, dword ptr [0x43af50]; mov ecx, dword ptr [ecx]; popfd	0053ce50	inner-patched	1/1
+0053df25	018f2df0	01953600	vm	00443ada	.text	cave	0053df2b	pushfd; stc; mov ecx, dword ptr [0x18f7a14]; adc ecx, dword ptr [0x46f3d6]; mov ecx, dword ptr [ecx]; popfd	0053df20	inner-patched	1/1
+00540687	018ed7d8	01955bb0	vm-indirect			unresolved			00540680	inner-patched	0/1
+00543418	018f2808	019535e0	vm	0044048b	.text	cave	0054341e	mov esi, dword ptr [ebp + 0x3c8]	00543410	inner-patched	1/1
+005492f0	018edb6c	019535b0	vm-indirect	00402a66	.text	cave	005492f6	pushfd; mov ecx, dword ptr [0x18f78a8]; add ecx, dword ptr [0x709548]; mov ecx, dword ptr [ecx]; popfd	005492f0	entry-lost	1/1
+005499c9	018f27a0	01954840	vm			unresolved			005499c0	inner-patched	0/1
+00549e5a	018ed73c	01955b90	vm			unresolved			00549e50	inner-patched	0/1
+0054a998	018f2950	01957260	vm			unresolved			0054a990	inner-patched	0/1
+0054af63	018f2ebc	01953590	vm			unresolved			0054af60	inner-patched	0/1
+0054c064	018f2c28	01953570	vm			unresolved			0054c040	inner-patched	0/1
+0054c653	018f2724	01954820	vm	0043e704	.text	cave	0054c659	mov dword ptr [esi], 0xbe2030	0054c650	inner-patched	1/1
+0054cb18	018f27e4	01955b60	vm-indirect			unresolved			0054cb10	inner-patched	0/1
+0054df33	018ed9f0	01953550	vm	0043e8f2	.text	cave	0054df3a	mov dword ptr [ecx + 8], 1	0054df20	inner-patched	1/1
+0054f43b	018edde8	01955b30	vm-indirect			unresolved			0054f3f0	inner-patched	0/1
+00550c50	018eddb4	01957230	vm-indirect	00402bf1	.text	cave	00550c56	sub esp, 0x9c	00550c50	entry-recoverable	1/1
+00551599	018f28b8	01957200	vm-indirect	00439986	.text	cave	005515a0	mov dword ptr [ebp], 0	00551590	inner-patched	1/1
+00551b49	018edd08	01953520	vm-indirect	00402ade	.text	cave	00551b50	lea esp, [esp]	00551b30	inner-patched	1/1
+005520b1	018f2db4	01954800	vm			unresolved			005520a0	inner-patched	0/1
+00552bcc	018ed8b8	01955b10	vm	00402556	.text	cave	00552bd2	pushfd; mov esi, dword ptr [0x18f788c]; sub esi, dword ptr [0x4de030]; mov esi, dword ptr [esi]; popfd	00552bc0	inner-patched	1/1
+005530e3	018f2b3c	019571e0	vm	00402326	.text	cave	005530ea	cmp byte ptr [0xcae9a2], 0	005530e0	inner-patched	1/1
+005535c0	018ed9a4	01953500	vm			unresolved			005535b0	inner-patched	0/1
+00554a58	018f28a0	01955ae0	vm-indirect			unresolved			005549c0	inner-patched	0/1
+00555a99	018f29e0	019571c0	vm			unresolved			00555a60	inner-patched	0/1
+00556c50	018f2ad4	019534d0	vm-indirect	0042ce34	.text	cave	00556c56	sub esp, 0x12c	00556c50	entry-recoverable	1/1
+00559067	018eda7c	019547d0	vm-indirect	00446347	.text	cave	0055906e	test byte ptr [edi + 0x471], 1	00559030	inner-patched	1/1
+00559bc0	018f24ac	01955ac0	vm			unresolved			00559bc0	entry-lost	0/1
+0055a010	018f249c	019571a0	vm			unresolved			0055a010	entry-lost	0/1
+0055a593	018f2670	019534b0	vm			unresolved			0055a580	inner-patched	0/1
+0055ab07	018eda2c	019547b0	vm	0040246b	.text	cave	0055ab0d	mov edx, dword ptr [eax + 0xe8]	0055ab00	inner-patched	1/1
+0055b534	018ed650	01957180	vm	004036aa	.text	cave	0055b53a	lea ecx, [esi + 0x90]	0055b530	inner-patched	1/1
+0055b950	018f29a8	01957160	vm			unresolved			0055b950	entry-lost	0/1
+0055cc63	018ed450	01955a90	vm-indirect	004025ec	.text	cave	0055cc69	mov dword ptr [esi], 0xbe2a48	0055cc60	inner-patched	1/1
+0055d2ca	018edb30	01957140	vm			unresolved			0055d2c0	inner-patched	0/1
+0055e0c6	018f2d74	01957400	vm-indirect	0040943f	.text	cave	0055e0d0	mov dword ptr [esi + 0xec], 0xffffffff	0055e0b0	inner-patched	1/1
+0055ef30	018ed8f4	01953700	vm-indirect			unresolved			0055ef20	inner-patched	0/1
+00561070	018ed3c0	01954910	vm	0042054f	.text	cave	00561076	sub esp, 0x1a8	00561070	entry-recoverable	1/1
+00561bab	018f25a8	01955c80	vm-indirect			unresolved			00561ba0	inner-patched	0/1
+005620e3	018f263c	019573d0	vm-indirect	004023a3	.text	cave	005620e9	pushfd; mov ecx, dword ptr [0x18f786c]; xor ecx, dword ptr [0x400128]; mov ecx, dword ptr [ecx]; popfd	005620e0	inner-patched	1/1
+0056384f	018edcb8	019536e0	vm	0043bc3c	.text	cave	00563855	or dword ptr [eax + 0x108], edx	00563820	inner-patched	1/1
+00565544	018f284c	01955c50	vm-indirect			unresolved			00565520	inner-patched	0/1
+00566253	018ed374	019573a0	vm-indirect	0040252d	.text	cave	0056625a	cmp byte ptr [ecx + 0x469d], 0	00566250	inner-patched	1/1
+00566b38	018f24a0	019536c0	vm			unresolved			00566b30	inner-patched	0/1
+00567dca	018f2530	019548f0	vm	004024f9	.text	cave	00567dd0	lea ebx, [ebx]	00567da0	inner-patched	1/1
+0056af33	018ed6f0	01955c20	vm-indirect	00402b86	.text	cave	0056af39	pushfd; stc; mov ecx, dword ptr [0x18f78b4]; adc ecx, dword ptr [0x494bd1]; mov ecx, dword ptr [ecx]; popfd	0056af30	inner-patched	1/1
+0056c5db	018f259c	01957380	vm			unresolved			0056c5d0	inner-patched	0/1
+0056d275	018edaf4	019536a0	vm			unresolved			0056d260	inner-patched	0/1
+005707ba	018f2910	01953680	vm			unresolved			005707a0	inner-patched	0/1
+00571eb0	018f29d8	019548c0	vm-indirect	00441a60	.text	cave	00571eb6	pushfd; clc; mov edx, dword ptr [0x18f79ec]; adc edx, dword ptr [0x117e388]; mov edx, dword ptr [edx]; popfd	00571eb0	entry-recoverable	1/1
+00576106	018f26c0	019548a0	vm	00443d46	.text	cave	0057610c	lea esi, [ebx + 0xa0]	00576100	inner-patched	1/1
+00577851	018ed360	01957350	vm-indirect	004023d6	.text	cave	00577858	mov esi, dword ptr [esp + 0x88]	00577840	inner-patched	1/1
+0057a0c2	018ed748	01953240	vm			unresolved			0057a0a0	inner-patched	0/1
+0057d073	018eda6c	01954880	vm	0043a946	.text	cave	0057d079	pushfd; stc; mov ecx, dword ptr [0x18f798c]; sbb ecx, dword ptr [0x43fc9e]; mov ecx, dword ptr [ecx]; popfd	0057d070	inner-patched	1/1
+0057f548	018f293c	01957330	vm	00438bf6	.text	cave	0057f54e	mov dword ptr [esi], 0	0057f540	inner-patched	1/1
+00583900	018edbc4	01954860	vm	0043a04f	.text	cave	00583906	mov ecx, dword ptr [esi + 0x6c68]	005838f0	inner-patched	1/1
+0058a7f8	018f2a4c	01957300	vm-indirect			unresolved			0058a7f0	inner-patched	0/1
+0058ad59	018f26f0	01953650	vm-indirect			unresolved			0058ad40	inner-patched	0/1
+0058cd65	018f2d84	01955c00	vm	0040a081	.text	cave	0058cd6b	mov dword ptr [esi], 0xbe4020	0058cd60	inner-patched	1/1
+0058d4be	018ed5f0	019572e0	vm			unresolved			0058d4a0	inner-patched	0/1
+0058e840	018f26ec	019572c0	vm	004586d7	.text	cave	0058e846	sub esp, 0xd0	0058e840	entry-recoverable	1/1
+0059062a	018f2bac	01955be0	vm			unresolved			00590610	inner-patched	0/1
+00591956	018f292c	019572a0	vm			unresolved			00591910	inner-patched	0/1
+00595070	018edbec	01953620	vm-indirect	00402921	.text	cave	00595076	sub esp, 0xdc	00595070	entry-recoverable	1/1
+00598637	018edce0	019537d0	vm	004426e7	.text	cave	0059863d	cmp dword ptr [ebx + 0xb4], esi	00598630	inner-patched	1/1
+0059e560	018ed4e8	01955d90	vm	00443ac0	.text	cave	0059e566	sub esp, 0x2f0	0059e560	entry-recoverable	1/1
+005a4338	018edab8	01954980	vm-indirect	00459f0d	.text	cave	005a433e	mov dword ptr [esi], 0xbe6008	005a4330	inner-patched	1/1
+005a49b0	018ed590	01955d70	vm			unresolved			005a49b0	entry-recoverable	0/1
+005a4ed0	018f27d4	019575b0	vm	0040ba01	.text	cave	005a4ed7	cmp dword ptr [0xdf6f94], 0	005a4ed0	entry-recoverable	1/1
+005a67d7	018f2964	019537b0	vm	004438eb	.text	cave	005a67dd	cmp dword ptr [0xdf6f94], edi	005a67d0	inner-patched	1/1
+005a7b89	018f28ac	01955d50	vm			unresolved			005a7b80	inner-patched	0/1
+005a9474	018f24c8	01955d20	vm-indirect	0045abd4	.text	cave	005a947a	lea eax, [ecx - 0xdd2f1aa]	005a9470	inner-patched	1/1
+005a9a50	018ed464	01957580	vm-indirect			unresolved			005a9a50	entry-lost	0/1
+005a9ea3	018ed4d4	01953790	vm			unresolved			005a9ea0	inner-patched	0/1
+005ac2c1	018ed86c	01954960	vm	0043a68c	.text	cave	005ac2c8	cmp dword ptr [ecx + 0x84], 0xc	005ac2c0	inner-patched	1/1
+005ac7d5	018edc68	01955d00	vm			unresolved			005ac7c0	inner-patched	0/1
+005ace1d	018f2a6c	01957550	vm-indirect	0043a186	.text	cave	005ace24	mov dword ptr [esi + 0x2c], 0	005ace10	inner-patched	1/1
+005ad395	018f2c1c	01957520	vm-indirect	00416890	.text	cave	005ad39c	mov dword ptr [esi + 0x6c], 3	005ad310	inner-patched	1/1
+005ae5a0	018f2bf0	01953760	vm-indirect	0040b645	.text	cave	005ae5a6	sub esp, 0x404	005ae5a0	entry-recoverable	1/1
+005af58b	018f2968	01955cd0	vm-indirect			unresolved			005af580	inner-patched	0/1
+005b130b	018ed998	01957500	vm	00402a11	.text	cave	005b1311	lea edi, [ebx + 0xfc]	005b1300	inner-patched	1/1
+005b4aeb	018f2a2c	019574d0	vm-indirect	0041dcb9	.text	cave	005b4af1	mov dword ptr [esi], 0	005b4ae0	inner-patched	1/1
+005b518c	018f290c	019574b0	vm	00402d12	.text	cave	005b5193	mov ecx, dword ptr [eax*4 + 0xcb7378]	005b5180	inner-patched	1/1
+005b8960	018edacc	01957480	vm-indirect			unresolved			005b8960	entry-recoverable	0/1
+005bbd40	018edbcc	01955cb0	vm	0045b6b1	.text	cave	005bbd47	test byte ptr [0xdf6630], 1	005bbd40	entry-recoverable	1/1
+005bd1f5	018ed4d8	01954930	vm-indirect	00445f98	.text	cave	005bd1fc	lea ecx, [eax*4 + 0xcb7310]	005bd1e0	inner-patched	1/1
+005be2c6	018edc84	01957460	vm			unresolved			005be2b0	inner-patched	0/1
+005be889	018f28e0	01953730	vm-indirect			unresolved			005be870	inner-patched	0/1
+005c4cf1	018ed36c	01955ed0	vm			unresolved			005c4cc0	inner-patched	0/1
+005c5d76	018ed958	01953910	vm	00450b64	.text	cave	005c5d7c	mov dword ptr [esi], 0xbe97d4	005c5d70	inner-patched	1/1
+005c688e	018f26d4	01954ae0	vm			unresolved			005c6870	inner-patched	0/1
+005c8b61	018ed9b4	01957790	vm-indirect			unresolved			005c8b40	inner-patched	0/1
+005c8fb0	018ed87c	019538e0	vm-indirect	0043ab5b	.text	cave	005c8fb6	sub esp, 0x80c	005c8fb0	entry-recoverable	1/1
+005ca1b2	018f2a88	01954ac0	vm			unresolved			005ca1a0	inner-patched	0/1
+005cb137	018ed8ec	01957760	vm-indirect			unresolved			005caf00	inner-patched	0/1
+005cb89a	018f28fc	01957740	vm	00402c46	.text	cave	005cb8a0	mov dword ptr [eax], 1	005cb880	inner-patched	1/1
+005cc302	018eddd0	019538b0	vm-indirect	00426ed0	.text	cave	005cc308	cmp word ptr [esp + 0x18], 0	005cbde0	inner-patched	1/1
+005ceac7	018edbdc	01954a90	vm-indirect	00402df6	.text	cave	005ceacd	lea edi, [esi + 0x94]	005ceac0	inner-patched	1/1
+005cf5f0	018ed784	01955ea0	vm-indirect	004463f6	.text	cave	005cf5f6	mov dword ptr [esi], 0xbe9f90	005cf5e0	inner-patched	1/1
+005d0100	018eda8c	01957710	vm-indirect	004580b3	.text	cave	005d0106	sub esp, 0xb0c	005d0100	entry-recoverable	1/1
+005d4a67	018f2e34	01953880	vm-indirect			unresolved			005d4a60	inner-patched	0/1
+005d5438	018edaec	01955e70	vm-indirect			unresolved			005d5410	inner-patched	0/1
+005d5df0	018ed4a0	01953860	vm	0043a2a6	.text	cave	005d5df6	pushfd; mov edx, dword ptr [0x18f7974]; not edx; xor edx, dword ptr [0x4348aa]; mov edx, dword ptr [edx]; popfd	005d5df0	entry-recoverable	1/1
+005d63bc	018ed698	01954a60	vm-indirect			unresolved			005d63b0	inner-patched	0/1
+005d7475	018edc78	019576e0	vm-indirect			unresolved			005d7460	inner-patched	0/1
+005d7ad4	018f2ae4	01957430	vm-indirect			unresolved			005d7ac0	inner-patched	0/1
+005d8c0c	018f2d30	01954a40	vm	00455e09	.text	cave	005d8c13	cmp dword ptr [ebx + 0xad8], 0	005d8c00	inner-patched	1/1
+005d9052	018ed6ac	01955e50	vm			unresolved			005d9040	inner-patched	0/1
+005d988e	018f2da4	019576b0	vm-indirect			unresolved			005d9880	inner-patched	0/1
+005dbc07	018eda60	01955e20	vm-indirect			unresolved			005dbc00	inner-patched	0/1
+005ddff6	018ed4d0	01957690	vm			unresolved			005ddff0	inner-patched	0/1
+005dedd0	018f24f8	01953840	vm			unresolved			005dedd0	entry-recoverable	0/1
+005df609	018f26f8	01954a10	vm-indirect			unresolved			005df5f0	inner-patched	0/1
+005dff10	018f2bd4	01955df0	vm-indirect			unresolved			005dff10	entry-recoverable	0/1
+005e047a	018ed448	01957670	vm			unresolved			005e0470	inner-patched	0/1
+005e1b6d	018ed508	019549f0	vm			unresolved			005e1b50	inner-patched	0/1
+005e2f65	018f2eac	01957640	vm-indirect			unresolved			005e2f60	inner-patched	0/1
+005e3e74	018edb00	01953810	vm-indirect	004465ea	.text	cave	005e3e7b	movzx edx, byte ptr [esi + 0xccc]	005e3e10	inner-patched	1/1
+005e65b4	018ed564	019537f0	vm	0043a981	.text	cave	005e65ba	mov edi, dword ptr [esi + 0xd4]	005e65b0	inner-patched	1/1
+005e6b3d	018edc50	019549d0	vm	00459fdb	.text	cave	005e6b44	mov dword ptr [esi + 4], 1	005e6b30	inner-patched	1/1
+005e778f	018f286c	01955dd0	vm			unresolved			005e7750	inner-patched	0/1
+005e7e27	018ed898	01957620	vm			unresolved					0/1
+005e9808	018f2b18	01957600	vm			unresolved			005e97f0	inner-patched	0/1
+005eb5c0	018ed760	019549b0	vm			unresolved			005eb5c0	entry-recoverable	0/1
+005eb9f0	018f2e28	01955db0	vm			unresolved			005eb9f0	entry-recoverable	0/1
+005ed6a0	018f2b54	019575d0	vm-indirect			unresolved			005ed6a0	entry-recoverable	0/1
+005ee150	018f2958	01955fb0	vm-indirect			unresolved			005ee150	entry-recoverable	0/1
+005eebf6	018ed3f8	01957810	vm-indirect	0043e61a	.text	cave	005eebfc	mov dword ptr [esi], 0xbef5c8	005eebf0	inner-patched	1/1
+005ef115	018f2b10	01953a00	vm	0043a77d	.text	cave	005ef11b	mov dword ptr [esi], 0xbe2030	005ef110	inner-patched	1/1
+005efcac	018f2bbc	01954b40	vm			unresolved			005efc90	inner-patched	0/1
+005f13a3	018ed7c0	01955f80	vm-indirect			unresolved			005f13a0	inner-patched	0/1
+005f2ecd	018ed714	01955f60	vm			unresolved			005f2e90	inner-patched	0/1
+005f4103	018f260c	019539d0	vm-indirect	00437b15	.text	cave	005f4109	lea ecx, [esi + 0x3dc]	005f4100	inner-patched	1/1
+005f4b67	018ed6fc	01954b20	vm			unresolved			005f4b50	inner-patched	0/1
+005f5543	018f2794	01955f30	vm-indirect			unresolved					0/1
+005f80fa	018edba8	019539a0	vm-indirect			unresolved			005f80e0	inner-patched	0/1
+005f8e10	018f2d1c	01955f10	vm			unresolved			005f8e10	entry-recoverable	0/1
+005fa1e0	018eddc0	01953980	vm			unresolved			005fa1e0	entry-recoverable	0/1
+005fb470	018ed5bc	019577f0	vm			unresolved			005fb470	entry-recoverable	0/1
+005fc080	018edbf4	01953950	vm-indirect			unresolved			005fc080	entry-recoverable	0/1
+005fd530	018ed8a0	01955ef0	vm			unresolved			005fd530	entry-recoverable	0/1
+005fe230	018ed358	019577c0	vm-indirect			unresolved			005fde90	inner-patched	0/1
+006022e0	018f28d4	01954b00	vm			unresolved			006022e0	entry-recoverable	0/1
+00603480	018f2520	01953930	vm			unresolved			00603480	entry-recoverable	0/1
+006044d3	018ed750	01956170	vm			unresolved			00603e00	inner-patched	0/1
+00606900	018f26b4	01953b60	vm			unresolved			00606900	entry-recoverable	0/1
+00607405	018f2894	01954c20	vm			unresolved			00606aa0	inner-patched	0/1
+00607a98	018f2e1c	01956150	vm			unresolved			00607620	inner-patched	0/1
+0060a5c0	018ed540	01957990	vm-indirect			unresolved			0060a5c0	entry-recoverable	0/1
+0060ac16	018f279c	01957960	vm-indirect	004021f6	.text	cave	0060ac1c	sub esp, 0x368	0060ac10	inner-patched	1/1
+0060c50f	018f2608	01954bf0	vm-indirect			unresolved			0060c3a0	inner-patched	0/1
+0060e5af	018ed3e8	01956120	vm-indirect			unresolved			0060e580	inner-patched	0/1
+0060f91f	018f2b9c	019560f0	vm-indirect			unresolved			0060f8d0	inner-patched	0/1
+006114bf	018f2abc	01953b30	vm-indirect	004025e1	.text	cave	006114c5	mov eax, dword ptr [esi + 0x13c]			1/1
+00612e9e	018f273c	019560d0	vm			unresolved					0/1
+006141c0	018ed830	01957930	vm-indirect			unresolved			006141c0	entry-recoverable	0/1
+00614b45	018f25fc	01953b00	vm-indirect			unresolved			00614250	inner-patched	0/1
+006192cf	018f268c	019560b0	vm			unresolved			00618e40	inner-patched	0/1
+0061a28f	018edb0c	01957900	vm-indirect			unresolved			0061a240	inner-patched	0/1
+0061a6f4	018f2c7c	019578e0	vm			unresolved			0061a6f0	inner-patched	0/1
+0061b35d	018f2998	01953ad0	vm-indirect			unresolved			0061b2a0	inner-patched	0/1
+0061bb73	018ed82c	01954bd0	vm			unresolved					0/1
+0061cc83	018f2510	01956090	vm			unresolved			0061cc80	inner-patched	0/1
+0061f3b0	018ed850	019578c0	vm			unresolved			0061f3b0	entry-recoverable	0/1
+0061fd4a	018f2a18	01953ab0	vm			unresolved			0061fd30	inner-patched	0/1
+006202c0	018f2d6c	01956060	vm-indirect			unresolved			00620200	inner-patched	0/1
+006232f0	018f2e58	01954bb0	vm	00455491	.text	cave	006232f7	cmp dword ptr [0xdf6bc8], 0	006232f0	entry-recoverable	1/1
+00623bb0	018f2ce4	01956030	vm-indirect			unresolved			00623bb0	entry-recoverable	0/1
+00624549	018f26e8	019578a0	vm			unresolved			00624530	inner-patched	0/1
+00627628	018ed8dc	01953a80	vm-indirect			unresolved			00627573	clean	0/1
+006287f3	018ed8c4	01954b80	vm-indirect			unresolved			006287e0	inner-patched	0/1
+00628f77	018f24bc	01956010	vm			unresolved			00628f70	inner-patched	0/1
+0062babc	018f2ef8	01957870	vm-indirect			unresolved			0062b0b0	inner-patched	0/1
+0062e43f	018edda4	01953a50	vm-indirect	0040262c	.text	cave	0062e446	cmp byte ptr [ebp + 0x134], 0			1/1
+0062f0a0	018f2e18	01954b60	vm	00450ca1	.text	cave	0062f0a6	sub esp, 0x23c	0062f0a0	entry-recoverable	1/1
+0062f7ff	018ed91c	01955fe0	vm-indirect			unresolved			0062f430	inner-patched	0/1
+00630d6a	018f2c74	01957840	vm-indirect	00445a43	.text	cave	00630d70	add esp, 0x2d8			1/1
+00631514	018f298c	01953a20	vm-indirect	004581a8	.text	cave	0063151b	mov eax, dword ptr [eax*4 + 0xcbc6f8]	00631510	inner-patched	1/1
+00632e71	018ed584	01957aa0	vm			unresolved			00632e70	inner-patched	0/1
+006332ea	018f281c	01953c60	vm-indirect			unresolved			006332d0	inner-patched	0/1
+0063d8ea	018f2c88	01953c40	vm			unresolved			0063d8d0	inner-patched	0/1
+0063e59a	018f2a68	01957a80	vm	0043a772	.text	cave	0063e5a0	mov edi, dword ptr [eax + 0x10c]	0063e580	inner-patched	1/1
+0063f6c7	018edbf0	01953c20	vm			unresolved			0063f6c0	inner-patched	0/1
+006435da	018edd04	01953c00	vm	00402638	.text	cave	006435e0	lea ebx, [ebx]	006435c0	inner-patched	1/1
+00645fb6	018ed5d4	01957a60	vm	00402ad3	.text	cave	00645fbc	mov dword ptr [eax], 0xbf22a4	00645fb0	inner-patched	1/1
+0064712b	018eda20	01953bd0	vm-indirect	00446772	.text	cave	00647131	mov byte ptr [esi + 0xc0], al	00647110	inner-patched	1/1
+00648010	018ed6e0	019561e0	vm-indirect	00402d06	.text	cave	00648017	cmp dword ptr [ecx + 0x20], 0xfff5d3d6	00648010	entry-lost	1/1
+00649e4f	018f2e78	01957a30	vm-indirect	00402886	.text	cave	00649e55	mov dword ptr [esi], 0xbf2608	00649e40	inner-patched	1/1
+0064a9b8	018f2d94	01953bb0	vm	00411587	.text	cave	0064a9be	mov dword ptr [eax], 0	0064a9b0	inner-patched	1/1
+0064bd9a	018f26ac	01957a10	vm	00445f07	.text	cave	0064bda0	add edi, dword ptr [0x18f9e50]	0064bd80	inner-patched	1/1
+0064d599	018f2a28	01953b80	vm-indirect			unresolved			0064d020	inner-patched	0/1
+0064fc1e	018f2c70	019561b0	vm-indirect	0044416f	.text	cave	0064fc24	mov al, byte ptr [edi + 0x14ce5]	0064fc10	inner-patched	1/1
+00650c86	018ed8b4	019579e0	vm-indirect	00402616	.text	cave	00650c8c	lea esi, [edi + 0x14d6c]	00650c80	inner-patched	1/1
+0065281b	018f27b0	01954c40	vm-indirect			unresolved			00652800	inner-patched	0/1
+00656916	018f2e50	019579c0	vm	004550d1	.text	cave	0065691c	sub esp, 0xac	00656910	inner-patched	1/1
+0065804e	018f2c48	01956190	vm			unresolved			00658030	inner-patched	0/1
+00659f03	018f2b38	01957cc0	vm-indirect			unresolved			00659ee0	inner-patched	0/1
+0065ac8c	018edb80	01953da0	vm-indirect	004043da	.text	cave	0065ac93	test byte ptr [ebp + 0x471], 1	0065ac80	inner-patched	1/1
+0065cddb	018edcc0	01956360	vm			unresolved			0065cdd0	inner-patched	0/1
+00660ba9	018f262c	01954d90	vm-indirect	00402738	.text	cave	00660bb0	lea esp, [esp]	00660b90	inner-patched	1/1
+00668001	018f29cc	01957c90	vm-indirect	0043a341	.text	cave	00668007	mov eax, dword ptr [ecx + 0x114]	00667ff0	inner-patched	1/1
+0066920a	018f2d10	01953d70	vm-indirect	0040267a	.text	cave	00669210	lea ebx, [ebx]	006691e0	inner-patched	1/1
+00669cf3	018edd58	01956340	vm	00442785	.text	cave	00669cfa	test byte ptr [0xdf88f4], 1	00669cf0	inner-patched	1/1
+0066d0a0	018f2860	01956310	vm-indirect	00409386	.text	cave	0066d0a6	sub esp, 0xcc	0066d0a0	entry-recoverable	1/1
+0066f8f0	018ed5cc	01954d70	vm			unresolved			0066f8f0	entry-recoverable	0/1
+0067465a	018f2cc8	01954d40	vm-indirect	00402ac6	.text	cave	00674662	mov dword ptr [esp + 4], 0x56626220	00674640	inner-patched	1/1
+00678679	018f24f0	01957c60	vm-indirect			unresolved			00678670	inner-patched	0/1
+0067aca8	018f27ec	01953d50	vm	0043a141	.text	cave	0067acae	mov eax, dword ptr [esi + 0x114]	0067aca0	inner-patched	1/1
+0067d95a	018f2c64	01957c30	vm-indirect			unresolved			0067d950	inner-patched	0/1
+0067e60f	018f251c	019562e0	vm-indirect	004424e9	.text	cave	0067e615	mov edi, dword ptr [eax + 0x310]	0067e600	inner-patched	1/1
+0067edd5	018f24e0	01957c10	vm			unresolved			0067edd0	inner-patched	0/1
+0067f7c3	018edadc	01954d10	vm-indirect			unresolved			0067f7c0	inner-patched	0/1
+00680183	018ed84c	019562b0	vm-indirect			unresolved			00680180	inner-patched	0/1
+00680c8f	018ed9d4	01953d20	vm-indirect			unresolved			00680c70	inner-patched	0/1
+006812a3	018f25ec	01954ce0	vm-indirect			unresolved			00681220	inner-patched	0/1
+00682863	018f2c68	01957be0	vm-indirect			unresolved			00682860	inner-patched	0/1
+00682d22	018f2e08	01957bc0	vm			unresolved			00682d20	inner-patched	0/1
+00683144	018f24c4	01953cf0	vm-indirect	00459661	.text	cave	0068314a	mov dword ptr [ecx + 0x180], eax	00683140	inner-patched	1/1
+00683630	018ed980	01954cc0	vm	004024ad	.text	cave	00683636	mov eax, dword ptr [ecx + 0x180]	00683630	entry-lost	1/1
+00684664	018ed628	01957b90	vm-indirect	00448004	.text	cave	0068466a	mov eax, dword ptr [eax + 0x384]	00684660	inner-patched	1/1
+00685042	018f282c	01953cc0	vm-indirect	0044cae0	.text	cave	00685048	pushfd; mov ecx, dword ptr [0x18f7a48]; sub ecx, dword ptr [0x1907e38]; mov ecx, dword ptr [ecx]; popfd	00685040	inner-patched	1/1
+00685922	018ed3cc	01956280	vm-indirect			unresolved			006858e0	inner-patched	0/1
+00685eb3	018ed43c	01957b60	vm-indirect	00459ef6	.text	cave	00685eb9	mov al, byte ptr [eax + 0x144]	00685eb0	inner-patched	1/1
+00686c46	018f2800	01954c90	vm-indirect			unresolved			00686c40	inner-patched	0/1
+00687080	018f27c8	01956260	vm			unresolved			00687080	entry-recoverable	0/1
+00687504	018f2824	01957b40	vm			unresolved			00687500	inner-patched	0/1
+006879b2	018ed738	01953c90	vm-indirect	00459de0	.text	cave	006879b8	mov ecx, dword ptr [eax + 0x238]	006879b0	inner-patched	1/1
+00688198	018ed554	01954c70	vm	004399a6	.text	cave	0068819f	mov dword ptr [eax + 4], 0	00688190	inner-patched	1/1
+006885e1	018ed534	01956240	vm	0042177a	.text	cave	006885e8	mov dword ptr [esi + 4], 0	006885d0	inner-patched	1/1
+006891c9	018f28f0	01957b10	vm-indirect			unresolved			006891b0	inner-patched	0/1
+0068c154	018f2a58	01956210	vm-indirect	00439992	.text	cave	0068c15a	mov ecx, dword ptr [eax + 0x33c]	0068c150	inner-patched	1/1
+0068d285	018f26c8	01957af0	vm			unresolved			0068d280	inner-patched	0/1
+0068edca	018eda18	01957f00	vm-indirect			unresolved			0068edb0	inner-patched	0/1
+00690684	018edabc	01953fd0	vm			unresolved			00690660	inner-patched	0/1
+00691d3d	018ed544	01954f30	vm			unresolved			00691d30	inner-patched	0/1
+00695566	018ed648	01953fa0	vm-indirect	004037d6	.text	cave	0069556d	mov dword ptr [esi + 0xc], 0xbdb9a8	00695550	inner-patched	1/1
+00697bfb	018ed8a4	01957ee0	vm			unresolved			00697bf0	inner-patched	0/1
+006992d0	018f2c58	01957eb0	vm-indirect			unresolved			006992c0	inner-patched	0/1
+00699780	018f2c84	01953f70	vm-indirect	00449506	.text	cave	00699786	mov eax, dword ptr [ecx + 0x21c]	00699780	entry-recoverable	1/1
+0069a033	018ed6dc	01954f10	vm			unresolved			0069a030	inner-patched	0/1
+0069c53c	018edcec	01957e80	vm-indirect			unresolved			0069c530	inner-patched	0/1
+0069e173	018ed8f0	019564f0	vm			unresolved			0069e170	inner-patched	0/1
+0069e78e	018f2568	01957e60	vm	00451d81	.text	cave	0069e794	mov edx, dword ptr [eax + 0x418]	0069e780	inner-patched	1/1
+006a1873	018ed47c	01954ee0	vm-indirect			unresolved			006a1850	inner-patched	0/1
+006a2f48	018edbb0	01957e30	vm-indirect			unresolved			006a2f30	inner-patched	0/1
+006a3e53	018f2884	01953f40	vm-indirect			unresolved			006a3e50	inner-patched	0/1
+006a47e4	018f29c8	01954eb0	vm-indirect			unresolved			006a47e0	inner-patched	0/1
+006a4d96	018f2a00	019564c0	vm-indirect			unresolved			006a4d90	inner-patched	0/1
+006a51a0	018f2b00	01957e10	vm	0043a336	.text	cave	006a51a6	mov ecx, dword ptr [ecx + 0x37c]	006a51a0	entry-recoverable	1/1
+006a55f0	018ed680	01957ac0	vm-indirect			unresolved			006a55f0	entry-recoverable	0/1
+006a5ab0	018ed6c8	01953f10	vm-indirect			unresolved			006a5ab0	entry-lost	0/1
+006a5fa3	018f2ea4	01954e90	vm	0043a766	.text	cave	006a5faa	test byte ptr [esi + 0x471], 1	006a5fa0	inner-patched	1/1
+006a6463	018ed9ec	01956490	vm-indirect	0043a117	.text	cave	006a646a	cmp byte ptr [esi + 0x4d8], 0	006a6460	inner-patched	1/1
+006a6dc1	018f2560	01957df0	vm	00450629	.text	cave	006a6dc8	cmp byte ptr [ecx + 0x236], 0	006a6dc0	inner-patched	1/1
+006a71c3	018f2580	01953ef0	vm			unresolved			006a71c0	inner-patched	0/1
+006a7600	018f2708	01956460	vm-indirect	004236a0	.text	cave	006a7606	mov eax, dword ptr [ecx + 0x328]	006a7600	entry-recoverable	1/1
+006a8400	018f28c4	01953ed0	vm	004480d6	.text	cave	006a8406	sub esp, 0x9c	006a8400	entry-recoverable	1/1
+006abb21	018f2c18	01954e70	vm			unresolved			006abb20	inner-patched	0/1
+006ad4b7	018ed420	01956430	vm-indirect			unresolved			006ad4b0	inner-patched	0/1
+006aee7a	018edb2c	01957dc0	vm-indirect			unresolved			006aee60	inner-patched	0/1
+006b08cd	018ed63c	01953ea0	vm-indirect			unresolved			006b08c0	inner-patched	0/1
+006b1b54	018f27fc	01954e50	vm			unresolved			006b1b50	inner-patched	0/1
+006b2a33	018eda08	01956410	vm			unresolved			006b2a30	inner-patched	0/1
+006b4f83	018f2898	01953e80	vm			unresolved			006b4f80	inner-patched	0/1
+006b5a33	018ed92c	019563f0	vm			unresolved			006b5a30	inner-patched	0/1
+006b6c09	018f2698	01953e60	vm			unresolved			006b6bf0	inner-patched	0/1
+006b7045	018f27dc	01954e20	vm-indirect	00417391	.text	cave	006b704b	mov ecx, dword ptr [edi + 0x150]	006b7040	inner-patched	1/1
+006b8144	018f294c	019563c0	vm-indirect			unresolved			006b8130	inner-patched	0/1
+006b8f5b	018ed42c	01957da0	vm			unresolved			006b8f50	inner-patched	0/1
+006b9a6b	018edad0	01953e30	vm-indirect			unresolved			006b9a60	inner-patched	0/1
+006ba210	018f25d0	01954df0	vm-indirect			unresolved			006ba210	entry-recoverable	0/1
+006bb369	018f2c98	019563a0	vm	0044f3b9	.text	cave	006bb36f	mov dword ptr [esi], 0	006bb360	inner-patched	1/1
+006bcf30	018ed7b0	01957d70	vm-indirect	0044dc16	.text	cave	006bcf36	sub esp, 0xbc	006bcf30	entry-recoverable	1/1
+006bd51e	018f2f18	01957d40	vm-indirect	00454226	.text	cave	006bd526	mov dword ptr [esp + 0xc], 0	006bd510	inner-patched	1/1
+006c01fa	018f2bb8	01953e00	vm-indirect			unresolved			006c01f0	inner-patched	0/1
+006c0623	018f2b84	01954dc0	vm-indirect	00416306	.text	cave	006c0629	mov eax, dword ptr [esi + 0x424]	006c0620	inner-patched	1/1
+006c0b63	018f2ba4	01956380	vm	004435e8	.text	cave	006c0b69	mov ecx, dword ptr [esi + 0xc0]	006c0b60	inner-patched	1/1
+006c10dc	018edcd0	01957d10	vm-indirect			unresolved			006c10b0	inner-patched	0/1
+006c1504	018edda0	01953dd0	vm-indirect	00402716	.text	cave	006c150b	cmp dword ptr [esi + 0x310], 0	006c1500	inner-patched	1/1
+006c1d63	018f29f0	019565f0	vm-indirect	00445a23	.text	cave	006c1d69	mov ecx, dword ptr [esi + 0x328]	006c1d60	inner-patched	1/1
+006c2c33	018ed5e0	019540b0	vm	0040aedf	.text	cave	006c2c39	mov ecx, dword ptr [eax + 0x418]	006c2c30	inner-patched	1/1
+006c3653	018f2914	01954ff0	vm-indirect			unresolved			006c3640	inner-patched	0/1
+006c3a81	018edc18	019565c0	vm-indirect			unresolved			006c3a60	inner-patched	0/1
+006c4029	018ed518	01958000	vm			unresolved			006c4010	inner-patched	0/1
+006c4f53	018f2c0c	01954090	vm	004128bb	.text	cave	006c4f5b	mov dword ptr [esp + 0x50], 0xbdb8e8	006c4f10	inner-patched	1/1
+006c54b3	018ed740	01954fc0	vm-indirect	0040b54b	.text	cave	006c54bb	mov dword ptr [esp + 0x50], 0xbdb8e8	006c5480	inner-patched	1/1
+006c5993	018f2db8	019565a0	vm			unresolved			006c5960	inner-patched	0/1
+006c5eb3	018ed7cc	01957fe0	vm			unresolved			006c5e80	inner-patched	0/1
+006c6314	018f2dfc	01957fb0	vm-indirect	00447521	.text	cave	006c631a	mov eax, dword ptr [ecx + 0xb0]	006c6310	inner-patched	1/1
+006c7515	018ed718	01954f90	vm-indirect			unresolved			006c74d0	inner-patched	0/1
+006c8384	018f2b94	01956570	vm-indirect	0043ae66	.text	cave	006c838a	mov dword ptr [edi], 0xc11aa0	006c8380	inner-patched	1/1
+006ca76b	018f2de0	01957f90	vm			unresolved			006ca760	inner-patched	0/1
+006cace6	018f28a8	01954060	vm-indirect	00438e56	.text	cave	006cacec	mov edx, dword ptr [eax + 0x9c]	006cace0	inner-patched	1/1
+006ccf13	018f274c	01956540	vm-indirect			unresolved			006ccf10	inner-patched	0/1
+006cf186	018f2770	01957f60	vm-indirect	00454bc7	.text	cave	006cf18d	mov dword ptr [esi + 0x24], 0xbf7c44	006cf170	inner-patched	1/1
+006cfd04	018f2660	01954040	vm			unresolved			006cfd00	inner-patched	0/1
+006d0330	018f2e6c	01954f70	vm	00402576	.text	cave	006d0336	mov eax, dword ptr [ecx + 0x80]	006d0330	entry-recoverable	1/1
+006d1dd4	018eda4c	01954020	vm	004180a0	.text	cave	006d1dda	mov esi, dword ptr [ebx + 0x310]	006d1dd0	inner-patched	1/1
+006d23a0	018f26f4	01954f50	vm			unresolved			006d23a0	entry-recoverable	0/1
+006d65fa	018ed8e4	01956510	vm-indirect			unresolved			006d65f0	inner-patched	0/1
+006d8a3b	018f2760	01957f30	vm-indirect			unresolved			006d8a20	inner-patched	0/1
+006de686	018f287c	01953ff0	vm-indirect			unresolved			006de680	inner-patched	0/1
+006df9d9	018f2788	01956770	vm			unresolved			006df9c0	inner-patched	0/1
+006e045d	018edd90	019541f0	vm			unresolved			006e0450	inner-patched	0/1
+006e3a69	018f2d24	01955100	vm			unresolved			006e3a60	inner-patched	0/1
+006e476e	018ed40c	01956750	vm	00442acf	.text	cave	006e4774	mov dword ptr [ebx], 0	006e4760	inner-patched	1/1
+006e5ce2	018f2aa0	019581f0	vm-indirect	00456e77	.text	cave	006e5ce8	cmp dword ptr [ecx + 0x26c], eax	006e5ce0	inner-patched	1/1
+006e6637	018edbc8	019550e0	vm			unresolved			006e6620	inner-patched	0/1
+006e77fc	018ed870	01956720	vm-indirect			unresolved			006e77f0	inner-patched	0/1
+006e7eb8	018ed828	019581c0	vm-indirect			unresolved			006e7ea0	inner-patched	0/1
+006e9813	018ed79c	019581a0	vm			unresolved			006e9810	inner-patched	0/1
+006e9e00	018f2cc4	019541c0	vm-indirect			unresolved			006e9df0	inner-patched	0/1
+006ea208	018edd50	019550c0	vm	0043ad26	.text	cave	006ea20f	test byte ptr [ebx + 0x84], 1	006ea200	inner-patched	1/1
+006ea9db	018edca8	01956700	vm			unresolved			006ea9d0	inner-patched	0/1
+006eb76a	018ed400	01958180	vm			unresolved			006eb760	inner-patched	0/1
+006ecdd7	018f2618	01954190	vm-indirect			unresolved			006ecdd0	inner-patched	0/1
+006ee7b3	018ed3e4	019566e0	vm	0043af76	.text	cave	006ee7b9	pushfd; clc; mov ecx, dword ptr [0x18f79a4]; adc ecx, dword ptr [0x6d65fb]; mov ecx, dword ptr [ecx]; popfd	006ee7b0	inner-patched	1/1
+006efe43	018f2654	01958160	vm	00401f36	.text	cave	006efe49	mov ecx, dword ptr [ecx + 0x3ec]	006efe40	inner-patched	1/1
+006f04a0	018edcfc	01954160	vm-indirect	0044afde	.text	cave	006f04a6	mov ecx, dword ptr [ecx + 0x308]	006f04a0	entry-lost	1/1
+006f0ec6	018ed354	019566c0	vm			unresolved			006f0ec0	inner-patched	0/1
+006f1356	018f2574	01958140	vm	00456f6b	.text	cave	006f135c	mov eax, dword ptr [esi + 0x80]	006f1350	inner-patched	1/1
+006f17a4	018f25e0	01954140	vm			unresolved			006f1780	inner-patched	0/1
+006f1ee5	018f2628	01955090	vm-indirect			unresolved			006f1ee0	inner-patched	0/1
+006f274a	018edd30	019566a0	vm	00439110	.text	cave	006f2751	cmp byte ptr [eax + 0x126], 0	006f2730	inner-patched	1/1
+006f2dbe	018ed384	01958120	vm	00402e01	.text	cave	006f2dc5	mov dword ptr [esi + 0xc], 0	006f2da0	inner-patched	1/1
+006f5d21	018ed990	01954120	vm			unresolved			006f5ce0	inner-patched	0/1
+006f6f49	018f2a94	01955070	vm	00455dfd	.text	cave	006f6f50	mov edx, dword ptr [esp + 0x80]	006f6f30	inner-patched	1/1
+006fb9f0	018f2edc	019580f0	vm-indirect			unresolved			006fb9f0	entry-recoverable	0/1
+006ffb0b	018f269c	01956670	vm-indirect			unresolved			006ffb00	inner-patched	0/1
+007000e4	018edd14	019580c0	vm-indirect			unresolved			007000e0	inner-patched	0/1
+00700ea8	018edd88	01954100	vm			unresolved			00700ea0	inner-patched	0/1
+007015a6	018f26cc	01955050	vm			unresolved			007015a0	inner-patched	0/1
+00701bfe	018f2cdc	01956640	vm-indirect			unresolved			00701bf0	inner-patched	0/1
+00702070	018ed630	01958090	vm-indirect			unresolved			00702070	entry-recoverable	0/1
+00705ac5	018edaac	01955020	vm-indirect			unresolved			00705ab0	inner-patched	0/1
+007064dc	018f2840	01956620	vm	004565ec	.text	cave	007064e2	mov ecx, dword ptr [ebx + 0x33c]	007064d0	inner-patched	1/1
+00706ca7	018f2d00	01958070	vm			unresolved			00706ca0	inner-patched	0/1
+007070be	018eda3c	01958050	vm			unresolved			007070a0	inner-patched	0/1
+0070a309	018edde4	01958020	vm-indirect			unresolved			0070a2f0	inner-patched	0/1
+0070b126	018ed3dc	019540d0	vm-indirect	0043afa6	.text	cave	0070b12c	sub esp, 0xe0	0070b120	inner-patched	1/1
+0070b9bf	018f2bd8	019568e0	vm	00409429	.text	cave	0070b9c5	pushfd; clc; mov esi, dword ptr [0x18f78e0]; adc esi, dword ptr [0x595070]; mov esi, dword ptr [esi]; popfd	0070b990	inner-patched	1/1
+0070edf2	018ed498	01958340	vm-indirect			unresolved			0070ede0	inner-patched	0/1
+0070f640	018f265c	019543c0	vm			unresolved			0070f630	inner-patched	0/1
+007120d7	018edb1c	01955240	vm-indirect			unresolved			007120d0	inner-patched	0/1
+0071377f	018ed7ec	019568c0	vm			unresolved			00713770	inner-patched	0/1
+007143ca	018ed974	01958320	vm			unresolved			007143c0	inner-patched	0/1
+00716030	018edb78	019543a0	vm			unresolved			00716020	inner-patched	0/1
+007187db	018f2a8c	01955220	vm			unresolved			007187d0	inner-patched	0/1
+0071a654	018f264c	01956890	vm-indirect			unresolved			0071a610	inner-patched	0/1
+0071bab6	018f2e94	019582f0	vm-indirect			unresolved			0071bab0	inner-patched	0/1
+0071bf40	018edd48	01954380	vm	0043ab16	.text	cave	0071bf46	sub esp, 0xb8	0071bf40	entry-recoverable	1/1
+0071c467	018ed4fc	019551f0	vm-indirect	00456e6c	.text	cave	0071c46d	mov eax, dword ptr [ebp + 0x418]	0071c460	inner-patched	1/1
+0071d624	018ed90c	01954360	vm			unresolved			0071d5f0	inner-patched	0/1
+0071dde9	018f2a80	01956860	vm-indirect			unresolved			0071ddd0	inner-patched	0/1
+0071f0f0	018ed5ac	019582d0	vm	00457996	.text	cave	0071f0f6	sub esp, 0x90	0071f0f0	entry-recoverable	1/1
+0071fed0	018f267c	01954340	vm			unresolved			0071fed0	entry-lost	0/1
+00722838	018ed638	019551d0	vm			unresolved			00722750	inner-patched	0/1
+00729d57	018ed5a4	01954310	vm-indirect			unresolved			00729d50	inner-patched	0/1
+0072a1a1	018f2610	019551a0	vm-indirect			unresolved			0072a190	inner-patched	0/1
+0072ac60	018f2ca8	01956830	vm-indirect			unresolved			0072aa50	clean	0/1
+0072b4fb	018f2d64	019582b0	vm	00402ca6	.text	cave	0072b501	mov eax, dword ptr [ebp + 0x150]	0072b4f0	inner-patched	1/1
+0072c35a	018f2ab8	01957cf0	vm	0040256b	.text	cave	0072c360	mov edx, dword ptr [eax + 0x29c]	0072c350	inner-patched	1/1
+0072cb11	018edd40	019542f0	vm	0043abe6	.text	cave	0072cb1b	mov dword ptr [ebx + 0x2e4], 0xffffffff			1/1
+0072cf37	018eda38	01955180	vm	0040a771	.text	cave	0072cf3d	mov esi, dword ptr [eax + 0xf4]	0072cf30	inner-patched	1/1
+0072f3c0	018edd7c	01958280	vm-indirect			unresolved			0072f3c0	entry-recoverable	0/1
+00731534	018ed904	019542c0	vm-indirect	0043a596	.text	cave	0073153b	cmp byte ptr [esi + 0x138], 0	00731530	inner-patched	1/1
+00731c20	018f2a14	01956800	vm-indirect			unresolved			00731c20	entry-recoverable	0/1
+00733b45	018edd68	01954290	vm-indirect			unresolved			00733b40	inner-patched	0/1
+00734025	018f2eec	01955150	vm-indirect			unresolved			00734020	inner-patched	0/1
+00734493	018f2a90	019567e0	vm	00457e56	.text	cave	0073449a	cmp byte ptr [ebp + 0xa4], 0	00734490	inner-patched	1/1
+00735db7	018ed688	01958250	vm-indirect	004431b2	.text	cave	00735dbe	cmp byte ptr [esi + 0xa1], 0	00735db0	inner-patched	1/1
+007363af	018f2cf0	01954260	vm-indirect	0043ed27	.text	cave	007363b5	mov eax, dword ptr [eax + 0x374]	007363a0	inner-patched	1/1
+00736f13	018f2ccc	019567c0	vm			unresolved			00736f00	inner-patched	0/1
+007398e1	018ed9c4	01954240	vm	00433fbf	.text	cave	007398e9	mov dword ptr [esp + 0xc], 0	007398d0	inner-patched	1/1
+0073a1b3	018ed4c4	01955120	vm-indirect	00440dbe	.text	cave	0073a1bb	mov dword ptr [esp + 0x18], 0	0073a190	inner-patched	1/1
+0073be05	018eddcc	01956790	vm-indirect	0042390f	.text	cave	0073be0b	pushfd; mov ecx, dword ptr [0x18f7930]; xor ecx, dword ptr [0x1911311]; mov ecx, dword ptr [ecx]; popfd	0073bdf0	inner-patched	1/1
+0073c755	018f2c38	01958220	vm-indirect	00429a56	.text	cave	0073c75c	mov dword ptr [esi + 0xc], 0xbdb9a8	0073c740	inner-patched	1/1
+0073dde7	018f2e40	01954210	vm-indirect	00457e83	.text	cave	0073ddee	mov dword ptr [esi + 0x24], 0xbfe3d0	0073ddd0	inner-patched	1/1
+00740c94	018edd34	019583c0	vm			unresolved			00740c90	inner-patched	0/1
+00741144	018ed9dc	01954400	vm	0043a4b6	.text	cave	0074114a	mov eax, dword ptr [ebx + 0x238]	00741140	inner-patched	1/1
+007451f5	018ed724	01955290	vm	0044afd1	.text	cave	007451fd	mov dword ptr [esp + 0x14], 6	007451e0	inner-patched	1/1
+007461cd	018edd24	01958390	vm-indirect	0040e35c	.text	cave	007461d4	cmp byte ptr [esi + 0xa2], 0	007461c0	inner-patched	1/1
+00747928	018ed7a0	019543e0	vm	00454bb1	.text	cave	0074792e	mov ecx, dword ptr [esi + 0x414]	00747920	inner-patched	1/1
+00747f13	018f2e68	01955270	vm	00401f76	.text	cave	00747f19	mov ecx, dword ptr [esi + 0x374]	00747f10	inner-patched	1/1
+00748360	018ed944	01956930	vm-indirect			unresolved			00748360	entry-recoverable	0/1

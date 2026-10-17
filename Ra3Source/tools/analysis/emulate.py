@@ -1,4 +1,4 @@
-"""Run one clean ra3_1.0.game leaf function in a CPU emulator.
+"""Run one ra3_1.0.game function in a CPU emulator.
 
 Differential oracle for C++ ports: the function's own shipped bytes are executed
 on caller-chosen inputs, outside the game process. Only the on-disk images of
@@ -15,10 +15,25 @@ stub (cdecl, sees the emulator and returns EAX) with ``bind_import``.
     a = emu.alloc(b"Data\\Foo.big\\0")
     b = emu.alloc(b"data\\foo.BIG\\0")
     print(emu.call(0x009F3650, [a, b]).eax)
+
+SecuROM-protected functions (ledger ``securom`` != clean) are not plaintext on
+disk: an entry-lost function's entry is a ``jmp [slot]`` whose slot points at a VM
+stub, an inner-patched one has single instructions replaced the same way, and the
+real target is only written into the slot the first time the site executes in the
+running game. ``securom_sites.py`` captures those resolved slots and the sections
+they live in from a read-only runtime dump (``ra3hook`` dump mode). Passing such a
+dump snapshot as ``capture`` overlays its ``.securom`` image, which carries both
+the resolved slot table and the decrypted bodies, so a protected function runs
+from the same resolved code the process would, SecuROM's own sections aside.
+
+    emu = Emulator(capture="work/runtime_dump/run35/snapshot_3_240s")
+    thunks = entry_targets("Ra3Source/docs/analysis/ra3_1.0/securom_sites.tsv")
+    print(emu.call(thunks[0x00401AD0]).eax)  # emulate the real body, not the thunk
 """
 
 from __future__ import annotations
 
+import csv
 import struct
 from dataclasses import dataclass
 from pathlib import Path
@@ -30,6 +45,8 @@ from unicorn import x86_const as r
 from disasm import DEFAULT_EXE, Image
 
 MAPPED_SECTIONS = (".text", ".rdata", ".data")
+SECUROM_SECTION = ".securom"
+SECUROM_OVERLAY = "_securom.bin"
 PAGE = 0x1000
 STACK_BASE = 0x7F000000
 STACK_SIZE = 0x100000
@@ -61,8 +78,31 @@ def _align(value: int, alignment: int = PAGE) -> int:
     return (value + alignment - 1) & ~(alignment - 1)
 
 
+def read_securom_sites(path: Path) -> list[dict]:
+    """Rows of ``securom_sites.py`` output with the address columns parsed as ints."""
+    rows = []
+    with Path(path).open(encoding="utf-8") as handle:
+        for row in csv.DictReader(handle, delimiter="\t"):
+            for column in ("site", "slot", "file_target", "runtime_target", "continuation",
+                           "function"):
+                row[column] = int(row[column], 16) if row.get(column) else None
+            rows.append(row)
+    return rows
+
+
+def entry_targets(path: Path) -> dict[int, int]:
+    """Entry-site thunk VA -> resolved body VA, for functions whose entry was lost.
+
+    These are the real functions to emulate and port: the ledger address is a thunk
+    that jumps through a resolved slot at the returned body.
+    """
+    return {row["site"]: row["runtime_target"] for row in read_securom_sites(path)
+            if row["runtime_target"] is not None and row["resolution"] == "body"
+            and row["function"] == row["site"]}
+
+
 class Emulator:
-    def __init__(self, exe: Path = DEFAULT_EXE) -> None:
+    def __init__(self, exe: Path = DEFAULT_EXE, capture: Optional[Path] = None) -> None:
         self.image = Image(exe)
         self.uc = unicorn.Uc(unicorn.UC_ARCH_X86, unicorn.UC_MODE_32)
         for name, rva, size, raw, raw_size in self.image.sections:
@@ -72,6 +112,8 @@ class Emulator:
             self.uc.mem_map(start, _align(size), unicorn.UC_PROT_READ | unicorn.UC_PROT_WRITE
                             | unicorn.UC_PROT_EXEC)
             self.uc.mem_write(start, self.image.data[raw:raw + raw_size])
+        if capture is not None:
+            self._map_securom_overlay(Path(capture))
         self._initial = {
             self.image.base + rva: self.image.data[raw:raw + raw_size]
             for name, rva, _, raw, raw_size in self.image.sections
@@ -99,6 +141,23 @@ class Emulator:
         self.uc.hook_add(unicorn.UC_HOOK_CODE, self._on_stub, begin=STUB_BASE,
                          end=STUB_BASE + PAGE - 1)
         self.uc.hook_add(unicorn.UC_HOOK_CODE, self._on_function_stub)
+
+    def _map_securom_overlay(self, capture: Path) -> None:
+        """Map .securom from a runtime dump: resolved slot table and decrypted bodies.
+
+        The shipped .securom is encrypted and holds VM stubs, so it is never mapped
+        from the file. The dump's image of it is what the process ran: slots resolved
+        to real targets, and the relocated/decrypted bodies those slots point at.
+        """
+        overlay = capture / SECUROM_OVERLAY
+        if not overlay.is_file():
+            raise EmulationError(f"capture has no {SECUROM_OVERLAY}: {capture}")
+        data = overlay.read_bytes()
+        start = next(self.image.base + rva for name, rva, *_ in self.image.sections
+                     if name.split("\0")[0] == SECUROM_SECTION)
+        self.uc.mem_map(start, _align(len(data)),
+                        unicorn.UC_PROT_READ | unicorn.UC_PROT_EXEC)
+        self.uc.mem_write(start, data)
 
     def _on_unmapped(self, uc, access, address, size, value, data) -> bool:
         eip = uc.reg_read(r.UC_X86_REG_EIP)
