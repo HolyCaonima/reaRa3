@@ -41,15 +41,15 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 protentry 合并）
+## 3. 现状（截至 gamelogic7c 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 965、unanalyzed 47,960（受保护函数已 reversed：entry-lost 60、inner-patched 2）。`securom` 分类：clean 47,777、entry-lost 653、
+  reversed 1,010、unanalyzed 47,915（受保护函数已 reversed：entry-lost 60、inner-patched 2）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
-- **hook**：282 个目标（其中 235 个只认显式键）。原有 86 个全部 replace 时，Release
+- **hook**：290 个目标（其中 243 个只认显式键）。原有 86 个全部 replace 时，Release
   遭遇战带 Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34）；新加的
-  180 个目标只有离线证据，尚未做合并实机 shadow/replace。
+  188 个目标只有离线证据，尚未做合并实机 shadow/replace。
 - **已完成模块**：
   - core（配置/INI/SkuDef）
   - io（BIG 档案、RefPack、BigHandler 四层：查找/打开/读取/seek/枚举）
@@ -120,6 +120,13 @@
     `securom_sites.tsv` 一致、`.text` 原生体不与台账函数重叠；交付说明里的字符串地址和
     "回调登记表"不实，C++ 注释中 41 个 slot 号错误，均已按二进制更正。集成态 Release
     166 场景零差异；两处语义 mutation 检出。无 hook
+  - gamelogic AIStateMachine7C 批次（`0x007C0AD0–0x007CE500`，Gemini 接手）：45 个 clean
+    入口（AIStateMachine 基类方法与 AIMoveTo/Dock/Harvest/GuardRetaliate/Enter/Exit 等 state
+    的 onEnter/onExit/xfer），8 个 explicitOnly hook；代码在 `ra3/gamelogic/AIStateMachine7C.h`。
+    类名经真实 vtable 的 `slot[2]` 名字串核实无误，但交付中的 vtable 地址、`aistates.cpp`
+    等源路径和一处尾调用为编造，C++ 函数名与 hook 键整体错位；主控按二进制重写注释/文档
+    证据，函数改为类名+方法名，hook 键改为短键（`f7810d1`）。集成态 Release 364 场景零差异，
+    `0x007CC920` 语义 mutation 检出
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
@@ -127,8 +134,7 @@
   - 少数 hook 在遭遇战里未被调用（logicrandomvariable、几个 BIG 枚举入口、
     stringfindlast 等），只有离线证据。
 - **当前并行**（子 agent 随主控会话结束而中断，恢复时先查各 worktree 有无新提交）：
-  - `recon/gamelogic7c`：`0x007C0000–0x007CFFFF` GameLogic 簇，Gemini；前两次 worker
-    均在产出前中断，已从 base `0a72cc8` 重新启动。
+  - `recon/gamelogic7c`：已合并（`789bcb1`）。
   - `recon/skirmishai89`：`0x00890000–0x0089FFFF` skirmish AI 簇，Gemini，base `5d16a5b`。
   - `recon/thingtemplate`：已合并。`recon/common7e`（`0x007E0000–0x0080FFFF` common
     类簇，Grok，可脚本核对的逐行所有权证明）补位，base `f535fe2`。
@@ -161,7 +167,10 @@
   `0x00870000` gamelogic/gameclient 301（Gemini）→ `0x004D0000` GameLogic 核心 261（Gemini）
   → `0x00990000` render 140（Gemini）→ `0x00820000–0x0083FFFF` gamelogic 250（Grok）。
   受保护批次合并后，按剩余 body/cave 数量再开下一路。
-- **验收教训**：子 agent 的交付说明可能与提交不符（protentry 的证据地址即为编造的）。
+- **验收教训**：子 agent 的交付说明可能与提交不符（protentry 的证据地址、gamelogic7c 的
+  vtable 地址与源路径均为编造的）。vtable 所有权声明一律用脚本反查：在 `.rdata` 中找函数
+  指针 → 经 `vtables_split.tsv` 定位所在表与槽号 → 读该表 `slot[2]` 的类名字符串（本二进制
+  无 MSVC RTTI）。
   受保护批次除 `accept_batch.py` 外，主控还要用脚本把注释中的 site/slot/body 与
   `securom_sites.tsv` 对齐，并抽查所引字符串、表引用确实存在。合并前用脚本从目标表直接核对
   键名、explicitOnly 计数与二进制 expected16，并核对 record 键与注释一致；旧 base 的

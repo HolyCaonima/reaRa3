@@ -19140,14 +19140,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007c0550	FUN_007c0550	.text	406		clean	unknown		unanalyzed	
 007c06f0	FUN_007c06f0	.text	422		clean	unknown		unanalyzed	
 007c08a0	FUN_007c08a0	.text	549		clean	unknown		unanalyzed	
-007c0ad0	FUN_007c0ad0	.text	245		clean	unknown		unanalyzed	
-007c0bd0	FUN_007c0bd0	.text	161		clean	unknown		unanalyzed	
-007c0c80	FUN_007c0c80	.text	119		clean	unknown		unanalyzed	
-007c0d00	FUN_007c0d00	.text	106		clean	unknown		unanalyzed	
-007c0d70	FUN_007c0d70	.text	121		clean	unknown		unanalyzed	
-007c0df0	FUN_007c0df0	.text	139		clean	unknown		unanalyzed	
-007c0e80	FUN_007c0e80	.text	86		clean	unknown		unanalyzed	
-007c0ee0	FUN_007c0ee0	.text	88		clean	unknown		unanalyzed	
+007c0ad0	FUN_007c0ad0	.text	245		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveToState::onEnter (vtable 0x00C2F388 slot 4, 0x00C32468 slot 4; resolves goal object/position, adds half owner max height on negative Z, and starts move via 0x007C08A0; 12 oracle cases)
+007c0bd0	FUN_007c0bd0	.text	161		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveToStateSA::onEnter (vtable 0x00C2F3E8 slot 4; sets move flag +0x4C, copies goal or machine position, starts move via 0x007C08A0, and runs checkMoveOut_006FFB00 when +0x54 is set; 8 oracle cases; explicitOnly hook)
+007c0c80	FUN_007c0c80	.text	119		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveOutOfTheWayState::onEnter (vtable 0x00C2F448 slot 4; updates owner status bit 0x97 via 0x006A4F80/0x006A4FB0, resolves AIUpdate sub-object +0x150->+0x14 target position or returns -2; 8 oracle cases; explicitOnly hook)
+007c0d00	FUN_007c0d00	.text	106		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveAndTightenState::onEnter (vtable 0x00C2F4B0 slot 4; computes repulsor destination via 0x007526C0, sets +0x50=1 and +0x54=1, and calls ownerHelper_00686E00 + startMove_007C08A0; 6 oracle cases; explicitOnly hook)
+007c0d70	FUN_007c0d70	.text	121		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveAwayPanicState::onEnter (vtable 0x00C2F518 slot 4; resolves goal object or returns -2, sets AIUpdate mode 5 via 0x007527C0, ownerAction_004D9AF0(8), and target ID via 0x00752720; 8 oracle cases; explicitOnly hook)
+007c0df0	FUN_007c0df0	.text	139		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveAwayFromRepulsorsState::onEnter (vtable 0x00C2F580 slot 4; queries owner range via 0x006A6510 and PartitionMgr target via 0x00798BE0, sets target ID and starts move or returns -2; 8 oracle cases)
+007c0e80	FUN_007c0e80	.text	86		clean	gamelogic	recon/gamelogic7c	reversed	AIBackAwayAndCowerState::onEnter (vtable 0x00C2C638 slot 4; destroys prior sub-machine at +0x20, allocates 0x80-byte sub-machine via 0x007B1E90, and falls back to 0x007B12D0; 8 oracle cases)
+007c0ee0	FUN_007c0ee0	.text	88		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveAwayAndCowerState::onEnter (vtable 0x00C2F650 slot 4; resolves goal object via 0x005B9F30 or returns -2, sets AIUpdate target ID via 0x00752720, and starts move via 0x007C08A0; 8 oracle cases; explicitOnly hook)
 007c0f40	FUN_007c0f40	.text	913		clean	unknown		unanalyzed	
 007c12e0	FUN_007c12e0	.text	1664		clean	unknown		unanalyzed	
 007c1960	FUN_007c1960	.text	346		clean	unknown		unanalyzed	
@@ -19159,19 +19159,19 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007c26e0	FUN_007c26e0	.text	755		clean	unknown		unanalyzed	
 007c29e0	FUN_007c29e0	.text	214		clean	unknown		unanalyzed	
 007c2ac0	FUN_007c2ac0	.text	440		clean	unknown		unanalyzed	
-007c2c80	FUN_007c2c80	.text	28		clean	unknown		unanalyzed	
+007c2c80	FUN_007c2c80	.text	28		clean	gamelogic	recon/gamelogic7c	reversed	AIPickUpCrateState::update (vtable 0x00C2FAA8 slot 5, 0x00C30160 slot 5; decrements delay counter at +0x50 while positive, then delegates to 0x007B12D0; 6 oracle cases)
 007c2ca0	FUN_007c2ca0	.text	300		clean	unknown		unanalyzed	
 007c2dd0	FUN_007c2dd0	.text	427		clean	unknown		unanalyzed	
 007c2f80	FUN_007c2f80	.text	1424		clean	unknown		unanalyzed	
-007c3520	FUN_007c3520	.text	87		clean	unknown		unanalyzed	
+007c3520	FUN_007c3520	.text	87		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveAndEvacuateState::onEnter (vtable 0x00C2FBE0 slot 4; caches owner position at +0x50..+0x58, resolves goal or machine position into +0x20..+0x28, and starts move via 0x007C08A0; 6 oracle cases; explicitOnly hook)
 007c3580	FUN_007c3580	.text	30		clean	unknown		unanalyzed	
 007c35a0	FUN_007c35a0	.text	209		clean	unknown		unanalyzed	
-007c3680	FUN_007c3680	.text	181		clean	unknown		unanalyzed	
+007c3680	FUN_007c3680	.text	181		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveAndDeleteState::onEnter (vtable 0x00C2FC48 slot 4; locks parent machine via 0x005AA240, sets +0x50=1 and owner status bits 0x8F/0x97, and starts move via 0x007C08A0; 10 oracle cases; explicitOnly hook)
 007c3740	FUN_007c3740	.text	630		clean	unknown		unanalyzed	
-007c39c0	FUN_007c39c0	.text	30		clean	unknown		unanalyzed	
+007c39c0	FUN_007c39c0	.text	30		clean	gamelogic	recon/gamelogic7c	reversed	AIFollowWaypointPathStateAndEvacuate::onEnter (vtable 0x00C324D0 slot 4; sets AIUpdate mode 5 via 0x007527C0 and delegates to base waypoint onEnter 0x007C3740; 4 oracle cases)
 007c39e0	FUN_007c39e0	.text	330		clean	unknown		unanalyzed	
 007c3b30	FUN_007c3b30	.text	30		clean	unknown		unanalyzed	
-007c3b50	FUN_007c3b50	.text	33		clean	unknown		unanalyzed	
+007c3b50	FUN_007c3b50	.text	33		clean	gamelogic	recon/gamelogic7c	reversed	AIAttackFollowWaypointPathState::onEnter (vtable 0x00C321E8 slot 4; clears and resets sub-machine at +0x6C to state 0 before delegating to 0x007C3740; 4 oracle cases)
 007c3b80	FUN_007c3b80	.text	297	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
 007c3cb0	FUN_007c3cb0	.text	276	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
 007c3dd0	FUN_007c3dd0	.text	315	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
@@ -19179,21 +19179,21 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007c4040	FUN_007c4040	.text	370		clean	unknown		unanalyzed	
 007c41c0	FUN_007c41c0	.text	93		clean	unknown		unanalyzed	
 007c4220	FUN_007c4220	.text	188		clean	unknown		unanalyzed	
-007c42e0	FUN_007c42e0	.text	184		clean	unknown		unanalyzed	
-007c43a0	FUN_007c43a0	.text	161		clean	unknown		unanalyzed	
-007c4450	FUN_007c4450	.text	184		clean	unknown		unanalyzed	
-007c4510	FUN_007c4510	.text	161		clean	unknown		unanalyzed	
+007c42e0	FUN_007c42e0	.text	184		clean	gamelogic	recon/gamelogic7c	reversed	AIDockState::xfer (vtable 0x00C2CDE8 slot 3; serializes version 1, lazily constructs 0x84-byte dock sub-machine via 0x007BD4D0 on load, and xfers +0x24/+0x25 flags; 10 oracle cases)
+007c43a0	FUN_007c43a0	.text	161		clean	gamelogic	recon/gamelogic7c	reversed	AIDockState::onEnter (vtable 0x00C2CDE8 slot 4; saves/updates AIUpdate +0x434 via sub-module vtable +0x1C4/+0x84, checks target via 0x00687810, and initializes 0x84-byte sub-machine; 10 oracle cases)
+007c4450	FUN_007c4450	.text	184		clean	gamelogic	recon/gamelogic7c	reversed	AIHarvestState::xfer (vtable 0x00C2CE40 slot 3; serializes version 1, lazily constructs 0x80-byte harvest sub-machine via 0x007BE020 on load, and xfers +0x24/+0x25 flags; 10 oracle cases)
+007c4510	FUN_007c4510	.text	161		clean	gamelogic	recon/gamelogic7c	reversed	AIHarvestState::onEnter (vtable 0x00C2CE40 slot 4; constructs 0x80-byte sub-machine via 0x007BE020, sets goal position/object, updates AIUpdate +0x434, and invokes sub-machine slot +0x14; 10 oracle cases)
 007c45c0	FUN_007c45c0	.text	314		clean	unknown		unanalyzed	
 007c4700	FUN_007c4700	.text	282		clean	unknown		unanalyzed	
-007c4820	FUN_007c4820	.text	148		clean	unknown		unanalyzed	
-007c48c0	FUN_007c48c0	.text	124		clean	unknown		unanalyzed	
+007c4820	FUN_007c4820	.text	148		clean	gamelogic	recon/gamelogic7c	reversed	AIGuardRetaliateState::xfer (vtable 0x00C2D1C8 slot 3; serializes version 1 and lazily constructs 0x90-byte retaliate sub-machine via 0x007BDF30; 10 oracle cases)
+007c48c0	FUN_007c48c0	.text	124		clean	gamelogic	recon/gamelogic7c	reversed	AIGuardRetaliateState::onEnter (vtable 0x00C2D1C8 slot 4; constructs 0x90-byte sub-machine via 0x007BDF30, copies unit machine goal position/ID via 0x00683570/0x00683550, and enters slot +0x14; 8 oracle cases)
 007c4940	FUN_007c4940	.text	329		clean	unknown		unanalyzed	
 007c4a90	FUN_007c4a90	.text	333		clean	unknown		unanalyzed	
-007c4be0	FUN_007c4be0	.text	80		clean	unknown		unanalyzed	
+007c4be0	FUN_007c4be0	.text	80		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveToPositionAndDieState::onEnter (vtable 0x00C2FFB8 slot 4; locks machine via 0x005AA240, copies goal or machine position to +0x20, sets +0x50=1, and starts move via 0x007C08A0; 6 oracle cases; explicitOnly hook)
 007c4c30	FUN_007c4c30	.text	243		clean	unknown		unanalyzed	
-007c4d30	FUN_007c4d30	.text	129		clean	unknown		unanalyzed	
-007c4dc0	FUN_007c4dc0	.text	30		clean	unknown		unanalyzed	
-007c4de0	FUN_007c4de0	.text	30		clean	unknown		unanalyzed	
+007c4d30	FUN_007c4d30	.text	129		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveToAndEvacuateState::onEnter (vtable 0x00C30228 slot 4, 0x00C30298 slot 4; sets AIUpdate mode 5 via 0x007527C0 and chains to AIMoveToState::onEnter_007C0AD0 when 3D distance exceeds 0.1f; 12 oracle cases)
+007c4dc0	FUN_007c4dc0	.text	30		clean	gamelogic	recon/gamelogic7c	reversed	AIFollowPathAndEvacuateState::onEnter (vtable 0x00C30028 slot 4; sets AIUpdate mode 5 via 0x007527C0 and chains to follow-path onEnter 0x007C2CA0; 4 oracle cases)
+007c4de0	FUN_007c4de0	.text	30		clean	gamelogic	recon/gamelogic7c	reversed	AIMoveForBoarding::onEnter (vtable 0x00C30310 slot 4; sets AIUpdate mode 5 via 0x007527C0 and chains to AIMoveToState::onEnter_007C0AD0; 8 oracle cases)
 007c4e00	FUN_007c4e00	.text	220		clean	unknown		unanalyzed	
 007c4ee0	FUN_007c4ee0	.text	120		clean	unknown		unanalyzed	
 007c4f60	FUN_007c4f60	.text	450		clean	unknown		unanalyzed	
@@ -19232,14 +19232,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007c6930	FUN_007c6930	.text	117		clean	unknown		unanalyzed	
 007c69b0	FUN_007c69b0	.text	143		clean	unknown		unanalyzed	
 007c6a40	FUN_007c6a40	.text	306		clean	unknown		unanalyzed	
-007c6b80	FUN_007c6b80	.text	42		clean	unknown		unanalyzed	
-007c6bb0	FUN_007c6bb0	.text	37		clean	unknown		unanalyzed	
-007c6be0	FUN_007c6be0	.text	39		clean	unknown		unanalyzed	
-007c6c10	FUN_007c6c10	.text	100		clean	unknown		unanalyzed	
-007c6c80	FUN_007c6c80	.text	90		clean	unknown		unanalyzed	
+007c6b80	FUN_007c6b80	.text	42		clean	gamelogic	recon/gamelogic7c	reversed	AIStateMachineDerived6B80::createSubMachine19 (vtable 0x00C326D0 slot 19; allocates 0x80 bytes via 0x00416820 and constructs sub-machine via 0x007BA5E0(mem, a1, a2); 6 oracle cases)
+007c6bb0	FUN_007c6bb0	.text	37		clean	gamelogic	recon/gamelogic7c	reversed	AIStateMachineDerived6B80::createSubMachine20 (vtable 0x00C326D0 slot 20; allocates 0x80 bytes via 0x00416820 and constructs sub-machine via 0x007BADC0(mem, a1, a2); 6 oracle cases)
+007c6be0	FUN_007c6be0	.text	39		clean	gamelogic	recon/gamelogic7c	reversed	AIStateMachineDerived6B80::createSubMachine21 (vtable 0x00C326D0 slot 21; allocates 0x80 bytes via 0x00416820 and constructs sub-machine via 0x007BACA0(mem, a1, 0); 6 oracle cases)
+007c6c10	FUN_007c6c10	.text	100		clean	gamelogic	recon/gamelogic7c	reversed	AIStateMachineDerived6C10::createSubMachine19 (vtable 0x00C303D0 slot 19, 0x00C30530 slot 19; checks flag bit 7 at a3+0x80 to select 0x007BB180 vs 0x007BA5E0 on 0x80-byte allocation; 8 oracle cases)
+007c6c80	FUN_007c6c80	.text	90		clean	gamelogic	recon/gamelogic7c	reversed	AIStateMachineDerived6C10::createSubMachine20 (vtable 0x00C303D0 slot 20, 0x00C30530 slot 20; checks flag bit 7 at a2+0x80 to select 0x007BB070 vs 0x007BADC0 on 0x80-byte allocation; 8 oracle cases)
 007c6ce0	FUN_007c6ce0	.text	231		clean	unknown		unanalyzed	
 007c6d00	FUN_007c6d00	.text	393		clean	unknown		unanalyzed	
-007c6e90	FUN_007c6e90	.text	227		clean	unknown		unanalyzed	
+007c6e90	FUN_007c6e90	.text	227		clean	gamelogic	recon/gamelogic7c	reversed	AIStateMachineDerived6E90::initDefaultState (vtable 0x00C30428 slot 5, 0x00C30480 slot 5; checks producer template/weapon store entries 0x14 vs 0x27, notifies 0x00A78070, or delegates to 0x005B25C0; 12 oracle cases)
 007c6f80	FUN_007c6f80	.text	281		clean	unknown		unanalyzed	
 007c70a0	FUN_007c70a0	.text	6		clean	unknown		unanalyzed	
 007c70b0	FUN_007c70b0	.text	36		clean	unknown		unanalyzed	
@@ -19262,16 +19262,16 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007c8450	FUN_007c8450	.text	212		clean	unknown		unanalyzed	
 007c8530	FUN_007c8530	.text	132		clean	unknown		unanalyzed	
 007c85c0	FUN_007c85c0	.text	277		clean	unknown		unanalyzed	
-007c86e0	FUN_007c86e0	.text	145		clean	unknown		unanalyzed	
+007c86e0	FUN_007c86e0	.text	145		clean	gamelogic	recon/gamelogic7c	reversed	UnitAIAttackBlockingObjectState::onExit (vtable 0x00C30EE0 slot 6; cleans up blocking target via 0x0050B5F0/0x006C0F40, clears +0x2C, and clears sub-machine at +0x20; 8 oracle cases)
 007c8780	FUN_007c8780	.text	360		clean	unknown		unanalyzed	
 007c88f0	FUN_007c88f0	.text	6		clean	unknown		unanalyzed	
 007c8900	FUN_007c8900	.text	36		clean	unknown		unanalyzed	
 007c89e0	FUN_007c89e0	.text	36		clean	unknown		unanalyzed	
 007c8a10	FUN_007c8a10	.text	187		clean	unknown		unanalyzed	
 007c8ad0	FUN_007c8ad0	.text	440		clean	unknown		unanalyzed	
-007c8c90	FUN_007c8c90	.text	169		clean	unknown		unanalyzed	
-007c8d40	FUN_007c8d40	.text	153		clean	unknown		unanalyzed	
-007c8de0	FUN_007c8de0	.text	93		clean	unknown		unanalyzed	
+007c8c90	FUN_007c8c90	.text	169		clean	gamelogic	recon/gamelogic7c	reversed	UnitAIEnterAndDieState::onEnter (vtable 0x00C2AF38 slot 4; resolves goal object via 0x005B9F30/0x004DE030/0x0050B5F0 and invokes contain module vtable +0x40(owner, 0); 8 oracle cases)
+007c8d40	FUN_007c8d40	.text	153		clean	gamelogic	recon/gamelogic7c	reversed	UnitAIFindReplacementState::onEnter (vtable 0x00C2B0D8 slot 4; resolves replacement target via 0x005B9F30/0x004DE030/0x0050B5F0 and invokes contain module vtable +0x98(owner); 8 oracle cases)
+007c8de0	FUN_007c8de0	.text	93		clean	gamelogic	recon/gamelogic7c	reversed	UnitAIFollowWaypointPathAsTeamState::queryWeaponClipOffset (vtable 0x00C2E8C8 slot 20, 0x00C2E940 slot 20; queries AIUpdate sub-object via 0x0069A030/0x007ADAB0 and returns (flag, offset) pair; 8 oracle cases)
 007c8e40	FUN_007c8e40	.text	175		clean	unknown		unanalyzed	
 007c8ef0	FUN_007c8ef0	.text	6		clean	unknown		unanalyzed	
 007c8f00	FUN_007c8f00	.text	36		clean	unknown		unanalyzed	
@@ -19279,10 +19279,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007c9070	FUN_007c9070	.text	159		clean	unknown		unanalyzed	
 007c9110	FUN_007c9110	.text	6		clean	unknown		unanalyzed	
 007c9120	FUN_007c9120	.text	36		clean	unknown		unanalyzed	
-007c9150	FUN_007c9150	.text	40		clean	unknown		unanalyzed	
+007c9150	FUN_007c9150	.text	40		clean	gamelogic	recon/gamelogic7c	reversed	UnitAIGarrisonedState::createSubMachine (vtable 0x00C2EA28 slot 19; allocates 0x80 bytes via 0x00416820 and constructs garrison sub-machine via 0x007C9070; 6 oracle cases)
 007c9180	FUN_007c9180	.text	81		clean	unknown		unanalyzed	
 007c91e0	FUN_007c91e0	.text	159		clean	unknown		unanalyzed	
-007c9280	FUN_007c9280	.text	40		clean	unknown		unanalyzed	
+007c9280	FUN_007c9280	.text	40		clean	gamelogic	recon/gamelogic7c	reversed	UnitAIHoldGroundState::createSubMachine (vtable 0x00C2EB68 slot 19; allocates 0x80 bytes via 0x00416820 and constructs hold-ground sub-machine via 0x007C91E0; 6 oracle cases)
 007c92b0	FUN_007c92b0	.text	190		clean	unknown		unanalyzed	
 007c9370	FUN_007c9370	.text	134		clean	unknown		unanalyzed	
 007c9400	FUN_007c9400	.text	275		clean	unknown		unanalyzed	
@@ -19338,14 +19338,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007cc6c0	FUN_007cc6c0	.text	412		clean	unknown		unanalyzed	
 007cc860	FUN_007cc860	.text	6		clean	unknown		unanalyzed	
 007cc870	FUN_007cc870	.text	36		clean	unknown		unanalyzed	
-007cc8a0	FUN_007cc8a0	.text	42		clean	unknown		unanalyzed	
-007cc8d0	FUN_007cc8d0	.text	37		clean	unknown		unanalyzed	
+007cc8a0	FUN_007cc8a0	.text	42		clean	gamelogic	recon/gamelogic7c	reversed	AIStateMachine::createSubMachine19 (vtable 0x00C2C4C8 slot 19, 0x00C30428 slot 19, 0x00C30480 slot 19, 0x00C304D8 slot 19, 0x00C30588 slot 19, 0x00C30638 slot 19, 0x00C32678 slot 19, 0x00C32808 slot 19, 0x00C32940 slot 19; allocates 0x90 bytes via 0x00416820 and constructs sub-machine via 0x007C8780(mem, a1, a2); 6 oracle cases)
+007cc8d0	FUN_007cc8d0	.text	37		clean	gamelogic	recon/gamelogic7c	reversed	AIStateMachine::createSubMachine20 (vtable 0x00C2C4C8 slot 20, 0x00C30428 slot 20, 0x00C30480 slot 20, 0x00C304D8 slot 20, 0x00C30588 slot 20, 0x00C30638 slot 20, 0x00C32678 slot 20, 0x00C32808 slot 20, 0x00C32940 slot 20; allocates 0x80 bytes via 0x00416820 and constructs sub-machine via 0x007C8E40(mem, a1); 6 oracle cases)
 007cc900	FUN_007cc900	.text	201		clean	unknown		unanalyzed	
-007cc920	FUN_007cc920	.text	260		clean	unknown		unanalyzed	
-007cca30	FUN_007cca30	.text	206		clean	unknown		unanalyzed	
-007ccb00	FUN_007ccb00	.text	97		clean	unknown		unanalyzed	
-007ccb70	FUN_007ccb70	.text	68		clean	unknown		unanalyzed	
-007ccbc0	FUN_007ccbc0	.text	102		clean	unknown		unanalyzed	
+007cc920	FUN_007cc920	.text	260		clean	gamelogic	recon/gamelogic7c	reversed	AIStateMachine::updateStateMachine (vtable 0x00C2C4C8 slot 4, 0x00C30378 slot 4, 0x00C303D0 slot 4, 0x00C30428 slot 4, 0x00C30480 slot 4, 0x00C304D8 slot 4, 0x00C30530 slot 4, 0x00C30588 slot 4, 0x00C305E0 slot 4, 0x00C30638 slot 4, 0x00C32620 slot 4, 0x00C32678 slot 4, 0x00C326D0 slot 4, 0x00C32808 slot 4, 0x00C32940 slot 4; ticks temporary state at +0x88 against frame deadline +0x8C, restores saved goal object/position on exit, and delegates to 0x005AC420; 14 oracle cases + 14 mutant cases)
+007cca30	FUN_007cca30	.text	206		clean	gamelogic	recon/gamelogic7c	reversed	AIStateMachine::exitTemporaryState (called by 0x007CCB00/0x007CCB70/0x007CCBC0; exits temporary state at +0x88, restores saved goal object/position, and notifies owner+0x324 via 0x006838B0; 10 oracle cases)
+007ccb00	FUN_007ccb00	.text	97		clean	gamelogic	recon/gamelogic7c	reversed	AIStateMachine::clear (vtable 0x00C2C4C8 slot 13, 0x00C30378 slot 13, 0x00C303D0 slot 13, 0x00C30428 slot 13, 0x00C30480 slot 13, 0x00C304D8 slot 13, 0x00C30530 slot 13, 0x00C30588 slot 13, 0x00C305E0 slot 13, 0x00C30638 slot 13, 0x00C32620 slot 13, 0x00C32678 slot 13, 0x00C326D0 slot 13, 0x00C32808 slot 13, 0x00C32940 slot 13; exits non-permanent temporary state via 0x007CCA30, calls 0x005C0840, destroys +0x84 sub-machine, and notifies AIUpdate vtable +0x270; 10 oracle cases)
+007ccb70	FUN_007ccb70	.text	68		clean	gamelogic	recon/gamelogic7c	reversed	AIStateMachine::resetToDefaultState (vtable 0x00C2C4C8 slot 6, 0x00C30378 slot 6, 0x00C303D0 slot 6, 0x00C30428 slot 6, 0x00C30480 slot 6, 0x00C304D8 slot 6, 0x00C30530 slot 6, 0x00C30588 slot 6, 0x00C305E0 slot 6, 0x00C30638 slot 6, 0x00C32620 slot 6, 0x00C32678 slot 6, 0x00C326D0 slot 6, 0x00C32808 slot 6, 0x00C32940 slot 6; exits non-permanent temporary state via 0x007CCA30, clears +0x80, and delegates to 0x005C08C0; 8 oracle cases)
+007ccbc0	FUN_007ccbc0	.text	102		clean	gamelogic	recon/gamelogic7c	reversed	AIStateMachine::setState (vtable 0x00C2C4C8 slot 7, 0x00C30378 slot 7, 0x00C303D0 slot 7, 0x00C30428 slot 7, 0x00C30480 slot 7, 0x00C304D8 slot 7, 0x00C30530 slot 7, 0x00C30588 slot 7, 0x00C305E0 slot 7, 0x00C30638 slot 7, 0x00C32620 slot 7, 0x00C32678 slot 7, 0x00C326D0 slot 7, 0x00C32808 slot 7, 0x00C32940 slot 7; exits non-permanent temporary state via 0x007CCA30, notifies AIUpdate vtable +0x2B0 on state change, and delegates to 0x005B6230; 10 oracle cases)
 007ccc30	FUN_007ccc30	.text	521		clean	unknown		unanalyzed	
 007cce40	FUN_007cce40	.text	639		clean	unknown		unanalyzed	
 007cd0c0	thunk_FUN_007cce40	.text	5		clean	unknown		unanalyzed	
@@ -19357,10 +19357,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007cdc70	FUN_007cdc70	.text	530		clean	unknown		unanalyzed	
 007cde90	FUN_007cde90	.text	224		clean	unknown		unanalyzed	
 007cdf70	FUN_007cdf70	.text	774		clean	unknown		unanalyzed	
-007ce280	FUN_007ce280	.text	182		clean	unknown		unanalyzed	
+007ce280	FUN_007ce280	.text	182		clean	gamelogic	recon/gamelogic7c	reversed	AIEnterState::onExit (vtable 0x00C2FE00 slot 6; clears AIUpdate+0x214->+0x40, notifies contain module vtable +0x40(owner, 0) for target +0x50, and calls base 0x007B1190; 10 oracle cases)
 007ce340	FUN_007ce340	.text	287		clean	unknown		unanalyzed	
-007ce460	FUN_007ce460	.text	154		clean	unknown		unanalyzed	
-007ce500	FUN_007ce500	.text	32		clean	unknown		unanalyzed	
+007ce460	FUN_007ce460	.text	154		clean	gamelogic	recon/gamelogic7c	reversed	AIExitState::onExit (vtable 0x00C2CF60 slot 6, 0x00C2D818 slot 6, 0x00C2D880 slot 6; calls 0x006E6360(aiUpdate, 0) and notifies contain module vtable +0x40(owner, 0) for container +0x20; 8 oracle cases)
+007ce500	FUN_007ce500	.text	32		clean	gamelogic	recon/gamelogic7c	reversed	AIExitSiegeEngineState::onExit (vtable 0x00C2D8E8 slot 6; calls 0x006E6360(aiUpdate, 0) and notifies siege contain module via 0x006A7600 vtable +0x40(owner, 0); 8 oracle cases)
 007ce520	FUN_007ce520	.text	310		clean	unknown		unanalyzed	
 007ce660	FUN_007ce660	.text	291		clean	unknown		unanalyzed	
 007ce860	FUN_007ce860	.text	235		clean	unknown		unanalyzed	
