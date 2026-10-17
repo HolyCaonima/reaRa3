@@ -4,7 +4,9 @@ ra3_add_module(common
         include/ra3/common/Crc32.h
         include/ra3/common/GameString.h
         include/ra3/common/Player.h
+        include/ra3/common/ThingTemplate.h
         src/ByteString.cpp
         src/Crc32.cpp
         src/GameString.cpp
-        src/Player.cpp)
+        src/Player.cpp
+        src/ThingTemplate.cpp)
