@@ -219,6 +219,8 @@ int __cdecl pathCompare(const char* a, const char* b)
     return game;
 }
 
+}  // namespace
+
 void recordScalar(const char* key, TargetState& state, std::uint32_t game, std::uint32_t ours)
 {
     if (game == ours) {
@@ -247,6 +249,8 @@ void recordOutput(const char* key, TargetState& state, const void* game, const v
         }
     }
 }
+
+namespace {
 
 // Shadow comparisons may touch only bytes the original reads: a limited source
 // need not be terminated within `count`, and the destination buffer may be
@@ -3121,11 +3125,21 @@ void reportMismatch(const char* key, TargetState& state, const std::string& deta
     }
 }
 
+namespace {
+
+std::vector<Target> withModuleTargets(std::vector<Target> list)
+{
+    appendModuleTargets(list);
+    return list;
+}
+
+}  // namespace
+
 const std::vector<Target>& targets()
 {
     // RVAs are relative to the 0x00400000 image base; expected bytes are the
     // first 16 bytes of the shipped function.
-    static const std::vector<Target> table = {
+    static const std::vector<Target> table = withModuleTargets({
         {"refpack", 0x005F72E0,
          {0x51, 0x8B, 0x4C, 0x24, 0x0C, 0x85, 0xC9, 0x56,
           0x8B, 0x74, 0x24, 0x0C, 0x75, 0x07, 0x33, 0xC0},
@@ -3472,7 +3486,7 @@ const std::vector<Target>& targets()
          {0x8B, 0x44, 0x24, 0x08, 0x83, 0xEC, 0x0C, 0x85,
           0xC0, 0x74, 0x31, 0x8B, 0x11, 0x85, 0xD2, 0x74},
          7, reinterpret_cast<void*>(&unicodeStringConcat), &g_unicodeStringConcat, true},
-    };
+    });
     return table;
 }
 

@@ -48,9 +48,18 @@ struct Target {
 
 const std::vector<Target>& targets();
 
+// Module target tables live in dll/targets/<Module>Targets.cpp, each exposing
+// append<Module>Targets(); ModuleTargets.cpp calls them after the core table.
+void appendModuleTargets(std::vector<Target>& table);
+
 void writeLine(const std::string& text);
 
 // Counts a shadow mismatch and logs the first few with `detail`.
 void reportMismatch(const char* key, TargetState& state, const std::string& detail);
+
+// Shadow outcome helpers: count a match or report a mismatch.
+void recordScalar(const char* key, TargetState& state, std::uint32_t game, std::uint32_t ours);
+void recordOutput(const char* key, TargetState& state, const void* game, const void* ours,
+                  std::size_t size);
 
 }  // namespace ra3hook

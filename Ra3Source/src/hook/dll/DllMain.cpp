@@ -1,9 +1,11 @@
+#include "RuntimeDump.h"
 #include "Targets.h"
 
 #include <ra3/hook/Detour.h>
 
 #include <Windows.h>
 
+#include <algorithm>
 #include <chrono>
 #include <cstdint>
 #include <exception>
@@ -27,12 +29,16 @@ namespace {
 //   <target key>=shadow|replace|off
 //   target=0x...                  dummy process only: absolute address for "refpack"
 //   log=PATH, summary_interval_ms=N
+//   dump=DIR                      read-only SecuROM site capture (RuntimeDump.h)
+//   dump_at_s=S1,S2,...           snapshot times after injection
+//   dump_poll_ms=N                slot and site polling interval
 struct Config {
     Mode defaultMode = Mode::shadow;
     std::map<std::string, Mode> modes;
     std::uintptr_t testAddress = 0;
     std::filesystem::path logPath;
     unsigned summaryIntervalMs = 1000;
+    DumpConfig dump;
 };
 
 HMODULE g_module = nullptr;
@@ -189,6 +195,28 @@ bool loadConfig(Config& config, std::string& error)
                 return false;
             }
             config.summaryIntervalMs = static_cast<unsigned>(interval);
+        } else if (key == "dump") {
+            config.dump.directory = value;
+        } else if (key == "dump_at_s") {
+            config.dump.snapshotSeconds.clear();
+            std::istringstream list(value);
+            std::string item;
+            while (std::getline(list, item, ',')) {
+                std::uintptr_t seconds = 0;
+                if (!parseUnsigned(trim(item), seconds) || seconds > 86400) {
+                    error = "dump_at_s must list seconds between 0 and 86400";
+                    return false;
+                }
+                config.dump.snapshotSeconds.push_back(static_cast<unsigned>(seconds));
+            }
+            std::sort(config.dump.snapshotSeconds.begin(), config.dump.snapshotSeconds.end());
+        } else if (key == "dump_poll_ms") {
+            std::uintptr_t interval = 0;
+            if (!parseUnsigned(value, interval) || interval < 50 || interval > 60000) {
+                error = "dump_poll_ms must be between 50 and 60000";
+                return false;
+            }
+            config.dump.pollIntervalMs = static_cast<unsigned>(interval);
         } else {
             error = "unknown config key: " + key;
             return false;
@@ -294,13 +322,33 @@ DWORD runWorker()
         return 1;
     }
     logHostImage();
+    std::unique_ptr<RuntimeDump> dump;
+    if (!config.dump.directory.empty()) {
+        dump = std::make_unique<RuntimeDump>(config.dump);
+        if (!dump->start(error)) {
+            writeLine(error);
+            dump.reset();
+        }
+    }
     if (!installTargets(config)) {
         return 1;
     }
 
+    using Clock = std::chrono::steady_clock;
+    const auto summaryInterval = std::chrono::milliseconds(config.summaryIntervalMs);
+    const auto sleep =
+        std::chrono::milliseconds(dump ? std::min(config.summaryIntervalMs, dump->pollIntervalMs())
+                                       : config.summaryIntervalMs);
+    auto nextSummary = Clock::now() + summaryInterval;
     for (;;) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(config.summaryIntervalMs));
-        writeSummary();
+        if (dump) {
+            dump->tick();
+        }
+        std::this_thread::sleep_for(sleep);
+        if (Clock::now() >= nextSummary) {
+            writeSummary();
+            nextSummary += summaryInterval;
+        }
     }
 }
 
