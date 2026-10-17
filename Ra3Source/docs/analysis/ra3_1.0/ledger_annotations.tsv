@@ -116,7 +116,7 @@ address	status	owner	module	notes
 00a77ae0	reversed	recon/hookcat	unknown	hook candidate: 初始化二字段结构为 {1,arg}
 00a77bd0	reversed	recon/hookcat	unknown	hook candidate: 把 NUL 结尾字符串复制到 this+0x20
 004cb400	verified	recon/ports1	common	compare two uint16-length-prefixed byte strings; ra3::common::compareLengthPrefixed; emulator 2006/2006 (earlier: hook candidate: 比较两个带 16 位长度前缀的字节串); live shadow 9022/9022, replace 9341 calls in a skirmish (injection.md 5.4 runs 12-13)
-007e1ba0	reversed	recon/hookcat	unknown	hook candidate: 测试对象内两个状态字节是否都为零
+007e1ba0	reversed	recon/player	common	Player::isPlayerActive; oracle 500; hook playeractive (earlier: hook candidate: 测试对象内两个状态字节是否都为零)
 004c9ea0	verified	recon/ports1	common	fixed-length unsigned byte comparison returning -1/0/1; ra3::common::compareBytes; emulator 2006/2006 (earlier: hook candidate: 定长字节序列三路比较（-1/0/1）); live shadow 269853/269853, replace 257685 calls in a skirmish (injection.md 5.4 runs 12-13)
 00983a90	reversed	recon/hookcat	unknown	hook candidate: 写虚表并初始化多个对象字段
 00b23c00	reversed	recon/hookcat	unknown	hook candidate: 清零首个字段
@@ -235,3 +235,37 @@ address	status	owner	module	notes
 005a9680	verified	recon/simrng	sim	RandomVariable copy (distribution first, then low/high via x87), thiscall ret 4, EAX=this; ra3::sim::copyRandomVariable; oracle 2000/2000 as 0x005A9660; live shadow 17152/17152, replace 17152 calls in a skirmish (运行 33/34)
 005a96a0	verified	recon/simrng	sim	GameClientRandomVariable::getValue thiscall -> x87 ST0: constant returns low when low==high else uniform (client real helper inlined), other distributions +0.0; ra3::sim::clientRandomVariableExtended (naked) + portable clientRandomVariableValue; oracle 6000/6000 80-bit ST0 + state at CW 007F/027F/037F, Debug+Release; live shadow 108747/108747, replace 68235 calls in a skirmish (运行 33/34)
 005a9730	reversed	recon/simrng	sim	GameLogicRandomVariable::getValue thiscall -> x87 ST0: as 0x005A96A0 on the logic stream plus highBias (5): low + (high-low)*sqrt(r), r and sqrt stored as floats, no delta check; ra3::sim::logicRandomVariableExtended (naked) + portable; oracle 6000/6000 80-bit ST0 + state at CW 007F/027F/037F, Debug+Release; 0 calls in a live skirmish (运行 33)
+007e1480	reversed	recon/player	common	player_port::hasCapacity; oracle 500
+007e1530	reversed	recon/player	common	Player::adjustCounter125c; oracle 500; hook playeradjustcounter
+007e15d0	reversed	recon/player	common	Player::setValue1258; oracle 50
+007e1840	reversed	recon/player	common	Player::setListInScoreScreen; oracle 50
+007e1930	reversed	recon/player	common	Player::setValueF8; oracle 50
+007e19e0	reversed	recon/player	common	Player::slotForIndex; oracle 500
+007e1b50	reversed	recon/player	common	Player::indexedPointer128; oracle 50
+007e1b70	reversed	recon/player	common	Player::value1c8; oracle 50
+007e1b80	reversed	recon/player	common	Player::isPlayerObserver; oracle 50
+007e1b90	reversed	recon/player	common	Player::isPlayerDead; oracle 50
+007e21e0	reversed	recon/player	common	player_port::setBoundedDelay; oracle 500
+007e2470	reversed	recon/player	common	player_port::indexIsOutsideBinaryRange; oracle 500
+007e25d0	reversed	recon/player	common	ScoreKeeper::setValue04IfUnlocked; oracle 500
+007e25e0	reversed	recon/player	common	ScoreKeeper::setValue0cIfUnlocked; oracle 500
+007e2600	reversed	recon/player	common	ScoreKeeper::addD0; oracle 500; hook scoreaddd0
+007e2620	reversed	recon/player	common	ScoreKeeper::addFloat11c; oracle 500
+007e2650	reversed	recon/player	common	ScoreKeeper::increment100; oracle 500; hook scoreincrement100
+007e2670	reversed	recon/player	common	ScoreKeeper::incrementE8; oracle 500; hook scoreincremente8
+007e2690	reversed	recon/player	common	ScoreKeeper::incrementEc; oracle 500; hook scoreincrementec
+007e26b0	reversed	recon/player	common	ScoreKeeper::incrementF0; oracle 500; hook scoreincrementf0
+007e26d0	reversed	recon/player	common	ScoreKeeper::incrementD8; oracle 500; hook scoreincrementd8
+007e26f0	reversed	recon/player	common	ScoreKeeper::addDc; oracle 500; hook scoreadddc
+007e2710	reversed	recon/player	common	ScoreKeeper::stopTimer; oracle 500; hook scorestoptimer
+007e2740	reversed	recon/player	common	ScoreKeeper::elapsedSeconds; oracle 500
+007e2760	reversed	recon/player	common	ScoreKeeper::timedSeconds; oracle 500
+007e27a0	reversed	recon/player	common	ScoreKeeper::sumGroup68; oracle 500
+007e27d0	reversed	recon/player	common	ScoreKeeper::sumGroup10; oracle 500
+007e2800	reversed	recon/player	common	ScoreKeeper::setFlag134; oracle 50; hook scoreflag134
+007e2810	reversed	recon/player	common	ScoreKeeper::setFlag135; oracle 50; hook scoreflag135
+007e2820	reversed	recon/player	common	ScoreKeeper::markFlag134; oracle 50; hook scoremark134
+007e2830	reversed	recon/player	common	ScoreKeeper::addMoney; oracle 500; hook scoreaddmoney
+007e2ca0	reversed	recon/player	common	player_port::setFlagD7; oracle 500
+007e2d30	reversed	recon/player	common	player_port::addValue290; oracle 500
+007e2d40	reversed	recon/player	common	player_port::subtractValue290; oracle 500

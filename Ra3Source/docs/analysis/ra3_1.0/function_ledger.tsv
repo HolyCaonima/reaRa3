@@ -19657,13 +19657,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e13b0	FUN_007e13b0	.text	57		clean	unknown		unanalyzed	
 007e13f0	FUN_007e13f0	.text	122		clean	unknown		unanalyzed	
 007e1470	FUN_007e1470	.text	6		clean	unknown		unanalyzed	
-007e1480	FUN_007e1480	.text	44		clean	unknown		unanalyzed	
+007e1480	FUN_007e1480	.text	44		clean	common	recon/player	reversed	player_port::hasCapacity; oracle 500
 007e14b0	FUN_007e14b0	.text	20		clean	unknown		unanalyzed	
 007e14d0	FUN_007e14d0	.text	72		clean	unknown		unanalyzed	
-007e1530	FUN_007e1530	.text	25		clean	unknown		unanalyzed	
+007e1530	FUN_007e1530	.text	25		clean	common	recon/player	reversed	Player::adjustCounter125c; oracle 500; hook playeradjustcounter
 007e1550	FUN_007e1550	.text	92		clean	unknown		unanalyzed	
 007e15b0	FUN_007e15b0	.text	27		clean	unknown		unanalyzed	
-007e15d0	FUN_007e15d0	.text	13		clean	unknown		unanalyzed	
+007e15d0	FUN_007e15d0	.text	13		clean	common	recon/player	reversed	Player::setValue1258; oracle 50
 007e15e0	FUN_007e15e0	.text	17		clean	unknown		unanalyzed	
 007e1600	FUN_007e1600	.text	25		clean	unknown		unanalyzed	
 007e1620	FUN_007e1620	.text	48		clean	unknown		unanalyzed	
@@ -19680,7 +19680,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e17c0	FUN_007e17c0	.text	18		clean	unknown		unanalyzed	
 007e17e0	FUN_007e17e0	.text	68		clean	unknown		unanalyzed	
 007e1830	FUN_007e1830	.text	15		clean	unknown		unanalyzed	
-007e1840	FUN_007e1840	.text	13		clean	unknown		unanalyzed	
+007e1840	FUN_007e1840	.text	13		clean	common	recon/player	reversed	Player::setListInScoreScreen; oracle 50
 007e1850	FUN_007e1850	.text	9		clean	unknown		unanalyzed	
 007e1860	FUN_007e1860	.text	25		clean	unknown		unanalyzed	
 007e1880	FUN_007e1880	.text	32		clean	unknown		unanalyzed	
@@ -19688,19 +19688,19 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e18c0	FUN_007e18c0	.text	17		clean	unknown		unanalyzed	
 007e18e0	FUN_007e18e0	.text	32		clean	unknown		unanalyzed	
 007e1900	FUN_007e1900	.text	43		clean	unknown		unanalyzed	
-007e1930	FUN_007e1930	.text	17		clean	unknown		unanalyzed	
+007e1930	FUN_007e1930	.text	17		clean	common	recon/player	reversed	Player::setValueF8; oracle 50
 007e1950	FUN_007e1950	.text	7		clean	unknown		unanalyzed	
 007e1970	FUN_007e1970	.text	18		clean	unknown		unanalyzed	
 007e1990	FUN_007e1990	.text	80		clean	unknown		unanalyzed	
-007e19e0	FUN_007e19e0	.text	30		clean	unknown		unanalyzed	
+007e19e0	FUN_007e19e0	.text	30		clean	common	recon/player	reversed	Player::slotForIndex; oracle 500
 007e1a00	FUN_007e1a00	.text	88		clean	unknown		unanalyzed	
 007e1a60	FUN_007e1a60	.text	104		clean	unknown		unanalyzed	
 007e1b40	FUN_007e1b40	.text	14		clean	unknown		unanalyzed	
-007e1b50	FUN_007e1b50	.text	28		clean	unknown		unanalyzed	
-007e1b70	FUN_007e1b70	.text	7		clean	unknown		unanalyzed	
-007e1b80	FUN_007e1b80	.text	7		clean	unknown		unanalyzed	
-007e1b90	FUN_007e1b90	.text	7		clean	unknown		unanalyzed	
-007e1ba0	FUN_007e1ba0	.text	27		clean	unknown	recon/hookcat	reversed	hook candidate: 测试对象内两个状态字节是否都为零
+007e1b50	FUN_007e1b50	.text	28		clean	common	recon/player	reversed	Player::indexedPointer128; oracle 50
+007e1b70	FUN_007e1b70	.text	7		clean	common	recon/player	reversed	Player::value1c8; oracle 50
+007e1b80	FUN_007e1b80	.text	7		clean	common	recon/player	reversed	Player::isPlayerObserver; oracle 50
+007e1b90	FUN_007e1b90	.text	7		clean	common	recon/player	reversed	Player::isPlayerDead; oracle 50
+007e1ba0	FUN_007e1ba0	.text	27		clean	common	recon/player	reversed	Player::isPlayerActive; oracle 500; hook playeractive (earlier: hook candidate: 测试对象内两个状态字节是否都为零)
 007e1be0	FUN_007e1be0	.text	28		clean	unknown		unanalyzed	
 007e1c00	FUN_007e1c00	.text	17		clean	unknown		unanalyzed	
 007e1c20	FUN_007e1c20	.text	17		clean	unknown		unanalyzed	
@@ -19721,7 +19721,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e2170	FUN_007e2170	.text	28		clean	unknown		unanalyzed	
 007e2190	FUN_007e2190	.text	8		clean	unknown		unanalyzed	
 007e21a0	FUN_007e21a0	.text	64		clean	unknown		unanalyzed	
-007e21e0	FUN_007e21e0	.text	34		clean	unknown		unanalyzed	
+007e21e0	FUN_007e21e0	.text	34		clean	common	recon/player	reversed	player_port::setBoundedDelay; oracle 500
 007e2210	FUN_007e2210	.text	26		clean	unknown		unanalyzed	
 007e2230	FUN_007e2230	.text	34		clean	unknown		unanalyzed	
 007e2260	FUN_007e2260	.text	14		clean	unknown		unanalyzed	
@@ -19741,31 +19741,31 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e23f0	FUN_007e23f0	.text	24		clean	unknown		unanalyzed	
 007e2410	FUN_007e2410	.text	6		clean	unknown		unanalyzed	
 007e2420	FUN_007e2420	.text	8		clean	unknown		unanalyzed	
-007e2470	FUN_007e2470	.text	19		clean	unknown		unanalyzed	
+007e2470	FUN_007e2470	.text	19		clean	common	recon/player	reversed	player_port::indexIsOutsideBinaryRange; oracle 500
 007e2490	FUN_007e2490	.text	30		clean	unknown		unanalyzed	
 007e24b0	FUN_007e24b0	.text	6		clean	unknown		unanalyzed	
 007e24c0	FUN_007e24c0	.text	149		clean	unknown		unanalyzed	
 007e2560	FUN_007e2560	.text	97		clean	unknown		unanalyzed	
-007e25d0	FUN_007e25d0	.text	16		clean	unknown		unanalyzed	
-007e25e0	FUN_007e25e0	.text	16		clean	unknown		unanalyzed	
+007e25d0	FUN_007e25d0	.text	16		clean	common	recon/player	reversed	ScoreKeeper::setValue04IfUnlocked; oracle 500
+007e25e0	FUN_007e25e0	.text	16		clean	common	recon/player	reversed	ScoreKeeper::setValue0cIfUnlocked; oracle 500
 007e25f0	FUN_007e25f0	.text	6		clean	unknown		unanalyzed	
-007e2600	FUN_007e2600	.text	27		clean	unknown		unanalyzed	
-007e2620	FUN_007e2620	.text	39		clean	unknown		unanalyzed	
-007e2650	FUN_007e2650	.text	22		clean	unknown		unanalyzed	
-007e2670	FUN_007e2670	.text	22		clean	unknown		unanalyzed	
-007e2690	FUN_007e2690	.text	22		clean	unknown		unanalyzed	
-007e26b0	FUN_007e26b0	.text	22		clean	unknown		unanalyzed	
-007e26d0	FUN_007e26d0	.text	22		clean	unknown		unanalyzed	
-007e26f0	FUN_007e26f0	.text	27		clean	unknown		unanalyzed	
-007e2710	FUN_007e2710	.text	47		clean	unknown		unanalyzed	
-007e2740	FUN_007e2740	.text	27		clean	unknown		unanalyzed	
-007e2760	FUN_007e2760	.text	55		clean	unknown		unanalyzed	
-007e27a0	FUN_007e27a0	.text	43		clean	unknown		unanalyzed	
-007e27d0	FUN_007e27d0	.text	43		clean	unknown		unanalyzed	
-007e2800	FUN_007e2800	.text	13		clean	unknown		unanalyzed	
-007e2810	FUN_007e2810	.text	13		clean	unknown		unanalyzed	
-007e2820	FUN_007e2820	.text	8		clean	unknown		unanalyzed	
-007e2830	FUN_007e2830	.text	30		clean	unknown		unanalyzed	
+007e2600	FUN_007e2600	.text	27		clean	common	recon/player	reversed	ScoreKeeper::addD0; oracle 500; hook scoreaddd0
+007e2620	FUN_007e2620	.text	39		clean	common	recon/player	reversed	ScoreKeeper::addFloat11c; oracle 500
+007e2650	FUN_007e2650	.text	22		clean	common	recon/player	reversed	ScoreKeeper::increment100; oracle 500; hook scoreincrement100
+007e2670	FUN_007e2670	.text	22		clean	common	recon/player	reversed	ScoreKeeper::incrementE8; oracle 500; hook scoreincremente8
+007e2690	FUN_007e2690	.text	22		clean	common	recon/player	reversed	ScoreKeeper::incrementEc; oracle 500; hook scoreincrementec
+007e26b0	FUN_007e26b0	.text	22		clean	common	recon/player	reversed	ScoreKeeper::incrementF0; oracle 500; hook scoreincrementf0
+007e26d0	FUN_007e26d0	.text	22		clean	common	recon/player	reversed	ScoreKeeper::incrementD8; oracle 500; hook scoreincrementd8
+007e26f0	FUN_007e26f0	.text	27		clean	common	recon/player	reversed	ScoreKeeper::addDc; oracle 500; hook scoreadddc
+007e2710	FUN_007e2710	.text	47		clean	common	recon/player	reversed	ScoreKeeper::stopTimer; oracle 500; hook scorestoptimer
+007e2740	FUN_007e2740	.text	27		clean	common	recon/player	reversed	ScoreKeeper::elapsedSeconds; oracle 500
+007e2760	FUN_007e2760	.text	55		clean	common	recon/player	reversed	ScoreKeeper::timedSeconds; oracle 500
+007e27a0	FUN_007e27a0	.text	43		clean	common	recon/player	reversed	ScoreKeeper::sumGroup68; oracle 500
+007e27d0	FUN_007e27d0	.text	43		clean	common	recon/player	reversed	ScoreKeeper::sumGroup10; oracle 500
+007e2800	FUN_007e2800	.text	13		clean	common	recon/player	reversed	ScoreKeeper::setFlag134; oracle 50; hook scoreflag134
+007e2810	FUN_007e2810	.text	13		clean	common	recon/player	reversed	ScoreKeeper::setFlag135; oracle 50; hook scoreflag135
+007e2820	FUN_007e2820	.text	8		clean	common	recon/player	reversed	ScoreKeeper::markFlag134; oracle 50; hook scoremark134
+007e2830	FUN_007e2830	.text	30		clean	common	recon/player	reversed	ScoreKeeper::addMoney; oracle 500; hook scoreaddmoney
 007e2890	FUN_007e2890	.text	83		clean	unknown		unanalyzed	
 007e28f0	FUN_007e28f0	.text	41		clean	unknown		unanalyzed	
 007e2950	FUN_007e2950	.text	23		clean	unknown		unanalyzed	
@@ -19779,14 +19779,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007e2b80	FUN_007e2b80	.text	4		clean	unknown		unanalyzed	
 007e2b90	FUN_007e2b90	.text	27		clean	unknown		unanalyzed	
 007e2bb0	FUN_007e2bb0	.text	8		clean	unknown		unanalyzed	
-007e2ca0	FUN_007e2ca0	.text	24		clean	unknown		unanalyzed	
+007e2ca0	FUN_007e2ca0	.text	24		clean	common	recon/player	reversed	player_port::setFlagD7; oracle 500
 007e2cc0	FUN_007e2cc0	.text	7		clean	unknown		unanalyzed	
 007e2cd0	FUN_007e2cd0	.text	7		clean	unknown		unanalyzed	
 007e2ce0	FUN_007e2ce0	.text	43		clean	unknown		unanalyzed	
 007e2d10	FUN_007e2d10	.text	13		clean	unknown		unanalyzed	
 007e2d20	FUN_007e2d20	.text	13		clean	unknown		unanalyzed	
-007e2d30	FUN_007e2d30	.text	13		clean	unknown		unanalyzed	
-007e2d40	FUN_007e2d40	.text	13		clean	unknown		unanalyzed	
+007e2d30	FUN_007e2d30	.text	13		clean	common	recon/player	reversed	player_port::addValue290; oracle 500
+007e2d40	FUN_007e2d40	.text	13		clean	common	recon/player	reversed	player_port::subtractValue290; oracle 500
 007e2d50	FUN_007e2d50	.text	76		clean	unknown		unanalyzed	
 007e2da0	FUN_007e2da0	.text	7		clean	unknown		unanalyzed	
 007e2db0	FUN_007e2db0	.text	7		clean	unknown		unanalyzed	
