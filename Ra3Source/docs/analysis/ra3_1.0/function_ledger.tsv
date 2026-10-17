@@ -12724,121 +12724,121 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0069a0f0	FUN_0069a0f0	.text	47		clean	unknown		unanalyzed	
 0069a120	FUN_0069a120	.text	69		clean	unknown		unanalyzed	
 0069a170	FUN_0069a170	.text	142		clean	unknown		unanalyzed	
-0069a250	FUN_0069a250	.text	6		clean	unknown		unanalyzed	
-0069a260	FUN_0069a260	.text	47		clean	unknown		unanalyzed	
+0069a250	FUN_0069a250	.text	6		clean	gamelogic	recon/weaponlogic	reversed	AssistedTargetingUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069a260	FUN_0069a260	.text	47		clean	gamelogic	recon/weaponlogic	reversed	AssistedTargetingUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069a290	FUN_0069a290	.text	298		clean	unknown		unanalyzed	
-0069a3c0	FUN_0069a3c0	.text	6		clean	unknown		unanalyzed	
-0069a3d0	FUN_0069a3d0	.text	47		clean	unknown		unanalyzed	
+0069a3c0	FUN_0069a3c0	.text	6		clean	gamelogic	recon/weaponlogic	reversed	AttachUpdate module name; vtable 00c01e40 and exact pointer oracle
+0069a3d0	FUN_0069a3d0	.text	47		clean	gamelogic	recon/weaponlogic	reversed	AttachUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069a400	FUN_0069a400	.text	5		clean	unknown		unanalyzed	
 0069a410	FUN_0069a410	.text	170	SageEngine\source\GameEngine\gamelogic\object\Update\AttachUpdate.cpp	clean	gamelogic		unanalyzed	
 0069a4c0	FUN_0069a4c0	.text	114		clean	unknown		unanalyzed	
 0069a540	FUN_0069a540	.text	26		clean	unknown		unanalyzed	
 0069a55a	FUN_0069a55a	.text	174		clean	unknown		unanalyzed	
-0069a610	FUN_0069a610	.text	48		clean	unknown		unanalyzed	
-0069a640	FUN_0069a640	.text	130		clean	unknown		unanalyzed	
+0069a610	FUN_0069a610	.text	48		clean	gamelogic	recon/weaponlogic	reversed	weapon target controlling-player filter; direct callers 00741720/00752d30; full EAX/cleanup oracle; explicit hook
+0069a640	FUN_0069a640	.text	130		clean	gamelogic	recon/weaponlogic	reversed	weapon source-exclusion and candidate-kind seven-word masks; direct callers 00741720/00752d30; oracle; explicit hook
 0069a6d0	FUN_0069a6d0	.text	49		clean	unknown		unanalyzed	
-0069a710	FUN_0069a710	.text	16		clean	unknown		unanalyzed	
+0069a710	FUN_0069a710	.text	16		clean	gamelogic	recon/weaponlogic	reversed	weapon line-of-sight template flag; direct caller 007c9730; EAX/EDX/cleanup oracle; explicit hook
 0069a720	FUN_0069a720	.text	125		clean	unknown		unanalyzed	
 0069a7a0	FUN_0069a7a0	.text	44		clean	unknown		unanalyzed	
 0069a7d0	FUN_0069a7d0	.text	66		clean	unknown		unanalyzed	
 0069a820	FUN_0069a820	.text	270	SageEngine\source\GameEngine\gamelogic\object\Update\BombardAreaUpdate.cpp	clean	gamelogic		unanalyzed	
 0069a930	FUN_0069a930	.text	67		clean	unknown		unanalyzed	
 0069a980	FUN_0069a980	.text	63		clean	unknown		unanalyzed	
-0069aa10	FUN_0069aa10	.text	6		clean	unknown		unanalyzed	
-0069aa20	FUN_0069aa20	.text	47		clean	unknown		unanalyzed	
+0069aa10	FUN_0069aa10	.text	6		clean	gamelogic	recon/weaponlogic	reversed	BoredUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069aa20	FUN_0069aa20	.text	47		clean	gamelogic	recon/weaponlogic	reversed	BoredUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069aa50	FUN_0069aa50	.text	103		clean	unknown		unanalyzed	
 0069aac0	FUN_0069aac0	.text	56		clean	unknown		unanalyzed	
-0069ab60	FUN_0069ab60	.text	6		clean	unknown		unanalyzed	
-0069ab70	FUN_0069ab70	.text	47		clean	unknown		unanalyzed	
-0069aba0	FUN_0069aba0	.text	117		clean	unknown		unanalyzed	
+0069ab60	FUN_0069ab60	.text	6		clean	gamelogic	recon/weaponlogic	reversed	ChargeWeaponUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069ab70	FUN_0069ab70	.text	47		clean	gamelogic	recon/weaponlogic	reversed	ChargeWeaponUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069aba0	FUN_0069aba0	.text	117		clean	gamelogic	recon/weaponlogic	reversed	ChargeWeaponUpdate clamped progress; full 80-bit x87 ST0 at three control words and cleanup oracle; not hooked
 0069ac20	FUN_0069ac20	.text	106		clean	unknown		unanalyzed	
-0069ac90	FUN_0069ac90	.text	114		clean	unknown		unanalyzed	
+0069ac90	FUN_0069ac90	.text	114		clean	gamelogic	recon/weaponlogic	reversed	ClusterBombUpdate target exclusion predicate; exact upper-EAX residue/callback/cleanup oracle
 0069ad10	FUN_0069ad10	.text	253	SageEngine\source\GameEngine\gamelogic\object\Update\ClusterBombUpdate.cpp	clean	gamelogic		unanalyzed	
-0069ae80	FUN_0069ae80	.text	6		clean	unknown		unanalyzed	
-0069ae90	FUN_0069ae90	.text	47		clean	unknown		unanalyzed	
+0069ae80	FUN_0069ae80	.text	6		clean	gamelogic	recon/weaponlogic	reversed	DeletionUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069ae90	FUN_0069ae90	.text	47		clean	gamelogic	recon/weaponlogic	reversed	DeletionUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069aec0	FUN_0069aec0	.text	93		clean	unknown		unanalyzed	
-0069af60	FUN_0069af60	.text	6		clean	unknown		unanalyzed	
-0069af70	FUN_0069af70	.text	47		clean	unknown		unanalyzed	
+0069af60	FUN_0069af60	.text	6		clean	gamelogic	recon/weaponlogic	reversed	DemoTrapUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069af70	FUN_0069af70	.text	47		clean	gamelogic	recon/weaponlogic	reversed	DemoTrapUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069afa0	FUN_0069afa0	.text	109		clean	unknown		unanalyzed	
-0069b040	FUN_0069b040	.text	6		clean	unknown		unanalyzed	
-0069b050	FUN_0069b050	.text	47		clean	unknown		unanalyzed	
-0069b0c0	FUN_0069b0c0	.text	6		clean	unknown		unanalyzed	
-0069b0d0	FUN_0069b0d0	.text	47		clean	unknown		unanalyzed	
-0069b100	FUN_0069b100	.text	329		clean	unknown		unanalyzed	
+0069b040	FUN_0069b040	.text	6		clean	gamelogic	recon/weaponlogic	reversed	DestroyObjectsUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b050	FUN_0069b050	.text	47		clean	gamelogic	recon/weaponlogic	reversed	DestroyObjectsUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069b0c0	FUN_0069b0c0	.text	6		clean	gamelogic	recon/weaponlogic	reversed	DestructibleEnvironmentUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b0d0	FUN_0069b0d0	.text	47		clean	gamelogic	recon/weaponlogic	reversed	DestructibleEnvironmentUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069b100	FUN_0069b100	.text	329		clean	gamelogic	recon/weaponlogic	reversed	DestructibleEnvironmentUpdate two-point 3x4 transform; vtable 00c028e8; SSE order/exact writes/input-output alias oracle
 0069b250	FUN_0069b250	.text	96		clean	unknown		unanalyzed	
-0069b2e0	FUN_0069b2e0	.text	6		clean	unknown		unanalyzed	
-0069b2f0	FUN_0069b2f0	.text	47		clean	unknown		unanalyzed	
-0069b480	FUN_0069b480	.text	6		clean	unknown		unanalyzed	
-0069b490	FUN_0069b490	.text	47		clean	unknown		unanalyzed	
+0069b2e0	FUN_0069b2e0	.text	6		clean	gamelogic	recon/weaponlogic	reversed	DieOnProducerDeathUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b2f0	FUN_0069b2f0	.text	47		clean	gamelogic	recon/weaponlogic	reversed	DieOnProducerDeathUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069b480	FUN_0069b480	.text	6		clean	gamelogic	recon/weaponlogic	reversed	EMPUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b490	FUN_0069b490	.text	47		clean	gamelogic	recon/weaponlogic	reversed	EMPUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069b4c0	FUN_0069b4c0	.text	74		clean	unknown		unanalyzed	
-0069b560	FUN_0069b560	.text	6		clean	unknown		unanalyzed	
-0069b570	FUN_0069b570	.text	47		clean	unknown		unanalyzed	
+0069b560	FUN_0069b560	.text	6		clean	gamelogic	recon/weaponlogic	reversed	FireSpreadUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b570	FUN_0069b570	.text	47		clean	gamelogic	recon/weaponlogic	reversed	FireSpreadUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069b5a0	FUN_0069b5a0	.text	15		clean	unknown		unanalyzed	
-0069b630	FUN_0069b630	.text	6		clean	unknown		unanalyzed	
-0069b640	FUN_0069b640	.text	47		clean	unknown		unanalyzed	
+0069b630	FUN_0069b630	.text	6		clean	gamelogic	recon/weaponlogic	reversed	FlammableUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b640	FUN_0069b640	.text	47		clean	gamelogic	recon/weaponlogic	reversed	FlammableUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069b670	FUN_0069b670	.text	86		clean	unknown		unanalyzed	
 0069b6d0	FUN_0069b6d0	.text	235		clean	unknown		unanalyzed	
-0069b830	FUN_0069b830	.text	6		clean	unknown		unanalyzed	
-0069b840	FUN_0069b840	.text	47		clean	unknown		unanalyzed	
+0069b830	FUN_0069b830	.text	6		clean	gamelogic	recon/weaponlogic	reversed	FreefallUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b840	FUN_0069b840	.text	47		clean	gamelogic	recon/weaponlogic	reversed	FreefallUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069b870	FUN_0069b870	.text	106		clean	unknown		unanalyzed	
 0069b8e0	FUN_0069b8e0	.text	66		clean	unknown		unanalyzed	
-0069b930	FUN_0069b930	.text	95		clean	unknown		unanalyzed	
-0069b9e0	FUN_0069b9e0	.text	6		clean	unknown		unanalyzed	
-0069b9f0	FUN_0069b9f0	.text	47		clean	unknown		unanalyzed	
+0069b930	FUN_0069b930	.text	95		clean	gamelogic	recon/weaponlogic	reversed	FreefallUpdate nested target-range search; direct caller 0077e7f0; full pointer-residue EAX oracle
+0069b9e0	FUN_0069b9e0	.text	6		clean	gamelogic	recon/weaponlogic	reversed	GatherSlavesUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069b9f0	FUN_0069b9f0	.text	47		clean	gamelogic	recon/weaponlogic	reversed	GatherSlavesUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069ba20	FUN_0069ba20	.text	56		clean	unknown		unanalyzed	
-0069baf0	FUN_0069baf0	.text	6		clean	unknown		unanalyzed	
-0069bb00	FUN_0069bb00	.text	47		clean	unknown		unanalyzed	
+0069baf0	FUN_0069baf0	.text	6		clean	gamelogic	recon/weaponlogic	reversed	GrapplingHookUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069bb00	FUN_0069bb00	.text	47		clean	gamelogic	recon/weaponlogic	reversed	GrapplingHookUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069bb30	FUN_0069bb30	.text	78		clean	unknown		unanalyzed	
 0069bb80	FUN_0069bb80	.text	162		clean	unknown		unanalyzed	
-0069bc80	FUN_0069bc80	.text	6		clean	unknown		unanalyzed	
-0069bc90	FUN_0069bc90	.text	47		clean	unknown		unanalyzed	
+0069bc80	FUN_0069bc80	.text	6		clean	gamelogic	recon/weaponlogic	reversed	HeightDieUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069bc90	FUN_0069bc90	.text	47		clean	gamelogic	recon/weaponlogic	reversed	HeightDieUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069bcc0	FUN_0069bcc0	.text	166		clean	unknown		unanalyzed	
-0069bdc0	FUN_0069bdc0	.text	6		clean	unknown		unanalyzed	
-0069bdd0	FUN_0069bdd0	.text	47		clean	unknown		unanalyzed	
+0069bdc0	FUN_0069bdc0	.text	6		clean	gamelogic	recon/weaponlogic	reversed	HijackerUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069bdd0	FUN_0069bdd0	.text	47		clean	gamelogic	recon/weaponlogic	reversed	HijackerUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069be00	FUN_0069be00	.text	164		clean	unknown		unanalyzed	
-0069bee0	FUN_0069bee0	.text	6		clean	unknown		unanalyzed	
-0069bef0	FUN_0069bef0	.text	47		clean	unknown		unanalyzed	
-0069bf90	FUN_0069bf90	.text	6		clean	unknown		unanalyzed	
-0069bfa0	FUN_0069bfa0	.text	47		clean	unknown		unanalyzed	
+0069bee0	FUN_0069bee0	.text	6		clean	gamelogic	recon/weaponlogic	reversed	HordeNotifyTargetsOfImminentProbableCrushingUpdate module name; exact pointer oracle
+0069bef0	FUN_0069bef0	.text	47		clean	gamelogic	recon/weaponlogic	reversed	HordeNotifyTargetsOfImminentProbableCrushingUpdate guarded module key; exact state oracle
+0069bf90	FUN_0069bf90	.text	6		clean	gamelogic	recon/weaponlogic	reversed	InitiateRepairDie module name; exact string pointer/EAX/EDX/cleanup oracle
+0069bfa0	FUN_0069bfa0	.text	47		clean	gamelogic	recon/weaponlogic	reversed	InitiateRepairDie guarded module key; exact guard/cache writes and resolver call oracle
 0069bfd0	FUN_0069bfd0	.text	122		clean	unknown		unanalyzed	
-0069c170	FUN_0069c170	.text	6		clean	unknown		unanalyzed	
-0069c180	FUN_0069c180	.text	47		clean	unknown		unanalyzed	
+0069c170	FUN_0069c170	.text	6		clean	gamelogic	recon/weaponlogic	reversed	InvisibilityBroadcastUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069c180	FUN_0069c180	.text	47		clean	gamelogic	recon/weaponlogic	reversed	InvisibilityBroadcastUpdate guarded module key; exact state/resolver oracle
 0069c1b0	FUN_0069c1b0	.text	11		clean	unknown		unanalyzed	
 0069c1c0	FUN_0069c1c0	.text	57		clean	unknown		unanalyzed	
 0069c200	FUN_0069c200	.text	256		clean	unknown		unanalyzed	
 0069c300	FUN_0069c300	.text	80		clean	unknown		unanalyzed	
 0069c350	FUN_0069c350	.text	79		clean	unknown		unanalyzed	
-0069c4b0	FUN_0069c4b0	.text	6		clean	unknown		unanalyzed	
-0069c4c0	FUN_0069c4c0	.text	47		clean	unknown		unanalyzed	
+0069c4b0	FUN_0069c4b0	.text	6		clean	gamelogic	recon/weaponlogic	reversed	InvisibilityUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069c4c0	FUN_0069c4c0	.text	47		clean	gamelogic	recon/weaponlogic	reversed	InvisibilityUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069c4f0	FUN_0069c4f0	.text	57		clean	unknown		unanalyzed	
 0069c530	FUN_0069c530	.text	18		inner-patched	unknown		unanalyzed	
 0069c5e0	FUN_0069c5e0	.text	205		clean	unknown		unanalyzed	
 0069c6b0	FUN_0069c6b0	.text	59		clean	unknown		unanalyzed	
 0069c6f0	FUN_0069c6f0	.text	255	SageEngine\source\GameEngine\gamelogic\object\Update\LargeGroupBonusUpdate.cpp	clean	gamelogic		unanalyzed	
-0069c7f0	FUN_0069c7f0	.text	6		clean	unknown		unanalyzed	
-0069c800	FUN_0069c800	.text	47		clean	unknown		unanalyzed	
+0069c7f0	FUN_0069c7f0	.text	6		clean	gamelogic	recon/weaponlogic	reversed	LargeGroupBonusUpdate module name; vtable 00c042d8 and exact pointer oracle
+0069c800	FUN_0069c800	.text	47		clean	gamelogic	recon/weaponlogic	reversed	LargeGroupBonusUpdate guarded module key; exact state/resolver oracle
 0069c830	FUN_0069c830	.text	57		clean	unknown		unanalyzed	
 0069c870	FUN_0069c870	.text	125		clean	unknown		unanalyzed	
 0069c8f0	FUN_0069c8f0	.text	8		clean	unknown		unanalyzed	
 0069c900	FUN_0069c900	.text	151		clean	unknown		unanalyzed	
-0069ca10	FUN_0069ca10	.text	6		clean	unknown		unanalyzed	
-0069ca20	FUN_0069ca20	.text	47		clean	unknown		unanalyzed	
-0069ca50	FUN_0069ca50	.text	201		clean	unknown		unanalyzed	
+0069ca10	FUN_0069ca10	.text	6		clean	gamelogic	recon/weaponlogic	reversed	LaserScatterUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069ca20	FUN_0069ca20	.text	47		clean	gamelogic	recon/weaponlogic	reversed	LaserScatterUpdate guarded module key; exact guard/cache writes and resolver call oracle
+0069ca50	FUN_0069ca50	.text	201		clean	gamelogic	recon/weaponlogic	reversed	LaserScatterUpdate initialization; scheduler args, object status and exact state writes oracle
 0069cb20	FUN_0069cb20	.text	151		clean	unknown		unanalyzed	
 0069cc40	FUN_0069cc40	.text	82		clean	unknown		unanalyzed	
 0069cca0	FUN_0069cca0	.text	47		clean	unknown		unanalyzed	
 0069ccd0	FUN_0069ccd0	.text	32		clean	unknown		unanalyzed	
 0069ccf0	FUN_0069ccf0	.text	64		clean	unknown		unanalyzed	
-0069cd30	FUN_0069cd30	.text	326		clean	unknown		unanalyzed	
-0069ce80	FUN_0069ce80	.text	10		clean	unknown		unanalyzed	
+0069cd30	FUN_0069cd30	.text	326		clean	gamelogic	recon/weaponlogic	reversed	LifetimeUpdate secondary deadline; direct callers 0069ce8a/00753ff0; x87 truncation and exact writes oracle
+0069ce80	FUN_0069ce80	.text	10		clean	gamelogic	recon/weaponlogic	reversed	LifetimeUpdate range scheduling entry with native continuation 0069ce8a; exact ABI/random/deadline oracle; dispatcher not analyzed
 0069ce8a	FUN_0069ce8a	.text	87	SageEngine\source\GameEngine\gamelogic\object\Update\LifetimeUpdate.cpp	clean	gamelogic		unanalyzed	
-0069cef0	FUN_0069cef0	.text	35		clean	unknown		unanalyzed	
-0069cf20	FUN_0069cf20	.text	64		clean	unknown		unanalyzed	
+0069cef0	FUN_0069cef0	.text	35		clean	gamelogic	recon/weaponlogic	reversed	LifetimeUpdate pause; vtable 00bf89a0 path; exact scheduler args/state/cleanup oracle
+0069cf20	FUN_0069cf20	.text	64		clean	gamelogic	recon/weaponlogic	reversed	LifetimeUpdate resume; vtable 00bf89a0 path; exact scheduler args/state/cleanup oracle
 0069cf60	FUN_0069cf60	.text	153		clean	unknown		unanalyzed	
 0069d000	FUN_0069d000	.text	185	SageEngine\source\GameEngine\GameLogic\Object\Update\LiftObjectUpdate.h	clean	gamelogic		unanalyzed	
-0069d0f0	FUN_0069d0f0	.text	121		clean	unknown		unanalyzed	
-0069d1d0	FUN_0069d1d0	.text	6		clean	unknown		unanalyzed	
-0069d1e0	FUN_0069d1e0	.text	47		clean	unknown		unanalyzed	
+0069d0f0	FUN_0069d0f0	.text	121		clean	gamelogic	recon/weaponlogic	reversed	LoseHealthUpdate capped pulse count; imported ceil/x87 conversion and full EAX/cleanup oracle
+0069d1d0	FUN_0069d1d0	.text	6		clean	gamelogic	recon/weaponlogic	reversed	LoseHealthUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069d1e0	FUN_0069d1e0	.text	47		clean	gamelogic	recon/weaponlogic	reversed	LoseHealthUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069d210	FUN_0069d210	.text	57		clean	unknown		unanalyzed	
 0069d250	FUN_0069d250	.text	321		clean	unknown		unanalyzed	
 0069d3a0	FUN_0069d3a0	.text	97		clean	unknown		unanalyzed	
@@ -12862,17 +12862,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0069da50	FUN_0069da50	.text	101		clean	unknown		unanalyzed	
 0069dac0	FUN_0069dac0	.text	218		clean	unknown		unanalyzed	
 0069dba0	FUN_0069dba0	.text	436	SageEngine\source\GameEngine\gamelogic\object\Update\PhysicsUpdate.cpp	clean	gamelogic		unanalyzed	
-0069e0d0	FUN_0069e0d0	.text	71		clean	unknown		unanalyzed	
-0069e120	FUN_0069e120	.text	65		clean	unknown		unanalyzed	
+0069e0d0	FUN_0069e0d0	.text	71		clean	gamelogic	recon/weaponlogic	reversed	PhysicsUpdate collision-mask flag set callback; exact virtual result/state/cleanup oracle
+0069e120	FUN_0069e120	.text	65		clean	gamelogic	recon/weaponlogic	reversed	PhysicsUpdate collision-mask flag clear callback; exact virtual result/state/cleanup oracle
 0069e170	FUN_0069e170	.text	9		inner-patched	unknown		unanalyzed	
-0069e190	FUN_0069e190	.text	217		clean	unknown		unanalyzed	
-0069e2d0	FUN_0069e2d0	.text	6		clean	unknown		unanalyzed	
-0069e2e0	FUN_0069e2e0	.text	47		clean	unknown		unanalyzed	
+0069e190	FUN_0069e190	.text	217		clean	gamelogic	recon/weaponlogic	reversed	PhysicsUpdate transform capture; direct callers 00714e30/00762080; exact 97-byte writes and native x87 SNaN quieting oracle
+0069e2d0	FUN_0069e2d0	.text	6		clean	gamelogic	recon/weaponlogic	reversed	PowerUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069e2e0	FUN_0069e2e0	.text	47		clean	gamelogic	recon/weaponlogic	reversed	PowerUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069e310	FUN_0069e310	.text	39		clean	unknown		unanalyzed	
 0069e340	FUN_0069e340	.text	119		clean	unknown		unanalyzed	
-0069e3c0	FUN_0069e3c0	.text	62		clean	unknown		unanalyzed	
-0069e400	FUN_0069e400	.text	17		clean	unknown		unanalyzed	
-0069e420	FUN_0069e420	.text	19		clean	unknown		unanalyzed	
+0069e3c0	FUN_0069e3c0	.text	62		clean	gamelogic	recon/weaponlogic	reversed	PhysicsUpdate group scaling; direct callers 007311d0/00763bc0; SSE bits and exact writes oracle
+0069e400	FUN_0069e400	.text	17		clean	gamelogic	recon/weaponlogic	reversed	object status bit 9 query; full EAX/EDX/cleanup oracle; explicit hook
+0069e420	FUN_0069e420	.text	19		clean	gamelogic	recon/weaponlogic	reversed	PhysicsUpdate controller identifier copy; vtable 00c19788 slot 6; exact write-range oracle
 0069e440	FUN_0069e440	.text	241		clean	unknown		unanalyzed	
 0069e540	FUN_0069e540	.text	106		clean	unknown		unanalyzed	
 0069e5b0	FUN_0069e5b0	.text	75		clean	unknown		unanalyzed	
@@ -12880,21 +12880,21 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0069e660	FUN_0069e660	.text	141		clean	unknown		unanalyzed	
 0069e6f0	FUN_0069e6f0	.text	133		clean	unknown		unanalyzed	
 0069e780	FUN_0069e780	.text	29		inner-patched	unknown		unanalyzed	
-0069e820	FUN_0069e820	.text	40		clean	unknown		unanalyzed	
-0069e850	FUN_0069e850	.text	44		clean	unknown		unanalyzed	
+0069e820	FUN_0069e820	.text	40		clean	gamelogic	recon/weaponlogic	reversed	PhysicsUpdate overlap count; vtable 00c19580 slot 23; linked-list oracle; explicit hook
+0069e850	FUN_0069e850	.text	44		clean	gamelogic	recon/weaponlogic	reversed	PhysicsUpdate controller/height predicate; direct caller 00763bc0; upper-EAX/float oracle; explicit hook
 0069e880	FUN_0069e880	.text	94		clean	unknown		unanalyzed	
-0069e8e0	FUN_0069e8e0	.text	49		clean	unknown		unanalyzed	
+0069e8e0	FUN_0069e8e0	.text	49		clean	gamelogic	recon/weaponlogic	reversed	PowerUpdate wake scheduling; exact deadline/scheduler/state/cleanup oracle
 0069e920	FUN_0069e920	.text	228		clean	unknown		unanalyzed	
-0069ea50	FUN_0069ea50	.text	6		clean	unknown		unanalyzed	
-0069ea60	FUN_0069ea60	.text	47		clean	unknown		unanalyzed	
+0069ea50	FUN_0069ea50	.text	6		clean	gamelogic	recon/weaponlogic	reversed	ProneUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069ea60	FUN_0069ea60	.text	47		clean	gamelogic	recon/weaponlogic	reversed	ProneUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069ea90	FUN_0069ea90	.text	93		clean	unknown		unanalyzed	
-0069eb30	FUN_0069eb30	.text	6		clean	unknown		unanalyzed	
-0069eb40	FUN_0069eb40	.text	47		clean	unknown		unanalyzed	
+0069eb30	FUN_0069eb30	.text	6		clean	gamelogic	recon/weaponlogic	reversed	RadarUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069eb40	FUN_0069eb40	.text	47		clean	gamelogic	recon/weaponlogic	reversed	RadarUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069eb70	FUN_0069eb70	.text	135		clean	unknown		unanalyzed	
 0069ec00	FUN_0069ec00	.text	29		clean	unknown		unanalyzed	
 0069ec20	FUN_0069ec20	.text	62		clean	unknown		unanalyzed	
-0069ece0	FUN_0069ece0	.text	6		clean	unknown		unanalyzed	
-0069ecf0	FUN_0069ecf0	.text	47		clean	unknown		unanalyzed	
+0069ece0	FUN_0069ece0	.text	6		clean	gamelogic	recon/weaponlogic	reversed	RepairUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069ecf0	FUN_0069ecf0	.text	47		clean	gamelogic	recon/weaponlogic	reversed	RepairUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069ed20	FUN_0069ed20	.text	79		clean	unknown		unanalyzed	
 0069ed70	FUN_0069ed70	.text	57		clean	unknown		unanalyzed	
 0069edb0	FUN_0069edb0	.text	72		clean	unknown		unanalyzed	
@@ -12905,32 +12905,32 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0069f0d0	FUN_0069f0d0	.text	47		clean	unknown		unanalyzed	
 0069f100	FUN_0069f100	.text	126		clean	unknown		unanalyzed	
 0069f180	FUN_0069f180	.text	235	SageEngine\source\GameEngine\gamelogic\object\Update\SetLocomotorSpeedUpdate.cpp	clean	gamelogic		unanalyzed	
-0069f270	FUN_0069f270	.text	6		clean	unknown		unanalyzed	
-0069f280	FUN_0069f280	.text	47		clean	unknown		unanalyzed	
+0069f270	FUN_0069f270	.text	6		clean	gamelogic	recon/weaponlogic	reversed	SetLocomotorSpeedUpdate module name; vtable 00c05a88 and exact pointer oracle
+0069f280	FUN_0069f280	.text	47		clean	gamelogic	recon/weaponlogic	reversed	SetLocomotorSpeedUpdate guarded module key; exact state/resolver oracle
 0069f2b0	FUN_0069f2b0	.text	165		clean	unknown		unanalyzed	
 0069f360	FUN_0069f360	.text	96		clean	unknown		unanalyzed	
 0069f410	FUN_0069f410	.text	6		clean	unknown		unanalyzed	
 0069f420	FUN_0069f420	.text	47		clean	unknown		unanalyzed	
-0069f450	FUN_0069f450	.text	767		clean	unknown		unanalyzed	
+0069f450	FUN_0069f450	.text	767		clean	gamelogic	recon/weaponlogic	reversed	ShieldBodyUpdate sphere/segment intersection; callers 007178d0/00717d50; SSE/x87 exact output/full EAX/cleanup/start-output alias oracle
 0069f750	FUN_0069f750	.text	8		clean	unknown		unanalyzed	
-0069f760	FUN_0069f760	.text	15		clean	unknown		unanalyzed	
-0069f770	FUN_0069f770	.text	84		clean	unknown		unanalyzed	
-0069f840	FUN_0069f840	.text	6		clean	unknown		unanalyzed	
-0069f850	FUN_0069f850	.text	47		clean	unknown		unanalyzed	
+0069f760	FUN_0069f760	.text	15		clean	gamelogic	recon/weaponlogic	reversed	object slave-link clear; vtable 00c05cb4 slot 4; exact two writes/EAX/EDX oracle; explicit hook
+0069f770	FUN_0069f770	.text	84		clean	gamelogic	recon/weaponlogic	reversed	SlavedUpdate pinned position plus optional offset; direct caller 006e9b80; exact output/alias-order oracle
+0069f840	FUN_0069f840	.text	6		clean	gamelogic	recon/weaponlogic	reversed	SlavedUpdate module name; exact string pointer/EAX/EDX/cleanup oracle
+0069f850	FUN_0069f850	.text	47		clean	gamelogic	recon/weaponlogic	reversed	SlavedUpdate guarded module key; exact guard/cache writes and resolver call oracle
 0069f880	FUN_0069f880	.text	15		clean	unknown		unanalyzed	
 0069f890	FUN_0069f890	.text	57		clean	unknown		unanalyzed	
-0069f8d0	FUN_0069f8d0	.text	125		clean	unknown		unanalyzed	
+0069f8d0	FUN_0069f8d0	.text	125		clean	gamelogic	recon/weaponlogic	reversed	SlavedUpdate guard-point proximity scan; direct caller 00718620; full pointer-residue EAX/SSE oracle; explicit hook
 0069f950	FUN_0069f950	.text	139		clean	unknown		unanalyzed	
-0069f9e0	FUN_0069f9e0	.text	169		clean	unknown		unanalyzed	
+0069f9e0	FUN_0069f9e0	.text	169		clean	gamelogic	recon/weaponlogic	reversed	SlavedUpdate state predicate; direct caller 0069fa90; all upper-EAX paths/cleanup oracle; explicit hook
 0069fa90	FUN_0069fa90	.text	202		clean	unknown		unanalyzed	
 0069fb60	FUN_0069fb60	.text	95		clean	unknown		unanalyzed	
 0069fbc0	FUN_0069fbc0	.text	73		clean	unknown		unanalyzed	
 0069fc10	FUN_0069fc10	.text	52		clean	unknown		unanalyzed	
-0069fc50	FUN_0069fc50	.text	13		clean	unknown		unanalyzed	
-0069fc60	FUN_0069fc60	.text	36		clean	unknown		unanalyzed	
+0069fc50	FUN_0069fc50	.text	13		clean	gamelogic	recon/weaponlogic	reversed	SlavedUpdate configuration bit 22; direct caller 005252b0; EAX/EDX oracle; explicit hook
+0069fc60	FUN_0069fc60	.text	36		clean	gamelogic	recon/weaponlogic	reversed	SlavedUpdate rider predicate; direct caller 007aa550; pointer-residue EAX oracle; explicit hook
 0069fc90	FUN_0069fc90	.text	58		clean	unknown		unanalyzed	
 0069fcd0	FUN_0069fcd0	.text	82		clean	unknown		unanalyzed	
-0069fd30	FUN_0069fd30	.text	18		clean	unknown		unanalyzed	
+0069fd30	FUN_0069fd30	.text	18		clean	gamelogic	recon/weaponlogic	reversed	SlavedUpdate template-field copy; vtable/caller ownership; exact write/EAX/EDX/cleanup oracle
 0069fd50	FUN_0069fd50	.text	113		clean	unknown		unanalyzed	
 0069fe20	FUN_0069fe20	.text	6		clean	unknown		unanalyzed	
 0069fe30	FUN_0069fe30	.text	47		clean	unknown		unanalyzed	
