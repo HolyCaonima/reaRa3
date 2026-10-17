@@ -14,7 +14,7 @@ address	status	owner	module	notes
 007879f0	reversed	recon/thing78	gamelogic	ra3::gamelogic::xferLineSegment; 00c28380 slot 3 LineSegmentDamageUpdate
 00788470	reversed	recon/thing78	gamelogic	ra3::gamelogic::lineSegmentNameKey; 00c28380 slot 4 LineSegmentDamageUpdate; NAMEKEY cache of 00c283d8
 007885e0	reversed	recon/thing78	gamelogic	ra3::gamelogic::writeModuleDataWord; 00bdbc08 slot 5 BehaviorModule
-00788650	reversed	recon/thing78	common	ra3::common::assignTagged; called from 00911260 at 00911271; 00911260 called by W3DScriptedModelDraw 00911910 at 0091193c; writes vtable 00c28498
+00788650	reversed	recon/thing78	common	ra3::common::assignTagged; called from 00911260 at 00911271; 00911260 called by W3DScriptedModelDraw 00911910 at 0091193c; writes vtable 00c28498, so it is the DrawableModule constructor (slot 2 of 00c28498 returns DrawableModule; C++ name kept) (controller)
 007886c0	reversed	recon/thing78	common	ra3::common::cachedScalar; called by AIEnterState 007db740 at 007db76a
 007886e0	reversed	recon/thing78	common	ra3::common::firstSlot; called by HighlanderBody 006906e0 at 0069070f
 00788730	reversed	recon/thing78	common	ra3::common::templateField130; called by AIBuildableStructure 008c4de0 at 008c4e5f
