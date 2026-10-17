@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 render9b 合并）
+## 3. 现状（截至 client52 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 2,118、unanalyzed 46,807（受保护函数已 reversed：entry-lost 104、inner-patched 14、
+  reversed 2,176、unanalyzed 46,749（受保护函数已 reversed：entry-lost 104、inner-patched 14、
   entry-recoverable 3）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
@@ -286,6 +286,13 @@
     `render9b.md`。命令类名取自 slot 2 返回的用法串；主控复算 `fails=0`，并把 9–30 字节的小体逐条
     反汇编，确认都写字段或调用（不是返回常量桩）。12 个宽命令体（各 parse 与 renderquad exec）留待后续。
     集成态 oracle 111 例零差异，`parseClearCommand` 的 `>=1→>=2` mutation 检出
+  - GameClient `View` 批次（`0x00520000–0x0053FFFF`，Grok）：58 个 `View` vtable `0x00BE0440` 方法
+    （slot 2 返回 `View`）：视口宽高/原点、位置、角度钳制、FOV 缩放、高度/地形高度、滤镜与缩放模式、
+    guard 位置、震屏、远近裁剪面，以及 slot 5 的默认视口初始化与它尾跳的相机复位 `0x00529C60`；无
+    hook。代码在 `ra3/gameclient/GameClient52.h`，设计见 `client52.md`。主控复算 `fails=0` 并把 ≤48
+    字节的体全部反汇编：32 个是单字段访问器（55%，超出样板口径，见 §3 末“样板口径”），因派单未写明而照收。
+    2 个 `fpatan` 体因 Unicorn 与 CPU 的 80 位尾数不同而放弃。集成态 oracle 332 例零差异，
+    `View_setAngleClamped` 存储偏移 `0x2C→0x30` mutation 检出
   - AI states 批次（`0x00790000–0x0079FFFF`，Grok）：48 个方法（Turret/UnitAI/AIDock/AIGuard/AIAttack
     各 state 的 onEnter/update/onExit 与条件槽位、FollowWaypointPath/Turret 状态机），无 hook，样板 0；
     代码在 `ra3/gamelogic/AIState79.h`，设计见 `aistate79.md`。归属全部为单个 split vtable 槽位，主控
@@ -331,10 +338,10 @@
     `recon/particles65`、`recon/render91`、`recon/obj6a`、`recon/protcave`、`recon/protentry2`、
     `recon/gamelogic82`、`recon/skirm87`、`recon/common5a`、`recon/render56`、`recon/objbehav68`、`recon/audio50`、
     `recon/aistate79`、`recon/render99`、`recon/net5d2`、`recon/obj69`、`recon/logic4d`、`recon/skirm8b`、
-    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`、`recon/render9b`：已合并（`789bcb1`、
+    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`、`recon/render9b`、`recon/client52`：已合并（`789bcb1`、
     `f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`、
     `9df37c8`、`760e231`、`79a7caa`、`9c14506`、`6234602`、`00c9a7a`、`be08241`、`ba97d03`、`bec182d`、
-    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`、`ae7caf5`）。追加合并脚本在
+    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`、`ae7caf5`、`0f0515f`）。追加合并脚本在
     冲突块以 `)` 收尾时会报 WARN，需手工检查括号（skirm87 合并时拼坏过一次 CMake）。受保护批次的站点/字符串/伪调用核对脚本见 `work/probe/check_protcave.py`、
     `work/probe/check_protentry2.py`，多快照槽值用 `work/probe/slot_snapshots.py`。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
@@ -357,6 +364,8 @@
     主控手工替换）、`recon/aistate7c`（`0x007C0000–0x007CFFFF` 剩余 200 个 clean，142 个在具名
     split vtable 非 getter 槽位，Grok）、`recon/render9b`（`0x009B0000–0x009BFFFF` 渲染管线脚本命令
     解释器，slot 2 返回各命令的用法串，Grok）。当前 Grok 9 路、Gemini 1 路。
+  - client52 合并后补位：`recon/aistate79c`（`0x00790000–0x0079FFFF` 第三轮，AI states，169 个在具名
+    split vtable 非 getter 槽位，Grok）。
   - render9b 合并后补位：`recon/aistate7a2`（`0x007A0000–0x007AFFFF` 第二轮，AI states，186 个在具名
     split vtable 非 getter 槽位，`AIStates.cpp`/`GetStrafePosition.cpp` 锚点，Grok）。
   - aistate79b 合并后补位：`recon/w3d56`（`0x00560000–0x0057FFFF` W3D 渲染层：W3DView 覆盖、
@@ -403,7 +412,7 @@
   （已开 aistate7c）→ ~~`0x009B0000` 106~~（已开 render9b）→ ~~`0x00720000` 95~~（已开 obj72，含 `0x0073`）→
   ~~`0x00690000` 第二轮~~（已开 obj69b）→ ~~`0x007D0000`~~（已开 aistate7d）→ ~~`0x006E0000`~~（已开 obj6e，含 `0x006F`）→ ~~`0x00710000`~~（已开
   obj70，含 `0x0070`）→ ~~`0x00520000`~~（已开 client52，含 `0x0053`）→ ~~`0x00560000`~~（已开 w3d56，含 `0x0057`）→
-  （17:50 重排）~~`0x007A0000` 第二轮 186~~（已开 aistate7a2）→ `0x00790000` 第三轮 169 →
+  （17:50 重排）~~`0x007A0000` 第二轮 186~~（已开 aistate7a2）→ ~~`0x00790000` 第三轮 169~~（已开 aistate79c）→
   `0x006C0000` 96 → `0x00660000` 91 → `0x007B0000` 第二轮 89 → `0x009B0000` 第二轮 73；下一轮用 `python work\probe\rank_blocks.py <在途块号...>` 重新排名
   （按具名 split vtable 非 getter 槽位里的未认领 clean 函数数），再用 `survey_block.py` 看类名与锚点。
   `0x0066`（FX 粒子模块）与 `0x006C` 的槽位多在无 slot-2 getter 的表里（主控用
@@ -438,6 +447,10 @@
   Grok 更稳（不断连、交付与代码一致）。唯一的 Gemini 位只给最难的簇（受保护代码、GameLogic 核心、
   重 x87/ABI）；Gemini 批次完成或中断后，若没有这类难簇，空位也补 Grok。Gemini 交付仍一律由主控
   脚本重推证据。
+- **样板口径**（17:50 补充）：计入 30% 上限的样板包括 slot-2 类名 getter、NAMEKEY 缓存、返回常量桩、
+  只转发基类的 xfer、超过 5 个的同形工厂，以及只读写一个成员、不带逻辑的单字段访问器
+  （`fld [ecx+X]; ret`、`mov [ecx+X], arg; ret 4`）。client52 有 32/58 个单字段访问器，因当时派单没写明
+  而照收；模板 `work/prompts/obj72.md` 已补上这一条。
 - **验收按风险分级**（用户 12:13、12:15 决定，避免重复验证）：
   - 低风险直线访问器/常量写入：2–4 个有区别的场景，覆盖正常值、边界值、ABI、实际写集
     和 sentinel 即可；不做随机数量竞赛。

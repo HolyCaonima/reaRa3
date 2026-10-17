@@ -4182,16 +4182,16 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00522500	FUN_00522500	.text	16		clean	unknown		unanalyzed	
 00522510	FUN_00522510	.text	6		clean	unknown		unanalyzed	
 00522520	FUN_00522520	.text	14		clean	unknown		unanalyzed	
-00522530	FUN_00522530	.text	57		clean	unknown		unanalyzed	
-00522570	FUN_00522570	.text	12		clean	unknown		unanalyzed	
-00522580	FUN_00522580	.text	43		clean	unknown		unanalyzed	
-005225b0	FUN_005225b0	.text	43		clean	unknown		unanalyzed	
+00522530	FUN_00522530	.text	57		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_pushZoom; 00be0440 slot 81; slot 2 returns View
+00522570	FUN_00522570	.text	12		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setViewId; 00be0440 slot 131; slot 2 returns View
+00522580	FUN_00522580	.text	43		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_scaleFovDown; 00be0440 slot 63; slot 2 returns View
+005225b0	FUN_005225b0	.text	43		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_scaleFovUp; 00be0440 slot 64; slot 2 returns View
 005225e0	FUN_005225e0	.text	7		clean	unknown		unanalyzed	
-005225f0	FUN_005225f0	.text	45		clean	unknown		unanalyzed	
-00522620	FUN_00522620	.text	13		clean	unknown		unanalyzed	
-00522630	FUN_00522630	.text	116		clean	unknown		unanalyzed	
+005225f0	FUN_005225f0	.text	45		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setAngleClamped; 00be0440 slot 50; slot 2 returns View
+00522620	FUN_00522620	.text	13		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_copyAnglePitchDefaults; 00be0440 slot 54; slot 2 returns View
+00522630	FUN_00522630	.text	116		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_applyCamera; 00be0440 slot 75; slot 2 returns View
 005226b0	FUN_005226b0	.text	149		clean	unknown		unanalyzed	
-00522750	FUN_00522750	.text	80		clean	unknown		unanalyzed	
+00522750	FUN_00522750	.text	80		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_distanceFromHalfAngle; 00be0440 slot 113; slot 2 returns View
 005227a0	FUN_005227a0	.text	55		clean	unknown		unanalyzed	
 005227e0	FUN_005227e0	.text	19		clean	unknown		unanalyzed	
 00522800	FUN_00522800	.text	6		clean	unknown		unanalyzed	
@@ -4396,60 +4396,60 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00529310	FUN_00529310	.text	163		clean	unknown		unanalyzed	
 005293c0	FUN_005293c0	.text	817		clean	unknown		unanalyzed	
 00529700	FUN_00529700	.text	278		clean	unknown		unanalyzed	
-00529820	FUN_00529820	.text	10		clean	unknown		unanalyzed	
-00529830	AptCIH::SetDisplayListNext	.text	10		clean	unknown		unanalyzed	
-00529840	AptCIH::SetDisplayListParent	.text	10		clean	unknown		unanalyzed	
-00529850	FUN_00529850	.text	17		clean	unknown		unanalyzed	
-00529870	FUN_00529870	.text	21		clean	unknown		unanalyzed	
-00529890	FUN_00529890	.text	19		clean	unknown		unanalyzed	
+00529820	FUN_00529820	.text	10		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setLockByte; 00be0440 slot 8; slot 2 returns View
+00529830	AptCIH::SetDisplayListNext	.text	10		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setViewportWidth; 00be0440 slot 10; slot 2 returns View
+00529840	AptCIH::SetDisplayListParent	.text	10		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setViewportHeight; 00be0440 slot 12; slot 2 returns View
+00529850	FUN_00529850	.text	17		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setViewportOrigin; 00be0440 slot 14; slot 2 returns View
+00529870	FUN_00529870	.text	21		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getViewportOrigin; 00be0440 slot 15; slot 2 returns View
+00529890	FUN_00529890	.text	19		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setPositionFromScreenIf; 00be0440 slot 21; slot 2 returns View
 005298b0	FUN_005298b0	.text	3		clean	unknown		unanalyzed	
 005298c0	FUN_005298c0	.text	3		clean	unknown		unanalyzed	
 005298d0	FUN_005298d0	.text	3		clean	unknown		unanalyzed	
-005298e0	FUN_005298e0	.text	4		clean	unknown		unanalyzed	
-005298f0	FUN_005298f0	.text	4		clean	unknown		unanalyzed	
-00529900	FUN_00529900	.text	24		clean	unknown		unanalyzed	
-00529920	FUN_00529920	.text	4		clean	unknown		unanalyzed	
-00529930	FUN_00529930	.text	4		clean	unknown		unanalyzed	
-00529940	FUN_00529940	.text	14		clean	unknown		unanalyzed	
-00529950	FUN_00529950	.text	10		clean	unknown		unanalyzed	
-00529960	FUN_00529960	.text	4		clean	unknown		unanalyzed	
-00529970	FUN_00529970	.text	14		clean	unknown		unanalyzed	
-00529980	FUN_00529980	.text	4		clean	unknown		unanalyzed	
-00529990	FUN_00529990	.text	14		clean	unknown		unanalyzed	
-005299a0	FUN_005299a0	.text	14		clean	unknown		unanalyzed	
-005299b0	FUN_005299b0	.text	4		clean	unknown		unanalyzed	
-005299c0	FUN_005299c0	.text	25		clean	unknown		unanalyzed	
-005299e0	FUN_005299e0	.text	5		clean	unknown		unanalyzed	
-005299f0	FUN_005299f0	.text	21		clean	unknown		unanalyzed	
-00529a10	FUN_00529a10	.text	4		clean	unknown		unanalyzed	
-00529a20	AptActionInterpreter::getThrownValue	.text	4		clean	unknown		unanalyzed	
-00529a30	FUN_00529a30	.text	10		clean	unknown		unanalyzed	
-00529a40	FUN_00529a40	.text	22		clean	unknown		unanalyzed	
-00529a60	FUN_00529a60	.text	10		clean	unknown		unanalyzed	
-00529a70	FUN_00529a70	.text	4		clean	unknown		unanalyzed	
-00529a80	FUN_00529a80	.text	14		clean	unknown		unanalyzed	
-00529a90	FUN_00529a90	.text	7		clean	unknown		unanalyzed	
-00529aa0	FUN_00529aa0	.text	7		clean	unknown		unanalyzed	
-00529ab0	FUN_00529ab0	.text	13		clean	unknown		unanalyzed	
-00529ac0	FUN_00529ac0	.text	23		clean	unknown		unanalyzed	
-00529ae0	FUN_00529ae0	.text	16		clean	unknown		unanalyzed	
-00529af0	FUN_00529af0	.text	28		clean	unknown		unanalyzed	
-00529b10	FUN_00529b10	.text	33		clean	unknown		unanalyzed	
-00529b40	FUN_00529b40	.text	64		clean	unknown		unanalyzed	
-00529b80	FUN_00529b80	.text	12		clean	unknown		unanalyzed	
-00529b90	FUN_00529b90	.text	7		clean	unknown		unanalyzed	
-00529ba0	FUN_00529ba0	.text	31		clean	unknown		unanalyzed	
-00529bc0	FUN_00529bc0	.text	7		clean	unknown		unanalyzed	
-00529bd0	FUN_00529bd0	.text	7		clean	unknown		unanalyzed	
-00529be0	FUN_00529be0	.text	17		clean	unknown		unanalyzed	
-00529c00	FUN_00529c00	.text	17		clean	unknown		unanalyzed	
+005298e0	FUN_005298e0	.text	4		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getAngle; 00be0440 slot 51; slot 2 returns View
+005298f0	FUN_005298f0	.text	4		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getPitch; 00be0440 slot 53; slot 2 returns View
+00529900	FUN_00529900	.text	24		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_copyPosition; 00be0440 slot 55; slot 2 returns View
+00529920	FUN_00529920	.text	4		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getZoom; 00be0440 slot 59; slot 2 returns View
+00529930	FUN_00529930	.text	4		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getFov; 00be0440 slot 61; slot 2 returns View
+00529940	FUN_00529940	.text	14		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setFov; 00be0440 slot 62; slot 2 returns View
+00529950	FUN_00529950	.text	10		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setByte7D; 00be0440 slot 67; slot 2 returns View
+00529960	FUN_00529960	.text	4		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getHeight; 00be0440 slot 68; slot 2 returns View
+00529970	FUN_00529970	.text	14		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setHeight; 00be0440 slot 69; slot 2 returns View
+00529980	FUN_00529980	.text	4		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getMaxHeight; 00be0440 slot 70; slot 2 returns View
+00529990	FUN_00529990	.text	14		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setMaxHeight; 00be0440 slot 71; slot 2 returns View
+005299a0	FUN_005299a0	.text	14		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setTerrainHeight; 00be0440 slot 72; slot 2 returns View
+005299b0	FUN_005299b0	.text	4		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getTerrainHeight; 00be0440 slot 73; slot 2 returns View
+005299c0	FUN_005299c0	.text	25		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_clearFilter; 00be0440 slot 78; slot 2 returns View
+005299e0	FUN_005299e0	.text	5		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setFilterReady; 00be0440 slot 79; slot 2 returns View
+005299f0	FUN_005299f0	.text	21		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setFilter; 00be0440 slot 80; slot 2 returns View
+00529a10	FUN_00529a10	.text	4		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getZoomCurrent; 00be0440 slot 82; slot 2 returns View
+00529a20	AptActionInterpreter::getThrownValue	.text	4		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getZoomMode; 00be0440 slot 83; slot 2 returns View
+00529a30	FUN_00529a30	.text	10		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setZoomMode; 00be0440 slot 84; slot 2 returns View
+00529a40	FUN_00529a40	.text	22		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_clearZoomFilter; 00be0440 slot 85; slot 2 returns View
+00529a60	FUN_00529a60	.text	10		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setCameraByte; 00be0440 slot 86; slot 2 returns View
+00529a70	FUN_00529a70	.text	4		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getExtraPitch; 00be0440 slot 89; slot 2 returns View
+00529a80	FUN_00529a80	.text	14		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setExtraPitch; 00be0440 slot 90; slot 2 returns View
+00529a90	FUN_00529a90	.text	7		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getGuardFlag; 00be0440 slot 94; slot 2 returns View
+00529aa0	FUN_00529aa0	.text	7		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getGuardId; 00be0440 slot 96; slot 2 returns View
+00529ab0	FUN_00529ab0	.text	13		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setGuardId; 00be0440 slot 97; slot 2 returns View
+00529ac0	FUN_00529ac0	.text	23		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setGuardPosition; 00be0440 slot 99; slot 2 returns View
+00529ae0	FUN_00529ae0	.text	16		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_clearGuardPosition; 00be0440 slot 100; slot 2 returns View
+00529af0	FUN_00529af0	.text	28		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_hasGuardPosition; 00be0440 slot 101; slot 2 returns View
+00529b10	FUN_00529b10	.text	33		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_copyGuardPosition; 00be0440 slot 102; slot 2 returns View
+00529b40	FUN_00529b40	.text	64		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_addShakeMagnitude; 00be0440 slot 106; slot 2 returns View
+00529b80	FUN_00529b80	.text	12		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_clearShake; 00be0440 slot 107; slot 2 returns View
+00529b90	FUN_00529b90	.text	7		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getShake; 00be0440 slot 108; slot 2 returns View
+00529ba0	FUN_00529ba0	.text	31		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setShakeRange; 00be0440 slot 111; slot 2 returns View
+00529bc0	FUN_00529bc0	.text	7		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getNearClip; 00be0440 slot 118; slot 2 returns View
+00529bd0	FUN_00529bd0	.text	7		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_getFarClip; 00be0440 slot 119; slot 2 returns View
+00529be0	FUN_00529be0	.text	17		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setNearClip; 00be0440 slot 120; slot 2 returns View
+00529c00	FUN_00529c00	.text	17		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setFarClip; 00be0440 slot 121; slot 2 returns View
 00529c20	FUN_00529c20	.text	6		clean	unknown		unanalyzed	
 00529c30	FUN_00529c30	.text	38		clean	unknown		unanalyzed	
-00529c60	FUN_00529c60	.text	210		clean	unknown		unanalyzed	
-00529d40	FUN_00529d40	.text	98		clean	unknown		unanalyzed	
-00529db0	FUN_00529db0	.text	38		clean	unknown		unanalyzed	
-00529de0	FUN_00529de0	.text	168		clean	unknown		unanalyzed	
-00529e90	FUN_00529e90	.text	86		clean	unknown		unanalyzed	
+00529c60	FUN_00529c60	.text	210		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_resetCameraDefaults; called from View 00be0440 slot 5 at 0053133e; slot 2 returns View
+00529d40	FUN_00529d40	.text	98		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_setPositionFromScreen; 00be0440 slot 18; slot 2 returns View
+00529db0	FUN_00529db0	.text	38		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_addPositionXY; 00be0440 slot 20; slot 2 returns View
+00529de0	FUN_00529de0	.text	168		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_captureCamera; 00be0440 slot 74; slot 2 returns View
+00529e90	FUN_00529e90	.text	86		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_distanceFromFov; 00be0440 slot 112; slot 2 returns View
 00529ef0	FUN_00529ef0	.text	67		clean	unknown		unanalyzed	
 00529f40	FUN_00529f40	.text	14		clean	unknown		unanalyzed	
 00529f50	FUN_00529f50	.text	12		clean	unknown		unanalyzed	
@@ -4615,7 +4615,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00531250	FUN_00531250	.text	18		clean	asset	recon/vclass	reversed	name=AssetHandler<PathMusicGameDynamicState>::destroy_instance; slot=3; shared_by=1 handlers; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义
 00531270	FUN_00531270	.text	75		inner-patched	unknown		unanalyzed	
 005312c0	FUN_005312c0	.text	102		clean	unknown		unanalyzed	
-00531330	FUN_00531330	.text	19		clean	unknown		unanalyzed	
+00531330	FUN_00531330	.text	19		clean	gameclient	recon/client52	reversed	ra3::gameclient::View_initDefaultViewport; 00be0440 slot 5; slot 2 returns View
 00531350	FUN_00531350	.text	745		clean	unknown		unanalyzed	
 00531640	FUN_00531640	.text	23		clean	unknown		unanalyzed	
 00531660	FUN_00531660	.text	49		clean	unknown		unanalyzed	
