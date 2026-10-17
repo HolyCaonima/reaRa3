@@ -42,7 +42,7 @@ address	status	owner	module	notes
 006f9b00	reversed	recon/obj6e	gamelogic	ra3::gamelogic::HordeContain_testTriple; 00c217f8 slot 73; ctor 0073cb30 also stores 00c21a98 whose slot 2 returns HordeContain
 006f9b40	reversed	recon/obj6e	gamelogic	ra3::gamelogic::HordeContain_passengerSlot70; 00c217f8 slot 28; ctor 0073cb30 also stores 00c21a98 whose slot 2 returns HordeContain
 006fa9e0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::HealContain_noteFrame; 00c23350 slot 38; ctor 0075d9d0 also stores 00c235f0 whose slot 2 returns HealContain
-006fbb50	reversed	recon/obj6e	gamelogic	ra3::gamelogic::OpenContain_passengerFlag; 00c1f8f0 slot 44; ctor 0072782b also stores 00c1fb90 whose slot 2 returns OpenContain
+006fbb50	reversed	recon/obj6e	gamelogic	ra3::gamelogic::OpenContain_passengerFlag; 00c1f8f0 slot 44; 0x00727820 stores 00c1fb90 (slot 2 returns OpenContain) at this+0 and 00c1f8f0 at this+0x24 in the code after its cave jump at 0x00727826 (Ghidra split that continuation as 0x0072782b) (controller)
 006fcad0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::ActivateModuleSpecialAbilityUpdate_enable; 00c1b5d8 slot 6; slot 2 returns ActivateModuleSpecialAbilityUpdate
 006fda30	reversed	recon/obj6e	gamelogic	ra3::gamelogic::GiveUpgradeUpdate_runGrant; 00c1cc18 slot 38; slot 2 returns GiveUpgradeUpdate
 006fe070	reversed	recon/obj6e	gamelogic	ra3::gamelogic::ToggleMountedSpecialAbilityUpdate_mountedReady; 00c1e498 slot 39; slot 2 returns ToggleMountedSpecialAbilityUpdate

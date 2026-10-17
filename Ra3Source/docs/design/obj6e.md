@@ -39,7 +39,7 @@ base-only xfers are in the set. No factory or clone methods. Hooks: none.
 | `00C1CC18` | slot 2 returns GiveUpgradeUpdate |
 | `00C1E258` | slot 2 returns ToggleHiddenSpecialAbilityUpdate |
 | `00C1E498` | slot 2 returns ToggleMountedSpecialAbilityUpdate |
-| `00C1F8F0` | ctor `0072782B` also stores `00C1FB90` (OpenContain) |
+| `00C1F8F0` | `0x00727820` stores `00C1FB90` (OpenContain) and `00C1F8F0`; the stores sit after its cave jump at `0x00727826`, in the continuation Ghidra split as `0x0072782B` (controller correction) |
 | `00C20BC0` | slot 2 returns MoneyGainAttachUpdate |
 | `00C20D90` | slot 2 returns StealUnitUpdate |
 | `00C21520` / `00C217F8` | ctor `0073CB30` also stores `00C21A98` (HordeContain) |
@@ -150,3 +150,5 @@ The compare was restored and the oracle returned to `mismatches=0`.
 ## Hooks
 
 None.
+
+主控验收口径（controller）：5 个 GateProxyBehavior 守卫转发（`006F6C10`–`006F6C90`，同形）、2 个纯转发（`006E1E40`、`006E91F0`）与 3 个单字段读取/自增或调整后指针（`006E1C80`、`006E8FD0`、`006E9010`）按样板计，共 10/51，未超 30%。
