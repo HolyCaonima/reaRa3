@@ -25,8 +25,8 @@ address	status	owner	module	notes
 005b6230	reversed	recon/common5a	common	setState; vtable 00be8178 slot 7; slot 2 005b2440 returns StateMachine at 00be81c0
 005b6240	reversed	recon/common5a	common	stateMapContains; direct callee of 007db090 at 007db13b; 007db090 is vtable 00c2c520 slot 5; slot 2 00799810 returns AIIdleState at 00c2c56c
 005ba020	reversed	recon/common5a	common	goalQuery; assertion string 00be90a8 StateMachine.cpp:1075 referenced at 005ba037
-005ba110	reversed	recon/common5a	common	publishGoalPosition; calls 005ba020 at 005ba122 with the same this; 005ba020 is anchored by assertion string 00be90a8
-005bdca0	reversed	recon/common5a	common	goalObjectLive; calls 005ba020 at 005bdca9 with the same this; 005ba020 is anchored by assertion string 00be90a8
+005ba110	reversed	recon/common5a	common	publishGoalPosition; direct callee of 0079e0c0 at 0079e0d2; 0079e0c0 is 00c2aa80 slot 4; slot 2 returns UnitAIAttemptSkipMoveState; also calls 005ba020 at 005ba122 with the same this
+005bdca0	reversed	recon/common5a	common	goalObjectLive; direct callee of 007a2e50 at 007a2e61; 007a2e50 is 00c2c7d0 slot 4; slot 2 returns AIAttackMeleeHordeWaitState; also calls 005ba020 at 005bdca9 with the same this
 005bdcc0	reversed	recon/common5a	common	assignGoalPath; direct callee of 00683080 at 0068309f; 00683080 is vtable 00c22118 slot 136; slot 2 00740f10 returns AIUpdateInterface at 00c223cc; adds 0x58 to this then jumps to 005ba670
 005bdf30	reversed	recon/common5a	common	xferGoalPath; direct callee of 005c0a6a at 005c0cbf; 005c0a6a references assertion string 00be95d8 StateMachine.cpp:1379
 005aa190		recon/common5a	common	rejected: vtable 00be8178 slot 15 is fld dword ptr [0x00be68e8]; ret, an x87 constant with no distinct object behavior
