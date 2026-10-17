@@ -13535,32 +13535,32 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b14c0	FUN_006b14c0	.text	8		clean	unknown		unanalyzed	
 006b14d0	FUN_006b14d0	.text	40		clean	unknown		unanalyzed	
 006b1500	FUN_006b1500	.text	49		clean	unknown		unanalyzed	
-006b1540	FUN_006b1540	.text	270	SageEngine\source\GameEngine\gamelogic\object\Contain\GarrisonContain.cpp	clean	gamelogic		unanalyzed	
-006b1670	FUN_006b1670	.text	101		clean	unknown		unanalyzed	
-006b16e0	FUN_006b16e0	.text	83		clean	unknown		unanalyzed	
+006b1540	FUN_006b1540	.text	270	SageEngine\source\GameEngine\gamelogic\object\Contain\GarrisonContain.cpp	clean	gamelogic	recon/behavior6b	reversed	findOpenGarrisonPoint decision; native method/callback differential and mutation
+006b1670	FUN_006b1670	.text	101		clean	gamelogic	recon/behavior6b	reversed	chooseGarrisonDestination; native callback differential and mutation
+006b16e0	FUN_006b16e0	.text	83		clean	gamelogic	recon/behavior6b	reversed	garrisonReassignmentActions; native callback differential and mutation
 006b1740	FUN_006b1740	.text	446		clean	unknown		unanalyzed	
-006b1900	FUN_006b1900	.text	238		clean	unknown		unanalyzed	
+006b1900	FUN_006b1900	.text	238		clean	gamelogic	recon/behavior6b	reversed	preferGarrisonPoint decision; native no-reassignment differential and mutation
 006b19f0	FUN_006b19f0	.text	216		clean	unknown		unanalyzed	
 006b1ae0	FUN_006b1ae0	.text	106		clean	unknown		unanalyzed	
 006b1b50	FUN_006b1b50	.text	10		inner-patched	unknown		unanalyzed	
 006b1c60	FUN_006b1c60	.text	337		clean	unknown		unanalyzed	
 006b1dc0	FUN_006b1dc0	.text	199		clean	unknown		unanalyzed	
-006b1e90	FUN_006b1e90	.text	57		clean	unknown		unanalyzed	
+006b1e90	FUN_006b1e90	.text	57		clean	gamelogic	recon/behavior6b	reversed	copyExitWaypointIfAvailable; native ABI/write differential and mutation
 006b1ed0	FUN_006b1ed0	.text	36		clean	unknown		unanalyzed	
-006b1f00	FUN_006b1f00	.text	128		clean	unknown		unanalyzed	
+006b1f00	FUN_006b1f00	.text	128		clean	gamelogic	recon/behavior6b	reversed	countMatchingOccupants; native cached-path differential and mutation
 006b1f80	FUN_006b1f80	.text	178		clean	unknown		unanalyzed	
 006b2040	FUN_006b2040	.text	147		clean	unknown		unanalyzed	
-006b20e0	FUN_006b20e0	.text	118		clean	unknown		unanalyzed	
+006b20e0	FUN_006b20e0	.text	118		clean	gamelogic	recon/behavior6b	reversed	canTransferContainedObject; native relation/ownership differential and mutation
 006b2160	FUN_006b2160	.text	95		clean	unknown		unanalyzed	
-006b21c0	FUN_006b21c0	.text	84		clean	unknown		unanalyzed	
-006b2220	FUN_006b2220	.text	58		clean	unknown		unanalyzed	
-006b2260	FUN_006b2260	.text	58		clean	unknown		unanalyzed	
+006b21c0	FUN_006b21c0	.text	84		clean	gamelogic	recon/behavior6b	reversed	containsObjectId; native list differential and mutation
+006b2220	FUN_006b2220	.text	58		clean	gamelogic	recon/behavior6b	reversed	hasOpenRiderSlotZero; native base/list differential and mutation
+006b2260	FUN_006b2260	.text	58		clean	gamelogic	recon/behavior6b	reversed	hasOpenRiderSlotOne; native base/list differential and mutation
 006b22a0	FUN_006b22a0	.text	125		clean	unknown		unanalyzed	
-006b2320	FUN_006b2320	.text	132		clean	unknown		unanalyzed	
-006b23b0	FUN_006b23b0	.text	305		clean	unknown		unanalyzed	
+006b2320	FUN_006b2320	.text	132		clean	gamelogic	recon/behavior6b	reversed	nearestContainedObject2D; native lock/list/float differential and mutation
+006b23b0	FUN_006b23b0	.text	305		clean	gamelogic	recon/behavior6b	reversed	consumeScaledSpawnCount; native one-shot write differential and mutation
 006b24f0	FUN_006b24f0	.text	413		clean	unknown		unanalyzed	
-006b2690	FUN_006b2690	.text	274		clean	unknown		unanalyzed	
-006b27b0	FUN_006b27b0	.text	94		clean	unknown		unanalyzed	
+006b2690	FUN_006b2690	.text	274		clean	gamelogic	recon/behavior6b	reversed	garrisonDamageStatusToSet; native callback/status-write differential and mutation
+006b27b0	FUN_006b27b0	.text	94		clean	gamelogic	recon/behavior6b	reversed	clearGarrisonDamageStatusBits; native write differential and mutation
 006b28c0	FUN_006b28c0	.text	161		clean	unknown		unanalyzed	
 006b2970	FUN_006b2970	.text	93		clean	unknown		unanalyzed	
 006b29d0	FUN_006b29d0	.text	91		clean	unknown		unanalyzed	
@@ -13588,57 +13588,57 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b3070	FUN_006b3070	.text	111		clean	unknown		unanalyzed	
 006b30e0	FUN_006b30e0	.text	6		clean	unknown		unanalyzed	
 006b30f0	FUN_006b30f0	.text	47		clean	unknown		unanalyzed	
-006b3120	FUN_006b3120	.text	62		clean	unknown		unanalyzed	
-006b3160	FUN_006b3160	.text	88		clean	unknown		unanalyzed	
+006b3120	FUN_006b3120	.text	62		clean	gamelogic	recon/behavior6b	reversed	remainingConditionFrames; native linked-list/frame differential and mutation
+006b3160	FUN_006b3160	.text	88		clean	gamelogic	recon/behavior6b	reversed	nextConditionWakeFrame; native linked-list/frame differential and mutation
 006b31c0	FUN_006b31c0	.text	6		clean	unknown		unanalyzed	
 006b31d0	FUN_006b31d0	.text	36		clean	unknown		unanalyzed	
 006b3200	FUN_006b3200	.text	104		clean	unknown		unanalyzed	
-006b3270	FUN_006b3270	.text	79		clean	unknown		unanalyzed	
+006b3270	FUN_006b3270	.text	79		clean	gamelogic	recon/behavior6b	reversed	scaleBalloonVelocity; native float/write differential and mutation
 006b32c0	FUN_006b32c0	.text	348		clean	unknown		unanalyzed	
 006b3420	FUN_006b3420	.text	106		clean	unknown		unanalyzed	
 006b3490	FUN_006b3490	.text	30		clean	unknown		unanalyzed	
 006b34b0	FUN_006b34b0	.text	327	SageEngine\source\GameEngine\gamelogic\object\SpecialPower\ActivateModuleSpecialPower.cpp	clean	gamelogic		unanalyzed	
 006b3600	FUN_006b3600	.text	91		clean	unknown		unanalyzed	
-006b3660	FUN_006b3660	.text	286		clean	unknown		unanalyzed	
+006b3660	FUN_006b3660	.text	286		clean	gamelogic	recon/behavior6b	reversed	specialAbilityDamageBucket; native event-band callback differential and mutation
 006b3780	FUN_006b3780	.text	52		clean	unknown		unanalyzed	
 006b37c0	FUN_006b37c0	.text	84		clean	unknown		unanalyzed	
-006b3820	FUN_006b3820	.text	157		clean	unknown		unanalyzed	
+006b3820	FUN_006b3820	.text	157		clean	gamelogic	recon/behavior6b	reversed	updateDisabledStatus; native inactive-path ABI differential and mutation
 006b38c0	FUN_006b38c0	.text	84		clean	unknown		unanalyzed	
 006b3920	FUN_006b3920	.text	83		clean	unknown		unanalyzed	
-006b3980	FUN_006b3980	.text	24		clean	unknown		unanalyzed	
-006b39a0	FUN_006b39a0	.text	274		clean	unknown		unanalyzed	
+006b3980	FUN_006b3980	.text	24		clean	gamelogic	recon/behavior6b	reversed	specialAbilityActivationState; native EAX differential and explicitOnly hook
+006b39a0	FUN_006b39a0	.text	274		clean	gamelogic	recon/behavior6b	reversed	approachPosition; native vector/float/write differential and mutation
 006b3ac0	FUN_006b3ac0	.text	285		clean	unknown		unanalyzed	
 006b3cc0	FUN_006b3cc0	.text	119		clean	unknown		unanalyzed	
 006b3da0	FUN_006b3da0	.text	26		clean	unknown		unanalyzed	
-006b3dc0	FUN_006b3dc0	.text	27		clean	unknown		unanalyzed	
+006b3dc0	FUN_006b3dc0	.text	27		clean	gamelogic	recon/behavior6b	reversed	specialAbilityUnpackState; native EAX differential and explicitOnly hook
 006b3de0	FUN_006b3de0	.text	293		clean	unknown		unanalyzed	
-006b3f10	FUN_006b3f10	.text	169		clean	unknown		unanalyzed	
-006b3fc0	FUN_006b3fc0	.text	164		clean	unknown		unanalyzed	
-006b4070	FUN_006b4070	.text	114		clean	unknown		unanalyzed	
-006b40f0	FUN_006b40f0	.text	95		clean	unknown		unanalyzed	
+006b3f10	FUN_006b3f10	.text	169		clean	gamelogic	recon/behavior6b	reversed	crossedTriggerRadius; native disabled-path write differential and mutation
+006b3fc0	FUN_006b3fc0	.text	164		clean	gamelogic	recon/behavior6b	reversed	minimumSpecialProgress; native x87 base-path differential and mutation
+006b4070	FUN_006b4070	.text	114		clean	gamelogic	recon/behavior6b	reversed	broadcastSpecialProgress; native callback/float ABI differential and mutation
+006b40f0	FUN_006b40f0	.text	95		clean	gamelogic	recon/behavior6b	reversed	resetSpecialProgress; native callback ABI differential and mutation
 006b4150	FUN_006b4150	.text	56		clean	unknown		unanalyzed	
 006b4190	FUN_006b4190	.text	139		clean	unknown		unanalyzed	
 006b4220	thunk_FUN_0043a788	.text	5		clean	unknown		unanalyzed	
 006b4225	FUN_006b4225	.text	522		clean	unknown		unanalyzed	
 006b4430	FUN_006b4430	.text	168		clean	unknown		unanalyzed	
-006b44e0	FUN_006b44e0	.text	234		clean	unknown		unanalyzed	
+006b44e0	FUN_006b44e0	.text	234		clean	gamelogic	recon/behavior6b	reversed	withinAnySpecialPosition; native no-owner differential and mutation
 006b45d0	FUN_006b45d0	.text	117		clean	unknown		unanalyzed	
 006b4650	FUN_006b4650	.text	87		clean	unknown		unanalyzed	
 006b46b0	FUN_006b46b0	.text	108		clean	unknown		unanalyzed	
-006b4720	FUN_006b4720	.text	79		clean	unknown		unanalyzed	
+006b4720	FUN_006b4720	.text	79		clean	gamelogic	recon/behavior6b	reversed	requiredConditionSet; native EAX differential and mutation
 006b4770	FUN_006b4770	.text	213		clean	unknown		unanalyzed	
 006b4850	FUN_006b4850	.text	6		clean	unknown		unanalyzed	
 006b4860	FUN_006b4860	.text	47		clean	unknown		unanalyzed	
 006b4890	FUN_006b4890	.text	64		clean	unknown		unanalyzed	
-006b48d0	FUN_006b48d0	.text	87		clean	unknown		unanalyzed	
+006b48d0	FUN_006b48d0	.text	87		clean	gamelogic	recon/behavior6b	reversed	requiredConditionSetUpdate; native EAX differential and mutation
 006b4930	FUN_006b4930	.text	267		clean	unknown		unanalyzed	
-006b4a40	FUN_006b4a40	.text	127		clean	unknown		unanalyzed	
+006b4a40	FUN_006b4a40	.text	127		clean	gamelogic	recon/behavior6b	reversed	specialPowerWithinRange; native vector/float/ABI differential and mutation
 006b4ac0	FUN_006b4ac0	.text	36		clean	unknown		unanalyzed	
 006b4af0	FUN_006b4af0	.text	410		clean	unknown		unanalyzed	
 006b4c90	FUN_006b4c90	.text	171		clean	unknown		unanalyzed	
-006b4d40	FUN_006b4d40	.text	52		clean	unknown		unanalyzed	
+006b4d40	FUN_006b4d40	.text	52		clean	gamelogic	recon/behavior6b	reversed	weaponFireTargetAllowed; native status/ABI differential and mutation
 006b4d80	FUN_006b4d80	.text	298	SageEngine\source\GameEngine\gamelogic\object\SpecialPower\ToggleStatusSpecialAbilityUpdate.cpp	clean	gamelogic		unanalyzed	
-006b4eb0	FUN_006b4eb0	.text	208	SageEngine\source\GameEngine\gamelogic\object\SpecialPower\WeaponFireSpecialAbilityUpdate.cpp	clean	gamelogic		unanalyzed	
+006b4eb0	FUN_006b4eb0	.text	208	SageEngine\source\GameEngine\gamelogic\object\SpecialPower\WeaponFireSpecialAbilityUpdate.cpp	clean	gamelogic	recon/behavior6b	reversed	applyWeaponFireRadius; native output-write differential and mutation
 006b4f80	FUN_006b4f80	.text	19		inner-patched	unknown		unanalyzed	
 006b4fe0	FUN_006b4fe0	.text	110		clean	unknown		unanalyzed	
 006b5050	FUN_006b5050	.text	67		clean	unknown		unanalyzed	
@@ -13646,7 +13646,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b50e0	FUN_006b50e0	.text	67		clean	unknown		unanalyzed	
 006b5130	FUN_006b5130	.text	57		clean	unknown		unanalyzed	
 006b5170	FUN_006b5170	.text	67		clean	unknown		unanalyzed	
-006b51c0	FUN_006b51c0	.text	71		clean	unknown		unanalyzed	
+006b51c0	FUN_006b51c0	.text	71		clean	gamelogic	recon/behavior6b	reversed	clearDockObjectStatus; native status-write differential and mutation
 006b5210	FUN_006b5210	.text	66		clean	unknown		unanalyzed	
 006b5260	FUN_006b5260	.text	131		clean	unknown		unanalyzed	
 006b52f0	FUN_006b52f0	.text	111		clean	unknown		unanalyzed	
@@ -13656,11 +13656,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b5a30	FUN_006b5a30	.text	9		inner-patched	unknown		unanalyzed	
 006b5aa0	FUN_006b5aa0	.text	6		clean	unknown		unanalyzed	
 006b5ab0	FUN_006b5ab0	.text	47		clean	unknown		unanalyzed	
-006b5ae0	FUN_006b5ae0	.text	10		clean	unknown		unanalyzed	
-006b5af0	FUN_006b5af0	.text	173		clean	unknown		unanalyzed	
-006b5ba0	FUN_006b5ba0	.text	116		clean	unknown		unanalyzed	
-006b5c20	FUN_006b5c20	.text	116		clean	unknown		unanalyzed	
-006b5ca0	FUN_006b5ca0	.text	118		clean	unknown		unanalyzed	
+006b5ae0	FUN_006b5ae0	.text	10		clean	gamelogic	recon/behavior6b	reversed	setDockEnabled; native byte-write differential and mutation
+006b5af0	FUN_006b5af0	.text	173		clean	gamelogic	recon/behavior6b	reversed	selectSourceDockPosition; native vector/write differential and mutation
+006b5ba0	FUN_006b5ba0	.text	116		clean	gamelogic	recon/behavior6b	reversed	selectTargetDockPosition; native vector/write differential and mutation
+006b5c20	FUN_006b5c20	.text	116		clean	gamelogic	recon/behavior6b	reversed	selectApproachDockPosition; native vector/write differential and mutation
+006b5ca0	FUN_006b5ca0	.text	118		clean	gamelogic	recon/behavior6b	reversed	markDockPairOccupied; native aliased status-write differential and mutation
 006b5d20	FUN_006b5d20	.text	530		clean	unknown		unanalyzed	
 006b5f40	FUN_006b5f40	.text	6		clean	unknown		unanalyzed	
 006b5f50	FUN_006b5f50	.text	47		clean	unknown		unanalyzed	
@@ -13686,11 +13686,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b6bf0	FUN_006b6bf0	.text	31		inner-patched	unknown		unanalyzed	
 006b6d00	FUN_006b6d00	.text	299		clean	unknown		unanalyzed	
 006b6e30	FUN_006b6e30	.text	144		clean	unknown		unanalyzed	
-006b6ec0	FUN_006b6ec0	.text	65		clean	unknown		unanalyzed	
+006b6ec0	FUN_006b6ec0	.text	65		clean	gamelogic	recon/behavior6b	reversed	setSpecialDestination; native EAX/alias/write differential and mutation
 006b6f10	FUN_006b6f10	.text	300		clean	unknown		unanalyzed	
 006b7040	FUN_006b7040	.text	11		inner-patched	unknown		unanalyzed	
 006b7100	FUN_006b7100	.text	547		clean	unknown		unanalyzed	
-006b7340	FUN_006b7340	.text	76		clean	unknown		unanalyzed	
+006b7340	FUN_006b7340	.text	76		clean	gamelogic	recon/behavior6b	reversed	canSelectAlternateTarget; native empty-container differential and mutation
 006b7390	FUN_006b7390	.text	94		clean	unknown		unanalyzed	
 006b73f0	FUN_006b73f0	.text	96		clean	unknown		unanalyzed	
 006b7450	FUN_006b7450	.text	252		clean	unknown		unanalyzed	
@@ -13703,7 +13703,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b77e0	FUN_006b77e0	.text	47		clean	unknown		unanalyzed	
 006b7810	FUN_006b7810	.text	6		clean	unknown		unanalyzed	
 006b7820	FUN_006b7820	.text	47		clean	unknown		unanalyzed	
-006b7850	FUN_006b7850	.text	112		clean	unknown		unanalyzed	
+006b7850	FUN_006b7850	.text	112		clean	gamelogic	recon/behavior6b	reversed	bombardRadius; native x87 float differential and mutation
 006b7950	FUN_006b7950	.text	6		clean	unknown		unanalyzed	
 006b7960	FUN_006b7960	.text	47		clean	unknown		unanalyzed	
 006b7990	FUN_006b7990	.text	88		clean	unknown		unanalyzed	
@@ -13713,10 +13713,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b7aa0	FUN_006b7aa0	.text	6		clean	unknown		unanalyzed	
 006b7ab0	FUN_006b7ab0	.text	47		clean	unknown		unanalyzed	
 006b7ae0	FUN_006b7ae0	.text	30		clean	unknown		unanalyzed	
-006b7b00	FUN_006b7b00	.text	155		clean	unknown		unanalyzed	
+006b7b00	FUN_006b7b00	.text	155		clean	gamelogic	recon/behavior6b	reversed	initializeFireWeaponState; native copy/status/write differential and mutation
 006b7ba0	FUN_006b7ba0	.text	462		clean	unknown		unanalyzed	
-006b7d70	FUN_006b7d70	.text	16		clean	unknown		unanalyzed	
-006b7d80	FUN_006b7d80	.text	16		clean	unknown		unanalyzed	
+006b7d70	FUN_006b7d70	.text	16		clean	gamelogic	recon/behavior6b	reversed	invalidTargetsDeathFlags; native EAX/write differential and explicitOnly hook
+006b7d80	FUN_006b7d80	.text	16		clean	gamelogic	recon/behavior6b	reversed	invalidTargetsDeathDefaultFlags; native EAX/write differential and explicitOnly hook
 006b7df0	FUN_006b7df0	.text	6		clean	unknown		unanalyzed	
 006b7e00	FUN_006b7e00	.text	47		clean	unknown		unanalyzed	
 006b7e30	FUN_006b7e30	.text	755		clean	unknown		unanalyzed	
@@ -13728,7 +13728,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b8430	FUN_006b8430	.text	6		clean	unknown		unanalyzed	
 006b8440	FUN_006b8440	.text	47		clean	unknown		unanalyzed	
 006b8470	FUN_006b8470	.text	8		clean	unknown		unanalyzed	
-006b8480	FUN_006b8480	.text	16		clean	unknown		unanalyzed	
+006b8480	FUN_006b8480	.text	16		clean	gamelogic	recon/behavior6b	reversed	linearDamageFlags; native EAX/write differential and explicitOnly hook
 006b8540	FUN_006b8540	.text	6		clean	unknown		unanalyzed	
 006b8550	FUN_006b8550	.text	47		clean	unknown		unanalyzed	
 006b8580	FUN_006b8580	.text	95		clean	unknown		unanalyzed	
@@ -13741,20 +13741,20 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b8c20	FUN_006b8c20	.text	6		clean	unknown		unanalyzed	
 006b8c30	FUN_006b8c30	.text	47		clean	unknown		unanalyzed	
 006b8c60	FUN_006b8c60	.text	8		clean	unknown		unanalyzed	
-006b8c70	FUN_006b8c70	.text	19		clean	unknown		unanalyzed	
+006b8c70	FUN_006b8c70	.text	19		clean	gamelogic	recon/behavior6b	reversed	physicsBehaviorFlags; native EAX/write differential and explicitOnly hook
 006b8c90	FUN_006b8c90	.text	81		clean	unknown		unanalyzed	
-006b8cf0	FUN_006b8cf0	.text	418	SageEngine\source\GameEngine\gamelogic\object\Update\PhysicsUpdate.cpp	clean	gamelogic		unanalyzed	
+006b8cf0	FUN_006b8cf0	.text	418	SageEngine\source\GameEngine\gamelogic\object\Update\PhysicsUpdate.cpp	clean	gamelogic	recon/behavior6b	reversed	physicsAnglesToVector; native x87/SSE vector differential and mutation
 006b8ea0	FUN_006b8ea0	.text	26		clean	unknown		unanalyzed	
-006b8ec0	FUN_006b8ec0	.text	139		clean	unknown		unanalyzed	
+006b8ec0	FUN_006b8ec0	.text	139		clean	gamelogic	recon/behavior6b	reversed	initializePhysicsRuntime; native EAX/exact-write differential and explicitOnly hook
 006b8f50	FUN_006b8f50	.text	221		inner-patched	unknown		unanalyzed	
 006b9040	FUN_006b9040	.text	407		clean	unknown		unanalyzed	
-006b91e0	FUN_006b91e0	.text	23		clean	unknown		unanalyzed	
+006b91e0	FUN_006b91e0	.text	23		clean	gamelogic	recon/behavior6b	reversed	hasMotiveTarget; native EAX differential and explicitOnly hook
 006b9200	FUN_006b9200	.text	780		clean	unknown		unanalyzed	
-006b9510	FUN_006b9510	.text	102		clean	unknown		unanalyzed	
-006b9580	FUN_006b9580	.text	75		clean	unknown		unanalyzed	
-006b95d0	FUN_006b95d0	.text	102		clean	unknown		unanalyzed	
+006b9510	FUN_006b9510	.text	102		clean	gamelogic	recon/behavior6b	reversed	appendPhysicsContact; native alias/list/write differential and mutation
+006b9580	FUN_006b9580	.text	75		clean	gamelogic	recon/behavior6b	reversed	countMatchingContacts; native list differential and mutation
+006b95d0	FUN_006b95d0	.text	102		clean	gamelogic	recon/behavior6b	reversed	enablePhysicsContact; native bounds/write differential and mutation
 006b9640	FUN_006b9640	.text	121		clean	unknown		unanalyzed	
-006b96c0	FUN_006b96c0	.text	59		clean	unknown		unanalyzed	
+006b96c0	FUN_006b96c0	.text	59		clean	gamelogic	recon/behavior6b	reversed	expireDelayedWeapon; native frame/write differential and mutation
 006b97b0	FUN_006b97b0	.text	6		clean	unknown		unanalyzed	
 006b97c0	FUN_006b97c0	.text	47		clean	unknown		unanalyzed	
 006b97f0	FUN_006b97f0	.text	57		clean	unknown		unanalyzed	
@@ -13762,10 +13762,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b9850	FUN_006b9850	.text	165		clean	unknown		unanalyzed	
 006b9900	FUN_006b9900	.text	54		clean	unknown		unanalyzed	
 006b9980	FUN_006b9980	.text	50		clean	unknown		unanalyzed	
-006b99c0	FUN_006b99c0	.text	154		clean	unknown		unanalyzed	
+006b99c0	FUN_006b99c0	.text	154		clean	gamelogic	recon/behavior6b	reversed	removePhysicsOverlap; native dual-array/write differential and mutation
 006b9a60	FUN_006b9a60	.text	17		inner-patched	unknown		unanalyzed	
-006b9b70	FUN_006b9b70	.text	50		clean	unknown		unanalyzed	
-006b9bb0	FUN_006b9bb0	.text	319		clean	unknown		unanalyzed	
+006b9b70	FUN_006b9b70	.text	50		clean	gamelogic	recon/behavior6b	reversed	needsAirborneStatus; native float/status differential and mutation
+006b9bb0	FUN_006b9bb0	.text	319		clean	gamelogic	recon/behavior6b	reversed	clearPhysicsStatusesAndSet; native status/condition/write differential and mutation
 006b9cf0	FUN_006b9cf0	.text	189		clean	unknown		unanalyzed	
 006b9db0	FUN_006b9db0	.text	83		clean	unknown		unanalyzed	
 006b9e10	FUN_006b9e10	.text	6		clean	unknown		unanalyzed	
@@ -13777,7 +13777,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006ba210	thunk_FUN_01954df0	.text	6		entry-recoverable	unknown		unanalyzed	
 006ba2d0	FUN_006ba2d0	.text	83		clean	unknown		unanalyzed	
 006ba330	FUN_006ba330	.text	655		clean	unknown		unanalyzed	
-006ba5d0	FUN_006ba5d0	.text	212		clean	unknown		unanalyzed	
+006ba5d0	FUN_006ba5d0	.text	212		clean	gamelogic	recon/behavior6b	reversed	initializeSpawnCrateState; native constructor/EAX/write differential and mutation
 006ba6b0	FUN_006ba6b0	.text	6		clean	unknown		unanalyzed	
 006ba6c0	FUN_006ba6c0	.text	47		clean	unknown		unanalyzed	
 006ba840	FUN_006ba840	.text	6		clean	unknown		unanalyzed	

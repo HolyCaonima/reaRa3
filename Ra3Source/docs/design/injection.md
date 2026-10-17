@@ -196,6 +196,14 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `audiomanagerseton` | `0x005031D0` 音频分类开关设置 | thiscall（2） | 7 | `SageAudioManagerView::setOn` | offline-verified, live pending；仅显式键启用 |
 | `audiorequestusesevent` | `0x00506410` 请求含 AudioEvent 谓词 | thiscall（1） | 6 | `requestUsesAudioEvent` | offline-verified, live pending；仅显式键启用 |
 | `audiomanagerplayinghandle` | `0x00506490` 播放 handle 分配 | thiscall | 6 | `SageAudioManagerView::allocatePlayingHandle` | offline-verified, live pending；仅显式键启用 |
+| `behaviorspecialactivationstate` | `0x006B3980` SpecialAbility 激活状态 | thiscall | 6 | `specialAbilityActivationState` | offline-verified, live pending；仅显式键启用 |
+| `behaviorspecialunpackstate` | `0x006B3DC0` SpecialAbility 解包状态 | thiscall | 9 | `specialAbilityUnpackState` | offline-verified, live pending；仅显式键启用 |
+| `behaviorinvalidtargetsflags` | `0x006B7D70` InvalidTargetsDeath 标志 | stdcall（1） | 10 | `invalidTargetsDeathFlags` | offline-verified, live pending；仅显式键启用 |
+| `behaviorinvalidtargetsdefaultflags` | `0x006B7D80` InvalidTargetsDeath 默认标志 | stdcall（1） | 10 | `invalidTargetsDeathDefaultFlags` | offline-verified, live pending；仅显式键启用 |
+| `behaviorlineardamageflags` | `0x006B8480` LinearDamage 标志 | stdcall（1） | 10 | `linearDamageFlags` | offline-verified, live pending；仅显式键启用 |
+| `behaviorphysicsflags` | `0x006B8C70` PhysicsBehavior 标志 | stdcall（1） | 10 | `physicsBehaviorFlags` | offline-verified, live pending；仅显式键启用 |
+| `behaviorphysicsruntime` | `0x006B8EC0` Physics 运行时构造 | thiscall（2） | 6 | `initializePhysicsRuntime` | offline-verified, live pending；仅显式键启用 |
+| `behaviorhasmotivetarget` | `0x006B91E0` motive target 谓词 | thiscall | 5 | `hasMotiveTarget` | offline-verified, live pending；仅显式键启用 |
 | `playeradjustcounter` | `0x007E1530` Player `+0x125c` 饱和计数 | thiscall（1） | 10 | `Player::adjustCounter125c` | offline-verified, live pending；仅显式键启用 |
 | `playeractive` | `0x007E1BA0` Player 活跃状态 | thiscall | 7 | `Player::isPlayerActive` | offline-verified, live pending；仅显式键启用 |
 | `scoreaddd0` | `0x007E2600` ScoreKeeper 增量 | thiscall（1） | 5 | `ScoreKeeper::addD0` | offline-verified, live pending；仅显式键启用 |
@@ -259,6 +267,10 @@ AITNGuard 的 8 个目标均有 shipped 原生行为差分，Debug/Release 各 4
 AudioEvent 的 15 个目标均逐项复核 expected16、完整指令边界和 shadow 写集。两配置
 50 个入口各 3,200 个场景 0 不一致；x87 返回比较完整 ST0，语义突变可被 oracle 检出。
 全部目标仅显式启用，尚未实机验证。
+
+Behavior6B 的 8 个目标来自 57 个 clean 语义入口；Release 集成 oracle 共 627 场景
+0 不一致，覆盖 ABI、别名、浮点和精确写集。目标均为无分配的叶状态查询、标志写入或
+固定布局构造，只认显式键，尚未实机验证。
 
 FXPS 的 15 个目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关。构造函数
 在副本上应用重建变换后比较实际布局，getter 只比较返回值或原函数写出的缓冲，全部要求
