@@ -91,6 +91,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/common5acheck)
     add_subdirectory(tools/aistate79check)
     add_subdirectory(tools/net5d2check)
+    add_subdirectory(tools/skirm8bcheck)
 endif()
 
 if(RA3_BUILD_TESTS)

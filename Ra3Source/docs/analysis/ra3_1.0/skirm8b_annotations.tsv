@@ -1,0 +1,43 @@
+address	status	owner	module	notes
+008b7860	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::xferAIRecruitmentManagerDataCache; 00c51eb4 slot 3; slot 2 returns AIRecruitmentManagerDataCache
+008b85f0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::buildableUnitPhaseIsNotOne; 00c52cd8 slot 16; slot 2 returns AIBuildableUnit
+008b8600	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::buildableUnitPhaseIsOne; 00c52cd8 slot 7; slot 2 returns AIBuildableUnit
+008b8610	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::copyBuildableUnitAnchor; 00c52cd8 slot 19; slot 2 returns AIBuildableUnit
+008b8fe0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::pushAIBuildableStructureRecord; 00c527c8 slot 9; slot 2 returns AIBuildableStructure
+008bdc40	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::xferAiBuildEfficiencyCalculator; 00c51a7c slot 3; slot 2 returns AiBuildEfficiencyCalculator
+008bff40	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::xferAIOpeningMover; 00c51afc slot 3; slot 2 returns AIOpeningMover
+008c0100	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::xferSkirmishAISpecialPowerStore; 00c52510 slot 3; slot 2 returns SkirmishAISpecialPowerStore
+008c1340	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::markAISimpleDefenseContact; 00c53334 slot 10; slot 2 returns AISimpleDefenseTactic
+008c1370	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::cacheAIEngineerTacticRecord; 00c53414 slot 10; slot 2 returns AIEngineerTactic
+008c3040	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::xferAINeedsBuilder; 00c51ec4 slot 3; slot 2 returns AINeedsBuilder
+008c48e0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::xferAIUnitUpgrader; 00c51c44 slot 3; slot 2 returns AIUnitUpgrader
+008c4b10	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::xferAIUpgradeScience; 00c52fd0 slot 3; slot 2 returns AIUpgradeScience
+008c4d40	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::bindAIBuildableUnitTarget; 00c52cd8 slot 1; slot 2 returns AIBuildableUnit
+008c5140	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::bindAIBuildableStructureTarget; 00c527c8 slot 1; slot 2 returns AIBuildableStructure
+008c58f0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::xferAIRebuildableStructure; 00c53048 slot 3; slot 2 returns AIRebuildableStructure
+008c8da0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::tryAISimpleDefenseActivation; 00c53334 slot 11; slot 2 returns AISimpleDefenseTactic
+008c8de0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::cacheAIStaticDefensePosition; 00c5336c slot 10; slot 2 returns AIStaticDefenseTactic
+008c96f0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::updateAIFlankAttackTactic; 00c53460 slot 10; slot 2 returns AIFlankAttackTactic
+008c9950	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::continueAISimpleAttack; E9 at 008cd791 inside AISimpleSiegeTactic 008cd760; no vtable of its own
+008c9a70	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::gateAIScriptedTactic; 00c535dc slot 10; slot 2 returns AIScriptedTactic
+008c9aa0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::chooseAIScriptedTacticMode; E9 at 008cd9e6 inside AIScriptedTactic 008cd9d0; no vtable of its own
+008cca40	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::aiReactiveDefenseWindowOpen; 00c532fc slot 5; slot 2 returns AIReactiveDefenseTactic
+008ccaa0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::updateAIReactiveDefenseTactic; 00c532fc slot 10; slot 2 returns AIReactiveDefenseTactic
+008ccb40	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::clearAIReactiveDefenseAlert; 00c532fc slot 7; slot 2 returns AIReactiveDefenseTactic
+008ccb90	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::createAIReactiveDefenseTactic; 00c532fc slot 4; slot 2 returns AIReactiveDefenseTactic
+008ccc10	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::createAISimpleDefenseTactic; 00c53334 slot 4; slot 2 returns AISimpleDefenseTactic
+008cceb0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::createAIStaticDefenseTactic; 00c5336c slot 4; slot 2 returns AIStaticDefenseTactic
+008ccf60	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::createAIExactExpansionTactic; 00c533a4 slot 4; slot 2 returns AIExactExpansionTactic
+008cd020	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::createAISimpleExpansionTactic; 00c533dc slot 4; slot 2 returns AISimpleExpansionTactic
+008cd110	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::createAIEngineerTactic; 00c53414 slot 4; slot 2 returns AIEngineerTactic
+008cd3f0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::createAIFlankAttackTactic; 00c53460 slot 4; slot 2 returns AIFlankAttackTactic
+008cd4b0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::createAIGarrisonTactic; 00c5349c slot 4; slot 2 returns AIGarrisonTactic
+008cd6e0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::createAISimpleAttackTactic; 00c534e8 slot 4; slot 2 returns AISimpleAttackTactic
+008cd760	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::updateAISimpleSiegeTactic; 00c53524 slot 11; slot 2 returns AISimpleSiegeTactic
+008cd7b0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::createAISimpleSiegeTactic; 00c53524 slot 4; slot 2 returns AISimpleSiegeTactic
+008cd840	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::aiHuntWindowOpen; 00c53560 slot 5; slot 2 returns AIHuntTactic
+008cd880	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::clearAIHuntAlert; 00c53560 slot 7; slot 2 returns AIHuntTactic
+008cd8d0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::createAIHuntTactic; 00c53560 slot 4; slot 2 returns AIHuntTactic
+008cd950	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::createAINullTactic; 00c535a4 slot 4; slot 2 returns AINullTactic
+008cd9d0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::updateAIScriptedTactic; 00c535dc slot 11; slot 2 returns AIScriptedTactic
+008cd9f0	reversed	recon/skirm8b	gamelogic	ra3::gamelogic::createAIScriptedTactic; 00c535dc slot 4; slot 2 returns AIScriptedTactic
