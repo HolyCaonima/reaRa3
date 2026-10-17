@@ -25757,54 +25757,54 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00922fc0	FUN_00922fc0	.text	301		clean	unknown		unanalyzed	
 009230f0	FUN_009230f0	.text	1370		clean	unknown		unanalyzed	
 00923650	FUN_00923650	.text	98		clean	unknown		unanalyzed	
-009236c0	FUN_009236c0	.text	128		clean	gameclient	recon/gameclient92	verified	MusicCondition throttled cached evaluation; short-circuit callback count, x87 truncation and +0x10/+0x14 writes checked
-00923740	FUN_00923740	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionFactory runtime type name; explicit-only hook gc92conditionfactoryname
-00923750	FUN_00923750	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_And runtime type name; explicit-only hook gc92andconditionname
-00923760	FUN_00923760	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_AnyTrackPlaying runtime type name; explicit-only hook gc92anytrackplayingname
+009236c0	FUN_009236c0	.text	128		clean	gameclient	recon/gameclient92	reversed	MusicCondition throttled cached evaluation; short-circuit callback count, x87 truncation and +0x10/+0x14 writes checked
+00923740	FUN_00923740	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionFactory runtime type name; explicit-only hook gc92conditionfactoryname
+00923750	FUN_00923750	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_And runtime type name; explicit-only hook gc92andconditionname
+00923760	FUN_00923760	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_AnyTrackPlaying runtime type name; explicit-only hook gc92anytrackplayingname
 00923770	FUN_00923770	.text	95		clean	unknown		unanalyzed	
 00923780	FUN_00923780	.text	257		clean	unknown		unanalyzed	
-00923890	FUN_00923890	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_EngagementCount runtime type name; explicit-only hook gc92engagementcountname
+00923890	FUN_00923890	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_EngagementCount runtime type name; explicit-only hook gc92engagementcountname
 009238a0	FUN_009238a0	.text	173		clean	unknown		unanalyzed	
-00923950	FUN_00923950	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_EvaEventPlayedRecently runtime type name; explicit-only hook gc92evaeventrecentname
-00923960	FUN_00923960	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_HitBySuperWeapon runtime type name; explicit-only hook gc92hitbysuperweaponname
-00923970	FUN_00923970	.text	65		clean	gameclient	recon/gameclient92	verified	LocalPlayerIsObserver predicate; all early/query/fallback branches differentially checked
-009239c0	FUN_009239c0	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_LocalPlayerIsObserver runtime type name; explicit-only hook gc92localobservername
-009239d0	FUN_009239d0	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_LocalPlayerKillRatio runtime type name; explicit-only hook gc92localkillrationame
-009239e0	FUN_009239e0	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_Not runtime type name; explicit-only hook gc92notconditionname
-009239f0	FUN_009239f0	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_ObjectsNearEvaEvent runtime type name; explicit-only hook gc92objectsnearevaname
-00923a00	FUN_00923a00	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_ObjectsOfTypeExist runtime type name; explicit-only hook gc92objectsoftypename
-00923a10	FUN_00923a10	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_Or runtime type name; explicit-only hook gc92orconditionname
-00923a20	FUN_00923a20	.text	13		clean	gameclient	recon/gameclient92	verified	PathMusic state valid/active predicate; partial-AL return checked
-00923a30	FUN_00923a30	.text	30		clean	gameclient	recon/gameclient92	verified	PathMusic matching-state activation handler; ret 4 and conditional byte write checked
-00923a50	FUN_00923a50	.text	30		clean	gameclient	recon/gameclient92	verified	PathMusic matching-state deactivation handler; ret 4 and conditional byte write checked
-00923a70	FUN_00923a70	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_PathMusicStateCurrentlyActive runtime type name; explicit-only hook gc92currentpathstatename
+00923950	FUN_00923950	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_EvaEventPlayedRecently runtime type name; explicit-only hook gc92evaeventrecentname
+00923960	FUN_00923960	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_HitBySuperWeapon runtime type name; explicit-only hook gc92hitbysuperweaponname
+00923970	FUN_00923970	.text	65		clean	gameclient	recon/gameclient92	reversed	LocalPlayerIsObserver predicate; all early/query/fallback branches differentially checked
+009239c0	FUN_009239c0	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_LocalPlayerIsObserver runtime type name; explicit-only hook gc92localobservername
+009239d0	FUN_009239d0	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_LocalPlayerKillRatio runtime type name; explicit-only hook gc92localkillrationame
+009239e0	FUN_009239e0	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_Not runtime type name; explicit-only hook gc92notconditionname
+009239f0	FUN_009239f0	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_ObjectsNearEvaEvent runtime type name; explicit-only hook gc92objectsnearevaname
+00923a00	FUN_00923a00	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_ObjectsOfTypeExist runtime type name; explicit-only hook gc92objectsoftypename
+00923a10	FUN_00923a10	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_Or runtime type name; explicit-only hook gc92orconditionname
+00923a20	FUN_00923a20	.text	13		clean	gameclient	recon/gameclient92	reversed	PathMusic state valid/active predicate; partial-AL return checked
+00923a30	FUN_00923a30	.text	30		clean	gameclient	recon/gameclient92	reversed	PathMusic matching-state activation handler; ret 4 and conditional byte write checked
+00923a50	FUN_00923a50	.text	30		clean	gameclient	recon/gameclient92	reversed	PathMusic matching-state deactivation handler; ret 4 and conditional byte write checked
+00923a70	FUN_00923a70	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_PathMusicStateCurrentlyActive runtime type name; explicit-only hook gc92currentpathstatename
 00923a80	FUN_00923a80	.text	79		clean	unknown		unanalyzed	
-00923ad0	FUN_00923ad0	.text	70		clean	gameclient	recon/gameclient92	verified	PathMusic typed activation event handler; disabled and matching timestamp/state writes checked
-00923b20	FUN_00923b20	.text	70		clean	gameclient	recon/gameclient92	verified	PathMusic typed deactivation event handler; disabled and matching timestamp/state writes checked
-00923b70	FUN_00923b70	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_PathMusicStateLastActive runtime type name; explicit-only hook gc92lastpathstatename
+00923ad0	FUN_00923ad0	.text	70		clean	gameclient	recon/gameclient92	reversed	PathMusic typed activation event handler; disabled and matching timestamp/state writes checked
+00923b20	FUN_00923b20	.text	70		clean	gameclient	recon/gameclient92	reversed	PathMusic typed deactivation event handler; disabled and matching timestamp/state writes checked
+00923b70	FUN_00923b70	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_PathMusicStateLastActive runtime type name; explicit-only hook gc92lastpathstatename
 00923b80	FUN_00923b80	.text	92		clean	unknown		unanalyzed	
-00923be0	FUN_00923be0	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_ScoredKillCount runtime type name; explicit-only hook gc92scoredkillcountname
-00923bf0	FUN_00923bf0	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_SpecificTrackTypePlaying runtime type name; explicit-only hook gc92specifictracktypename
-00923c00	FUN_00923c00	.text	69		clean	gameclient	recon/gameclient92	verified	TimeFromStartOfLevel frame/seconds x87 predicate; full unsigned-frame conversion and float-bit differential
-00923c50	FUN_00923c50	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_TimeFromStartOfLevel runtime type name; explicit-only hook gc92timefromstartname
-00923c60	FUN_00923c60	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_TrackPlayedCount runtime type name; explicit-only hook gc92trackplayedcountname
-00923c70	FUN_00923c70	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptConditionNugget_UnitsFarFromBase runtime type name; explicit-only hook gc92unitsfarfrombasename
-00923c80	FUN_00923c80	.text	168		clean	gameclient	recon/gameclient92	verified	Five-way MusicComparison with exact epsilon 0x3A83126F; randomized SSE float32 differential
-00923d30	FUN_00923d30	.text	6		clean	gameclient	recon/gameclient92	verified	MusicScriptingSystem runtime type name; explicit-only hook gc92musicscriptingsystemname
+00923be0	FUN_00923be0	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_ScoredKillCount runtime type name; explicit-only hook gc92scoredkillcountname
+00923bf0	FUN_00923bf0	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_SpecificTrackTypePlaying runtime type name; explicit-only hook gc92specifictracktypename
+00923c00	FUN_00923c00	.text	69		clean	gameclient	recon/gameclient92	reversed	TimeFromStartOfLevel frame/seconds x87 predicate; full unsigned-frame conversion and float-bit differential
+00923c50	FUN_00923c50	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_TimeFromStartOfLevel runtime type name; explicit-only hook gc92timefromstartname
+00923c60	FUN_00923c60	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_TrackPlayedCount runtime type name; explicit-only hook gc92trackplayedcountname
+00923c70	FUN_00923c70	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptConditionNugget_UnitsFarFromBase runtime type name; explicit-only hook gc92unitsfarfrombasename
+00923c80	FUN_00923c80	.text	168		clean	gameclient	recon/gameclient92	reversed	Five-way MusicComparison with exact epsilon 0x3A83126F; randomized SSE float32 differential
+00923d30	FUN_00923d30	.text	6		clean	gameclient	recon/gameclient92	reversed	MusicScriptingSystem runtime type name; explicit-only hook gc92musicscriptingsystemname
 00923d40	FUN_00923d40	.text	50		clean	unknown		unanalyzed	
 00923d80	FUN_00923d80	.text	50		clean	unknown		unanalyzed	
-00923e20	FUN_00923e20	.text	46		clean	gameclient	recon/gameclient92	verified	And condition short-circuit evaluator; empty/mixed/all-true callback result and call count checked
+00923e20	FUN_00923e20	.text	46		clean	gameclient	recon/gameclient92	reversed	And condition short-circuit evaluator; empty/mixed/all-true callback result and call count checked
 00923e50	FUN_00923e50	.text	152		clean	unknown		unanalyzed	
-00923ef0	FUN_00923ef0	.text	15		clean	gameclient	recon/gameclient92	verified	EngagementCount unsigned threshold predicate; randomized differential
-00923f00	FUN_00923f00	.text	23		clean	gameclient	recon/gameclient92	verified	Not condition child evaluator; null and both child values checked
+00923ef0	FUN_00923ef0	.text	15		clean	gameclient	recon/gameclient92	reversed	EngagementCount unsigned threshold predicate; randomized differential
+00923f00	FUN_00923f00	.text	23		clean	gameclient	recon/gameclient92	reversed	Not condition child evaluator; null and both child values checked
 00923f20	FUN_00923f20	.text	47		clean	unknown		unanalyzed	
-00923f50	FUN_00923f50	.text	46		clean	gameclient	recon/gameclient92	verified	Or condition short-circuit evaluator; empty/mixed/all-false callback result and call count checked
-00923f80	FUN_00923f80	.text	130		clean	gameclient	recon/gameclient92	verified	PathMusicStateLastActive elapsed-time comparison; finite float differential across five operators
+00923f50	FUN_00923f50	.text	46		clean	gameclient	recon/gameclient92	reversed	Or condition short-circuit evaluator; empty/mixed/all-false callback result and call count checked
+00923f80	FUN_00923f80	.text	130		clean	gameclient	recon/gameclient92	reversed	PathMusicStateLastActive elapsed-time comparison; finite float differential across five operators
 00924010	FUN_00924010	.text	8		clean	unknown		unanalyzed	
 00924020	FUN_00924020	.text	91		clean	unknown		unanalyzed	
 00924080	FUN_00924080	.text	182	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00924140	FUN_00924140	.text	175	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-009241f0	FUN_009241f0	.text	48		clean	gameclient	recon/gameclient92	verified	TrackPlayedCount player-cache predicate; stale-player write/refresh and lazy current-player count checked
+009241f0	FUN_009241f0	.text	48		clean	gameclient	recon/gameclient92	reversed	TrackPlayedCount player-cache predicate; stale-player write/refresh and lazy current-player count checked
 00924220	FUN_00924220	.text	337		clean	unknown		unanalyzed	
 00924380	FUN_00924380	.text	74		clean	unknown		unanalyzed	
 009243d0	FUN_009243d0	.text	132		clean	unknown		unanalyzed	
@@ -25820,39 +25820,39 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00924ac0	FUN_00924ac0	.text	91		clean	unknown		unanalyzed	
 00924b20	FUN_00924b20	.text	85		clean	unknown		unanalyzed	
 00924b80	FUN_00924b80	.text	80		clean	unknown		unanalyzed	
-00924bd0	FUN_00924bd0	.text	39		clean	gameclient	recon/gameclient92	verified	AnyTrackPlaying runtime constructor; full seeded write-set/ret 4/EAX differential
-00924c00	FUN_00924c00	.text	39		clean	gameclient	recon/gameclient92	verified	EvaEventPlayedRecently runtime constructor; full seeded write-set/ret 4/EAX differential
-00924c30	FUN_00924c30	.text	39		clean	gameclient	recon/gameclient92	verified	LocalPlayerIsObserver runtime constructor; full seeded write-set/ret 4/EAX differential
+00924bd0	FUN_00924bd0	.text	39		clean	gameclient	recon/gameclient92	reversed	AnyTrackPlaying runtime constructor; full seeded write-set/ret 4/EAX differential
+00924c00	FUN_00924c00	.text	39		clean	gameclient	recon/gameclient92	reversed	EvaEventPlayedRecently runtime constructor; full seeded write-set/ret 4/EAX differential
+00924c30	FUN_00924c30	.text	39		clean	gameclient	recon/gameclient92	reversed	LocalPlayerIsObserver runtime constructor; full seeded write-set/ret 4/EAX differential
 00924c60	FUN_00924c60	.text	157		clean	unknown		unanalyzed	
 00924d00	FUN_00924d00	.text	8		clean	unknown		unanalyzed	
-00924d10	FUN_00924d10	.text	124		clean	gameclient	recon/gameclient92	verified	PathMusicStateCurrentlyActive listener constructor; secondary self-anchor and writes checked
-00924d90	FUN_00924d90	.text	125		clean	gameclient	recon/gameclient92	verified	PathMusicStateLastActive listener constructor; secondary self-anchor and writes checked
+00924d10	FUN_00924d10	.text	124		clean	gameclient	recon/gameclient92	reversed	PathMusicStateCurrentlyActive listener constructor; secondary self-anchor and writes checked
+00924d90	FUN_00924d90	.text	125		clean	gameclient	recon/gameclient92	reversed	PathMusicStateLastActive listener constructor; secondary self-anchor and writes checked
 00924e10	FUN_00924e10	.text	8		clean	unknown		unanalyzed	
-00924e20	FUN_00924e20	.text	39		clean	gameclient	recon/gameclient92	verified	SpecificTrackTypePlaying runtime constructor; full seeded write-set/ret 4/EAX differential
-00924e50	FUN_00924e50	.text	39		clean	gameclient	recon/gameclient92	verified	TimeFromStartOfLevel runtime constructor; full seeded write-set/ret 4/EAX differential
+00924e20	FUN_00924e20	.text	39		clean	gameclient	recon/gameclient92	reversed	SpecificTrackTypePlaying runtime constructor; full seeded write-set/ret 4/EAX differential
+00924e50	FUN_00924e50	.text	39		clean	gameclient	recon/gameclient92	reversed	TimeFromStartOfLevel runtime constructor; full seeded write-set/ret 4/EAX differential
 00924e80	FUN_00924e80	.text	8		clean	unknown		unanalyzed	
-00924e90	FUN_00924e90	.text	39		clean	gameclient	recon/gameclient92	verified	TrackPlayedCount runtime constructor; full seeded write-set/ret 4/EAX differential
+00924e90	FUN_00924e90	.text	39		clean	gameclient	recon/gameclient92	reversed	TrackPlayedCount runtime constructor; full seeded write-set/ret 4/EAX differential
 00924ec0	FUN_00924ec0	.text	67		clean	unknown		unanalyzed	
 00924f10	FUN_00924f10	.text	282		clean	unknown		unanalyzed	
 00925030	FUN_00925030	.text	147		clean	unknown		unanalyzed	
 009250d0	FUN_009250d0	.text	92		clean	unknown		unanalyzed	
 00925130	FUN_00925130	.text	317	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00925270	FUN_00925270	.text	30		clean	unknown		unanalyzed	
-00925290	FUN_00925290	.text	94		clean	gameclient	recon/gameclient92	verified	EngagementCount runtime constructor; complete embedded 0x4C record, player cache, write set and refresh callback checked
+00925290	FUN_00925290	.text	94		clean	gameclient	recon/gameclient92	reversed	EngagementCount runtime constructor; complete embedded 0x4C record, player cache, write set and refresh callback checked
 009252f0	FUN_009252f0	.text	8		clean	unknown		unanalyzed	
 00925300	FUN_00925300	.text	81		clean	unknown		unanalyzed	
-00925360	FUN_00925360	.text	267		clean	gameclient	recon/gameclient92	verified	HitBySuperWeapon listener constructor; x87 truncate-to-zero duration ticks and embedded self-anchor checked
+00925360	FUN_00925360	.text	267		clean	gameclient	recon/gameclient92	reversed	HitBySuperWeapon listener constructor; x87 truncate-to-zero duration ticks and embedded self-anchor checked
 00925470	FUN_00925470	.text	8		clean	unknown		unanalyzed	
 00925480	FUN_00925480	.text	101		clean	unknown		unanalyzed	
 009254f0	FUN_009254f0	.text	30		clean	unknown		unanalyzed	
 00925510	FUN_00925510	.text	211		clean	unknown		unanalyzed	
 009255f0	FUN_009255f0	.text	125		clean	unknown		unanalyzed	
 00925670	FUN_00925670	.text	85		clean	unknown		unanalyzed	
-009256d0	FUN_009256d0	.text	43		clean	gameclient	recon/gameclient92	verified	ObjectsNearEvaEvent runtime constructor; full seeded write-set/ret 4/EAX differential
-00925700	FUN_00925700	.text	117		clean	gameclient	recon/gameclient92	verified	ObjectsOfTypeExist constructor; both 15-slot filter arrays represented and presence byte checked
+009256d0	FUN_009256d0	.text	43		clean	gameclient	recon/gameclient92	reversed	ObjectsNearEvaEvent runtime constructor; full seeded write-set/ret 4/EAX differential
+00925700	FUN_00925700	.text	117		clean	gameclient	recon/gameclient92	reversed	ObjectsOfTypeExist constructor; both 15-slot filter arrays represented and presence byte checked
 00925780	FUN_00925780	.text	76		clean	unknown		unanalyzed	
 009257d0	FUN_009257d0	.text	60		clean	unknown		unanalyzed	
-00925810	FUN_00925810	.text	43		clean	gameclient	recon/gameclient92	verified	UnitsFarFromBase runtime constructor; full seeded write-set/ret 4/EAX differential
+00925810	FUN_00925810	.text	43		clean	gameclient	recon/gameclient92	reversed	UnitsFarFromBase runtime constructor; full seeded write-set/ret 4/EAX differential
 00925840	FUN_00925840	.text	327		clean	unknown		unanalyzed	
 00925990	FUN_00925990	.text	191		clean	unknown		unanalyzed	
 00925a60	FUN_00925a60	.text	8		clean	unknown		unanalyzed	
@@ -25863,16 +25863,16 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00925d70	FUN_00925d70	.text	191		clean	unknown		unanalyzed	
 00925e40	FUN_00925e40	.text	517		clean	unknown		unanalyzed	
 00926050	FUN_00926050	.text	210		clean	unknown		unanalyzed	
-00926130	FUN_00926130	.text	113		clean	gameclient	recon/gameclient92	verified	LocalPlayerKillRatio constructor; embedded 0x34 record/self-anchor, cache writes and clear-refresh callbacks checked
+00926130	FUN_00926130	.text	113		clean	gameclient	recon/gameclient92	reversed	LocalPlayerKillRatio constructor; embedded 0x34 record/self-anchor, cache writes and clear-refresh callbacks checked
 009261b0	FUN_009261b0	.text	8		clean	unknown		unanalyzed	
 009261c0	FUN_009261c0	.text	95		clean	unknown		unanalyzed	
 00926220	FUN_00926220	.text	30		clean	unknown		unanalyzed	
 00926240	FUN_00926240	.text	318		clean	unknown		unanalyzed	
-00926380	FUN_00926380	.text	94		clean	gameclient	recon/gameclient92	verified	ScoredKillCount constructor; vector/player-cache writes and clear-refresh callbacks checked
+00926380	FUN_00926380	.text	94		clean	gameclient	recon/gameclient92	reversed	ScoredKillCount constructor; vector/player-cache writes and clear-refresh callbacks checked
 009263e0	FUN_009263e0	.text	8		clean	unknown		unanalyzed	
 009263f0	FUN_009263f0	.text	88		clean	unknown		unanalyzed	
 00926450	FUN_00926450	.text	30		clean	unknown		unanalyzed	
-00926470	FUN_00926470	.text	125		clean	gameclient	recon/gameclient92	verified	ScoredKillCount weighted-record evaluator; cache-valid/stale/invalid clear-refresh branches, post-refresh range replacement and signed-wrap differential
+00926470	FUN_00926470	.text	125		clean	gameclient	recon/gameclient92	reversed	ScoredKillCount weighted-record evaluator; cache-valid/stale/invalid clear-refresh branches, post-refresh range replacement and signed-wrap differential
 009264f0	FUN_009264f0	.text	931		clean	unknown		unanalyzed	
 009268a0	FUN_009268a0	.text	23		clean	unknown		unanalyzed	
 009268c0	FUN_009268c0	.text	13		clean	unknown		unanalyzed	

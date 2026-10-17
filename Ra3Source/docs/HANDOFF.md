@@ -41,15 +41,14 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 Render8e 合并）
+## 3. 现状（截至 DisplayExtent 合并）
 
-- **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,986 行，其中 verified 66、
-  reversed 476、unanalyzed 48,444。`securom` 分类：clean 47,772、entry-lost 653、
+- **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,987 行，其中 verified 66、
+  reversed 682、unanalyzed 48,239。`securom` 分类：clean 47,773、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
-- **hook**：187 个目标（其中 143 个只认显式键）。原有 86 个全部 replace 时，Release
+- **hook**：230 个目标（其中 186 个只认显式键）。原有 86 个全部 replace 时，Release
   遭遇战带 Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34）；新加的
-  Player/Net/W3DView/FXPS/StringBase2/AITNGuard/AudioEvent/Behavior6B/Render8e 共
-  101 个目标只有离线证据，尚未做合并实机 shadow/replace。
+  144 个目标只有离线证据，尚未做合并实机 shadow/replace。
 - **已完成模块**：
   - core（配置/INI/SkuDef）
   - io（BIG 档案、RefPack、BigHandler 四层：查找/打开/读取/seek/枚举）
@@ -74,22 +73,31 @@
     `0x00559C30` 待刷新导出），15 个显式 hook；两配置 oracle 各 3,200 例零差异，
     完整核对 x87 ST0，并成功检出语义突变
   - gamelogic Behavior6B 批次：57 个 clean 语义入口，覆盖 contain、special ability、
-    dock/update 与 physics 簇，8 个显式 hook；独立复核发现 5 个受限域/真实语义问题，
-    正在 `recon/behavior6b` 修正，修复前不得视为最终验收
+    dock/update 与 physics 簇，8 个显式 hook；独立复核发现的问题已修正，主分支
+    Release 集成 oracle 671 场景零差异
   - render Render8e 批次：53 个 clean 语义入口、15 个显式 hook；强化 oracle 在修正
     Hermite 运算顺序、condition 选择优先级和变换累加顺序后，两配置各 3,480 场景零差异；
     既有 W3DView/Rain 两配置各 25,850 场景零差异
+  - gamelogic ObjectLogic 批次：29 个 clean 入口、3 个显式 hook；主分支 Release
+    1,665 次观测零差异，29/29 mutation 与别名 mutation 均检出并恢复
+  - net LobbySession 批次：46 个 vtable 字段叶函数，无 hook；Release 原生差分通过
+  - gameclient MusicScripting 批次：51 个入口、20 个类型名显式 hook；刷新后 range
+    重载、构造写集和 x87 语义修正后，Release 3,403 场景零差异，3 类 mutation 均检出
+  - ui UIControls 批次：53 个入口、10 个显式 hook；Release 2,784 场景零差异，两个
+    mutation 均检出并恢复
+  - gamelogic Scripts82 批次：36 个语义入口、10 个显式 hook；64 项库存中其余 28 项
+    保持 inventory-only，Release 1,693 场景零差异
+  - gameclient DisplayExtent 批次：20 个 vtable 叶函数，无 hook；别名写入、部分 EAX、
+    无符号溢出谓词及代表性 mutation 均通过
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
   - 类型化资源访问（recon/typed）未合并。
   - 少数 hook 在遭遇战里未被调用（logicrandomvariable、几个 BIG 枚举入口、
     stringfindlast 等），只有离线证据。
-- **当前十路并行**（用户 11:14 明确允许扩到 10 路）：`recon/terrainlogic`、
-  `recon/aistates`、`recon/grokclean1`、`recon/objectlogic`、`recon/uicontrols`、
-  `recon/weaponlogic`、`recon/gamelogic7c`、`recon/scripts82`、`recon/grokclean2`、
-  `recon/gameclient92`。每支独立 worktree，完成后主控逐支复验合并；构建/oracle 可并行，
-  主分支合并仍串行，避免注册表和 CMake 冲突污染。
+- **当前并行**：`recon/terrainlogic`、`recon/aistates`、`recon/weaponlogic`，以及因模型
+  服务临时失败后重新启动的 `recon/gamelogic7c`。每支独立 worktree，完成后主控逐支
+  复验合并；构建/oracle 可并行，主分支合并仍串行，避免注册表和 CMake 冲突污染。
 - **后续模型分流**（用户 12:10 决定）：复杂 ABI、受保护边界与重型对象簇继续优先
   Gemini 4 Argon Medium；简单叶函数、访问器与清晰类簇在 Gemini 4 Argon Medium 和
   Grok 4.7 High Fast 间 1:1 分配。当前已有两个 Gemini 补位，因此接下来两个简单补位
@@ -97,7 +105,8 @@
   完成耗时和最终有效重建数；没有账单遥测时不推断精确 token 成本。Grok 的前两批只分配
   clean 低风险簇，并提高证据门槛：逐项核对 `reversed` ↔ C++ ↔ shipped 行为，主控额外
   抽查反汇编、ABI、hook 前缀与写集；归属模糊、身份指纹冒充语义或重复认领立即退回。
-  连续两批无实质返工后，再降到与 Gemini 相同的审查强度。
+  两个 Grok 低风险批次均经主控反汇编抽查后无需实质返工；后续简单叶簇可按普通强度
+  使用 Grok，复杂 ABI、构造器和状态机仍优先 Gemini。
 - **验收按风险分级**（用户 12:13、12:15 决定，避免重复验证）：
   - 低风险直线访问器/常量写入：2–4 个有区别的场景，覆盖正常值、边界值、ABI、实际写集
     和 sentinel 即可；不做随机数量竞赛。
