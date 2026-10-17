@@ -32,8 +32,9 @@ DEFAULT_CHECKER = REPO_ROOT / "Ra3Source/build/win32/bin/Release/ra3_luavmcheck.
 ARENA_BASE = 0x22000000
 ARENA_SIZE = 0x00040000
 
-# .securom immediate slots read by the Stage-1 bodies (resolved at ms=253582..253857
-# in run35/slot_changes.tsv, 13.5s after snapshot_3_240s was dumped).
+# .securom immediate slots read by the bodies. Their values were NOT captured (zero in
+# every run35 snapshot, absent from slot_changes.tsv); they are inferred from Lua 4.0
+# semantics and the matching .rdata strings. Confirm with a dump taken after the Lua VM runs.
 SECUROM_IMMEDIATES: dict[int, int] = {
     0x018FC6E4: 0x00BD5154,  # 0x00403660: "memory allocation error: block too big"
     0x018FC93C: 0x00000004,  # 0x004036D0: MINPOWER2 = 4

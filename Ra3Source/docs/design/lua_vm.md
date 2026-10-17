@@ -5,19 +5,20 @@
 All 56 `entry-lost` (`resolution=body`) functions in `0x00403660`–`0x0040E480` belong to the embedded **Lua 4.0** runtime in `ra3_1.0.game`. Their ownership and exact Lua 4.0 subsystem boundaries are anchored by `.rdata` diagnostic and event strings read directly from `ra3_1.0.game`:
 
 - `0x00BD5150`: `""` (empty string fallback in `luaM_realloc`)
-- `0x00BD5154`: `"memory allocation error: block too big"` (referenced by `0x00403660` body `0x004A3130` via `.securom` immediate slot `0x018FC6E4`, resolved at `ms=253582` in `run35/slot_changes.tsv`)
+- `0x00BD5154`: `"memory allocation error: block too big"` (pushed from `.securom` immediate slot `0x018FC6E4` at `0x004A317E` in `0x00403660` body `0x004A3130`; slot value inferred, see §2.5)
 - `0x00BD517C`: `"stack overflow"` (referenced by `0x004038B0` body `0x004A4010` at `0x004A4024`)
-- `0x00BD51B8`: `"?"` (default chunk name referenced by `0x00403EC0` body `0x00406550` via `.securom` immediate slot `0x018FC47C`, resolved at `ms=253582`)
+- `0x00BD51B8`: `"?"` (default chunk name referenced by `0x00403EC0` body `0x00406550` via `.securom` immediate slot `0x018FC47C`; slot value inferred, see §2.5)
 - `0x00BD5230`: `luaO_typenames` table (`"userdata"`, `"nil"`, `"number"`, `"string"`, `"table"`, `"function"`) read at `0x0049F6D9` (`0x0040A120`)
-- `0x00BD52AC`: ``"`%.20s' expected"`` (referenced by `0x00404370` body `0x019149F0` via `.securom` immediate slot `0x018FCB10`, resolved at `ms=253857`)
-- `0x00BD52C0`: ``"`%.20s' expected (to close `%.20s' at line %d)"`` (referenced by `0x00404450` body `0x004A1440` via `.securom` immediate slot `0x018FC6A4`, resolved at `ms=253857`)
+- `0x00BD52AC`: ``"`%.20s' expected"`` (referenced by `0x00404370` body `0x019149F0` via `.securom` immediate slot `0x018FCB10`; slot value inferred, see §2.5)
+- `0x00BD52C0`: ``"`%.20s' expected (to close `%.20s' at line %d)"`` (referenced by `0x00404450` body `0x004A1440` via `.securom` immediate slot `0x018FC6A4`; slot value inferred, see §2.5)
 - `0x00BD52F0`: `"constant table overflow"` (pushed at `0x004748A4` in `0x00404550` body `0x00474880`)
 - `0x00BD59A0`: `luaT_eventname` table (`"gettable"`, `"settable"`, `"index"`, `"getglobal"`, `"setglobal"`, `"add"`, `"sub"`, `"mul"`, `"div"`, `"pow"`, `"unm"`, `"lt"`, `"concat"`, `"gc"`, `"function"`, `NULL`) read at `0x0049F6E0` (`0x0040A120`)
 - `0x00BD59F0`: `luaT_validevents[7][15]` validity matrix read at `0x0049F6BA` (`0x0040A120`)
 - `0x00BD5AC0`: `"tag table overflow"` (pushed at `0x00443DD0` in `0x00409E90` body `0x00443DC0`)
-- `0x00BD5AD4`: `"%d is not a valid tag"` (referenced by `0x0040A120` body `0x0049F650` via `.securom` immediate slot `0x018FC62C`)
-- `0x00BD5AF0`: `"cannot change `%.20s' tag method for type `%.20s'%.20s"` (pushed at `0x0049F6EB` in `0x0040A120` body `0x0049F650`)
-- `0x00BD5B28`: `"tag method must be a function (or nil)"` (pushed at `0x0049F710` in `0x0040A120` body `0x0049F650`)
+- `0x00BD5AD4`: `"%d is not a valid tag"` (referenced by `0x0040A120` body `0x0049F650` via `.securom` immediate slot `0x018FC62C` at `0x0049F689`; slot value inferred, see §2.5)
+- `0x00BD5B38`: `"cannot change `%.20s' tag method for type `%.20s'%.20s"` (pushed at `0x0049F6EA` in `0x0040A120` body `0x0049F650`)
+- `0x00BD5B10`: `"tag method must be a function (or nil)"` (pushed at `0x0049F722` in `0x0040A120` body `0x0049F650`)
+- (`0x00BD5AF0` holds `"%d was not created by `newtag'"`; `0x00BD5B28` is the middle of the `0x00BD5B10` string.)
 - `0x00BD5B70`: `" with default tag"` / `0x00BBED30`: `""` (selected at `0x0049F6CD`–`0x0049F6D4` in `0x0040A120`)
 - `0x00BD5C0C`: `"invalid tag for a userdata (%d)"` (pushed at `0x0191B7B1` in `0x0040A860` body `0x0191B790`)
 - `0x00BD5C6C`: `"table index is nil"` (pushed at `0x01906A34` in `0x0040B570` body `0x019069F0`)
@@ -33,13 +34,14 @@ Across the `.text` and `.securom` bodies resolved in `run35/snapshot_3_240s`:
 1. **Entry-site trampoline**: Each function's original 6-byte entry at `site` was overwritten with `jmp dword ptr [slot]` (`FF 25 <slot>`), where `slot` in `.securom` (`0x018F4FDC`–`0x018FC418`) points at the relocated/decrypted `body` (`0x00404950`–`0x004A58A0` in `.text` or `0x019026A0`–`0x01933830` in `.securom`).
 2. **SecuROM call-site rewrites**: Direct `call <callee>` instructions inside relocated bodies were rewritten to `push <ret_addr>; jmp <callee>` or `push <ret_addr>; push <callee>; ret`, followed by junk dead bytes between `<ret_addr - N>` and `<ret_addr>`.
 3. **Inline arithmetic target/pointer thunks**: Several sites compute their callee target or `.rdata` pointer inline from `.securom` constants and `.text` words without calling any SecuROM VM helper:
-   - `0x00404370` (`0x01914A0C`): `mov ebp, [0x018F76F0]; add ebp, [0x0059BD14]` -> `0xFDFA8E5B + 0x02462955 = 0x0040B7B0` (`luaX_token2str`)
+   - `0x00404370` (`0x01914A0C`): `mov ebp, [0x018F76F0]; add ebp, [0x0059BD14]` -> `0x005679DE + 0xFFEA3DD2 = 0x0040B7B0` (`luaX_token2str`)
    - `0x004048E0` (`0x00439CD7`): `mov ebx, [0x018F7474]; mov ecx, [0x004049D1]; ror ebx, cl` -> `ror(0x08194C00, 5) = 0x0040CA60` (`luaK_lastisopen`)
-   - `0x00405B10` (`0x0193388C`): `mov edx, [0x0065EBF2]; xor edx, [0x018F746C]` -> `0x8BE8BFFE ^ 0x8BA87C7E = 0x0040C380` (`luaX_lex`)
+   - `0x00405B10` (`0x01933899`): `mov ecx, [0x01931780]; xor ecx, [0x018F7820]` -> `0x52F88BC7 ^ 0x52B84847 = 0x0040C380` (`luaX_lex`)
    - `0x00406CF0` (`0x019150CC`): `mov eax, [0x018F7700]; not eax; xor eax, [0x0069CE86]` -> `~0x00675713 ^ 0xFFD8915C = 0x004039B0` (`call_linehook`)
    - `0x0040C920` (`0x0045A76C`): `mov ebp, [0x018F76A8]; mov ecx, [0x0052EF45]; ror ebp, cl` -> `0x00BD5FE0` (`"control structure too long"`)
 4. **SecuROM execution counters**: `dec dword ptr [0x0198xxxx]; je <re-encrypt_stub>` instructions decrement a nonzero counter in `.securom` data on each call.
-5. **Relocated immediates in `.securom`**: Immediate constants (`MINPOWER2 = 4`, `NO_TOKEN = 286`, `MAXARG_U = 0x03FFFFFF`, `MASK_B = 0x00003FC0`, `NO_REG = 0xFF`, `MASK_OP = 0x3F`, `MINSTRTABSIZE = 16`, `LUA_NTAGS = 6`, and `.rdata` string pointers) were replaced by `dword ptr [0x018FCxxx]` loads resolved on first execution (`run35/slot_changes.tsv` at `ms=253582..253857`).
+5. **Relocated immediates in `.securom`**: Immediate constants (`MINPOWER2 = 4`, `NO_TOKEN = 286`, `MAXARG_U = 0x03FFFFFF`, `MASK_B = 0x00003FC0`, `NO_REG = 0xFF`, `MASK_OP = 0x3F`, `MINSTRTABSIZE = 16`, `LUA_NTAGS = 6`, and `.rdata` string pointers) were replaced by `dword ptr [0x018FCxxx]` loads.
+   **These 28 slot values were not captured.** They are zero in all four run35 snapshots (0/45/120/240 s) and are not data-slot rows in `run35/slot_changes.tsv` (that file only records code slots; the bodies' entry slots resolve at `ms=253582`, after the last snapshot). The values in `verify_lua_vm.py` `SECUROM_IMMEDIATES` are inferred from Lua 4.0 semantics and, for string pointers, from the matching `.rdata` string at that address. The oracle therefore proves the C++ matches the native bodies *given these constants*. Open item: confirm them with a live dump taken after the Lua VM first runs (later than ~254 s into a session).
 
 ## 3. Reconstructed Functions (44 Functions; All Names Inferred from Lua 4.0 Semantics & `.rdata` Strings)
 
