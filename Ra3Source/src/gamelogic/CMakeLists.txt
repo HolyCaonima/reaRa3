@@ -23,6 +23,7 @@ ra3_add_module(gamelogic
         src/AIState7A.cpp
         include/ra3/gamelogic/AIState7B.h
         include/ra3/gamelogic/AIState79B.h
+        include/ra3/gamelogic/AIState7C.h
         src/AIStateMachine7C.cpp
         src/AITNGuardViews.cpp
         src/AIStateViews.cpp
@@ -48,6 +49,7 @@ ra3_add_module(gamelogic
         src/AIState7B.cpp
         src/AIState79B.cpp
         src/ObjectModules72.cpp
+        src/AIState7C.cpp
     PUBLIC_DEPS
         Ra3::sim
         Ra3::common)
