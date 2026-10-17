@@ -246,7 +246,8 @@ class Emulator:
     def write(self, address: int, data: bytes) -> None:
         self.uc.mem_write(address, data)
 
-    def call(self, address: int, stack_args: Sequence[int] = (), *, ecx: int = 0, edx: int = 0,
+    def call(self, address: int, stack_args: Sequence[int] = (), *, eax: int = 0,
+             ecx: int = 0, edx: int = 0,
              max_instructions: int = 5_000_000,
              _return_address: int = RETURN_SENTINEL) -> CallResult:
         """Call ``address`` with ``stack_args`` pushed right to left.
@@ -260,7 +261,7 @@ class Emulator:
         esp = top - len(frame)
         self.uc.mem_write(esp, frame)
         for reg, value in ((r.UC_X86_REG_ESP, esp), (r.UC_X86_REG_EBP, 0),
-                           (r.UC_X86_REG_EAX, 0), (r.UC_X86_REG_EBX, 0),
+                           (r.UC_X86_REG_EAX, eax), (r.UC_X86_REG_EBX, 0),
                            (r.UC_X86_REG_ECX, ecx), (r.UC_X86_REG_EDX, edx),
                            (r.UC_X86_REG_ESI, 0), (r.UC_X86_REG_EDI, 0)):
             self.uc.reg_write(reg, value & 0xFFFFFFFF)

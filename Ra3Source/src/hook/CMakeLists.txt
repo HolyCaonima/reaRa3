@@ -14,11 +14,13 @@ ra3_add_shared_library(ra3hook
         dll/Targets.cpp
         dll/Targets.h
         dll/targets/PlayerTargets.cpp
+        dll/targets/NetTargets.cpp
     DEPS
         Ra3::asset
         Ra3::common
         Ra3::hook
         Ra3::io
         Ra3::math
+        Ra3::net
         Ra3::sim
         Ra3::text)
