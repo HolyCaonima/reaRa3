@@ -114,6 +114,22 @@
   - `recon/thingtemplate`：`0x00780000–0x00796FFF` ThingTemplate/Thing 访问器簇，Grok
     （提高证据门槛：逐行所有权证明），base `5d16a5b`。
   - `recon/render91`：`0x00900000–0x0091FFFF` W3D draw module 簇，Gemini，base `5d16a5b`。
+  - 14:00 补足 10 路，base 均为 `86baa8d`：`recon/objbehav68`（`0x00680000–0x0068FFFF`
+    对象 behavior/update 模块，Gemini）、`recon/protentry`（run35 已恢复原生体的
+    entry-lost 函数，Gemini，无 hook）、`recon/protcave`（全部站点为 cave 的
+    inner-patched/entry-recoverable 函数，Gemini，无 hook）、`recon/drawable52`
+    （`0x00520000–0x0052FFFF` Drawable 访问器，Grok，逐行所有权证明）、
+    `recon/particles65`（`0x00650000–0x0067FFFF` 粒子模块，Gemini）、`recon/net5d`
+    （`0x005D0000–0x005DFFFF` 网络类簇，Grok，逐行所有权证明）。
+  - 已合并批次的旧 worktree 已移除（分支保留）；`recon/behavior6b` 的 `c24fe82` 与
+    main 的 `44616d1` 为同一补丁。
+- **合并前静态验收**：`python Ra3Source\tools\analysis\accept_batch.py recon/<name>`。
+  它只经 git 读取分支内容，检查共享文件改动、与 main 内容不同的同名新增文件、新 hook
+  的键唯一性/explicitOnly 计数/expected 字节对二进制/stolen 整指令且可搬移/无回跳/
+  每键有 record 调用、设计文档 hook 表的字节/VA/explicitOnly 与代码一致，以及注释的
+  格式、owner、台账归属、保护类别和与 main/在途分支的重复认领。`RESULT FAIL` 先退回或
+  由主控修正再合并。脚本不判断语义与所有权证据，这部分仍由主控抽查。
+- **批次指标**：`docs/analysis/ra3_1.0/batch_metrics.tsv`，合并或退回时追加一行。
 - **验收教训**：子 agent 的交付说明可能与提交不符。合并前用脚本从目标表直接核对
   键名、explicitOnly 计数与二进制 expected16，并核对 record 键与注释一致；旧 base 的
   分支可能新建与主分支同名的头文件（WeaponLogic 合并时即需改名为 `UpdateModules.h`）；
