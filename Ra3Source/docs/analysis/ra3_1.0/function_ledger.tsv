@@ -18852,9 +18852,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007b03c0	FUN_007b03c0	.text	556		clean	unknown		unanalyzed	
 007b05f0	FUN_007b05f0	.text	315		clean	unknown		unanalyzed	
 007b0730	FUN_007b0730	.text	326		clean	unknown		unanalyzed	
-007b0880	FUN_007b0880	.text	101		clean	unknown		unanalyzed	
-007b08f0	FUN_007b08f0	.text	77		clean	unknown		unanalyzed	
-007b0940	FUN_007b0940	.text	77		clean	unknown		unanalyzed	
+007b0880	FUN_007b0880	.text	101		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiGarrisonedOnEnter; 00c2c268 slot 4; slot 2 returns AIGarrisonedState
+007b08f0	FUN_007b08f0	.text	77		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiGarrisonedOnExit; 00c2c268 slot 6; slot 2 returns AIGarrisonedState
+007b0940	FUN_007b0940	.text	77		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiGarrisonedUpdate; 00c2c268 slot 5; slot 2 returns AIGarrisonedState
 007b0990	FUN_007b0990	.text	87		clean	unknown		unanalyzed	
 007b09f0	FUN_007b09f0	.text	542		clean	unknown		unanalyzed	
 007b0c10	FUN_007b0c10	.text	305		clean	unknown		unanalyzed	
@@ -18862,35 +18862,35 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007b0e20	FUN_007b0e20	.text	257	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
 007b0f30	FUN_007b0f30	.text	104		clean	unknown		unanalyzed	
 007b1090	FUN_007b1090	.text	180		clean	unknown		unanalyzed	
-007b1150	FUN_007b1150	.text	51		clean	unknown		unanalyzed	
+007b1150	FUN_007b1150	.text	51		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::unitAIDeadOnExit; 00c2ace0 slot 6; slot 2 returns UnitAIDeadState; also 00c2c578 slot 6 AIDeadState
 007b1190	FUN_007b1190	.text	308		clean	unknown		unanalyzed	
 007b12d0	FUN_007b12d0	.text	1071		clean	unknown		unanalyzed	
 007b1700	FUN_007b1700	.text	205		clean	unknown		unanalyzed	
-007b17d0	FUN_007b17d0	.text	62		clean	unknown		unanalyzed	
+007b17d0	FUN_007b17d0	.text	62		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveToOnExit; 00c2f388 slot 6; slot 2 returns AIMoveToState
 007b1810	FUN_007b1810	.text	479		clean	unknown		unanalyzed	
-007b19f0	FUN_007b19f0	.text	143		clean	unknown		unanalyzed	
-007b1a80	FUN_007b1a80	.text	90		clean	unknown		unanalyzed	
+007b19f0	FUN_007b19f0	.text	143		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveToCoverOnExit; 00c32468 slot 6; slot 2 returns AIMoveToCoverState
+007b1a80	FUN_007b1a80	.text	90		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveToStateSAUpdate; 00c2f3e8 slot 5; slot 2 returns AIMoveToStateSA
 007b1ae0	thunk_FUN_007b12d0	.text	5		clean	unknown		unanalyzed	
-007b1af0	FUN_007b1af0	.text	120		clean	unknown		unanalyzed	
-007b1b70	FUN_007b1b70	.text	49		clean	unknown		unanalyzed	
-007b1bb0	FUN_007b1bb0	.text	89		clean	unknown		unanalyzed	
-007b1c10	FUN_007b1c10	.text	74		clean	unknown		unanalyzed	
-007b1c60	FUN_007b1c60	.text	72		clean	unknown		unanalyzed	
+007b1af0	FUN_007b1af0	.text	120		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveOutOfTheWayOnExit; 00c2f448 slot 6; slot 2 returns AIMoveOutOfTheWayState
+007b1b70	FUN_007b1b70	.text	49		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveAndTightenUpdate; 00c2f4b0 slot 5; slot 2 returns AIMoveAndTightenState
+007b1bb0	FUN_007b1bb0	.text	89		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveAwayPanicOnExit; 00c2f518 slot 6; slot 2 returns AIMoveAwayPanicState
+007b1c10	FUN_007b1c10	.text	74		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveAwayPanicUpdate; 00c2f518 slot 5; slot 2 returns AIMoveAwayPanicState; also 00c2f580 slot 5 AIMoveAwayFromRepulsorsState
+007b1c60	FUN_007b1c60	.text	72		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveAwayFromRepulsorsOnExit; 00c2f580 slot 6; slot 2 returns AIMoveAwayFromRepulsorsState
 007b1cb0	FUN_007b1cb0	.text	368	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
-007b1e20	FUN_007b1e20	.text	98		clean	unknown		unanalyzed	
+007b1e20	FUN_007b1e20	.text	98		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiFearOnExit; 00c2f5f0 slot 6; slot 2 returns AIFearState
 007b1e90	FUN_007b1e90	.text	156		clean	unknown		unanalyzed	
-007b1f30	FUN_007b1f30	.text	107		clean	unknown		unanalyzed	
-007b1fa0	FUN_007b1fa0	.text	103		clean	unknown		unanalyzed	
-007b2010	FUN_007b2010	.text	52		clean	unknown		unanalyzed	
-007b2050	FUN_007b2050	.text	116		clean	unknown		unanalyzed	
-007b20d0	FUN_007b20d0	.text	91		clean	unknown		unanalyzed	
+007b1f30	FUN_007b1f30	.text	107		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiUncontrollableCowerOnEnter; 00c2c768 slot 4; slot 2 returns AIUncontrollableCower
+007b1fa0	FUN_007b1fa0	.text	103		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiUncontrollableCowerOnExit; 00c2c768 slot 6; slot 2 returns AIUncontrollableCower
+007b2010	FUN_007b2010	.text	52		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveAwayAndCowerOnExit; 00c2f650 slot 6; slot 2 returns AIMoveAwayAndCowerState
+007b2050	FUN_007b2050	.text	116		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveAwayAndCowerUpdate; 00c2f650 slot 5; slot 2 returns AIMoveAwayAndCowerState
+007b20d0	FUN_007b20d0	.text	91		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiBackAwayOnExit; 00c2f6b8 slot 6; slot 2 returns AIBackAwayState
 007b2130	FUN_007b2130	.text	930		clean	unknown		unanalyzed	
 007b24e0	FUN_007b24e0	.text	1008		clean	unknown		unanalyzed	
-007b28d0	FUN_007b28d0	.text	192		clean	unknown		unanalyzed	
+007b28d0	FUN_007b28d0	.text	192		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiAttackApproachTargetOnExit; 00c2f718 slot 6; slot 2 returns AIAttackApproachTargetState
 007b2990	FUN_007b2990	.text	705		clean	unknown		unanalyzed	
 007b2c60	FUN_007b2c60	.text	218		clean	unknown		unanalyzed	
 007b2d40	thunk_FUN_007b2c60	.text	5		clean	unknown		unanalyzed	
-007b2d50	FUN_007b2d50	.text	181		clean	unknown		unanalyzed	
+007b2d50	FUN_007b2d50	.text	181		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiAttackPositionApproachTargetOnExit; 00c2f788 slot 6; slot 2 returns AIAttackPositionApproachTargetState
 007b2e10	FUN_007b2e10	.text	1113		clean	unknown		unanalyzed	
 007b3270	FUN_007b3270	.text	475		clean	unknown		unanalyzed	
 007b3450	FUN_007b3450	.text	585		clean	unknown		unanalyzed	
@@ -18898,17 +18898,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007b36b0	FUN_007b36b0	.text	165		clean	unknown		unanalyzed	
 007b3760	FUN_007b3760	.text	476		clean	unknown		unanalyzed	
 007b3940	thunk_FUN_007b3760	.text	5		clean	unknown		unanalyzed	
-007b3950	FUN_007b3950	.text	21		clean	unknown		unanalyzed	
+007b3950	FUN_007b3950	.text	21		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiAttackPursueTargetOnExit; 00c2f878 slot 6; slot 2 returns AIAttackPursueTargetState
 007b3970	FUN_007b3970	.text	440		clean	unknown		unanalyzed	
 007b3b30	thunk_FUN_007b3970	.text	5		clean	unknown		unanalyzed	
 007b3b40	FUN_007b3b40	.text	512		clean	unknown		unanalyzed	
 007b3d40	FUN_007b3d40	.text	411		clean	unknown		unanalyzed	
 007b3ee0	thunk_FUN_007b3d40	.text	5		clean	unknown		unanalyzed	
-007b3ef0	FUN_007b3ef0	.text	32		clean	unknown		unanalyzed	
+007b3ef0	FUN_007b3ef0	.text	32		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiAttackMeleeSquishOnExit; 00c2f9c8 slot 6; slot 2 returns AIAttackMeleeSquishState
 007b3f10	FUN_007b3f10	.text	30		clean	unknown		unanalyzed	
 007b3f30	FUN_007b3f30	.text	930		clean	unknown		unanalyzed	
 007b42e0	FUN_007b42e0	.text	1183		clean	unknown		unanalyzed	
-007b4780	FUN_007b4780	.text	36		clean	unknown		unanalyzed	
+007b4780	FUN_007b4780	.text	36		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiAttackMeleeEngageUpdate; 00c2fa38 slot 5; slot 2 returns AIAttackMeleeEngageState
 007b47b0	FUN_007b47b0	.text	105		clean	unknown		unanalyzed	
 007b4820	FUN_007b4820	.text	147		clean	unknown		unanalyzed	
 007b48c0	FUN_007b48c0	.text	513		clean	unknown		unanalyzed	
@@ -18920,42 +18920,42 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007b4e70	FUN_007b4e70	.text	190		clean	unknown		unanalyzed	
 007b4f30	FUN_007b4f30	.text	6		clean	unknown		unanalyzed	
 007b4f40	FUN_007b4f40	.text	78		clean	unknown		unanalyzed	
-007b4f90	FUN_007b4f90	.text	157		clean	unknown		unanalyzed	
+007b4f90	FUN_007b4f90	.text	157		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiAttackMoveToOnExit; 00c32180 slot 6; slot 2 returns AIAttackMoveToState
 007b5030	FUN_007b5030	.text	71		clean	unknown		unanalyzed	
 007b5080	FUN_007b5080	.text	530		clean	unknown		unanalyzed	
-007b52a0	FUN_007b52a0	.text	47		clean	unknown		unanalyzed	
-007b52d0	FUN_007b52d0	.text	66		clean	unknown		unanalyzed	
-007b5320	FUN_007b5320	.text	72		clean	unknown		unanalyzed	
-007b5370	FUN_007b5370	.text	28		clean	unknown		unanalyzed	
+007b52a0	FUN_007b52a0	.text	47		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiFollowWaypointPathOnExit; 00c2fcb0 slot 6; slot 2 returns AIFollowWaypointPathState
+007b52d0	FUN_007b52d0	.text	66		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiFollowWaypointPathEvacuateOnExit; 00c324d0 slot 6; slot 2 returns AIFollowWaypointPathStateAndEvacuate
+007b5320	FUN_007b5320	.text	72		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiFollowWaypointPathExactOnExit; 00c2fd20 slot 6; slot 2 returns AIFollowWaypointPathExactState
+007b5370	FUN_007b5370	.text	28		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiFollowWaypointPathExactUpdate; 00c2fd20 slot 5; slot 2 returns AIFollowWaypointPathExactState
 007b5390	FUN_007b5390	.text	102		clean	unknown		unanalyzed	
 007b5400	FUN_007b5400	.text	6		clean	unknown		unanalyzed	
 007b5410	FUN_007b5410	.text	78		clean	unknown		unanalyzed	
-007b5460	FUN_007b5460	.text	61		clean	unknown		unanalyzed	
+007b5460	FUN_007b5460	.text	61		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiAttackFollowWaypointPathOnExit; 00c321e8 slot 6; slot 2 returns AIAttackFollowWaypointPathState
 007b54a0	FUN_007b54a0	.text	6		clean	unknown		unanalyzed	
 007b54b0	FUN_007b54b0	.text	369	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
-007b5630	FUN_007b5630	.text	126		clean	unknown		unanalyzed	
-007b56b0	FUN_007b56b0	.text	46		clean	unknown		unanalyzed	
+007b5630	FUN_007b5630	.text	126		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiWanderOnExit; 00c32258 slot 6; slot 2 returns AIWanderState
+007b56b0	FUN_007b56b0	.text	46		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiWanderInPlaceOnExit; 00c2fd90 slot 6; slot 2 returns AIWanderInPlaceState
 007b56e0	FUN_007b56e0	.text	6		clean	unknown		unanalyzed	
 007b56f0	FUN_007b56f0	.text	320	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
-007b5830	FUN_007b5830	.text	72		clean	unknown		unanalyzed	
+007b5830	FUN_007b5830	.text	72		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiPanicOnExit; 00c322b8 slot 6; slot 2 returns AIPanicState
 007b5880	FUN_007b5880	.text	292		clean	unknown		unanalyzed	
 007b59b0	FUN_007b59b0	.text	879		clean	unknown		unanalyzed	
 007b5d20	FUN_007b5d20	.text	259		clean	unknown		unanalyzed	
-007b5e30	FUN_007b5e30	.text	22		clean	unknown		unanalyzed	
+007b5e30	FUN_007b5e30	.text	22		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiCombineUpdate; 00c2fe60 slot 5; slot 2 returns AICombineState
 007b5e50	FUN_007b5e50	.text	627		clean	unknown		unanalyzed	
-007b60d0	FUN_007b60d0	.text	67		clean	unknown		unanalyzed	
+007b60d0	FUN_007b60d0	.text	67		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiChargeTargetOnExit; 00c2ff50 slot 6; slot 2 returns AIChargeTargetState
 007b6120	FUN_007b6120	.text	70		clean	unknown		unanalyzed	
 007b6170	FUN_007b6170	.text	340		clean	unknown		unanalyzed	
-007b62d0	FUN_007b62d0	.text	27		clean	unknown		unanalyzed	
-007b62f0	FUN_007b62f0	.text	81		clean	unknown		unanalyzed	
+007b62d0	FUN_007b62d0	.text	27		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveAndDeleteOnExit; 00c2fc48 slot 6; slot 2 returns AIMoveAndDeleteState; also 00c2ffb8 slot 6 AIMoveToPositionAndDieState
+007b62f0	FUN_007b62f0	.text	81		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveToAndEvacuateOnExit; 00c30228 slot 6; slot 2 returns AIMoveToAndEvacuateState; also 00c30298 slot 6 AIAttackMoveToAndEvacuateState; also 00c30310 slot 6 AIMoveForBoarding
 007b6350	FUN_007b6350	.text	36		clean	unknown		unanalyzed	
 007b6380	FUN_007b6380	.text	103		clean	unknown		unanalyzed	
 007b63f0	FUN_007b63f0	.text	161		clean	unknown		unanalyzed	
-007b64a0	FUN_007b64a0	.text	131		clean	unknown		unanalyzed	
-007b6530	FUN_007b6530	.text	123		clean	unknown		unanalyzed	
-007b65b0	FUN_007b65b0	.text	184		clean	unknown		unanalyzed	
-007b6670	FUN_007b6670	.text	112		clean	unknown		unanalyzed	
-007b66e0	FUN_007b66e0	.text	105		clean	unknown		unanalyzed	
+007b64a0	FUN_007b64a0	.text	131		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiDeployOnEnter; 00c2d3c8 slot 4; slot 2 returns AIDeployState
+007b6530	FUN_007b6530	.text	123		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiDeployOnExit; 00c2d3c8 slot 6; slot 2 returns AIDeployState
+007b65b0	FUN_007b65b0	.text	184		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiUnDeployOnEnter; 00c2d428 slot 4; slot 2 returns AIUnDeployState
+007b6670	FUN_007b6670	.text	112		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiUnDeployOnExit; 00c2d428 slot 6; slot 2 returns AIUnDeployState
+007b66e0	FUN_007b66e0	.text	105		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiTNGuardMachineXfer; 00c2d488 slot 3; slot 2 returns AITNGuardMachine
 007b6750	FUN_007b6750	.text	236		clean	unknown		unanalyzed	
 007b6840	FUN_007b6840	.text	38		clean	unknown		unanalyzed	
 007b6870	FUN_007b6870	.text	6		clean	unknown		unanalyzed	
@@ -19004,7 +19004,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007b9140	FUN_007b9140	.text	888		clean	unknown		unanalyzed	
 007b94c0	FUN_007b94c0	.text	578		clean	unknown		unanalyzed	
 007b9710	FUN_007b9710	.text	266		clean	unknown		unanalyzed	
-007b9820	FUN_007b9820	.text	175		clean	unknown		unanalyzed	
+007b9820	FUN_007b9820	.text	175		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiStateMachineSlot18; 00c305e0 slot 18; slot 2 returns AIStateMachine
 007b98d0	FUN_007b98d0	.text	1840		clean	unknown		unanalyzed	
 007ba000	FUN_007ba000	.text	60		clean	unknown		unanalyzed	
 007ba03c	FUN_007ba03c	.text	26		clean	unknown		unanalyzed	
@@ -19059,7 +19059,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007bb430	FUN_007bb430	.text	6		clean	unknown		unanalyzed	
 007bb440	FUN_007bb440	.text	36		clean	unknown		unanalyzed	
 007bb470	FUN_007bb470	.text	40		clean	unknown		unanalyzed	
-007bb4a0	FUN_007bb4a0	.text	83		clean	unknown		unanalyzed	
+007bb4a0	FUN_007bb4a0	.text	83		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::unitAILandOnExit; 00c30b70 slot 6; slot 2 returns UnitAILandState
 007bb500	FUN_007bb500	.text	205		clean	unknown		unanalyzed	
 007bb5d0	FUN_007bb5d0	.text	6		clean	unknown		unanalyzed	
 007bb5e0	FUN_007bb5e0	.text	36		clean	unknown		unanalyzed	
@@ -19067,8 +19067,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007bb640	FUN_007bb640	.text	601		clean	unknown		unanalyzed	
 007bb8a0	FUN_007bb8a0	.text	6		clean	unknown		unanalyzed	
 007bb8b0	FUN_007bb8b0	.text	36		clean	unknown		unanalyzed	
-007bb8e0	FUN_007bb8e0	.text	77		clean	unknown		unanalyzed	
-007bb930	FUN_007bb930	.text	137		clean	unknown		unanalyzed	
+007bb8e0	FUN_007bb8e0	.text	77		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::unitAIReturnForLandingSlot19; 00c2de50 slot 19; slot 2 returns UnitAIReturnForLandingState
+007bb930	FUN_007bb930	.text	137		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::unitAITakeOffOnExit; 00c30bd0 slot 6; slot 2 returns UnitAITakeOffState
 007bb9c0	FUN_007bb9c0	.text	525		clean	unknown		unanalyzed	
 007bbbd0	FUN_007bbbd0	.text	162		clean	unknown		unanalyzed	
 007bbc80	FUN_007bbc80	.text	160		clean	unknown		unanalyzed	
@@ -19088,9 +19088,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007bc1b0	FUN_007bc1b0	.text	6		clean	unknown		unanalyzed	
 007bc1c0	FUN_007bc1c0	.text	40		clean	unknown		unanalyzed	
 007bc1f0	FUN_007bc1f0	.text	304		clean	unknown		unanalyzed	
-007bc320	FUN_007bc320	.text	53		clean	unknown		unanalyzed	
+007bc320	FUN_007bc320	.text	53		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiFollowExitProductionPathSlot19; 00c31210 slot 19; slot 2 returns AIFollowExitProductionPathState
 007bc360	FUN_007bc360	.text	344		clean	unknown		unanalyzed	
-007bc4c0	FUN_007bc4c0	.text	170		clean	unknown		unanalyzed	
+007bc4c0	FUN_007bc4c0	.text	170		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiMoveToAndCollectOnExit; 00c31488 slot 6; slot 2 returns AIMoveToAndCollectState
 007bc5d0	FUN_007bc5d0	.text	30		clean	unknown		unanalyzed	
 007bc5f0	FUN_007bc5f0	.text	78		clean	unknown		unanalyzed	
 007bc640	FUN_007bc640	.text	38		clean	unknown		unanalyzed	
@@ -19099,14 +19099,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007bd080	FUN_007bd080	.text	1094		clean	unknown		unanalyzed	
 007bd4d0	FUN_007bd4d0	.text	471		clean	unknown		unanalyzed	
 007bd6b0	FUN_007bd6b0	.text	177		clean	unknown		unanalyzed	
-007bd770	FUN_007bd770	.text	48		clean	unknown		unanalyzed	
-007bd7a0	FUN_007bd7a0	.text	130		clean	unknown		unanalyzed	
-007bd830	FUN_007bd830	.text	79		clean	unknown		unanalyzed	
-007bd880	FUN_007bd880	.text	130		clean	unknown		unanalyzed	
-007bd910	FUN_007bd910	.text	97		clean	unknown		unanalyzed	
+007bd770	FUN_007bd770	.text	48		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiInternalMoveTo31B10Update; 00c31b10 slot 5; slot 2 returns AIInternalMoveToState
+007bd7a0	FUN_007bd7a0	.text	130		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiDockApproachOnExit; 00c31aa8 slot 6; slot 2 returns AIDockApproachState; also 00c31b10 slot 6 AIInternalMoveToState
+007bd830	FUN_007bd830	.text	79		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiInternalMoveTo31B60Update; 00c31b60 slot 5; slot 2 returns AIInternalMoveToState
+007bd880	FUN_007bd880	.text	130		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiInternalMoveTo31B60OnExit; 00c31b60 slot 6; slot 2 returns AIInternalMoveToState
+007bd910	FUN_007bd910	.text	97		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiInternalMoveTo31BB0Update; 00c31bb0 slot 5; slot 2 returns AIInternalMoveToState
 007bd980	FUN_007bd980	.text	184		clean	unknown		unanalyzed	
-007bda40	FUN_007bda40	.text	79		clean	unknown		unanalyzed	
-007bda90	FUN_007bda90	.text	107		clean	unknown		unanalyzed	
+007bda40	FUN_007bda40	.text	79		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiInternalMoveTo31C00Update; 00c31c00 slot 5; slot 2 returns AIInternalMoveToState
+007bda90	FUN_007bda90	.text	107		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiInternalMoveTo31C00OnExit; 00c31c00 slot 6; slot 2 returns AIInternalMoveToState
 007bdb00	FUN_007bdb00	.text	130		clean	unknown		unanalyzed	
 007bdb90	FUN_007bdb90	.text	6		clean	unknown		unanalyzed	
 007bdba0	FUN_007bdba0	.text	123		clean	unknown		unanalyzed	
@@ -19115,7 +19115,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007bdd70	FUN_007bdd70	.text	105		clean	unknown		unanalyzed	
 007bdde0	FUN_007bdde0	.text	218		clean	unknown		unanalyzed	
 007bdec0	FUN_007bdec0	.text	36		clean	unknown		unanalyzed	
-007bdef0	FUN_007bdef0	.text	33		clean	unknown		unanalyzed	
+007bdef0	FUN_007bdef0	.text	33		clean	gamelogic	recon/aistate7b	reversed	ra3::gamelogic::aiGuardReturnUpdate; 00c31d08 slot 5; slot 2 returns AIGuardReturnState
 007bdf20	thunk_FUN_007b1190	.text	5		clean	unknown		unanalyzed	
 007bdf30	FUN_007bdf30	.text	231		clean	unknown		unanalyzed	
 007be020	FUN_007be020	.text	221		clean	unknown		unanalyzed	
