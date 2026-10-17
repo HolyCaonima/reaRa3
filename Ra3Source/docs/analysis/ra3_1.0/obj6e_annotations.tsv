@@ -1,0 +1,52 @@
+address	status	owner	module	notes
+006e1c80	reversed	recon/obj6e	gamelogic	ra3::gamelogic::MovementSpecialPower_adjustedField; 00c16930 slot 11; ctor 006fdba0 also stores 00c16a60 whose slot 2 returns MovementSpecialPower
+006e1d30	reversed	recon/obj6e	gamelogic	ra3::gamelogic::MoveToPositionAndEvacuateSpecialPower_dispatch; 00c16b10 slot 20; ctor 006fdc00 also stores 00c16ce8 whose slot 2 returns MoveToPositionAndEvacuateSpecialPower
+006e1e40	reversed	recon/obj6e	gamelogic	ra3::gamelogic::MoveToPositionAndReplaceSelfSpecialPower_dispatch; 00c16d98 slot 20; ctor 006fdc50 also stores 00c16f70 whose slot 2 returns MoveToPositionAndReplaceSelfSpecialPower
+006e1f70	reversed	recon/obj6e	gamelogic	ra3::gamelogic::OCLSpecialPower_dispatch; 00c17028 slot 20; ctors 006e1e60 and 006e1f10 also store 00c17200 whose slot 2 returns OCLSpecialPower
+006e2f30	reversed	recon/obj6e	gamelogic	ra3::gamelogic::SpecialPowerModule_dispatchIfBit25; 00c01108 slot 6; slot 2 returns SpecialPowerModule
+006e2f70	reversed	recon/obj6e	gamelogic	ra3::gamelogic::SpecialPowerModule_dispatchUnlessBit6; 00c00f18 slot 3; ctor 006cac50 also stores 00c01108 whose slot 2 returns SpecialPowerModule
+006e3220	reversed	recon/obj6e	gamelogic	ra3::gamelogic::ToggleHiddenSpecialAbilityUpdate_clearHidden; 00c1e258 slot 43; slot 2 returns ToggleHiddenSpecialAbilityUpdate
+006e3290	reversed	recon/obj6e	gamelogic	ra3::gamelogic::ToggleHiddenSpecialAbilityUpdate_applyHidden; 00c1e258 slot 44; slot 2 returns ToggleHiddenSpecialAbilityUpdate
+006e3e10	reversed	recon/obj6e	gamelogic	ra3::gamelogic::DozerAIUpdate_acceptsObject; 00c24878 slot 20; ctor 00751d20 also stores 00c24a50 whose slot 2 returns DozerAIUpdate
+006e4220	reversed	recon/obj6e	gamelogic	ra3::gamelogic::DozerAIUpdate_resetAction; 00c24878 slot 13; ctor 00751d20 also stores 00c24a50 whose slot 2 returns DozerAIUpdate
+006e44d0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::DozerAIUpdate_workerFromId; 00c24878 slot 26; ctor 00751d20 also stores 00c24a50 whose slot 2 returns DozerAIUpdate
+006e46e0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::HordeAIUpdate_flagPassenger; 00c24d18 slot 12; ctor 0075fcd0 also stores 00c24ee0 whose slot 2 returns HordeAIUpdate
+006e48f0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::SupplyTruckAIUpdate_acceptTarget; 00c25398 slot 35; slot 2 returns SupplyTruckAIUpdate
+006e4920	reversed	recon/obj6e	gamelogic	ra3::gamelogic::SupplyTruckAIUpdate_deliverBoxes; 00c25398 slot 67; slot 2 returns SupplyTruckAIUpdate
+006e4980	reversed	recon/obj6e	gamelogic	ra3::gamelogic::SupplyTruckAIUpdate_deliverPosition; 00c25398 slot 69; slot 2 returns SupplyTruckAIUpdate
+006e4a10	reversed	recon/obj6e	gamelogic	ra3::gamelogic::SupplyTruckAIUpdate_recordCargo; 00c25398 slot 68; slot 2 returns SupplyTruckAIUpdate
+006e8750	reversed	recon/obj6e	gamelogic	ra3::gamelogic::MoneyGainAttachUpdate_maybeGain; 00c20bc0 slot 26; slot 2 returns MoneyGainAttachUpdate
+006e8fd0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::ProductionUpdate_producerField; 00c19580 slot 27; ctor 006e8ed0 also stores 00c19788 whose slot 2 returns ProductionUpdate
+006e9010	reversed	recon/obj6e	gamelogic	ra3::gamelogic::ProductionUpdate_incrementQueued; 00c19788 slot 22; slot 2 returns ProductionUpdate
+006e9040	reversed	recon/obj6e	gamelogic	ra3::gamelogic::ProductionUpdate_objectFromId; 00c19580 slot 47; ctor 006e8ed0 also stores 00c19788 whose slot 2 returns ProductionUpdate
+006e91f0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::ProductionUpdate_clearLink; 00c19580 slot 36; ctor 006e8ed0 also stores 00c19788 whose slot 2 returns ProductionUpdate
+006e9390	reversed	recon/obj6e	gamelogic	ra3::gamelogic::ProductionUpdate_bindProducer; 00c19580 slot 20; ctor 006e8ed0 also stores 00c19788 whose slot 2 returns ProductionUpdate
+006e9ee0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::BehaviorModule_objectOrigin; 00bf8da8 slot 7; ctor 0069f890 also stores 00bdbc08 whose slot 2 returns BehaviorModule
+006eb4e0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::SpecialAbilityUpdate_isReady; 00c142d8 slot 39; slot 2 returns SpecialAbilityUpdate
+006ebac0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::StealUnitUpdate_syncTarget; 00c20d90 slot 25; slot 2 returns StealUnitUpdate
+006ebbd0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::StoreCurrentStateUpdate_xfer; 00bf8f40 slot 3; slot 2 returns StoreCurrentStateUpdate
+006ece70	reversed	recon/obj6e	gamelogic	ra3::gamelogic::EncloseBehavior_offerToContainer; 00c08a48 slot 24; slot 2 returns EncloseBehavior
+006ed440	reversed	recon/obj6e	gamelogic	ra3::gamelogic::WeaponInitState_enter; 00bf96a8 slot 4; slot 2 returns WeaponInitState
+006ed4a0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::WeaponPreFireState_clearFlag; 00bf9770 slot 6; slot 2 returns WeaponPreFireState
+006ed4e0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::WeaponFireState_advance; 00bf97d8 slot 5; slot 2 returns WeaponFireState
+006f6c10	reversed	recon/obj6e	gamelogic	ra3::gamelogic::GateProxyBehavior_call14; 00bfb418 slot 5; ctor 0068cfa0 also stores 00bfb3c0 whose slot 2 returns GateProxyBehavior
+006f6c30	reversed	recon/obj6e	gamelogic	ra3::gamelogic::GateProxyBehavior_call18; 00bfb418 slot 6; ctor 0068cfa0 also stores 00bfb3c0 whose slot 2 returns GateProxyBehavior
+006f6c50	reversed	recon/obj6e	gamelogic	ra3::gamelogic::GateProxyBehavior_call1C; 00bfb418 slot 7; ctor 0068cfa0 also stores 00bfb3c0 whose slot 2 returns GateProxyBehavior
+006f6c70	reversed	recon/obj6e	gamelogic	ra3::gamelogic::GateProxyBehavior_call10; 00bfb418 slot 4; ctor 0068cfa0 also stores 00bfb3c0 whose slot 2 returns GateProxyBehavior
+006f6c90	reversed	recon/obj6e	gamelogic	ra3::gamelogic::GateProxyBehavior_call20; 00bfb418 slot 8; ctor 0068cfa0 also stores 00bfb3c0 whose slot 2 returns GateProxyBehavior
+006f7db0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::SpawnBehavior_anyLiving; 00c114e8 slot 7; ctor 006c7a20 also stores 00c11688 whose slot 2 returns SpawnBehavior
+006f8a60	reversed	recon/obj6e	gamelogic	ra3::gamelogic::UnifiedControlBehavior_onRadius; 00bfd820 slot 23; slot 2 returns UnifiedControlBehavior
+006f94b0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::HordeContain_passengerSlotB0; 00c217f8 slot 44; ctor 0073cb30 also stores 00c21a98 whose slot 2 returns HordeContain
+006f94f0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::HordeContain_passengerSlot28; 00c217f8 slot 10; ctor 0073cb30 also stores 00c21a98 whose slot 2 returns HordeContain
+006f9710	reversed	recon/obj6e	gamelogic	ra3::gamelogic::HordeContain_knowsObject; 00c21520 slot 5; ctor 0073cb30 also stores 00c21a98 whose slot 2 returns HordeContain
+006f9b00	reversed	recon/obj6e	gamelogic	ra3::gamelogic::HordeContain_testTriple; 00c217f8 slot 73; ctor 0073cb30 also stores 00c21a98 whose slot 2 returns HordeContain
+006f9b40	reversed	recon/obj6e	gamelogic	ra3::gamelogic::HordeContain_passengerSlot70; 00c217f8 slot 28; ctor 0073cb30 also stores 00c21a98 whose slot 2 returns HordeContain
+006fa9e0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::HealContain_noteFrame; 00c23350 slot 38; ctor 0075d9d0 also stores 00c235f0 whose slot 2 returns HealContain
+006fbb50	reversed	recon/obj6e	gamelogic	ra3::gamelogic::OpenContain_passengerFlag; 00c1f8f0 slot 44; ctor 0072782b also stores 00c1fb90 whose slot 2 returns OpenContain
+006fcad0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::ActivateModuleSpecialAbilityUpdate_enable; 00c1b5d8 slot 6; slot 2 returns ActivateModuleSpecialAbilityUpdate
+006fda30	reversed	recon/obj6e	gamelogic	ra3::gamelogic::GiveUpgradeUpdate_runGrant; 00c1cc18 slot 38; slot 2 returns GiveUpgradeUpdate
+006fe070	reversed	recon/obj6e	gamelogic	ra3::gamelogic::ToggleMountedSpecialAbilityUpdate_mountedReady; 00c1e498 slot 39; slot 2 returns ToggleMountedSpecialAbilityUpdate
+006ff060	reversed	recon/obj6e	gamelogic	ra3::gamelogic::SupplyTruckAIUpdate_popPending; 00c251a8 slot 7; ctor 007522b0 also stores 00c25398 whose slot 2 returns SupplyTruckAIUpdate
+006ff9f0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::AIUpdateInterface_allowsMove; 00c22118 slot 167; slot 2 returns AIUpdateInterface
+006ffad0	reversed	recon/obj6e	gamelogic	ra3::gamelogic::AIUpdateInterface_locomotorReady; 00c22118 slot 130; slot 2 returns AIUpdateInterface
+006ffd50	reversed	recon/obj6e	gamelogic	ra3::gamelogic::AIUpdateInterface_orderState33; 00c22118 slot 74; slot 2 returns AIUpdateInterface
