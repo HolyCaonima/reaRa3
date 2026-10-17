@@ -41,14 +41,14 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 StringBase2 合并）
+## 3. 现状（截至 AITNGuard 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,986 行，其中 verified 66、
-  reversed 309、unanalyzed 48,611。`securom` 分类：clean 47,772、entry-lost 653、
+  reversed 317、unanalyzed 48,603。`securom` 分类：clean 47,772、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
-- **hook**：141 个目标（其中 97 个只认显式键）。原有 86 个全部 replace 时，Release
+- **hook**：149 个目标（其中 105 个只认显式键）。原有 86 个全部 replace 时，Release
   遭遇战带 Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34）；新加的
-  Player/Net/W3DView/FXPS/StringBase2 共 55 个目标只有离线证据，尚未做合并实机
+  Player/Net/W3DView/FXPS/StringBase2/AITNGuard 共 63 个目标只有离线证据，尚未做合并实机
   shadow/replace。
 - **已完成模块**：
   - core（配置/INI/SkuDef）
@@ -68,6 +68,8 @@
   - common StringBase2 批次：50 个重建入口（其中 48 个对应 Ghidra 台账函数），6 个
     显式 hook；两配置 oracle 各 4,000 例零差异，含 112 个嵌入 NUL 与非零容量尾部
     对抗场景；受保护六字节站点只按已观察的指针清零效果建模
+  - gamelogic AITNGuard 批次：50 个 clean body 仅作类族库存，其中 8 个叶入口完成
+    C++ 重建与显式 hook；两配置原生行为 oracle 各 4,000 例零差异，语义突变成功检出
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
@@ -76,7 +78,7 @@
     stringfindlast 等），只有离线证据。
 - **当前十路并行**（用户 11:14 明确允许扩到 10 路）：`recon/terrainlogic`、
   `recon/aistates`、`recon/audioevent`、`recon/objectlogic`、`recon/uicontrols`、
-  `recon/weaponlogic`、`recon/behavior6b`、`recon/skirmish79`、`recon/render8e`、
+  `recon/weaponlogic`、`recon/behavior6b`、`recon/scripts82`、`recon/render8e`、
   `recon/gameclient92`。每支独立 worktree，完成后主控逐支复验合并；构建/oracle 可并行，
   主分支合并仍串行，避免注册表和 CMake 冲突污染。
 - **git**：本地 `main` 领先 `origin/main` 20 个提交，未 push（用户没要求 push）。

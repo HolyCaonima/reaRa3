@@ -173,6 +173,14 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `stringbase2asciisourcecopyrange` | `0x004CB020` ASCII copy source 区间复制 | thiscall（3） | 7 | `ra3::common::copyGameStringSourceRange` | offline-verified, live pending；仅显式键启用 |
 | `stringbase2unicodesourcecopyrange` | `0x004CB0E0` Unicode copy source 区间复制 | thiscall（3） | 7 | `ra3::common::copyGameStringSourceRange` | offline-verified, live pending；仅显式键启用 |
 | `stringbase2asciiisnone` | `0x004CB990` ASCII 不区分大小写 `None` 判断 | thiscall | 5 | `ra3::common::isNoneGameString` | offline-verified, live pending；仅显式键启用 |
+| `skirmishguardpayload` | `0x0079BCE0` AITNGuard 条件 payload 访问 | thiscall | 6 | `conditionalPayloadOffset` | offline-verified, live pending；仅显式键启用 |
+| `skirmishguardpair` | `0x0079BED0` AITNGuard 端点配对分类 | cdecl（4） | 8 | `classifyEndpointPair` | offline-verified, live pending；仅显式键启用 |
+| `skirmishguardobjectcooldown` | `0x0079C020` 对象冷却谓词 | thiscall（2） | 10 | `objectCooldownResult` | offline-verified, live pending；仅显式键启用 |
+| `skirmishguardtargetcooldown` | `0x0079C080` 目标冷却谓词 | thiscall（3） | 10 | `targetCooldownResult` | offline-verified, live pending；仅显式键启用 |
+| `skirmishguardtrackedtarget` | `0x0079C100` 跟踪目标设置 | thiscall（1） | 6 | `trackedTargetId` | offline-verified, live pending；仅显式键启用 |
+| `skirmishguardcandidatenear` | `0x0079C2A0` 候选二维距离谓词 | cdecl（2） | 6 | `candidateNearResult` | offline-verified, live pending；仅显式键启用 |
+| `skirmishguardpointnear` | `0x0079C340` 守卫点二维距离谓词 | thiscall（1） | 8 | `isNear2D` | offline-verified, live pending；仅显式键启用 |
+| `skirmishguardreturnnear` | `0x0079C3D0` 返回点二维距离谓词 | thiscall（1） | 8 | `isNear2D` | offline-verified, live pending；仅显式键启用 |
 | `playeradjustcounter` | `0x007E1530` Player `+0x125c` 饱和计数 | thiscall（1） | 10 | `Player::adjustCounter125c` | offline-verified, live pending；仅显式键启用 |
 | `playeractive` | `0x007E1BA0` Player 活跃状态 | thiscall | 7 | `Player::isPlayerActive` | offline-verified, live pending；仅显式键启用 |
 | `scoreaddd0` | `0x007E2600` ScoreKeeper 增量 | thiscall（1） | 5 | `ScoreKeeper::addD0` | offline-verified, live pending；仅显式键启用 |
@@ -227,6 +235,11 @@ StringBase2 的 6 个目标均为只读或仅写调用方输出缓冲的低风�
 shadow 先调用原函数并返回原结果；两个 `copyRange` 目标先快照源区，再只比较原函数实际
 要求写出的 `count * sizeof(Char)` 字节。完整 50 入口在 Debug/Release 各 4,000 个场景
 （含 112 个嵌入 NUL 与非零容量尾部对抗场景）中 0 不一致，尚未做实机验证。
+
+AITNGuard 的 8 个目标均有 shipped 原生行为差分，Debug/Release 各 4,000 个场景
+0 不一致。50 个 clean body 指纹仅用于类族库存，不计作重建。三个谓词保留原函数只写
+`AL` 时 EAX 高 24 位的行为；tracked-target shadow 只比较原函数实际写入的 8 字节。
+全部目标仅显式启用，尚未实机验证。
 
 FXPS 的 15 个目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关。构造函数
 在副本上应用重建变换后比较实际布局，getter 只比较返回值或原函数写出的缓冲，全部要求

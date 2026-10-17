@@ -411,3 +411,11 @@ address	status	owner	module	notes
 004cc460	reversed	recon/stringbase2	common	Unicode substring from C string with signed bounds; oracle 80
 004cc5b0	reversed	recon/stringbase2	common	Unicode iterative replace-all stops search at embedded NUL; oracle 80 incl adversarial slack
 004cc820	reversed	recon/stringbase2	common	Unicode replace-all object wrapper stops search at embedded NUL; oracle 80 incl adversarial slack
+0079bce0	reversed	recon/skirmish79	gamelogic	AITNGuard conditional payload accessor; native behavior oracle
+0079bed0	reversed	recon/skirmish79	gamelogic	AITNGuard endpoint-pair classifier; native behavior oracle
+0079c020	reversed	recon/skirmish79	gamelogic	AITNGuard object cooldown predicate; native behavior oracle
+0079c080	reversed	recon/skirmish79	gamelogic	AITNGuard target cooldown predicate; native behavior oracle
+0079c100	reversed	recon/skirmish79	gamelogic	AITNGuard tracked-target setter; native behavior oracle
+0079c2a0	reversed	recon/skirmish79	gamelogic	AITNGuard candidate-near predicate; native behavior oracle
+0079c340	reversed	recon/skirmish79	gamelogic	AITNGuard guard-point predicate; native behavior oracle
+0079c3d0	reversed	recon/skirmish79	gamelogic	AITNGuard return-point predicate; native behavior oracle

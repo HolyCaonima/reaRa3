@@ -18129,20 +18129,20 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079bb20	FUN_0079bb20	.text	283		clean	unknown		unanalyzed	
 0079bc40	FUN_0079bc40	.text	8		clean	unknown		unanalyzed	
 0079bc50	FUN_0079bc50	.text	136		clean	unknown		unanalyzed	
-0079bce0	FUN_0079bce0	.text	23		clean	unknown		unanalyzed	
+0079bce0	FUN_0079bce0	.text	23		clean	gamelogic	recon/skirmish79	reversed	AITNGuard conditional payload accessor; native behavior oracle
 0079bd40	FUN_0079bd40	.text	122		clean	unknown		unanalyzed	
 0079bdc0	FUN_0079bdc0	.text	34		clean	unknown		unanalyzed	
 0079bdf0	FUN_0079bdf0	.text	191		clean	unknown		unanalyzed	
 0079beb0	FUN_0079beb0	.text	7		clean	unknown		unanalyzed	
 0079bec0	FUN_0079bec0	.text	7		clean	unknown		unanalyzed	
-0079bed0	FUN_0079bed0	.text	83		clean	unknown		unanalyzed	
+0079bed0	FUN_0079bed0	.text	83		clean	gamelogic	recon/skirmish79	reversed	AITNGuard endpoint-pair classifier; native behavior oracle
 0079bf30	FUN_0079bf30	.text	124		clean	unknown		unanalyzed	
 0079bfb0	FUN_0079bfb0	.text	50		clean	unknown		unanalyzed	
 0079bff0	FUN_0079bff0	.text	46		clean	unknown		unanalyzed	
-0079c020	FUN_0079c020	.text	93		clean	unknown		unanalyzed	
-0079c080	FUN_0079c080	.text	100		clean	unknown		unanalyzed	
+0079c020	FUN_0079c020	.text	93		clean	gamelogic	recon/skirmish79	reversed	AITNGuard object cooldown predicate; native behavior oracle
+0079c080	FUN_0079c080	.text	100		clean	gamelogic	recon/skirmish79	reversed	AITNGuard target cooldown predicate; native behavior oracle
 0079c0f0	FUN_0079c0f0	.text	8		clean	unknown		unanalyzed	
-0079c100	FUN_0079c100	.text	45		clean	unknown		unanalyzed	
+0079c100	FUN_0079c100	.text	45		clean	gamelogic	recon/skirmish79	reversed	AITNGuard tracked-target setter; native behavior oracle
 0079c130	FUN_0079c130	.text	45		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<AIData>::create_instance; slot=1; shared_by=1 handlers; allocation_size=1; field_offsets=0x38; small_constants=0x4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 0079c160	FUN_0079c160	.text	32		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<AIData>::copy_construct_in_place; slot=2; shared_by=1 handlers; field_offsets=0x38; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 0079c180	FUN_0079c180	.text	28		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<TargetingInTurretArcCompare>::create_instance; slot=1; shared_by=1 handlers; allocation_size=4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
@@ -18150,11 +18150,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079c1c0	FUN_0079c1c0	.text	28		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<TargetingCombatChainCompare>::create_instance; slot=1; shared_by=1 handlers; allocation_size=4; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 0079c1e0	FUN_0079c1e0	.text	17		clean	asset	recon/vclass	unanalyzed	proposed_name=AssetHandler<TargetingCombatChainCompare>::copy_construct_in_place; slot=2; shared_by=1 handlers; small_constants=0xC; 静态槽归类，未逐函数完成 Ghidra 语义反编译，故 status 留空
 0079c280	FUN_0079c280	.text	31		clean	unknown		unanalyzed	
-0079c2a0	FUN_0079c2a0	.text	83		clean	unknown		unanalyzed	
+0079c2a0	FUN_0079c2a0	.text	83		clean	gamelogic	recon/skirmish79	reversed	AITNGuard candidate-near predicate; native behavior oracle
 0079c300	FUN_0079c300	.text	64		clean	unknown		unanalyzed	
-0079c340	FUN_0079c340	.text	67		clean	unknown		unanalyzed	
+0079c340	FUN_0079c340	.text	67		clean	gamelogic	recon/skirmish79	reversed	AITNGuard guard-point predicate; native behavior oracle
 0079c390	FUN_0079c390	.text	51		clean	unknown		unanalyzed	
-0079c3d0	FUN_0079c3d0	.text	67		clean	unknown		unanalyzed	
+0079c3d0	FUN_0079c3d0	.text	67		clean	gamelogic	recon/skirmish79	reversed	AITNGuard return-point predicate; native behavior oracle
 0079c420	FUN_0079c420	.text	5		clean	unknown		unanalyzed	
 0079c430	FUN_0079c430	.text	6		clean	unknown		unanalyzed	
 0079c440	FUN_0079c440	.text	6		clean	unknown		unanalyzed	
