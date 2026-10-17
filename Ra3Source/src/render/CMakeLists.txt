@@ -10,6 +10,7 @@ ra3_add_module(render
         include/ra3/render/W3DLayer56.h
         include/ra3/render/RenderCore99.h
         include/ra3/render/RenderScript9B.h
+        include/ra3/render/RenderScript9B2.h
         src/W3DAnimation.cpp
         src/W3DDrawable.cpp
         src/W3DMaterial.cpp
@@ -20,7 +21,9 @@ ra3_add_module(render
         src/W3DLayer56.cpp
         src/RenderCore99.cpp
         src/RenderScript9B.cpp
+        src/RenderScript9B2.cpp
     PUBLIC_DEPS
         Ra3::math)
 
 set_source_files_properties(src/W3DLayer56.cpp PROPERTIES COMPILE_FLAGS "/arch:SSE2 /fp:precise")
+set_source_files_properties(src/RenderScript9B2.cpp PROPERTIES COMPILE_FLAGS "/arch:SSE2 /fp:precise")
