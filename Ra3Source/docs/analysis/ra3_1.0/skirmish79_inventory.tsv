@@ -1,0 +1,51 @@
+address	size	crc32	classification	name	notes
+0079b4d0	55	dcab3c3a	inventory-only	AITNGuardInnerState::xfer	identity fingerprint only; exact behavior unimplemented
+0079b510	185	61287a5f	inventory-only	AITNGuard.cpp::sub_0079B510	identity fingerprint only; exact behavior unimplemented
+0079b5d0	48	e4f00bc0	inventory-only	AITNGuardInnerState::onExit	identity fingerprint only; exact behavior unimplemented
+0079b610	48	1724193e	inventory-only	AITNGuardOuterState::onExit	identity fingerprint only; exact behavior unimplemented
+0079b640	65	6f4a859c	inventory-only	AITNGuardIdleState::xfer	identity fingerprint only; exact behavior unimplemented
+0079b690	144	591760ad	model-only	AITNGuardIdleState::onEnter	pointer-free policy model; not a direct port
+0079b720	94	b22d4efa	inventory-only	AITNGuardPickUpCrateState::onEnter	identity fingerprint only; exact behavior unimplemented
+0079b790	83	44a0a9d4	inventory-only	AITNGuardAttackAggressorState::onExit	identity fingerprint only; exact behavior unimplemented
+0079b930	61	b9d027d8	inventory-only	AITNGuard.cpp::sub_0079B930	identity fingerprint only; exact behavior unimplemented
+0079b9a0	68	1aab799d	inventory-only	AITNGuard.cpp::sub_0079B9A0	identity fingerprint only; exact behavior unimplemented
+0079b9f0	54	5233539f	inventory-only	AITNGuard.cpp::sub_0079B9F0	identity fingerprint only; exact behavior unimplemented
+0079ba30	38	5aa519bd	inventory-only	AITNGuard.cpp::sub_0079BA30	identity fingerprint only; exact behavior unimplemented
+0079ba60	57	9e5eb5db	inventory-only	AITNGuard.cpp::sub_0079BA60	identity fingerprint only; exact behavior unimplemented
+0079bb00	27	2c2b1435	inventory-only	AITNGuard.cpp::sub_0079BB00	identity fingerprint only; exact behavior unimplemented
+0079bb20	283	a93e062c	inventory-only	AITNGuard.cpp::sub_0079BB20	identity fingerprint only; exact behavior unimplemented
+0079bc50	136	8df55f7e	inventory-only	AITNGuard.cpp::sub_0079BC50	identity fingerprint only; exact behavior unimplemented
+0079bce0	23	7332668e	reconstructed	AITNGuard.cpp::sub_0079BCE0	exact C++ semantics and shipped behavior oracle
+0079bd40	122	19a0581c	inventory-only	AITNGuard.cpp::sub_0079BD40	identity fingerprint only; exact behavior unimplemented
+0079bdc0	34	68a5fea9	inventory-only	AITNGuard.cpp::sub_0079BDC0	identity fingerprint only; exact behavior unimplemented
+0079bdf0	191	eaccfd74	inventory-only	AITNGuard.cpp::sub_0079BDF0	identity fingerprint only; exact behavior unimplemented
+0079bed0	83	6013df2a	reconstructed	AITNGuard.cpp::classifyEndpointPair	exact C++ semantics and shipped behavior oracle
+0079bf30	124	0730cafe	inventory-only	AITNGuard.cpp::sub_0079BF30	identity fingerprint only; exact behavior unimplemented
+0079bfb0	50	d5077739	inventory-only	AITNGuard.cpp::sub_0079BFB0	identity fingerprint only; exact behavior unimplemented
+0079bff0	46	ad910de6	inventory-only	AITNGuard.cpp::sub_0079BFF0	identity fingerprint only; exact behavior unimplemented
+0079c020	93	ebdec131	reconstructed	AITNGuard.cpp::objectCooldownElapsed	exact C++ semantics and shipped behavior oracle
+0079c080	100	7512ebe5	reconstructed	AITNGuard.cpp::targetCooldownElapsed	exact C++ semantics and shipped behavior oracle
+0079c100	45	057c327d	reconstructed	AITNGuard.cpp::setTrackedTarget	exact C++ semantics and shipped behavior oracle
+0079c130	45	886334e3	inventory-only	AITNGuard.cpp::sub_0079C130	identity fingerprint only; exact behavior unimplemented
+0079c160	32	47ac33b3	inventory-only	AITNGuard.cpp::sub_0079C160	identity fingerprint only; exact behavior unimplemented
+0079c180	28	0ac0531e	inventory-only	AITNGuard.cpp::sub_0079C180	identity fingerprint only; exact behavior unimplemented
+0079c1a0	17	a52c1e8c	inventory-only	AITNGuard.cpp::sub_0079C1A0	identity fingerprint only; exact behavior unimplemented
+0079c1c0	28	3b8b43df	inventory-only	AITNGuard.cpp::sub_0079C1C0	identity fingerprint only; exact behavior unimplemented
+0079c1e0	17	bd0beab4	inventory-only	AITNGuard.cpp::sub_0079C1E0	identity fingerprint only; exact behavior unimplemented
+0079c280	31	3459e0d2	inventory-only	AITNGuard.cpp::sub_0079C280	identity fingerprint only; exact behavior unimplemented
+0079c2a0	83	0aa96023	reconstructed	AITNGuard.cpp::isCandidateNear	exact C++ semantics and shipped behavior oracle
+0079c300	64	96669488	inventory-only	AITNGuard.cpp::sub_0079C300	identity fingerprint only; exact behavior unimplemented
+0079c340	67	28c7386e	reconstructed	AITNGuard.cpp::isNearGuardPoint	exact C++ semantics and shipped behavior oracle
+0079c390	51	bf905bf8	inventory-only	AITNGuard.cpp::sub_0079C390	identity fingerprint only; exact behavior unimplemented
+0079c3d0	67	c5c6fadf	reconstructed	AITNGuard.cpp::isNearReturnPoint	exact C++ semantics and shipped behavior oracle
+007a68c0	36	ed405c70	inventory-only	AITNGuardMachine::deletingDestructor	identity fingerprint only; lifecycle behavior unimplemented
+007ce860	235	6881510b	model-only	AITNGuard.cpp::findBestTunnel	pointer-free policy model; not a direct port
+007ceb30	706	f3e6c2dd	inventory-only	AITNGuardMachine::lookForInnerTarget	identity fingerprint only; exact behavior unimplemented
+007cee00	226	9a3e6ce9	inventory-only	AITNGuardInnerState::onEnter	identity fingerprint only; exact behavior unimplemented
+007ceef0	403	7f579cf0	model-only	AITNGuardInnerState::update	pointer-free policy model; not a direct port
+007cf090	243	adb50c45	inventory-only	AITNGuardOuterState::onEnter	identity fingerprint only; exact behavior unimplemented
+007cf190	227	5f07418f	model-only	AITNGuardOuterState::update	pointer-free policy model; not a direct port
+007cf280	196	93df0706	inventory-only	AITNGuardReturnState::onEnter	identity/source-path evidence only; exact behavior unimplemented
+007cf360	459	1a24a7e0	model-only	AITNGuardIdleState::update	pointer-free policy model; not a direct port
+007cf530	313	f59301e0	inventory-only	AITNGuardAttackAggressorState::onEnter	identity fingerprint only; exact behavior unimplemented
+007cf670	177	2637d475	inventory-only	AITNGuardAttackAggressorState::update	identity fingerprint only; exact behavior unimplemented

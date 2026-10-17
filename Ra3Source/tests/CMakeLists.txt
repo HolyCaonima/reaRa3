@@ -11,6 +11,7 @@ ra3_add_executable(ra3_unit_tests
         core/GameConfigTests.cpp
         core/IniFileTests.cpp
         core/SkuDefTests.cpp
+        gamelogic/AITNGuardTests.cpp
         hook/EmittedDecoder.h
         hook/HookTests.cpp
         io/ArchiveSetTests.cpp
@@ -22,6 +23,7 @@ ra3_add_executable(ra3_unit_tests
         Ra3::asset
         Ra3::common
         Ra3::core
+        Ra3::gamelogic
         Ra3::hook
         Ra3::io
         Ra3::text)

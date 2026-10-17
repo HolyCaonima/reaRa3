@@ -18,10 +18,12 @@ ra3_add_shared_library(ra3hook
         dll/targets/RenderTargets.cpp
         dll/targets/GameClientTargets.cpp
         dll/targets/StringBase2Targets.cpp
+        dll/targets/SkirmishTargets.cpp
     DEPS
         Ra3::asset
         Ra3::common
         Ra3::gameclient
+        Ra3::gamelogic
         Ra3::hook
         Ra3::io
         Ra3::math
