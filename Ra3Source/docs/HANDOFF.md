@@ -107,8 +107,13 @@
   - 类型化资源访问（recon/typed）未合并。
   - 少数 hook 在遭遇战里未被调用（logicrandomvariable、几个 BIG 枚举入口、
     stringfindlast 等），只有离线证据。
-- **当前并行**：`recon/gamelogic7c`（`0x007C0000–0x007CFFFF` GameLogic 簇，前两次
-  worker 均在产出前中断，已从 base `0a72cc8` 重新启动）。
+- **当前并行**（子 agent 随主控会话结束而中断，恢复时先查各 worktree 有无新提交）：
+  - `recon/gamelogic7c`：`0x007C0000–0x007CFFFF` GameLogic 簇，Gemini；前两次 worker
+    均在产出前中断，已从 base `0a72cc8` 重新启动。
+  - `recon/skirmishai89`：`0x00890000–0x0089FFFF` skirmish AI 簇，Gemini，base `5d16a5b`。
+  - `recon/thingtemplate`：`0x00780000–0x00796FFF` ThingTemplate/Thing 访问器簇，Grok
+    （提高证据门槛：逐行所有权证明），base `5d16a5b`。
+  - `recon/render91`：`0x00900000–0x0091FFFF` W3D draw module 簇，Gemini，base `5d16a5b`。
 - **验收教训**：子 agent 的交付说明可能与提交不符。合并前用脚本从目标表直接核对
   键名、explicitOnly 计数与二进制 expected16，并核对 record 键与注释一致；旧 base 的
   分支可能新建与主分支同名的头文件（WeaponLogic 合并时即需改名为 `UpdateModules.h`）；
