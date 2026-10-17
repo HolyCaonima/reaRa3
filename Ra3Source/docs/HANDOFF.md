@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 protcave 合并）
+## 3. 现状（截至 protentry2 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 1,242、unanalyzed 47,683（受保护函数已 reversed：entry-lost 60、inner-patched 14、
+  reversed 1,286、unanalyzed 47,639（受保护函数已 reversed：entry-lost 104、inner-patched 14、
   entry-recoverable 3）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
@@ -178,6 +178,17 @@
     写反，接手方已更正。主控核对 15 行站点/槽位/continuation 与站点表一致、15 条调用边、11 个
     调用者 vtable 槽位和 4 个带源路径的调用者。10 个无锚点入口剔除，13 个记为延后。集成态
     81 场景零差异，`!= → ==` mutation 检出
+  - Lua 4.0 VM 受保护批次（`0x00403660–0x0040E2F0`，Gemini）：44 个 entry-lost 入口（内存、
+    栈、parser、GC、tag method、table、code generator），原生体 32 个在 `.text`、12 个在
+    `.securom`；无 hook；代码在 `ra3/core/LuaVmPorts.h`，设计见 `lua_vm.md`。函数体的调用被改写成
+    `push 返回地址; push 目标; ret` / `push 返回地址; jmp 目标` 并夹垃圾字节，部分目标与字符串指针
+    用 `ror`/`xor`/`add` 现算。主控核对 44 行 site/slot/body 与站点表和 `slot_changes.tsv` 一致、
+    `.text` 原生体不与台账函数重叠、14 条字符串文本、按伪调用解析的 22 条调用边，以及内联算出的
+    目标。交付中 28 个 `.securom` 立即数槽被说成"在 run35 里解析"，实际在所有快照中为 0、
+    `slot_changes.tsv` 也没有，是按 Lua 4.0 语义推断的；另有 2 个字符串地址错位、2 处内联推导
+    操作数为编造、1 条调用边不实。主控已改正文档/oracle/注释（`6e59ee9`）。**待办**：oracle 的
+    `SECUROM_IMMEDIATES` 需用一次在 Lua VM 首次运行之后（会话约 254 s 以后）的实机转储确认。
+    集成态 127 场景零差异，`MASK_B` mutation 检出
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
@@ -186,8 +197,10 @@
     stringfindlast 等），只有离线证据。
 - **当前并行**（子 agent 随主控会话结束而中断，恢复时先查各 worktree 有无新提交）：
   - `recon/gamelogic7c`、`recon/common7e`、`recon/drawable52`、`recon/gamelogic72`、
-    `recon/particles65`、`recon/render91`、`recon/obj6a`、`recon/protcave`：已合并（`789bcb1`、
-    `f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`、`9df37c8`、`760e231`、`79a7caa`）。合并冲突若只是注册行追加，用
+    `recon/particles65`、`recon/render91`、`recon/obj6a`、`recon/protcave`、`recon/protentry2`：
+    已合并（`789bcb1`、`f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`、`9df37c8`、`760e231`、`79a7caa`、
+    `9c14506`）。受保护批次的站点/字符串/伪调用核对脚本见 `work/probe/check_protcave.py`、
+    `work/probe/check_protentry2.py`，多快照槽值用 `work/probe/slot_snapshots.py`。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
     `python work\probe\verify_ownership.py <claims.txt>` 逐条反查（格式见脚本头注释）。
   - `recon/common5a`：`0x005A0000–0x005BFFFF` common 簇，Grok，base `0d099eb`。

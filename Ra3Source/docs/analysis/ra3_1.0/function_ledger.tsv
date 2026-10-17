@@ -159,12 +159,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004035a0	thunk_FUN_0043b146	.text	5		clean	unknown		unanalyzed	
 004035a5	FUN_004035a5	.text	15		clean	unknown		unanalyzed	
 004035d0	FUN_004035d0	.text	10		clean	unknown		unanalyzed	
-00403660	thunk_FUN_0197c030	.text	6		entry-lost	unknown		unanalyzed	
-004036d0	FUN_004036d0	.text	16		entry-lost	unknown		unanalyzed	
-00403740	thunk_FUN_01985770	.text	6		entry-lost	unknown		unanalyzed	
+00403660	thunk_FUN_0197c030	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	"LuaMemRealloc(state, oldBlock, size) [luaM_realloc]: entry-lost thunk site=0x00403660 slot=0x018FB434 body=0x004A3130 section=.text; reallocates or frees Lua heap blocks via CRT [0x00CA28B0]/[0x00CA28B4] and raises lua_error (""memory allocation error: block too big"" at 0x00BD5154 via [0x018FC6E4]) or luaD_breakrun(L, 4) (0x00403FF0); verified against run35 capture (4 scenarios, 0 mismatches)."
+004036d0	FUN_004036d0	.text	16		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaMemGrowAux(state, block, nelems, inc, elementSize, errormsg, limit) [luaM_growaux]: entry-lost thunk site=0x004036D0 slot=0x018F504C body=0x019082A0 section=.securom; power-of-two array grower calling luaO_power2 (0x00404070), lua_error (0x004037D0), and intra-cluster LuaMemRealloc (0x00403660); verified against run35 capture (4 scenarios, 0 mismatches).
+00403740	thunk_FUN_01985770	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaDoInitStack(state, stackSize) [luaD_init]: entry-lost thunk site=0x00403740 slot=0x018F640C body=0x00466F20 section=.text; allocates and initializes Lua value stack via intra-cluster LuaMemRealloc (0x00403660) and increments L->nblocks; verified against run35 capture (2 scenarios, 0 mismatches).
 004037d0	thunk_FUN_01977d90	.text	6		entry-recoverable	unknown		unanalyzed	
 00403800	FUN_00403800	.text	171		clean	unknown		unanalyzed	
-004038b0	thunk_FUN_0197c000	.text	6		entry-lost	unknown		unanalyzed	
+004038b0	thunk_FUN_0197c000	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	"LuaDoCheckStack(state, needed) [luaD_checkstack]: entry-lost thunk site=0x004038B0 slot=0x018FB698 body=0x004A4010 section=.text; checks L->stackLast - L->top <= needed and calls luaD_error (0x00403F80) with ""stack overflow"" (0x00BD517C); verified against run35 capture (3 scenarios, 0 mismatches)."
 004038f6	FUN_004038f6	.text	11		clean	unknown		unanalyzed	
 00403910	switchD_01793697::switchdataD_00403910	.text	6		patched	unknown		unanalyzed	
 00403960	thunk_FUN_01985750	.text	6		entry-lost	unknown		unanalyzed	
@@ -173,11 +173,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00403a80	FUN_00403a80	.text	90		clean	unknown		unanalyzed	
 00403ae0	FUN_00403ae0	.text	48		clean	unknown		unanalyzed	
 00403b10	FUN_00403b10	.text	354		clean	unknown		unanalyzed	
-00403ca0	thunk_FUN_01977d70	.text	6		entry-lost	unknown		unanalyzed	
+00403ca0	thunk_FUN_01977d70	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaProtectedCall(state, nargs, nresults) [lua_call]: entry-lost thunk site=0x00403CA0 slot=0x018FB0A4 body=0x004252F0 section=.text; packages CallS {L->top - (nargs + 1), nresults} and invokes luaD_runprotected (0x00403800) with f_call (0x00403C80), restoring L->top on error; verified against run35 capture (3 scenarios, 0 mismatches).
 00403cd7	FUN_00403cd7	.text	11		clean	unknown		unanalyzed	
 00403e51	FUN_00403e51	.text	11		clean	unknown		unanalyzed	
 00403e70	thunk_FUN_01980250	.text	6		entry-lost	unknown		unanalyzed	
-00403ec0	thunk_FUN_01985720	.text	6		entry-lost	unknown		unanalyzed	
+00403ec0	thunk_FUN_01985720	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	"LuaDoBuffer(state, buff, size, name) [lua_dobuffer]: entry-lost thunk site=0x00403EC0 slot=0x018FA148 body=0x00406550 section=.text; opens ZIO memory stream via luaZ_mopen (0x0040AF40, defaulting name to ""?"" at 0x00BD51B8 via [0x018FC47C]), calls f_parser (0x00403CF0), then calls 0x00403800 with 0x00403C80 pushed (push/ret call forms at 0x00406586, 0x004065AA, 0x004065E2; no call to 0x00403CA0 observed); verified against run35 capture (3 scenarios, 0 mismatches)."
 00403f37	FUN_00403f37	.text	11		clean	unknown		unanalyzed	
 00403f50	thunk_FUN_01977d40	.text	6		entry-lost	unknown		unanalyzed	
 00403f80	thunk_FUN_0197bfc0	.text	6		entry-lost	unknown		unanalyzed	
@@ -188,20 +188,20 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004041a0	thunk_FUN_0197bfa0	.text	6		entry-lost	unknown		unanalyzed	
 004042f0	FUN_004042f0	.text	11		clean	unknown		unanalyzed	
 004042fb	FUN_004042fb	.text	50		clean	unknown		unanalyzed	
-00404370	thunk_FUN_019856f0	.text	6		entry-lost	unknown		unanalyzed	
-004043f0	thunk_FUN_01977d20	.text	6		entry-lost	unknown		unanalyzed	
-00404450	thunk_FUN_0197bf80	.text	6		entry-lost	unknown		unanalyzed	
+00404370	thunk_FUN_019856f0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	"LuaParserCheckNext(ls, token) [checknext]: entry-lost thunk site=0x00404370 slot=0x018F5E88 body=0x019149F0 section=.securom; verifies ls->t.token == token (formatting ""`%.20s' expected"" at 0x00BD52AC via [0x018FCB10] and calling luaX_syntaxerror 0x0040B960 on mismatch) and advances lexer; verified against run35 capture (3 scenarios, 0 mismatches)."
+004043f0	thunk_FUN_01977d20	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaParserOptional(ls, token) [optional]: entry-lost thunk site=0x004043F0 slot=0x018F7340 body=0x004A58A0 section=.text; consumes token if ls->t.token == token (using NO_TOKEN=286 from [0x018FCDD0]) and returns 1, else 0; verified against run35 capture (3 scenarios, 0 mismatches).
+00404450	thunk_FUN_0197bf80	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	"LuaParserCheckMatch(ls, what, who, where) [check_match]: entry-lost thunk site=0x00404450 slot=0x018FB1B8 body=0x004A1440 section=.text; checks closing delimiter token and reports ""`%.20s' expected (to close `%.20s' at line %d)"" (0x00BD52C0 via [0x018FC6A4]) via luaX_error (0x0040C900) or error_expected (0x00404330); verified against run35 capture (3 scenarios, 0 mismatches)."
 00404542	FUN_00404542	.text	10		clean	unknown		unanalyzed	
-00404550	thunk_FUN_019856c0	.text	6		entry-lost	unknown		unanalyzed	
+00404550	thunk_FUN_019856c0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	"LuaParserStringK(ls, str) [stringK]: entry-lost thunk site=0x00404550 slot=0x018F6120 body=0x00474880 section=.text; interns string constant in Proto::kstr via intra-cluster LuaMemGrowAux (0x004036D0, ""constant table overflow"" at 0x00BD52F0, MAXARG_U from [0x018FCB60]) and emits constant via luaK_kstr (0x0040D330); verified against run35 capture (3 scenarios, 0 mismatches)."
 004045b0	FUN_004045b0	.text	93		clean	unknown		unanalyzed	
 00404670	thunk_FUN_0197bf60	.text	6		entry-recoverable	unknown		unanalyzed	
 004046da	FUN_004046da	.text	10		clean	unknown		unanalyzed	
 004046f0	FUN_004046f0	.text	57		clean	unknown		unanalyzed	
 00404730	FUN_00404730	.text	16		inner-patched	unknown		unanalyzed	
-004048e0	thunk_FUN_01977cc0	.text	6		entry-lost	unknown		unanalyzed	
+004048e0	thunk_FUN_01977cc0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaParserAdjustMultAssign(ls, nvars, nexps) [adjust_mult_assign]: entry-lost thunk site=0x004048E0 slot=0x018FA584 body=0x00439CA0 section=.text; balances RHS/LHS counts in multiple assignment using intra-cluster LuaCodeLastIsOpen (0x0040CA60), LuaCodeSetCallReturns (0x0040CAA0), and LuaCodeAdjustStack (0x0040D5B0); verified against run35 capture (3 scenarios, 0 mismatches).
 00404a4d	FUN_00404a4d	.text	11		clean	unknown		unanalyzed	
-00404ac0	thunk_FUN_0197c370	.text	6		entry-lost	unknown		unanalyzed	
-00404ba0	thunk_FUN_019806f0	.text	6		entry-lost	unknown		unanalyzed	
+00404ac0	thunk_FUN_0197c370	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaParserCloseFunc(ls) [close_func]: entry-lost thunk site=0x00404AC0 slot=0x018FBEAC body=0x019026A0 section=.securom; emits OP_END via luaK_code0 (0x0040D200), resolves labels via intra-cluster LuaCodeGetLabel (0x0040D2F0), shrinks Proto arrays via intra-cluster LuaMemRealloc (0x00403660), and pops FuncState; verified against run35 capture (2 scenarios, 0 mismatches).
+00404ba0	thunk_FUN_019806f0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	unanalyzed	Deferred Lua parser function (site=0x00404BA0 slot=0x018F5D68 body=0x01913770 section=.securom): body invokes SecuROM VM obfuscation helper 0x00E61000; deferred per scope rules.
 00404c40	FUN_00404c40	.text	111		clean	unknown		unanalyzed	
 00404de0	FUN_00404de0	.text	46		clean	unknown		unanalyzed	
 00404e10	FUN_00404e10	.text	165		clean	unknown		unanalyzed	
@@ -210,7 +210,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004052fe	FUN_004052fe	.text	23		clean	unknown		unanalyzed	
 00405330	FUN_00405330	.text	136		clean	unknown		unanalyzed	
 004053e0	thunk_FUN_01985b10	.text	6		entry-lost	unknown		unanalyzed	
-00405560	thunk_FUN_0197c310	.text	6		entry-lost	unknown		unanalyzed	
+00405560	thunk_FUN_0197c310	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	unanalyzed	Deferred Lua parser function body() (site=0x00405560 slot=0x018FB2DC body=0x004A22E0 section=.text): body invokes SecuROM VM obfuscation helpers 0x00E610C0/0x00E62160; deferred per scope rules.
 00405613	FUN_00405613	.text	10		clean	unknown		unanalyzed	
 004056d6	FUN_004056d6	.text	11		clean	unknown		unanalyzed	
 004056f0	FUN_004056f0	.text	32		entry-lost	unknown		unanalyzed	
@@ -218,9 +218,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004057d0	FUN_004057d0	.text	290		clean	unknown		unanalyzed	
 00405900	FUN_00405900	.text	97		clean	unknown		unanalyzed	
 00405a50	FUN_00405a50	.text	182		clean	unknown		unanalyzed	
-00405b10	thunk_FUN_01985af0	.text	6		entry-lost	unknown		unanalyzed	
+00405b10	thunk_FUN_01985af0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaParserFuncStat(ls, line) [funcstat]: entry-lost thunk site=0x00405B10 slot=0x018F71A0 body=0x01933830 section=.securom; parses function declaration statement via luaX_lex (0x0040C380), funcname (0x00405260), body (0x00405560), and luaK_storevar (0x0040D990); verified against run35 capture (2 scenarios, 0 mismatches).
 00405c50	FUN_00405c50	.text	51		clean	unknown		unanalyzed	
-00405f10	thunk_FUN_0197c2f0	.text	6		entry-lost	unknown		unanalyzed	
+00405f10	thunk_FUN_0197c2f0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	unanalyzed	Deferred Lua parser function constructor() (site=0x00405F10 slot=0x018F4FE0 body=0x01907AE0 section=.securom): body invokes SecuROM VM obfuscation helper 0x00E62160; deferred per scope rules.
 00405fa0	FUN_00405fa0	.text	273		clean	unknown		unanalyzed	
 004061e0	FUN_004061e0	.text	26		clean	unknown		unanalyzed	
 004061f8	FUN_004061f8	.text	275		clean	unknown		unanalyzed	
@@ -235,16 +235,16 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00406a9c	FUN_00406a9c	.text	110		clean	unknown		unanalyzed	
 00406c00	thunk_FUN_0197c2d0	.text	6		entry-lost	unknown		unanalyzed	
 00406c40	FUN_00406c40	.text	163		clean	unknown		unanalyzed	
-00406cf0	thunk_FUN_01980620	.text	6		entry-lost	unknown		unanalyzed	
-00406d70	FUN_00406d70	.text	16		entry-lost	unknown		unanalyzed	
+00406cf0	thunk_FUN_01980620	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaVmTraceExec(state, top, linehook) [traceexec]: entry-lost thunk site=0x00406CF0 slot=0x018F5EE8 body=0x01915010 section=.securom; computes current pc and source line via luaG_getline (0x004093B0) and invokes call_linehook (0x004039B0) on new line or backward branch; verified against run35 capture (3 scenarios, 0 mismatches).
+00406d70	FUN_00406d70	.text	16		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaVmClosure(state, nelems) [luaV_closure]: entry-lost thunk site=0x00406D70 slot=0x018F9FF4 body=0x00404ED0 section=.text; allocates closure via luaF_newclosure (0x0040E7C0), copies nelems upvalues from L->top, and pushes closure onto stack after intra-cluster LuaDoCheckStack (0x004038B0); verified against run35 capture (3 scenarios, 0 mismatches).
 00406de0	FUN_00406de0	.text	28		clean	unknown		unanalyzed	
 00406e00	thunk_FUN_01978060	.text	6		entry-recoverable	unknown		unanalyzed	
 00406e07	FUN_00406e07	.text	256		clean	unknown		unanalyzed	
 00406e20	thunk_FUN_0197c2b0	.text	6		entry-lost	unknown		unanalyzed	
 00406f10	thunk_FUN_01980600	.text	6		entry-lost	unknown		unanalyzed	
-00407020	thunk_FUN_01985a80	.text	6		entry-lost	unknown		unanalyzed	
+00407020	thunk_FUN_01985a80	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	unanalyzed	Deferred Lua VM function luaV_getglobal (site=0x00407020 slot=0x018F5AB0 body=0x019119D0 section=.securom): body invokes SecuROM VM obfuscation helper 0x00E60CC0; deferred per scope rules.
 004070a9	FUN_004070a9	.text	10		clean	unknown		unanalyzed	
-004070c0	thunk_FUN_01978040	.text	6		entry-lost	unknown		unanalyzed	
+004070c0	thunk_FUN_01978040	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	unanalyzed	Deferred Lua VM function luaV_settable (site=0x004070C0 slot=0x018F6F54 body=0x01931360 section=.securom): body invokes SecuROM VM obfuscation helper 0x00E610C0; deferred per scope rules.
 0040714a	__break	.text	1		clean	unknown		unanalyzed	
 004071d1	FUN_004071d1	.text	10		clean	unknown		unanalyzed	
 004071e0	thunk_FUN_0197c290	.text	6		entry-lost	unknown		unanalyzed	
@@ -267,16 +267,16 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00408b4a	FUN_00408b4a	.text	130		clean	unknown		unanalyzed	
 00408cf0	FUN_00408cf0	.text	103		clean	unknown		unanalyzed	
 00408d70	FUN_00408d70	.text	54		clean	unknown		unanalyzed	
-00408db0	thunk_FUN_01980ae0	.text	6		entry-lost	unknown		unanalyzed	
-00408df0	thunk_FUN_01985fa0	.text	6		entry-lost	unknown		unanalyzed	
-00408e30	thunk_FUN_01978470	.text	6		entry-lost	unknown		unanalyzed	
+00408db0	thunk_FUN_01980ae0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaGcCollectProto(state) [collectproto]: entry-lost thunk site=0x00408DB0 slot=0x018F6040 body=0x00467B40 section=.text; sweeps L->rootproto linked list, clearing mark bits on live protos and freeing unmarked protos via luaF_freeproto (0x0040E930); verified against run35 capture (3 scenarios, 0 mismatches).
+00408df0	thunk_FUN_01985fa0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaGcCollectTable(state) [collecttable]: entry-lost thunk site=0x00408DF0 slot=0x018FA02C body=0x00404950 section=.text; sweeps L->roottable linked list, resetting self-marks on live tables and freeing unmarked tables via luaH_free (0x0040B470); verified against run35 capture (3 scenarios, 0 mismatches).
+00408e30	thunk_FUN_01978470	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaGcCollectStrings(state, all) [collectstrings]: entry-lost thunk site=0x00408E30 slot=0x018FB34C body=0x004A2490 section=.text; sweeps L->strt hash buckets, freeing unmarked non-const strings via intra-cluster LuaMemRealloc (0x00403660) and shrinking bucket array via luaS_resize (0x0040E3C0); verified against run35 capture (3 scenarios, 0 mismatches).
 00408ea4	FUN_00408ea4	.text	23		clean	unknown		unanalyzed	
-00408ed0	thunk_FUN_0197c6b0	.text	6		entry-lost	unknown		unanalyzed	
+00408ed0	thunk_FUN_0197c6b0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaGcCollectUdata(state, all) [collectudata]: entry-lost thunk site=0x00408ED0 slot=0x018FC3F0 body=0x01906B30 section=.securom; sweeps L->udt hash buckets, moving unmarked userdata to L->TMtable[tag].collected and shrinking bucket array via luaS_resize (0x0040E3C0); verified against run35 capture (3 scenarios, 0 mismatches).
 00408f55	FUN_00408f55	.text	23		clean	unknown		unanalyzed	
-00408f70	FUN_00408f70	.text	16		entry-lost	unknown		unanalyzed	
-00408fe0	thunk_FUN_01985f70	.text	6		entry-lost	unknown		unanalyzed	
+00408f70	FUN_00408f70	.text	16		entry-lost	core/LuaVmPorts	recon/protentry2	unanalyzed	Deferred Lua GC function checkMbuffer (site=0x00408F70 slot=0x018F636C body=0x019195D0 section=.securom): body invokes SecuROM VM obfuscation helper 0x00E60CE0; deferred per scope rules.
+00408fe0	thunk_FUN_01985f70	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	unanalyzed	Deferred Lua GC function callgcTM (site=0x00408FE0 slot=0x018FA350 body=0x00422AC0 section=.text): .text body 0x00422AC0 lies inside existing function_ledger.tsv entry 0x0042295e (size 1538); deferred per ledger non-overlap rule.
 004090e0	thunk_FUN_01978440	.text	6		entry-lost	unknown		unanalyzed	
-00409120	thunk_FUN_0197c680	.text	6		entry-lost	unknown		unanalyzed	
+00409120	thunk_FUN_0197c680	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaGcMarkAll(state) [markall]: entry-lost thunk site=0x00409120 slot=0x018FAE84 body=0x0049F310 section=.text; marks root global table L->gt, stack [L->stack..L->top), locked refs, and gray closure/table lists via marklock (0x00408BD0), markobject (0x00408C40), and luaH_remove (0x0040B2C0); verified against run35 capture (2 scenarios, 0 mismatches).
 00409260	FUN_00409260	.text	123		clean	unknown		unanalyzed	
 004092e0	FUN_004092e0	.text	22		clean	unknown		unanalyzed	
 00409310	FUN_00409310	.text	15		clean	unknown		unanalyzed	
@@ -297,30 +297,30 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00409c00	FUN_00409c00	.text	283		clean	unknown		unanalyzed	
 00409da2	FUN_00409da2	.text	11		clean	unknown		unanalyzed	
 00409e10	FUN_00409e10	.text	117		clean	unknown		unanalyzed	
-00409e90	thunk_FUN_0197c5e0	.text	6		entry-lost	unknown		unanalyzed	
+00409e90	thunk_FUN_0197c5e0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	"LuaNewTag(state) [lua_newtag]: entry-lost thunk site=0x00409E90 slot=0x018FC3D0 body=0x00443DC0 section=.text; grows L->TMtable via intra-cluster LuaMemGrowAux (0x004036D0, 64-byte LuaTM entries, ""tag table overflow"" at 0x00BD5AC0) and initializes new tag slot; verified against run35 capture (2 scenarios, 0 mismatches)."
 00409ef6	FUN_00409ef6	.text	23		clean	unknown		unanalyzed	
 00409f20	thunk_FUN_019809e0	.text	6		entry-lost	unknown		unanalyzed	
 00409f30	FUN_00409f30	.text	277		clean	unknown		unanalyzed	
 0040a02a	FUN_0040a02a	.text	1		clean	unknown		unanalyzed	
-0040a070	thunk_FUN_01985ea0	.text	6		entry-lost	unknown		unanalyzed	
-0040a120	thunk_FUN_0197c5b0	.text	6		entry-lost	unknown		unanalyzed	
+0040a070	thunk_FUN_01985ea0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaTagOfObject(o) [luaT_tag]: entry-lost thunk site=0x0040A070 slot=0x018F5B20 body=0x0043B020 section=.text; returns custom tag for userdata (o->value.ts->u.d.tag) or table (o->value.a->htag via [0x018FCA78]=4), else o->ttype; verified against run35 capture (3 scenarios, 0 mismatches).
+0040a120	thunk_FUN_0197c5b0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaSetTagMethod(state, tag, event) [lua_settagmethod]: entry-lost thunk site=0x0040A120 slot=0x018FAEB8 body=0x0049F650 section=.text; validates event via luaT_checkevent (0x00409DB0), tag range, and luaT_validevents (0x00BD59F0), errors via luaO_verror (0x004041A0), and pops new handler into L->TMtable[tag].method[e]; verified against run35 capture (4 scenarios, 0 mismatches).
 0040a230	FUN_0040a230	.text	13		clean	unknown		unanalyzed	
 0040a240	FUN_0040a240	.text	13		clean	unknown		unanalyzed	
 0040a250	FUN_0040a250	.text	40		clean	unknown		unanalyzed	
 0040a2bd	FUN_0040a2bd	.text	11		clean	unknown		unanalyzed	
 0040a2d0	thunk_FUN_0197c580	.text	6		entry-lost	unknown		unanalyzed	
-0040a340	thunk_FUN_01980990	.text	6		entry-lost	unknown		unanalyzed	
+0040a340	thunk_FUN_01980990	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaPushValue(state, index) [lua_pushvalue]: entry-lost thunk site=0x0040A340 slot=0x018FC148 body=0x004431E0 section=.text; resolves positive/negative stack index relative to L->Cbase or L->top, pushes copy at L->top, and checks stack via intra-cluster LuaDoCheckStack (0x004038B0); verified against run35 capture (2 scenarios, 0 mismatches).
 0040a390	FUN_0040a390	.text	44		clean	unknown	recon/hookcat	reversed	hook candidate: 按正/负索引访问 16 字节环形/分段记录
 0040a3c0	FUN_0040a3c0	.text	23		clean	unknown		unanalyzed	
 0040a3e0	thunk_FUN_01978370	.text	6		entry-lost	unknown		unanalyzed	
-0040a440	thunk_FUN_0197c550	.text	6		entry-lost	unknown		unanalyzed	
+0040a440	thunk_FUN_0197c550	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaGetN(state, index) [lua_getn]: entry-lost thunk site=0x0040A440 slot=0x018FB260 body=0x0041AA80 section=.text; resolves stack index via luaA_indexAcceptable and returns table aux/count word at +0x0C when ttype == LUA_TTABLE (4), else 0; verified against run35 capture (4 scenarios, 0 mismatches).
 0040a480	thunk_FUN_01980970	.text	6		entry-lost	unknown		unanalyzed	
 0040a490	FUN_0040a490	.text	24		clean	unknown		unanalyzed	
 0040a4c0	thunk_FUN_01985e40	.text	6		entry-recoverable	unknown		unanalyzed	
 0040a500	thunk_FUN_01978340	.text	6		entry-lost	unknown		unanalyzed	
 0040a570	FUN_0040a570	.text	65		clean	unknown		unanalyzed	
-0040a5c0	thunk_FUN_0197c520	.text	6		entry-lost	unknown		unanalyzed	
-0040a600	thunk_FUN_01980950	.text	6		entry-lost	unknown		unanalyzed	
+0040a5c0	thunk_FUN_0197c520	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaIsFunction(state, index) [lua_toboolean]: entry-lost thunk site=0x0040A5C0 slot=0x018FB380 body=0x00426E30 section=.text; resolves stack index and converts Lua value to boolean truth integer (0 for nil/out-of-bounds, raw value for tag 6, 1 otherwise); verified against run35 capture (4 scenarios, 0 mismatches).
+0040a600	thunk_FUN_01980950	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaToString(state, index) [lua_tostring]: entry-lost thunk site=0x0040A600 slot=0x018F50B8 body=0x004461A0 section=.text; resolves stack index, converts non-strings in place via luaV_tostring (0x00406C40), and returns TString::str (+0x14); verified against run35 capture (3 scenarios, 0 mismatches).
 0040a650	thunk_FUN_01980920	.text	6		entry-lost	unknown		unanalyzed	
 0040a6a0	thunk_FUN_01985e10	.text	6		entry-lost	unknown		unanalyzed	
 0040a6e0	thunk_FUN_01978310	.text	6		entry-lost	unknown		unanalyzed	
@@ -330,8 +330,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0040a7b0	thunk_FUN_01980900	.text	6		entry-lost	unknown		unanalyzed	
 0040a7f0	FUN_0040a7f0	.text	94		clean	unknown		unanalyzed	
 0040a850	thunk_FUN_00406de0	.text	5		clean	unknown		unanalyzed	
-0040a860	thunk_FUN_01985df0	.text	6		entry-lost	unknown		unanalyzed	
-0040a8c0	thunk_FUN_0197ca80	.text	6		entry-lost	unknown		unanalyzed	
+0040a860	thunk_FUN_01985df0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	"LuaPushUserTag(state, udata, tag) [lua_pushusertag]: entry-lost thunk site=0x0040A860 slot=0x018F6608 body=0x0191B790 section=.securom; validates tag against LUA_ANYTAG/-1, LUA_TUSERDATA/0, or [LUA_NTAGS=6 from 0x018FCBF8..L->lastTag] (""invalid tag for a userdata (%d)"" at 0x00BD5C0C via luaO_verror 0x004041A0), interns userdata via luaS_createudata (0x0040E690), and pushes onto stack via intra-cluster LuaDoCheckStack (0x004038B0); verified against run35 capture (4 scenarios, 0 mismatches)."
+0040a8c0	thunk_FUN_0197ca80	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaGetGlobal(state, name) [lua_getglobal]: entry-lost thunk site=0x0040A8C0 slot=0x018FB6F4 body=0x0043E3B0 section=.text; interns name via luaS_new (0x0040E750), fetches value via luaV_getglobal (0x00407020), copies TObject to L->top, and checks stack via intra-cluster LuaDoCheckStack (0x004038B0, 1 from [0x018FC748]); verified against run35 capture (2 scenarios, 0 mismatches).
 0040a901	FUN_0040a901	.text	10		clean	unknown		unanalyzed	
 0040a910	thunk_FUN_01980ef0	.text	6		entry-lost	unknown		unanalyzed	
 0040a960	thunk_FUN_019863a0	.text	6		entry-lost	unknown		unanalyzed	
@@ -339,7 +339,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0040aa20	thunk_FUN_01dce000	.text	6		entry-lost	unknown		unanalyzed	
 0040aa42	FUN_0040aa42	.text	10		clean	unknown		unanalyzed	
 0040aa50	thunk_FUN_0197ca50	.text	6		entry-lost	unknown		unanalyzed	
-0040aad0	thunk_FUN_01980ed0	.text	6		entry-lost	unknown		unanalyzed	
+0040aad0	thunk_FUN_01980ed0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaNewTable(state, aux) [lua_newtable]: entry-lost thunk site=0x0040AAD0 slot=0x018F5C50 body=0x0045EDC0 section=.text; allocates empty table via intra-cluster LuaTableNew (0x0040B410), pushes LUA_TTABLE (4) onto stack, and checks stack via intra-cluster LuaDoCheckStack (0x004038B0, 1 from [0x018FCAB8]); verified against run35 capture (2 scenarios, 0 mismatches).
 0040ab10	FUN_0040ab10	.text	37		clean	unknown		unanalyzed	
 0040ab40	FUN_0040ab40	.text	52		clean	unknown		unanalyzed	
 0040ab80	thunk_FUN_01986370	.text	6		entry-lost	unknown		unanalyzed	
@@ -357,7 +357,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0040ae40	FUN_0040ae40	.text	121		clean	unknown		unanalyzed	
 0040aec0	thunk_FUN_01d5f000	.text	6		entry-recoverable	unknown		unanalyzed	
 0040aec6	FUN_0040aec6	.text	25		clean	unknown		unanalyzed	
-0040aef0	thunk_FUN_01978770	.text	6		entry-lost	unknown		unanalyzed	
+0040aef0	thunk_FUN_01978770	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaNewUserData(state, size) [lua_newuserdata]: entry-lost thunk site=0x0040AEF0 slot=0x018FB394 body=0x0043D6E0 section=.text; allocates userdata via luaS_newudata (0x0040E600, 0 from [0x018FC6D8]), pushes onto stack via intra-cluster LuaDoCheckStack (0x004038B0), and returns TString::u.d.value (+0x04); verified against run35 capture (2 scenarios, 0 mismatches).
 0040afd6	FUN_0040afd6	.text	11		clean	unknown		unanalyzed	
 0040b000	FUN_0040b000	.text	93		clean	unknown		unanalyzed	
 0040b060	FUN_0040b060	.text	99		clean	unknown		unanalyzed	
@@ -365,8 +365,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0040b1b0	FUN_0040b1b0	.text	51		clean	unknown		unanalyzed	
 0040b240	thunk_FUN_0197c9c0	.text	6		entry-lost	unknown		unanalyzed	
 0040b2c0	FUN_0040b2c0	.text	181		clean	unknown		unanalyzed	
-0040b410	thunk_FUN_01986310	.text	6		entry-lost	unknown		unanalyzed	
-0040b570	thunk_FUN_01980e00	.text	6		entry-lost	unknown		unanalyzed	
+0040b410	thunk_FUN_01986310	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaTableNew(state, nhash, aux) [luaH_new]: entry-lost thunk site=0x0040B410 slot=0x018F603C body=0x00470720 section=.text; allocates 28-byte LuaHash via intra-cluster LuaMemRealloc (0x00403660), links into L->roottable, rounds capacity via luaO_power2 (0x00404070), and initializes node vector via setnodevector (0x0040B380); verified against run35 capture (3 scenarios, 0 mismatches).
+0040b570	thunk_FUN_01980e00	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	"LuaTableSet(state, t, key) [luaH_set]: entry-lost thunk site=0x0040B570 slot=0x018FC3E8 body=0x019069F0 section=.securom; probes main position via luaH_mainposition (0x0040B060), compares keys via luaO_equalObj (0x00404090), resolves Brent chain collisions, advances t->firstfree or calls rehash (0x0040B4B0), and errors on nil key (""table index is nil"" at 0x00BD5C6C); verified against run35 capture (4 scenarios, 0 mismatches)."
 0040b660	FUN_0040b660	.text	42		clean	unknown		unanalyzed	
 0040b690	FUN_0040b690	.text	55		clean	unknown		unanalyzed	
 0040b720	thunk_FUN_01d77000	.text	6		entry-lost	unknown		unanalyzed	
@@ -381,11 +381,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0040c030	FUN_0040c030	.text	428		clean	unknown		unanalyzed	
 0040c380	FUN_0040c380	.text	1201		clean	unknown		unanalyzed	
 0040c900	thunk_FUN_0197c930	.text	6		entry-lost	unknown		unanalyzed	
-0040c920	FUN_0040c920	.text	32		entry-lost	unknown		unanalyzed	
-0040c980	thunk_FUN_019862c0	.text	6		entry-lost	unknown		unanalyzed	
+0040c920	FUN_0040c920	.text	32		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	"LuaCodeFixJump(fs, pc, dest) [luaK_fixjump]: entry-lost thunk site=0x0040C920 slot=0x018F5474 body=0x0045A730 section=.text; encodes signed jump offset into fs->f->code[pc] (MASK_OP=0x3F from [0x018FC988]) or reports ""control structure too long"" (0x00BD5FE0 rotated from [0x018F76A8] by [0x0052EF45]) via luaX_syntaxerror (0x0040B960); verified against run35 capture (3 scenarios, 0 mismatches)."
+0040c980	thunk_FUN_019862c0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	"LuaCodeCheckStack(fs, n) [luaK_checkstack]: entry-lost thunk site=0x0040C980 slot=0x018F6788 body=0x0047AA50 section=.text; advances fs->freereg by n and updates fs->f->maxstacksize, calling luaX_syntaxerror (0x0040B960) with ""function or expression too complex"" (0x00BD5FFC from [0x018FCC14]) if > 250; verified against run35 capture (3 scenarios, 0 mismatches)."
 0040c9d0	FUN_0040c9d0	.text	136		clean	unknown		unanalyzed	
-0040ca60	thunk_FUN_0197c910	.text	6		entry-lost	unknown		unanalyzed	
-0040caa0	FUN_0040caa0	.text	32		entry-lost	unknown		unanalyzed	
+0040ca60	thunk_FUN_0197c910	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaCodeLastIsOpen(fs) [luaK_lastisopen]: entry-lost thunk site=0x0040CA60 slot=0x018FBEFC body=0x00435790 section=.text; checks whether fs->f->code[fs->pc - 1] is an unpatched OP_CALL (op==2) with MULT_RET (MASK_B=0x3FC0 from [0x018FC864]); verified against run35 capture (3 scenarios, 0 mismatches).
+0040caa0	FUN_0040caa0	.text	32		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	"LuaCodeSetCallReturns(fs, nresults) [luaK_setcallreturns]: entry-lost thunk site=0x0040CAA0 slot=0x018F5C84 body=0x01913030 section=.securom; patches B-arg of open OP_CALL instruction to nresults and advances fs->freereg (checking MAXSTACK=250 with ""function or expression too complex"" at 0x00BD5FFC); verified against run35 capture (3 scenarios, 0 mismatches)."
 0040cba0	thunk_FUN_01986290	.text	6		entry-recoverable	unknown		unanalyzed	
 0040ccdd	FUN_0040ccdd	.text	10		clean	unknown		unanalyzed	
 0040cd30	FUN_0040cd30	.text	72		clean	unknown		unanalyzed	
@@ -404,24 +404,24 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0040cfcd	switchD_0040ce3c::caseD_21	.text	227		clean	unknown		unanalyzed	
 0040d1c0	FUN_0040d1c0	.text	56		clean	unknown		unanalyzed	
 0040d206	FUN_0040d206	.text	10		clean	unknown		unanalyzed	
-0040d220	thunk_FUN_01980d80	.text	6		entry-lost	unknown		unanalyzed	
-0040d240	thunk_FUN_01986260	.text	6		entry-lost	unknown		unanalyzed	
+0040d220	thunk_FUN_01980d80	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaCode1(fs, op, arg1) [luaK_code1]: entry-lost thunk site=0x0040D220 slot=0x018FC078 body=0x0042CE50 section=.text; forwards to luaK_code2(fs, op, arg1, 0) (0x0040CDF0); verified against run35 capture (2 scenarios, 0 mismatches).
+0040d240	thunk_FUN_01986260	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	unanalyzed	Deferred Lua codegen function luaK_jump (site=0x0040D240 slot=0x018F5DCC body=0x019142B0 section=.securom): body invokes SecuROM VM obfuscation helper 0x00E60CC0; deferred per scope rules.
 0040d2d7	FUN_0040d2d7	.text	11		clean	unknown		unanalyzed	
-0040d2f0	thunk_FUN_019786b0	.text	6		entry-lost	unknown		unanalyzed	
+0040d2f0	thunk_FUN_019786b0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaCodeGetLabel(fs) [luaK_getlabel]: entry-lost thunk site=0x0040D2F0 slot=0x018F725C body=0x004975D0 section=.text; updates fs->lasttarget = fs->pc and patches pending jump list fs->jpc via luaK_patchlistaux (0x0040CBA0, NO_REG=0xFF from [0x018FCDB0]); verified against run35 capture (2 scenarios, 0 mismatches).
 0040d3ab	FUN_0040d3ab	.text	11		clean	unknown		unanalyzed	
 0040d3c0	FUN_0040d3c0	.text	336		clean	unknown		unanalyzed	
 0040d510	FUN_0040d510	.text	147		clean	unknown		unanalyzed	
-0040d5b0	thunk_FUN_01980d50	.text	6		entry-lost	unknown		unanalyzed	
-0040d990	thunk_FUN_01980d20	.text	6		entry-lost	unknown		unanalyzed	
-0040dc40	thunk_FUN_01978680	.text	6		entry-lost	unknown		unanalyzed	
+0040d5b0	thunk_FUN_01980d50	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaCodeAdjustStack(fs, n) [luaK_adjuststack]: entry-lost thunk site=0x0040D5B0 slot=0x018FC418 body=0x01907050 section=.securom; emits or coalesces OP_POP/OP_PUSHNIL/OP_SETLOCAL, adjusts fs->freereg, and grows Proto::code via intra-cluster LuaMemGrowAux (0x004036D0); verified against run35 capture (4 scenarios, 0 mismatches).
+0040d990	thunk_FUN_01980d20	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	unanalyzed	Deferred Lua codegen function luaK_storevar (site=0x0040D990 slot=0x018F5468 body=0x0190B7A0 section=.securom): body invokes SecuROM VM obfuscation helper 0x00E60CC0; deferred per scope rules.
+0040dc40	thunk_FUN_01978680	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaCodeUnary(fs, v, op) [code_unop]: entry-lost thunk site=0x0040DC40 slot=0x018FB15C body=0x0040B6E0 section=.text; selects jump opcode 42 or 40 from op != 0 and delegates to codearith (0x0040DB40); verified against run35 capture (2 scenarios, 0 mismatches).
 0040dc46	FUN_0040dc46	.text	25		clean	unknown		unanalyzed	
-0040dc70	thunk_FUN_0197c890	.text	6		entry-lost	unknown		unanalyzed	
-0040dff0	thunk_FUN_01980cf0	.text	6		entry-lost	unknown		unanalyzed	
-0040e1d0	thunk_FUN_01986210	.text	6		entry-lost	unknown		unanalyzed	
-0040e220	thunk_FUN_0197ce60	.text	6		entry-lost	unknown		unanalyzed	
-0040e2f0	thunk_FUN_01981480	.text	6		entry-lost	unknown		unanalyzed	
+0040dc70	thunk_FUN_0197c890	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	unanalyzed	Deferred Lua codegen function luaK_prefix (site=0x0040DC70 slot=0x018FC16C body=0x01904560 section=.securom): body invokes SecuROM VM obfuscation helper 0x00E610C0; deferred per scope rules.
+0040dff0	thunk_FUN_01980cf0	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	unanalyzed	Deferred Lua codegen function luaK_posfix (site=0x0040DFF0 slot=0x018F6398 body=0x019198D0 section=.securom): body invokes SecuROM VM obfuscation helper 0x00E610C0; deferred per scope rules.
+0040e1d0	thunk_FUN_01986210	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaCodeInfix(ls, op, v) [luaK_infix]: entry-lost thunk site=0x0040E1D0 slot=0x018F5C74 body=0x0045EF60 section=.text; emits short-circuit jump for OPR_AND (12) / OPR_OR (13, using 1 from [0x018FCABC]) via codearith (0x0040DB40), or evaluates LHS via luaK_prefix (0x0040DC70); verified against run35 capture (3 scenarios, 0 mismatches).
+0040e220	thunk_FUN_0197ce60	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaCodePosfix(ls, op, v1, v2) [luaK_posfix]: entry-lost thunk site=0x0040E220 slot=0x018FB3A0 body=0x004A2BD0 section=.text; completes binary operator expression via luaK_exp2val (0x0040D770), intra-cluster LuaCodeSetCallReturns (0x0040CAA0), luaK_concat (0x0040CD30), or luaK_prefix (0x0040DC70) + luaK_code2 (0x0040CDF0) using descriptor table at 0x00BD5EE8; verified against run35 capture (5 scenarios, 0 mismatches).
+0040e2f0	thunk_FUN_01981480	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	reversed	LuaStringInit(state) [luaS_init]: entry-lost thunk site=0x0040E2F0 slot=0x018F4FDC body=0x0044DE30 section=.text; allocates initial 1-bucket hash arrays for L->strt and L->udt via intra-cluster LuaMemRealloc (0x00403660) and adds 8 to L->nblocks; verified against run35 capture (1 scenario, 0 mismatches).
 0040e340	thunk_FUN_01973dc0	.text	6		entry-recoverable	unknown		unanalyzed	
-0040e480	thunk_FUN_01981450	.text	6		entry-lost	unknown		unanalyzed	
+0040e480	thunk_FUN_01981450	.text	6		entry-lost	core/LuaVmPorts	recon/protentry2	unanalyzed	Deferred Lua string interner luaS_newlstr (site=0x0040E480 slot=0x018F52A0 body=0x0190A290 section=.securom): body invokes SecuROM VM obfuscation helper 0x00E60CE0; deferred per scope rules.
 0040e683	FUN_0040e683	.text	11		clean	unknown		unanalyzed	
 0040e736	FUN_0040e736	.text	10		clean	unknown		unanalyzed	
 0040e750	thunk_FUN_0197ce10	.text	6		entry-recoverable	unknown		unanalyzed	
