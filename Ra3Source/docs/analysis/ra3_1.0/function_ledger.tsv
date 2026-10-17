@@ -4057,7 +4057,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0051fef0	FUN_0051fef0	.text	43		clean	unknown		unanalyzed	
 0051ff20	FUN_0051ff20	.text	28		clean	unknown		unanalyzed	
 0051ff40	FUN_0051ff40	.text	56		clean	unknown		unanalyzed	
-00520010	FUN_00520010	.text	40		clean	unknown		unanalyzed	
+00520010	FUN_00520010	.text	40		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
 00520020	FUN_00520020	.text	2		clean	unknown		unanalyzed	
 0052003a	FUN_0052003a	.text	9		clean	unknown		unanalyzed	
 00520043	FUN_00520043	.text	2		clean	unknown		unanalyzed	
@@ -4071,10 +4071,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00520078	FUN_00520078	.text	58		clean	unknown		unanalyzed	
 005200c0	FUN_005200c0	.text	82		clean	unknown		unanalyzed	
 00520120	thunk_FUN_019532b0	.text	6		entry-recoverable	unknown		unanalyzed	
-00520170	FUN_00520170	.text	176		clean	unknown		unanalyzed	
-00520220	FUN_00520220	.text	209		clean	unknown		unanalyzed	
+00520170	FUN_00520170	.text	176		clean	gameclient	recon/drawable52	reversed	addSwayOffset. Called from constructor callers 0x0052BAD0 (0x0052C13E) and 0x0052C3D0 (0x0052CA3F); those functions call the Drawable.cpp-asserting function 0x0051FCB0 (at 0x0052BAF2 / 0x0052C3F1).
+00520220	FUN_00520220	.text	209		clean	gameclient	recon/drawable52	reversed	integrateSwayAngle. Called from the same constructor callers at 0x0052C0DC and 0x0052C938.
 00520300	FUN_00520300	.text	117		clean	unknown		unanalyzed	
-00520380	FUN_00520380	.text	84		clean	unknown		unanalyzed	
+00520380	FUN_00520380	.text	84		clean	gameclient	recon/drawable52	reversed	ensureAuxRecord. Direct call from Drawable::xfer 0x0053EE30 at 0x0053FB0D.
 005203e0	FUN_005203e0	.text	58		clean	unknown		unanalyzed	
 00520420	FUN_00520420	.text	72		clean	unknown		unanalyzed	
 00520470	FUN_00520470	.text	238		clean	unknown		unanalyzed	
@@ -4083,29 +4083,29 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005208a0	thunk_FUN_01954620	.text	6		entry-lost	unknown		unanalyzed	
 005208b0	FUN_005208b0	.text	139		clean	unknown		unanalyzed	
 00520940	FUN_00520940	.text	75		clean	unknown		unanalyzed	
-00520990	FUN_00520990	.text	23		clean	unknown		unanalyzed	
-005209b0	FUN_005209b0	.text	35		clean	unknown		unanalyzed	
+00520990	FUN_00520990	.text	23		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+005209b0	FUN_005209b0	.text	35		clean	gameclient	recon/drawable52	reversed	visitModules20. Primary Drawable vtable 0x00BE1058 slot 8, pointer stored at 0x00BE1078.
 005209e0	FUN_005209e0	.text	84		clean	unknown		unanalyzed	
 00520a40	FUN_00520a40	.text	112		clean	unknown		unanalyzed	
 00520ab0	FUN_00520ab0	.text	129		clean	unknown		unanalyzed	
-00520b40	FUN_00520b40	.text	57		clean	unknown		unanalyzed	
+00520b40	FUN_00520b40	.text	57		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
 00520b80	FUN_00520b80	.text	75		clean	unknown		unanalyzed	
-00520bd0	FUN_00520bd0	.text	51		clean	unknown		unanalyzed	
-00520c10	FUN_00520c10	.text	57		clean	unknown		unanalyzed	
+00520bd0	FUN_00520bd0	.text	51		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00520c10	FUN_00520c10	.text	57		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
 00520c50	FUN_00520c50	.text	91		clean	unknown		unanalyzed	
-00520cb0	FUN_00520cb0	.text	194		clean	unknown		unanalyzed	
+00520cb0	FUN_00520cb0	.text	194		clean	gameclient	recon/drawable52	reversed	readTintEnvelope. TintEnvelope vtable 0x00BDFFD4 slot 3, pointer stored at 0x00BDFFE0; that vtable is installed by Drawable::xfer.
 00520d80	FUN_00520d80	.text	40		clean	unknown		unanalyzed	
-00520db0	FUN_00520db0	.text	64		clean	unknown		unanalyzed	
+00520db0	FUN_00520db0	.text	64		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
 00520df0	FUN_00520df0	.text	31		clean	unknown		unanalyzed	
 00520e10	FUN_00520e10	.text	88		clean	unknown		unanalyzed	
 00520e70	FUN_00520e70	.text	88		clean	unknown		unanalyzed	
 00520ed0	FUN_00520ed0	.text	27		clean	unknown		unanalyzed	
 00520ef0	FUN_00520ef0	.text	88		clean	unknown		unanalyzed	
-00520f50	FUN_00520f50	.text	57		clean	unknown		unanalyzed	
+00520f50	FUN_00520f50	.text	57		clean	gameclient	recon/drawable52	reversed	queryModulesB0. Primary Drawable vtable 0x00BE1058 slot 9, pointer stored at 0x00BE107C.
 00520fd0	FUN_00520fd0	.text	7		clean	unknown		unanalyzed	
 00520fe0	FUN_00520fe0	.text	110		clean	unknown		unanalyzed	
 00521050	FUN_00521050	.text	35		inner-patched	unknown		unanalyzed	
-00521090	FUN_00521090	.text	59		clean	unknown		unanalyzed	
+00521090	FUN_00521090	.text	59		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
 005210f0	FUN_005210f0	.text	18		clean	unknown		unanalyzed	
 00521110	FUN_00521110	.text	37		clean	unknown		unanalyzed	
 00521140	FUN_00521140	.text	37		clean	unknown		unanalyzed	
@@ -4205,7 +4205,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00522a30	FUN_00522a30	.text	39		clean	math	recon/ports2	reversed	minimum(float,float); ra3::math::minimum; oracle 2031/2031 Debug+Release
 00522a60	FUN_00522a60	.text	810		clean	unknown		unanalyzed	
 00522d90	FUN_00522d90	.text	810		clean	unknown		unanalyzed	
-00523140	FUN_00523140	.text	115		clean	unknown		unanalyzed	
+00523140	FUN_00523140	.text	115		clean	gameclient	recon/drawable52	reversed	readCountedBlock. Direct call from Drawable::xfer at 0x0053EEFF.
 005231c0	FUN_005231c0	.text	112		clean	unknown		unanalyzed	
 00523230	FUN_00523230	.text	8		clean	unknown		unanalyzed	
 00523240	FUN_00523240	.text	143		clean	math	recon/ports2	reversed	Vector3 approximate length, full 80-bit ST0 under caller CW; ra3::math::approximateLengthExtended; oracle 2014/2014 at CW 007f/027f/037f Debug+Release; NaN payload emulator-unreliable
@@ -4224,36 +4224,36 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005237f0	FUN_005237f0	.text	100		clean	unknown		unanalyzed	
 00523860	FUN_00523860	.text	33		clean	unknown		unanalyzed	
 00523890	FUN_00523890	.text	247		clean	unknown		unanalyzed	
-00523990	FUN_00523990	.text	31		clean	unknown		unanalyzed	
+00523990	FUN_00523990	.text	31		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Deleting destructor of the sway-state helper, not an accessor.
 005239b0	FUN_005239b0	.text	243		inner-patched	unknown		unanalyzed	
 00523ab0	FUN_00523ab0	.text	99		clean	unknown		unanalyzed	
 00523b20	FUN_00523b20	.text	140		clean	unknown		unanalyzed	
-00523bb0	FUN_00523bb0	.text	61		clean	unknown		unanalyzed	
-00523bf0	FUN_00523bf0	.text	51		clean	unknown		unanalyzed	
+00523bb0	FUN_00523bb0	.text	61		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523bf0	FUN_00523bf0	.text	51		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
 00523c30	FUN_00523c30	.text	93		clean	unknown		unanalyzed	
 00523c90	FUN_00523c90	.text	172		clean	unknown		unanalyzed	
 00523d40	FUN_00523d40	.text	90		clean	unknown		unanalyzed	
 00523da0	FUN_00523da0	.text	38		clean	unknown		unanalyzed	
 00523dd0	FUN_00523dd0	.text	130		clean	unknown		unanalyzed	
-00523e60	FUN_00523e60	.text	8		inner-patched	unknown		unanalyzed	
-00523ec0	FUN_00523ec0	.text	44		clean	unknown		unanalyzed	
-00523ef0	FUN_00523ef0	.text	44		clean	unknown		unanalyzed	
-00523f20	FUN_00523f20	.text	22		clean	unknown		unanalyzed	
-00523f40	FUN_00523f40	.text	71		clean	unknown		unanalyzed	
-00523f90	FUN_00523f90	.text	45		clean	unknown		unanalyzed	
-00523fc0	FUN_00523fc0	.text	22		clean	unknown		unanalyzed	
-00523fe0	FUN_00523fe0	.text	35		clean	unknown		unanalyzed	
-00524010	FUN_00524010	.text	62		clean	unknown		unanalyzed	
-00524050	FUN_00524050	.text	111		clean	unknown		unanalyzed	
-005240c0	FUN_005240c0	.text	69		clean	unknown		unanalyzed	
-00524110	FUN_00524110	.text	38		clean	unknown		unanalyzed	
+00523e60	FUN_00523e60	.text	8		inner-patched	gameclient	recon/drawable52	unanalyzed	Deferred. Ledger securom inner-patched, not a clean body.
+00523ec0	FUN_00523ec0	.text	44		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523ef0	FUN_00523ef0	.text	44		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523f20	FUN_00523f20	.text	22		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523f40	FUN_00523f40	.text	71		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523f90	FUN_00523f90	.text	45		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523fc0	FUN_00523fc0	.text	22		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523fe0	FUN_00523fe0	.text	35		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00524010	FUN_00524010	.text	62		clean	gameclient	recon/drawable52	reversed	publishArgument. 0x005371D0 calls it at 0x00537217 with the same this (esi) it passes to secondary-vtable callee publishCondition 0x00524050 at 0x0053721E.
+00524050	FUN_00524050	.text	111		clean	gameclient	recon/drawable52	reversed	publishCondition. Direct call from secondary Drawable vtable slot syncSecondary 0x0052DEF0 at 0x0052DF3F.
+005240c0	FUN_005240c0	.text	69		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00524110	FUN_00524110	.text	38		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
 00524140	FUN_00524140	.text	229		clean	unknown		unanalyzed	
 00524230	FUN_00524230	.text	114		clean	unknown		unanalyzed	
-005242b0	FUN_005242b0	.text	29		inner-patched	unknown		unanalyzed	
+005242b0	FUN_005242b0	.text	29		inner-patched	gameclient	recon/drawable52	unanalyzed	Deferred. Ledger securom inner-patched, not a clean body.
 005242e0	FUN_005242e0	.text	43		clean	unknown		unanalyzed	
-00524310	FUN_00524310	.text	488		clean	unknown		unanalyzed	
-00524500	FUN_00524500	.text	44		clean	unknown		unanalyzed	
-00524530	FUN_00524530	.text	44		clean	unknown		unanalyzed	
+00524310	FUN_00524310	.text	488		clean	gameclient	recon/drawable52	reversed	updateSwayState. Direct call to the Drawable.cpp-asserting function 0x0051FCB0.
+00524500	FUN_00524500	.text	44		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00524530	FUN_00524530	.text	44		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
 00524560	FUN_00524560	.text	137		clean	unknown		unanalyzed	
 005245f0	FUN_005245f0	.text	715		clean	unknown		unanalyzed	
 005248d0	FUN_005248d0	.text	663		clean	unknown		unanalyzed	
@@ -4271,17 +4271,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00525a50	FUN_00525a50	.text	83		clean	unknown		unanalyzed	
 00525ab0	FUN_00525ab0	.text	179		clean	unknown		unanalyzed	
 00525b70	FUN_00525b70	.text	80		clean	unknown		unanalyzed	
-00525bd0	FUN_00525bd0	.text	115		clean	unknown		unanalyzed	
+00525bd0	FUN_00525bd0	.text	115		clean	gameclient	recon/drawable52	reversed	publishScalar. Primary Drawable vtable 0x00BE1058 slot 5, pointer stored at 0x00BE106C.
 00525c50	FUN_00525c50	.text	159		clean	unknown		unanalyzed	
-00525cf0	FUN_00525cf0	.text	68		clean	unknown		unanalyzed	
-00525d40	FUN_00525d40	.text	82		clean	unknown		unanalyzed	
-00525da0	FUN_00525da0	.text	161		clean	unknown		unanalyzed	
+00525cf0	FUN_00525cf0	.text	68		clean	gameclient	recon/drawable52	reversed	positionPointer. Direct call from Drawable.cpp-asserting function 0x0052C1C0 at 0x0052C273.
+00525d40	FUN_00525d40	.text	82		clean	gameclient	recon/drawable52	reversed	releaseTracked. Direct call from Drawable::xfer at 0x0053FEB7.
+00525da0	FUN_00525da0	.text	161		clean	gameclient	recon/drawable52	reversed	clearAttachedBit. Direct call to xfer callee releaseTracked 0x00525D40.
 00525e50	FUN_00525e50	.text	9		inner-patched	unknown		unanalyzed	
 00525ec0	FUN_00525ec0	.text	97		clean	unknown		unanalyzed	
 00525f30	FUN_00525f30	.text	57		clean	unknown		unanalyzed	
 00525f70	FUN_00525f70	.text	428		clean	unknown		unanalyzed	
 00526120	FUN_00526120	.text	116		clean	unknown		unanalyzed	
-005261a0	FUN_005261a0	.text	6		clean	unknown		unanalyzed	
+005261a0	FUN_005261a0	.text	6		clean	gameclient	recon/drawable52	reversed	tintEnvelopeStatic. TintEnvelope vtable 0x00BDFFD4 slot 2, pointer stored at 0x00BDFFDC.
 005261b0	FUN_005261b0	.text	124		clean	unknown		unanalyzed	
 00526230	FUN_00526230	.text	152		clean	unknown		unanalyzed	
 005262d0	FUN_005262d0	.text	141		clean	unknown		unanalyzed	
@@ -4294,7 +4294,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005267a3	FUN_005267a3	.text	4		clean	unknown		unanalyzed	
 00526800	FUN_00526800	.text	115		clean	unknown		unanalyzed	
 00526880	FUN_00526880	.text	91		clean	unknown		unanalyzed	
-005268e0	FUN_005268e0	.text	106		clean	unknown		unanalyzed	
+005268e0	FUN_005268e0	.text	106		clean	gameclient	recon/drawable52	reversed	resolveRecord. Direct callee of applyAlternate 0x0052DA30 and selectRecordKey 0x0052CDD0; applyAlternate is reached from setAttachedAndRefresh, which calls xfer callee releaseTracked.
 00526950	FUN_00526950	.text	80		clean	unknown		unanalyzed	
 005269a0	FUN_005269a0	.text	20		clean	unknown		unanalyzed	
 005269c0	FUN_005269c0	.text	47		clean	unknown		unanalyzed	
@@ -4476,7 +4476,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0052a6d0	FUN_0052a6d0	.text	105		clean	unknown		unanalyzed	
 0052a740	FUN_0052a740	.text	102		clean	unknown		unanalyzed	
 0052a7b0	FUN_0052a7b0	.text	71	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-0052a800	FUN_0052a800	.text	79		clean	unknown		unanalyzed	
+0052a800	FUN_0052a800	.text	79		clean	gameclient	recon/drawable52	reversed	copyTwelveDwords. Direct call from secondary Drawable vtable slot syncSecondary 0x0052DEF0 at 0x0052DF37.
 0052a850	FUN_0052a850	.text	33		clean	unknown		unanalyzed	
 0052a880	FUN_0052a880	.text	271		clean	unknown		unanalyzed	
 0052a990	FUN_0052a990	.text	145		clean	unknown		unanalyzed	
@@ -4498,46 +4498,46 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0052b000	FUN_0052b000	.text	13		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::storeFieldCC; slot 57; exact dword write verified
 0052b010	FUN_0052b010	.text	8		clean	unknown		unanalyzed	
 0052b020	FUN_0052b020	.text	57		clean	unknown		unanalyzed	
-0052b060	FUN_0052b060	.text	6		clean	unknown		unanalyzed	
+0052b060	FUN_0052b060	.text	6		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Six-byte thunk, no distinct behavior.
 0052b066	FUN_0052b066	.text	109		clean	unknown		unanalyzed	
-0052b0e0	FUN_0052b0e0	.text	36		clean	unknown		unanalyzed	
+0052b0e0	FUN_0052b0e0	.text	36		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Deleting destructor, not an accessor.
 0052b110	FUN_0052b110	.text	79		clean	unknown		unanalyzed	
 0052b160	FUN_0052b160	.text	196		clean	unknown		unanalyzed	
 0052b230	FUN_0052b230	.text	178		clean	unknown		unanalyzed	
-0052b2f0	FUN_0052b2f0	.text	1295		clean	unknown		unanalyzed	
-0052b930	thunk_FUN_01955a70	.text	6		entry-recoverable	unknown		unanalyzed	
-0052b960	FUN_0052b960	.text	29		clean	unknown		unanalyzed	
-0052b980	FUN_0052b980	.text	29		clean	unknown		unanalyzed	
+0052b2f0	FUN_0052b2f0	.text	1295		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Large update body, not an accessor. Ownership anchor only.
+0052b930	thunk_FUN_01955a70	.text	6		entry-recoverable	gameclient	recon/drawable52	unanalyzed	Deferred. Entry-recoverable thunk, not a clean body.
+0052b960	FUN_0052b960	.text	29		clean	gameclient	recon/drawable52	reversed	assignByte25A. Direct call to secondary-vtable callee publishCondition 0x00524050.
+0052b980	FUN_0052b980	.text	29		clean	gameclient	recon/drawable52	reversed	assignByte25B. Direct call to secondary-vtable callee publishCondition 0x00524050.
 0052b9a0	FUN_0052b9a0	.text	215		clean	unknown		unanalyzed	
-0052ba80	FUN_0052ba80	.text	66		clean	unknown		unanalyzed	
-0052bad0	FUN_0052bad0	.text	1764		clean	unknown		unanalyzed	
+0052ba80	FUN_0052ba80	.text	66		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+0052bad0	FUN_0052bad0	.text	1764		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Large constructor caller, not an accessor. Ownership anchor only.
 0052c1c0	FUN_0052c1c0	.text	494	SageEngine\source\GameEngine\gameclient\Drawable.cpp	clean	gameclient		unanalyzed	
-0052c3d0	FUN_0052c3d0	.text	2456		clean	unknown		unanalyzed	
-0052cd70	thunk_FUN_01957110	.text	6		entry-recoverable	unknown		unanalyzed	
-0052cdd0	FUN_0052cdd0	.text	113		clean	unknown		unanalyzed	
+0052c3d0	FUN_0052c3d0	.text	2456		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Large constructor caller, not an accessor. Ownership anchor only.
+0052cd70	thunk_FUN_01957110	.text	6		entry-recoverable	gameclient	recon/drawable52	unanalyzed	Deferred. Entry-recoverable thunk, not a clean body.
+0052cdd0	FUN_0052cdd0	.text	113		clean	gameclient	recon/drawable52	reversed	selectRecordKey. Direct call to resolveRecord 0x005268E0.
 0052ce50	FUN_0052ce50	.text	314		clean	unknown		unanalyzed	
 0052cfa0	FUN_0052cfa0	.text	164		clean	unknown		unanalyzed	
 0052d050	FUN_0052d050	.text	170		clean	unknown		unanalyzed	
 0052d100	FUN_0052d100	.text	226		clean	unknown		unanalyzed	
 0052d1f0	FUN_0052d1f0	.text	474		clean	unknown		unanalyzed	
 0052d3d0	FUN_0052d3d0	.text	666		clean	unknown		unanalyzed	
-0052d670	FUN_0052d670	.text	52		clean	unknown		unanalyzed	
-0052d6b0	FUN_0052d6b0	.text	42		inner-patched	unknown		unanalyzed	
-0052d730	FUN_0052d730	.text	94		clean	unknown		unanalyzed	
-0052d790	FUN_0052d790	.text	152		clean	unknown		unanalyzed	
-0052d830	FUN_0052d830	.text	192		clean	unknown		unanalyzed	
-0052d8f0	FUN_0052d8f0	.text	157		clean	unknown		unanalyzed	
-0052d990	FUN_0052d990	.text	72		clean	unknown		unanalyzed	
-0052d9e0	FUN_0052d9e0	.text	73		clean	unknown		unanalyzed	
-0052da30	FUN_0052da30	.text	176		clean	unknown		unanalyzed	
-0052dae0	FUN_0052dae0	.text	67		clean	unknown		unanalyzed	
-0052db30	FUN_0052db30	.text	19		inner-patched	unknown		unanalyzed	
-0052dbd0	FUN_0052dbd0	.text	192		clean	unknown		unanalyzed	
-0052dc90	FUN_0052dc90	.text	277		clean	unknown		unanalyzed	
-0052ddb0	FUN_0052ddb0	.text	45		clean	unknown		unanalyzed	
+0052d670	FUN_0052d670	.text	52		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+0052d6b0	FUN_0052d6b0	.text	42		inner-patched	gameclient	recon/drawable52	unanalyzed	Deferred. Ledger securom inner-patched, not a clean body.
+0052d730	FUN_0052d730	.text	94		clean	gameclient	recon/drawable52	unanalyzed	Deferred. No vtable slot. Its call to publishArgument is not by itself an anchored Drawable edge.
+0052d790	FUN_0052d790	.text	152		clean	gameclient	recon/drawable52	reversed	transformPointer. Direct call from Drawable::xfer at 0x0053EF09.
+0052d830	FUN_0052d830	.text	192		clean	gameclient	recon/drawable52	unanalyzed	Deferred. Calls entry-recoverable 0x0052B060. Not an accessor.
+0052d8f0	FUN_0052d8f0	.text	157		clean	gameclient	recon/drawable52	reversed	installResolved. Direct call to xfer callee releaseTracked 0x00525D40.
+0052d990	FUN_0052d990	.text	72		clean	gameclient	recon/drawable52	reversed	refreshIfVisible. Direct call to xfer callee releaseTracked 0x00525D40.
+0052d9e0	FUN_0052d9e0	.text	73		clean	gameclient	recon/drawable52	reversed	refreshSupplied. Direct call to installResolved 0x0052D8F0, which calls xfer callee releaseTracked.
+0052da30	FUN_0052da30	.text	176		clean	gameclient	recon/drawable52	reversed	applyAlternate. Direct callee of setAttachedAndRefresh 0x0052DBD0, which calls xfer callee releaseTracked; also calls resolveRecord.
+0052dae0	FUN_0052dae0	.text	67		clean	gameclient	recon/drawable52	reversed	assignFlag13DBit1. Direct call to refreshIfVisible 0x0052D990, which calls xfer callee releaseTracked.
+0052db30	FUN_0052db30	.text	19		inner-patched	gameclient	recon/drawable52	unanalyzed	Deferred. Ledger securom inner-patched, not a clean body.
+0052dbd0	FUN_0052dbd0	.text	192		clean	gameclient	recon/drawable52	reversed	setAttachedAndRefresh. Direct call to xfer callee releaseTracked 0x00525D40.
+0052dc90	FUN_0052dc90	.text	277		clean	gameclient	recon/drawable52	reversed	refreshModuleGate. Direct call from Drawable::xfer at 0x0053F90E.
+0052ddb0	FUN_0052ddb0	.text	45		clean	gameclient	recon/drawable52	reversed	assignFlag13CBit1. Direct call to xfer callee refreshModuleGate 0x0052DC90.
 0052dde0	FUN_0052dde0	.text	262		clean	unknown		unanalyzed	
-0052def0	FUN_0052def0	.text	134		clean	unknown		unanalyzed	
-0052df80	FUN_0052df80	.text	175		clean	unknown		unanalyzed	
+0052def0	FUN_0052def0	.text	134		clean	gameclient	recon/drawable52	reversed	syncSecondary. Secondary Drawable vtable 0x00BE1048 slot 1, pointer stored at 0x00BE104C.
+0052df80	FUN_0052df80	.text	175		clean	gameclient	recon/drawable52	unanalyzed	Deferred. No vtable slot and no call edge to an anchored Drawable function.
 0052e030	FUN_0052e030	.text	12		inner-patched	unknown		unanalyzed	
 0052e3d0	FUN_0052e3d0	.text	95		clean	unknown		unanalyzed	
 0052e430	FUN_0052e430	.text	178		clean	unknown		unanalyzed	

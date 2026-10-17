@@ -41,15 +41,15 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 common7e 合并）
+## 3. 现状（截至 drawable52 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 1,044、unanalyzed 47,881（受保护函数已 reversed：entry-lost 60、inner-patched 2）。`securom` 分类：clean 47,777、entry-lost 653、
+  reversed 1,074、unanalyzed 47,851（受保护函数已 reversed：entry-lost 60、inner-patched 2）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
-- **hook**：298 个目标（其中 251 个只认显式键）。原有 86 个全部 replace 时，Release
+- **hook**：302 个目标（其中 255 个只认显式键）。原有 86 个全部 replace 时，Release
   遭遇战带 Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34）；新加的
-  196 个目标只有离线证据，尚未做合并实机 shadow/replace。
+  200 个目标只有离线证据，尚未做合并实机 shadow/replace。
 - **已完成模块**：
   - core（配置/INI/SkuDef）
   - io（BIG 档案、RefPack、BigHandler 四层：查找/打开/读取/seek/枚举）
@@ -133,6 +133,13 @@
     `ra3/common/CommonSubsystem.h`。主控脚本核对 34 条槽位全部成立，3 条按连续 vtable 段起点
     引用的槽位改为 `vtables_split.tsv` 的精确表（`649c861`）。27 个候选（析构/释放、无独立
     行为的 thunk、x87 返回等）记为延后行。集成态 Release oracle 通过，`+0xBA` 谓词 mutation 检出
+  - gameclient Drawable 批次（`0x00520170–0x0052DEF0`，Grok）：30 个 clean 入口（sway、tint
+    envelope、模块遍历、记录解析与标志位刷新等），4 个 explicitOnly hook；代码在
+    `ra3/gameclient/DrawableAccess.h`。锚点为带 `Drawable.cpp` 断言的 `0x0051FCB0`/`0x0052C1C0`、
+    `Drawable::xfer` `0x0053EE30`（副 vtable `0x00BE1048` slot 3）和主 vtable `0x00BE1058`
+    （构造器 `0x0053CAF0` 写入）。主控逐条核对 12 个调用点、15 条调用边和 6 个 vtable 槽位
+    全部成立；更正 1 处调用者归属和"构造函数"措辞（`15f83cd`）。37 个候选因无锚点边、
+    析构、thunk、受保护等记为延后行。集成态 Release 30 函数零差异
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
@@ -140,7 +147,8 @@
   - 少数 hook 在遭遇战里未被调用（logicrandomvariable、几个 BIG 枚举入口、
     stringfindlast 等），只有离线证据。
 - **当前并行**（子 agent 随主控会话结束而中断，恢复时先查各 worktree 有无新提交）：
-  - `recon/gamelogic7c`、`recon/common7e`：已合并（`789bcb1`、`f3c87e3`）。
+  - `recon/gamelogic7c`、`recon/common7e`、`recon/drawable52`：已合并（`789bcb1`、`f3c87e3`、
+    `c33c919`）。合并冲突若只是注册行追加，用 `python work\probe\union_conflicts.py <文件...>`。
   - `recon/gamelogic72`：`0x00720000–0x0075FFFF` gamelogic 簇，Grok（中等复杂度试验），
     base `3bffa7f`。
   - `recon/skirmishai89`：`0x00890000–0x0089FFFF` skirmish AI 簇，Gemini，base `5d16a5b`。
@@ -171,7 +179,7 @@
 - **补位队列**（任一路完成即补，保持 10 路；数字为未认领 clean 函数数）：
   ~~`0x006A0000–0x006BFFFF`~~（已开 obj6a）→ ~~`0x007E0000–0x0080FFFF`~~（已开
   common7e）→ ~~`0x00720000–0x0075FFFF`~~（已开 gamelogic72，Grok）→ ~~`0x00560000`~~（已开
-  render56，Gemini）→ `0x005A0000` common 196（Grok）→ `0x00500000` audio 118（Gemini）→
+  render56，Gemini）→ ~~`0x005A0000`~~（已开 common5a，Grok）→ `0x00500000` audio 118（Gemini）→
   `0x00870000` gamelogic/gameclient 301（Gemini）→ `0x004D0000` GameLogic 核心 261（Gemini）
   → `0x00990000` render 140（Gemini）→ `0x00820000–0x0083FFFF` gamelogic 250（Grok）。
   受保护批次合并后，按剩余 body/cave 数量再开下一路。
