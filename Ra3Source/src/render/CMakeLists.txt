@@ -4,11 +4,13 @@ ra3_add_module(render
         include/ra3/render/W3DDrawable.h
         include/ra3/render/W3DMaterial.h
         include/ra3/render/W3DRainManager.h
+        include/ra3/render/W3DScriptedModelDraw.h
         include/ra3/render/W3DView.h
         src/W3DAnimation.cpp
         src/W3DDrawable.cpp
         src/W3DMaterial.cpp
         src/W3DRainManager.cpp
+        src/W3DScriptedModelDraw.cpp
         src/W3DView.cpp
     PUBLIC_DEPS
         Ra3::math)
