@@ -765,3 +765,23 @@ address	status	owner	module	notes
 00820630	reversed	recon/scripts82	gamelogic	Parameter::qualifyPlayerSide; SIDE token remapping verified
 00820b70	reversed	recon/scripts82	gamelogic	ScriptAction::setActionType; template clamp/allocation/parameter initialization verified
 00820e00	reversed	recon/scripts82	gamelogic	ScriptAction::getTeamInvolved; action-table parameter selection verified
+005d5b20	reversed	recon/grokclean2	gameclient	DisplayExtent::storePrimaryExtent; vtables 00BE06D0/00BE4BE0 slot 15; exact dword write verified
+00560db0	reversed	recon/grokclean2	gameclient	DisplayExtent::storeSecondaryExtent; slot 16; exact dword write verified
+0052af80	reversed	recon/grokclean2	gameclient	DisplayExtent::loadPrimaryExtent; slot 17; dword load verified
+00740fa0	reversed	recon/grokclean2	gameclient	DisplayExtent::loadSecondaryExtent; slot 18; dword load verified
+0052af90	reversed	recon/grokclean2	gameclient	DisplayExtent::loadFlag5E; slot 19; partial-AL return verified
+0052afa0	reversed	recon/grokclean2	gameclient	DisplayExtent::secondaryTimesFourBelowPrimaryTimesThree; wrapped unsigned products and strict comparison verified
+0052afc0	reversed	recon/grokclean2	gameclient	DisplayExtent::storeFlag5F; slot 22; exact byte write and partial-AL return verified
+0052afd0	reversed	recon/grokclean2	gameclient	DisplayExtent::loadFlag5F; slot 23; partial-AL return verified
+0052afe0	reversed	recon/grokclean2	gameclient	DisplayExtent::storeFlag60; base slot 24 only; exact byte write verified
+00ada7c0	reversed	recon/grokclean2	gameclient	DisplayExtent::loadFlag60; slot 25; partial-AL return verified
+0052af60	reversed	recon/grokclean2	gameclient	DisplayExtent::storeTriple64; slot 30; interleaved alias-safe dword writes verified
+0051fb90	reversed	recon/grokclean2	gameclient	DisplayExtent::storePair74; slot 50; two exact dword writes verified
+0051fbb0	reversed	recon/grokclean2	gameclient	DisplayExtent::loadField74; slot 51; dword load verified
+0052b000	reversed	recon/grokclean2	gameclient	DisplayExtent::storeFieldCC; slot 57; exact dword write verified
+0058c900	reversed	recon/grokclean2	gameclient	DisplayExtent::loadFlag12C; derived slot 34; partial-AL return verified
+0058c910	reversed	recon/grokclean2	gameclient	DisplayExtent::storeFlag12C; derived slot 35; exact byte write verified
+0058c920	reversed	recon/grokclean2	gameclient	DisplayExtent::loadField110; derived slot 36; dword load verified
+0058c930	reversed	recon/grokclean2	gameclient	DisplayExtent::storeField110; derived slot 37; exact dword write verified
+00560800	reversed	recon/grokclean2	gameclient	DisplayExtent::storeQuad11C; derived slot 33; interleaved dword writes and +12C flag verified
+00560a10	reversed	recon/grokclean2	gameclient	DisplayExtent::loadField118; derived slot 61; dword load verified

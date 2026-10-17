@@ -4042,8 +4042,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0051fa00	FUN_0051fa00	.text	7		clean	unknown		unanalyzed	
 0051fa10	FUN_0051fa10	.text	31		clean	unknown		unanalyzed	
 0051fa30	FUN_0051fa30	.text	341		clean	unknown		unanalyzed	
-0051fb90	FUN_0051fb90	.text	17		clean	unknown		unanalyzed	
-0051fbb0	FUN_0051fbb0	.text	4		clean	unknown		unanalyzed	
+0051fb90	FUN_0051fb90	.text	17		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::storePair74; slot 50; two exact dword writes verified
+0051fbb0	FUN_0051fbb0	.text	4		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::loadField74; slot 51; dword load verified
 0051fbc0	FUN_0051fbc0	.text	138		clean	unknown		unanalyzed	
 0051fc50	FUN_0051fc50	.text	25		inner-patched	unknown		unanalyzed	
 0051fc70	FUN_0051fc70	.text	54		clean	unknown		unanalyzed	
@@ -4485,15 +4485,15 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0052ad90	FUN_0052ad90	.text	48		clean	unknown		unanalyzed	
 0052adc0	FUN_0052adc0	.text	22		clean	unknown		unanalyzed	
 0052ade0	FUN_0052ade0	.text	378		clean	unknown		unanalyzed	
-0052af60	FUN_0052af60	.text	24		clean	unknown		unanalyzed	
-0052af80	FUN_0052af80	.text	4		clean	unknown		unanalyzed	
-0052af90	FUN_0052af90	.text	4		clean	unknown		unanalyzed	
-0052afa0	FUN_0052afa0	.text	20		clean	unknown		unanalyzed	
-0052afc0	FUN_0052afc0	.text	10		clean	unknown		unanalyzed	
-0052afd0	FUN_0052afd0	.text	4		clean	unknown		unanalyzed	
-0052afe0	FUN_0052afe0	.text	10		clean	unknown		unanalyzed	
+0052af60	FUN_0052af60	.text	24		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::storeTriple64; slot 30; interleaved alias-safe dword writes verified
+0052af80	FUN_0052af80	.text	4		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::loadPrimaryExtent; slot 17; dword load verified
+0052af90	FUN_0052af90	.text	4		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::loadFlag5E; slot 19; partial-AL return verified
+0052afa0	FUN_0052afa0	.text	20		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::secondaryTimesFourBelowPrimaryTimesThree; wrapped unsigned products and strict comparison verified
+0052afc0	FUN_0052afc0	.text	10		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::storeFlag5F; slot 22; exact byte write and partial-AL return verified
+0052afd0	FUN_0052afd0	.text	4		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::loadFlag5F; slot 23; partial-AL return verified
+0052afe0	FUN_0052afe0	.text	10		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::storeFlag60; base slot 24 only; exact byte write verified
 0052aff0	FUN_0052aff0	.text	11		clean	unknown		unanalyzed	
-0052b000	FUN_0052b000	.text	13		clean	unknown		unanalyzed	
+0052b000	FUN_0052b000	.text	13		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::storeFieldCC; slot 57; exact dword write verified
 0052b010	FUN_0052b010	.text	8		clean	unknown		unanalyzed	
 0052b020	FUN_0052b020	.text	57		clean	unknown		unanalyzed	
 0052b060	FUN_0052b060	.text	6		clean	unknown		unanalyzed	
@@ -5681,11 +5681,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005607d0	thunk_FUN_009319d0	.text	5		clean	unknown		unanalyzed	
 005607e0	FUN_005607e0	.text	11		clean	unknown		unanalyzed	
 005607f0	FUN_005607f0	.text	16		clean	unknown		unanalyzed	
-00560800	FUN_00560800	.text	49		clean	unknown		unanalyzed	
+00560800	FUN_00560800	.text	49		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::storeQuad11C; derived slot 33; interleaved dword writes and +12C flag verified
 00560840	FUN_00560840	.text	264		clean	unknown		unanalyzed	
 00560950	FUN_00560950	.text	159		clean	unknown		unanalyzed	
 005609f0	FUN_005609f0	.text	28		clean	unknown		unanalyzed	
-00560a10	FUN_00560a10	.text	7		clean	unknown		unanalyzed	
+00560a10	FUN_00560a10	.text	7		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::loadField118; derived slot 61; dword load verified
 00560a20	FUN_00560a20	.text	6		clean	unknown		unanalyzed	
 00560a30	FUN_00560a30	.text	174		clean	unknown		unanalyzed	
 00560ae0	FUN_00560ae0	.text	31		clean	unknown		unanalyzed	
@@ -5709,7 +5709,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00560d60	FUN_00560d60	.text	46		clean	unknown		unanalyzed	
 00560d90	FUN_00560d90	.text	16		clean	unknown		unanalyzed	
 00560da0	FUN_00560da0	.text	10		clean	unknown		unanalyzed	
-00560db0	FUN_00560db0	.text	10		clean	unknown		unanalyzed	
+00560db0	FUN_00560db0	.text	10		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::storeSecondaryExtent; slot 16; exact dword write verified
 00560dc0	FUN_00560dc0	.text	17		clean	unknown		unanalyzed	
 00560de0	FUN_00560de0	.text	50		clean	unknown		unanalyzed	
 00560e20	FUN_00560e20	.text	233		clean	unknown		unanalyzed	
@@ -6395,10 +6395,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0058c590	FUN_0058c590	.text	326		clean	unknown		unanalyzed	
 0058c6e0	FUN_0058c6e0	.text	30		clean	unknown		unanalyzed	
 0058c700	FUN_0058c700	.text	506		clean	unknown		unanalyzed	
-0058c900	FUN_0058c900	.text	7		clean	unknown		unanalyzed	
-0058c910	FUN_0058c910	.text	13		clean	unknown		unanalyzed	
-0058c920	FUN_0058c920	.text	7		clean	unknown		unanalyzed	
-0058c930	FUN_0058c930	.text	13		clean	unknown		unanalyzed	
+0058c900	FUN_0058c900	.text	7		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::loadFlag12C; derived slot 34; partial-AL return verified
+0058c910	FUN_0058c910	.text	13		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::storeFlag12C; derived slot 35; exact byte write verified
+0058c920	FUN_0058c920	.text	7		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::loadField110; derived slot 36; dword load verified
+0058c930	FUN_0058c930	.text	13		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::storeField110; derived slot 37; exact dword write verified
 0058c940	FUN_0058c940	.text	8		clean	unknown		unanalyzed	
 0058c950	FUN_0058c950	.text	82		clean	unknown		unanalyzed	
 0058c9b0	FUN_0058c9b0	.text	815		clean	unknown		unanalyzed	
@@ -7992,7 +7992,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005d5ad0	FUN_005d5ad0	.text	9		clean	unknown		unanalyzed	
 005d5ae0	FUN_005d5ae0	.text	28		clean	unknown	recon/hookcat	reversed	hook candidate: 哨兵与范围检查后返回六元素数组槽
 005d5b00	FUN_005d5b00	.text	21		clean	unknown		unanalyzed	
-005d5b20	FUN_005d5b20	.text	10		clean	unknown		unanalyzed	
+005d5b20	FUN_005d5b20	.text	10		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::storePrimaryExtent; vtables 00BE06D0/00BE4BE0 slot 15; exact dword write verified
 005d5b30	FUN_005d5b30	.text	20		clean	unknown		unanalyzed	
 005d5b50	FUN_005d5b50	.text	61		clean	unknown		unanalyzed	
 005d5b90	FUN_005d5b90	.text	61		clean	unknown		unanalyzed	
@@ -16384,7 +16384,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00740f60	FUN_00740f60	.text	24		clean	unknown		unanalyzed	
 00740f80	FUN_00740f80	.text	10		clean	unknown		unanalyzed	
 00740f90	FUN_00740f90	.text	14		clean	unknown		unanalyzed	
-00740fa0	FUN_00740fa0	.text	4		clean	unknown		unanalyzed	
+00740fa0	FUN_00740fa0	.text	4		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::loadSecondaryExtent; slot 18; dword load verified
 00740fb0	FUN_00740fb0	.text	394		clean	unknown		unanalyzed	
 00741140	FUN_00741140	.text	20		inner-patched	unknown		unanalyzed	
 007411c0	FUN_007411c0	.text	697		clean	unknown		unanalyzed	
@@ -35299,7 +35299,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00ada670	FUN_00ada670	.text	7		clean	unknown		unanalyzed	
 00ada7a0	FUN_00ada7a0	.text	10		clean	unknown		unanalyzed	
 00ada7b0	FUN_00ada7b0	.text	4		clean	unknown		unanalyzed	
-00ada7c0	FUN_00ada7c0	.text	4		clean	unknown		unanalyzed	
+00ada7c0	FUN_00ada7c0	.text	4		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::loadFlag60; slot 25; partial-AL return verified
 00ada900	FUN_00ada900	.text	10		clean	unknown		unanalyzed	
 00ada910	FUN_00ada910	.text	10		clean	unknown		unanalyzed	
 00ada920	FUN_00ada920	.text	4		clean	unknown		unanalyzed	
