@@ -1,51 +1,9 @@
 address	status	owner	module	notes
-007a68c0	reversed	recon/skirmish79	gamelogic	AITNGuardMachine deleting destructor; clean body/profile oracle
-0079b4d0	reversed	recon/skirmish79	gamelogic	AITNGuardInnerState xfer; clean body/profile oracle
-0079b510	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079B510; clean body/profile oracle
-0079b5d0	reversed	recon/skirmish79	gamelogic	AITNGuardInnerState onExit; clean body/profile oracle
-0079b610	reversed	recon/skirmish79	gamelogic	AITNGuardOuterState onExit; clean body/profile oracle
-0079b640	reversed	recon/skirmish79	gamelogic	AITNGuardIdleState xfer; clean body/profile oracle
-0079b690	reversed	recon/skirmish79	gamelogic	AITNGuardIdleState onEnter; clean body/profile oracle
-0079b720	reversed	recon/skirmish79	gamelogic	AITNGuardPickUpCrateState onEnter; clean body/profile oracle
-0079b790	reversed	recon/skirmish79	gamelogic	AITNGuardAttackAggressorState onExit; clean body/profile oracle
-0079b930	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079B930; clean body/profile oracle
-0079b9a0	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079B9A0; clean body/profile oracle
-0079b9f0	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079B9F0; clean body/profile oracle
-0079ba30	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079BA30; clean body/profile oracle
-0079ba60	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079BA60; clean body/profile oracle
-0079bb00	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079BB00; clean body/profile oracle
-0079bb20	reversed	recon/skirmish79	gamelogic	AITNGuard angle-step helper; clean body/profile oracle
-0079bc50	reversed	recon/skirmish79	gamelogic	AITNGuard goal-mode helper; clean body/profile oracle
 0079bce0	reversed	recon/skirmish79	gamelogic	AITNGuard conditional payload accessor; native behavior oracle
-0079bd40	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079BD40; clean body/profile oracle
-0079bdc0	reversed	recon/skirmish79	gamelogic	AITNGuard handle-release helper; clean body/profile oracle
-0079bdf0	reversed	recon/skirmish79	gamelogic	AITNGuard firing-arc helper; clean body/profile oracle
 0079bed0	reversed	recon/skirmish79	gamelogic	AITNGuard endpoint-pair classifier; native behavior oracle
-0079bf30	reversed	recon/skirmish79	gamelogic	AITNGuard orientation helper; clean body/profile oracle
-0079bfb0	reversed	recon/skirmish79	gamelogic	AITNGuard scaled-range helper; clean body/profile oracle
-0079bff0	reversed	recon/skirmish79	gamelogic	AITNGuard range helper; clean body/profile oracle
 0079c020	reversed	recon/skirmish79	gamelogic	AITNGuard object cooldown predicate; native behavior oracle
 0079c080	reversed	recon/skirmish79	gamelogic	AITNGuard target cooldown predicate; native behavior oracle
 0079c100	reversed	recon/skirmish79	gamelogic	AITNGuard tracked-target setter; native behavior oracle
-0079c130	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079C130; clean body/profile oracle
-0079c160	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079C160; clean body/profile oracle
-0079c180	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079C180; clean body/profile oracle
-0079c1a0	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079C1A0; clean body/profile oracle
-0079c1c0	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079C1C0; clean body/profile oracle
-0079c1e0	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079C1E0; clean body/profile oracle
-0079c280	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079C280; clean body/profile oracle
 0079c2a0	reversed	recon/skirmish79	gamelogic	AITNGuard candidate-near predicate; native behavior oracle
-0079c300	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079C300; clean body/profile oracle
 0079c340	reversed	recon/skirmish79	gamelogic	AITNGuard guard-point predicate; native behavior oracle
-0079c390	reversed	recon/skirmish79	gamelogic	AITNGuard translation-unit helper 0079C390; clean body/profile oracle
 0079c3d0	reversed	recon/skirmish79	gamelogic	AITNGuard return-point predicate; native behavior oracle
-007ce860	reversed	recon/skirmish79	gamelogic	AITNGuard findBestTunnel; clean body/profile oracle and model
-007ceb30	reversed	recon/skirmish79	gamelogic	AITNGuardMachine lookForInnerTarget; clean body/profile oracle and model
-007cee00	reversed	recon/skirmish79	gamelogic	AITNGuardInnerState onEnter; clean body/profile oracle and model
-007ceef0	reversed	recon/skirmish79	gamelogic	AITNGuardInnerState update; clean body/profile oracle and model
-007cf090	reversed	recon/skirmish79	gamelogic	AITNGuardOuterState onEnter; clean body/profile oracle and model
-007cf190	reversed	recon/skirmish79	gamelogic	AITNGuardOuterState update; clean body/profile oracle and model
-007cf280	reversed	recon/skirmish79	gamelogic	AITNGuardReturnState onEnter; exact RA3 source-path anchor
-007cf360	reversed	recon/skirmish79	gamelogic	AITNGuardIdleState update; clean body/profile oracle and model
-007cf530	reversed	recon/skirmish79	gamelogic	AITNGuardAttackAggressorState onEnter; clean body/profile oracle and model
-007cf670	reversed	recon/skirmish79	gamelogic	AITNGuardAttackAggressorState update; clean body/profile oracle and model

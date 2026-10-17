@@ -72,11 +72,11 @@ struct AttackUpdateResult {
     bool callAttackEnter = false;
 };
 
-struct EntryEvidence {
+struct InventoryEntry {
     std::uint32_t address;
     std::uint32_t size;
     const char* name;
-    bool behaviorCompared;
+    bool directPort;
     bool hookSafe;
 };
 
@@ -121,6 +121,8 @@ bool isNear2D(
 std::uint32_t candidateNearResult(
     std::uint32_t pointer, bool disabled, bool near) noexcept;              // 0x0079C2A0 EAX/AL convention
 
+// Analysis-only policy models for selected state behavior. These omit
+// game-owned calls/effects and are not direct ports of the addressed bodies.
 const GuardCandidate* findNearestTunnel(
     const std::vector<GuardCandidate>& candidates, Coord2D position) noexcept; // 0x007CE860
 
@@ -134,6 +136,8 @@ AttackUpdateResult updateInnerAttack(
 AttackUpdateResult updateOuterAttack(
     const AttackUpdateInput& input) noexcept;                               // 0x007CF190
 
-const std::array<EntryEvidence, 50>& aitnGuardEntries() noexcept;
+// Static-analysis inventory. Only entries with directPort=true are exact C++
+// reconstructions; the others remain identity evidence or policy models.
+const std::array<InventoryEntry, 50>& aitnGuardInventory() noexcept;
 
 }  // namespace ra3::gamelogic

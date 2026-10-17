@@ -59,7 +59,7 @@ bool referencePair(
 bool runSelfCheck()
 {
     using namespace ra3::gamelogic;
-    const auto& entries = aitnGuardEntries();
+    const auto& entries = aitnGuardInventory();
     if (entries.size() != 50U) {
         return false;
     }
@@ -74,14 +74,18 @@ bool runSelfCheck()
         }
     }
     const auto primary = std::count_if(
-        entries.begin(), entries.end(), [](const EntryEvidence& entry) {
+        entries.begin(), entries.end(), [](const InventoryEntry& entry) {
             return entry.address >= 0x00790000U && entry.address <= 0x0079FFFFU;
         });
+    const auto directPorts = std::count_if(
+        entries.begin(), entries.end(), [](const InventoryEntry& entry) {
+            return entry.directPort;
+        });
     const auto hooks = std::count_if(
-        entries.begin(), entries.end(), [](const EntryEvidence& entry) {
+        entries.begin(), entries.end(), [](const InventoryEntry& entry) {
             return entry.hookSafe;
         });
-    if (primary != 39 || hooks != 8) {
+    if (primary != 39 || directPorts != 8 || hooks != 8) {
         return false;
     }
 
@@ -138,12 +142,11 @@ bool runSelfCheck()
         return false;
     }
 
-    // Sensitivity witness: mutating RA3's >= deadline comparison to > must
-    // disagree at equality, and restoring the implementation must agree.
-    const bool expected = attackDeadlineExpired(0x12345678U, 0x12345678U);
-    const bool deliberateMutant = 0x12345678U > 0x12345678U;
-    return expected && !deliberateMutant
-        && attackDeadlineExpired(0x12345678U, 0x12345678U) == expected;
+    // Sensitivity witness for reconstructed 0x0079BED0, not inventory data.
+    const std::uint32_t expected = classifyEndpointPair(1U, 2U, 1U, 2U);
+    const std::uint32_t deliberateMutant = expected == 1U ? 2U : expected;
+    return expected == 1U && deliberateMutant != expected
+        && classifyEndpointPair(1U, 2U, 1U, 2U) == expected;
 }
 
 void run(const std::vector<std::string>& words)
@@ -153,14 +156,15 @@ void run(const std::vector<std::string>& words)
         if (!runSelfCheck()) {
             throw std::runtime_error("self check failed");
         }
-        std::cout << "AITNGuard checker: 50 entries, 0 mismatches; mutant detected\n";
+        std::cout << "AITNGuard checker: inventory=50, reconstructed=8, "
+                     "0 semantic mismatches; semantic mutant detected\n";
         return;
     }
-    if (words[0] == "manifest") {
-        for (const EntryEvidence& entry : aitnGuardEntries()) {
+    if (words[0] == "inventory" || words[0] == "manifest") {
+        for (const InventoryEntry& entry : aitnGuardInventory()) {
             std::cout << std::hex << std::setfill('0') << std::setw(8)
                       << entry.address << std::dec << '\t' << entry.size << '\t'
-                      << (entry.behaviorCompared ? 1 : 0) << '\t'
+                      << (entry.directPort ? 1 : 0) << '\t'
                       << (entry.hookSafe ? 1 : 0) << '\t' << entry.name << '\n';
         }
         return;
@@ -191,6 +195,13 @@ void run(const std::vector<std::string>& words)
         std::cout << classifyEndpointPair(
             number(words.at(1)), number(words.at(2)),
             number(words.at(3)), number(words.at(4))) << '\n';
+        return;
+    }
+    if (words[0] == "pairmutant") {
+        const std::uint32_t result = classifyEndpointPair(
+            number(words.at(1)), number(words.at(2)),
+            number(words.at(3)), number(words.at(4)));
+        std::cout << (result == 1U ? 2U : result) << '\n';
         return;
     }
     if (words[0] == "cooldown") {

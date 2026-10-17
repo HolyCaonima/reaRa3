@@ -6,17 +6,17 @@
 namespace ra3::gamelogic {
 namespace {
 
-// These are the 50 nontrivial clean native bodies accepted for this port. The
-// address-qualified names are intentional where RA3 has no surviving symbol:
-// they record translation-unit membership without inventing a C++ method name.
-constexpr std::array<EntryEvidence, 50> entries{{
+// Static-analysis inventory of 50 nontrivial clean native bodies. Only the
+// eight directPort entries have exact C++ semantics and shipped-code behavior
+// comparisons. Address-qualified names avoid inventing a C++ method name.
+constexpr std::array<InventoryEntry, 50> entries{{
     {0x007A68C0, 36, "AITNGuardMachine::deletingDestructor", false, false},
     {0x0079B4D0, 55, "AITNGuardInnerState::xfer", false, false},
     {0x0079B510, 185, "AITNGuard.cpp::sub_0079B510", false, false},
     {0x0079B5D0, 48, "AITNGuardInnerState::onExit", false, false},
     {0x0079B610, 48, "AITNGuardOuterState::onExit", false, false},
     {0x0079B640, 65, "AITNGuardIdleState::xfer", false, false},
-    {0x0079B690, 144, "AITNGuardIdleState::onEnter", true, false},
+    {0x0079B690, 144, "AITNGuardIdleState::onEnter", false, false},
     {0x0079B720, 94, "AITNGuardPickUpCrateState::onEnter", false, false},
     {0x0079B790, 83, "AITNGuardAttackAggressorState::onExit", false, false},
     {0x0079B930, 61, "AITNGuard.cpp::sub_0079B930", false, false},
@@ -25,14 +25,14 @@ constexpr std::array<EntryEvidence, 50> entries{{
     {0x0079BA30, 38, "AITNGuard.cpp::sub_0079BA30", false, false},
     {0x0079BA60, 57, "AITNGuard.cpp::sub_0079BA60", false, false},
     {0x0079BB00, 27, "AITNGuard.cpp::sub_0079BB00", false, false},
-    {0x0079BB20, 283, "AITNGuard.cpp::sub_0079BB20", true, false},
+    {0x0079BB20, 283, "AITNGuard.cpp::sub_0079BB20", false, false},
     {0x0079BC50, 136, "AITNGuard.cpp::sub_0079BC50", false, false},
     {0x0079BCE0, 23, "AITNGuard.cpp::sub_0079BCE0", true, true},
     {0x0079BD40, 122, "AITNGuard.cpp::sub_0079BD40", false, false},
     {0x0079BDC0, 34, "AITNGuard.cpp::sub_0079BDC0", false, false},
-    {0x0079BDF0, 191, "AITNGuard.cpp::sub_0079BDF0", true, false},
+    {0x0079BDF0, 191, "AITNGuard.cpp::sub_0079BDF0", false, false},
     {0x0079BED0, 83, "AITNGuard.cpp::classifyEndpointPair", true, true},
-    {0x0079BF30, 124, "AITNGuard.cpp::sub_0079BF30", true, false},
+    {0x0079BF30, 124, "AITNGuard.cpp::sub_0079BF30", false, false},
     {0x0079BFB0, 50, "AITNGuard.cpp::sub_0079BFB0", false, false},
     {0x0079BFF0, 46, "AITNGuard.cpp::sub_0079BFF0", false, false},
     {0x0079C020, 93, "AITNGuard.cpp::objectCooldownElapsed", true, true},
@@ -50,16 +50,16 @@ constexpr std::array<EntryEvidence, 50> entries{{
     {0x0079C340, 67, "AITNGuard.cpp::isNearGuardPoint", true, true},
     {0x0079C390, 51, "AITNGuard.cpp::sub_0079C390", false, false},
     {0x0079C3D0, 67, "AITNGuard.cpp::isNearReturnPoint", true, true},
-    {0x007CE860, 235, "AITNGuard.cpp::findBestTunnel", true, false},
-    {0x007CEB30, 706, "AITNGuardMachine::lookForInnerTarget", true, false},
-    {0x007CEE00, 226, "AITNGuardInnerState::onEnter", true, false},
-    {0x007CEEF0, 403, "AITNGuardInnerState::update", true, false},
-    {0x007CF090, 243, "AITNGuardOuterState::onEnter", true, false},
-    {0x007CF190, 227, "AITNGuardOuterState::update", true, false},
-    {0x007CF280, 196, "AITNGuardReturnState::onEnter", true, false},
-    {0x007CF360, 459, "AITNGuardIdleState::update", true, false},
-    {0x007CF530, 313, "AITNGuardAttackAggressorState::onEnter", true, false},
-    {0x007CF670, 177, "AITNGuardAttackAggressorState::update", true, false},
+    {0x007CE860, 235, "AITNGuard.cpp::findBestTunnel", false, false},
+    {0x007CEB30, 706, "AITNGuardMachine::lookForInnerTarget", false, false},
+    {0x007CEE00, 226, "AITNGuardInnerState::onEnter", false, false},
+    {0x007CEEF0, 403, "AITNGuardInnerState::update", false, false},
+    {0x007CF090, 243, "AITNGuardOuterState::onEnter", false, false},
+    {0x007CF190, 227, "AITNGuardOuterState::update", false, false},
+    {0x007CF280, 196, "AITNGuardReturnState::onEnter", false, false},
+    {0x007CF360, 459, "AITNGuardIdleState::update", false, false},
+    {0x007CF530, 313, "AITNGuardAttackAggressorState::onEnter", false, false},
+    {0x007CF670, 177, "AITNGuardAttackAggressorState::update", false, false},
 }};
 
 }  // namespace
@@ -67,7 +67,8 @@ constexpr std::array<EntryEvidence, 50> entries{{
 // The class and method intent is cross-checked against:
 // GeneralsMD/Code/GameEngine/Include/GameLogic/AITNGuard.h:54-208 and
 // GeneralsMD/Code/GameEngine/Source/GameLogic/AI/AITNGuard.cpp:130-877.
-// Layouts, constants, return values, and branch order here come from RA3.
+// Exact leaf layouts and semantics come from clean RA3 bodies. Policy-model
+// functions below intentionally encode only their documented behavioral slice.
 
 bool attackDeadlineExpired(
     std::uint32_t frame, std::uint32_t deadline) noexcept
@@ -286,7 +287,7 @@ AttackUpdateResult updateOuterAttack(
     return output;
 }
 
-const std::array<EntryEvidence, 50>& aitnGuardEntries() noexcept
+const std::array<InventoryEntry, 50>& aitnGuardInventory() noexcept
 {
     return entries;
 }

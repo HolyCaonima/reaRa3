@@ -1,10 +1,10 @@
-# AITNGuard game-logic reconstruction
+# AITNGuard 50-body inventory and eight leaf reconstructions
 
 ## Accepted boundary
 
-This batch reconstructs the tunnel-network guard state family, not every
-function near `0x00790000`. The class identity is supported by independent
-evidence:
+This batch identifies and fingerprints the tunnel-network guard state family,
+not every function near `0x00790000`. Within that family, it reconstructs only
+eight leaf functions. The class identity is supported by independent evidence:
 
 - vtable `0x00C2D488` names `AITNGuardMachine` at `0x0079B4B0`;
 - vtable `0x00C2D4E8` names `AITNGuardInnerState` at `0x0079B4C0`;
@@ -24,8 +24,37 @@ The local translation-unit interval starts after `AIUnDeployState`
 `0x0079B4D0`–`0x0079C3D0` are accepted. Eleven connected bodies are outside
 that interval: the machine deleting destructor at `0x007A68C0`, two
 AITNGuard helpers at `0x007CE860`/`0x007CEB30`, and eight state callbacks
-through `0x007CF670`. This gives 50 nontrivial clean native functions; the
-short type-name returns are evidence but are not count padding.
+through `0x007CF670`. This gives an inventory of 50 nontrivial clean native
+functions; the short type-name returns are evidence but are not count padding.
+Inventory membership is not a claim that a function has been reconstructed.
+
+## Reconstruction accounting
+
+Only these eight entries have maintainable C++ implementations of their
+observable leaf semantics and shipped-byte behavioral differential evidence:
+
+- `0x0079BCE0`: conditional payload accessor;
+- `0x0079BED0`: endpoint-pair classifier;
+- `0x0079C020`: object cooldown predicate;
+- `0x0079C080`: target cooldown predicate;
+- `0x0079C100`: tracked-target setter;
+- `0x0079C2A0`: candidate-near predicate;
+- `0x0079C340`: guard-point predicate;
+- `0x0079C3D0`: return-point predicate.
+
+These eight alone are marked `reversed` in
+`docs/analysis/ra3_1.0/skirmish79_annotations.tsv`. The complete 50-body
+inventory, including size, CRC, and classification, is recorded separately in
+`skirmish79_inventory.tsv`. Full-body fingerprints establish that analysis and
+testing use the intended shipped bytes; they do not establish semantic
+equivalence and are not reconstruction evidence.
+
+Five of the remaining entries have useful pointer-free policy models:
+`0x0079B690`, `0x007CE860`, `0x007CEEF0`, `0x007CF190`, and `0x007CF360`.
+Those models deliberately omit game-owned pointers, calls, and effects. They
+are analysis/testing aids, not direct ports, and are not counted as
+reconstructed. In total, 42 inventoried functions remain unimplemented as
+exact observable behaviors (five model-only and 37 inventory-only).
 
 ## Source correspondence and RA3 differences
 
@@ -43,27 +72,31 @@ Names and state intent were cross-checked against the released Generals code:
 
 The Generals source establishes original names and intent only. RA3's object
 offsets, unsigned frame comparisons, state return values, extra helper
-classes, and callback order come from the clean RA3 bodies. The port uses
-pointer-free views for deterministic testing and leaves game-owned lookup,
+classes, and callback order come from the clean RA3 bodies. The policy models
+use pointer-free views for deterministic analysis and leave game-owned lookup,
 allocation, virtual dispatch, tunnel-list mutation, and serialization behind
-explicit inputs/effects.
+explicit inputs/effects. They must not be treated as exact ports of the full
+native callbacks.
 
 ## Oracle
 
 `tools/analysis/ports/verify_skirmish_ai.py` has two independent layers:
 
-1. Every accepted entry is compared with the shipped image by address, ledger
-   size, clean status, and CRC32 over the complete native body.
+1. Every inventoried entry is compared with the shipped image by address,
+   ledger size, clean status, and CRC32 over the complete native body. This is
+   identity evidence only.
 2. Eight snapshot-safe leaf entries are executed from the shipped bytes with
    Unicorn and compared against `ra3_gamelogic`, including return values,
    changed bytes, and stack cleanup. Random cases cover conditional payloads,
    endpoint orientation, both cooldown tables, tracked targets, and three
    distance predicates.
 
-The checker independently exercises the state policies and verifies a
-deliberate `>=` to `>` deadline mutation. The Python oracle separately mutates
-a body fingerprint and an endpoint result, requires both mismatches, and then
-requires restored matches.
+The checker independently exercises the state policy models but reports them
+separately from the reconstruction count. The Python oracle asks the checker
+for a deliberately mutated endpoint result, requires it to disagree with the
+shipped `0x0079BED0` result, and then requires the unmodified implementation to
+match again. Thus mutation sensitivity is semantic rather than fingerprint
+sensitivity.
 
 ## Hook policy
 
@@ -74,10 +107,11 @@ cooldown hooks read the current frame and immutable tuning constants, matching
 the original. The hooks preserve cdecl/thiscall cleanup through MSVC fastcall
 adapters; none returns an x87 value.
 
-The remaining 42 functions are deliberately not hookable: their original
-bodies allocate states, release owned children, call game-owned virtual
-interfaces, mutate tunnel/team/global state, or serialize through external
-objects.
+The remaining 42 inventoried functions are not exact reconstructions and have
+no hooks. Their original bodies allocate states, release owned children, call
+game-owned virtual interfaces, mutate tunnel/team/global state, or serialize
+through external objects. Some have the model-only abstractions listed above;
+the rest retain inventory evidence only.
 
 ## Deferred and unknown
 

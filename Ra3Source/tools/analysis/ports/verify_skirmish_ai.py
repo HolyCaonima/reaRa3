@@ -1,10 +1,11 @@
-"""Differential oracle for the RA3 AITNGuard object cluster.
+"""Inventory and differential oracle for the RA3 AITNGuard object cluster.
 
-All 50 accepted native bodies are tied to the shipped image by address, size,
-clean-ledger status, and a full-body CRC. Snapshot-safe leaf behavior is also
-executed from the shipped bytes with Unicorn and compared to ra3_gamelogic.
-The final sensitivity pass corrupts one body fingerprint and one semantic
-result, requires both mutations to be detected, then verifies restoration.
+Fifty clean native bodies are inventoried by address, size, and full-body CRC.
+Those fingerprints prove shipped-image identity, not semantic reconstruction.
+Only eight leaf bodies have exact C++ ports; their behavior is executed from
+the shipped bytes with Unicorn and compared to ra3_gamelogic. The sensitivity
+pass requires a deliberate C++ semantic mutant to disagree with shipped code,
+then verifies that the unmodified implementation agrees again.
 """
 
 from __future__ import annotations
@@ -81,6 +82,17 @@ ENTRIES = {
     0x007CF670: (177, 0x2637D475),
 }
 
+DIRECT_PORTS = {
+    0x0079BCE0,
+    0x0079BED0,
+    0x0079C020,
+    0x0079C080,
+    0x0079C100,
+    0x0079C2A0,
+    0x0079C340,
+    0x0079C3D0,
+}
+
 
 class Checker:
     def __init__(self, executable: Path) -> None:
@@ -121,22 +133,39 @@ def read_float(emu: Emulator, address: int) -> float:
     return struct.unpack("<f", emu.read(address, 4))[0]
 
 
-def manifest(executable: Path) -> dict[int, tuple[int, str]]:
+def inventory(executable: Path) -> dict[int, tuple[int, bool, bool, str]]:
     output = subprocess.check_output(
-        [str(executable), "manifest"], text=True)
+        [str(executable), "inventory"], text=True)
     result = {}
     for line in output.splitlines():
-        address, size, _behavior, _hook, name = line.split("\t", 4)
-        result[int(address, 16)] = (int(size), name)
+        address, size, direct_port, hook_safe, name = line.split("\t", 4)
+        result[int(address, 16)] = (
+            int(size), direct_port == "1", hook_safe == "1", name)
     return result
 
 
-def verify_profiles(executable: Path, exe: Path) -> int:
-    declared = manifest(executable)
+def verify_inventory(executable: Path, exe: Path) -> int:
+    declared = inventory(executable)
     if set(declared) != set(ENTRIES):
         missing = set(ENTRIES) - set(declared)
         extra = set(declared) - set(ENTRIES)
-        raise AssertionError(f"manifest address mismatch missing={missing} extra={extra}")
+        raise AssertionError(
+            f"inventory address mismatch missing={missing} extra={extra}")
+    declared_ports = {
+        address for address, (_size, direct_port, _hook, _name)
+        in declared.items() if direct_port
+    }
+    declared_hooks = {
+        address for address, (_size, _direct_port, hook, _name)
+        in declared.items() if hook
+    }
+    if declared_ports != DIRECT_PORTS:
+        raise AssertionError(
+            f"direct-port set mismatch expected={DIRECT_PORTS} "
+            f"actual={declared_ports}")
+    if declared_hooks != DIRECT_PORTS:
+        raise AssertionError(
+            f"hook set mismatch expected={DIRECT_PORTS} actual={declared_hooks}")
 
     with LEDGER.open(encoding="utf-8") as handle:
         ledger = {
@@ -145,7 +174,7 @@ def verify_profiles(executable: Path, exe: Path) -> int:
         }
     image = Image(exe)
     for address, (size, expected_crc) in ENTRIES.items():
-        declared_size, name = declared[address]
+        declared_size, _direct_port, _hook, name = declared[address]
         row = ledger[address]
         actual_crc = zlib.crc32(image.read(address, size)) & 0xFFFFFFFF
         if declared_size != size or int(row["size"]) != size:
@@ -289,25 +318,22 @@ def verify_behavior(executable: Path, exe: Path, cases: int) -> int:
 
 
 def verify_mutation_sensitivity(executable: Path, exe: Path) -> None:
-    image = Image(exe)
-    address = 0x0079BED0
-    size, expected_crc = ENTRIES[address]
-    actual_crc = zlib.crc32(image.read(address, size)) & 0xFFFFFFFF
-    fingerprint_mutant_detected = actual_crc != (expected_crc ^ 1)
-    fingerprint_restored = actual_crc == expected_crc
-
+    emu = Emulator(exe)
+    shipped = emu.call(0x0079BED0, [1, 2, 1, 2])
+    if shipped.stack_cleanup != 0:
+        raise AssertionError("0x0079BED0 sensitivity witness ABI mismatch")
     checker = Checker(executable)
     try:
         original = int(checker.call("pair 1 2 1 2"))
-        semantic_mutant = 2 if original == 1 else original
-        semantic_mutant_detected = semantic_mutant != original
-        semantic_restored = int(checker.call("pair 1 2 1 2")) == original
+        semantic_mutant = int(checker.call("pairmutant 1 2 1 2"))
+        restored = int(checker.call("pair 1 2 1 2"))
     finally:
         checker.close()
-    if not all((
-            fingerprint_mutant_detected, fingerprint_restored,
-            semantic_mutant_detected, semantic_restored)):
-        raise AssertionError("deliberate mutation was not detected and restored")
+    if (original != shipped.eax
+            or semantic_mutant == shipped.eax
+            or restored != shipped.eax):
+        raise AssertionError(
+            "semantic mutant did not disagree with shipped behavior and restore")
 
 
 def main() -> None:
@@ -317,13 +343,16 @@ def main() -> None:
     parser.add_argument("--cases", type=int, default=300)
     args = parser.parse_args()
 
-    profile_count = verify_profiles(args.checker, args.exe)
+    inventory_count = verify_inventory(args.checker, args.exe)
     behavior_count = verify_behavior(args.checker, args.exe, args.cases)
     verify_mutation_sensitivity(args.checker, args.exe)
     print(
-        f"AITNGuard oracle: {profile_count} entry profiles, "
-        f"{behavior_count} native behavior cases, 0 mismatches")
-    print("  deliberate fingerprint and semantic mutants: detected; restoration: matched")
+        f"AITNGuard inventory: {inventory_count} fingerprints, 0 mismatches")
+    print(
+        f"AITNGuard behavioral oracle: {len(DIRECT_PORTS)} reconstructed "
+        f"entries, {behavior_count} scenarios, 0 mismatches")
+    print("  deliberate semantic mutant: detected against shipped behavior; "
+          "restoration: matched")
 
 
 if __name__ == "__main__":
