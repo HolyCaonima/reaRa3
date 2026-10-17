@@ -17776,7 +17776,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00797090	FUN_00797090	.text	6		clean	unknown		unanalyzed	
 007970a0	FUN_007970a0	.text	30		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::unitAIParkedOnExit; 00c2dd88 slot 6; slot 2 returns UnitAIPArkedState
 007970c0	FUN_007970c0	.text	6		clean	unknown		unanalyzed	
-007970d0	FUN_007970d0	.text	124		clean	unknown		unanalyzed	
+007970d0	FUN_007970d0	.text	124		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIReloadAmmoUpdate; 00c29ed8 slot 5; slot 2 returns UnitAIReloadAmmoState
 00797150	FUN_00797150	.text	65		clean	unknown		unanalyzed	
 007971a0	FUN_007971a0	.text	6		clean	unknown		unanalyzed	
 007971b0	FUN_007971b0	.text	6		clean	unknown		unanalyzed	
@@ -17802,7 +17802,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007974c0	FUN_007974c0	.text	6		clean	unknown		unanalyzed	
 007974d0	FUN_007974d0	.text	46		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::unitAIWaitForMinerUpdate; 00c2a410 slot 5; slot 2 returns UnitAIWaitForMinerState
 00797500	FUN_00797500	.text	6		clean	unknown		unanalyzed	
-00797510	FUN_00797510	.text	71		clean	unknown		unanalyzed	
+00797510	FUN_00797510	.text	71		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIDriftSlot6; 00c2a478 slot 6; slot 2 returns UnitAIDriftState
 00797560	FUN_00797560	.text	6		clean	unknown		unanalyzed	
 00797570	FUN_00797570	.text	74		clean	gamelogic	recon/aistate79	unanalyzed	rejected: UnitAIFreeFallState onEnter uses fnstcw/fld
 007975c0	FUN_007975c0	.text	55		clean	unknown		unanalyzed	
@@ -17821,14 +17821,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00797860	FUN_00797860	.text	6		clean	unknown		unanalyzed	
 00797870	FUN_00797870	.text	6		clean	unknown		unanalyzed	
 00797880	FUN_00797880	.text	6		clean	unknown		unanalyzed	
-00797890	FUN_00797890	.text	40		clean	unknown		unanalyzed	
+00797890	FUN_00797890	.text	40		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::turretAIAimTurretWhenBusySlot19; 00c2a7f0 slot 19; slot 2 returns TurretAIAimTurretStateWhenBusy
 007978c0	FUN_007978c0	.text	6		clean	unknown		unanalyzed	
 007978d0	FUN_007978d0	.text	70		clean	gamelogic	recon/aistate79	unanalyzed	rejected: TurretAIHoldTurretState onEnter uses fnstcw/fld
 00797920	FUN_00797920	.text	52		clean	unknown		unanalyzed	
 00797960	FUN_00797960	.text	54	SageEngine\source\GameEngine\gamelogic\ai\States\TurretStates\Idle.cpp	clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::turretAIIdleOnEnter; 00c29b20 slot 4; slot 2 returns TurretAIIdleState; 0079797d pushes 00c2a8c8 TurretStates\Idle.cpp
 007979a0	FUN_007979a0	.text	42		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::turretAIIdleUpdate; 00c29b20 slot 5; slot 2 returns TurretAIIdleState
 007979d0	FUN_007979d0	.text	52		clean	unknown		unanalyzed	
-00797a10	FUN_00797a10	.text	139	SageEngine\source\GameEngine\gamelogic\ai\States\TurretStates\IdleScan.cpp	clean	gamelogic		unanalyzed	
+00797a10	FUN_00797a10	.text	139	SageEngine\source\GameEngine\gamelogic\ai\States\TurretStates\IdleScan.cpp	clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::turretAIIdleScanOnEnter; 00c29b80 slot 4; slot 2 returns TurretAIIdleScanState; pushes 00c2a938 (TurretStates\IdleScan.cpp) at 00797a4c and 00797a6c
 00797aa0	FUN_00797aa0	.text	6		clean	unknown		unanalyzed	
 00797ab0	FUN_00797ab0	.text	6		clean	unknown		unanalyzed	
 00797ac0	FUN_00797ac0	.text	57		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::unitAIAimFireAtPositionOnEnter; 00c2aa10 slot 4; slot 2 returns UnitAIAimFireAtPositionState
@@ -17896,12 +17896,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00798550	FUN_00798550	.text	6		clean	unknown		unanalyzed	
 00798560	FUN_00798560	.text	94		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::unitAIResetEnterOnEnter; 00c2b6a0 slot 4; slot 2 returns UnitAIResetEnterState
 007985c0	FUN_007985c0	.text	6		clean	unknown		unanalyzed	
-007985d0	FUN_007985d0	.text	163		clean	unknown		unanalyzed	
+007985d0	FUN_007985d0	.text	163		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::saAIFaceTargetApplyHeading; no vtable; E9 at 0079d928 inside 0079d8f0 jumps here; 0079d8f0 is SA_AIFaceTargetState 00c2e138 slot 5
 00798680	thunk_FUN_007985d0	.text	5		clean	unknown		unanalyzed	
 00798690	FUN_00798690	.text	56		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::unitAIRotateToAngleOnExit; 00c2b708 slot 6; slot 2 returns UnitAIRotateToAngleState
 007986d0	FUN_007986d0	.text	6		clean	unknown		unanalyzed	
-007986e0	FUN_007986e0	.text	30		clean	unknown		unanalyzed	
-00798700	FUN_00798700	.text	76		clean	unknown		unanalyzed	
+007986e0	FUN_007986e0	.text	30		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIRotateToPathSlot6; 00c2b778 slot 6; slot 2 returns UnitAIRotateToPathState
+00798700	FUN_00798700	.text	76		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIRotateToPathXfer; 00c2b778 slot 3; slot 2 returns UnitAIRotateToPathState
 00798750	FUN_00798750	.text	6		clean	unknown		unanalyzed	
 00798760	FUN_00798760	.text	70		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::unitAISetGoalPositionToTargetOnEnter; 00c2b7e0 slot 4; slot 2 returns UnitAISetGoalPositionToTargetState
 007987b0	FUN_007987b0	.text	6		clean	unknown		unanalyzed	
@@ -17912,7 +17912,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00798810	FUN_00798810	.text	39		clean	unknown		unanalyzed	
 00798840	FUN_00798840	.text	6		clean	unknown		unanalyzed	
 00798850	FUN_00798850	.text	15		clean	unknown		unanalyzed	
-00798860	FUN_00798860	.text	29		clean	unknown		unanalyzed	
+00798860	FUN_00798860	.text	29		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::moveInStraightLineSlot6; 00c00cf0 slot 6; slot 2 returns MoveInStraightLineState; the same body is slot 6 of 26 other tables and each has its own slot-2 getter: MoveToGroundState 00c00d58, BalloonMoveToGroundState 00c0b578, UnitAISuperState 00c2b9f8, AIAttackAreaState 00c2d298, UnitAIHeliEvacuateState 00c2d9a8, AIMoveToFollowThroughState 00c2da88, AIMoveToInitialRunState 00c2db68, JetAILandingApproachState 00c2dc40, JetAIMoveToGoalState 00c2dcb0, UnitAIMoveToRallyPointState 00c2dd18, AIAggressiveState 00c2e1a0, UnitAIAttackSquadState 00c2e4a0, UnitAIDisguiseWhenIdleState 00c2e640, UnitAIGuardAreaState 00c2ea90, UnitAIGuardPositionState 00c2eaf8, UnitAIHoldGroundState 00c2eb68, UnitAIHordeExitGoalState 00c2ec38, UnitAIHordeMoveToGoalAndEnterState 00c2eca8, UnitAIMoveToAndDeleteState 00c2edf8, UnitAIAIMoveToAndEvacuateState 00c2ee68, UnitAIMoveToCoverState 00c2eed8, UnitAIReturnToSourceAndEnterState 00c2f1d0, UnitAIDisguiseAggressiveState 00c30690, UnitAIDisguiseHoldFireState 00c30700, UnitAIDisguiseHoldGroundState 00c30770, UnitAIDisguiseGuardPositionState 00c310b8
 00798880	FUN_00798880	.text	13		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::unitAISuperStateSlot15; 00c2b9f8 slot 15; slot 2 returns UnitAISuperState
 00798890	FUN_00798890	.text	73		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::unitAISuperXfer; 00c2b9f8 slot 3; slot 2 returns UnitAISuperState
 007988e0	FUN_007988e0	.text	6		clean	unknown		unanalyzed	
@@ -17920,7 +17920,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00798900	FUN_00798900	.text	19		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::unitAITimedIdleUpdate; 00c2ba60 slot 5; slot 2 returns UnitAITimedIdleState
 00798920	FUN_00798920	.text	104		clean	unknown		unanalyzed	
 00798990	FUN_00798990	.text	6		clean	unknown		unanalyzed	
-007989a0	FUN_007989a0	.text	51		clean	unknown		unanalyzed	
+007989a0	FUN_007989a0	.text	51		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIWaitForOccupantsOnEnter; 00c2bac8 slot 4; slot 2 returns UnitAIWaitForOccupantsState
 007989e0	FUN_007989e0	.text	37		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::unitAIWaitForOccupantsOnExit; 00c2bac8 slot 6; slot 2 returns UnitAIWaitForOccupantsState
 00798a10	thunk_FUN_01936248	.text	5		entry-lost	unknown		unanalyzed	
 00798a60	FUN_00798a60	.text	59		clean	unknown		unanalyzed	
@@ -17936,7 +17936,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00798cf0	FUN_00798cf0	.text	14		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::aiDockWaitForClearanceOnEnter; 00c2bba8 slot 4; slot 2 returns AIDockWaitForClearanceState
 00798d00	FUN_00798d00	.text	6		clean	unknown		unanalyzed	
 00798d10	FUN_00798d10	.text	81		clean	unknown		unanalyzed	
-00798d70	FUN_00798d70	.text	78		clean	unknown		unanalyzed	
+00798d70	FUN_00798d70	.text	78		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiDockProcessDockXfer; 00c2bc10 slot 3; slot 2 returns AIDockProcessDockState
 00798dc0	FUN_00798dc0	.text	11		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::aiDockProcessDockOnExit; 00c2bc10 slot 6; slot 2 returns AIDockProcessDockState
 00798dd0	FUN_00798dd0	.text	58		clean	unknown		unanalyzed	
 00798e20	FUN_00798e20	.text	34		clean	unknown		unanalyzed	
@@ -17956,7 +17956,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00799090	FUN_00799090	.text	6		clean	unknown		unanalyzed	
 007990a0	FUN_007990a0	.text	65		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::aiHarvestPrepareSiteOnEnter; 00c2be60 slot 4; slot 2 returns AIHarvestPrepareSiteState
 007990f0	FUN_007990f0	.text	6		clean	unknown		unanalyzed	
-00799100	FUN_00799100	.text	117		clean	unknown		unanalyzed	
+00799100	FUN_00799100	.text	117		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiHarvestWorkSiteXfer; 00c2bec8 slot 3; slot 2 returns AIHarvestWorkSiteState
 00799180	FUN_00799180	.text	6		clean	unknown		unanalyzed	
 00799190	FUN_00799190	.text	371		clean	unknown		unanalyzed	
 00799310	FUN_00799310	.text	10		clean	unknown		unanalyzed	
@@ -17969,7 +17969,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007993e0	FUN_007993e0	.text	6		clean	unknown		unanalyzed	
 007993f0	FUN_007993f0	.text	6		clean	unknown		unanalyzed	
 00799400	FUN_00799400	.text	6		clean	unknown		unanalyzed	
-00799410	FUN_00799410	.text	134	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
+00799410	FUN_00799410	.text	134	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiGarrisonedIdleOnEnter; 00c2c140 slot 4; slot 2 returns AIGarrisonedIdleState; pushes 00c2c1a8 (AIStates.cpp) at 00799419
 007994a0	FUN_007994a0	.text	46		clean	unknown		unanalyzed	
 007994d0	FUN_007994d0	.text	6		clean	unknown		unanalyzed	
 007994e0	FUN_007994e0	.text	6		clean	unknown		unanalyzed	
@@ -17986,7 +17986,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007997b0	FUN_007997b0	.text	13		clean	unknown		unanalyzed	
 007997c0	FUN_007997c0	.text	7		clean	unknown		unanalyzed	
 00799810	FUN_00799810	.text	6		clean	unknown		unanalyzed	
-00799820	FUN_00799820	.text	97		clean	unknown		unanalyzed	
+00799820	FUN_00799820	.text	97		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiIdleXfer; 00c2c520 slot 3; slot 2 returns AIIdleState
 00799890	FUN_00799890	.text	73	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::aiIdleOnEnter; 00c2c520 slot 4; slot 2 returns AIIdleState; 007998b2 pushes 00c2c1a8 AIStates.cpp
 007998e0	FUN_007998e0	.text	6		clean	unknown		unanalyzed	
 007998f0	FUN_007998f0	.text	40		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::unitAIDeadUpdate; 00c2ace0 slot 5; slot 2 returns UnitAIDeadState
@@ -17997,7 +17997,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00799a90	FUN_00799a90	.text	6		clean	unknown		unanalyzed	
 00799aa0	FUN_00799aa0	.text	6		clean	unknown		unanalyzed	
 00799ab0	FUN_00799ab0	.text	43		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::aiBackAwayAndCowerUpdate; 00c2c638 slot 5; slot 2 returns AIBackAwayAndCowerState
-00799ae0	FUN_00799ae0	.text	29		clean	unknown		unanalyzed	
+00799ae0	FUN_00799ae0	.text	29		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiBackAwayAndCowerSlot6; 00c2c638 slot 6; slot 2 returns AIBackAwayAndCowerState
 00799b00	FUN_00799b00	.text	52		clean	unknown		unanalyzed	
 00799b40	FUN_00799b40	.text	6		clean	unknown		unanalyzed	
 00799b50	FUN_00799b50	.text	6		clean	unknown		unanalyzed	
@@ -18005,7 +18005,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00799b70	FUN_00799b70	.text	190		clean	gamelogic	recon/aistate79b	unanalyzed	rejected: AICowerState onEnter uses x87 (dump fp=2); the integer oracle does not carry ST0
 00799c30	FUN_00799c30	.text	91		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::aiCowerOnExit; 00c2c708 slot 6; slot 2 returns AICowerState
 00799c90	FUN_00799c90	.text	6		clean	unknown		unanalyzed	
-00799ca0	FUN_00799ca0	.text	79		clean	unknown		unanalyzed	
+00799ca0	FUN_00799ca0	.text	79		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiUncontrollableCowerXfer; 00c2c768 slot 3; slot 2 returns AIUncontrollableCower
 00799cf0	FUN_00799cf0	.text	49		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::aiBackAwayOnEnter; 00c2f6b8 slot 4; slot 2 returns AIBackAwayState
 00799d30	FUN_00799d30	.text	19		clean	unknown		unanalyzed	
 00799d50	FUN_00799d50	.text	37		clean	unknown		unanalyzed	
@@ -18017,11 +18017,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00799e20	FUN_00799e20	.text	75		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::aiAttackMeleeHordeWaitPathXfer; 00c2c838 slot 3; slot 2 returns AIAttackMeleeHordeWaitPathState
 00799e70	FUN_00799e70	.text	57		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::aiPickUpCrateOnEnter; 00c2faa8 slot 4; slot 2 returns AIPickUpCrateState
 00799eb0	thunk_FUN_00799920	.text	5		clean	unknown		unanalyzed	
-00799ec0	FUN_00799ec0	.text	33		clean	unknown		unanalyzed	
-00799ef0	FUN_00799ef0	.text	29		clean	unknown		unanalyzed	
+00799ec0	FUN_00799ec0	.text	33		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiFollowPathAsTeamSlot9; 00c2fb78 slot 9; slot 2 returns AIFollowPathAsTeamState
+00799ef0	FUN_00799ef0	.text	29		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiAttackMoveToSlot9; 00c32180 slot 9; slot 2 returns AIAttackMoveToState
 00799f10	FUN_00799f10	.text	83	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
 00799f70	FUN_00799f70	.text	6		clean	unknown		unanalyzed	
-00799f80	FUN_00799f80	.text	87		clean	unknown		unanalyzed	
+00799f80	FUN_00799f80	.text	87		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiAttackAimAtTargetXfer; 00c2c8a8 slot 3; slot 2 returns AIAttackAimAtTargetState
 00799fe0	FUN_00799fe0	.text	106		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::aiAttackAimAtTargetOnExit; 00c2c8a8 slot 6; slot 2 returns AIAttackAimAtTargetState
 0079a050	FUN_0079a050	.text	45		clean	unknown		unanalyzed	
 0079a080	FUN_0079a080	.text	4		clean	unknown		unanalyzed	
@@ -18033,7 +18033,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079a140	FUN_0079a140	.text	106		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::aiAttackPositionAimAtTargetOnExit; 00c2c970 slot 6; slot 2 returns AIAttackPositionAimAtTargetState
 0079a1b0	FUN_0079a1b0	.text	6		clean	unknown		unanalyzed	
 0079a1c0	FUN_0079a1c0	.text	8		clean	gamelogic	recon/aistate79	unanalyzed	rejected: AIAttackFireWeaponState slot 19 is mov ecx, [ecx+0x18]; jmp 005b9f30
-0079a1d0	FUN_0079a1d0	.text	44		clean	unknown		unanalyzed	
+0079a1d0	FUN_0079a1d0	.text	44		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiAttackFireWeaponSlot6; 00c2c9e0 slot 6 slot 2 returns AIAttackFireWeaponState; also 00c2ca48 slot 6 slot 2 returns AIAttackPositionFireWeaponState; the two tables do not share a slot-2 getter (0079a1b0 and 0079a200)
 0079a200	FUN_0079a200	.text	6		clean	unknown		unanalyzed	
 0079a210	FUN_0079a210	.text	52		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::aiAttackFireWeaponSlot17; 00c2c9e0 slot 17; slot 2 returns AIAttackFireWeaponState
 0079a250	FUN_0079a250	.text	6		clean	unknown		unanalyzed	
@@ -18050,7 +18050,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079a3e0	FUN_0079a3e0	.text	6		clean	unknown		unanalyzed	
 0079a3f0	FUN_0079a3f0	.text	93		clean	unknown		unanalyzed	
 0079a450	FUN_0079a450	.text	41		clean	unknown		unanalyzed	
-0079a480	FUN_0079a480	.text	31		clean	unknown		unanalyzed	
+0079a480	FUN_0079a480	.text	31		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiAttackSlot8; 00c2cce0 slot 8; slot 2 returns AIAttackState
 0079a4a0	FUN_0079a4a0	.text	17		clean	unknown		unanalyzed	
 0079a4c0	FUN_0079a4c0	.text	39		clean	unknown		unanalyzed	
 0079a4f0	FUN_0079a4f0	.text	15		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::aiAttackSquadStateSlot17; 00c2cd88 slot 17; slot 2 returns AIAttackSquadState
@@ -18089,7 +18089,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079ae70	FUN_0079ae70	.text	110		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::aiGuardAreaOnEnter; 00c2d0a8 slot 4; slot 2 returns AIGuardAreaState
 0079aee0	FUN_0079aee0	.text	55		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::aiGuardAreaUpdate; 00c2d0a8 slot 5; slot 2 returns AIGuardAreaState
 0079af20	FUN_0079af20	.text	6		clean	unknown		unanalyzed	
-0079af30	FUN_0079af30	.text	28		clean	unknown		unanalyzed	
+0079af30	FUN_0079af30	.text	28		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiGarrisonedSlot8; 00c2c268 slot 8 slot 2 returns AIGarrisonedState; also slot 8 of AIGuardState 00c2d030, AIGuardAreaState 00c2d0a8 and AIGuardObjectState 00c2d108; each table has its own slot-2 getter (007994d0, 0079ac40, 0079ade0, 0079af20)
 0079af50	FUN_0079af50	.text	125		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::aiGuardObjectXfer; 00c2d108 slot 3; slot 2 returns AIGuardObjectState
 0079afd0	FUN_0079afd0	.text	133		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::aiGuardObjectOnEnter; 00c2d108 slot 4; slot 2 returns AIGuardObjectState
 0079b060	FUN_0079b060	.text	6		clean	unknown		unanalyzed	
@@ -18099,9 +18099,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079b110	FUN_0079b110	.text	6		clean	unknown		unanalyzed	
 0079b120	FUN_0079b120	.text	6		clean	unknown		unanalyzed	
 0079b130	FUN_0079b130	.text	138		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::aiAttackAreaXfer; 00c2d298 slot 3; slot 2 returns AIAttackAreaState
-0079b1c0	FUN_0079b1c0	.text	117	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic		unanalyzed	
+0079b1c0	FUN_0079b1c0	.text	117	SageEngine\source\GameEngine\gamelogic\ai\AIStates.cpp	clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiAttackAreaOnEnter; 00c2d298 slot 4; slot 2 returns AIAttackAreaState; pushes 00c2c1a8 (AIStates.cpp) at 0079b201
 0079b240	FUN_0079b240	.text	59		clean	unknown		unanalyzed	
-0079b280	FUN_0079b280	.text	100		clean	unknown		unanalyzed	
+0079b280	FUN_0079b280	.text	100		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiFaceOnEnter; 00c2d950 slot 4; slot 2 returns AIFaceState
 0079b2f0	FUN_0079b2f0	.text	33		clean	unknown		unanalyzed	
 0079b340	FUN_0079b340	.text	6		clean	unknown		unanalyzed	
 0079b350	FUN_0079b350	.text	6		clean	unknown		unanalyzed	
@@ -18120,7 +18120,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079b600	FUN_0079b600	.text	6		clean	unknown		unanalyzed	
 0079b610	FUN_0079b610	.text	48		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::aiTNGuardOuterOnExit; 00c2d548 slot 6; slot 2 returns AITNGuardOuterState
 0079b640	FUN_0079b640	.text	65		clean	unknown		unanalyzed	
-0079b690	FUN_0079b690	.text	144	SageEngine\source\GameEngine\gamelogic\ai\AITNGuard.cpp	clean	gamelogic		unanalyzed	
+0079b690	FUN_0079b690	.text	144	SageEngine\source\GameEngine\gamelogic\ai\AITNGuard.cpp	clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiTNGuardIdleOnEnter; 00c30100 slot 4; slot 2 returns AITNGuardIdleState; pushes 00c2d5a8 (AITNGuard.cpp) at 0079b6cc
 0079b720	FUN_0079b720	.text	94		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::aiPickUpCrateOnEnter; 00c30160 slot 4; slot 2 returns AIPickUpCrateState
 0079b780	FUN_0079b780	.text	6		clean	unknown		unanalyzed	
 0079b790	FUN_0079b790	.text	83		clean	gamelogic	recon/aistate79b	unanalyzed	rejected: AITNGuardAttackAggressorState slot 6 calls 00687c90 once with no argument and again with one
@@ -18174,25 +18174,25 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079c520	FUN_0079c520	.text	34		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::turretStateMachineSlot13; 00c29c50 slot 13; slot 2 returns TurretStateMachine
 0079c550	FUN_0079c550	.text	35		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::turretStateMachineOnExit; 00c29c50 slot 6; slot 2 returns TurretStateMachine
 0079c580	FUN_0079c580	.text	67		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::turretStateMachineSlot7; 00c29c50 slot 7; slot 2 returns TurretStateMachine
-0079c5d0	FUN_0079c5d0	.text	253		clean	unknown		unanalyzed	
+0079c5d0	FUN_0079c5d0	.text	253		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIGetBoardingLocationOnEnter; 00c29cb0 slot 4; slot 2 returns UnitAIGetBoardingLocationState
 0079c6d0	FUN_0079c6d0	.text	6		clean	unknown		unanalyzed	
-0079c6e0	FUN_0079c6e0	.text	313		clean	unknown		unanalyzed	
+0079c6e0	FUN_0079c6e0	.text	313		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIHeliEvacuateOnEnter; 00c2d9a8 slot 4; slot 2 returns UnitAIHeliEvacuateState
 0079c820	FUN_0079c820	.text	97		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::unitAIHeliEvacuateXfer; 00c2d9a8 slot 3; slot 2 returns UnitAIHeliEvacuateState
 0079c890	FUN_0079c890	.text	6		clean	unknown		unanalyzed	
 0079c8a0	FUN_0079c8a0	.text	44		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::unitAIHeliPrepareForBoardingOnExit; 00c2da10 slot 6; slot 2 returns UnitAIHeliPrepareForBoardingState
 0079c8d0	FUN_0079c8d0	.text	117		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::unitAICheckFarEnoughOnEnter; 00c29d20 slot 4; slot 2 returns UnitAICheckFarEnoughState
 0079c950	FUN_0079c950	.text	6		clean	unknown		unanalyzed	
-0079c960	FUN_0079c960	.text	28		clean	unknown		unanalyzed	
+0079c960	FUN_0079c960	.text	28		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiMoveToFollowThroughOnEnter; 00c2da88 slot 4 slot 2 returns AIMoveToFollowThroughState; also 00c2e640 slot 4 slot 2 returns UnitAIDisguiseWhenIdleState; the two tables do not share a slot-2 getter (0079c950 and 0079e910)
 0079c980	FUN_0079c980	.text	6		clean	unknown		unanalyzed	
-0079c990	FUN_0079c990	.text	96		clean	unknown		unanalyzed	
+0079c990	FUN_0079c990	.text	96		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiMoveToGoalDiveBombOnEnter; 00c2daf8 slot 4; slot 2 returns AIMoveToGoalDiveBombState
 0079c9f0	FUN_0079c9f0	.text	42		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::aiMoveToGoalDiveBombOnExit; 00c2daf8 slot 6; slot 2 returns AIMoveToGoalDiveBombState
 0079ca20	FUN_0079ca20	.text	6		clean	unknown		unanalyzed	
-0079ca30	FUN_0079ca30	.text	53		clean	unknown		unanalyzed	
-0079ca70	FUN_0079ca70	.text	87		clean	unknown		unanalyzed	
+0079ca30	FUN_0079ca30	.text	53		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiMoveToInitialRunOnEnter; 00c2db68 slot 4 slot 2 returns AIMoveToInitialRunState; also 00c2eed8 slot 4 slot 2 returns UnitAIMoveToCoverState; the two tables do not share a slot-2 getter (0079ca20 and 0079fec0)
+0079ca70	FUN_0079ca70	.text	87		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::jetAttackMoveFollowPathXfer; 00c32d30 slot 3 slot 2 returns JetAttackMoveFollowPathAsTeamStateMachine; also 00c333d0 slot 3 slot 2 returns AttackMoveFollowPathAsTeamStateMachine; the two tables do not share a slot-2 getter (007ba930 and 007bbdd0)
 0079cad0	FUN_0079cad0	.text	6		clean	unknown		unanalyzed	
 0079cae0	FUN_0079cae0	.text	6		clean	unknown		unanalyzed	
 0079caf0	FUN_0079caf0	.text	6		clean	unknown		unanalyzed	
-0079cb00	FUN_0079cb00	.text	83		clean	unknown		unanalyzed	
+0079cb00	FUN_0079cb00	.text	83		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::jetAIMoveToGoalOnEnter; 00c2dcb0 slot 4; slot 2 returns JetAIMoveToGoalState
 0079cb60	FUN_0079cb60	.text	81		clean	unknown		unanalyzed	
 0079cbc0	FUN_0079cbc0	.text	56		clean	gamelogic	recon/aistate79b	unanalyzed	rejected: UnitAILandState slot 19 uses x87 (dump fp=2)
 0079cc00	FUN_0079cc00	.text	6		clean	unknown		unanalyzed	
@@ -18204,36 +18204,36 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079cd20	FUN_0079cd20	.text	101		clean	gamelogic	recon/aistate79b	unanalyzed	rejected: UnitAIRequestClearanceState onEnter uses x87 (dump fp=2)
 0079cd90	FUN_0079cd90	.text	6		clean	unknown		unanalyzed	
 0079cda0	FUN_0079cda0	.text	182		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::unitAIReturnForLandingOnExit; 00c2de50 slot 6; slot 2 returns UnitAIReturnForLandingState
-0079ce60	FUN_0079ce60	.text	102		clean	unknown		unanalyzed	
+0079ce60	FUN_0079ce60	.text	102		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAILandXfer; 00c30b70 slot 3 slot 2 returns UnitAILandState; also 00c30bd0 slot 3 slot 2 returns UnitAITakeOffState; the two tables do not share a slot-2 getter (007a94d0 and 007a9750)
 0079ced0	FUN_0079ced0	.text	6		clean	unknown		unanalyzed	
 0079cee0	FUN_0079cee0	.text	163		clean	unknown		unanalyzed	
 0079cf90	FUN_0079cf90	.text	6		clean	unknown		unanalyzed	
 0079cfa0	FUN_0079cfa0	.text	22		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::unitAIWaitForClearanceOnEnter; 00c2df30 slot 4; slot 2 returns UnitAIWaitForClearanceState
 0079cfc0	FUN_0079cfc0	.text	6		clean	unknown		unanalyzed	
 0079cfd0	FUN_0079cfd0	.text	96		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::unitAIDeliverOreOnExit; 00c2df98 slot 6; slot 2 returns UnitAIDeliverOreState
-0079d030	FUN_0079d030	.text	535		clean	unknown		unanalyzed	
+0079d030	FUN_0079d030	.text	535		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIDeliverToRefineryUpdate; 00c29fa8 slot 5; slot 2 returns UnitAIDeliverToRefineryState
 0079d250	FUN_0079d250	.text	6		clean	unknown		unanalyzed	
-0079d260	FUN_0079d260	.text	52		clean	unknown		unanalyzed	
+0079d260	FUN_0079d260	.text	52		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIDeliverOreOnEnter; 00c2df98 slot 4 slot 2 returns UnitAIDeliverOreState; also 00c2e000 slot 4 slot 2 returns UnitAIDockWithNodeState; the two tables do not share a slot-2 getter (0079cfc0 and 0079d250)
 0079d2a0	FUN_0079d2a0	.text	120		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::unitAIDockWithNodeOnExit; 00c2e000 slot 6; slot 2 returns UnitAIDockWithNodeState
-0079d320	FUN_0079d320	.text	178		clean	unknown		unanalyzed	
+0079d320	FUN_0079d320	.text	178		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIGetBestBoneUpdate; 00c2a080 slot 5; slot 2 returns UnitAIGetBestBoneState
 0079d3e0	FUN_0079d3e0	.text	211		clean	unknown		unanalyzed	
 0079d4c0	thunk_FUN_0079d3e0	.text	5		clean	unknown		unanalyzed	
 0079d4d0	FUN_0079d4d0	.text	6		clean	unknown		unanalyzed	
 0079d4e0	FUN_0079d4e0	.text	47		clean	unknown		unanalyzed	
 0079d510	FUN_0079d510	.text	6		clean	unknown		unanalyzed	
 0079d520	FUN_0079d520	.text	150		clean	unknown		unanalyzed	
-0079d5c0	FUN_0079d5c0	.text	214		clean	unknown		unanalyzed	
-0079d6a0	FUN_0079d6a0	.text	149		clean	unknown		unanalyzed	
+0079d5c0	FUN_0079d5c0	.text	214		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIDriftUpdate; 00c2a478 slot 5; slot 2 returns UnitAIDriftState
+0079d6a0	FUN_0079d6a0	.text	149		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIFreeFallUpdate; 00c2a4d8 slot 5; slot 2 returns UnitAIFreeFallState
 0079d740	FUN_0079d740	.text	174		clean	unknown		unanalyzed	
 0079d7f0	FUN_0079d7f0	.text	226		clean	unknown		unanalyzed	
 0079d8e0	FUN_0079d8e0	.text	6		clean	unknown		unanalyzed	
-0079d8f0	FUN_0079d8f0	.text	61		clean	unknown		unanalyzed	
+0079d8f0	FUN_0079d8f0	.text	61		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::saAIFaceTargetUpdate; 00c2e138 slot 5; slot 2 returns SA_AIFaceTargetState; tail-jumps to 007985d0 at 0079d928
 0079d930	FUN_0079d930	.text	113		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::saAIPrepareOnEnter; 00c2a5f8 slot 4; slot 2 returns SA_AIPrepareState
 0079d9b0	FUN_0079d9b0	.text	91		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::saAIValidateApproachTargetOnEnter; 00c2a718 slot 4; slot 2 returns SA_AIValidateApproachTargetState
 0079da10	FUN_0079da10	.text	6		clean	unknown		unanalyzed	
-0079da20	FUN_0079da20	.text	132		clean	unknown		unanalyzed	
+0079da20	FUN_0079da20	.text	132		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::aiAggressiveOnEnter; 00c2e1a0 slot 4 slot 2 returns AIAggressiveState; also 00c30690 slot 4 slot 2 returns UnitAIDisguiseAggressiveState; the two tables do not share a slot-2 getter (0079da10 and 007a85c0)
 0079dab0	FUN_0079dab0	.text	6		clean	unknown		unanalyzed	
-0079dac0	FUN_0079dac0	.text	76		clean	unknown		unanalyzed	
+0079dac0	FUN_0079dac0	.text	76		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIAimFireAtObjectXfer; 00c2e208 slot 3; slot 2 returns UnitAIAimFireAtObjectState
 0079db10	FUN_0079db10	.text	30		clean	gamelogic	recon/aistate79	unanalyzed	rejected: UnitAIAimFireAtPositionState slot 19 copies goal floats with fld/fstp
 0079db30	FUN_0079db30	.text	297		clean	unknown		unanalyzed	
 0079dc60	FUN_0079dc60	.text	215		clean	unknown		unanalyzed	
@@ -18283,7 +18283,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079ec70	FUN_0079ec70	.text	91		clean	gamelogic	recon/aistate79b	unanalyzed	rejected: UnitAIFindCoverState onEnter uses x87 (dump fp=2)
 0079ecd0	FUN_0079ecd0	.text	6		clean	unknown		unanalyzed	
 0079ece0	FUN_0079ece0	.text	300		clean	unknown		unanalyzed	
-0079ee10	FUN_0079ee10	.text	55		clean	unknown		unanalyzed	
+0079ee10	FUN_0079ee10	.text	55		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIFollowPathOnEnter; 00c2e7e8 slot 4 slot 2 returns UnitAIFollowPathState; also slot 4 of JetAIAttackMoveFollowPathAsTeamState 00c30a10 and UnitAIAttackMoveFollowPathAsTeamState 00c30f50; each table has its own slot-2 getter (0079ecd0, 007a91d0, 007aaa20)
 0079ee50	FUN_0079ee50	.text	95		clean	gamelogic	recon/aistate79b	unanalyzed	rejected: UnitAIFollowPathState onExit uses fldz
 0079eef0	FUN_0079eef0	.text	135		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::followWaypointPathMachineXfer; 00c29a48 slot 3; slot 2 returns FollowWaypointPathStateMachine
 0079ef80	FUN_0079ef80	.text	6		clean	unknown		unanalyzed	
@@ -18291,7 +18291,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079f030	FUN_0079f030	.text	130		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::unitAIFollowWaypointPathOnEnter; 00c2e850 slot 4; slot 2 returns UnitAIFollowWaypointPathState
 0079f0c0	FUN_0079f0c0	.text	56		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::unitAIFollowWaypointPathOnExit; 00c2e850 slot 6; slot 2 returns UnitAIFollowWaypointPathState
 0079f100	FUN_0079f100	.text	6		clean	unknown		unanalyzed	
-0079f110	FUN_0079f110	.text	33		clean	unknown		unanalyzed	
+0079f110	FUN_0079f110	.text	33		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIFollowWaypointPathAsTeamOnEnter; 00c2e8c8 slot 4; slot 2 returns UnitAIFollowWaypointPathAsTeamState
 0079f140	FUN_0079f140	.text	6		clean	unknown		unanalyzed	
 0079f150	FUN_0079f150	.text	100		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::unitAIFollowWaypointPathExactOnEnter; 00c2e940 slot 4; slot 2 returns UnitAIFollowWaypointPathExactState
 0079f1c0	FUN_0079f1c0	.text	101		clean	gamelogic	recon/aistate79b	unanalyzed	rejected: UnitAIFollowWaypointPathExactState onExit uses x87 (dump fp=2)
@@ -18303,11 +18303,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079f330	FUN_0079f330	.text	146		clean	unknown		unanalyzed	
 0079f3d0	FUN_0079f3d0	.text	30		clean	gamelogic	recon/aistate79	reversed	ra3::gamelogic::unitAIGarrisonedIdleUpdate; 00c2b1b8 slot 5; slot 2 returns UnitAIGarrisonedIdleState
 0079f3f0	FUN_0079f3f0	.text	6		clean	unknown		unanalyzed	
-0079f400	FUN_0079f400	.text	173		clean	unknown		unanalyzed	
+0079f400	FUN_0079f400	.text	173		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIGuardAreaOnEnter; 00c2ea90 slot 4; slot 2 returns UnitAIGuardAreaState
 0079f4b0	FUN_0079f4b0	.text	6		clean	unknown		unanalyzed	
-0079f4c0	FUN_0079f4c0	.text	174		clean	unknown		unanalyzed	
+0079f4c0	FUN_0079f4c0	.text	174		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIGuardPositionOnEnter; 00c2eaf8 slot 4 slot 2 returns UnitAIGuardPositionState; also 00c310b8 slot 4 slot 2 returns UnitAIDisguiseGuardPositionState; the two tables do not share a slot-2 getter (0079f4b0 and 007ab040)
 0079f570	FUN_0079f570	.text	6		clean	unknown		unanalyzed	
-0079f580	FUN_0079f580	.text	138		clean	unknown		unanalyzed	
+0079f580	FUN_0079f580	.text	138		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIHoldGroundOnEnter; 00c2eb68 slot 4 slot 2 returns UnitAIHoldGroundState; also 00c30770 slot 4 slot 2 returns UnitAIDisguiseHoldGroundState; the two tables do not share a slot-2 getter (0079f570 and 007a8620)
 0079f610	FUN_0079f610	.text	224		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::unitAIHordeEnterGoalOnEnter; 00c2b358 slot 4; slot 2 returns UnitAIHordeEnterGoalState
 0079f6f0	FUN_0079f6f0	.text	85		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::unitAIHordeEnterGoalOnExit; 00c2b358 slot 6; slot 2 returns UnitAIHordeEnterGoalState
 0079f750	FUN_0079f750	.text	162		clean	unknown		unanalyzed	
@@ -18325,15 +18325,15 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0079fca0	FUN_0079fca0	.text	6		clean	unknown		unanalyzed	
 0079fcb0	FUN_0079fcb0	.text	6		clean	unknown		unanalyzed	
 0079fcc0	FUN_0079fcc0	.text	6		clean	unknown		unanalyzed	
-0079fcd0	FUN_0079fcd0	.text	71		clean	unknown		unanalyzed	
+0079fcd0	FUN_0079fcd0	.text	71		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIMoveToAndDeleteOnEnter; 00c2edf8 slot 4 slot 2 returns UnitAIMoveToAndDeleteState; also 00c2ee68 slot 4 slot 2 returns UnitAIAIMoveToAndEvacuateState; the two tables do not share a slot-2 getter (0079fcb0 and 0079fcc0)
 0079fd20	FUN_0079fd20	.text	343		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::unitAIMoveToGoalOnEnter; 00c31668 slot 4; slot 2 returns UnitAIMoveToGoalState; slot-2 getter 0079fed0 is shared by 00c31668 and 00c2ef40, so one table is a subclass inheriting the name (controller)
-0079fe80	FUN_0079fe80	.text	58		clean	unknown		unanalyzed	
+0079fe80	FUN_0079fe80	.text	58		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIMoveToAttackPositionOnEnter; 00c31770 slot 4; slot 2 returns UnitAIMoveToAttackPositionState
 0079fec0	FUN_0079fec0	.text	6		clean	unknown		unanalyzed	
 0079fed0	FUN_0079fed0	.text	6		clean	unknown		unanalyzed	
 0079fee0	FUN_0079fee0	.text	40		clean	gamelogic	recon/aistate79c	reversed	ra3::gamelogic::unitAIMoveToGoalCopyOnEnter; 00c2ef40 slot 4; slot 2 returns UnitAIMoveToGoalState; slot-2 getter 0079fed0 is shared by 00c31668 and 00c2ef40, so one table is a subclass inheriting the name (controller)
 0079ff10	FUN_0079ff10	.text	113		clean	gamelogic	recon/aistate79b	reversed	ra3::gamelogic::unitAIMoveToGoalOnExit; 00c2ef40 slot 6; slot 2 returns UnitAIMoveToGoalState
 0079ff90	FUN_0079ff90	.text	6		clean	unknown		unanalyzed	
-0079ffa0	FUN_0079ffa0	.text	139		clean	unknown		unanalyzed	
+0079ffa0	FUN_0079ffa0	.text	139		clean	gamelogic	recon/aistate79d	reversed	ra3::gamelogic::unitAIMoveToGoalAndEnterOnEnter; 00c2efa8 slot 4; slot 2 returns UnitAIMoveToGoalAndEnterState; the body continues through the ret at 007a008c
 007a0020	FUN_007a0020	.text	109		clean	unknown		unanalyzed	
 007a00a0	FUN_007a00a0	.text	100		clean	gamelogic	recon/aistate7a	reversed	ra3::gamelogic::UnitAIMoveToGoalAndEnterState_onExit; 00c2efa8 slot 6; slot 2 returns UnitAIMoveToGoalAndEnterState
 007a0110	FUN_007a0110	.text	6		clean	unknown		unanalyzed	

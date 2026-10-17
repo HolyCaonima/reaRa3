@@ -344,12 +344,17 @@ def build() -> None:
         add(0x0079D5C0, rig.mem, rets, table=at(table), terrain=at(terrain))
 
     # 0079d6a0 freefall. Below the bias moves; above it fails. A late frame completes.
-    for height, below, frame, deadline in (("bf800000", True, 1, 5), ("3f800000", False, 1, 5),
-                                           ("bf800000", True, 9, 5)):
+    # The z=10 cases sit just under and exactly on z - 5.0, so a wrong bias is caught.
+    for z, height, below, frame, deadline in ((0x40A00000, "bf800000", True, 1, 5),
+                                              (0x40A00000, "3f800000", False, 1, 5),
+                                              (0x40A00000, "bf800000", True, 9, 5),
+                                              (0x41200000, "40980000", True, 1, 5),
+                                              (0x41200000, "40a00000", False, 1, 5),
+                                              (0x41200000, "40a80000", False, 1, 5)):
         rig = chain()
         terrain = rig.obj()
         terrain_vt = rig.vt(terrain, [(0x1C, 8)])
-        rig.mem.w(rig.unit, 0x40, 0x40A00000)
+        rig.mem.w(rig.unit, 0x40, z)
         rig.mem.w(rig.state, 0x20, deadline)
         logic = rig.logic(frame=frame)
         rets = [(terrain_vt[0x1C], 2, height, True)]

@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 aistate7b2、obj72b、protcave3 合并；aistate7c 复审降级，aistate7c2 退回）
+## 3. 现状（截至 obj72b、protcave3、aistate79d 合并；aistate7c 复审降级，aistate7c2 退回）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 2,731、unanalyzed 46,194（受保护函数已 reversed：entry-lost 104、inner-patched 65、
+  reversed 2,779、unanalyzed 46,146（受保护函数已 reversed：entry-lost 104、inner-patched 65、
   entry-recoverable 9）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
@@ -387,6 +387,11 @@
   - **退回 aistate7c2**（`0x007C` 第二轮，Grok）：交付的 45 个全部是自写 lifter 生成的寄存器/栈模拟代码（报告里
     直说"lifter core""generate the ports"），新的 `accept_batch` 检查 45/45 报错，未合并；分支保留，其 claims 与
     oracle 用例可供可读改写复用
+  - AI states 第四轮（`0x00790000–0x0079FFFF`，Grok）：48 个（aistate79c 留下的 14 个 x87 重体与
+    `0079D8F0`/`007985D0`、若干 xfer、多表共用的 onEnter/onExit 体），无 hook，无模拟代码；代码在
+    `ra3/gamelogic/AIState79D.h`，设计见 `aistate79d.md`。最短的 11 个体（28–44 字节）都有逻辑，样板 0。
+    交付的 109 例 oracle 零差异，但把 `kFreeFallBias` 从 5.0 改成 5.5 也能通过（用例离阈值太远）；控制者补了
+    3 个贴近阈值的 `0079D6A0` 用例（共 112 例），突变现已检出。今后验收时对浮点阈值常量做一次突变抽查
   - AI states 批次（`0x00790000–0x0079FFFF`，Grok）：48 个方法（Turret/UnitAI/AIDock/AIGuard/AIAttack
     各 state 的 onEnter/update/onExit 与条件槽位、FollowWaypointPath/Turret 状态机），无 hook，样板 0；
     代码在 `ra3/gamelogic/AIState79.h`，设计见 `aistate79.md`。归属全部为单个 split vtable 槽位，主控
@@ -432,10 +437,10 @@
     `recon/particles65`、`recon/render91`、`recon/obj6a`、`recon/protcave`、`recon/protentry2`、
     `recon/gamelogic82`、`recon/skirm87`、`recon/common5a`、`recon/render56`、`recon/objbehav68`、`recon/audio50`、
     `recon/aistate79`、`recon/render99`、`recon/net5d2`、`recon/obj69`、`recon/logic4d`、`recon/skirm8b`、
-    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`、`recon/render9b`、`recon/client52`、`recon/obj72`、`recon/aistate7c`、`recon/protcave2`、`recon/aistate7d`、`recon/obj69b`、`recon/obj70`、`recon/w3d56`、`recon/obj6e`、`recon/aistate79c`、`recon/aistate7a2`、`recon/obj6c`、`recon/fx66`、`recon/aistate7b2`、`recon/obj72b`、`recon/protcave3`：已合并（`789bcb1`、
+    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`、`recon/render9b`、`recon/client52`、`recon/obj72`、`recon/aistate7c`、`recon/protcave2`、`recon/aistate7d`、`recon/obj69b`、`recon/obj70`、`recon/w3d56`、`recon/obj6e`、`recon/aistate79c`、`recon/aistate7a2`、`recon/obj6c`、`recon/fx66`、`recon/aistate7b2`、`recon/obj72b`、`recon/protcave3`、`recon/aistate79d`：已合并（`789bcb1`、
     `f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`、
     `9df37c8`、`760e231`、`79a7caa`、`9c14506`、`6234602`、`00c9a7a`、`be08241`、`ba97d03`、`bec182d`、
-    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`、`ae7caf5`、`0f0515f`、`989d91b`、`747eae9`、`8ee7d18`、`d8dfd05`、`284c239`、`dacb6b0`、`3b872e2`、`64682bd`、`892e93b`、`45a2d4e`、`1394ce0`、`02c5529`、`442001f`、`a9dad90`、`c364489`）。追加合并脚本在
+    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`、`ae7caf5`、`0f0515f`、`989d91b`、`747eae9`、`8ee7d18`、`d8dfd05`、`284c239`、`dacb6b0`、`3b872e2`、`64682bd`、`892e93b`、`45a2d4e`、`1394ce0`、`02c5529`、`442001f`、`a9dad90`、`c364489`、`8881760`）。追加合并脚本在
     冲突块以 `)` 收尾时会报 WARN，需手工检查括号（skirm87 合并时拼坏过一次 CMake）。受保护批次的站点/字符串/伪调用核对脚本见 `work/probe/check_protcave.py`、
     `work/probe/check_protentry2.py`，多快照槽值用 `work/probe/slot_snapshots.py`。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
@@ -449,8 +454,7 @@
   - **在途**（18:30 时 10 路，Grok 9、Gemini 1；派单在 `work/prompts/<名>.md`；已交付合并的从下表划掉）：
     - ~~`recon/protcave3`~~（已合并 `c364489`；`work/prompts/protcave3_pool.txt` 的 165 个中计数 25 个、丢弃 8 个，
       其余留给下一轮 Gemini 位，做法同上：`--replace-deferred` 折叠、`check_protcave.py` 从注释重建 claims 对照）。
-    - ~~`recon/aistate7a2`~~（已合并 `45a2d4e`）、`recon/aistate79d`（18:30 补位，`0x0079` 第四轮，先做 aistate79c
-      留下的 x87 体）、~~`recon/aistate7b2`~~（已合并 `442001f`）、~~`recon/aistate7c2`~~（退回，全为模拟代码）：AI states，
+    - ~~`recon/aistate7a2`~~（已合并 `45a2d4e`）、~~`recon/aistate79d`~~（已合并 `8881760`）、~~`recon/aistate7b2`~~（已合并 `442001f`）、~~`recon/aistate7c2`~~（退回，全为模拟代码）：AI states，
       代码进 `src/gamelogic`。
     - ~~`recon/obj6c`~~（已合并 `1394ce0`；次级接口表槽位未做）、
       `recon/obj69c`（18:30 补位，`0x0069` 第三轮，84 个在 slot 2 为 `0065f220` 的次级表里）、
