@@ -10349,12 +10349,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0065e0d0	FUN_0065e0d0	.text	29		clean	unknown		unanalyzed	
 0065e0f0	FUN_0065e0f0	.text	31		clean	unknown		unanalyzed	
 0065e110	FUN_0065e110	.text	101		clean	unknown		unanalyzed	
-0065e1e0	FUN_0065e1e0	.text	290		clean	unknown		unanalyzed	
+0065e1e0	FUN_0065e1e0	.text	290		clean	gameclient	recon/particles65	reversed	"DefaultAlphaParticleModule::computeAlphaRate; ownership: direct callee of 00661370 (direct callee of 00669A80 = vtable 00BF3D44 slot 4 (slot2 ""DefaultAlphaModule"") at 00669A99) at 0066140B; computes per-frame alpha interpolation rate between keyframes on x87/SSE; ra3::gameclient::computeDefaultAlphaRate; oracle 24 cases across 2 FPU CWs; hook fxpsalpharate (explicitOnly)"
 0065e310	FUN_0065e310	.text	145		clean	unknown		unanalyzed	
-0065e490	FUN_0065e490	.text	523		clean	unknown		unanalyzed	
+0065e490	FUN_0065e490	.text	523		clean	gameclient	recon/particles65	reversed	"color keyframe tint helper (owning class unproven); ownership: direct callee of 00907ED0 (direct callee of 0090F030 = vtable 00C55668 slot 14 (slot2 ""W3DScriptedModelDraw"") at 0090F4AD) at 00908153; scales 8 RGB keyframes by packed 0xRRGGBB tint strength and sets scaleRand to (1,1,1); ra3::gameclient::applyDefaultColorTint; oracle 24 cases across 2 FPU CWs; hook fxpscolortint (explicitOnly)"
 0065e6a0	FUN_0065e6a0	.text	100		clean	unknown		unanalyzed	
-0065e710	FUN_0065e710	.text	411		clean	unknown		unanalyzed	
-0065e8b0	FUN_0065e8b0	.text	285		clean	unknown		unanalyzed	
+0065e710	FUN_0065e710	.text	411		clean	gameclient	recon/particles65	reversed	"DefaultColorParticleModule::computeColorRate; ownership: direct callee of 0065E8B0 = vtable 00BF3588 slot 4 (slot2 ""DefaultColorParticleModule"") at 0065E975; computes per-frame RGB interpolation step between keyframes; ra3::gameclient::computeDefaultColorRate; oracle 24 cases across 2 FPU CWs; hook fxpscolorrate (explicitOnly)"
+0065e8b0	FUN_0065e8b0	.text	285		clean	gameclient	recon/particles65	reversed	"DefaultColorParticleModule::updateColor; ownership: vtable 00BF3588 slot 4 (slot2 ""DefaultColorParticleModule""); advances currentColor, checks keyframe boundary, and clamps negative channels to 0; ra3::gameclient::updateDefaultColorParticle; oracle 24 cases across 2 FPU CWs"
 0065e9d0	FUN_0065e9d0	.text	138		clean	unknown		unanalyzed	
 0065ea60	FUN_0065ea60	.text	6		clean	unknown		unanalyzed	
 0065ea70	FUN_0065ea70	.text	84		clean	unknown		unanalyzed	
@@ -10362,29 +10362,29 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0065eae0	FUN_0065eae0	.text	7		clean	unknown		unanalyzed	
 0065eaf0	FUN_0065eaf0	.text	7		clean	unknown		unanalyzed	
 0065eb00	FUN_0065eb00	.text	7		clean	unknown		unanalyzed	
-0065eb10	FUN_0065eb10	.text	270		clean	unknown		unanalyzed	
-0065ec20	FUN_0065ec20	.text	111		clean	unknown		unanalyzed	
-0065edf0	FUN_0065edf0	.text	99		clean	unknown		unanalyzed	
+0065eb10	FUN_0065eb10	.text	270		clean	gameclient	recon/particles65	reversed	DefaultUpdateModuleTemplate::initializeFromAsset; ownership: direct callee of 00673A50 (direct callee of 00674080 (direct callee of 00674500 = vtable 00BF3A80 slot 5 at 0067452C) at 00674277) at 00673B81; initializes default update template (vptr 0x00BF2DE8) and copies lifetime/size/rotation/angular/damping RandomVariables; ra3::gameclient::initializeDefaultUpdateModuleTemplateFromAsset; oracle 24 cases across 2 FPU CWs
+0065ec20	FUN_0065ec20	.text	111		clean	gameclient	recon/particles65	reversed	UpdateModuleTemplate::copyFrom; ownership: direct callee of 0065F690 (direct callee of 00663240 = vtable 00BF3100 slot 5 at 00663257) at 0065F699; copies base update template lifetime/size/rotation RandomVariables and shaderType; ra3::gameclient::copyUpdateModuleTemplateBase; oracle 24 cases across 2 FPU CWs
+0065edf0	FUN_0065edf0	.text	99		clean	gameclient	recon/particles65	reversed	"DefaultUpdateParticleModule::updateParticle; ownership: vtable 00BF3F9C slot 4 (slot2 ""DefaultUpdateParticleModule""); updates particle size, rotationAngleZ, angularRateZ, and sizeRate with damping; ra3::gameclient::updateDefaultUpdateParticle; oracle 24 cases across 2 FPU CWs"
 0065ee60	FUN_0065ee60	.text	169		clean	unknown		unanalyzed	
 0065ef10	FUN_0065ef10	.text	52		clean	unknown		unanalyzed	
-0065ef50	FUN_0065ef50	.text	37		clean	unknown		unanalyzed	
-0065ef80	FUN_0065ef80	.text	83		clean	unknown		unanalyzed	
+0065ef50	FUN_0065ef50	.text	37		clean	gameclient	recon/particles65	reversed	"CylinderEmissionVolumeModule::stepRadiusOffset; ownership: vtable 00BF49DC slot 5 (slot2 ""CylinderEmissionVolumeModule""); adds template->radiusRate (+0x10) to currentRadius (+0x0C); ra3::gameclient::stepCylinderVolumeRadiusOffset; oracle 24 cases across 2 FPU CWs; hook fxpscylstepradius (explicitOnly)"
+0065ef80	FUN_0065ef80	.text	83		clean	gameclient	recon/particles65	reversed	OrthoEmissionVelocityModuleTemplate::copyFrom; ownership: direct callee of 00662550 = vtable 00BF2CFC slot 5 at 00662564; copies velocity type and 3 axis RandomVariables with vptr 0x00BF2A60; ra3::gameclient::copyOrthoVelocityTemplate; oracle 24 cases across 2 FPU CWs; hook fxpsorthotmplcopy (explicitOnly)
 0065efe0	FUN_0065efe0	.text	81		clean	unknown		unanalyzed	
-0065f040	FUN_0065f040	.text	67		clean	unknown		unanalyzed	
+0065f040	FUN_0065f040	.text	67		clean	gameclient	recon/particles65	reversed	"OutwardEmissionVelocityModule::getVelocity; ownership: vtable 00BF4AB0 slot 6 (slot2 ""OutwardEmissionVelocityModule""); samples radial/normal speed RandomVariables and dispatches volume outward velocity; ra3::gameclient::computeOutwardEmissionVelocity; oracle 24 cases across 2 FPU CWs"
 0065f090	FUN_0065f090	.text	97		clean	unknown		unanalyzed	
-0065f100	FUN_0065f100	.text	94		clean	unknown		unanalyzed	
-0065f160	FUN_0065f160	.text	125		clean	unknown		unanalyzed	
-0065f1e0	FUN_0065f1e0	.text	64		clean	unknown		unanalyzed	
+0065f100	FUN_0065f100	.text	94		clean	gameclient	recon/particles65	reversed	WavefrontEmissionVelocityModuleTemplate::initializeFromAsset; ownership: direct callee of 00673A50 (direct callee of 00674080 (direct callee of 00674500 = vtable 00BF3A80 slot 5 at 0067452C) at 00674277) at 00673DCD; initializes wavefront velocity template (type 5, vptr 0x00BF2A60) and copies 5 RandomVariables; ra3::gameclient::initializeWavefrontVelocityTemplateFromAsset; oracle 24 cases across 2 FPU CWs
+0065f160	FUN_0065f160	.text	125		clean	gameclient	recon/particles65	reversed	WavefrontEmissionVelocityModuleTemplate::copyFrom; ownership: direct callee of 00662AB0 = vtable 00BF2E6C slot 5 at 00662AC4; copies wavefront velocity template fields and 5 RandomVariables; ra3::gameclient::copyWavefrontVelocityTemplate; oracle 24 cases across 2 FPU CWs; hook fxpswavetmplcopy (explicitOnly)
+0065f1e0	FUN_0065f1e0	.text	64		clean	gameclient	recon/particles65	reversed	"WavefrontEmissionVelocityModule::sampleParameters; ownership: direct callee of 0066CA50 = vtable 00BF4740 slot 4 (slot2 ""WaveParticleStorageModule"") at 0066CB42; samples 4 wavefront velocity parameters from client RandomVariables; ra3::gameclient::sampleWavefrontVelocityDimensions; oracle 24 cases across 2 FPU CWs"
 0065f220	AptRenderItem::GetRefCount	.text	3		clean	unknown		unanalyzed	
 0065f230	FUN_0065f230	.text	63		clean	unknown		unanalyzed	
 0065f270	FUN_0065f270	.text	104		clean	unknown		unanalyzed	
 0065f2e0	FUN_0065f2e0	.text	92		clean	unknown		unanalyzed	
 0065f340	FUN_0065f340	.text	64		clean	unknown		unanalyzed	
 0065f380	FUN_0065f380	.text	210		clean	unknown		unanalyzed	
-0065f460	FUN_0065f460	.text	107		clean	unknown		unanalyzed	
-0065f530	FUN_0065f530	.text	351		clean	unknown		unanalyzed	
-0065f690	FUN_0065f690	.text	329		clean	unknown		unanalyzed	
-0065f900	FUN_0065f900	.text	192		clean	unknown		unanalyzed	
+0065f460	FUN_0065f460	.text	107		clean	gameclient	recon/particles65	reversed	RenderObjectDrawModuleTemplate::copyFrom; ownership: direct callee of 00663210 = vtable 00BF30E0 slot 5 at 00663224; copies 0x40-byte RenderObject draw template (vptr 0x00BF30E0) with x87 float copies; ra3::gameclient::copyRenderObjectDrawTemplate; oracle 24 cases across 2 FPU CWs; hook fxpsrodrawtmplcopy (explicitOnly)
+0065f530	FUN_0065f530	.text	351		clean	gameclient	recon/particles65	unanalyzed	RenderObjectUpdateModuleTemplate::initializeFromAsset; deferred: only caller 0x00660A80 has no code or data references, no anchored edge; initializes 3D render-object update template (vptr 0x00BF3858) and copies 3-axis angular/scale RandomVariables; ra3::gameclient::initializeRenderObjectUpdateModuleTemplateFromAsset; oracle 24 cases across 2 FPU CWs
+0065f690	FUN_0065f690	.text	329		clean	gameclient	recon/particles65	reversed	RenderObjectUpdateModuleTemplate::copyFrom; ownership: direct callee of 00663240 = vtable 00BF3100 slot 5 at 00663257; copies base update template and 7 RenderObjectUpdate RandomVariables; ra3::gameclient::copyRenderObjectUpdateModuleTemplate; oracle 24 cases across 2 FPU CWs
+0065f900	FUN_0065f900	.text	192		clean	gameclient	recon/particles65	reversed	"RenderObjectParticleUpdateModule::updateParticle; ownership: vtable 00BF4418 slot 4 (slot2 ""RenderObjectParticleUpdateModule""); updates 3D particle size, rotationAngles, angularRate, and sizeRate with damping; ra3::gameclient::updateRenderObjectUpdateParticle; oracle 24 cases across 2 FPU CWs"
 0065f9c0	FUN_0065f9c0	.text	271		clean	unknown		unanalyzed	
 0065fad0	FUN_0065fad0	.text	39		clean	unknown		unanalyzed	
 0065fb00	FUN_0065fb00	.text	75		clean	unknown		unanalyzed	
@@ -10393,9 +10393,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0065fba0	FUN_0065fba0	.text	68		clean	unknown		unanalyzed	
 0065fbf0	FUN_0065fbf0	.text	100		clean	unknown		unanalyzed	
 0065fc60	FUN_0065fc60	.text	8		clean	unknown		unanalyzed	
-0065fc70	FUN_0065fc70	.text	124		clean	unknown		unanalyzed	
-0065fcf0	FUN_0065fcf0	.text	105		clean	unknown		unanalyzed	
-0065fd60	FUN_0065fd60	.text	307		clean	unknown		unanalyzed	
+0065fc70	FUN_0065fc70	.text	124		clean	gameclient	recon/particles65	reversed	WindModuleTemplate::initializeFromAsset; ownership: direct callee of 00673A50 (direct callee of 00674080 (direct callee of 00674500 = vtable 00BF3A80 slot 5 at 0067452C) at 00674277) at 00673AD3; copies windMotion, strength/distance floats, 3 angle RandomVariables, and turbulence parameters; ra3::gameclient::initializeWindModuleTemplateFromAsset; oracle 24 cases across 2 FPU CWs
+0065fcf0	FUN_0065fcf0	.text	105		clean	gameclient	recon/particles65	reversed	WindModuleTemplate::copyFrom; ownership: direct callee of 006612C0 = vtable 00BF31BC slot 5 at 006612D4; copies 0x40-byte WindModuleTemplate (vptr 0x00BF3C20); ra3::gameclient::copyWindModuleTemplate; oracle 24 cases across 2 FPU CWs
+0065fd60	FUN_0065fd60	.text	307		clean	gameclient	recon/particles65	reversed	"WindModule::updateWindMotion; ownership: vtable 00BF478C slot 5 (slot2 ""WindModule""); updates PingPong (motion=2) and Circular (motion=3) wind angles and resamples bounds on reversal; ra3::gameclient::updateWindModuleMotion; oracle 24 cases across 2 FPU CWs"
 0065fea0	FUN_0065fea0	.text	117		clean	unknown		unanalyzed	
 0065ff20	FUN_0065ff20	.text	6		clean	unknown		unanalyzed	
 0065ff30	FUN_0065ff30	.text	76		clean	unknown		unanalyzed	
@@ -10433,7 +10433,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00660430	FUN_00660430	.text	45		clean	unknown		unanalyzed	
 00660460	FUN_00660460	.text	80		clean	unknown		unanalyzed	
 006604b0	FUN_006604b0	.text	115		clean	unknown		unanalyzed	
-00660530	FUN_00660530	.text	33		clean	unknown		unanalyzed	
+00660530	FUN_00660530	.text	33		clean	gameclient	recon/particles65	reversed	"FXParticle::getSize; ownership: direct callee of 0066CE40 = vtable 00BF31D4 slot 4 (slot2 ""WindParticleModule"") at 0066D04F; returns current particle size in x87 ST0 from DefaultUpdate (+0x10) or RenderObjectUpdate (+0x38), or 0.0; ra3::gameclient::getParticleSizeExtended; oracle 24 cases across 2 FPU CWs"
 00660560	FUN_00660560	.text	36		clean	unknown		unanalyzed	
 00660590	FUN_00660590	.text	17		clean	unknown		unanalyzed	
 006605b0	FUN_006605b0	.text	36		clean	unknown		unanalyzed	
@@ -10478,9 +10478,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00660c50	FUN_00660c50	.text	86		clean	unknown		unanalyzed	
 00660cb0	FUN_00660cb0	.text	56		clean	unknown		unanalyzed	
 00660cf0	FUN_00660cf0	.text	81		clean	unknown		unanalyzed	
-00660d50	FUN_00660d50	.text	552		clean	unknown		unanalyzed	
-00660f80	FUN_00660f80	.text	173		clean	unknown		unanalyzed	
-00661030	FUN_00661030	.text	300		clean	unknown		unanalyzed	
+00660d50	FUN_00660d50	.text	552		clean	gameclient	recon/particles65	reversed	"Matrix34::multiply; ownership: direct callee of 006C16D0 (direct callee of 0075E110 = vtable 00C1FB90 slot 39 (slot2 ""OpenContain"") at 0075E55B) at 006C192B; 3x4 affine matrix multiplication in column-by-column SSE order; ra3::gameclient::multiplyMatrix34; oracle 24 cases across 2 FPU CWs; hook fxpsmulmat34 (explicitOnly)"
+00660f80	FUN_00660f80	.text	173		clean	gameclient	recon/particles65	reversed	"extractTransposeRotation33; ownership: direct callee of 0066B630 = vtable 00BF4368 slot 6 (slot2 ""RenderObjectDrawModule"") at 0066B89B; extracts transposed upper-left 3x3 rotation block from Matrix34; ra3::gameclient::extractTransposeRotation33; oracle 24 cases across 2 FPU CWs; hook fxpsextractrot33 (explicitOnly)"
+00661030	FUN_00661030	.text	300		clean	gameclient	recon/particles65	reversed	"evaluateCubicHermiteSpline; ownership: direct callee of 006658A0 = vtable 00BF4CC4 slot 11 (slot2 ""SplineEmissionVolumeModule"") at 00665972; evaluates 3D cubic Hermite spline point from p0, p1, m0, m1 at t; ra3::gameclient::evaluateCubicHermiteSpline; oracle 24 cases across 2 FPU CWs"
 00661160	FUN_00661160	.text	92		clean	gameclient	recon/fxps	reversed	initializeDefaultAlphaTemplate; oracle 500 cases
 006611c0	FUN_006611c0	.text	6		clean	gameclient	recon/fxps	reversed	defaultAlphaTemplateTypeName; oracle 50 cases
 006611d0	FUN_006611d0	.text	47		clean	unknown		unanalyzed	
@@ -10488,17 +10488,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00661210	FUN_00661210	.text	167		clean	unknown		unanalyzed	
 006612c0	FUN_006612c0	.text	31		clean	unknown		unanalyzed	
 006612e0	FUN_006612e0	.text	144		clean	asset	recon/layout3	reversed	FXParticleAlpha runtime constructor; consumes 20-byte keyframes from serialized count/pointer and distributes entries by 1-based slot
-00661370	FUN_00661370	.text	169		clean	unknown		unanalyzed	
+00661370	FUN_00661370	.text	169		clean	gameclient	recon/particles65	reversed	"DefaultAlphaParticleModule::initialize; ownership: direct callee of 00669A80 = vtable 00BF3D44 slot 4 (slot2 ""DefaultAlphaModule"") at 00669A99; samples 8 alpha keyframes from template RandomVariables and computes initial alpha rate; ra3::gameclient::initializeDefaultAlphaParticle; oracle 24 cases across 2 FPU CWs"
 00661420	FUN_00661420	.text	6		clean	gameclient	recon/fxps	reversed	defaultAlphaParticleTypeName; oracle 50 cases
 00661430	FUN_00661430	.text	346		clean	asset	recon/layout3	reversed	FXParticleColor runtime constructor; reads reordered root fields and consumes 20-byte color keyframes from serialized count/pointer
-00661590	FUN_00661590	.text	1101		clean	unknown		unanalyzed	
+00661590	FUN_00661590	.text	1101		clean	gameclient	recon/particles65	reversed	"DefaultColorParticleModule::initialize; ownership: direct callee of 00669CC0 = vtable 00BF3D6C slot 4 (slot2 ""DefaultColorModule"") at 00669CDC; samples scaleRand from DefaultColorModule, scales 8 RGB keyframes, and computes initial color rate; ra3::gameclient::initializeDefaultColorParticle; oracle 24 cases across 2 FPU CWs"
 006619e0	FUN_006619e0	.text	6		clean	gameclient	recon/fxps	reversed	defaultColorParticleTypeName; oracle 50 cases
 006619f0	FUN_006619f0	.text	71		clean	gameclient	recon/fxps	reversed	colorWithinRange; oracle 1500 cases across three x87 control words
 00661a40	FUN_00661a40	.text	94		clean	unknown		unanalyzed	
 00661aa0	FUN_00661aa0	.text	12		clean	unknown		unanalyzed	
 00661ab0	FUN_00661ab0	.text	69		clean	gameclient	recon/fxps	reversed	initializeBoxVolumeRuntime; oracle 500 cases
 00661b00	FUN_00661b00	.text	21		clean	gameclient	recon/fxps	reversed	boxVolumeDebugDimensions; oracle 500 cases
-00661b20	FUN_00661b20	.text	83		clean	unknown		unanalyzed	
+00661b20	FUN_00661b20	.text	83		clean	gameclient	recon/particles65	reversed	DefaultUpdateModuleTemplate::copyFrom; ownership: direct callee of 00665310 = vtable 00BF2B94 slot 5 at 00665324; copies base update template and 4 DefaultUpdate RandomVariables; ra3::gameclient::copyDefaultUpdateModuleTemplate; oracle 24 cases across 2 FPU CWs
 00661b80	FUN_00661b80	.text	6		clean	gameclient	recon/fxps	reversed	boxVolumeTypeName; oracle 50 cases
 00661b90	FUN_00661b90	.text	347		clean	unknown		unanalyzed	
 00661cf0	FUN_00661cf0	.text	806	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemitterboxvolumemodule.cpp	clean	gameclient	recon/fxps	reversed	emitBoxPoint; oracle 1500 cases across three x87 control words
@@ -10528,19 +10528,19 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00662820	FUN_00662820	.text	307		clean	unknown		unanalyzed	
 00662960	FUN_00662960	.text	24		clean	unknown		unanalyzed	
 00662980	FUN_00662980	.text	6		clean	unknown		unanalyzed	
-00662990	FUN_00662990	.text	99		clean	unknown		unanalyzed	
-00662a00	FUN_00662a00	.text	82		clean	unknown		unanalyzed	
-00662a60	FUN_00662a60	.text	66		clean	unknown		unanalyzed	
+00662990	FUN_00662990	.text	99		clean	gameclient	recon/particles65	reversed	TerrainFireEmissionModuleTemplate::copyFrom; ownership: direct callee of 00665B40 = vtable 00BF2E2C slot 5 at 00665B54; copies TerrainFire template flags and 3 RandomVariables (vptr 0x00BF2FD0); ra3::gameclient::copyTerrainFireTemplate; oracle 24 cases across 2 FPU CWs
+00662a00	FUN_00662a00	.text	82		clean	gameclient	recon/particles65	unanalyzed	TerrainFireEmissionModuleTemplate::initializeFromAsset; deferred: only caller 0x00664A20 has no code or data references, no anchored edge; initializes TerrainFire template from asset layout; ra3::gameclient::initializeTerrainFireTemplateFromAsset; oracle 24 cases across 2 FPU CWs
+00662a60	FUN_00662a60	.text	66		clean	gameclient	recon/particles65	reversed	"TerrainFireEmissionModule::samplePoint; ownership: vtable 00BF4BC0 slot 11 (slot2 ""TerrainFireEmissionModule""); samples 3D emission point from TerrainFire template RandomVariables; ra3::gameclient::sampleTerrainFirePoint; oracle 24 cases across 2 FPU CWs"
 00662ab0	FUN_00662ab0	.text	31		clean	unknown		unanalyzed	
 00662ad0	FUN_00662ad0	.text	24		clean	unknown		unanalyzed	
 00662af0	FUN_00662af0	.text	83		clean	unknown		unanalyzed	
 00662b50	FUN_00662b50	.text	6		clean	unknown		unanalyzed	
-00662b60	FUN_00662b60	.text	139		clean	unknown		unanalyzed	
+00662b60	FUN_00662b60	.text	139		clean	gameclient	recon/particles65	reversed	"LightningDrawModule::packParticleVertices; ownership: direct callee of 00670120 (direct callee of 00677240 = vtable 00BF4108 slot 6 (slot2 ""GpuDrawModule"") at 006773B2) at 00670261; packs segmentCount LightningSwarmVertex records (position, initialLifetime, velocity, age, seedPhase, segmentIndex); ra3::gameclient::packLightningParticleVertices; oracle 24 cases across 2 FPU CWs"
 00662bf0	FUN_00662bf0	.text	156		clean	unknown		unanalyzed	
 00662c90	FUN_00662c90	.text	6		clean	unknown		unanalyzed	
-00662ca0	FUN_00662ca0	.text	361		clean	unknown		unanalyzed	
-00662e10	FUN_00662e10	.text	314		clean	unknown		unanalyzed	
-00662f50	FUN_00662f50	.text	448		clean	unknown		unanalyzed	
+00662ca0	FUN_00662ca0	.text	361		clean	gameclient	recon/particles65	unanalyzed	LightningDrawModuleTemplate::initializeFromAsset; deferred: only caller 0x006648C0 has no code or data references, no anchored edge; copies 6 scalar floats and 2x6 interleaved RandomVariables (vptr 0x00BF38D0); ra3::gameclient::initializeLightningDrawTemplateFromAsset; oracle 24 cases across 2 FPU CWs
+00662e10	FUN_00662e10	.text	314		clean	gameclient	recon/particles65	reversed	LightningDrawModuleTemplate::copyFrom; ownership: direct callee of 00666190 = vtable 00BF38D0 slot 5 at 006661A7; copies 0xAC-byte LightningDrawModuleTemplate; ra3::gameclient::copyLightningDrawTemplate; oracle 24 cases across 2 FPU CWs
+00662f50	FUN_00662f50	.text	448		clean	gameclient	recon/particles65	reversed	"LightningDrawModuleTemplate::initializeDefault; ownership: direct callee of 00668F30 = vtable 00BF30A0 slot 1 (slot2 ""RenderObjectDrawModuleTemplate"") at 00668F43; initializes default LightningDrawModuleTemplate with 12 uniform(0,0) RandomVariables; ra3::gameclient::initializeDefaultLightningDrawTemplate; oracle 24 cases across 2 FPU CWs"
 00663110	FUN_00663110	.text	75		clean	unknown		unanalyzed	
 00663160	FUN_00663160	.text	24		clean	unknown		unanalyzed	
 00663180	FUN_00663180	.text	69		clean	unknown		unanalyzed	
@@ -10656,9 +10656,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00664dc0	FUN_00664dc0	.text	226	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00664eb0	FUN_00664eb0	.text	97		clean	unknown		unanalyzed	
 00664f20	FUN_00664f20	.text	111		clean	unknown		unanalyzed	
-00664fa0	FUN_00664fa0	.text	264		clean	unknown		unanalyzed	
+00664fa0	FUN_00664fa0	.text	264		clean	gameclient	recon/particles65	reversed	"inverseTransformPointByMatrix34; ownership: direct callee of 006658A0 = vtable 00BF4CC4 slot 11 (slot2 ""SplineEmissionVolumeModule"") at 0066598D; subtracts translation and multiplies by transposed 3x3 rotation block; ra3::gameclient::inverseTransformPointByMatrix34; oracle 24 cases across 2 FPU CWs; hook fxpsinvmat34pt (explicitOnly)"
 006650b0	FUN_006650b0	.text	34		clean	unknown		unanalyzed	
-006650e0	FUN_006650e0	.text	213		clean	unknown		unanalyzed	
+006650e0	FUN_006650e0	.text	213		clean	gameclient	recon/particles65	reversed	"DefaultAlphaParticleModule::updateAlpha; ownership: vtable 00BF3558 slot 4 (slot2 ""DefaultAlphaParticleModule""); steps currentAlpha, advances keyframe on elapsed fraction, and clamps to [0,1] when shaderType == 1; ra3::gameclient::updateDefaultAlphaParticle; oracle 24 cases across 2 FPU CWs"
 006651c0	FUN_006651c0	.text	24		clean	unknown		unanalyzed	
 006651e0	FUN_006651e0	.text	195		clean	unknown		unanalyzed	
 006652b0	FUN_006652b0	.text	83		clean	unknown		unanalyzed	
@@ -10668,16 +10668,16 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00665350	FUN_00665350	.text	26		clean	unknown		unanalyzed	
 00665370	FUN_00665370	.text	79		clean	unknown		unanalyzed	
 006653c0	FUN_006653c0	.text	89		clean	unknown		unanalyzed	
-00665420	FUN_00665420	.text	179		clean	unknown		unanalyzed	
+00665420	FUN_00665420	.text	179		clean	gameclient	recon/particles65	reversed	"CylinderEmissionVolumeModule::computeOutwardVelocity; ownership: vtable 00BF49DC slot 8 (slot2 ""CylinderEmissionVolumeModule""); computes outward radial + normal velocity for cylinder volume; ra3::gameclient::computeCylinderOutwardVelocity; oracle 24 cases across 2 FPU CWs; hook fxpscyloutwardvel (explicitOnly)"
 006654e0	FUN_006654e0	.text	89		clean	unknown		unanalyzed	
-00665540	FUN_00665540	.text	419		clean	unknown		unanalyzed	
+00665540	FUN_00665540	.text	419		clean	gameclient	recon/particles65	reversed	"LineEmissionVolumeModule::computeOutwardVelocity; ownership: vtable 00BF4A2C slot 8 (slot2 ""LineEmissionVolumeModule""); projects onto line segment, constructs orthogonal radial basis, and combines radial/normal speeds; ra3::gameclient::computeLineOutwardVelocity; oracle 24 cases across 2 FPU CWs"
 006656f0	FUN_006656f0	.text	53		clean	unknown		unanalyzed	
 00665730	FUN_00665730	.text	59		clean	unknown		unanalyzed	
 00665770	FUN_00665770	.text	89		clean	unknown		unanalyzed	
-006657d0	FUN_006657d0	.text	204		clean	unknown		unanalyzed	
-006658a0	FUN_006658a0	.text	672	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemittersplinevolumemodule.cpp	clean	gameclient		unanalyzed	
+006657d0	FUN_006657d0	.text	204		clean	gameclient	recon/particles65	reversed	"SplineEmissionVolumeModule::computeOutwardVelocity; ownership: vtable 00BF4CC4 slot 8 (slot2 ""SplineEmissionVolumeModule""); scales spline tangent by normalSpeed and adds radial velocity; ra3::gameclient::computeSplineOutwardVelocity; oracle 24 cases across 2 FPU CWs; hook fxpssplineoutwardvel (explicitOnly)"
+006658a0	FUN_006658a0	.text	672	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemittersplinevolumemodule.cpp	clean	gameclient	recon/particles65	unanalyzed	SplineEmissionVolumeModule::samplePoint; depends on spline control-point cache and external curve container; deferred
 00665b40	FUN_00665b40	.text	31		clean	unknown		unanalyzed	
-00665b60	FUN_00665b60	.text	212		clean	unknown		unanalyzed	
+00665b60	FUN_00665b60	.text	212		clean	gameclient	recon/particles65	reversed	"EmissionVolumeModule::computeOutwardVelocity (shared slot 8 of Box/Sphere/TerrainFire volumes); ownership: vtable 00BF4954 slot 8 (slot2 ""BoxEmissionVolumeModule""), vtable 00BF4B74 slot 8 (slot2 ""SphereEmissionVolumeModule""), vtable 00BF4BC0 slot 8 (slot2 ""TerrainFireEmissionModule""); normalizes emission position on x87/SSE and scales by radialSpeed; ra3::gameclient::computeRadialOutwardVelocity; oracle 24 cases across 2 FPU CWs; hook fxpsradialoutwardvel (explicitOnly)"
 00665c40	FUN_00665c40	.text	316	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemittervolumemodule.cpp	clean	gameclient	recon/fxps	reversed	randomUnitVector; oracle 1500 cases across three x87 control words
 00665d90	FUN_00665d90	.text	120		clean	unknown		unanalyzed	
 00665e10	FUN_00665e10	.text	120		clean	unknown		unanalyzed	
@@ -10722,7 +10722,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00666ab0	FUN_00666ab0	.text	373		clean	unknown		unanalyzed	
 00666c25	FUN_00666c25	.text	2		clean	unknown		unanalyzed	
 00666c80	FUN_00666c80	.text	229		clean	unknown		unanalyzed	
-00666d70	FUN_00666d70	.text	166		clean	unknown		unanalyzed	
+00666d70	FUN_00666d70	.text	166		clean	gameclient	recon/particles65	reversed	"SwarmPhysicsParticleModule::updatePhysics; ownership: vtable 00BF3154 slot 4 (slot2 ""SwarmPhysicsParticleModule""); accelerates particle velocity and position toward system worldTransform origin; ra3::gameclient::updateSwarmPhysicsParticle; oracle 24 cases across 2 FPU CWs"
 00666e20	FUN_00666e20	.text	41		clean	unknown		unanalyzed	
 00666e49	FUN_00666e49	.text	172		clean	unknown		unanalyzed	
 00666f00	FUN_00666f00	.text	294		clean	unknown		unanalyzed	
@@ -10765,8 +10765,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00668f50	FUN_00668f50	.text	105		clean	unknown		unanalyzed	
 00668fc0	FUN_00668fc0	.text	71		clean	unknown		unanalyzed	
 00669010	FUN_00669010	.text	72		clean	unknown		unanalyzed	
-00669060	FUN_00669060	.text	236		clean	unknown		unanalyzed	
-00669150	FUN_00669150	.text	51		clean	unknown		unanalyzed	
+00669060	FUN_00669060	.text	236		clean	gameclient	recon/particles65	reversed	"buildEulerXYZMatrix33; ownership: direct callee of 0066B630 = vtable 00BF4368 slot 6 (slot2 ""RenderObjectDrawModule"") at 0066B83E; builds 3x3 rotation matrix from XYZ Euler angles via x87 fsin/fcos and SSE products; ra3::gameclient::buildEulerXYZMatrix33; oracle 24 cases across 2 FPU CWs; hook fxpseulermat33 (explicitOnly)"
+00669150	FUN_00669150	.text	51		clean	gameclient	recon/particles65	reversed	"transposeMatrix33; ownership: direct callee of 0066B630 = vtable 00BF4368 slot 6 (slot2 ""RenderObjectDrawModule"") at 0066B8A9; transposes 3x3 float matrix via x87 fld/fstp; ra3::gameclient::transposeMatrix33; oracle 24 cases across 2 FPU CWs; hook fxpstransposemat33 (explicitOnly)"
 00669190	FUN_00669190	.text	73	SageEngine\source\GameEngine\gameclient\system\EngagingContent.cpp	clean	gameclient	recon/fxps	reversed	shuffleDwords; oracle 1500 cases
 006691e0	FUN_006691e0	.text	89		inner-patched	unknown		unanalyzed	
 00669260	FUN_00669260	.text	65		clean	unknown		unanalyzed	
@@ -10787,13 +10787,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006698f0	FUN_006698f0	.text	50		clean	unknown		unanalyzed	
 00669930	FUN_00669930	.text	50		clean	unknown		unanalyzed	
 00669970	FUN_00669970	.text	83		clean	unknown		unanalyzed	
-006699d0	FUN_006699d0	.text	134		clean	unknown		unanalyzed	
+006699d0	FUN_006699d0	.text	134		clean	gameclient	recon/particles65	reversed	"FXParticleBase::initialize; ownership: direct callee of 0066ABF0 asserts 00BF4190 (""...XParticleSystem\FxpsGPUStorageModule.cpp"") at 0066ABFF; initializes base particle state, increments systemRef->refCount, and increments manager activeParticleCounter (+0x78); ra3::gameclient::initializeParticleBase; oracle 24 cases across 2 FPU CWs"
 00669a60	FUN_00669a60	.text	6		clean	unknown		unanalyzed	
 00669a70	FUN_00669a70	.text	6		clean	unknown		unanalyzed	
 00669a80	FUN_00669a80	.text	40		clean	unknown		unanalyzed	
-00669ab0	FUN_00669ab0	.text	480		clean	unknown		unanalyzed	
+00669ab0	FUN_00669ab0	.text	480		clean	gameclient	recon/particles65	reversed	DefaultColorModule::initialize; ownership: direct callee of 0066F710 = vtable 00BF2AC8 slot 2 at 0066F72C; initializes 0xAC-byte DefaultColorModule (vptr 0x00BF3D6C) from template keyframes and scaleRand; ra3::gameclient::initializeDefaultColorModule; oracle 24 cases across 2 FPU CWs
 00669c90	FUN_00669c90	.text	6		clean	unknown		unanalyzed	
-00669ca0	FUN_00669ca0	.text	24		clean	unknown		unanalyzed	
+00669ca0	FUN_00669ca0	.text	24		clean	gameclient	recon/particles65	reversed	"DefaultColorModule::getScaleRange; ownership: vtable 00BF3D6C slot 5 (slot2 ""DefaultColorModule""); reads scaleRand low/high range into float[2]; ra3::gameclient::getDefaultColorScaleRange; oracle 24 cases across 2 FPU CWs"
 00669cc0	FUN_00669cc0	.text	43		clean	unknown		unanalyzed	
 00669cf0	FUN_00669cf0	.text	9		inner-patched	unknown		unanalyzed	
 0066a290	FUN_0066a290	.text	82		clean	unknown		unanalyzed	
@@ -10806,7 +10806,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0066a710	FUN_0066a710	.text	7		clean	gameclient	recon/fxps	reversed	defaultUpdateLifetimeData; oracle 50 cases
 0066a720	FUN_0066a720	.text	7		clean	gameclient	recon/fxps	reversed	defaultUpdateSizeData; oracle 50 cases
 0066a730	FUN_0066a730	.text	7		clean	gameclient	recon/fxps	reversed	defaultUpdateRotationData; oracle 50 cases
-0066a740	FUN_0066a740	.text	256		clean	unknown		unanalyzed	
+0066a740	FUN_0066a740	.text	256		clean	gameclient	recon/particles65	reversed	"DefaultUpdateParticleModule::initialize; ownership: direct callee of 0066FDA0 = vtable 00BF3F64 slot 4 (slot2 ""DefaultUpdateModule"") at 0066FDB9; samples initial size/rotation/angularRateZ/damping/sizeRate from DefaultUpdateModuleTemplate; ra3::gameclient::initializeDefaultUpdateParticle; oracle 24 cases across 2 FPU CWs"
 0066a840	FUN_0066a840	.text	6		clean	gameclient	recon/fxps	reversed	defaultUpdateParticleTypeName; oracle 50 cases
 0066a850	FUN_0066a850	.text	3		clean	gameclient	recon/fxps	reversed	one; oracle 100 cases
 0066a860	FUN_0066a860	.text	29		clean	gameclient	recon/fxps	reversed	zeroVector4; oracle 100 cases
@@ -10827,12 +10827,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0066aba0	FUN_0066aba0	.text	7		clean	gameclient	recon/fxps	reversed	gpuMiscWord; oracle 500 cases
 0066abb0	FUN_0066abb0	.text	7		clean	gameclient	recon/fxps	reversed	gpuEnableSoftParticles; oracle 500 cases
 0066abc0	FUN_0066abc0	.text	33		clean	gameclient	recon/fxps	reversed	gpuMiscValues; oracle 500 cases
-0066abf0	FUN_0066abf0	.text	136	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\FxpsGPUStorageModule.cpp	clean	gameclient		unanalyzed	
+0066abf0	FUN_0066abf0	.text	136	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\FxpsGPUStorageModule.cpp	clean	gameclient	recon/particles65	reversed	"FXParticle::initialize; ownership: direct callee of 0067BD20 = vtable 00BF4D10 slot 4 (slot2 ""GPUParticleSystemStorageModule"") at 0067BF80; source anchor FxpsGPUStorageModule.cpp:615; initializes FXParticle, samples randomSeedPhase in [0,15], and computes deathTimestamp; ra3::gameclient::initializeParticle; oracle 24 cases across 2 FPU CWs"
 0066ac80	FUN_0066ac80	.text	477		clean	unknown		unanalyzed	
-0066ae60	FUN_0066ae60	.text	104		clean	unknown		unanalyzed	
+0066ae60	FUN_0066ae60	.text	104		clean	gameclient	recon/particles65	reversed	LifeEventModule::initialize; ownership: direct callee of 00670350 = vtable 00BF2ECC slot 2 at 00670369; increments systemRef->refCount and truncates sampled eventTimeRand to integer triggerFrame; ra3::gameclient::initializeLifeEventModule; oracle 24 cases across 2 FPU CWs
 0066aed0	FUN_0066aed0	.text	6		clean	unknown		unanalyzed	
 0066aee0	FUN_0066aee0	.text	40		clean	unknown		unanalyzed	
-0066af10	FUN_0066af10	.text	235		clean	unknown		unanalyzed	
+0066af10	FUN_0066af10	.text	235		clean	gameclient	recon/particles65	reversed	LightningDrawModule::initialize; ownership: direct callee of 00670380 = vtable 00BF38D0 slot 2 at 00670399; maps system shaderType to shaderPassType and samples 12 lightning amplitude/frequency/phase floats; ra3::gameclient::initializeLightningDrawModule; oracle 24 cases across 2 FPU CWs
 0066b020	FUN_0066b020	.text	6		clean	unknown		unanalyzed	
 0066b030	FUN_0066b030	.text	1463		clean	unknown		unanalyzed	
 0066b5f0	FUN_0066b5f0	.text	6		clean	unknown		unanalyzed	
@@ -10844,7 +10844,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0066bab0	FUN_0066bab0	.text	7		clean	unknown		unanalyzed	
 0066bac0	FUN_0066bac0	.text	7		clean	unknown		unanalyzed	
 0066bad0	FUN_0066bad0	.text	7		clean	unknown		unanalyzed	
-0066bae0	FUN_0066bae0	.text	347		clean	unknown		unanalyzed	
+0066bae0	FUN_0066bae0	.text	347		clean	gameclient	recon/particles65	reversed	"RenderObjectParticleUpdateModule::initialize; ownership: direct callee of 00670470 = vtable 00BF43D8 slot 4 (slot2 ""RenderObjectUpdateModule"") at 00670489; samples 3D initial size, rotationAngles, angularRate, damping, and sizeRate from RenderObjectUpdateModuleTemplate; ra3::gameclient::initializeRenderObjectUpdateParticle; oracle 24 cases across 2 FPU CWs"
 0066bc40	FUN_0066bc40	.text	6		clean	unknown		unanalyzed	
 0066bc50	FUN_0066bc50	.text	4		clean	unknown		unanalyzed	
 0066bc60	FUN_0066bc60	.text	6		clean	unknown		unanalyzed	
@@ -10872,10 +10872,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0066ca10	FUN_0066ca10	.text	38		clean	unknown		unanalyzed	
 0066ca40	FUN_0066ca40	.text	6		clean	unknown		unanalyzed	
 0066ca50	FUN_0066ca50	.text	770		clean	unknown		unanalyzed	
-0066cd60	FUN_0066cd60	.text	108	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpswindmodule.cpp	clean	gameclient		unanalyzed	
+0066cd60	FUN_0066cd60	.text	108	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpswindmodule.cpp	clean	gameclient	recon/particles65	reversed	WindModule::initialize; ownership: direct callee of 0066F780 = vtable 00BF31BC slot 2 at 0066F799; source anchor fxpswindmodule.cpp:96; increments systemRef->refCount and samples initial start/end/current ping-pong wind angles; ra3::gameclient::initializeWindModule; oracle 24 cases across 2 FPU CWs
 0066cdd0	FUN_0066cdd0	.text	6		clean	gameclient	recon/fxps	reversed	windTypeName; oracle 50 cases
-0066cde0	FUN_0066cde0	.text	85	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpswindmodule.cpp	clean	gameclient		unanalyzed	
-0066ce40	FUN_0066ce40	.text	594		clean	unknown		unanalyzed	
+0066cde0	FUN_0066cde0	.text	85	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpswindmodule.cpp	clean	gameclient	recon/particles65	unanalyzed	WindModule::createParticleModule; source anchor fxpswindmodule.cpp:150; allocates 0x20-byte WindParticleModule via MemoryPool::allocateBlock (0x0041C160); allocator wrapper deferred
+0066ce40	FUN_0066ce40	.text	594		clean	gameclient	recon/particles65	reversed	"WindParticleModule::updateWindParticle; ownership: vtable 00BF31D4 slot 4 (slot2 ""WindParticleModule""); computes distance-attenuated directional and cosine turbulence wind forces on FXParticle; ra3::gameclient::updateWindParticle; oracle 24 cases across 2 FPU CWs"
 0066d0a0	thunk_FUN_01956310	.text	6		entry-recoverable	unknown		unanalyzed	
 0066e440	FUN_0066e440	.text	190		clean	unknown		unanalyzed	
 0066e500	FUN_0066e500	.text	117		clean	unknown		unanalyzed	

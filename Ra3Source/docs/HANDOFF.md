@@ -41,15 +41,15 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 gamelogic72 合并）
+## 3. 现状（截至 particles65 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 1,125、unanalyzed 47,800（受保护函数已 reversed：entry-lost 60、inner-patched 2）。`securom` 分类：clean 47,777、entry-lost 653、
+  reversed 1,175、unanalyzed 47,750（受保护函数已 reversed：entry-lost 60、inner-patched 2）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
-- **hook**：306 个目标（其中 259 个只认显式键）。原有 86 个全部 replace 时，Release
+- **hook**：321 个目标（其中 274 个只认显式键）。原有 86 个全部 replace 时，Release
   遭遇战带 Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34）；新加的
-  204 个目标只有离线证据，尚未做合并实机 shadow/replace。
+  219 个目标只有离线证据，尚未做合并实机 shadow/replace。
 - **已完成模块**：
   - core（配置/INI/SkuDef）
   - io（BIG 档案、RefPack、BigHandler 四层：查找/打开/读取/seek/枚举）
@@ -146,6 +146,14 @@
     代码在 `ra3/gamelogic/ModuleIdentity72.h`。主控核对 51 个槽位、名字串及每个指针在 `.rdata`
     中唯一出现。全为宏样板，语义深度低；之后的批次限制样板占比不超过 30%。集成态 Release
     152 场景零差异，guard 位 mutation 检出
+  - gameclient FXParticleSystem 模块批次（`0x0065E1E0–0x0066CE40`，Gemini）：50 个计数的 clean
+    入口（Alpha/Color/Update/Wind/RenderObject/Lightning 模块的初始化、模板复制、每帧更新、
+    emission volume 外向速度与矩阵/样条辅助），15 个 explicitOnly hook；代码在
+    `ra3/gameclient/ParticleModules65.h`。交付注释没有逐函数所有权证据，文档中的
+    `0x00BF4BD4` 源路径和多个 vtable 地址不实且缺 hook 表；主控脚本反查后补写证据
+    （16 个模块 vtable 槽位带 `slot[2]` 类名，34 个可追到模块/模板 vtable 或
+    `FxpsGPUStorageModule.cpp` 断言的直接调用边），3 个无锚点入口改为延后行（`ea106de`）。
+    集成态 Release 1,272 次比较零差异
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
@@ -153,8 +161,8 @@
   - 少数 hook 在遭遇战里未被调用（logicrandomvariable、几个 BIG 枚举入口、
     stringfindlast 等），只有离线证据。
 - **当前并行**（子 agent 随主控会话结束而中断，恢复时先查各 worktree 有无新提交）：
-  - `recon/gamelogic7c`、`recon/common7e`、`recon/drawable52`、`recon/gamelogic72`：已合并
-    （`789bcb1`、`f3c87e3`、`c33c919`、`2c9fd80`）。合并冲突若只是注册行追加，用
+  - `recon/gamelogic7c`、`recon/common7e`、`recon/drawable52`、`recon/gamelogic72`、
+    `recon/particles65`：已合并（`789bcb1`、`f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`）。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。
   - `recon/obj6a`：Gemini 因 resource_exhausted 中断，主控提交快照 `cbfd909`，改由 Grok 接手。
   - `recon/common5a`：`0x005A0000–0x005BFFFF` common 簇，Grok，base `0d099eb`。
@@ -189,7 +197,7 @@
   common7e）→ ~~`0x00720000–0x0075FFFF`~~（已开 gamelogic72，Grok）→ ~~`0x00560000`~~（已开
   render56，Gemini）→ ~~`0x005A0000`~~（已开 common5a，Grok）→ ~~`0x00500000`~~（已开 audio50，Gemini）→
   `0x00870000` gamelogic/gameclient 301（Gemini）→ `0x004D0000` GameLogic 核心 261（Gemini）
-  → `0x00990000` render 140（Gemini）→ `0x00820000–0x0083FFFF` gamelogic 250（Grok）。
+  → `0x00990000` render 140（Gemini）→ ~~`0x00820000–0x0083FFFF`~~（已开 gamelogic82，Grok）。
   受保护批次合并后，按剩余 body/cave 数量再开下一路。
 - **验收教训**：子 agent 的交付说明可能与提交不符（protentry 的证据地址、gamelogic7c 的
   vtable 地址与源路径均为编造的）。vtable 所有权声明一律用脚本反查：在 `.rdata` 中找函数
