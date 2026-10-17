@@ -3,6 +3,10 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <stdexcept>
 #include <string>
 
 #ifdef _WIN32
@@ -479,27 +483,104 @@ void dispatch(const std::string& op, Buffer& b) {
             b.u8(0x00) != 0U, b.u8(0x01) != 0U, b.u8(0x02),
             b.u32(0x04), b.u8(0x08), b.u8(0x09) != 0U, b.u8(0x0A), b.u8(0x0B) != 0U);
         b.setU32(0x10, handled ? 1U : 0U);
+    } else {
+        throw std::runtime_error("Unknown op: " + op);
     }
+}
+
+Buffer fromHex(const std::string& text) {
+    if (text.size() != sizeof(Buffer::bytes) * 2U) {
+        throw std::runtime_error("unexpected scenario hex length");
+    }
+    auto nibble = [](char c) -> std::uint8_t {
+        if (c >= '0' && c <= '9') return static_cast<std::uint8_t>(c - '0');
+        if (c >= 'a' && c <= 'f') return static_cast<std::uint8_t>(c - 'a' + 10);
+        if (c >= 'A' && c <= 'F') return static_cast<std::uint8_t>(c - 'A' + 10);
+        throw std::runtime_error("invalid hex char");
+    };
+    Buffer out{};
+    for (std::size_t i = 0; i < sizeof(Buffer::bytes); ++i) {
+        out.bytes[i] = static_cast<std::uint8_t>(
+            (nibble(text[i * 2U]) << 4U) | nibble(text[i * 2U + 1U]));
+    }
+    return out;
+}
+
+void printHex(const Buffer& b) {
+    static const char kHex[] = "0123456789abcdef";
+    char line[sizeof(Buffer::bytes) * 2U + 2U];
+    for (std::size_t i = 0; i < sizeof(Buffer::bytes); ++i) {
+        line[i * 2U] = kHex[(b.bytes[i] >> 4U) & 0x0FU];
+        line[i * 2U + 1U] = kHex[b.bytes[i] & 0x0FU];
+    }
+    line[sizeof(Buffer::bytes) * 2U] = '\n';
+    line[sizeof(Buffer::bytes) * 2U + 1U] = '\0';
+    std::cout.write(line, sizeof(Buffer::bytes) * 2U + 1U);
+}
+
+void mutateBuffer(Buffer& b) {
+    b.bytes[0x10] ^= 0x01U;
+    b.bytes[0x14] ^= 0x01U;
+    b.bytes[0x18] ^= 0x01U;
+    b.bytes[0x20] ^= 0x01U;
 }
 
 }  // namespace
 
 int main(int argc, char** argv) {
-    if (argc < 2) {
-        return 2;
-    }
+    bool forceMutate = false;
+    if (argc >= 2 && std::string(argv[1]) == "--mutate") {
+        forceMutate = true;
+    } else if (argc >= 2) {
 #ifdef _WIN32
-    _setmode(_fileno(stdin), _O_BINARY);
-    _setmode(_fileno(stdout), _O_BINARY);
+        _setmode(_fileno(stdin), _O_BINARY);
+        _setmode(_fileno(stdout), _O_BINARY);
 #endif
-    const std::string op = argv[1];
-    Buffer buf{};
-    if (std::fread(buf.bytes, 1, sizeof(buf.bytes), stdin) != sizeof(buf.bytes)) {
-        return 3;
+        const std::string op = argv[1];
+        Buffer buf{};
+        if (std::fread(buf.bytes, 1, sizeof(buf.bytes), stdin) != sizeof(buf.bytes)) {
+            return 3;
+        }
+        dispatch(op, buf);
+        if (std::fwrite(buf.bytes, 1, sizeof(buf.bytes), stdout) != sizeof(buf.bytes)) {
+            return 4;
+        }
+        return 0;
     }
-    dispatch(op, buf);
-    if (std::fwrite(buf.bytes, 1, sizeof(buf.bytes), stdout) != sizeof(buf.bytes)) {
-        return 4;
+
+    std::string line;
+    while (std::getline(std::cin, line)) {
+        if (!line.empty() && line.back() == '\r') {
+            line.pop_back();
+        }
+        if (line.empty()) {
+            continue;
+        }
+        if (line == "quit") {
+            return 0;
+        }
+        std::istringstream iss(line);
+        std::string first;
+        iss >> first;
+        bool doMutate = forceMutate;
+        std::string op;
+        std::string hexText;
+        if (first == "eval" || first == "mutate") {
+            if (first == "mutate") {
+                doMutate = true;
+            }
+            iss >> op >> hexText;
+        } else {
+            op = first;
+            iss >> hexText;
+        }
+        Buffer buf = fromHex(hexText);
+        dispatch(op, buf);
+        if (doMutate) {
+            mutateBuffer(buf);
+        }
+        printHex(buf);
+        std::cout.flush();
     }
     return 0;
 }
