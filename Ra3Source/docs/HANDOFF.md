@@ -41,14 +41,15 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 net5d 合并）
+## 3. 现状（截至 thingtemplate 合并）
 
-- **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,987 行，其中 verified 66、
-  reversed 904、unanalyzed 48,017。`securom` 分类：clean 47,773、entry-lost 653、
+- **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
+  reversed 919、unanalyzed 48,006。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
-- **hook**：277 个目标（其中 230 个只认显式键）。原有 86 个全部 replace 时，Release
+  Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
+- **hook**：282 个目标（其中 235 个只认显式键）。原有 86 个全部 replace 时，Release
   遭遇战带 Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34）；新加的
-  175 个目标只有离线证据，尚未做合并实机 shadow/replace。
+  180 个目标只有离线证据，尚未做合并实机 shadow/replace。
 - **已完成模块**：
   - core（配置/INI/SkuDef）
   - io（BIG 档案、RefPack、BigHandler 四层：查找/打开/读取/seek/枚举）
@@ -106,6 +107,12 @@
     代码在 `ra3/net/CommandMessage.h`；无 hook（影子调用会重复驱动文本/流虚函数）。
     主控逐条核对 42 个 vtable 槽位声明并抽查反汇编；集成态 Release 165 场景零差异，
     `+0x18→+0x1C` 写偏移 mutation 检出。24 个全局/分配器/断言门面入口留作清单行
+  - common ThingTemplate 批次（`0x0078B6E0–0x0078E810`，Grok）：12 个 clean 入口（掩码
+    谓词、模块记录查找/移除、注册表取值、构造器安装助手），5 个 explicitOnly hook；代码在
+    `ra3/common/ThingTemplate.h`。所有权为 vtable `00C2927C` 槽位或构造器 `00795F70`
+    （写入该 vtable）/ `ThingTemplate.cpp` 锚点的直接调用边，主控逐条核对。126 个候选因
+    无所有权边、生命周期、EASTL、x87 等被拒。`0x0078E7C0` 为 Ghidra 漏建函数，已登记
+    `function_additions.tsv`；同时补登记了早先 stringbase2/audioevent 认领的 3 个漏建函数
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
@@ -116,8 +123,8 @@
   - `recon/gamelogic7c`：`0x007C0000–0x007CFFFF` GameLogic 簇，Gemini；前两次 worker
     均在产出前中断，已从 base `0a72cc8` 重新启动。
   - `recon/skirmishai89`：`0x00890000–0x0089FFFF` skirmish AI 簇，Gemini，base `5d16a5b`。
-  - `recon/thingtemplate`：`0x00780000–0x00796FFF` ThingTemplate/Thing 访问器簇，Grok
-    （提高证据门槛：逐行所有权证明），base `5d16a5b`。
+  - `recon/thingtemplate`：已合并。`recon/common7e`（`0x007E0000–0x0080FFFF` common
+    类簇，Grok，可脚本核对的逐行所有权证明）补位，base `f535fe2`。
   - `recon/render91`：`0x00900000–0x0091FFFF` W3D draw module 簇，Gemini，base `5d16a5b`。
   - 14:00 补足 10 路，base 均为 `86baa8d`：`recon/objbehav68`（`0x00680000–0x0068FFFF`
     对象 behavior/update 模块，Gemini）、`recon/protentry`（run35 已恢复原生体的
@@ -128,8 +135,9 @@
     （已合并）。
   - `recon/obj6a`：`0x006A0000–0x006BFFFF` gamelogic 类簇，Gemini，base `77fa914`
     （补 net5d 的位）。
-  - 模型服务连接错误会中断子 agent；gamelogic7c、objbehav68 各中断一次，已用 resume
-    在原 worktree 续跑。中断后先查 worktree 未提交改动，续跑而不是重启。
+  - 模型服务连接错误会中断子 agent。resume 续跑会带回长上下文，实测很快再次失败；
+    做法是先查 worktree 未提交改动，再派一个新上下文的 agent 接手半成品（说明现有文件、
+    缺什么、先提交再完善）。gamelogic7c、objbehav68、protcave 已按此接手。
   - 已合并批次的旧 worktree 已移除（分支保留）；`recon/behavior6b` 的 `c24fe82` 与
     main 的 `44616d1` 为同一补丁。
 - **合并前静态验收**：`python Ra3Source\tools\analysis\accept_batch.py recon/<name>`。
@@ -140,8 +148,8 @@
   由主控修正再合并。脚本不判断语义与所有权证据，这部分仍由主控抽查。
 - **批次指标**：`docs/analysis/ra3_1.0/batch_metrics.tsv`，合并或退回时追加一行。
 - **补位队列**（任一路完成即补，保持 10 路；数字为未认领 clean 函数数）：
-  ~~`0x006A0000–0x006BFFFF`~~（已开 obj6a）→ `0x007E0000–0x0080FFFF` common 464
-  （Grok）→ `0x00720000–0x0075FFFF` gamelogic ~520（Gemini）→ `0x00560000` render 212
+  ~~`0x006A0000–0x006BFFFF`~~（已开 obj6a）→ ~~`0x007E0000–0x0080FFFF`~~（已开
+  common7e）→ `0x00720000–0x0075FFFF` gamelogic ~520（Gemini）→ `0x00560000` render 212
   （Gemini）→ `0x005A0000` common 196（Grok）→ `0x00500000` audio 118（Gemini）→
   `0x00870000` gamelogic/gameclient 301（Gemini）→ `0x004D0000` GameLogic 核心 261（Gemini）
   → `0x00990000` render 140（Gemini）→ `0x00820000–0x0083FFFF` gamelogic 250（Grok）。

@@ -2251,6 +2251,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004cb0e0	FUN_004cb0e0	.text	35		clean	common	recon/stringbase2	reversed	Unicode text-source copyRange; oracle 80; hook stringbase2unicodesourcecopyrange
 004cb110	FUN_004cb110	.text	33		clean	common	recon/strings	reversed	Unicode {text,length} copy source (vtable 0x00BDAB7C) slot 3 copyTo: memcpy(dest, text, 2*length), returns length, ret 4
 004cb140	FUN_004cb140	.text	31		clean	common	recon/stringbase2	reversed	Unicode abstract-source deleting destructor; oracle 80
+004cb160	FUN_004cb160	.text	69		clean	common	recon/stringbase2	reversed	Unicode skip separators register helper; oracle 80
+004cb1b0	FUN_004cb1b0	.text	65		clean	common	recon/stringbase2	reversed	Unicode skip non-separators register helper; oracle 80
 004cb200	FUN_004cb200	.text	92		clean	common	recon/stringbase2	reversed	Unicode-object to ASCII translation through opaque converter; oracle 80
 004cb260	FUN_004cb260	.text	14		inner-patched	unknown		unanalyzed	
 004cb280	thunk_FUN_0197e460	.text	6		entry-lost	unknown		unanalyzed	
@@ -5460,6 +5462,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00559bf0	FUN_00559bf0	.text	27		clean	unknown		unanalyzed	
 00559c10	FUN_00559c10	.text	15		clean	audio	recon/audioevent	reversed	AudioEventView::setPlayerIndex; oracle 64; hook audioeventsetplayer
 00559c20	FUN_00559c20	.text	4		clean	audio	recon/audioevent	reversed	AudioEventView::minimumRange; x87 oracle 64
+00559c30	FUN_00559c30	.text	19		clean	audio	recon/audioevent	reversed	AudioEventView::decrementDelay; oracle 64; hook audioeventdecrementdelay
 00559c50	FUN_00559c50	.text	51		clean	audio	recon/audioevent	reversed	AudioEventView::setPosition; oracle 64; hook audioeventsetposition
 00559c90	FUN_00559c90	.text	30		clean	audio	recon/audioevent	reversed	AudioEventView::setObjectId; oracle 64; hook audioeventsetobject
 00559cb0	FUN_00559cb0	.text	13		clean	audio	recon/audioevent	reversed	AudioEventView::objectId; oracle 64
@@ -17653,7 +17656,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0078b650	FUN_0078b650	.text	305		clean	unknown		unanalyzed	
 0078b670	FUN_0078b670	.text	436		clean	unknown		unanalyzed	
 0078b690	FUN_0078b690	.text	71		clean	unknown		unanalyzed	
-0078b6e0	FUN_0078b6e0	.text	80		clean	unknown		unanalyzed	
+0078b6e0	FUN_0078b6e0	.text	80		clean	common	recon/thingtemplate	reversed	moveModuleRecords. Direct callee of 0078DCA0 at 0078DD19. cdecl. Equal pointers return the destination and write nothing. The copy loop calls 004CA9B0, whose first-use lock allocates, and is not executed. Offline oracle only.
 0078b730	FUN_0078b730	.text	105		clean	unknown		unanalyzed	
 0078b7a0	FUN_0078b7a0	.text	152		clean	unknown		unanalyzed	
 0078b840	FUN_0078b840	.text	41		clean	unknown		unanalyzed	
@@ -17664,7 +17667,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0078b990	FUN_0078b990	.text	111		clean	unknown		unanalyzed	
 0078ba00	FUN_0078ba00	.text	219		clean	unknown		unanalyzed	
 0078bae0	FUN_0078bae0	.text	33		clean	unknown		unanalyzed	
-0078bb10	FUN_0078bb10	.text	32		clean	unknown		unanalyzed	
+0078bb10	FUN_0078bb10	.text	32		clean	common	recon/thingtemplate	reversed	findModuleRecordByKey. Direct callee of ThingTemplate.cpp 0078DE50 at 0078DEC6. Stride-0x14 scan of [container+0x14, container+0x18). explicitOnly hook thingtemplatefindmodule. Offline oracle only.
 0078bb30	FUN_0078bb30	.text	37		clean	unknown		unanalyzed	
 0078bb60	FUN_0078bb60	.text	147		clean	unknown		unanalyzed	
 0078bc00	FUN_0078bc00	.text	52		clean	unknown		unanalyzed	
@@ -17681,9 +17684,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0078bee0	FUN_0078bee0	.text	118		clean	unknown		unanalyzed	
 0078bf60	FUN_0078bf60	.text	77		clean	unknown		unanalyzed	
 0078bfb0	FUN_0078bfb0	.text	198		clean	unknown		unanalyzed	
-0078c080	FUN_0078c080	.text	1146	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common		unanalyzed	
-0078c500	FUN_0078c500	.text	697	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common		unanalyzed	
-0078c7c0	FUN_0078c7c0	.text	612	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common		unanalyzed	
+0078c080	FUN_0078c080	.text	1146	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common	recon/thingtemplate	unanalyzed	Deferred. Thing.cpp:235 position transform, x87/SSE. Source-anchored, not an accessor. Not counted.
+0078c500	FUN_0078c500	.text	697	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common	recon/thingtemplate	unanalyzed	Deferred. Thing.cpp:265, callee of 0078CEE0 and 0078D1E0. x87/SSE. Not counted.
+0078c7c0	FUN_0078c7c0	.text	612	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common	recon/thingtemplate	unanalyzed	Deferred. Thing.cpp:290 position transform, x87/SSE. Not counted.
 0078ca30	FUN_0078ca30	.text	70		clean	unknown		unanalyzed	
 0078ca80	FUN_0078ca80	.text	126		clean	unknown		unanalyzed	
 0078cb00	FUN_0078cb00	.text	39		clean	unknown		unanalyzed	
@@ -17692,11 +17695,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0078cb90	FUN_0078cb90	.text	177		clean	unknown		unanalyzed	
 0078cc50	FUN_0078cc50	.text	165		clean	unknown		unanalyzed	
 0078cd00	FUN_0078cd00	.text	137	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-0078cd90	FUN_0078cd90	.text	114		clean	unknown		unanalyzed	
-0078ce10	FUN_0078ce10	.text	115		clean	unknown		unanalyzed	
-0078ce90	FUN_0078ce90	.text	71		clean	unknown		unanalyzed	
-0078cee0	FUN_0078cee0	.text	755	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common		unanalyzed	
-0078d1e0	FUN_0078d1e0	.text	694	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common		unanalyzed	
+0078cd90	FUN_0078cd90	.text	114		clean	common	recon/thingtemplate	reversed	registryPrimaryValue. Direct callee of constructor callees 0078E0D0 and 0078E1C0. Key 0 returns 0; otherwise map at registry+0x40 then +0x24 via 006C3A10. Offline oracle only.
+0078ce10	FUN_0078ce10	.text	115		clean	common	recon/thingtemplate	reversed	registrySecondaryValue. Direct callee of 0078E0D0 and 0078E1C0. Same maps as 0078CD90, returning value+4 and value+0x10. Offline oracle only.
+0078ce90	FUN_0078ce90	.text	71		clean	common	recon/thingtemplate	reversed	registryValuePresent. Direct callee of 0078E0D0 and 0078E1C0. +0x24 map only, including key 0. Non-null value returns that address with low byte 1. explicitOnly hook thingtemplateregistrypresent. Offline oracle only.
+0078cee0	FUN_0078cee0	.text	755	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common	recon/thingtemplate	unanalyzed	Deferred. Thing.cpp:127 position transform, x87/SSE. Not counted.
+0078d1e0	FUN_0078d1e0	.text	694	SageEngine\source\GameEngine\common\thing\Thing.cpp	clean	common	recon/thingtemplate	unanalyzed	Deferred. Thing.cpp:173 position transform, x87/SSE. Not counted.
 0078d4a0	FUN_0078d4a0	.text	77		clean	unknown		unanalyzed	
 0078d4f0	FUN_0078d4f0	.text	39		clean	unknown		unanalyzed	
 0078d520	FUN_0078d520	.text	61		clean	unknown		unanalyzed	
@@ -17712,20 +17715,21 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0078da40	FUN_0078da40	.text	277		clean	unknown	recon/hookcat	reversed	hook candidate: 遍历两侧关联 ID 并判断两个对象是否相互关联
 0078db60	FUN_0078db60	.text	58		clean	unknown		unanalyzed	
 0078dba0	FUN_0078dba0	.text	253		clean	unknown		unanalyzed	
-0078dca0	FUN_0078dca0	.text	278		clean	unknown		unanalyzed	
+0078dca0	FUN_0078dca0	.text	278		clean	common	recon/thingtemplate	reversed	removeFirstMatchingModuleRecord. Direct callee of 0078E0D0 and 0078E1C0, four times each. Two stride-0x14 ranges. Oracle covers empty and non-matching walks plus a second-range hit; a first-range hit calls 004CA930, whose lock allocates, and is not executed. Offline oracle only.
 0078ddc0	FUN_0078ddc0	.text	134	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-0078de50	FUN_0078de50	.text	637	SageEngine\source\GameEngine\common\thing\ThingTemplate.cpp	clean	common		unanalyzed	
-0078e0d0	FUN_0078e0d0	.text	234		clean	unknown		unanalyzed	
-0078e1c0	FUN_0078e1c0	.text	216		clean	unknown		unanalyzed	
-0078e2a0	FUN_0078e2a0	.text	173		clean	unknown		unanalyzed	
+0078de50	FUN_0078de50	.text	637	SageEngine\source\GameEngine\common\thing\ThingTemplate.cpp	clean	common	recon/thingtemplate	unanalyzed	Deferred. ThingTemplate.cpp anchor. Found-key path calls SecuROM thunk 0040EBF0. Not-found append copies two uninitialized stack bytes. Not counted.
+0078e0d0	FUN_0078e0d0	.text	234		clean	common	recon/thingtemplate	reversed	installParsedModule. Direct callee of ThingTemplate constructor 00795F70 at 0079645D, 00796526, 007965D5, 00796685 and 00796735. Key 0 returns the pair address. Otherwise registry lookups, four removals, and for key 0x977F8391 a dword store at +0x2F8 from pair+8. Miss on global map 00CC32D0 returns 00CC32D4. The 0078DE50 branch is not taken: an empty registry makes the present byte 0, and the found-key path of 0078DE50 calls SecuROM thunk 0040EBF0. Offline oracle only.
+0078e1c0	FUN_0078e1c0	.text	216		clean	common	recon/thingtemplate	reversed	installParsedModuleAlternate. Direct callee of constructor 00795F70 at 00796483. Same as 0078E0D0 without the 0x977F8391 store. Offline oracle only.
+0078e2a0	FUN_0078e2a0	.text	173		clean	common	recon/thingtemplate	reversed	appendTemplateWordAndResetMap. Direct callee of constructor 00795F70 at 00796884. Flag +0x306 clears the dword vector by setting end back to begin (the copy loop compares the end pointer with itself). In-capacity append, then the map header at +0x264 is zeroed and self-linked. Oracle keeps the tree pointer null and the vector below capacity. Offline oracle only.
 0078e350	FUN_0078e350	.text	121		clean	unknown		unanalyzed	
 0078e3d0	FUN_0078e3d0	.text	147	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 0078e470	FUN_0078e470	.text	135		clean	unknown		unanalyzed	
 0078e500	FUN_0078e500	.text	50		clean	unknown		unanalyzed	
 0078e540	FUN_0078e540	.text	639		clean	unknown		unanalyzed	
-0078e800	FUN_0078e800	.text	63		clean	unknown		unanalyzed	
-0078e810	FUN_0078e810	.text	46		clean	unknown		unanalyzed	
-0078e840	FUN_0078e840	.text	251		clean	unknown		unanalyzed	
+0078e7c0	FUN_0078e7c0	.text	53		clean	common	recon/thingtemplate	reversed	maskAllNine. Target of ThingTemplate vtable 00C2927C slot 3 (0078E800 adds 0xC0 and jumps here). Ghidra has no entry; the bytes sit between the ret at 0078E7F1 and the slot thunk. Nine required-bit compares; EAX keeps the query pointer with the low byte replaced. explicitOnly hook thingtemplatemaskall. Offline oracle only.
+0078e800	FUN_0078e800	.text	63		clean	common	recon/thingtemplate	reversed	maskAllNineAtC0. ThingTemplate vtable 00C2927C slot 3. Distinct from 0078e7c0 because it adds 0xC0 before the jump. explicitOnly hook thingtemplatemaskallatc0. Offline oracle only.
+0078e810	FUN_0078e810	.text	46		clean	common	recon/thingtemplate	reversed	maskAnyNineAtC0. ThingTemplate vtable 00C2927C slot 2. Any of nine dwords at this+0xC0 shares a bit with the query. Full EAX is 0 or 1. explicitOnly hook thingtemplatemaskany. Offline oracle only.
+0078e840	FUN_0078e840	.text	251		clean	common	recon/thingtemplate	unanalyzed	Deferred. ThingTemplate vtable 00C2927C slot 1. Reads global 00DEBA80 and makes virtual calls. Not counted.
 0078e960	FUN_0078e960	.text	23		clean	unknown		unanalyzed	
 0078e980	FUN_0078e980	.text	362		clean	unknown		unanalyzed	
 0078eaf0	FUN_0078eaf0	.text	189		clean	unknown		unanalyzed	
@@ -17738,7 +17742,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00795d50	FUN_00795d50	.text	158		clean	unknown		unanalyzed	
 00795df0	FUN_00795df0	.text	94		clean	unknown		unanalyzed	
 00795e50	FUN_00795e50	.text	286	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-00795f70	FUN_00795f70	.text	477		clean	unknown		unanalyzed	
+00795f70	FUN_00795f70	.text	477		clean	common	recon/thingtemplate	unanalyzed	Deferred. ThingTemplate constructor. Lifecycle, writes vtable 00C2927C, and its assert paths call SecuROM thunk 0040EBF0. Not counted.
 0079614d	FUN_0079614d	.text	2831	SageEngine\source\GameEngine\common\thing\ThingTemplate.cpp	clean	common		unanalyzed	
 00796c60	FUN_00796c60	.text	12		clean	unknown		unanalyzed	
 00796c6c	FUN_00796c6c	.text	171		clean	unknown		unanalyzed	
