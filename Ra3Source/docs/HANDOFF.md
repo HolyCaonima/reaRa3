@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 obj72 合并）
+## 3. 现状（截至 aistate7c、protcave2 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 2,217、unanalyzed 46,708（受保护函数已 reversed：entry-lost 104、inner-patched 14、
+  reversed 2,287、unanalyzed 46,638（受保护函数已 reversed：entry-lost 104、inner-patched 14、
   entry-recoverable 3）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
@@ -299,6 +299,20 @@
     `ra3/gamelogic/ObjectModules72.h`，设计见 `obj72.md`。归属全为具名 split vtable 槽位，主控复算
     `fails=0`，并反汇编全部短 xfer 与最小的体：样板 4/41（1 个只转发基类的 xfer、3 个转发包装）。
     集成态 oracle 113 例零差异，`kAimState2` `2→9` mutation 检出
+  - AI states 批次（`0x007C0000–0x007CFFFF`，Grok）：41 个 state 方法（AIAttack*/AIEnter*/AIGuard*/
+    AIHarvest*/AITNGuard*/UnitAI* 的 onEnter/update/onExit，93–333 字节），无 hook，样板 0；代码在
+    `ra3/gamelogic/AIState7C.h`，设计见 `aistate7c.md`。主控复算 `fails=0`；`00c31b10/60/b0/c00` 四张表共用
+    名字 getter `0x0079C430`，其中三张可能属于继承名字的子类（Generals 里 AIDock 的移动状态派生自
+    AIInternalMoveToState），主控已在四行注释里写明。49 个 x87/comiss 体与 41 个其余真实体留待后续。
+    集成态 oracle 82 例零差异，`AIAimFireState::onEnter` 的 `je` 取反 mutation 检出
+  - 受保护 cave 第二批（Gemini）：29 个计数（protcave 的 13 个延后行中 12 个闭合，另 17 个取自 cave 池），
+    代码在 `ra3/gamelogic/ProtectedCaveLogic2.h`，设计见 `protected_caves2.md`；oracle 把各 slot 指向
+    runtime_target，让原版 cave 在 Unicorn 里原样执行。交付没有 claims 文件，主控用
+    `python work\probe\check_protcave.py recon/protcave2 protcave2_annotations.tsv` 从注释重建声明：
+    30 个站点与 `securom_sites.tsv` 全部一致，`fails=0`；但 `0x007461C0` 的调用者 `0x0074634F` 是 Ghidra
+    在 `0x00746280` 循环中间误切出的入口，所引“vtable” `0x00C8CA1C` 是单槽 `data_pointer`，主控把它改为
+    延后（保留移植）。合并时用 `fold_annotations.py --replace-deferred` 原位替换了 13 个旧延后行。集成态
+    oracle 77 例零差异，`idx<thresh` 取反 mutation 检出
   - AI states 批次（`0x00790000–0x0079FFFF`，Grok）：48 个方法（Turret/UnitAI/AIDock/AIGuard/AIAttack
     各 state 的 onEnter/update/onExit 与条件槽位、FollowWaypointPath/Turret 状态机），无 hook，样板 0；
     代码在 `ra3/gamelogic/AIState79.h`，设计见 `aistate79.md`。归属全部为单个 split vtable 槽位，主控
@@ -344,10 +358,10 @@
     `recon/particles65`、`recon/render91`、`recon/obj6a`、`recon/protcave`、`recon/protentry2`、
     `recon/gamelogic82`、`recon/skirm87`、`recon/common5a`、`recon/render56`、`recon/objbehav68`、`recon/audio50`、
     `recon/aistate79`、`recon/render99`、`recon/net5d2`、`recon/obj69`、`recon/logic4d`、`recon/skirm8b`、
-    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`、`recon/render9b`、`recon/client52`、`recon/obj72`：已合并（`789bcb1`、
+    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`、`recon/render9b`、`recon/client52`、`recon/obj72`、`recon/aistate7c`、`recon/protcave2`：已合并（`789bcb1`、
     `f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`、
     `9df37c8`、`760e231`、`79a7caa`、`9c14506`、`6234602`、`00c9a7a`、`be08241`、`ba97d03`、`bec182d`、
-    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`、`ae7caf5`、`0f0515f`、`989d91b`）。追加合并脚本在
+    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`、`ae7caf5`、`0f0515f`、`989d91b`、`747eae9`、`8ee7d18`）。追加合并脚本在
     冲突块以 `)` 收尾时会报 WARN，需手工检查括号（skirm87 合并时拼坏过一次 CMake）。受保护批次的站点/字符串/伪调用核对脚本见 `work/probe/check_protcave.py`、
     `work/probe/check_protentry2.py`，多快照槽值用 `work/probe/slot_snapshots.py`。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
@@ -364,12 +378,11 @@
   - skirmishai89 合并后补位：`recon/aistate7d`（`0x007D0000–0x007DFFFF`，AIPlayer/AISkirmishPlayer、
     AIStateMachine 与 AI states，89 个在 split vtable 槽位，`AIPlayer.cpp`/`UnitAITargetChooser.cpp`
     锚点，Grok）。
-  - net5d2、obj69、logic4d 合并后补位（base 为记录本次合并的 docs 提交）：`recon/protcave2`
-    （唯一的 Gemini 位：`securom_sites.tsv` 中 `resolution=cave` 且未认领的 190 个函数，外加 protcave
-    的 13 个延后入口；这 13 个在主台账注释里是空状态行，`fold_annotations.py` 会报 clash，合并时
-    主控手工替换）、`recon/aistate7c`（`0x007C0000–0x007CFFFF` 剩余 200 个 clean，142 个在具名
-    split vtable 非 getter 槽位，Grok）、`recon/render9b`（`0x009B0000–0x009BFFFF` 渲染管线脚本命令
-    解释器，slot 2 返回各命令的用法串，Grok）。当前 Grok 9 路、Gemini 1 路。
+  - aistate7c、protcave2 合并后补位：`recon/protcave3`（唯一的 Gemini 位：剩余 165 个只有 cave 站点、
+    无注释行的 inner-patched/entry-recoverable 函数，清单 `work/prompts/protcave3_pool.txt`；外加 5 个
+    空状态的延后行 `007461c0` 与 drawable52 的 `00523e60`/`005242b0`/`0052cd70`/`0052d6b0`，合并时用
+    `fold_annotations.py ... --replace-deferred` 原位替换）、`recon/fx66`（`0x00660000–0x0067FFFF`
+    FX 粒子系统类，约 100 个在具名表槽位，代码进 `src/gameclient`，Grok）。当前 Grok 9 路、Gemini 1 路。
   - obj72 合并后补位：`recon/obj6c`（`0x006C0000–0x006DFFFF` 对象模块，约 86 个在具名表槽位
     （AIUpdateInterface 29、StancesBehavior 15 等），约 250 个在多继承模块的次级接口表里，类名须经同时写主表
     与次级表的构造函数确定，Grok）。
@@ -422,7 +435,7 @@
   ~~`0x00690000` 第二轮~~（已开 obj69b）→ ~~`0x007D0000`~~（已开 aistate7d）→ ~~`0x006E0000`~~（已开 obj6e，含 `0x006F`）→ ~~`0x00710000`~~（已开
   obj70，含 `0x0070`）→ ~~`0x00520000`~~（已开 client52，含 `0x0053`）→ ~~`0x00560000`~~（已开 w3d56，含 `0x0057`）→
   （17:50 重排）~~`0x007A0000` 第二轮 186~~（已开 aistate7a2）→ ~~`0x00790000` 第三轮 169~~（已开 aistate79c）→
-  ~~`0x006C0000` 96~~（已开 obj6c，含 `0x006D`）→ `0x00660000` 91 → `0x007B0000` 第二轮 89 → `0x009B0000` 第二轮 73；下一轮用 `python work\probe\rank_blocks.py <在途块号...>` 重新排名
+  ~~`0x006C0000` 96~~（已开 obj6c，含 `0x006D`）→ ~~`0x00660000` 91~~（已开 fx66，含 `0x0067`）→ `0x007B0000` 第二轮 89 → `0x009B0000` 第二轮 73；下一轮用 `python work\probe\rank_blocks.py <在途块号...>` 重新排名
   （按具名 split vtable 非 getter 槽位里的未认领 clean 函数数），再用 `survey_block.py` 看类名与锚点。
   `0x0066`（FX 粒子模块）与 `0x006C` 的槽位多在无 slot-2 getter 的表里（主控用
   `work/probe/survey_block.py <lo> <hi>` 复查），类名只能推断，排在后面；protcave 已由 protcave2 接续。`0x00A0`–`0x00BA` 区段数量

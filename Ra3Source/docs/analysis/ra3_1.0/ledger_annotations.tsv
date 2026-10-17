@@ -1548,34 +1548,34 @@ address	status	owner	module	notes
 006a6460	reversed	recon/protcave	gamelogic	runUnregisterObjectSubsystems: inner-patched site 0x006a6463 -> 0x006a646a slot 0x018ed9ec; direct callee of 0x006b0f80 at 0x006b0fc5; 0x006b0f80 is 0x00c22b88 slot 29; 6 oracle cases
 006a6dc0	reversed	recon/protcave	gamelogic	runObjectPositionStep: inner-patched site 0x006a6dc1 -> 0x006a6dc8 slot 0x018f2560; direct callee of 0x00742940 at 0x00742a40 (NotifyTargetsOfImminentProbableCrushingMux.cpp); 7 oracle cases
 006a7600	reversed	recon/protcave	gamelogic	runObjectControllingPlayer: entry-recoverable site 0x006a7600 -> 0x006a7606 slot 0x018f2708; direct callee of 0x007688e0 at 0x0076985c (GenericObjectCreationNugget.cpp); 4 oracle cases
-006a8400		recon/protcave	gamelogic	deferred: entry-recoverable site 0x006a8400 -> 0x006a8406 slot 0x018f28c4; body has further calls and was not closed in this batch
+006a8400	reversed	recon/protcave2	gamelogic	runTriggerWeaponInitAudioEvent: entry-recoverable site 0x006a8400 -> 0x006a8406 slot 0x018f28c4; direct callee of 0x006ed440 at 0x006ed471; 0x006ed440 is 0x00bf96a8 slot 4; 2 oracle cases
 006b7040	reversed	recon/protcave	gamelogic	runAssignAiTargetRef: inner-patched site 0x006b7045 -> 0x006b704b slot 0x018f27dc; direct callee of 0x0079ff10 at 0x0079ff61; 0x0079ff10 is 0x00c2ef40 slot 6; 4 oracle cases
 006bb360	reversed	recon/protcave	gamelogic	runClassifyObjectKindMask: inner-patched site 0x006bb369 -> 0x006bb36f slot 0x018f2c98; direct callee of 0x00745250 at 0x0074534e (WeaponSlot.cpp); 9 oracle cases
 006bd510	reversed	recon/protcave	gamelogic	runObjectPassesKindFilter: inner-patched site 0x006bd51e -> 0x006bd526 slot 0x018f2f18; direct callee of 0x00745d40 at 0x00745dc1; 0x00745d40 is 0x00c07788 slot 1; 5 oracle cases
-006c0620		recon/protcave	gamelogic	deferred: inner-patched site 0x006c0623 -> 0x006c0629 slot 0x018f2b84; body has further calls and was not closed in this batch
+006c0620	reversed	recon/protcave2	gamelogic	runResolveObjectIndicatorColor: inner-patched site 0x006c0623 -> 0x006c0629 slot 0x018f2b84; direct callee of 0x006fd280 at 0x006fd3d6; 0x006fd280 is 0x00c1bc90 slot 39; 3 oracle cases
 006c0b60		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x006c0b63 -> 0x006c0b69 slot 0x018f2ba4
 006c1500	reversed	recon/protcave	gamelogic	runFindBehaviorModuleByKey: inner-patched site 0x006c1504 -> 0x006c150b slot 0x018edda0; direct callee of 0x006ebea0 at 0x006ebf35; 0x006ebea0 is 0x00c06274 slot 1; 5 oracle cases
 006c1d60	reversed	recon/protcave	gamelogic	runReassignControllingPlayer: inner-patched site 0x006c1d63 -> 0x006c1d69 slot 0x018f29f0; direct callee of 0x006c85e0 at 0x006c85ff; 0x006c85e0 is 0x00c11970 slot 98; 4 oracle cases
-006c2c30		recon/protcave	gamelogic	deferred: inner-patched site 0x006c2c33 -> 0x006c2c39 slot 0x018ed5e0; body has further calls and was not closed in this batch
-006c4f10		recon/protcave	gamelogic	deferred: inner-patched site 0x006c4f53 -> 0x006c4f5b slot 0x018f2c0c; message construction was not closed in this batch
-006c5480		recon/protcave	gamelogic	deferred: inner-patched site 0x006c54b3 -> 0x006c54bb slot 0x018ed740; message construction was not closed in this batch
+006c2c30	reversed	recon/protcave2	gamelogic	runUpdateObjectPowerRadarStatusBit: inner-patched site 0x006c2c33 -> 0x006c2c39 slot 0x018ed5e0; direct callee of 0x007028b0 at 0x0070295d; 0x007028b0 is 0x00c06420 slot 0; 3 oracle cases
+006c4f10	reversed	recon/protcave2	gamelogic	runDispatchVec3CommandMessage: inner-patched site 0x006c4f53 -> 0x006c4f5b slot 0x018f2c0c; direct callee of 0x006e6830 at 0x006e6b21; 0x006e6830 is 0x00c01e40 slot 25; 2 oracle cases
+006c5480	reversed	recon/protcave2	gamelogic	runDispatchTargetCommandMessage3D: inner-patched site 0x006c54b3 -> 0x006c54bb slot 0x018ed740; direct callee of 0x007512c0 at 0x00751377; 0x007512c0 is 0x00c1c560 slot 29; 2 oracle cases
 006c6310		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x006c6314 -> 0x006c631a slot 0x018f2dfc
-006c8380		recon/protcave	gamelogic	deferred: inner-patched site 0x006c8384 -> 0x006c838a slot 0x018f2b94; continuation walks past a closed body and was not matched
-006cace0		recon/protcave	gamelogic	deferred: inner-patched site 0x006cace6 -> 0x006cacec slot 0x018f28a8; body has further calls and was not closed in this batch
+006c8380	reversed	recon/protcave2	gamelogic	runDestroyActiveBodyBase: inner-patched site 0x006c8384 -> 0x006c838a slot 0x018f2b94; direct callee of 0x006d9c20 at 0x006d9c37; 0x006d9c20 is 0x00c11d28 slot 0; 2 oracle cases
+006cace0	reversed	recon/protcave2	gamelogic	runTryExecuteSpecialPowerOnTarget: inner-patched site 0x006cace6 -> 0x006cacec slot 0x018f28a8; vtable 0x00c00f4c slot 13; 3 oracle cases
 006d0330		recon/protcave	gamelogic	dropped: entry-recoverable site 0x006d0330 -> 0x006d0336 slot 0x018f2e6c; continuation reaches an indirect jump and was not a closed match
-006d1dd0		recon/protcave	gamelogic	deferred: inner-patched site 0x006d1dd4 -> 0x006d1dda slot 0x018eda4c; body has further calls and was not closed in this batch
-006e4760		recon/protcave	gamelogic	deferred: inner-patched site 0x006e476e -> 0x006e4774 slot 0x018ed40c; hash lookup was not closed in this batch
+006d1dd0	reversed	recon/protcave2	gamelogic	runRefreshObjectModulesAndDrawableState: inner-patched site 0x006d1dd4 -> 0x006d1dda slot 0x018eda4c; direct callee of 0x006fe4a0 at 0x006fea0d; 0x006fe4a0 is 0x00bf7e40 slot 5; 2 oracle cases
+006e4760	reversed	recon/protcave2	gamelogic	runFindSelectableObjectAndQueryModule44: inner-patched site 0x006e476e -> 0x006e4774 slot 0x018ed40c; direct callee of 0x0079cd20 at 0x0079cd3c; 0x0079cd20 is 0x00c29f40 slot 4; 2 oracle cases
 006e5ce0	reversed	recon/protcave	gamelogic	runClearNonZeroStatusWord: inner-patched site 0x006e5ce2 -> 0x006e5ce8 slot 0x018f2aa0; direct callee of 0x0079b720 at 0x0079b72f; 0x0079b720 is 0x00c30160 slot 4; 4 oracle cases
 006ee7b0		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x006ee7b3 -> 0x006ee7b9 slot 0x018ed3e4
-006efe40		recon/protcave	gamelogic	deferred: inner-patched site 0x006efe43 -> 0x006efe49 slot 0x018f2654; hash lookup was not closed in this batch
-006f1350		recon/protcave	gamelogic	deferred: inner-patched site 0x006f1356 -> 0x006f135c slot 0x018f2574; body has further calls and was not closed in this batch
-0072cf30		recon/protcave	gamelogic	deferred: inner-patched site 0x0072cf37 -> 0x0072cf3d slot 0x018eda38; drawable tint path was not closed in this batch
+006efe40	reversed	recon/protcave2	gamelogic	runResolveObjectByProducerId: inner-patched site 0x006efe43 -> 0x006efe49 slot 0x018f2654; direct callee of 0x006ffc00 at 0x006ffc7d; 0x006ffc00 is 0x00c22118 slot 99; 2 oracle cases
+006f1350	reversed	recon/protcave2	gamelogic	runIsObjectMobileAndControllable: inner-patched site 0x006f1356 -> 0x006f135c slot 0x018f2574; direct callee of 0x007ca9e0 at 0x007caa89; 0x007ca9e0 is 0x00c31dc8 slot 5; 3 oracle cases
+0072cf30	reversed	recon/protcave2	gamelogic	runApplyDrawableTintEnvelope: inner-patched site 0x0072cf37 -> 0x0072cf3d slot 0x018eda38; direct callee of 0x0072cfd0 at 0x0072d07b; 0x0072cfd0 is 0x00c22118 slot 22; 2 oracle cases
 00731530	reversed	recon/protcave	gamelogic	runRegisterActiveModuleListener: inner-patched site 0x00731534 -> 0x0073153b slot 0x018ed904; direct callee of 0x00742e90 at 0x00742f46; 0x00742e90 is 0x00c19580 slot 4; 4 oracle cases
 00734490		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x00734493 -> 0x0073449a slot 0x018f2a90
 0073c740		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x0073c755 -> 0x0073c75c slot 0x018f2c38
 00741140		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x00741144 -> 0x0074114a slot 0x018ed9dc
 007451e0	reversed	recon/protcave	gamelogic	runNotifySixBucketListeners: inner-patched site 0x007451f5 -> 0x007451fd slot 0x018ed724; direct callee of 0x007564a0 at 0x007564a3; 0x007564a0 is 0x00c143b0 slot 1; 2 oracle cases
-007461c0		recon/protcave	gamelogic	deferred: inner-patched site 0x007461cd -> 0x007461d4 slot 0x018edd24; body has further calls and was not closed in this batch
+007461c0		recon/protcave2	gamelogic	runCopyWeaponAimTransformAndUpdate: inner-patched site 0x007461cd -> 0x007461d4 slot 0x018edd24; direct callee of 0x0074634f at 0x007465a4; 0x0074634f is 0x00c8ca1c slot 0; 3 oracle cases; deferred (controller): anchor 0x0074634f is a Ghidra mis-split inside 0x00746280, which really contains call site 0x007465a4, and 0x00c8ca1c is a one-slot data pointer, not a vtable; 0x00746280 is reached only from unanchored 0x007571d0/0x00780ed0
 00747920		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x00747928 -> 0x0074792e slot 0x018ed7a0
 00747f10	reversed	recon/protcave	gamelogic	runConsiderObjectIdle: inner-patched site 0x00747f13 -> 0x00747f19 slot 0x018f2e68; direct callee of 0x004f7320 at 0x004f7a59; 0x004f7320 is 0x00bdcc74 slot 13; 9 oracle cases
 00403660	reversed	recon/protentry2	core/LuaVmPorts	"LuaMemRealloc(state, oldBlock, size) [luaM_realloc]: entry-lost thunk site=0x00403660 slot=0x018FB434 body=0x004A3130 section=.text; reallocates or frees Lua heap blocks via CRT [0x00CA28B0]/[0x00CA28B4] and raises lua_error (""memory allocation error: block too big"" at 0x00BD5154 via [0x018FC6E4]) or luaD_breakrun(L, 4) (0x00403FF0); verified against run35 capture (4 scenarios, 0 mismatches)."
@@ -2682,3 +2682,61 @@ address	status	owner	module	notes
 0073f5c0	reversed	recon/obj72	gamelogic	ra3::gamelogic::WeaponFireSpecialAbilityUpdate_templateBit8; 00c1e918 slot 23; slot 2 returns WeaponFireSpecialAbilityUpdate
 0073faa0	reversed	recon/obj72	gamelogic	ra3::gamelogic::DeployStyleAIUpdate_xfer; 00c245b0 slot 3; slot 2 returns DeployStyleAIUpdate
 0073fff0	reversed	recon/obj72	gamelogic	ra3::gamelogic::HordeAIUpdate_xfer; 00c24ee0 slot 3; slot 2 returns HordeAIUpdate; ledger entry starts at 0073fff0 and the ret is at 0074001c
+007c2610	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIAttackFireDuringApproachState_onEnter; 00c2f8e8 slot 4; slot 2 returns AIAttackFireDuringApproachState
+007c29e0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIAttackMeleeSquishState_onEnter; 00c2f9c8 slot 4; slot 2 returns AIAttackMeleeSquishState
+007c35a0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIAttackMoveToState_onEnter; 00c32180 slot 4; slot 2 returns AIAttackMoveToState
+007c39e0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIFollowWaypointPathExactState_onEnter; 00c2fd20 slot 4; slot 2 returns AIFollowWaypointPathExactState
+007c41c0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIAimFireState_onEnter; 00c2c910 slot 4; slot 2 returns AIAimFireState
+007c4220	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIAimFireState_update; 00c2c910 slot 5; slot 2 returns AIAimFireState
+007c45c0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIEnterState_onEnter; 00c2fe00 slot 4; slot 2 returns AIEnterState
+007c4700	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIEnterAndAttackState_onEnter; 00c2fec0 slot 4; slot 2 returns AIEnterAndAttackState
+007c4a90	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIChargeTargetState_update; 00c2ff50 slot 5; slot 2 returns AIChargeTargetState
+007c4c30	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIMoveToPositionAndEnterState_onEnter; 00c301b8 slot 4; slot 2 returns AIMoveToPositionAndEnterState
+007c4e00	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIBurningDeathState_onEnter; 00c30098 slot 4; slot 2 returns AIBurningDeathState
+007c4ee0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIBurningDeathState_update; 00c30098 slot 5; slot 2 returns AIBurningDeathState
+007c77d0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::UnitAIMoveToRallyPointState_onEnter; 00c2dd18 slot 4; slot 2 returns UnitAIMoveToRallyPointState
+007c7980	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::UnitAIReturnForLandingState_onEnter; 00c2de50 slot 4; slot 2 returns UnitAIReturnForLandingState
+007c8450	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::SA_AIApproachTargetState_onEnter; 00c30e48 slot 4; slot 2 returns SA_AIApproachTargetState
+007c85c0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::UnitAIAttackBlockingObjectState_onEnter; 00c30ee0 slot 4; slot 2 returns UnitAIAttackBlockingObjectState
+007c8a10	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::UnitAICombinedUnitState_update; 00c2e508 slot 5; slot 2 returns UnitAICombinedUnitState
+007c92b0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::UnitAIIsBlockedByWall_onEnter; 00c2b560 slot 4; slot 2 returns UnitAIIsBlockedByWall
+007c9370	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIMoveToAndCollectState_onEnter; 00c31488 slot 4; slot 2 returns AIMoveToAndCollectState
+007c9400	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::UnitAIMoveToGoalState_update; 00c31668 slot 5; slot 2 returns UnitAIMoveToGoalState
+007c9630	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::UnitAIReturnToSourceAndEnterState_onEnter; 00c2f1d0 slot 4; slot 2 returns UnitAIReturnToSourceAndEnterState
+007c9830	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::UnitAIStartMoveState_onEnter; 00c2b8b8 slot 4; slot 2 returns UnitAIStartMoveState
+007c9df0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIDockApproachState_onEnter; 00c31aa8 slot 4; slot 2 returns AIDockApproachState
+007c9ea0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIInternalMoveToState_onEnter; 00c31b10 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller)
+007c9f40	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIInternalMoveToState_onEnter_007c9f40; 00c31b60 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller)
+007c9ff0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIInternalMoveToState_onEnter_007c9ff0; 00c31bb0 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller)
+007ca180	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIInternalMoveToState_onEnter_007ca180; 00c31c00 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller)
+007ca460	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIGuardMoveToAttack_onEnter; 00c31ca0 slot 4; slot 2 returns AIGuardMoveToAttack
+007ca680	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIGuardReturnState_onEnter; 00c31d70 slot 4; slot 2 returns AIGuardReturnState
+007ca7c0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIGuardReturnState_update; 00c31d70 slot 5; slot 2 returns AIGuardReturnState
+007cb070	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIHarvestApproachSiteState_onEnter; 00c31e38 slot 4; slot 2 returns AIHarvestApproachSiteState
+007cb350	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIHarvestWorkSiteState_onExit; 00c2bec8 slot 6; slot 2 returns AIHarvestWorkSiteState
+007cd3b0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIMoveAndDeleteState_update; 00c2fc48 slot 5; slot 2 returns AIMoveAndDeleteState
+007ce340	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIEnterAndAttackState_onExit; 00c2fec0 slot 6; slot 2 returns AIEnterAndAttackState
+007ce520	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIMoveToPositionAndDieState_update; 00c2ffb8 slot 5; slot 2 returns AIMoveToPositionAndDieState
+007ce660	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIMoveToPositionAndEnterState_onExit; 00c301b8 slot 6; slot 2 returns AIMoveToPositionAndEnterState
+007cee00	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AITNGuardInnerState_onEnter; 00c2d4e8 slot 4; slot 2 returns AITNGuardInnerState
+007cf090	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AITNGuardOuterState_onEnter; 00c2d548 slot 4; slot 2 returns AITNGuardOuterState
+007cf190	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AITNGuardOuterState_update; 00c2d548 slot 5; slot 2 returns AITNGuardOuterState
+007cf530	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AITNGuardAttackAggressorState_onEnter; 00c2d610 slot 4; slot 2 returns AITNGuardAttackAggressorState
+007cf670	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AITNGuardAttackAggressorState_update; 00c2d610 slot 5; slot 2 returns AITNGuardAttackAggressorState
+004d5550	reversed	recon/protcave2	gamelogic	runNotifySpecialPowerReady: inner-patched site 0x004d5577 -> 0x004d557d slot 0x018ed888; direct callee of 0x0071c540 at 0x0071c639; 0x0071c540 is 0x00c27548 slot 1; 3 oracle cases
+00502700	reversed	recon/protcave2	gamelogic	runStopSubChannelStream: inner-patched site 0x00502703 -> 0x0050270a slot 0x018edc04; direct callee of 0x005064a0 at 0x005064b1; 0x005064a0 is 0x00bdf5a8 slot 89; 4 oracle cases
+00505060	reversed	recon/protcave2	gamelogic	runUpdateLinearEnvelopeValue: entry-recoverable site 0x00505060 -> 0x00505067 slot 0x018ed768; direct callee of 0x0051eff0 at 0x0051f0e7; 0x0051eff0 is 0x00bdf5a8 slot 5; 5 oracle cases
+00513340	reversed	recon/protcave2	gamelogic	runCreateWrappedRefSubObject: inner-patched site 0x00513353 -> 0x00513359 slot 0x018f2750; direct callee of 0x005134d0 at 0x005134e2; 0x005134d0 is 0x00bdf5a8 slot 36; 2 oracle cases
+0051f780	reversed	recon/protcave2	gamelogic	runComputeTransformedViewVector: inner-patched site 0x0051f785 -> 0x0051f78b slot 0x018f25b8; direct callee of 0x0052f5a0 at 0x0052f77d; 0x0052f5a0 is 0x00bdfadc slot 2; 2 oracle cases
+00521050	reversed	recon/protcave2	gamelogic	runGetOrCreatePlayerTeamEntry: inner-patched site 0x00521053 -> 0x00521059 slot 0x018eddec; direct callee of 0x00579700 at 0x00579744; 0x00579700 is 0x00be5580 slot 1; 3 oracle cases
+005259e0	reversed	recon/protcave2	gamelogic	runFlushDirtySubObjects: inner-patched site 0x005259e3 -> 0x005259ea slot 0x018f2dd0; direct callee of 0x006fe4a0 at 0x006fea1a; 0x006fe4a0 is 0x00bf7e40 slot 5; 3 oracle cases
+0054df20	reversed	recon/protcave2	gamelogic	runEnsureTerrainLogicSubHelper: inner-patched site 0x0054df33 -> 0x0054df3a slot 0x018ed9f0; direct callee of 0x00864630 at 0x0086467e; 0x00864630 is 0x00c4f778 slot 4; 2 oracle cases
+0057f540	reversed	recon/protcave2	gamelogic	runAppendFormattedProjectionStrings: inner-patched site 0x0057f548 -> 0x0057f54e slot 0x018f293c; direct callee of 0x0071fab0 at 0x0071fd38; 0x0071fab0 is 0x00c11090 slot 3; 2 oracle cases
+00598630	reversed	recon/protcave2	gamelogic	runDestroySubObjectArrayAndReset: inner-patched site 0x00598637 -> 0x0059863d slot 0x018edce0; direct callee of 0x005986b0 at 0x00598739; 0x005986b0 is 0x00be4290 slot 6; 2 oracle cases
+005b5180	reversed	recon/protcave2	gamelogic	runIsIndexedTableEntryEmpty: inner-patched site 0x005b518c -> 0x005b5193 slot 0x018f290c; direct callee of 0x005e8b00 at 0x005e8f12; 0x005e8b00 is 0x00bef40c slot 0; 3 oracle cases
+005e65b0	reversed	recon/protcave2	gamelogic	runDestroyGameInfoBase: inner-patched site 0x005e65b4 -> 0x005e65ba slot 0x018ed564; direct callee of 0x005eece0 at 0x005eece3; 0x005eece0 is 0x00bef5c8 slot 0; 2 oracle cases
+005e6b30	reversed	recon/protcave2	gamelogic	runResetGameSlot: inner-patched site 0x005e6b3d -> 0x005e6b44 slot 0x018edc50; vtable 0x00be2030 slot 4; 2 oracle cases
+00674640	reversed	recon/protcave2	gamelogic	runRegisterEntryInTaggedMap: inner-patched site 0x0067465a -> 0x00674662 slot 0x018f2cc8; direct callee of 0x00674690 at 0x006746b4; 0x00674690 is 0x00bf3ae0 slot 5; 2 oracle cases
+0067e600	reversed	recon/protcave2	gamelogic	runFindModuleMatchingSubObject: inner-patched site 0x0067e60f -> 0x0067e615 slot 0x018f251c; direct callee of 0x006812f0 at 0x0068131d; 0x006812f0 is 0x00c00f4c slot 33; 3 oracle cases
+006885d0	reversed	recon/protcave2	gamelogic	runInitKindOfFilterPredicate: inner-patched site 0x006885e1 -> 0x006885e8 slot 0x018ed534; direct callee of 0x006c89e0 at 0x006c8a9e; 0x006c89e0 is 0x00c19c68 slot 23; 3 oracle cases
+0068c150	reversed	recon/protcave2	gamelogic	runHaveDifferentContainerStatuses: inner-patched site 0x0068c154 -> 0x0068c15a slot 0x018f2a58; direct callee of 0x006c9db0 at 0x006c9ef4; 0x006c9db0 is 0x00c1fb90 slot 22; 3 oracle cases
