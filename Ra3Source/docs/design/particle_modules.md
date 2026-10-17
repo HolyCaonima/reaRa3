@@ -71,6 +71,9 @@
 
 `0066abb0` 的返回不是规范化 bool：反汇编先把 data 指针装入 EAX，再只覆盖 AL。实现和 oracle 都保留这个约定。
 
+`0066ab70` hook 使用 naked 入口和两个十字节 x87 缓冲；shadow 返回 original 的完整
+80 位 ST0，replace 直接 `fld m32` 产生重建结果，均不经过 C++ `float` 临时值。
+
 ## 未解决和刻意不挂
 
 - `006658a0` spline 采样、`0066abf0` GPU storage 初始化、`0066cd60/0066cde0/0066ce40` wind 构造/力计算尚未移植；它们涉及缓存、分配器、引用计数或更大的游戏对象图。

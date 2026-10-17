@@ -184,24 +184,73 @@ RA3_GPU_SCALAR_WRAPPER(
 
 #undef RA3_GPU_SCALAR_WRAPPER
 
-float __fastcall gpuSpeedMultiplier(const GpuDrawModuleView* module, void*)
+int __cdecl beginGpuSpeed()
 {
     TargetState& state = g_gpuSpeedMultiplier;
     state.calls.fetch_add(1, std::memory_order_relaxed);
-    const float ours = ra3::gameclient::gpuSpeedMultiplier(*module);
-    if (state.mode == Mode::replace) {
-        state.matches.fetch_add(1, std::memory_order_relaxed);
-        return ours;
+    return static_cast<int>(state.mode);
+}
+
+void* __cdecl gpuSpeedOriginal()
+{
+    return g_gpuSpeedMultiplier.original;
+}
+
+void __cdecl compareGpuSpeed(
+    const std::uint8_t* game, const std::uint8_t* ours)
+{
+    recordOutput(
+        "fxpsgpuspeed", g_gpuSpeedMultiplier, game, ours, 10);
+}
+
+void __cdecl recordGpuSpeedReplacement()
+{
+    g_gpuSpeedMultiplier.matches.fetch_add(1, std::memory_order_relaxed);
+}
+
+// ra3_1.0.game 0x0066AB70 returns an m32 load in the full x87 ST0 register.
+// Keep both shadow results in ten-byte buffers so neither passes through a
+// C++ float temporary.
+__declspec(naked) float gpuSpeedMultiplier()
+{
+    __asm {
+        sub esp, 24
+        mov dword ptr [esp + 20], ecx
+        call beginGpuSpeed
+        cmp eax, 2
+        je replace_path
+
+        call gpuSpeedOriginal
+        mov ecx, dword ptr [esp + 20]
+        call eax
+        fstp tbyte ptr [esp]
+
+        mov ecx, dword ptr [esp + 20]
+        mov eax, dword ptr [ecx + 8]
+        fld dword ptr [eax + 24h]
+        fstp tbyte ptr [esp + 10]
+
+        lea edx, [esp]
+        lea eax, [esp + 10]
+        push eax
+        push edx
+        call compareGpuSpeed
+        add esp, 8
+
+        fld tbyte ptr [esp]
+        add esp, 24
+        ret
+
+    replace_path:
+        mov ecx, dword ptr [esp + 20]
+        mov eax, dword ptr [ecx + 8]
+        fld dword ptr [eax + 24h]
+        fstp tbyte ptr [esp + 10]
+        call recordGpuSpeedReplacement
+        fld tbyte ptr [esp + 10]
+        add esp, 24
+        ret
     }
-    const float game =
-        reinterpret_cast<float(__thiscall*)(const GpuDrawModuleView*)>(
-            state.original)(module);
-    std::uint32_t gameBits = 0;
-    std::uint32_t oursBits = 0;
-    std::memcpy(&gameBits, &game, sizeof(gameBits));
-    std::memcpy(&oursBits, &ours, sizeof(oursBits));
-    recordScalar("fxpsgpuspeed", state, gameBits, oursBits);
-    return game;
 }
 
 void __fastcall gpuMiscValues(

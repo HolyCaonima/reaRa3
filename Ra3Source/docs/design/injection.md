@@ -176,7 +176,7 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `fxpsupdaterotation` | `0x0066A730` update rotation 字段指针 | thiscall | 6 | `defaultUpdateRotationData` | offline-verified, live pending；仅显式键启用 |
 | `fxpsgpuframesperrow` | `0x0066AB50` GPU frames-per-row getter | thiscall | 6 | `gpuFramesPerRow` | offline-verified, live pending；仅显式键启用 |
 | `fxpsgputotalframes` | `0x0066AB60` GPU total-frames getter | thiscall | 6 | `gpuTotalFrames` | offline-verified, live pending；仅显式键启用 |
-| `fxpsgpuspeed` | `0x0066AB70` GPU speed getter（x87 ST0） | thiscall | 6 | `gpuSpeedMultiplier` | offline-verified, live pending；仅显式键启用 |
+| `fxpsgpuspeed` | `0x0066AB70` GPU speed getter（x87 ST0） | thiscall（naked） | 6 | 十字节 original/ours 缓冲，replace 直接 `fld m32` | offline-verified, live pending；仅显式键启用 |
 | `fxpsgpusinglerow` | `0x0066AB80` GPU single-row getter | thiscall | 6 | `gpuSingleRow` | offline-verified, live pending；仅显式键启用 |
 | `fxpsgpusortparticles` | `0x0066AB90` GPU sort getter | thiscall | 6 | `gpuSortParticles` | offline-verified, live pending；仅显式键启用 |
 | `fxpsgpumiscword` | `0x0066ABA0` GPU misc word getter | thiscall | 6 | `gpuMiscWord` | offline-verified, live pending；仅显式键启用 |
@@ -185,7 +185,8 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 
 FXPS 的 15 个目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关。构造函数
 在副本上应用重建变换后比较实际布局，getter 只比较返回值或原函数写出的缓冲，全部要求
-显式键启用。
+显式键启用。`fxpsgpuspeed` 的 naked 入口分别以 `fstp tbyte` 保存 original/ours，
+逐十字节比较，并在返回前以 `fld tbyte` 重装所选结果，不经过 C++ `float`。
 
 上述字符串的 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节
