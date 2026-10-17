@@ -2047,3 +2047,144 @@ address	status	owner	module	notes
 009ab8e0		recon/render99	render	rejected: EASTL vector<ShaderParam>::resize (divides by the 72-byte element size); resizeShaderParamVector; kept only as a helper of counted ports (controller)
 009acb60	reversed	recon/render99	render	ra3::render::importShaderParamBlock; callee of 009af530 at 009af659; 009af530 pushes RenderObject.cpp string 00c5e498
 009acfe0		recon/render99	render	rejected: EASTL vector<SubObjectRecord>::push_back with refcount increment; appendSubObjectRecord; kept only as a helper of counted ports (controller)
+005d3260	reversed	recon/net5d2	net	ra3::net::endpointsEqual; call from 0060D390 at 0060D3E6, and 0060D390 is vtable 00BEF6E8 slot 37
+005d3290	reversed	recon/net5d2	net	ra3::net::endpointsDiffer; call from 0060CD10 at 0060CE85, and 0060CD10 is vtable 00BEF6E8 slot 43
+005d32c0	reversed	recon/net5d2	net	ra3::net::clampTinyState; call from 0060CD10 at 0060CFB9, vtable 00BEF6E8 slot 43
+005d3770	reversed	recon/net5d2	net	ra3::net::childByte2E; vtable 00BF0DDC slot 4, slot 2 is 005EB960 and not a name getter
+005d3790	reversed	recon/net5d2	net	ra3::net::childByte2D; vtable 00BF0DDC slot 5, slot 2 is 005EB960 and not a name getter
+005d37b0	reversed	recon/net5d2	net	ra3::net::childDword30; vtable 00BF0DDC slot 10, slot 2 is 005EB960 and not a name getter
+005d37d0	reversed	recon/net5d2	net	ra3::net::childField8C; vtable 00BF0DDC slot 13, slot 2 is 005EB960 and not a name getter
+005d3c50	reversed	recon/net5d2	net	ra3::net::childByte29; vtable 00BF0BB4 slot 4, slot 2 is 005EB960 and not a name getter
+005d3c70	reversed	recon/net5d2	net	ra3::net::childByte28; vtable 00BF0BB4 slot 5, slot 2 is 005EB960 and not a name getter
+005d4010	reversed	recon/net5d2	net	ra3::net::cursorFieldsDiffer; vtable 00BF1198 slot 8, slot 2 is 005EBEA0 and not a name getter
+005d4920	reversed	recon/net5d2	net	ra3::net::storePair124; vtable 00BF1558 slot 97, slot 2 is 00622B00 and not a name getter
+005d4960	reversed	recon/net5d2	net	ra3::net::flagOrPointerSet; vtable 00BF1558 slot 64, slot 2 is 00622B00 and not a name getter
+005d4df0	reversed	recon/net5d2	net	ra3::net::initTaggedPointer; call from 00AB5000 at 00AB5018, and 00AB5000 is vtable 00C730A4 slot 8
+005d5450	reversed	recon/net5d2	net	ra3::net::natBufferRead; vtable 00BEE470 slot 3, slot 2 is 004CE130 and not a name getter
+005d5540	reversed	recon/net5d2	net	ra3::net::natBufferSeek; vtable 00BEE470 slot 5, slot 2 is 004CE130 and not a name getter
+005d5b50	reversed	recon/net5d2	net	ra3::net::otherSlotSharesId; call from 005C5650 at 005C5A37, which pushes GameStart.cpp:557 at 00BE9860
+005d5bd0	reversed	recon/net5d2	net	ra3::net::clearSlotIpAddresses; SkirmishGameInfo vtable 00BDC918 slot 14
+005d5c00	reversed	recon/net5d2	net	ra3::net::stateIsSixOrSeven; call from 00B1F5C0 at 00B1F5CC, and 00B1F5C0 is vtable 00C7D3F8 slot 3
+005d5c40	reversed	recon/net5d2	net	ra3::net::dismissIndexedSlot; SkirmishGameInfo vtable 00BDC918 slot 34
+005d5f80	reversed	recon/net5d2	net	ra3::net::slotStateIsAi; call from 005CD2B0 at 005CD2DE, which pushes GameStart.cpp:1637 at 00BE9F30
+005d6010	reversed	recon/net5d2	net	ra3::net::chainNodeAt; vtable 00BEF6E8 slot 48, slot 2 is 004D6430 and not a name getter
+005d6040	reversed	recon/net5d2	net	ra3::net::unlinkWideChain; call from 005EF520 at 005EF62D, and 005EF520 is vtable 00BEF6E8 slot 18
+005d60b0	reversed	recon/net5d2	net	ra3::net::findEndpointNode; vtable 00BEF6E8 slot 61, slot 2 is 004D6430 and not a name getter
+005d60f0	reversed	recon/net5d2	net	ra3::net::unlinkShortChain; call from 00601210 at 0060130B, and 00601210 is vtable 00BEF6E8 slot 29
+005d6140	reversed	recon/net5d2	net	ra3::net::headEndpointMatches; vtable 00BEF6E8 slot 52, slot 2 is 004D6430 and not a name getter
+005d6430	reversed	recon/net5d2	net	ra3::net::recordAtFc; call from 0060CD10 at 0060CF0E, vtable 00BEF6E8 slot 43
+005d6840	reversed	recon/net5d2	net	ra3::net::attachAndRetain; call from 005C0E80 at 005C0E95, and 005C0E80 is vtable 00BE8538 slot 1
+005d68b0	reversed	recon/net5d2	net	ra3::net::linkStateIsOne; vtable 00BEEDB0 slot 15, slot 2 is 004D6430 and not a name getter
+005d68c0	reversed	recon/net5d2	net	ra3::net::linkChildField8; vtable 00BEEDB0 slot 27, slot 2 is 004D6430 and not a name getter
+005d68d0	reversed	recon/net5d2	net	ra3::net::clampChannelStamp; vtable 00BEEDB0 slot 35, slot 2 is 004D6430 and not a name getter
+005d68f0	reversed	recon/net5d2	net	ra3::net::setChannelBit; vtable 00BEEDB0 slot 36, slot 2 is 004D6430 and not a name getter
+005d8480	reversed	recon/net5d2	net	ra3::net::childDword6C; vtable 00BF0DDC slot 11, slot 2 is 005EB960 and not a name getter
+005d84a0	reversed	recon/net5d2	net	ra3::net::childDword7C; vtable 00BF0DDC slot 12, slot 2 is 005EB960 and not a name getter
+005db600	reversed	recon/net5d2	net	ra3::net::initFloatExtents; call from 004F6C50 at 004F6E11, and 004F6C50 is vtable 00BDCC74 slot 4
+005db640	reversed	recon/net5d2	net	ra3::net::occupiedRecordField; call from 0062F890 at 0062FD32, and 0062F890 is vtable 00BEF6E8 slot 5
+005db670	reversed	recon/net5d2	net	ra3::net::setOccupiedRecordField; call from 0060CD10 at 0060CEAE, vtable 00BEF6E8 slot 43
+005dbff0	reversed	recon/net5d2	net	ra3::net::countAcceptedSlots; E9 at 004DD2C0, and 004DD2C0 is SkirmishGameInfo vtable 00BDC918 slot 6
+005dc180	reversed	recon/net5d2	net	ra3::net::findLocalHumanSlot; GameInfo vtable 00BE8018 slot 12
+005dc1c0	reversed	recon/net5d2	net	ra3::net::slotZeroIsLocalHuman; GameInfo vtable 00BE8018 slot 11
+005dc1f0	reversed	recon/net5d2	net	ra3::net::otherSlotIsHuman; GameInfo vtable 00BE8018 slot 17
+005dcf10	reversed	recon/net5d2	net	ra3::net::clearLanHumanReady; LANGameInfo vtable 00BEFCA0 slot 13
+005dd100	reversed	recon/net5d2	net	ra3::net::channelFrameReached; vtable 00BEEDB0 slot 31, slot 2 is 004D6430 and not a name getter
+00690740	reversed	recon/obj69	gamelogic	ra3::gamelogic::stancesBehaviorFirstNodeValue; 00c11840 slot 31; slot 2 returns StancesBehavior
+006911d0	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainDecayRange; 00c21520 slot 138; 0073cb3b stores primary 00c21a98 whose slot 2 returns HordeContain; 0073cb8a stores 00c21520 at this+0x16c
+00691350	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainInvertSlotF4; 00c21784 slot 0; 0073cb72 stores 00c21784 at this+0x38 in the constructor that stores HordeContain at 0073cb3b
+006914b0	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainFirstPassengerId; 00c21520 slot 8; same HordeContain constructor store as 006911d0
+006914e0	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainField5cClear; 00c21520 slot 62; same HordeContain constructor store as 006911d0
+006914f0	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainNotifyPassengerList; 00c21520 slot 121; same HordeContain constructor store as 006911d0
+00691550	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainNotifyPassengerListShort; 00c21520 slot 122; same HordeContain constructor store as 006911d0
+00691990	reversed	recon/obj69	gamelogic	ra3::gamelogic::slaughterHordeContainPasses; 00c22e28 slot 43; slot 2 returns SlaughterHordeContain
+006919e0	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainMarkRecord; 00c0a7d0 slot 12; 0074d2c6 stores HordeContain 00c21a98; 0074d555 stores 00c0a7d0; 0074d570 publishes that object at this+0x294
+00691a30	reversed	recon/obj69	gamelogic	ra3::gamelogic::hordeContainCopyRecordVector; 00c0a7d0 slot 13; same constructor stores as 006919e0
+006923a0	reversed	recon/obj69	gamelogic	ra3::gamelogic::infiltratorContainZeroSevenDwords; 00bfe530 slot 53; 006922f3 stores primary 00bfe7e8 whose slot 2 returns InfiltratorContain; 0069230e stores 00bfe530 at this+0x18
+00692500	reversed	recon/obj69	gamelogic	ra3::gamelogic::openContainStorePairIds; 00c1f8f0 slot 42; 0072782b stores primary 00c1fb90 whose slot 2 returns OpenContain; 0072783f stores 00c1f8f0 at this+0x24
+00692580	reversed	recon/obj69	gamelogic	ra3::gamelogic::openContainPlaneAccepts; 00c1f8f0 slot 45; same OpenContain constructor store as 00692500
+006925f0	reversed	recon/obj69	gamelogic	ra3::gamelogic::openContainPairPlaneAccepts; 00c1f8f0 slot 46; same OpenContain constructor store as 00692500
+006926d0	reversed	recon/obj69	gamelogic	ra3::gamelogic::openContainHasField78; 00c1f8f0 slot 17; same OpenContain constructor store as 00692500
+00692850	reversed	recon/obj69	gamelogic	ra3::gamelogic::openContainBitClear; 00c1f8f0 slot 4; same OpenContain constructor store as 00692500
+00692890	reversed	recon/obj69	gamelogic	ra3::gamelogic::openContainCopySevenDwords; 00c1f8f0 slot 43; same OpenContain constructor store as 00692500
+00694670	reversed	recon/obj69	gamelogic	ra3::gamelogic::beamSpecialAbilityAllowsTarget; 00c1ba58 slot 43; slot 2 returns BeamSpecialAbilityUpdate
+00694710	reversed	recon/obj69	gamelogic	ra3::gamelogic::specialPowerUpdateIdMatches; 00bf7d10 slot 5; 006b479a sets edi to this+0x28; 006b479d stores primary 00c0b860 whose slot 2 returns SpecialPowerUpdateModule; 006b47b4 stores 00bf7d10 at this+0x24
+00694730	reversed	recon/obj69	gamelogic	ra3::gamelogic::specialPowerUpdateReadFieldC; 00bf7c68 slot 38; 006b47bb stores 00bf7c68 through edi in the SpecialPowerUpdateModule constructor
+00695670	reversed	recon/obj69	gamelogic	ra3::gamelogic::table00C00F4CStoreByte39; 00c00f4c slot 18; slot 2 is 0067e580 and is not a name getter; the image has no store of 00c00f4c
+00695690	reversed	recon/obj69	gamelogic	ra3::gamelogic::table00C00F4CReadField54; 00c00f4c slot 31; slot 2 is 0067e580 and is not a name getter; the image has no store of 00c00f4c
+006966b0	reversed	recon/obj69	gamelogic	ra3::gamelogic::specialPowerUpdateIdEquals; 00bf7c68 slot 0; same 006b47bb store as 00694730
+00696870	reversed	recon/obj69	gamelogic	ra3::gamelogic::specialPowerUpdateReadSlot1; 00bf7c68 slot 6; same 006b47bb store as 00694730
+00697100	reversed	recon/obj69	gamelogic	ra3::gamelogic::uncombineSpecialPowerHasEntries; 00c13440 slot 30; 006cb444 stores primary 00c13640 whose slot 2 returns UncombineSpecialPower; 006cb46d stores 00c13440 at this+0x28; slot 130 of 00c13440 returns UncombineSpecialPower
+00697130	reversed	recon/obj69	gamelogic	ra3::gamelogic::weaponFireSpecialAbilityFlagBit8; 00c1e918 slot 42; slot 2 returns WeaponFireSpecialAbilityUpdate
+00697720	reversed	recon/obj69	gamelogic	ra3::gamelogic::supplyTruckSumDwords; 00c251a8 slot 2; 007522bb stores primary 00c25398 whose slot 2 returns SupplyTruckAIUpdate; 007522eb stores 00c251a8 at this+0x51c; this slot 2 is the sum, not a name getter
+006978d0	reversed	recon/obj69	gamelogic	ra3::gamelogic::supplyTruckRangeScale; 00c251a8 slot 19; same SupplyTruckAIUpdate constructor store as 00697720
+006979e0	reversed	recon/obj69	gamelogic	ra3::gamelogic::dockUpdateIdPresentOrOpen; 00c0bbb0 slot 0; 00740541 stores primary 00c0bd58 whose slot 2 returns DockUpdate; 00740555 stores 00c0bbb0 at this+0x24
+00697a40	reversed	recon/obj69	gamelogic	ra3::gamelogic::dockUpdateSlotReady; 00c0bbb0 slot 4; same DockUpdate constructor store as 006979e0
+00697aa0	reversed	recon/obj69	gamelogic	ra3::gamelogic::dockUpdateMarkId; 00c0bbb0 slot 8; same DockUpdate constructor store as 006979e0
+006981b0	reversed	recon/obj69	gamelogic	ra3::gamelogic::defaultProductionExitTransformPoint; 00c01460 slot 98; slot 2 is 0065f220 and is not a name getter; slot 78 returns DefaultProductionExitUpdate
+00699710	reversed	recon/obj69	gamelogic	ra3::gamelogic::aiUpdatePathGoalActive; 00c22118 slot 158; slot 2 returns AIUpdateInterface
+006997b0	reversed	recon/obj69	gamelogic	ra3::gamelogic::aiUpdateClearGoalFloats; 00c22118 slot 151; slot 2 returns AIUpdateInterface
+006997e0	reversed	recon/obj69	gamelogic	ra3::gamelogic::aiUpdateSetGoalPosition; 00c22118 slot 153; slot 2 returns AIUpdateInterface
+00699840	reversed	recon/obj69	gamelogic	ra3::gamelogic::aiUpdateSetGoalFloat; 00c22118 slot 155; slot 2 returns AIUpdateInterface
+00699860	reversed	recon/obj69	gamelogic	ra3::gamelogic::aiUpdateLocomotorAllowsMove; 00c22118 slot 157; slot 2 returns AIUpdateInterface
+00699ca0	reversed	recon/obj69	gamelogic	ra3::gamelogic::aiUpdatePulseModule3c; 00c22118 slot 66; slot 2 returns AIUpdateInterface
+0069b5a0	reversed	recon/obj69	gamelogic	ra3::gamelogic::fireWeaponUpdateReadFieldC; 00c0ce84 slot 2; 006cd898 stores primary 00c0cfc8 whose slot 2 returns FireWeaponUpdate; 006cd8a5 stores 00c0ce84 at this+0x10; this slot 2 is the read, not a name getter
+0069c1b0	reversed	recon/obj69	gamelogic	ra3::gamelogic::invisibilityBroadcastAdjustor24; 00c03dc0 slot 92; slot 2 is 0065f220 and is not a name getter; slot 78 returns InvisibilityBroadcastUpdate
+0069e5b0	reversed	recon/obj69	gamelogic	ra3::gamelogic::productionUpdateConsumeMatchingLink; 00c19580 slot 37; 006e8ed7 stores primary 00c19788 whose slot 2 returns ProductionUpdate; 006e8eeb stores 00c19580 at this+0x24
+004d05a0	reversed	recon/logic4d	core	getTextFileLine4D: indexed 12-byte line entry lookup over [this+0x04..+0x08) (call 004d05a0 <- 00987fc0 <- ... <- 00550620 GameStateMap[3]; 5 oracle cases)
+004d2ad0	reversed	recon/logic4d	gamelogic	relinkGhostObjectNodeBefore4D: unlink circular doubly-linked list node and insert before targetNode (call 004d2ad0 <- 0071ac40 GhostObjectManager[3]; 3 oracle cases)
+004d3750	reversed	recon/logic4d	gamelogic	equalsObjectIDPair4D: 8-byte ObjectID pair equality check (call 004d3750 <- 0065add0 <- 0077d580 ReconstituteStateSpecialAbility[27]; 4 oracle cases)
+004d3770	reversed	recon/logic4d	gamelogic	normalizeAngleRad4D: wrap angle (radians) into (-pi, pi] using 2*pi step (call 004d3770 <- 007c2f80 AIFollowPathAsTeamState[5]; 24 oracle cases across x87 cw 007F/027F/037F)
+004d3cd0	reversed	recon/logic4d	gamelogic	"getBehaviorModuleClassNameVa4D: BehaviorModule::getModuleClassName returning 0x00BDBC60 ""BehaviorModule"" (00BDBC08 slot 2; 1 oracle case)"
+004d4020	reversed	recon/logic4d	gamelogic	convertSecondsToFrames4D: convert duration at (*holder+0x08) to integer frames using 0x00DEEEE8 and optional GameLogic time scale +0x1C4 (call 004d4020 <- 004ec480 <- ... <- 00712730 SpecialPowerModule[23]; 18 oracle cases)
+004d4260	reversed	recon/logic4d	gamelogic	"getCampaignSystemNameVa4D: CampaignSystem::getSubsystemName returning 0x00BDBD9C ""CampaignSystem"" (00BDBD54 slot 2; 1 oracle case)"
+004d4320	reversed	recon/logic4d	gamelogic	resetDelayedExperienceLevelGrantSystem4D: DelayedExperienceLevelGrantSystem::reset clearing +0x1C (00BDC6A0 slot 1; 2 oracle cases)
+004d4330	reversed	recon/logic4d	gamelogic	getDelayedExperienceLevelGrantSystemNameVa4D: DelayedExperienceLevelGrantSystem::getSubsystemName returning 0x00BDBDAC (00BDC6A0 slot 2; 1 oracle case)
+004d4400		recon/logic4d	gamelogic	rejected: compiler-generated DamageInfoInput copy assignment (member-wise, skips vptr); assignDamageInfoInputPayload4D; port kept for the oracle (controller)
+004d4500	reversed	recon/logic4d	gamelogic	compareCooldownProgress4D: compare scaled remaining cooldown frames (+0xA0 frame, +0x38 scale) against currentFrame (call 004d4500 <- 004f6630 <- ... <- 00550620 GameStateMap[3]; 24 oracle cases)
+004d4910	reversed	recon/logic4d	gamelogic	initThingTemplateRefWrapper4D: initialize ThingTemplateRefWrapper vtable 0x00BDBE5C and +0x04 templateRef (call 004d4910 <- 0079614d ThingTemplate.cpp:770; 2 oracle cases)
+004d4c50	reversed	recon/logic4d	gamelogic	allocateNextSequenceId4D: post-increment GameLogic sequence counter at +0x144 (call 004d4c50 <- 0076b240 <- 004d7970 <- 004ede90 GameLogic[3]; 3 oracle cases)
+004d4cd0	reversed	recon/logic4d	gamelogic	countLinkedNodesAtBC4D: count singly-linked list nodes starting at *(owner+0xBC) via next at +0x7C (call 004d4cd0 <- 0059d680 W3DTracerManager.cpp; 4 oracle cases)
+004d4ea0	reversed	recon/logic4d	gamelogic	updateCrcBufferMaxSize4D: update CRC buffer high-water mark at +0x1C when candidate > current (GameLogic.cpp:4254 at 0x00BDBEC8; 4 oracle cases)
+004d5530	reversed	recon/logic4d	gamelogic	updateMaxFloatAt204D: update float high-water mark at +0x20 when candidate > current (call 004d5530 <- 0076b240 <- 004d7970 <- 004ede90 GameLogic[3]; 4 oracle cases)
+004d57a0	reversed	recon/logic4d	gamelogic	snapAngleToCardinalRad4D: snap radian angle in-place to nearest cardinal multiple of pi/2 (call 004d57a0 <- 008bb220 <- 008d2130 AIBuildableStructure[23]; 33 oracle cases)
+004d5900	reversed	recon/logic4d	gamelogic	anyBitFlags288_4D: 288-bit (9-word) KindOf bitset non-zero test (call 004d5900 <- 006908e0 CrateCollide[22]; 5 oracle cases)
+004d5920	reversed	recon/logic4d	gamelogic	testRequiredAndForbiddenBitFlags288_4D: 288-bit bitset test for all required bits set and no forbidden bits set (call 004d5920 <- 0078b960 <- 006908e0 CrateCollide[22]; 5 oracle cases)
+004d5a40	reversed	recon/logic4d	gamelogic	intersectsBitFlags480_4D: 480-bit (15-word) ModelCondition bitset intersection test (call 004d5a40 <- 0076e8c0 StancesBehavior[26]; 4 oracle cases)
+004d5ab0	reversed	recon/logic4d	gamelogic	anyBitFlags480_4D: 480-bit (15-word) bitset non-zero test (call 004d5ab0 <- 009091c0 W3DScriptedModelDraw.cpp:851; 4 oracle cases)
+004d5b10	reversed	recon/logic4d	gamelogic	equalsBitFlags480_4D: 480-bit (60-byte) bitset equality test (call 004d5b10 <- 00692670 OpenContain[29]; 4 oracle cases)
+004d5bb0	reversed	recon/logic4d	gamelogic	anyObjectStatusMask224_4D: 224-bit (7-word) ObjectStatusMask non-zero test (call 004d5bb0 <- 007712e0 BeamSpecialAbilityUpdate[39]; 4 oracle cases)
+004d5bd0	reversed	recon/logic4d	gamelogic	intersectsObjectStatusMask224_4D: 224-bit (7-word) ObjectStatusMask intersection test (call 004d5bd0 <- 00690e60 FireWeaponCollide[22]; 4 oracle cases)
+004d5df0		recon/logic4d	gamelogic	rejected: compiler-generated DamageInfoInput copy constructor (vptr store then member-wise copy); copyConstructDamageInfoInput4D; port kept for the oracle (controller)
+004d6170	reversed	recon/logic4d	gamelogic	containsPointStrictRegion2D4D: Region2D strict interior point test lo.x < p.x < hi.x and lo.y < p.y < hi.y (call 004d6170 <- 0072bad0 AIUpdate.cpp; 6 oracle cases)
+004d6500	reversed	recon/logic4d	gamelogic	resetMoveGoalResult4D: AIInternalMoveToState 0x28-byte goal record default initializer (call 004d6500 <- 006471f0 <- 0064b470 <- 007c08a0 AIInternalMoveToState[4]; 2 oracle cases)
+004d6550	reversed	recon/logic4d	gamelogic	defaultConstructDamageInfoInput4D: DamageInfoInput default constructor setting vtable 0x00BDC178 and default fields (call 004d6550 <- 004f6720 DOTManager[3]; 2 oracle cases)
+004d6680	reversed	recon/logic4d	gamelogic	anyBitAt26C4D: single-word embedded bitset at +0x26C non-zero test (call 004d6680 <- 008c9430 AIEngineerTactic[11]; 3 oracle cases)
+004d66a0	reversed	recon/logic4d	gamelogic	testBitAt26C4D: bit test in embedded bitset starting at +0x26C (call 004d66a0 <- 007db090 AIIdleState[5]; 5 oracle cases)
+004d6710	reversed	recon/logic4d	gamelogic	getSpecialAbilityField0C4D: safe dereference of *(*(self+0x04)+0x0C) returning 0 when null (call 004d6710 <- 00739344 <- ... <- 007432e0 SpecialAbilityUpdate[29]; 3 oracle cases)
+004d6730	reversed	recon/logic4d	gamelogic	getSpecialAbilityField104D: safe dereference of *(*(self+0x04)+0x10) returning 0 when null (call 004d6730 <- 00739344 <- ... <- 007432e0 SpecialAbilityUpdate[29]; 3 oracle cases)
+004d6750	reversed	recon/logic4d	gamelogic	hasAnyLowThreeFlagsAt08_4D: test whether any of bits 0..2 are set in *(*(self+0x04)+0x08) (call 004d6750 <- 007432e0 SpecialAbilityUpdate[29]; 4 oracle cases)
+004d67f0	reversed	recon/logic4d	gamelogic	"getUpdateModuleClassNameVa4D: UpdateModule::getModuleClassName returning 0x00BDC318 ""UpdateModule"" (00BDC2C0 slot 2; 1 oracle case)"
+004d6960	reversed	recon/logic4d	gamelogic	stampPassiveAreaEffectMaskedSlots4D: stamp value into self+0x38+i*4 for each set bit i in 0..14 of maskWords (call 004d6960 <- 006c72e0 PassiveAreaEffectBehavior[25]; 3 oracle cases)
+004d69a0	reversed	recon/logic4d	gamelogic	isEntryInBeamExcludeList4D: test whether targetEntry nested key matches any entry in [listHeader+0x04..+0x08) (call 004d69a0 <- 004d9ce0 <- 007712e0 BeamSpecialAbilityUpdate[39]; 4 oracle cases)
+004d6ab0	reversed	recon/logic4d	gamelogic	findCampaignRecordByNestedKey4D: linear search of 32-byte campaign records in [self+0x0C..+0x10) by nested key (call 004d6ab0 <- 004ecf10 CampaignSystem[3]; 4 oracle cases)
+004d6ff0		recon/logic4d	gamelogic	rejected: compiler-generated DamageInfoShort copy assignment (base assignment 004d4400 plus member-wise tail); assignDamageInfoShort4D; port kept for the oracle (controller)
+004d7040	reversed	recon/logic4d	gamelogic	removeObjectIdSwapLastAt24_4D: remove *(obj+0xDC) from vector [self+0x24..+0x28) via swap-with-last (call 004d7040 <- 00748600 <- 0076e8c0 StancesBehavior[26]; 4 oracle cases)
+004d8390	reversed	recon/logic4d	gamelogic	resolveAIUpgradeTargetTemplateRef4D: resolve AIUpgradeScience target template ref by kind 1..13 or fallback 0x00CA5724 (call 004d8390 <- 008b8e10 <- 008c4990 <- 008c4b10 AIUpgradeScience[3]; 4 oracle cases)
+004d86d0	reversed	recon/logic4d	gamelogic	isDamageAndSpawnTableEntryFlag90Set4D: bounds-checked query of flag byte +0x90 in 0x9C-byte table [tableBeginVa, tableEndVa) (call 004d86d0 <- 00704eb0 <- 00756960 <- 00767810 DamageAndSpawnNugget.cpp; 4 oracle cases)
+004d8780	reversed	recon/logic4d	gamelogic	matchesObjectStatusFilter4D: ObjectStatus filter check against object status mask at +0x80 (call 004d8780 <- 004e30b0 <- 00771a00 CaptureSpecialAbilityUpdate[27]; 4 oracle cases)
+004d8810	reversed	recon/logic4d	gamelogic	matchesRelationshipFilter4D: relationship filter bitmask check (ENEMIES=0, NEUTRAL=1, ALLIES=2 + same-player bit 3) (call 004d8810 <- 004e30b0 <- 00771a00 CaptureSpecialAbilityUpdate[27]; 5 oracle cases)
+004d8930	reversed	recon/logic4d	gamelogic	findTaggedContactMidpoint4D: find contact entry with tag 0x9063FB6C in [holder+0x1A8..+0x1AC) and populate 40-byte goal (call 004d8930 <- 004f5780 <- 007ab310 UnitAIExitGoalState[4]; 4 oracle cases)
+004d9230	reversed	recon/logic4d	gamelogic	buildZRotationMatrix4D: initialize 3x3 row-major Z-rotation matrix (36 bytes) from radian angle (call 004d9230 <- 0066ca50 WaveParticleStorageModule[4]; 9 oracle cases)
+004d9280	reversed	recon/logic4d	gamelogic	countSetBits288_4D: SWAR popcount across 9-word (288-bit) bitset (call 004d9280 <- 004e0b1c <- 00421704 <- 004e0b00 <- 005a3000 W3DPropBuffer[3]; 4 oracle cases)
+004da690		recon/logic4d	gamelogic	rejected: compiler-generated DOTInfoRecord copy assignment (base assignment 004d4400 plus member-wise tail); assignDOTInfoRecord4D; port kept for the oracle (controller)
+004da780	reversed	recon/logic4d	gamelogic	defaultConstructLuaEventParameters4D: LuaEventParameters default constructor setting vtable 0x00BDC6E8 and 3 EventParameter slots (call 004da780 <- 0077caa0 SlaughterHordeContain[45]; 2 oracle cases)
+004dad10	reversed	recon/logic4d	gamelogic	findRegisteredPairByKey4D: search circular doubly-linked list at gameLogic+0x1B0 for 64-bit key returning node+8 (call 004dad10 <- 004ede90 GameLogic[3]; 3 oracle cases)
+004db8c0	reversed	recon/logic4d	gamelogic	resetGlobalWeatherData4D: GlobalWeatherSystem weather data default reset (0x9C bytes) (call 004db8c0 <- 004f9760 <- 004f9a70 GlobalWeatherSystem[3]; 2 oracle cases)
+004dbb30	reversed	recon/logic4d	gamelogic	initExitGoalEntry4D: UnitAIExitGoalState 0x24-byte entry initializer (call 004dbb30 <- 004efd20 <- 004f5780 <- 007ab310 UnitAIExitGoalState[4]; 2 oracle cases)
+004dbbf0	reversed	recon/logic4d	gamelogic	gridToWorldPlacement4D: convert grid cell (gridX, gridY) to world position through matrix at +0xA0..+0xC0 (call 004dbbf0 <- 008bb220 <- 008d2130 AIBuildableStructure[23]; 9 oracle cases)
+004dbd20	reversed	recon/logic4d	gamelogic	snapWorldPointToGrid4D: snap world position in-place to nearest 30-unit placement grid cell corner (call 004dbd20 <- 004dfc30 <- 00549300 <- 008ba680 <- 008bade0 GetAIStructurePlacementLocation.cpp; 6 oracle cases)
+004dbec0	reversed	recon/logic4d	gamelogic	offsetWorldPointByGridCells4D: offset world position by (deltaCellsX, deltaCellsY) in grid space preserving world Z (call 004dbec0 <- 005492c0 <- 008abd40 <- 008ba280 <- 008ba450 <- 008ba680; 6 oracle cases)
+004dc080	reversed	recon/logic4d	gamelogic	worldToGridCell4D: convert world position to grid cell coordinates (outCellX, outCellY) with optional rounding (call 004dc080 <- 008830e0 <- 008bb220 <- 008d2130 AIBuildableStructure[23]; 6 oracle cases)
+004dd390	reversed	recon/logic4d	gamelogic	defaultConstructMapMissionObjectives4D: MapMissionObjectives default constructor setting vtable 0x00BDC9B8 and +0x14 = -1 (call 004dd390 <- 004df330 MissionObjectiveTracker[3]; 2 oracle cases)
+004dd3d0	reversed	recon/logic4d	gamelogic	defaultConstructCampaignRecordTable4D: CampaignSystem sub-table default constructor setting vtable 0x00BDC9E0 and byte +0x1C = 1 (call 004dd3d0 <- 004ecf10 CampaignSystem[3]; 2 oracle cases)
+004dfc30	reversed	recon/logic4d	gamelogic	snapRotatedFootprintToGrid4D: snap rotated structure footprint center to placement grid (call 004dfc30 <- 00549300 <- 008ba680 <- 008bade0 GetAIStructurePlacementLocation.cpp; 6 oracle cases)
