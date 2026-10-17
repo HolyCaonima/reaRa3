@@ -19,7 +19,11 @@ ra3_add_module(gamelogic
         src/ScriptsCluster.cpp
         src/UpdateModules.cpp
         src/ModuleIdentity72.cpp
-        src/WeaponLogic.cpp)
+        src/WeaponLogic.cpp
+        include/ra3/gamelogic/ObjectUpdates78.h
+        src/ObjectUpdates78.cpp
+    PUBLIC_DEPS
+        Ra3::common)
 
 if(MSVC AND CMAKE_SIZEOF_VOID_P EQUAL 4)
     target_compile_options(ra3_gamelogic PRIVATE /arch:SSE2 /fp:precise)
