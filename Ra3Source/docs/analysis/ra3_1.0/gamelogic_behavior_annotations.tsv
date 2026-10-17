@@ -1,0 +1,58 @@
+address	status	owner	module	notes
+006b1540	reversed	recon/behavior6b	gamelogic	findOpenGarrisonPoint decision; native method/callback differential and mutation
+006b1670	reversed	recon/behavior6b	gamelogic	chooseGarrisonDestination; native callback differential and mutation
+006b16e0	reversed	recon/behavior6b	gamelogic	garrisonReassignmentActions; native callback differential and mutation
+006b1900	reversed	recon/behavior6b	gamelogic	preferGarrisonPoint decision; native no-reassignment differential and mutation
+006b1e90	reversed	recon/behavior6b	gamelogic	copyExitWaypointIfAvailable; native ABI/write differential and mutation
+006b1f00	reversed	recon/behavior6b	gamelogic	countMatchingOccupants; native cached-path differential and mutation
+006b20e0	reversed	recon/behavior6b	gamelogic	canTransferContainedObject; native relation/ownership differential and mutation
+006b21c0	reversed	recon/behavior6b	gamelogic	containsObjectId; native list differential and mutation
+006b2220	reversed	recon/behavior6b	gamelogic	hasOpenRiderSlotZero; native base/list differential and mutation
+006b2260	reversed	recon/behavior6b	gamelogic	hasOpenRiderSlotOne; native base/list differential and mutation
+006b2320	reversed	recon/behavior6b	gamelogic	nearestContainedObject2D; native lock/list/float differential and mutation
+006b23b0	reversed	recon/behavior6b	gamelogic	consumeScaledSpawnCount; native one-shot write differential and mutation
+006b2690	reversed	recon/behavior6b	gamelogic	garrisonDamageStatusToSet; native callback/status-write differential and mutation
+006b27b0	reversed	recon/behavior6b	gamelogic	clearGarrisonDamageStatusBits; native write differential and mutation
+006b3120	reversed	recon/behavior6b	gamelogic	remainingConditionFrames; native linked-list/frame differential and mutation
+006b3160	reversed	recon/behavior6b	gamelogic	nextConditionWakeFrame; native linked-list/frame differential and mutation
+006b3270	reversed	recon/behavior6b	gamelogic	scaleBalloonVelocity; native float/write differential and mutation
+006b3660	reversed	recon/behavior6b	gamelogic	specialAbilityDamageBucket; native event-band callback differential and mutation
+006b3820	reversed	recon/behavior6b	gamelogic	updateDisabledStatus; native inactive-path ABI differential and mutation
+006b3980	reversed	recon/behavior6b	gamelogic	specialAbilityActivationState; native EAX differential and explicitOnly hook
+006b39a0	reversed	recon/behavior6b	gamelogic	approachPosition; native vector/float/write differential and mutation
+006b3dc0	reversed	recon/behavior6b	gamelogic	specialAbilityUnpackState; native EAX differential and explicitOnly hook
+006b3f10	reversed	recon/behavior6b	gamelogic	crossedTriggerRadius; native disabled-path write differential and mutation
+006b3fc0	reversed	recon/behavior6b	gamelogic	minimumSpecialProgress; native x87 base-path differential and mutation
+006b4070	reversed	recon/behavior6b	gamelogic	broadcastSpecialProgress; native callback/float ABI differential and mutation
+006b40f0	reversed	recon/behavior6b	gamelogic	resetSpecialProgress; native callback ABI differential and mutation
+006b44e0	reversed	recon/behavior6b	gamelogic	withinAnySpecialPosition; native no-owner differential and mutation
+006b4720	reversed	recon/behavior6b	gamelogic	requiredConditionSet; native EAX differential and mutation
+006b48d0	reversed	recon/behavior6b	gamelogic	requiredConditionSetUpdate; native EAX differential and mutation
+006b4a40	reversed	recon/behavior6b	gamelogic	specialPowerWithinRange; native vector/float/ABI differential and mutation
+006b4d40	reversed	recon/behavior6b	gamelogic	weaponFireTargetAllowed; native status/ABI differential and mutation
+006b4eb0	reversed	recon/behavior6b	gamelogic	applyWeaponFireRadius; native output-write differential and mutation
+006b51c0	reversed	recon/behavior6b	gamelogic	clearDockObjectStatus; native status-write differential and mutation
+006b5ae0	reversed	recon/behavior6b	gamelogic	setDockEnabled; native byte-write differential and mutation
+006b5af0	reversed	recon/behavior6b	gamelogic	selectSourceDockPosition; native vector/write differential and mutation
+006b5ba0	reversed	recon/behavior6b	gamelogic	selectTargetDockPosition; native vector/write differential and mutation
+006b5c20	reversed	recon/behavior6b	gamelogic	selectApproachDockPosition; native vector/write differential and mutation
+006b5ca0	reversed	recon/behavior6b	gamelogic	markDockPairOccupied; native aliased status-write differential and mutation
+006b6ec0	reversed	recon/behavior6b	gamelogic	setSpecialDestination; native EAX/alias/write differential and mutation
+006b7340	reversed	recon/behavior6b	gamelogic	canSelectAlternateTarget; native empty-container differential and mutation
+006b7850	reversed	recon/behavior6b	gamelogic	bombardRadius; native x87 float differential and mutation
+006b7b00	reversed	recon/behavior6b	gamelogic	initializeFireWeaponState; native copy/status/write differential and mutation
+006b7d70	reversed	recon/behavior6b	gamelogic	invalidTargetsDeathFlags; native EAX/write differential and explicitOnly hook
+006b7d80	reversed	recon/behavior6b	gamelogic	invalidTargetsDeathDefaultFlags; native EAX/write differential and explicitOnly hook
+006b8480	reversed	recon/behavior6b	gamelogic	linearDamageFlags; native EAX/write differential and explicitOnly hook
+006b8c70	reversed	recon/behavior6b	gamelogic	physicsBehaviorFlags; native EAX/write differential and explicitOnly hook
+006b8cf0	reversed	recon/behavior6b	gamelogic	physicsAnglesToVector; native x87/SSE vector differential and mutation
+006b8ec0	reversed	recon/behavior6b	gamelogic	initializePhysicsRuntime; native EAX/exact-write differential and explicitOnly hook
+006b91e0	reversed	recon/behavior6b	gamelogic	hasMotiveTarget; native EAX differential and explicitOnly hook
+006b9510	reversed	recon/behavior6b	gamelogic	appendPhysicsContact; native alias/list/write differential and mutation
+006b9580	reversed	recon/behavior6b	gamelogic	countMatchingContacts; native list differential and mutation
+006b95d0	reversed	recon/behavior6b	gamelogic	enablePhysicsContact; native bounds/write differential and mutation
+006b96c0	reversed	recon/behavior6b	gamelogic	expireDelayedWeapon; native frame/write differential and mutation
+006b99c0	reversed	recon/behavior6b	gamelogic	removePhysicsOverlap; native dual-array/write differential and mutation
+006b9b70	reversed	recon/behavior6b	gamelogic	needsAirborneStatus; native float/status differential and mutation
+006b9bb0	reversed	recon/behavior6b	gamelogic	clearPhysicsStatusesAndSet; native status/condition/write differential and mutation
+006ba5d0	reversed	recon/behavior6b	gamelogic	initializeSpawnCrateState; native constructor/EAX/write differential and mutation
