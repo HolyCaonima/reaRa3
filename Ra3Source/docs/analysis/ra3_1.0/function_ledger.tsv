@@ -3438,13 +3438,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005021c0	FUN_005021c0	.text	56		clean	unknown		unanalyzed	
 00502200	FUN_00502200	.text	31		clean	unknown		unanalyzed	
 00502250	FUN_00502250	.text	31		clean	unknown		unanalyzed	
-00502270	FUN_00502270	.text	43		clean	unknown		unanalyzed	
+00502270	FUN_00502270	.text	43		clean	audio	recon/audio50	reversed	ra3::audio::resolveSpeakerCenterChannel; called from 00515050 at 00515423, and 00515050 is called from RenderingSound.cpp 00515B70 at 00515E2F.
 005022a0	FUN_005022a0	.text	58		clean	unknown		unanalyzed	
 005022e0	FUN_005022e0	.text	34		clean	unknown		unanalyzed	
 00502310	FUN_00502310	.text	212		clean	unknown		unanalyzed	
 005023f0	FUN_005023f0	.text	135		clean	unknown		unanalyzed	
 00502480	FUN_00502480	.text	192		clean	unknown		unanalyzed	
-00502540	FUN_00502540	.text	87		clean	unknown		unanalyzed	
+00502540	FUN_00502540	.text	87		clean	audio	recon/audio50	reversed	ra3::audio::bindSoundProvider; called from SagePathMusicManager vtable 00BDF3A4 slot 1 (00506710) at 0050674E.
 005025a0	FUN_005025a0	.text	163		clean	unknown		unanalyzed	
 00502670	FUN_00502670	.text	130		clean	unknown		unanalyzed	
 00502700	FUN_00502700	.text	9		inner-patched	unknown		unanalyzed	
@@ -3461,10 +3461,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00502f00	FUN_00502f00	.text	44		clean	unknown		unanalyzed	
 00502f30	FUN_00502f30	.text	18		clean	unknown		unanalyzed	
 00502f50	FUN_00502f50	.text	89		clean	unknown		unanalyzed	
-00502fb0	FUN_00502fb0	.text	6		clean	unknown		unanalyzed	
+00502fb0	FUN_00502fb0	.text	6		clean	audio	recon/audio50	reversed	ra3::audio::sageAudioManagerEmptyEventAddress; SageAudioManager instance vtable 00BDF5A8 slot 73. 0051BA00 stores that vtable at object+0. Slot 2 of 00BDF5A8 is not a name getter; the name comes from subsystem vtable 00BDF594.
 00502fc0	FUN_00502fc0	.text	22		clean	audio	recon/audioevent	reversed	consumeAudioResetFlag; explicit global boundary; oracle 64
 00502fe0	FUN_00502fe0	.text	8		clean	audio	recon/audioevent	reversed	markAudioSettingsDirty; explicit global boundary; oracle 64
-00502ff0	FUN_00502ff0	.text	10		clean	unknown		unanalyzed	
+00502ff0	FUN_00502ff0	.text	10		clean	audio	recon/audio50	reversed	ra3::audio::sageAudioManagerStopAllImmediately; SageAudioManager instance vtable 00BDF5A8 slot 4.
 00503000	FUN_00503000	.text	154		clean	unknown		unanalyzed	
 005030a0	FUN_005030a0	.text	80		clean	unknown		unanalyzed	
 005030f0	FUN_005030f0	.text	118		clean	unknown		unanalyzed	
@@ -3475,17 +3475,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00503260	FUN_00503260	.text	13		clean	unknown		unanalyzed	
 00503270	FUN_00503270	.text	13		clean	unknown		unanalyzed	
 00503280	FUN_00503280	.text	7		clean	audio	recon/audioevent	reversed	SageAudioManagerView::eventInfoRegistry; oracle 64
-00503290	FUN_00503290	.text	6		clean	unknown		unanalyzed	
+00503290	FUN_00503290	.text	6		clean	audio	recon/audio50	reversed	ra3::audio::sageAudioManagerListenerOrientationCount; SageAudioManager instance vtable 00BDF5A8 slot 20.
 005032a0	FUN_005032a0	.text	47		clean	audio	recon/audioevent	reversed	indexedVolume; explicit global-array boundary; x87 oracle 64
 005032d0	FUN_005032d0	.text	18		clean	audio	recon/audioevent	reversed	playerVolume; explicit player-state/current-player boundary; x87 oracle 64
 005032f0	FUN_005032f0	.text	14		clean	audio	recon/audioevent	reversed	SageAudioManagerView::playerHandle; oracle 64
-00503300	FUN_00503300	.text	6		clean	unknown		unanalyzed	
+00503300	FUN_00503300	.text	6		clean	audio	recon/audio50	reversed	"ra3::audio::sageAudioManagerSubsystemNameAddress; subsystem vtable 00BDF594 slot 2, mov eax, 00BDEDB4 (""SageAudioManager""). 0051BA00 stores 00BDF594 at object+0x24."
 00503310	FUN_00503310	.text	35		inner-patched	unknown		unanalyzed	
 00503350	FUN_00503350	.text	19		clean	unknown		unanalyzed	
 00503370	FUN_00503370	.text	39		clean	unknown		unanalyzed	
 005033a0	FUN_005033a0	.text	41		clean	unknown		unanalyzed	
 005033d0	FUN_005033d0	.text	33		clean	unknown		unanalyzed	
-00503400	FUN_00503400	.text	6		clean	unknown		unanalyzed	
+00503400	FUN_00503400	.text	6		clean	audio	recon/audio50	reversed	"ra3::audio::sagePathMusicManagerSubsystemNameAddress; SagePathMusicManager vtable 00BDF3A4 slot 2, mov eax, 00BDEDC8 (""SagePathMusicManager"")."
 00503410	FUN_00503410	.text	32		clean	unknown		unanalyzed	
 00503430	FUN_00503430	.text	4		clean	unknown		unanalyzed	
 00503440	FUN_00503440	.text	10		clean	unknown		unanalyzed	
@@ -3526,12 +3526,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00504380	thunk_FUN_004fd1c0	.text	5		clean	unknown		unanalyzed	
 00504390	FUN_00504390	.text	144		clean	unknown		unanalyzed	
 005044a0	FUN_005044a0	.text	70		clean	unknown		unanalyzed	
-005044f0	FUN_005044f0	.text	24		clean	unknown		unanalyzed	
+005044f0	FUN_005044f0	.text	24		clean	audio	recon/audio50	reversed	ra3::audio::initAudioEventHandle; direct call from SageAudioManager.cpp 0051E560 at 0051E698.
 00504510	FUN_00504510	.text	71		inner-patched	unknown		unanalyzed	
-00504560	FUN_00504560	.text	37		clean	unknown		unanalyzed	
+00504560	FUN_00504560	.text	37		clean	audio	recon/audio50	reversed	ra3::audio::releaseAudioEventHandle; direct call from SageAudioManager.cpp 005161C0 at 00516398.
 00504590	FUN_00504590	.text	35		clean	unknown		unanalyzed	
-005045c0	FUN_005045c0	.text	25		clean	unknown		unanalyzed	
-005045e0	FUN_005045e0	.text	63		clean	unknown		unanalyzed	
+005045c0	FUN_005045c0	.text	25		clean	audio	recon/audio50	reversed	ra3::audio::releasePlayingAudioHandle; direct call from SageAudioManager.cpp 0051E560 at 0051E9F4.
+005045e0	FUN_005045e0	.text	63		clean	audio	recon/audio50	reversed	ra3::audio::unlinkPlayingAudioNode; direct callee of 00519740 at 005198e9; 00519740 is a direct callee of 00519c50 at 00519fb0; 00519c50 is a direct callee of 0051a1c0 at 0051a3e1; 0051a1c0 is 00bdf594 slot 3; slot 2 returns SageAudioManager
 00504620	FUN_00504620	.text	39		clean	math	recon/ports2	reversed	maximum(float,float); ra3::math::maximum; oracle 2031/2031 Debug+Release
 00504650	FUN_00504650	.text	39		clean	math	recon/ports2	reversed	clamp(float,float,float); ra3::math::clamp; oracle 2031/2031 Debug+Release
 00504680	FUN_00504680	.text	60		clean	math	recon/ports2	verified	Vector3 exact equality; ra3::math::exactlyEqual; oracle 2031/2031 Debug+Release; live shadow 1/1, replace 1 calls in a skirmish (运行 20/21)
@@ -3549,23 +3549,23 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005049d0	FUN_005049d0	.text	11		clean	unknown		unanalyzed	
 005049e0	FUN_005049e0	.text	37		clean	math	recon/ports2	reversed	Vector3 squared distance, full 80-bit ST0 under caller CW; ra3::math::squaredDistance; oracle 2014/2014 at CW 007f/027f/037f Debug+Release; NaN payload emulator-unreliable
 00504a10	FUN_00504a10	.text	65		clean	unknown		unanalyzed	
-00504ac0	FUN_00504ac0	.text	36		clean	unknown		unanalyzed	
-00504af0	FUN_00504af0	.text	46		clean	unknown		unanalyzed	
+00504ac0	FUN_00504ac0	.text	36		clean	audio	recon/audio50	reversed	ra3::audio::testAudioEventCategoryBit; direct call from SageAudioManager.cpp 0051D3C0 at 0051D607.
+00504af0	FUN_00504af0	.text	46		clean	audio	recon/audio50	reversed	ra3::audio::intersectsAudioEventCategoryMask; called from 00508510 at 005085E2. 00508510 is called from RenderingSound.cpp 00515B70 at 00515E28.
 00504b20	FUN_00504b20	.text	55		clean	unknown		unanalyzed	
 00504b60	FUN_00504b60	.text	73		clean	unknown		unanalyzed	
 00504bb0	FUN_00504bb0	.text	140	SageEngine\source\GameEngineDevice\sageaudiodevice\AudioCache\SageAudioCache.cpp	clean	audio	recon/audioevent	reversed	selectCacheWeightedIndex; RNG boundary; oracle 64
 00504c40	FUN_00504c40	.text	51		clean	audio	recon/audioevent	reversed	recentChannelUsed; oracle 64
-00504c80	FUN_00504c80	.text	298		clean	unknown		unanalyzed	
+00504c80	FUN_00504c80	.text	298		clean	audio	recon/audio50	reversed	ra3::audio::recomputePlayerCategoryVolume; called from 00505340 at 00505384. 00505340 is called from SageAudioManager vtable slot 71 (00506670).
 00504dc0	FUN_00504dc0	.text	45		clean	audio	recon/audioevent	reversed	initializeAudioChannelGrid; callback boundary; oracle 64
-00504df0	FUN_00504df0	.text	197		clean	unknown		unanalyzed	
-00504ec0	FUN_00504ec0	.text	86		clean	unknown		unanalyzed	
+00504df0	FUN_00504df0	.text	197		clean	audio	recon/audio50	reversed	ra3::audio::recomputePlayerCategoryProduct; called from 00505340 at 00505375.
+00504ec0	FUN_00504ec0	.text	86		clean	audio	recon/audio50	reversed	ra3::audio::decrementPlayerVolumeCounters; called from 0051EFF0 at 0051F182. 0051EFF0 is SageAudioManager instance vtable 00BDF5A8 slot 5.
 00504f20	FUN_00504f20	.text	81		clean	unknown		unanalyzed	
 00504f80	FUN_00504f80	.text	221		clean	unknown		unanalyzed	
 00505060	thunk_FUN_01955920	.text	6		entry-recoverable	unknown		unanalyzed	
 00505150	FUN_00505150	.text	423		clean	unknown		unanalyzed	
 00505300	FUN_00505300	.text	53		clean	audio	recon/audioevent	reversed	resetAudioCategoryForPlayers; callback/global boundary; oracle 64
-00505340	FUN_00505340	.text	105		clean	unknown		unanalyzed	
-005053b0	FUN_005053b0	.text	90		clean	unknown		unanalyzed	
+00505340	FUN_00505340	.text	105		clean	audio	recon/audio50	reversed	ra3::audio::acquireVolumeModifierLock; called from SageAudioManager vtable 00BDF5A8 slot 71 (00506670) at 00506675.
+005053b0	FUN_005053b0	.text	90		clean	audio	recon/audio50	reversed	ra3::audio::releaseVolumeModifierLock; called from SageAudioManager vtable 00BDF5A8 slot 72 (00506680) at 00506685.
 00505410	FUN_00505410	.text	69		clean	unknown		unanalyzed	
 00505460	FUN_00505460	.text	75		clean	unknown		unanalyzed	
 005054b0	FUN_005054b0	.text	89		clean	unknown		unanalyzed	
@@ -3590,13 +3590,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00506170	FUN_00506170	.text	392		clean	unknown		unanalyzed	
 00506300	FUN_00506300	.text	264		clean	unknown		unanalyzed	
 00506410	FUN_00506410	.text	26		clean	audio	recon/audioevent	reversed	requestUsesAudioEvent; oracle 64; hook audiorequestusesevent
-00506430	FUN_00506430	.text	96		clean	unknown		unanalyzed	
+00506430	FUN_00506430	.text	96		clean	audio	recon/audio50	reversed	ra3::audio::sageAudioManagerQuerySuppressed; SageAudioManager instance vtable 00BDF5A8 slot 101.
 00506490	FUN_00506490	.text	16		clean	audio	recon/audioevent	reversed	SageAudioManagerView::allocatePlayingHandle; oracle 64; hook audiomanagerplayinghandle
 005064a0	FUN_005064a0	.text	23		clean	unknown		unanalyzed	
 005064c0	FUN_005064c0	.text	245		clean	unknown		unanalyzed	
 005065c0	FUN_005065c0	.text	164		clean	audio	recon/audioevent	reversed	configureEnvelope; backend refresh stubbed; oracle 64
-00506670	FUN_00506670	.text	14		clean	unknown		unanalyzed	
-00506680	FUN_00506680	.text	14		clean	unknown		unanalyzed	
+00506670	FUN_00506670	.text	14		clean	audio	recon/audio50	reversed	ra3::audio::sageAudioManagerOnAcquireVolumeModifierLock; SageAudioManager instance vtable 00BDF5A8 slot 71.
+00506680	FUN_00506680	.text	14		clean	audio	recon/audio50	reversed	ra3::audio::sageAudioManagerOnReleaseVolumeModifierLock; SageAudioManager instance vtable 00BDF5A8 slot 72.
 00506690	FUN_00506690	.text	37		clean	audio	recon/audioevent	reversed	setPlayerEnvelope; player-state callback boundary; oracle 64
 005066c0	FUN_005066c0	.text	19		clean	unknown		unanalyzed	
 005066e0	FUN_005066e0	.text	8		clean	unknown		unanalyzed	
@@ -3616,8 +3616,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00506b00	FUN_00506b00	.text	50		clean	unknown		unanalyzed	
 00506b40	FUN_00506b40	.text	137		clean	unknown		unanalyzed	
 00506bd0	FUN_00506bd0	.text	68		inner-patched	unknown		unanalyzed	
-00506c20	FUN_00506c20	.text	109		clean	unknown		unanalyzed	
-00506c90	FUN_00506c90	.text	61		clean	unknown		unanalyzed	
+00506c20	FUN_00506c20	.text	109		clean	audio	recon/audio50	reversed	ra3::audio::initCategoryBitsFour; called from vtable 00BDC45C slot 2 (004D9E20) at 004D9E2F. That slot is not a mov/ret name getter.
+00506c90	FUN_00506c90	.text	61		clean	audio	recon/audio50	reversed	ra3::audio::initCategoryBitsTwo; called from 00508510 at 00508594. 00508510 is called from RenderingSound.cpp 00515B70 at 00515E28.
 00506cd0	FUN_00506cd0	.text	81		clean	unknown		unanalyzed	
 00506d30	FUN_00506d30	.text	74		clean	unknown		unanalyzed	
 00506d80	FUN_00506d80	.text	104		clean	unknown		unanalyzed	
@@ -3639,7 +3639,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005074e0	FUN_005074e0	.text	153		clean	unknown		unanalyzed	
 00507580	FUN_00507580	.text	15		inner-patched	unknown		unanalyzed	
 00507700	FUN_00507700	.text	30		clean	unknown		unanalyzed	
-00507720	FUN_00507720	.text	36		clean	unknown		unanalyzed	
+00507720	FUN_00507720	.text	36		clean	audio	recon/audio50	reversed	ra3::audio::hasActiveRenderCursor; direct call from SageAudioManager.cpp 0051D3C0 at 0051D6BB.
 00507750	FUN_00507750	.text	98		clean	unknown		unanalyzed	
 005077c0	FUN_005077c0	.text	1442		clean	unknown		unanalyzed	
 00507d70	FUN_00507d70	.text	171		clean	unknown		unanalyzed	
@@ -3655,7 +3655,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00508330	FUN_00508330	.text	372		clean	unknown		unanalyzed	
 005084b0	FUN_005084b0	.text	88		clean	unknown		unanalyzed	
 00508510	FUN_00508510	.text	277		clean	unknown		unanalyzed	
-00508640	FUN_00508640	.text	67		clean	unknown		unanalyzed	
+00508640	FUN_00508640	.text	67		clean	audio	recon/audio50	reversed	ra3::audio::appendPlayingAudioNode; direct callee of 005181e0 at 005182dd; 005181e0 is a direct callee of 00519740 at 005198c8; 00519740 reaches 00bdf594 slot 3 (SageAudioManager) via 00519c50 and 0051a1c0 as for 005045e0
 00508690	thunk_FUN_00435f20	.text	5		clean	unknown		unanalyzed	
 00508695	FUN_00508695	.text	73		clean	unknown		unanalyzed	
 005086e0	FUN_005086e0	.text	77		clean	unknown		unanalyzed	
@@ -3725,7 +3725,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0050afe0	FUN_0050afe0	.text	8		clean	unknown		unanalyzed	
 0050aff0	FUN_0050aff0	.text	87		clean	unknown		unanalyzed	
 0050b050	FUN_0050b050	.text	62		clean	unknown		unanalyzed	
-0050b090	FUN_0050b090	.text	83		clean	unknown		unanalyzed	
+0050b090	FUN_0050b090	.text	83		clean	audio	recon/audio50	reversed	ra3::audio::sagePathMusicManagerTransferState; SagePathMusicManager vtable 00BDF3A4 slot 3.
 0050b0f0	FUN_0050b0f0	.text	139		clean	unknown		unanalyzed	
 0050b180	FUN_0050b180	.text	146		clean	unknown		unanalyzed	
 0050b220	FUN_0050b220	.text	142		clean	unknown		unanalyzed	
@@ -3799,7 +3799,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0050dcb0	FUN_0050dcb0	.text	350		clean	unknown		unanalyzed	
 0050de20	FUN_0050de20	.text	204		clean	unknown		unanalyzed	
 0050df00	FUN_0050df00	.text	118		clean	unknown		unanalyzed	
-0050df80	FUN_0050df80	.text	84		clean	unknown		unanalyzed	
+0050df80	FUN_0050df80	.text	84		clean	audio	recon/audio50	reversed	ra3::audio::eraseListenerRecord; tail-called from 0050E510 at 0050E517. 0050E510 is SageAudioManager instance vtable 00BDF5A8 slot 92.
 0050dfe0	FUN_0050dfe0	.text	43		clean	unknown		unanalyzed	
 0050e010	FUN_0050e010	.text	43		clean	unknown		unanalyzed	
 0050e040	FUN_0050e040	.text	90		clean	unknown		unanalyzed	
@@ -3807,7 +3807,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0050e100	FUN_0050e100	.text	388		clean	unknown		unanalyzed	
 0050e290	FUN_0050e290	.text	88		clean	unknown		unanalyzed	
 0050e2f0	FUN_0050e2f0	.text	540	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-0050e510	FUN_0050e510	.text	15		clean	unknown		unanalyzed	
+0050e510	FUN_0050e510	.text	15		clean	audio	recon/audio50	reversed	ra3::audio::sageAudioManagerRemoveListenerEntry; SageAudioManager instance vtable 00BDF5A8 slot 92.
 0050e520	FUN_0050e520	.text	485		clean	unknown		unanalyzed	
 0050e710	FUN_0050e710	.text	527		clean	unknown		unanalyzed	
 0050e920	FUN_0050e920	.text	643		clean	unknown		unanalyzed	
@@ -3826,10 +3826,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0050f6b0	FUN_0050f6b0	.text	156		clean	unknown		unanalyzed	
 0050f750	FUN_0050f750	.text	141		clean	unknown		unanalyzed	
 0050f7e0	FUN_0050f7e0	.text	448		clean	unknown		unanalyzed	
-0050fa80	FUN_0050fa80	.text	166		clean	unknown		unanalyzed	
+0050fa80	FUN_0050fa80	.text	166		clean	audio	recon/audio50	reversed	ra3::audio::applyListedVolumeModifiers; called from 0050FD50 at 0050FD6D. 0050FD50 is called from RenderingSound.cpp 00515B70 at 00515DB6.
 0050fb30	FUN_0050fb30	.text	161		clean	unknown		unanalyzed	
 0050fbe0	FUN_0050fbe0	.text	357		clean	unknown		unanalyzed	
-0050fd50	FUN_0050fd50	.text	90		clean	unknown		unanalyzed	
+0050fd50	FUN_0050fd50	.text	90		clean	audio	recon/audio50	reversed	ra3::audio::refreshRenderingPlayerVolumes; direct call from RenderingSound.cpp 00515B70 at 00515DB6.
 0050fdb0	FUN_0050fdb0	.text	573		clean	unknown		unanalyzed	
 0050fff0	FUN_0050fff0	.text	28		clean	unknown		unanalyzed	
 00510010	FUN_00510010	.text	38		clean	unknown		unanalyzed	
