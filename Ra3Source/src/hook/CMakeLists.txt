@@ -31,6 +31,7 @@ ra3_add_shared_library(ra3hook
         dll/targets/TerrainLogicTargets.cpp
         dll/targets/ThingTemplateTargets.cpp
         dll/targets/GameLogic7CTargets.cpp
+        dll/targets/GameLogic72Targets.cpp
     DEPS
         Ra3::audio
         Ra3::asset

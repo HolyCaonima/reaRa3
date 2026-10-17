@@ -72,6 +72,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/thingtemplatecheck)
     add_subdirectory(tools/relodetokcheck)
     add_subdirectory(tools/gamelogic7ccheck)
+    add_subdirectory(tools/gamelogic72check)
 endif()
 
 if(RA3_BUILD_TESTS)
