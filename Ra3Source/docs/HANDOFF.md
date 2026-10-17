@@ -192,6 +192,9 @@
     `python work\probe\verify_ownership.py <claims.txt>` 逐条反查（格式见脚本头注释）。
   - `recon/common5a`：`0x005A0000–0x005BFFFF` common 簇，Grok，base `0d099eb`。
   - `recon/render56`：`0x00560000–0x0059FFFF` render 簇，Gemini，base `5e4a7c2`。
+  - `recon/audio50`：`0x00500000–0x0050FFFF` SageAudio 设备层，base `d18d88e`；Gemini 断连后主控
+    提交快照 `30643c3`（约 42 个草稿入口和 checker，无 oracle/注释/文档），改由 Grok 接手。
+  - `recon/skirm87`、`recon/render99`、`recon/thing78`：Grok 新开，见补位队列。
   - `recon/skirmishai89`：`0x00890000–0x0089FFFF` skirmish AI 簇，Gemini，base `5d16a5b`。
   - 14:00 补足 10 路，base 均为 `86baa8d`：`recon/objbehav68`（`0x00680000–0x0068FFFF`
     对象 behavior/update 模块，Gemini）、`recon/protentry`（已合并；由
