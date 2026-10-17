@@ -41,14 +41,14 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 DisplayExtent 合并）
+## 3. 现状（截至 WeaponLogic 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,987 行，其中 verified 66、
-  reversed 733、unanalyzed 48,188。`securom` 分类：clean 47,773、entry-lost 653、
+  reversed 823、unanalyzed 48,098。`securom` 分类：clean 47,773、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
-- **hook**：246 个目标（其中 202 个只认显式键）。原有 86 个全部 replace 时，Release
+- **hook**：257 个目标（其中 213 个只认显式键）。原有 86 个全部 replace 时，Release
   遭遇战带 Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34）；新加的
-  144 个目标只有离线证据，尚未做合并实机 shadow/replace。
+  155 个目标只有离线证据，尚未做合并实机 shadow/replace。
 - **已完成模块**：
   - core（配置/INI/SkuDef）
   - io（BIG 档案、RefPack、BigHandler 四层：查找/打开/读取/seek/枚举）
@@ -91,13 +91,18 @@
     无符号溢出谓词及代表性 mutation 均通过
   - gamelogic AIStates 批次：51 个 Dozer/Supply/Unit state 入口、16 个显式 hook；
     Release 3,264 场景零差异，16/16 mutation 检出
+  - gamelogic WeaponLogic 批次（`0x0069A250–0x0069FD30` update 模块簇）：90 个 clean
+    入口（30 对模块名/键解析 + 30 个 Lifetime/Physics/Shield/Slaved 等行为），11 个显式
+    hook；代码在 `ra3/gamelogic/UpdateModules.h`（与 ObjectLogic 的 `WeaponLogic.h`
+    区分）。集成态 Release 1,890 次比较零差异，`lifetimeResume` 语义 mutation 检出
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
   - 类型化资源访问（recon/typed）未合并。
   - 少数 hook 在遭遇战里未被调用（logicrandomvariable、几个 BIG 枚举入口、
     stringfindlast 等），只有离线证据。
-- **当前并行**：`recon/terrainlogic`、`recon/weaponlogic`，以及因模型
+- **当前并行**：`recon/terrainlogic`（首轮 hook 配置与交付说明不符，已退回修正：应为
+  20 个 hook、17 个 explicitOnly，仅 3 个纯函数自动启用；修正完成前不合并），以及因模型
   服务临时失败后重新启动的 `recon/gamelogic7c`。每支独立 worktree，完成后主控逐支
   复验合并；构建/oracle 可并行，主分支合并仍串行，避免注册表和 CMake 冲突污染。
 - **后续模型分流**（用户 12:10 决定）：复杂 ABI、受保护边界与重型对象簇继续优先
