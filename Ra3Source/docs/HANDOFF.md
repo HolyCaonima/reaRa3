@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 TerrainLogic 合并）
+## 3. 现状（截至 net5d 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,987 行，其中 verified 66、
-  reversed 866、unanalyzed 48,055。`securom` 分类：clean 47,773、entry-lost 653、
+  reversed 904、unanalyzed 48,017。`securom` 分类：clean 47,773、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
 - **hook**：277 个目标（其中 230 个只认显式键）。原有 86 个全部 replace 时，Release
   遭遇战带 Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34）；新加的
@@ -101,6 +101,11 @@
     `aligntonormalmatrix` 三个纯函数跟随默认模式。首轮交付的 hook 配置和文档字节与代码
     不符，主控修正后合并（`c76dae9`）。集成态 Release 2,868 场景零差异，`kSideOffset`
     语义 mutation 检出
+  - net 命令消息批次（`0x005D67E0–0x005DB270`，Grok）：38 个 clean 入口，均为命令消息
+    vtable 的调试文本槽（`<frame=%d, player=%d, type=%d>` + 类型名）与字段传输槽，
+    代码在 `ra3/net/CommandMessage.h`；无 hook（影子调用会重复驱动文本/流虚函数）。
+    主控逐条核对 42 个 vtable 槽位声明并抽查反汇编；集成态 Release 165 场景零差异，
+    `+0x18→+0x1C` 写偏移 mutation 检出。24 个全局/分配器/断言门面入口留作清单行
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
@@ -120,7 +125,11 @@
     inner-patched/entry-recoverable 函数，Gemini，无 hook）、`recon/drawable52`
     （`0x00520000–0x0052FFFF` Drawable 访问器，Grok，逐行所有权证明）、
     `recon/particles65`（`0x00650000–0x0067FFFF` 粒子模块，Gemini）、`recon/net5d`
-    （`0x005D0000–0x005DFFFF` 网络类簇，Grok，逐行所有权证明）。
+    （已合并）。
+  - `recon/obj6a`：`0x006A0000–0x006BFFFF` gamelogic 类簇，Gemini，base `77fa914`
+    （补 net5d 的位）。
+  - 模型服务连接错误会中断子 agent；gamelogic7c、objbehav68 各中断一次，已用 resume
+    在原 worktree 续跑。中断后先查 worktree 未提交改动，续跑而不是重启。
   - 已合并批次的旧 worktree 已移除（分支保留）；`recon/behavior6b` 的 `c24fe82` 与
     main 的 `44616d1` 为同一补丁。
 - **合并前静态验收**：`python Ra3Source\tools\analysis\accept_batch.py recon/<name>`。
@@ -131,7 +140,7 @@
   由主控修正再合并。脚本不判断语义与所有权证据，这部分仍由主控抽查。
 - **批次指标**：`docs/analysis/ra3_1.0/batch_metrics.tsv`，合并或退回时追加一行。
 - **补位队列**（任一路完成即补，保持 10 路；数字为未认领 clean 函数数）：
-  `0x006A0000–0x006BFFFF` gamelogic 879（Gemini）→ `0x007E0000–0x0080FFFF` common 464
+  ~~`0x006A0000–0x006BFFFF`~~（已开 obj6a）→ `0x007E0000–0x0080FFFF` common 464
   （Grok）→ `0x00720000–0x0075FFFF` gamelogic ~520（Gemini）→ `0x00560000` render 212
   （Gemini）→ `0x005A0000` common 196（Grok）→ `0x00500000` audio 118（Gemini）→
   `0x00870000` gamelogic/gameclient 301（Gemini）→ `0x004D0000` GameLogic 核心 261（Gemini）

@@ -972,3 +972,65 @@ address	status	owner	module	notes
 00868470	reversed	recon/terrainlogic	sim	TerrainLogic::adjustNewMapWaypoints; adds getGroundHeight to each waypoint Z in g_waypointListHead (0x00DFC194) and calls 0x00866BB0; ra3::sim::adjustNewMapWaypoints; oracle 15 cases
 008684c0	reversed	recon/terrainlogic	sim	findPositionAround; certain source anchor TerrainLogic.cpp:3158; returns *center if outside pathfind extent, else concentric ring search (dr=5.0f) with GameLogicRandomValueReal (0x005A9550) and ceil (0x00BBA4DC); ra3::sim::findPositionAround; oracle 54 cases across 3 FPU CWs
 008686a0		recon/terrainlogic	sim	findPositionAround7; 445-byte 7-arg ring search calling 0x008678E0 and 0x00867430; deferred
+005d67e0	reversed	recon/net5d	net	CommandMessage::appendFrame; vtable 00bee53c slot 2; sprintf frame/player/type from +4/+8/+C into text +0x3C
+005d9df0	reversed	recon/net5d	net	CommandMessage::appendAuthServerNewGameAccepted; vtable 00bee924 slot 14; frame prefix plus literal AUTHSERVER_NEW_GAME_ACCEPTED
+005d9e40	reversed	recon/net5d	net	CommandMessage::xferPair; vtable 00bee924 slot 16 and 00bef4d4 slot 14; one body counted once; stream +0x6C at +0x14 and +0x18
+005d9eb0	reversed	recon/net5d	net	CommandMessage::appendAuthServerNewGameRejected; vtable 00bee988 slot 2; frame prefix plus literal AUTHSERVER_NEW_GAME_REJECTED
+005d9f00	reversed	recon/net5d	net	CommandMessage::xferDwordAndWord; vtable 00bee988 slot 4; stream +0x6C at +0x14, +0x74 through a word temporary stored back at +0x18; EAX is that zero-extended word
+005d9f80	reversed	recon/net5d	net	CommandMessage::appendCamera; vtable 00bee9bc slot 2; frame prefix, CAMERA frame int +0x14, optional pos/rot bits from flag +0x18
+005da030	reversed	recon/net5d	net	CommandMessage::xferCameraPayload; vtable 00bee9bc slot 4; +0x6C/+0x7C then flag bits of the transferred byte select +0x58 and +0x54
+005da100	reversed	recon/net5d	net	CommandMessage::appendPlayerJoin; vtable 00bee9f0 slot 2; frame prefix, PlayerJoinMsg literal, tail text +0x30 of dword +0x14
+005da160	reversed	recon/net5d	net	CommandMessage::xferPlayerJoinPayload; vtable 00bee9f0 slot 4; +0x6C/+0x70/+0x6C then six +0x6C dwords at +0x20
+005da200	reversed	recon/net5d	net	CommandMessage::appendPlayerLeavesServer; vtable 00beea20 slot 2; frame prefix plus literal PLAYER_LEAVES_SERVER
+005da2e0	reversed	recon/net5d	net	CommandMessage::appendFileData; vtable 00beea4c slot 2; frame prefix, FILE_DATA, text +0x30 of dword +0x18, tail literal bytes
+005da430	reversed	recon/net5d	net	CommandMessage::appendGameCommandDone; vtable 00beea74 slot 2; frame prefix, GAMECOMMANDDONE, tail text +0x30 of dword +0x14
+005da520	reversed	recon/net5d	net	CommandMessage::xferTimedPair; vtable 00bef4d4 slot 4; stream +0x60 at +0x14 and +0x70 at +0x18
+005da550	reversed	recon/net5d	net	CommandMessage::appendGameClientRequestNewGame; vtable 00beeaa4 slot 7; frame prefix plus literal GAMECLIENT_REQUEST_NEW_GAME
+005da5a0	reversed	recon/net5d	net	CommandMessage::xferTwelveDwords; vtable 00beeaa4 slot 9; +0x6C at +0x14 then six dwords at +0x18 and six at +0x30
+005da660	reversed	recon/net5d	net	CommandMessage::appendGrantLeave; vtable 00beeae4 slot 3; frame prefix plus literal GRANT_LEAVE
+005da6e0	reversed	recon/net5d	net	CommandMessage::appendIgnoreVoice; vtable 00beeb0c slot 2; frame prefix, IGNORE_VOICE, tail text +0x24 of byte +0x14
+005da740	reversed	recon/net5d	net	CommandMessage::xferIgnoreVoicePayload; vtable 00beeb0c slot 4; tail call of stream +0x84 at +0x14
+005da790	reversed	recon/net5d	net	CommandMessage::appendGameCommandDoneOld; vtable 00beeb30 slot 2; GAMECOMMANDDONE int +0x14 then old-slot byte +0x18 via text +0x34
+005da810	reversed	recon/net5d	net	CommandMessage::xferDoneOldPayload; vtable 00beeb30 slot 4; stream +0x6C at +0x14 and +0x7C at +0x18
+005da8f0	reversed	recon/net5d	net	CommandMessage::appendCreateTime; vtable 00bef4d4 slot 7; frame prefix, create time, tail text +0x30 of dword +0x14
+005da950	reversed	recon/net5d	net	CommandMessage::xferField14Slot6C; vtable 00beea74 slot 4, 00beebc0 slot 4 and 00bef4d4 slot 9; one body counted once; tail +0x6C at +0x14
+005da970	reversed	recon/net5d	net	CommandMessage::appendPingPong; vtable 00bef4d4 slot 12; ping int +0x18 then pong int +0x14
+005da9f0	reversed	recon/net5d	net	CommandMessage::appendProgress; vtable 00beeba0 slot 2; frame prefix, PROGRESS, tail text +0x34 of byte +0x14
+005daa50	reversed	recon/net5d	net	CommandMessage::xferField14Slot7C; vtable 00beeba0 slot 4 and 00beed84 slot 4; one body counted once; tail +0x7C at +0x14
+005daaa0	reversed	recon/net5d	net	CommandMessage::appendRequestLeave; vtable 00beebc0 slot 2; frame prefix, REQUEST_LEAVE, tail text +0x30 of dword +0x14
+005dab30	reversed	recon/net5d	net	CommandMessage::appendServerJoinAccept; vtable 00beebf0 slot 2; frame prefix plus literal SERVER_JOIN_ACCEPT
+005dabc0	reversed	recon/net5d	net	CommandMessage::appendServerJoinReject; vtable 00beec18 slot 2; frame prefix plus literal SERVER_JOIN_REJECT
+005dac50	reversed	recon/net5d	net	CommandMessage::appendServerKick; vtable 00beec40 slot 2; frame prefix plus literal SERVER_KICK
+005dace0	reversed	recon/net5d	net	CommandMessage::appendServerStartupComplete; vtable 00beec5c slot 3; frame prefix plus literal SERVER_STARTUPCOMPLETE
+005dad70	reversed	recon/net5d	net	CommandMessage::appendServerStartupFailed; vtable 00beec8c slot 2; frame prefix plus literal SERVER_STARTUPFAILED
+005dae00	reversed	recon/net5d	net	CommandMessage::appendVoteDisconnectSuggested; vtable 00beecb8 slot 2; slot byte +0x14 via text +0x34 then kick frame +0x18
+005daed0	reversed	recon/net5d	net	CommandMessage::xferVotePayload; vtable 00beecb8 slot 4; +0x7C at +0x14, then +0x6C on that return at +0x18
+005daf30	reversed	recon/net5d	net	CommandMessage::appendTelestrator; vtable 00beed00 slot 2; frame int +0x14, byte +0x18 via text +0x34, tail literal bytes
+005db000	reversed	recon/net5d	net	CommandMessage::appendUi; vtable 00beed2c slot 2; UI caption from [[+0x14]+4]+8 or literal <Empty>, then nested vtable +0x0C
+005db0b0	reversed	recon/net5d	net	CommandMessage::forwardNested; vtable 00beed2c slot 1; EAX 0 if +0x14 is null, else nested vtable +0x08 with dword +0x08
+005db190	reversed	recon/net5d	net	CommandMessage::appendVoice; vtable 00beed50 slot 2; frame int +0x14, word +0x1A, word +0x18 via text +0x14
+005db270	reversed	recon/net5d	net	CommandMessage::appendVoteDisconnectSlot; vtable 00beed84 slot 2; frame prefix, VOTE_DISCONNECT, tail text +0x34 of byte +0x14
+005d3f40		recon/net5d	net	deferred: PeerThread assert, not a command-message slot
+005d4d90		recon/net5d	net	deferred: vtable 00beeae4 slot 2 reads global 00df6b38
+005d4db0		recon/net5d	net	deferred: vtable 00beeba0 slot 1 calls non-ledger 005bc790
+005d4dd0		recon/net5d	net	deferred: vtable 00beebc0 slot 1 reads global 00df6b38
+005d6c40		recon/net5d	net	deferred: ReliableTransport assert/dispatch facade
+005d6cd0		recon/net5d	net	deferred: ReliableTransport assert/dispatch facade
+005d6d60		recon/net5d	net	deferred: ReliableTransport assert/dispatch facade
+005d7a00		recon/net5d	net	deferred: TickerDataHandler float path, different source file
+005d8d60		recon/net5d	net	deferred: vtable 00bee924 slot 9 stores global 00df6c2c
+005da350		recon/net5d	net	deferred: vtable 00beea4c slot 4 calls allocators 004166b0 and 004165a0
+005da4c0		recon/net5d	net	deferred: vtable 00beeaa4 slot 4 is a tail jump to 005b03c0
+005dae80		recon/net5d	net	deferred: vtable 00beecb8 slot 1 writes through global 00df6b38
+005db2d0		recon/net5d	net	deferred: vtable 00beed84 slot 1 writes through global 00df6b38
+005da0c0		recon/net5d	net	deferred: vtable 00bef488 slot 4 has no frame-format sibling tying it to this class
+005da400		recon/net5d	net	deferred: vtable 00bef4a4 slot 4 calls 0054eda0 and has no frame-format sibling
+005dd1e0		recon/net5d	net	deferred: ReliableTransport assert/dispatch facade
+005dd2f0		recon/net5d	net	deferred: ReliableTransport assert/dispatch facade
+005dd3d0		recon/net5d	net	deferred: ReliableTransport assert/dispatch facade
+005dd4c0		recon/net5d	net	deferred: ReliableTransport assert/dispatch facade
+005dd5b0		recon/net5d	net	deferred: ReliableTransport assert/dispatch facade
+005dd670		recon/net5d	net	deferred: ReliableTransport assert/dispatch facade
+005dd6f0		recon/net5d	net	deferred: ReliableTransport assert/dispatch facade
+005dd8a0		recon/net5d	net	deferred: ReliableTransport assert/dispatch facade
+005dd9b0		recon/net5d	net	deferred: ReliableTransport assert/dispatch facade

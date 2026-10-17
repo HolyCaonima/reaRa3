@@ -1,3 +1,4 @@
 branch	model	base	started	delivered	first_build	first_oracle	report_mismatch	rework	final_reversed	hooks	explicit_only	notes
 recon/weaponlogic	unrecorded	unrecorded	unrecorded	2026-10-17	pass	pass	header name collided with main WeaponLogic.h	controller	90	11	11	renamed to UpdateModules.*; batch --mutated only flipped output, controller ran lifetimeResume semantic mutation; 1,890 Release comparisons
 recon/terrainlogic	unrecorded	unrecorded	unrecorded	2026-10-17	pass	pass	hook config, key names and doc bytes differed from report	1 (finished by controller)	43	20	17	subsystem-name hook removed, waypoint getter added; kSideOffset semantic mutation; 2,868 Release scenarios
+recon/net5d	grok-4.7-high-fast	86baa8d	2026-10-17 14:00	2026-10-17 14:22	pass	fail (oracle stub sprintf and EAX width fixed by batch)	none	0	38	0	0	42 vtable slot claims verified by controller; 24 rejected with reasons; +0x18->+0x1C mutation; 165 Release scenarios
