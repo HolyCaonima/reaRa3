@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 skirmishai89 合并）
+## 3. 现状（截至 aistate7a 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 1,874、unanalyzed 47,051（受保护函数已 reversed：entry-lost 104、inner-patched 14、
+  reversed 1,967、unanalyzed 46,958（受保护函数已 reversed：entry-lost 104、inner-patched 14、
   entry-recoverable 3）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
@@ -255,6 +255,18 @@
     划分、0x44 字节元素 vector 区间 erase）改为 rejected 行；hook 键原为 `SkirmishAIBaseBuild.<方法>`，
     改成主分支惯用的短小写键（`6a09fe2`）。5 个有链但无差分用例、3 个无链的入口为空状态行。集成态
     oracle 194 例零差异，独立 mutant 检查器（加权请求 `>`→`>=`）检出，hook_integration 通过
+  - 对象 update/contain/special-ability 模块批次（`0x00740000–0x0077FFFF`，Grok）：46 个 clean 方法
+    （Dock/AutoDeposit/ClusterBomb/DamageField 等 18 个 xfer、TransportAIUpdate 乘客通知、Heal/
+    SlaughterHorde/Tunnel contain 的进出、各 Toggle*/Switch*/Fling* SpecialAbilityUpdate 槽位、
+    TechUpgrade、MissileUpdate/ProjectileUpdate 发射等），无 hook；代码在
+    `ra3/gamelogic/ObjectModules74.h`，设计见 `obj74.md`。归属全为具名 split vtable 槽位，主控复算
+    `fails=0`。主控按调用剖面复核 xfer：只转发基类的有 3 个（交付漏算 `ReplaceObjectUpdate_xfer`），
+    样板 3/46。集成态 oracle 141 例零差异，Heal 标志位 10→11 mutation 检出
+  - AI states 批次（`0x007A0000–0x007AFFFF`，Grok）：47 个方法（UnitAI*/AI* state 的 onEnter/onExit/
+    update、12 个带字段的 xfer、`AIStateMachine` slot 8 建链），无 hook，样板 0；代码在
+    `ra3/gamelogic/AIState7A.h`，设计见 `aistate7a.md`。归属全为具名 split vtable 槽位（多个共享体
+    列出全部表），主控复算 `fails=0`。88 个 slot-2 getter、3 个 EASTL `allocator.h` 入口未计。
+    集成态 oracle 131 例零差异，`007A5590` 移位 10→11 mutation 检出
   - AI states 批次（`0x00790000–0x0079FFFF`，Grok）：48 个方法（Turret/UnitAI/AIDock/AIGuard/AIAttack
     各 state 的 onEnter/update/onExit 与条件槽位、FollowWaypointPath/Turret 状态机），无 hook，样板 0；
     代码在 `ra3/gamelogic/AIState79.h`，设计见 `aistate79.md`。归属全部为单个 split vtable 槽位，主控
@@ -300,10 +312,10 @@
     `recon/particles65`、`recon/render91`、`recon/obj6a`、`recon/protcave`、`recon/protentry2`、
     `recon/gamelogic82`、`recon/skirm87`、`recon/common5a`、`recon/render56`、`recon/objbehav68`、`recon/audio50`、
     `recon/aistate79`、`recon/render99`、`recon/net5d2`、`recon/obj69`、`recon/logic4d`、`recon/skirm8b`、
-    `recon/thing78`、`recon/skirmishai89`：已合并（`789bcb1`、
+    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`：已合并（`789bcb1`、
     `f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`、
     `9df37c8`、`760e231`、`79a7caa`、`9c14506`、`6234602`、`00c9a7a`、`be08241`、`ba97d03`、`bec182d`、
-    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`）。追加合并脚本在
+    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`）。追加合并脚本在
     冲突块以 `)` 收尾时会报 WARN，需手工检查括号（skirm87 合并时拼坏过一次 CMake）。受保护批次的站点/字符串/伪调用核对脚本见 `work/probe/check_protcave.py`、
     `work/probe/check_protentry2.py`，多快照槽值用 `work/probe/slot_snapshots.py`。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
@@ -326,10 +338,12 @@
     主控手工替换）、`recon/aistate7c`（`0x007C0000–0x007CFFFF` 剩余 200 个 clean，142 个在具名
     split vtable 非 getter 槽位，Grok）、`recon/render9b`（`0x009B0000–0x009BFFFF` 渲染管线脚本命令
     解释器，slot 2 返回各命令的用法串，Grok）。当前 Grok 9 路、Gemini 1 路。
-  - `recon/obj74`（`0x00740000–0x0077FFFF`，Grok，base `ae1793b`）、`recon/aistate7a`
-    （`0x007A0000–0x007AFFFF`，Grok，base `a9e701e`）、`recon/aistate79b`（`0x0079` 第二轮，Grok，
-    base `c58f149`）、`recon/aistate7b`（`0x007B0000–0x007BFFFF`，Grok）：objbehav68、audio50、
-    aistate79、render99 合并后补位。
+  - `recon/aistate79b`（`0x0079` 第二轮，Grok，base `c58f149`）、`recon/aistate7b`
+    （`0x007B0000–0x007BFFFF`，Grok）：aistate79、render99 合并后补位。
+  - obj74、aistate7a 合并后补位：`recon/obj6e`（`0x006E0000–0x006FFFFF`，weapon state、SupplyTruck AI、
+    special power、伤害 nugget、Grappling/Lift/Slaved update 等，Grok）、`recon/obj70`
+    （`0x00700000–0x0071FFFF`，GatherEject/SpawnCrate/ShieldSphere/Bombard 等模块与 special ability，
+    Grok）。派单由 `work/probe/make_brief.py <名> <base> <类前缀> <scope 文件>` 从 `obj72.md` 派生。
   - 14:00 补足 10 路，base 均为 `86baa8d`：`recon/objbehav68`（`0x00680000–0x0068FFFF`
     对象 behavior/update 模块，Gemini）、`recon/protentry`（已合并；由
     `recon/protentry2` 接续剩余 entry-lost 原生体）、`recon/protcave`（全部站点为 cave 的
@@ -364,7 +378,8 @@
   交给唯一的 Gemini 位（protcave2）。按"直接在具名 vtable 非 getter 槽位的未认领 clean 函数数"排序的后续块
   （16:55 统计）：~~`0x00790000` 218~~（已开 aistate79b）→ ~~`0x007B0000` 141~~（已开 aistate7b）→ ~~`0x007C0000` 116~~
   （已开 aistate7c）→ ~~`0x009B0000` 106~~（已开 render9b）→ ~~`0x00720000` 95~~（已开 obj72，含 `0x0073`）→
-  ~~`0x00690000` 第二轮~~（已开 obj69b）→ ~~`0x007D0000`~~（已开 aistate7d）→ `0x006E0000` → `0x00710000` → `0x00660000` → `0x006C0000`。
+  ~~`0x00690000` 第二轮~~（已开 obj69b）→ ~~`0x007D0000`~~（已开 aistate7d）→ ~~`0x006E0000`~~（已开 obj6e，含 `0x006F`）→ ~~`0x00710000`~~（已开
+  obj70，含 `0x0070`）→ `0x00520000`（65 个在具名槽位）→ `0x00560000` → `0x00660000` → `0x006C0000`。
   `0x0066`（FX 粒子模块）与 `0x006C` 的槽位多在无 slot-2 getter 的表里（主控用
   `work/probe/survey_block.py <lo> <hi>` 复查），类名只能推断，排在后面；protcave 已由 protcave2 接续。`0x00A0`–`0x00BA` 区段数量
   大但没有源路径锚点、具名 vtable 比例低，暂不开。

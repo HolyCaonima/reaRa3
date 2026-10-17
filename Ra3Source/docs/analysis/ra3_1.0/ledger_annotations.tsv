@@ -2326,3 +2326,96 @@ address	status	owner	module	notes
 008aac20	reversed	recon/skirmishai89	gamelogic	AIRebuildableStructure::getScaledDelayFrames; vt 008aac20 00c53048 15
 008aeeb0	reversed	recon/skirmishai89	gamelogic	AIBaseBuilder::moveStructureToUnderConstruction; call 008aeeb0 008af000 008af068
 008aef30	reversed	recon/skirmishai89	gamelogic	AIBaseBuilder::moveStructureToCompleted; call 008aef30 008af000 008af04e
+00740170	reversed	recon/obj74	gamelogic	ra3::gamelogic::SupplyTruckAIUpdate_xfer; 00c25398 slot 3; slot 2 returns SupplyTruckAIUpdate
+007402e0	reversed	recon/obj74	gamelogic	ra3::gamelogic::TransportAIUpdate_notifyPassengers45; 00c257c0 slot 45; slot 2 returns TransportAIUpdate
+007403a0	reversed	recon/obj74	gamelogic	ra3::gamelogic::TransportAIUpdate_notifyPassengers49; 00c257c0 slot 49; slot 2 returns TransportAIUpdate
+00740460	reversed	recon/obj74	gamelogic	ra3::gamelogic::TransportAIUpdate_notifyPassengers52; 00c257c0 slot 52; slot 2 returns TransportAIUpdate
+00740990	reversed	recon/obj74	gamelogic	ra3::gamelogic::RailedTransportDockUpdate_xfer; 00c0bf70 slot 3; slot 2 returns RailedTransportDockUpdate
+00740a60	reversed	recon/obj74	gamelogic	ra3::gamelogic::RepairDockUpdate_xfer; 00c0c190 slot 3; slot 2 returns RepairDockUpdate
+00740b00	reversed	recon/obj74	gamelogic	ra3::gamelogic::SupplyCenterDockUpdate_xfer; 00c0c3a8 slot 3; slot 2 returns SupplyCenterDockUpdate
+00740b80	reversed	recon/obj74	gamelogic	ra3::gamelogic::SupplyWarehouseDockUpdate_xfer; 00c0c5a8 slot 3; slot 2 returns SupplyWarehouseDockUpdate
+00740f60	reversed	recon/obj74	gamelogic	ra3::gamelogic::AIUpdateInterface_storeGoalPosition; 00c22118 slot 138; slot 2 returns AIUpdateInterface
+00742030	reversed	recon/obj74	gamelogic	ra3::gamelogic::AutoDepositUpdate_xfer; 00c0c920 slot 3; slot 2 returns AutoDepositUpdate
+00742220	reversed	recon/obj74	gamelogic	ra3::gamelogic::ClusterBombUpdate_xfer; 00c0ce18 slot 3; slot 2 returns ClusterBombUpdate
+00742370	reversed	recon/obj74	gamelogic	ra3::gamelogic::DamageFieldUpdate_xfer; 00c13a00 slot 3; slot 2 returns DamageFieldUpdate
+007428e0	reversed	recon/obj74	gamelogic	ra3::gamelogic::MissileUpdate_arm; 00c13f50 slot 22; slot 2 returns MissileUpdate
+00742dc0	reversed	recon/obj74	gamelogic	ra3::gamelogic::ObjectStatusSpecialAbilityUpdate_xfer; 00c1ebc8 slot 3; slot 2 returns ObjectStatusSpecialAbilityUpdate
+00742e00	reversed	recon/obj74	gamelogic	ra3::gamelogic::OCLMonitorSpecialAbilityUpdate_xfer; 00c1ee08 slot 3; slot 2 returns OCLMonitorSpecialAbilityUpdate
+00743140	reversed	recon/obj74	gamelogic	ra3::gamelogic::ReplaceObjectUpdate_xfer; 00c1f0a8 slot 3; slot 2 returns ReplaceObjectUpdate
+007437e0	reversed	recon/obj74	gamelogic	ra3::gamelogic::StealUnitUpdate_latch; 00c20d90 slot 24; slot 2 returns StealUnitUpdate
+007446b0	reversed	recon/obj74	gamelogic	ra3::gamelogic::WeaponScatterEffectUpdate_apply; 00c0e5d0 slot 31; slot 2 returns WeaponScatterEffectUpdate
+007450b0	reversed	recon/obj74	gamelogic	ra3::gamelogic::SubStructureBuildUpgrade_xfer; 00c108b0 slot 3; slot 2 returns SubStructureBuildUpgrade
+0074be70	reversed	recon/obj74	gamelogic	ra3::gamelogic::PlayerPowerManagerBehavior_refresh; 00c11420 slot 1; slot 2 returns PlayerPowerManagerBehavior
+0074c870	reversed	recon/obj74	gamelogic	ra3::gamelogic::SpawnBehavior_prime; 00c11688 slot 10; slot 2 returns SpawnBehavior
+0074fb70	reversed	recon/obj74	gamelogic	ra3::gamelogic::TransportContain_xfer; 00c200a0 slot 3; slot 2 returns TransportContain
+00751280	reversed	recon/obj74	gamelogic	ra3::gamelogic::DelayedWeaponFireSpecialAbilityUpdate_xfer; 00c202f0 slot 3; slot 2 returns DelayedWeaponFireSpecialAbilityUpdate
+00751a30	reversed	recon/obj74	gamelogic	ra3::gamelogic::ToggleMountedSpecialAbilityUpdate_clear; 00c1e498 slot 29; slot 2 returns ToggleMountedSpecialAbilityUpdate
+00751e60	reversed	recon/obj74	gamelogic	ra3::gamelogic::DozerAIUpdate_routeBuild; 00c24a50 slot 166; slot 2 returns DozerAIUpdate
+00755190	reversed	recon/obj74	gamelogic	ra3::gamelogic::StealUnitUpdate_relay; 00c20d90 slot 23; slot 2 returns StealUnitUpdate
+00764bf0	reversed	recon/obj74	gamelogic	ra3::gamelogic::ProjectileUpdate_launch; 00bf8cd8 slot 22; slot 2 returns ProjectileUpdate
+007671b0	reversed	recon/obj74	gamelogic	ra3::gamelogic::TechUpgrade_finish; 00c10aa0 slot 9; slot 2 returns TechUpgrade
+007671e0	reversed	recon/obj74	gamelogic	ra3::gamelogic::TechUpgrade_grant; 00c10aa0 slot 10; slot 2 returns TechUpgrade
+0076cfe0	reversed	recon/obj74	gamelogic	ra3::gamelogic::LaserStateModule_schedule; 00c1ae58 slot 22; slot 2 returns LaserStateModule
+0076fe20	reversed	recon/obj74	gamelogic	ra3::gamelogic::HealContain_receivePassenger; 00c235f0 slot 44; slot 2 returns HealContain
+0076ff30	reversed	recon/obj74	gamelogic	ra3::gamelogic::HordeGarrisonContain_xfer; 00c26980 slot 3; slot 2 returns HordeGarrisonContain
+0076ff90	reversed	recon/obj74	gamelogic	ra3::gamelogic::SlaughterHordeContain_receivePassenger; 00c22e28 slot 44; slot 2 returns SlaughterHordeContain
+007701e0	reversed	recon/obj74	gamelogic	ra3::gamelogic::GarrisonStealthContain_xfer; 00c23218 slot 3; slot 2 returns GarrisonStealthContain
+00770660	reversed	recon/obj74	gamelogic	ra3::gamelogic::HealContain_xfer; 00c235f0 slot 3; slot 2 returns HealContain
+00770e20	reversed	recon/obj74	gamelogic	ra3::gamelogic::TunnelContain_xfer; 00c23a98 slot 3; slot 2 returns TunnelContain
+00772390	reversed	recon/obj74	gamelogic	ra3::gamelogic::FlingPassengerSpecialAbilityUpdate_fling; 00c1c798 slot 27; slot 2 returns FlingPassengerSpecialAbilityUpdate
+00772430	reversed	recon/obj74	gamelogic	ra3::gamelogic::GiveOrRestoreUpgradeSpecialPower_apply; 00c1c9d8 slot 27; slot 2 returns GiveOrRestoreUpgradeSpecialPower
+00774bb0	reversed	recon/obj74	gamelogic	ra3::gamelogic::SwitchLocomotorsSpecialAbilityUpdate_commit; 00c1d960 slot 36; slot 2 returns SwitchLocomotorsSpecialAbilityUpdate
+00775cb0	reversed	recon/obj74	gamelogic	ra3::gamelogic::ToggleDeploySpecialAbilityUpdate_flip; 00c1e010 slot 27; slot 2 returns ToggleDeploySpecialAbilityUpdate
+00775cf0	reversed	recon/obj74	gamelogic	ra3::gamelogic::ToggleHiddenSpecialAbilityUpdate_flip; 00c1e258 slot 27; slot 2 returns ToggleHiddenSpecialAbilityUpdate
+00776280	reversed	recon/obj74	gamelogic	ra3::gamelogic::ToggleStatusSpecialAbilityUpdate_rewind; 00c1e6f0 slot 43; slot 2 returns ToggleStatusSpecialAbilityUpdate
+007784c0	reversed	recon/obj74	gamelogic	ra3::gamelogic::ObjectStatusSpecialAbilityUpdate_swap; 00c1ebc8 slot 27; slot 2 returns ObjectStatusSpecialAbilityUpdate
+0077c910	reversed	recon/obj74	gamelogic	ra3::gamelogic::HealContain_removePassenger; 00c235f0 slot 45; slot 2 returns HealContain
+0077c950	reversed	recon/obj74	gamelogic	ra3::gamelogic::SlaughterHordeContain_removePassenger; 00c22e28 slot 46; slot 2 returns SlaughterHordeContain
+0077ce90	reversed	recon/obj74	gamelogic	ra3::gamelogic::MoveToGroundState_update; 00c00d58 slot 5; slot 2 returns MoveToGroundState
+007a00a0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIMoveToGoalAndEnterState_onExit; 00c2efa8 slot 6; slot 2 returns UnitAIMoveToGoalAndEnterState
+007a0120	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIParachuteToGroundState_onExit; 00c2f018 slot 6; slot 2 returns UnitAIParachuteToGroundState
+007a03f0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIPrepareForBoardingState_onEnter; 00c2f160 slot 4 and 00c2da10 slot 4; slot 2 returns UnitAIPrepareForBoardingState and UnitAIHeliPrepareForBoardingState
+007a0440	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIPrepareForBoardingState_onExit; 00c2f160 slot 6; slot 2 returns UnitAIPrepareForBoardingState
+007a04d0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIRotateToAngleState_onEnter; 00c2b708 slot 4; slot 2 returns UnitAIRotateToAngleState
+007a0c50	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIDockWaitForClearanceState_update; 00c2bba8 slot 5; slot 2 returns AIDockWaitForClearanceState
+007a0cc0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIFaceState_onExit; 00c2f248 slot 6 and 00c2bba8 slot 6; slot 2 returns AIFaceState and AIDockWaitForClearanceState
+007a0e30	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIDockProcessDockState_onEnter; 00c2bc10 slot 4; slot 2 returns AIDockProcessDockState
+007a1090	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIGuardGoingIdleState_onEnter; 00c2bcd8 slot 4; slot 2 returns AIGuardGoingIdleState
+007a2340	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIMoveToStateSA_xfer; 00c2f3e8 slot 3; slot 2 returns AIMoveToStateSA
+007a2520	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIMoveAndTightenState_xfer; 00c2f4b0 slot 3, 00c2f518 slot 3, 00c2f580 slot 3, 00c2f5f0 slot 3; slot 2 returns AIMoveAndTightenState, AIMoveAwayPanicState, AIMoveAwayFromRepulsorsState, AIFearState
+007a32f0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIAttackMeleeHordeWaitState_onExit; 00c2c7d0 slot 6 and 00c2c838 slot 6; slot 2 returns AIAttackMeleeHordeWaitState and AIAttackMeleeHordeWaitPathState
+007a3dd0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIPickUpCrateState_xfer; 00c2faa8 slot 3 and 00c30160 slot 3; slot 2 of both returns AIPickUpCrateState
+007a41c0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIMoveAndEvacuateState_xfer; 00c2fbe0 slot 3; slot 2 returns AIMoveAndEvacuateState
+007a4310	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIMoveAndDeleteState_xfer; 00c2fc48 slot 3 and 00c2ffb8 slot 3; slot 2 returns AIMoveAndDeleteState and AIMoveToPositionAndDieState
+007a46d0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIAttackFollowWaypointPathState_xfer; 00c321e8 slot 3; slot 2 returns AIAttackFollowWaypointPathState
+007a4810	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIWanderState_xfer; 00c32258 slot 3 and 00c322b8 slot 3; slot 2 returns AIWanderState and AIPanicState
+007a5590	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIWaitUntilMembersFinishedBeforeExitState_onEnter; 00c2cb10 slot 4; slot 2 returns AIWaitUntilMembersFinishedBeforeExitState
+007a5640	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIStartAttackObjState_onEnter; 00c2cbf8 slot 4; slot 2 returns AIStartAttackObjState
+007a58a0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIStateMachine_createLinkedState; 00c2c4c8 slot 8 and fourteen other AIStateMachine slot 8 entries; slot 2 returns AIStateMachine; push 0x71e396c1 at 007a58bc
+007a5a50	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIEnterState_xfer; 00c2fe00 slot 3; slot 2 returns AIEnterState
+007a5cb0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIEnterAndAttackState_xfer; 00c2fec0 slot 3; slot 2 returns AIEnterAndAttackState
+007a5de0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIHordeEnterState_onExit; 00c2cea0 slot 6; slot 2 returns AIHordeEnterState
+007a6480	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIMoveToPositionAndEnterState_xfer; 00c301b8 slot 3; slot 2 returns AIMoveToPositionAndEnterState
+007a65b0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIRotateFiringarc_onEnter; 00c2d368 slot 4; slot 2 returns AIRotateFiringarc
+007a85e0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIDisguiseHoldFireState_onEnter; 00c30700 slot 4; slot 2 returns UnitAIDisguiseHoldFireState
+007a92b0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::JetAIAttackMoveToGoalState_onExit; 00c2dbd0 slot 6 and 00c2e2f8 slot 6; slot 2 returns JetAIAttackMoveToGoalState and UnitAIAttackMoveToGoalState
+007a9700	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIReloadAmmoState_onExit; 00c29ed8 slot 6; slot 2 returns UnitAIReloadAmmoState
+007a9a30	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAITaxiFromHangerState_onExit; 00c2dec0 slot 6; slot 2 returns UnitAITaxiFromHangerState
+007aa080	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIDeliverToRefineryState_onExit; 00c29fa8 slot 6; slot 2 returns UnitAIDeliverToRefineryState
+007aa4d0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIDriftState_onEnter; 00c2a478 slot 4; slot 2 returns UnitAIDriftState
+007aab50	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIAttackPositionState_onExit; 00c2e3d0 slot 6; slot 2 returns UnitAIAttackPositionState
+007aae40	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAICombinedUnitMoveToState_update; 00c31048 slot 5; slot 2 returns UnitAICombinedUnitMoveToState
+007aae60	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAICombinedUnitMoveToState_onExit; 00c31048 slot 6; slot 2 returns UnitAICombinedUnitMoveToState
+007aae90	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAICreatePathState_onEnter; 00c2ac10 slot 4; slot 2 returns UnitAICreatePathState
+007aaff0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIDepartBeach_onEnter; 00c2ada0 slot 4; slot 2 returns UnitAIDepartBeach
+007ab570	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIFollowExitProductionPathState_onExit; 00c31210 slot 6; slot 2 returns AIFollowExitProductionPathState
+007aba00	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIGarrisonedState_onExit; 00c2ea28 slot 6; slot 2 returns UnitAIGarrisonedState
+007aba50	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIGarrisonedIdleState_onEnter; 00c2b1b8 slot 4; slot 2 returns UnitAIGarrisonedIdleState
+007abbf0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIHordeGarrisonedState_onEnter; 00c2b438 slot 4; slot 2 returns UnitAIHordeGarrisonedState
+007abc30	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIHordeGarrisonedState_onExit; 00c2b438 slot 6; slot 2 returns UnitAIHordeGarrisonedState
+007ac260	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIMoveOutOfTheWayState_onExit; 00c2ed88 slot 6; slot 2 returns UnitAIMoveOutOfTheWayState
+007ac810	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIMoveToGoalState_onExit; 00c31668 slot 6; slot 2 returns UnitAIMoveToGoalState
+007ad1c0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIMoveToDeliverState_onEnter; 00c2e068 slot 4, 00c2e0d0 slot 4, 00c30de8 slot 4; slot 2 returns UnitAIMoveToDeliverState, UnitAIMoveToExtractState, UnitAIExtractState
+007ad210	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::UnitAIMoveToDeliverState_onExit; 00c2e068 slot 6, 00c2e0d0 slot 6, 00c30de8 slot 6; slot 2 returns UnitAIMoveToDeliverState, UnitAIMoveToExtractState, UnitAIExtractState
+007ae9d0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIHarvestApproachSiteState_xfer; 00c31e38 slot 3; slot 2 returns AIHarvestApproachSiteState
+007aebb0	reversed	recon/aistate7a	gamelogic	ra3::gamelogic::AIHarvestPrepareSiteState_onExit; 00c2be60 slot 6; slot 2 returns AIHarvestPrepareSiteState
