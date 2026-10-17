@@ -1,0 +1,52 @@
+address	status	owner	module	notes
+006819b0	reversed	recon/aistates	gamelogic	StateView::enterDozerAction; Dozer state vtable closure; oracle 64
+00681a00	reversed	recon/aistates	gamelogic	StateView::exitDozerAction; Dozer state vtable closure; oracle 64
+00681bb0	reversed	recon/aistates	gamelogic	StateView::enterDozerPrimaryIdle; vtable 00BF7F54 family; oracle 64
+00681bd0	reversed	recon/aistates	gamelogic	StateView::exitDozerPrimaryIdle; vtable 00BF7F54 family; oracle 64
+00681c80	reversed	recon/aistates	gamelogic	StateView::enterNestedDozerAction; vtable 00BF7FBC family; oracle 64
+00681cc0	reversed	recon/aistates	gamelogic	StateView::exitNestedDozerAction; vtable 00BF7FBC family; oracle 64
+00681e80	reversed	recon/aistates	gamelogic	DozerAIView::hasTask; Dozer primary state-machine interface; oracle 64
+00681e90	reversed	recon/aistates	gamelogic	DozerAIView::hasAnyTask; virtual hasTask dispatch retained; oracle 64
+00681ec0	reversed	recon/aistates	gamelogic	DozerAIView::taskTarget; oracle 64
+00681f10	reversed	recon/aistates	gamelogic	DozerAIView::mostRecentTask; virtual hasTask dispatch retained; oracle 64
+00681f60	reversed	recon/aistates	gamelogic	DozerAIView::dockPoint; 3x3 transition cell; oracle 64
+00681fa0	reversed	recon/aistates	gamelogic	DozerAIView::repairHealthPerSecond; explicit adjusted-this module view; oracle 64
+00681fb0	reversed	recon/aistates	gamelogic	DozerAIView::boredTime; explicit adjusted-this module view; oracle 64
+00682090	reversed	recon/aistates	gamelogic	SupplyTruckAIView::isCurrentlyFerryingSupplies; oracle 64
+006820d0	reversed	recon/aistates	gamelogic	SupplyTruckAIView::loseOneBox; drawable callback and EAX provenance; oracle 64
+00682170	reversed	recon/aistates	gamelogic	SupplyTruckAIView::forceWanting; adjusted-this module byte; oracle 64
+00682180	reversed	recon/aistates	gamelogic	SupplyTruckAIView::forceBusy; adjusted-this module byte; oracle 64
+00682190	reversed	recon/aistates	gamelogic	SupplyTruckAIView::copyPosition24; output alias covered; oracle 64
+006821b0	reversed	recon/aistates	gamelogic	SupplyTruckAIView::warehouseScanDistance; x87 return; oracle 64
+006821c0	reversed	recon/aistates	gamelogic	SupplyTruckAIView::dataFlag6c; byte-register provenance; oracle 64
+006821d0	reversed	recon/aistates	gamelogic	SupplyTruckAIView::dataFlag6d; byte-register provenance; oracle 64
+006821e0	reversed	recon/aistates	gamelogic	SupplyTruckAIView::dataFlag6e; byte-register provenance; oracle 64
+006821f0	reversed	recon/aistates	gamelogic	SupplyTruckAIView::dataFloat60; x87 return; oracle 64
+00682200	reversed	recon/aistates	gamelogic	SupplyTruckAIView::centerDelay; x87 qword conversion edges; oracle 64
+00682280	reversed	recon/aistates	gamelogic	SupplyTruckAIView::warehouseDelay; x87 qword conversion edges; oracle 64
+00682310	reversed	recon/aistates	gamelogic	StateView::enterSupplyBusy; SupplyTruckBusyState vtable closure; oracle 64
+00682350	reversed	recon/aistates	gamelogic	StateView::enterSupplyIdle; SupplyTruckIdleState vtable closure; oracle 64
+006823c0	reversed	recon/aistates	gamelogic	StateView::enterSupplyDocking; DockingState vtable closure; oracle 64
+00682890	reversed	recon/aistates	gamelogic	ai_port::oneSecondFrames; GameLogic timing helper called by AI states; oracle 64
+00682d30	reversed	recon/aistates	gamelogic	UnitAIView::setValue0144; AIUpdateInterface vtable closure; oracle 64
+00682d70	reversed	recon/aistates	gamelogic	UnitAIView::resetStateFlags; AIUpdateInterface vtable closure; oracle 64
+00682df0	reversed	recon/aistates	gamelogic	UnitAIView::nestedFlag1e; null and byte-register provenance; oracle 64
+00682e40	reversed	recon/aistates	gamelogic	UnitAIView::setGoalPosition; overlapping input alias order covered; oracle 64
+00682e70	reversed	recon/aistates	gamelogic	UnitAIView::clearGoal; oracle 64
+00682e80	reversed	recon/aistates	gamelogic	UnitAIView::selectedWeaponUsable; nested weapon layout; oracle 64
+00682f00	reversed	recon/aistates	gamelogic	UnitAIView::clearPendingObjectIds; oracle 64
+00682fe0	reversed	recon/aistates	gamelogic	UnitAIView::objectMatchesAttackIds; state/object ID branches; oracle 64
+00683030	reversed	recon/aistates	gamelogic	UnitAIView::currentStateIs69Or6a; exact EAX provenance; oracle 64
+006830f0	reversed	recon/aistates	gamelogic	UnitAIView::value0250; oracle 64
+00683100	reversed	recon/aistates	gamelogic	UnitAIView::currentOrQueuedStateId; null/default branches; oracle 64
+00683320	reversed	recon/aistates	gamelogic	UnitAIView::hasQueuedState; oracle 64
+00683520	reversed	recon/aistates	gamelogic	UnitAIView::currentStateId; null/default branches; oracle 64
+00683570	reversed	recon/aistates	gamelogic	UnitAIView::currentStateConditionBlock; pointer relocation covered; oracle 64
+00683580	reversed	recon/aistates	gamelogic	UnitAIView::currentStateTransitionBlock; pointer relocation covered; oracle 64
+00683590	reversed	recon/aistates	gamelogic	UnitAIView::setDesiredSpeedBits; exact float-bit write; oracle 64
+006835b0	reversed	recon/aistates	gamelogic	UnitAIView::scaledModuleTime; x87 qword conversion edges; oracle 64
+00683650	reversed	recon/aistates	gamelogic	UnitAIView::clearCommandLatch; virtual cancel callback retained; oracle 64
+00683670	reversed	recon/aistates	gamelogic	UnitAIView::randomizedDelay; module timing plus object-ID modulus; oracle 64
+00685cc0	reversed	recon/aistates	gamelogic	WeaponStateView::updateReady; WeaponReadyState vtable 00BF9710; oracle 64
+00685d20	reversed	recon/aistates	gamelogic	WeaponStateView::updateCoolDown; WeaponCoolDownState vtable 00BF9840; oracle 64
+00685da0	reversed	recon/aistates	gamelogic	WeaponStateView::updateReload; WeaponReloadState vtable 00BF9910; oracle 64

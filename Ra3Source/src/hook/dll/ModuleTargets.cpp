@@ -17,6 +17,7 @@ void appendObjectLogicTargets(std::vector<Target>& table);
 void appendGameClient92Targets(std::vector<Target>& table);
 void appendUiTargets(std::vector<Target>& table);
 void appendScripts82Targets(std::vector<Target>& table);
+void appendAIStateTargets(std::vector<Target>& table);
 
 void appendModuleTargets(std::vector<Target>& table)
 {
@@ -33,6 +34,7 @@ void appendModuleTargets(std::vector<Target>& table)
     appendGameClient92Targets(table);
     appendUiTargets(table);
     appendScripts82Targets(table);
+    appendAIStateTargets(table);
 }
 
 }  // namespace ra3hook
