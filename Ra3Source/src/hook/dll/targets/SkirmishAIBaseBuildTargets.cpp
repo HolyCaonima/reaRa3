@@ -37,7 +37,7 @@ const void* __fastcall hookedFindEntry20ByBit(
     const void* const game =
         reinterpret_cast<OriginalFn>(state.original)(self, bitIndex);
     recordScalar(
-        "SkirmishAIBaseBuild.findEntry20ByBit",
+        "skaientry20bit",
         state,
         addressValue(game),
         addressValue(ours));
@@ -59,7 +59,7 @@ void* __fastcall hookedFindEntryByTemplateId(
     void* const game =
         reinterpret_cast<OriginalFn>(state.original)(self, templateId);
     recordScalar(
-        "SkirmishAIBaseBuild.findEntryByTemplateId",
+        "skaifindtemplate",
         state,
         addressValue(game),
         addressValue(ours));
@@ -82,7 +82,7 @@ std::uint8_t __fastcall hookedGroupContainsTemplateId(
     const std::uint8_t game =
         reinterpret_cast<OriginalFn>(state.original)(self, templateId);
     recordScalar(
-        "SkirmishAIBaseBuild.groupContainsTemplateId",
+        "skaigrouphastemplate",
         state,
         game != 0u ? 1u : 0u,
         ours);
@@ -108,7 +108,7 @@ std::uint8_t __fastcall hookedCanAffordRequest(
     const std::uint8_t game = reinterpret_cast<OriginalFn>(state.original)(
         self, requestCost, requestPriority, timeHorizon);
     recordScalar(
-        "SkirmishAIBaseBuild.canAffordRequest",
+        "skaicanafford",
         state,
         game != 0u ? 1u : 0u,
         ours);
@@ -135,7 +135,7 @@ std::uint8_t __fastcall hookedIsCandidateBetterThanBest(
     const std::uint8_t game = reinterpret_cast<OriginalFn>(state.original)(
         self, candidateBase, currentBestBase);
     recordScalar(
-        "SkirmishAIBaseBuild.isCandidateBetterThanBest",
+        "skaibasebetter",
         state,
         game != 0u ? 1u : 0u,
         ours);
@@ -162,7 +162,7 @@ sbb::AIBaseView* __fastcall hookedFindBestMatchingBase(
     sbb::AIBaseView* const game =
         reinterpret_cast<OriginalFn>(state.original)(self, config, referencePos);
     recordScalar(
-        "SkirmishAIBaseBuild.findBestMatchingBase",
+        "skaibestbase",
         state,
         addressValue(game),
         addressValue(ours));
@@ -174,7 +174,7 @@ sbb::AIBaseView* __fastcall hookedFindBestMatchingBase(
 void appendSkirmishAIBaseBuildTargets(std::vector<Target>& table) {
     table.insert(table.end(), {
         {
-            "SkirmishAIBaseBuild.findEntry20ByBit",
+            "skaientry20bit",
             0x00482AE0U,
             {0x8B, 0x09, 0x8B, 0x81, 0x10, 0x01, 0x00, 0x00,
              0x8B, 0x91, 0x0C, 0x01, 0x00, 0x00, 0x56, 0x8D},
@@ -184,7 +184,7 @@ void appendSkirmishAIBaseBuildTargets(std::vector<Target>& table) {
             true,
         },
         {
-            "SkirmishAIBaseBuild.findEntryByTemplateId",
+            "skaifindtemplate",
             0x00487300U,
             {0x56, 0x8B, 0x74, 0x24, 0x08, 0x8D, 0x51, 0x1C,
              0x57, 0x8B, 0x7A, 0x04, 0x33, 0xC9, 0x8B, 0xFF},
@@ -194,7 +194,7 @@ void appendSkirmishAIBaseBuildTargets(std::vector<Target>& table) {
             true,
         },
         {
-            "SkirmishAIBaseBuild.groupContainsTemplateId",
+            "skaigrouphastemplate",
             0x0048D120U,
             {0x51, 0x8B, 0x41, 0x0C, 0x53, 0x55, 0x8B, 0x69,
              0x14, 0x56, 0x8B, 0x71, 0x10, 0x3B, 0xF5, 0x57},
@@ -204,7 +204,7 @@ void appendSkirmishAIBaseBuildTargets(std::vector<Target>& table) {
             true,
         },
         {
-            "SkirmishAIBaseBuild.canAffordRequest",
+            "skaicanafford",
             0x004900B0U,
             {0xF3, 0x0F, 0x10, 0x44, 0x24, 0x08, 0xD9, 0xEE,
              0xF3, 0x0F, 0x10, 0x6C, 0x24, 0x0C, 0x56, 0x8D},
@@ -214,7 +214,7 @@ void appendSkirmishAIBaseBuildTargets(std::vector<Target>& table) {
             true,
         },
         {
-            "SkirmishAIBaseBuild.isCandidateBetterThanBest",
+            "skaibasebetter",
             0x00490600U,
             {0x83, 0xEC, 0x08, 0x8B, 0x44, 0x24, 0x0C, 0x85,
              0xC0, 0x56, 0x8B, 0xF1, 0x89, 0x74, 0x24, 0x04},
@@ -224,7 +224,7 @@ void appendSkirmishAIBaseBuildTargets(std::vector<Target>& table) {
             true,
         },
         {
-            "SkirmishAIBaseBuild.findBestMatchingBase",
+            "skaibestbase",
             0x004908C0U,
             {0x83, 0xEC, 0x20, 0x33, 0xC0, 0x83, 0xC8, 0x04,
              0x89, 0x44, 0x24, 0x0C, 0x8B, 0x44, 0x24, 0x28},

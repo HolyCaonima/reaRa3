@@ -41,11 +41,11 @@ address	status	owner	module	notes
 0089af50	reversed	recon/skirmishai89	gamelogic	AIBuildHeuristic::initBase; call 0089af50 007f74d0 007f75f7
 0089d070	reversed	recon/skirmishai89	gamelogic	AIBuilder::hasActiveBuildableEntryForObjectId; call 0089d070 008a2bd0 008a2d8b
 0089d0d0	reversed	recon/skirmishai89	gamelogic	AIBuilder::hasActiveBuildableEntryAtPosition; call 0089d0d0 008a3fa0 008a4007
-0089dd90	reversed	recon/skirmishai89	gamelogic	AIBuildableCandidateVector::eraseRange68; call 0089dd90 008c46e0 008c482c
-0089e700	reversed	recon/skirmishai89	gamelogic	AIBaseQueryCriteria::insertionSortBounded; call 0089e700 008cb8f0 008cb98a
-0089e750	reversed	recon/skirmishai89	gamelogic	AIBaseQueryCriteria::insertionSortUnguarded; call 0089e750 008cb8f0 008cb9bb
-0089f140	reversed	recon/skirmishai89	gamelogic	AIBaseQueryCriteria::selectMedianOfThree; call 0089f140 008c6180 008c6208
-0089f1d0	reversed	recon/skirmishai89	gamelogic	AIBaseQueryCriteria::partitionByPivot; call 0089f1d0 008c6180 008c6213
+0089dd90		recon/skirmishai89	gamelogic	rejected: eastl vector<0x44-byte element>::erase(first,last) instantiation; AIBuildableCandidateVector::eraseRange68; port kept for the oracle (controller)
+0089e700		recon/skirmishai89	gamelogic	rejected: eastl insertion_sort instantiation (comparator 00890600); AIBaseQueryCriteria::insertionSortBounded; port kept for the oracle (controller)
+0089e750		recon/skirmishai89	gamelogic	rejected: eastl unguarded insertion sort instantiation (comparator 00890600); AIBaseQueryCriteria::insertionSortUnguarded; port kept for the oracle (controller)
+0089f140		recon/skirmishai89	gamelogic	rejected: eastl median-of-three instantiation; AIBaseQueryCriteria::selectMedianOfThree; port kept for the oracle (controller)
+0089f1d0		recon/skirmishai89	gamelogic	rejected: eastl partition instantiation; AIBaseQueryCriteria::partitionByPivot; port kept for the oracle (controller)
 0089f480		recon/skirmishai89	gamelogic	AIBuildHeuristicStore::init; no vt or call chain to a vtable whose slot 2 is a ledger function
 0089fe10	reversed	recon/skirmishai89	gamelogic	AIBaseBuilder::pruneAssignedStructures; call 0089fe10 008c62d0 008c62d9
 0089feb0		recon/skirmishai89	gamelogic	AIBuildStateManager::removeMatchingOrProducedTemplate; owned, deferred: template removal is not in the differential oracle
