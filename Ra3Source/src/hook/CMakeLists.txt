@@ -19,7 +19,9 @@ ra3_add_shared_library(ra3hook
         dll/targets/GameClientTargets.cpp
         dll/targets/StringBase2Targets.cpp
         dll/targets/SkirmishTargets.cpp
+        dll/targets/AudioTargets.cpp
     DEPS
+        Ra3::audio
         Ra3::asset
         Ra3::common
         Ra3::gameclient
