@@ -24597,7 +24597,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e5250	FUN_008e5250	.text	13		clean	unknown		unanalyzed	
 008e5260	FUN_008e5260	.text	9		clean	unknown		unanalyzed	
 008e5270	FUN_008e5270	.text	43		clean	unknown		unanalyzed	
-008e52a0	FUN_008e52a0	.text	13		clean	unknown		unanalyzed	
+008e52a0	FUN_008e52a0	.text	13		clean	render	recon/render91	reversed	ra3::render::setDynamicsDrawWord2FC; 00c55b00 slot 59; slot 2 returns W3DDynamicsDraw
 008e52b0	FUN_008e52b0	.text	115	SageEngine\source\GameEngineDevice\W3DDevice\GameClient\Drawable\W3DDynamicsDraw.cpp	clean	render		unanalyzed	
 008e5330	FUN_008e5330	.text	8		clean	unknown		unanalyzed	
 008e5340	FUN_008e5340	.text	43		clean	unknown		unanalyzed	
@@ -24608,7 +24608,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e5550	FUN_008e5550	.text	185		clean	render	recon/render8e	reversed	ra3::render::approachWrappedAngle; wrap and step branches covered by render8e oracle
 008e5620	FUN_008e5620	.text	43		clean	unknown		unanalyzed	
 008e5650	FUN_008e5650	.text	54		clean	unknown		unanalyzed	
-008e5690	FUN_008e5690	.text	26		clean	unknown		unanalyzed	
+008e5690	FUN_008e5690	.text	26		clean	render	recon/render91	reversed	ra3::render::releaseScriptedModelTerrainDecal; 00c55668 slot 17; slot 2 returns W3DScriptedModelDraw
 008e56b0	FUN_008e56b0	.text	56		clean	render	recon/render8e	reversed	ra3::render::setAnimationVisible; W3D animation visibility state and exact writes covered by render8e oracle
 008e56f0	FUN_008e56f0	.text	23		clean	unknown		unanalyzed	
 008e5710	FUN_008e5710	.text	44		clean	render	recon/render8e	reversed	ra3::render::consumeCachedProperty50; W3D cached vtable property and return/write behavior covered by render8e oracle
@@ -24624,7 +24624,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e5980	FUN_008e5980	.text	121		clean	unknown		unanalyzed	
 008e5a00	FUN_008e5a00	.text	43		clean	unknown		unanalyzed	
 008e5a30	FUN_008e5a30	.text	43		clean	unknown		unanalyzed	
-008e5a60	FUN_008e5a60	.text	47		clean	unknown		unanalyzed	
+008e5a60	FUN_008e5a60	.text	47		clean	render	recon/render91	reversed	ra3::render::notifySimpleDrawBoundToObject; 00c54698 slot 3; slot 2 returns W3DLaserDraw; same pointer at 00c54790 slot 3, 00c54890 slot 3, 00c54988 slot 3
 008e5a90	FUN_008e5a90	.text	43		clean	unknown		unanalyzed	
 008e5ac0	FUN_008e5ac0	.text	6		clean	unknown		unanalyzed	
 008e5ad0	FUN_008e5ad0	.text	6		clean	unknown		unanalyzed	
@@ -24696,7 +24696,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e87d0	FUN_008e87d0	.text	95		clean	render	recon/render8e	reversed	ra3::render::compatibleRenderFlags; W3DScriptedModelDraw call ownership and pointer ABI covered by render8e oracle
 008e8830	FUN_008e8830	.text	108		clean	unknown		unanalyzed	
 008e88a0	FUN_008e88a0	.text	85		clean	render	recon/render8e	reversed	ra3::render::copyFloatWords13; x87 m32 copy sequence and overlap alias covered by render8e oracle
-008e8900	FUN_008e8900	.text	89		clean	unknown		unanalyzed	
+008e8900	FUN_008e8900	.text	89		clean	render	recon/render91	reversed	ra3::render::getFirstAnimationName; direct callee of 008ed6f0 at 008ed706; 008ed6f0 is 00c55668 slot 64
 008e8960	FUN_008e8960	.text	105		clean	unknown		unanalyzed	
 008e89d0	FUN_008e89d0	.text	44		clean	render	recon/render8e	reversed	ra3::render::modelHasTextureSlots; W3DScriptedModelDraw model layout and return ABI covered by render8e oracle
 008e8a00	FUN_008e8a00	.text	160	SageEngine\source\GameEngineDevice\W3DDevice\GameClient\Drawable\W3DScriptedModelDraw.cpp	clean	render	recon/render8e	reversed	ra3::render::chooseWeightedModel; W3DScriptedModelDraw.cpp assertion ownership and deterministic RNG-stub oracle
@@ -24704,23 +24704,23 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008e8b20	FUN_008e8b20	.text	231		clean	render	recon/render8e	reversed	ra3::render::findConditionSubset260; W3DScriptedModelDraw condition-vector layout and pointer return covered by render8e oracle
 008e8c10	FUN_008e8c10	.text	155		clean	render	recon/render8e	reversed	ra3::render::findConditionSubset2c; W3DScriptedModelDraw condition-vector layout and pointer return covered by render8e oracle
 008e8cb0	FUN_008e8cb0	.text	160		clean	unknown		unanalyzed	
-008e8d50	FUN_008e8d50	.text	78		clean	unknown		unanalyzed	
-008e8dc0	FUN_008e8dc0	.text	36		clean	unknown		unanalyzed	
+008e8d50	FUN_008e8d50	.text	78		clean	render	recon/render91	reversed	ra3::render::isAnimationLayerComplete; direct callee of 0090ce30 at 0090d097; 0090ce30 references assertion string 00c54190
+008e8dc0	FUN_008e8dc0	.text	36		clean	render	recon/render91	reversed	ra3::render::getScriptedModelModuleKeyOrOverride; 00c55668 slot 5
 008e8df0	FUN_008e8df0	.text	160		clean	unknown		unanalyzed	
-008e8e90	FUN_008e8e90	.text	47		clean	unknown		unanalyzed	
-008e8ec0	FUN_008e8ec0	.text	20		clean	unknown		unanalyzed	
+008e8e90	FUN_008e8e90	.text	47		clean	render	recon/render91	reversed	ra3::render::updatePrimaryShadowTransform; 00c55668 slot 23
+008e8ec0	FUN_008e8ec0	.text	20		clean	render	recon/render91	reversed	ra3::render::updatePrimaryShadowVisibility; 00c55668 slot 24
 008e8ee0	FUN_008e8ee0	.text	228		clean	unknown		unanalyzed	
-008e8fd0	FUN_008e8fd0	.text	37		clean	unknown		unanalyzed	
-008e9000	FUN_008e9000	.text	18		clean	unknown		unanalyzed	
-008e9020	FUN_008e9020	.text	47		clean	unknown		unanalyzed	
-008e9050	FUN_008e9050	.text	20		clean	unknown		unanalyzed	
+008e8fd0	FUN_008e8fd0	.text	37		clean	render	recon/render91	reversed	ra3::render::releasePrimaryShadow; 00c55668 slot 26
+008e9000	FUN_008e9000	.text	18		clean	render	recon/render91	reversed	ra3::render::updateAuxShadowModule200; 00c55668 slot 29
+008e9020	FUN_008e9020	.text	47		clean	render	recon/render91	reversed	ra3::render::updateSecondaryShadowTransform; 00c55668 slot 30
+008e9050	FUN_008e9050	.text	20		clean	render	recon/render91	reversed	ra3::render::updateSecondaryShadowVisibility; 00c55668 slot 31
 008e9070	FUN_008e9070	.text	232		clean	unknown		unanalyzed	
 008e9160	FUN_008e9160	.text	213		clean	unknown		unanalyzed	
-008e9240	FUN_008e9240	.text	37		clean	unknown		unanalyzed	
-008e9270	FUN_008e9270	.text	37		clean	unknown		unanalyzed	
+008e9240	FUN_008e9240	.text	37		clean	render	recon/render91	reversed	ra3::render::releaseSecondaryShadow; 00c55668 slot 34
+008e9270	FUN_008e9270	.text	37		clean	render	recon/render91	reversed	ra3::render::releaseAuxShadowModule200; 00c55668 slot 35
 008e92a0	FUN_008e92a0	.text	163		clean	render	recon/render8e	reversed	ra3::render::modelConditionStateDifferent; relocated model vectors and return ABI covered by render8e oracle
 008e9350	FUN_008e9350	.text	83		clean	render	recon/render8e	reversed	ra3::render::setDrawableSelectable; owner/render-object pointer aliases and exact writes covered by render8e oracle
-008e93b0	FUN_008e93b0	.text	126		clean	unknown		unanalyzed	
+008e93b0	FUN_008e93b0	.text	126		clean	render	recon/render91	reversed	ra3::render::applyScriptedModelHouseColor; 00c555f0 slot 15; 009108f0 stores 00c555f0 at object+0x14 beside primary 00c55668
 008e9430	FUN_008e9430	.text	269		clean	unknown		unanalyzed	
 008e9540	FUN_008e9540	.text	169		clean	unknown		unanalyzed	
 008e95f0	FUN_008e95f0	.text	83		clean	render	recon/render8e	reversed	ra3::render::setAnimationFrame; animation frame reversal and exact writes covered by render8e oracle
@@ -24806,8 +24806,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008ed890	FUN_008ed890	.text	221		clean	unknown		unanalyzed	
 008ed970	FUN_008ed970	.text	27		clean	unknown		unanalyzed	
 008ed990	FUN_008ed990	.text	143		clean	unknown		unanalyzed	
-008eda20	FUN_008eda20	.text	260		clean	unknown		unanalyzed	
-008edb30	FUN_008edb30	.text	227		clean	unknown		unanalyzed	
+008eda20	FUN_008eda20	.text	260		clean	render	recon/render91	reversed	ra3::render::propagateSubObjectBoneVisibility; direct callee of 008ee8e0 at 008ee954; 008ee8e0 is direct callee of 008f3d60 at 008f3dcd; 008f3d60 is 00c555f0 slot 23
+008edb30	FUN_008edb30	.text	227		clean	render	recon/render91	reversed	ra3::render::applyNamedSubObjectVisibility; direct callee of 008f70e0 at 008f72b1; 008f70e0 is 00c555f0 slot 16
 008edc20	FUN_008edc20	.text	75		clean	unknown		unanalyzed	
 008edc70	FUN_008edc70	.text	229		clean	unknown		unanalyzed	
 008edd60	FUN_008edd60	.text	153		clean	unknown		unanalyzed	
@@ -24819,12 +24819,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008ee6a0	FUN_008ee6a0	.text	81		clean	unknown		unanalyzed	
 008ee700	FUN_008ee700	.text	52		clean	unknown		unanalyzed	
 008ee740	FUN_008ee740	.text	276		clean	unknown		unanalyzed	
-008ee860	FUN_008ee860	.text	120		clean	unknown		unanalyzed	
-008ee8e0	FUN_008ee8e0	.text	162		clean	unknown		unanalyzed	
-008ee990	FUN_008ee990	.text	409		clean	unknown		unanalyzed	
+008ee860	FUN_008ee860	.text	120		clean	render	recon/render91	reversed	ra3::render::applySubObjectOpacityAndRelease; direct callee of 008ee990 at 008eea0b; 008ee990 is direct callee of 008f3d60 at 008f3e2f; 008f3d60 is 00c555f0 slot 23
+008ee8e0	FUN_008ee8e0	.text	162		clean	render	recon/render91	reversed	ra3::render::applySubObjectHideState; direct callee of 008f3d60 at 008f3dcd; 008f3d60 is 00c555f0 slot 23
+008ee990	FUN_008ee990	.text	409		clean	render	recon/render91	reversed	ra3::render::updateSubObjectFadeAndVisibility; direct callee of 008f3d60 at 008f3e2f; 008f3d60 is 00c555f0 slot 23
 008eeb30	FUN_008eeb30	.text	838		clean	unknown		unanalyzed	
 008eee80	FUN_008eee80	.text	75		clean	unknown		unanalyzed	
-008eeed0	FUN_008eeed0	.text	148		clean	unknown		unanalyzed	
+008eeed0	FUN_008eeed0	.text	148		clean	render	recon/render91	reversed	ra3::render::resetAnimationLayerSlot; direct callee of 0090ce30 at 0090ced3; 0090ce30 references assertion string 00c54190
 008eef70	FUN_008eef70	.text	547		clean	unknown		unanalyzed	
 008ef1a0	FUN_008ef1a0	.text	239		clean	unknown		unanalyzed	
 008ef2d0	FUN_008ef2d0	.text	6		clean	unknown		unanalyzed	
@@ -24858,7 +24858,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008f0a90	FUN_008f0a90	.text	56		clean	unknown		unanalyzed	
 008f0ad0	FUN_008f0ad0	.text	84	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 008f0b30	FUN_008f0b30	.text	94		clean	unknown		unanalyzed	
-008f0b90	FUN_008f0b90	.text	82		clean	unknown		unanalyzed	
+008f0b90	FUN_008f0b90	.text	82		clean	render	recon/render91	reversed	ra3::render::rbTreeEqualRangeIntKey; direct callee of 008f5cb0 at 008f5cbf; 008f5cb0 is direct callee of 008f6ed0 at 008f6f18; 008f6ed0 is 00c555f0 slot 18
 008f0bf0	FUN_008f0bf0	.text	185		clean	unknown		unanalyzed	
 008f0cb0	FUN_008f0cb0	.text	180		clean	unknown		unanalyzed	
 008f0d70	FUN_008f0d70	.text	117		clean	unknown		unanalyzed	
@@ -24889,14 +24889,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008f2370	FUN_008f2370	.text	536		clean	unknown		unanalyzed	
 008f2590	FUN_008f2590	.text	47		clean	unknown		unanalyzed	
 008f25c0	FUN_008f25c0	.text	312		clean	unknown		unanalyzed	
-008f2700	FUN_008f2700	.text	69		clean	unknown		unanalyzed	
+008f2700	FUN_008f2700	.text	69		clean	render	recon/render91	reversed	ra3::render::stopAttachedParticleSystemsInVector; direct callee of 008f4290 at 008f42ac; 008f4290 is 00c557e8 slot 19; slot 2 returns W3DTankDraw
 008f2750	FUN_008f2750	.text	469		clean	unknown		unanalyzed	
 008f2930	FUN_008f2930	.text	96		clean	unknown		unanalyzed	
 008f2990	FUN_008f2990	.text	38		clean	unknown		unanalyzed	
 008f29c0	FUN_008f29c0	.text	87		clean	unknown		unanalyzed	
 008f2a20	FUN_008f2a20	.text	190		clean	unknown		unanalyzed	
 008f2ae0	FUN_008f2ae0	.text	286		clean	unknown		unanalyzed	
-008f2c10	FUN_008f2c10	.text	79		clean	unknown		unanalyzed	
+008f2c10	FUN_008f2c10	.text	79		clean	render	recon/render91	reversed	ra3::render::updateAttachedParticleSystemsVisibility; direct callee of 008f2c60 at 008f2ce2; 008f2c60 is 00c55668 slot 19
 008f2c60	FUN_008f2c60	.text	188		clean	unknown		unanalyzed	
 008f2d20	FUN_008f2d20	.text	84		clean	unknown		unanalyzed	
 008f2d80	FUN_008f2d80	.text	205		clean	unknown		unanalyzed	
@@ -24909,7 +24909,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008f39e0	FUN_008f39e0	.text	134		clean	unknown		unanalyzed	
 008f3a70	FUN_008f3a70	.text	666		clean	unknown		unanalyzed	
 008f3d10	FUN_008f3d10	.text	77		clean	unknown		unanalyzed	
-008f3d60	FUN_008f3d60	.text	223		clean	unknown		unanalyzed	
+008f3d60	FUN_008f3d60	.text	223		clean	render	recon/render91	reversed	ra3::render::updateScriptedModelSubObjects; 00c555f0 slot 23
 008f3e50	FUN_008f3e50	.text	73		clean	unknown		unanalyzed	
 008f3ea0	FUN_008f3ea0	.text	244		clean	unknown		unanalyzed	
 008f3fa0	FUN_008f3fa0	.text	145		clean	unknown		unanalyzed	
@@ -24929,7 +24929,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008f47a0	FUN_008f47a0	.text	178		clean	unknown		unanalyzed	
 008f4860	FUN_008f4860	.text	5138		clean	unknown		unanalyzed	
 008f5c80	FUN_008f5c80	.text	34		clean	unknown		unanalyzed	
-008f5cb0	FUN_008f5cb0	.text	60		clean	unknown		unanalyzed	
+008f5cb0	FUN_008f5cb0	.text	60		clean	render	recon/render91	reversed	ra3::render::rbTreeCountIntKey; direct callee of 008f6ed0 at 008f6f18; 008f6ed0 is 00c555f0 slot 18
 008f5cf0	FUN_008f5cf0	.text	513		clean	unknown		unanalyzed	
 008f5f00	FUN_008f5f00	.text	168		clean	unknown		unanalyzed	
 008f5fb0	FUN_008f5fb0	.text	70		clean	unknown		unanalyzed	
@@ -24963,7 +24963,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008f6c90	FUN_008f6c90	.text	184		clean	unknown		unanalyzed	
 008f6d50	FUN_008f6d50	.text	248		clean	unknown		unanalyzed	
 008f6e50	FUN_008f6e50	.text	126		clean	unknown		unanalyzed	
-008f6ed0	FUN_008f6ed0	.text	89		clean	unknown		unanalyzed	
+008f6ed0	FUN_008f6ed0	.text	89		clean	render	recon/render91	reversed	ra3::render::getSubObjectBoneCountForState; 00c555f0 slot 18
 008f6f30	FUN_008f6f30	.text	359		clean	unknown		unanalyzed	
 008f70a0	FUN_008f70a0	.text	59		clean	unknown		unanalyzed	
 008f70e0	FUN_008f70e0	.text	484		clean	unknown		unanalyzed	
@@ -24999,7 +24999,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008f9260	FUN_008f9260	.text	298	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 008f9390	FUN_008f9390	.text	290	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 008f94c0	FUN_008f94c0	.text	252	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-008f95d0	FUN_008f95d0	.text	108		clean	unknown		unanalyzed	
+008f95d0	FUN_008f95d0	.text	108		clean	render	recon/render91	reversed	ra3::render::eraseSubObjectRecords28Range; direct callee of 0090d780 at 0090d9b9; 0090d780 is 00c55668 slot 3
 008f9640	FUN_008f9640	.text	357	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 008f97b0	FUN_008f97b0	.text	337	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 008f9910	FUN_008f9910	.text	301	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
@@ -25256,15 +25256,15 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009108f0	FUN_009108f0	.text	1311		clean	unknown		unanalyzed	
 00910e10	FUN_00910e10	.text	6		clean	unknown		unanalyzed	
 00910e20	FUN_00910e20	.text	47		clean	unknown		unanalyzed	
-00910e50	FUN_00910e50	.text	10		clean	unknown		unanalyzed	
-00910e60	FUN_00910e60	.text	10		clean	unknown		unanalyzed	
-00910e70	FUN_00910e70	.text	27		clean	unknown		unanalyzed	
-00910e90	FUN_00910e90	.text	10		clean	unknown		unanalyzed	
+00910e50	FUN_00910e50	.text	10		clean	render	recon/render91	reversed	ra3::render::setScriptedModelFlag6D; 00c55668 slot 12
+00910e60	FUN_00910e60	.text	10		clean	render	recon/render91	reversed	ra3::render::getScriptedModelDataFlagD3; 00c55668 slot 57
+00910e70	FUN_00910e70	.text	27		clean	render	recon/render91	reversed	ra3::render::isScriptedModelActive6DOrDataD4; 00c55668 slot 22
+00910e90	FUN_00910e90	.text	10		clean	render	recon/render91	reversed	ra3::render::setScriptedModelFlag6C; 00c55668 slot 20
 00910ea0	FUN_00910ea0	.text	7		clean	unknown		unanalyzed	
-00910eb0	FUN_00910eb0	.text	13		clean	unknown		unanalyzed	
+00910eb0	FUN_00910eb0	.text	13		clean	render	recon/render91	reversed	ra3::render::setScriptedModelFlag216; 00c55668 slot 56
 00910ec0	FUN_00910ec0	.text	11		clean	unknown		unanalyzed	
-00910ed0	FUN_00910ed0	.text	11		clean	unknown		unanalyzed	
-00910ee0	FUN_00910ee0	.text	13		clean	unknown		unanalyzed	
+00910ed0	FUN_00910ed0	.text	11		clean	render	recon/render91	reversed	ra3::render::getScriptedModelSubInterface18; 00c55668 slot 10; same pointer also 00c55668 slot 11
+00910ee0	FUN_00910ee0	.text	13		clean	render	recon/render91	reversed	ra3::render::setScriptedModelFlag215; 00c55668 slot 55
 00910ef0	FUN_00910ef0	.text	117		clean	unknown		unanalyzed	
 00910f70	FUN_00910f70	.text	6		clean	unknown		unanalyzed	
 00910f80	FUN_00910f80	.text	47		clean	unknown		unanalyzed	
@@ -25275,7 +25275,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00911160	FUN_00911160	.text	172		clean	unknown		unanalyzed	
 00911210	FUN_00911210	.text	6		clean	unknown		unanalyzed	
 00911220	FUN_00911220	.text	47		clean	unknown		unanalyzed	
-00911250	FUN_00911250	.text	14		clean	unknown		unanalyzed	
+00911250	FUN_00911250	.text	14		clean	render	recon/render91	reversed	ra3::render::getDynamicsDrawSubInterface290; 00c55b00 slot 48; same pointer also 00c55b00 slot 49
 00911260	FUN_00911260	.text	1639		clean	unknown		unanalyzed	
 009118e0	FUN_009118e0	.text	38		clean	unknown		unanalyzed	
 00911910	FUN_00911910	.text	68		clean	unknown		unanalyzed	

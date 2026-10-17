@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 particles65 合并）
+## 3. 现状（截至 render91 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 1,175、unanalyzed 47,750（受保护函数已 reversed：entry-lost 60、inner-patched 2）。`securom` 分类：clean 47,777、entry-lost 653、
+  reversed 1,211、unanalyzed 47,714（受保护函数已 reversed：entry-lost 60、inner-patched 2）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
 - **hook**：321 个目标（其中 274 个只认显式键）。原有 86 个全部 replace 时，Release
@@ -154,6 +154,14 @@
     （16 个模块 vtable 槽位带 `slot[2]` 类名，34 个可追到模块/模板 vtable 或
     `FxpsGPUStorageModule.cpp` 断言的直接调用边），3 个无锚点入口改为延后行（`ea106de`）。
     集成态 Release 1,272 次比较零差异
+  - render W3DScriptedModelDraw 批次（`0x008E52A0–0x00911250`，Gemini 半成品由 Grok 接手）：
+    36 个 clean 入口（ScriptedModel/Dynamics draw 的阴影、子对象可见性与淡出、动画层、附着粒子、
+    标志位与子接口访问），无 hook；代码在 `ra3/render/W3DScriptedModelDraw.h`。接手方修正了草稿里
+    2 处与原程序不符的实现，剔除 34 个无所有权边的入口。主控用 `work/probe/verify_ownership.py`
+    核对 50 条声明全部成立：vtable 槽位带 `slot[2]` 类名（W3DScriptedModelDraw/W3DDynamicsDraw/
+    W3DLaserDraw/W3DTankDraw），副表 `0x00C555F0` 由 `0x009108F0` 写在 `+0x14`，调用边都在
+    指令边界上，`0x0090CE30` 带 `W3DScriptedModelDraw.cpp` 断言。集成态 Release 108 场景零差异，
+    `+0x2FC` 写偏移 mutation 检出
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
@@ -162,14 +170,14 @@
     stringfindlast 等），只有离线证据。
 - **当前并行**（子 agent 随主控会话结束而中断，恢复时先查各 worktree 有无新提交）：
   - `recon/gamelogic7c`、`recon/common7e`、`recon/drawable52`、`recon/gamelogic72`、
-    `recon/particles65`：已合并（`789bcb1`、`f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`）。合并冲突若只是注册行追加，用
-    `python work\probe\union_conflicts.py <文件...>`。
+    `recon/particles65`、`recon/render91`：已合并（`789bcb1`、`f3c87e3`、`c33c919`、`2c9fd80`、
+    `b67d3d3`、render91 见下一提交）。合并冲突若只是注册行追加，用
+    `python work\probe\union_conflicts.py <文件...>`。所有权声明用
+    `python work\probe\verify_ownership.py <claims.txt>` 逐条反查（格式见脚本头注释）。
   - `recon/obj6a`：Gemini 因 resource_exhausted 中断，主控提交快照 `cbfd909`，改由 Grok 接手。
   - `recon/common5a`：`0x005A0000–0x005BFFFF` common 簇，Grok，base `0d099eb`。
   - `recon/render56`：`0x00560000–0x0059FFFF` render 簇，Gemini，base `5e4a7c2`。
   - `recon/skirmishai89`：`0x00890000–0x0089FFFF` skirmish AI 簇，Gemini，base `5d16a5b`。
-  - `recon/render91`：`0x008E0000–0x0094FFFF` W3DScriptedModelDraw 簇；Gemini 两次断连后
-    主控提交半成品快照 `74af93c`，改由 Grok 接手。
   - `recon/protcave`：两次断连后主控提交快照 `31b2124`，Gemini 第三次接手。
   - 14:00 补足 10 路，base 均为 `86baa8d`：`recon/objbehav68`（`0x00680000–0x0068FFFF`
     对象 behavior/update 模块，Gemini）、`recon/protentry`（已合并；由
