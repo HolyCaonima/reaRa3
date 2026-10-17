@@ -686,7 +686,7 @@ void LuaSetTagMethod(LuaState* state, int32_t tag, const char* event) {
     state->top -= 1;
 }
 
-// [24/27] site=0x0040A340 slot=0x018FC148 body=0x004431E0 section=.text
+// [24/44] site=0x0040A340 slot=0x018FC148 body=0x004431E0 section=.text
 // Pushes a copy of the stack element at `index` onto the top of the stack (lua_pushvalue).
 // SecuROM rewrite: loads 1 from [0x018FC8D0] for luaD_checkstack(L, 1).
 void LuaPushValue(LuaState* state, int32_t index) {
@@ -698,7 +698,268 @@ void LuaPushValue(LuaState* state, int32_t index) {
     state->top += 1;
 }
 
-// [25/28] site=0x0040CA60 slot=0x018FBEFC body=0x00435790 section=.text
+namespace {
+
+// Resolves a 1-based positive or top-relative negative stack index with bounds check (luaA_indexAcceptable).
+LuaTObject* ResolveAcceptableIndex(LuaState* state, int32_t index) {
+    if (index >= 0) {
+        LuaTObject* o = state->Cbase + (index - 1);
+        if (o >= state->top) {
+            return nullptr;
+        }
+        return o;
+    }
+    return state->top + index;
+}
+
+struct BinOprCodeEntry {
+    int32_t opcode;
+    int32_t arg;
+};
+
+// Binary operator descriptor table at 0x00BD5EE8 (observed in 0x0040E220 body 0x004A2BD0).
+constexpr BinOprCodeEntry kBinOprTable[12] = {
+    {24, 0},   // OPR_ADD -> OP_ADD
+    {26, 0},   // OPR_SUB -> OP_SUB
+    {27, 0},   // OPR_MULT -> OP_MULT
+    {28, 0},   // OPR_DIV -> OP_DIV
+    {29, 0},   // OPR_POW -> OP_POW
+    {30, 2},   // OPR_CONCAT -> OP_CONCAT (arg=2)
+    {33, -1},  // OPR_NE -> OP_JMPNE (NO_JUMP=-1)
+    {34, -1},  // OPR_EQ -> OP_JMPEQ (NO_JUMP=-1)
+    {35, -1},  // OPR_LT -> OP_JMPLT (NO_JUMP=-1)
+    {36, -1},  // OPR_LE -> OP_JMPLE (NO_JUMP=-1)
+    {37, -1},  // OPR_GT -> OP_JMPGT (NO_JUMP=-1)
+    {38, -1},  // OPR_GE -> OP_JMPGE (NO_JUMP=-1)
+};
+
+}  // namespace
+
+// [25/44] site=0x0040A440 slot=0x018FB260 body=0x0041AA80 section=.text
+// Returns the custom array/table count or hash aux word at +0x0C if stack[index] is a table (lua_getn / table aux).
+int32_t LuaGetN(LuaState* state, int32_t index) {
+    const LuaTObject* o = ResolveAcceptableIndex(state, index);
+    if (o == nullptr || o->ttype != kLuaTypeTable) {
+        return 0;
+    }
+    return static_cast<int32_t>(o->value.ht->pad0C);
+}
+
+// [26/44] site=0x0040A5C0 slot=0x018FB380 body=0x00426E30 section=.text
+// Converts stack[index] to a boolean truth value (0 for nil/out-of-bounds, raw value for tag 6, 1 otherwise).
+int32_t LuaIsFunction(LuaState* state, int32_t index) {
+    const LuaTObject* o = ResolveAcceptableIndex(state, index);
+    if (o == nullptr || o->ttype == kLuaTypeNil) {
+        return 0;
+    }
+    if (o->ttype == 6) {
+        return static_cast<int32_t>(o->value.raw);
+    }
+    return 1;
+}
+
+// [27/44] site=0x0040A600 slot=0x018F50B8 body=0x004461A0 section=.text
+// Returns the C string pointer for stack[index], converting numbers in place via luaV_tostring (lua_tostring).
+const char* LuaToString(LuaState* state, int32_t index) {
+    LuaTObject* o = ResolveAcceptableIndex(state, index);
+    if (o == nullptr) {
+        return nullptr;
+    }
+    if (o->ttype != kLuaTypeString) {
+        if (g_hooks.luaVmToString == nullptr || g_hooks.luaVmToString(state, o) != 0) {
+            return nullptr;
+        }
+    }
+    return o->value.ts->str;
+}
+
+// [28/44] site=0x0040A860 slot=0x018F6608 body=0x0191B790 section=.securom
+// Pushes a userdata object with explicit tag onto the Lua stack (lua_pushusertag).
+// SecuROM rewrite: loads LUA_NTAGS (6) from [0x018FCBF8].
+void LuaPushUserTag(LuaState* state, void* udata, int32_t tag) {
+    if (tag != -1 && tag != 0 && (tag < 6 || tag > state->lastTag)) {
+        if (g_hooks.luaVError != nullptr) {
+            g_hooks.luaVError(
+                state,
+                "invalid tag for a userdata (%d)",
+                nullptr,
+                nullptr,
+                nullptr,
+                tag);
+        }
+    }
+    state->top->value.ts = (g_hooks.luaStringCreateUdata != nullptr)
+        ? g_hooks.luaStringCreateUdata(state, udata, tag)
+        : nullptr;
+    state->top->ttype = kLuaTypeUserdata;
+    if (state->top == state->stackLast) {
+        LuaDoCheckStack(state, 1);
+    }
+    state->top += 1;
+}
+
+// [29/44] site=0x0040A8C0 slot=0x018FB6F4 body=0x0043E3B0 section=.text
+// Pushes the value of global variable `name` onto the Lua stack (lua_getglobal).
+// SecuROM rewrite: loads 1 from [0x018FC748] for luaD_checkstack(L, 1).
+void LuaGetGlobal(LuaState* state, const char* name) {
+    LuaTObject* topSlot = state->top;
+    LuaTString* str = (g_hooks.luaStringNew != nullptr) ? g_hooks.luaStringNew(state, name) : nullptr;
+    const LuaTObject* val = (g_hooks.luaVmGetGlobal != nullptr) ? g_hooks.luaVmGetGlobal(state, str) : nullptr;
+    if (val != nullptr) {
+        *topSlot = *val;
+    }
+    state->top = topSlot;
+    if (topSlot == state->stackLast) {
+        LuaDoCheckStack(state, 1);
+    }
+    state->top += 1;
+}
+
+// [30/44] site=0x0040AAD0 slot=0x018F5C50 body=0x0045EDC0 section=.text
+// Creates an empty table via LuaTableNew(L, 0, aux) and pushes it onto the stack (lua_newtable).
+// SecuROM rewrite: loads 1 from [0x018FCAB8] for luaD_checkstack(L, 1).
+void LuaNewTable(LuaState* state, uint32_t aux) {
+    LuaHash* h = LuaTableNew(state, 0, aux);
+    state->top->value.ht = h;
+    state->top->ttype = kLuaTypeTable;
+    if (state->top == state->stackLast) {
+        LuaDoCheckStack(state, 1);
+    }
+    state->top += 1;
+}
+
+// [31/44] site=0x0040AEF0 slot=0x018FB394 body=0x0043D6E0 section=.text
+// Allocates a managed userdata block of `size` bytes, pushes it, and returns its payload pointer (lua_newuserdata).
+// SecuROM rewrite: loads 0 from [0x018FC6D8].
+void* LuaNewUserData(LuaState* state, uint32_t size) {
+    LuaTString* ts = (g_hooks.luaStringNewUdata != nullptr)
+        ? g_hooks.luaStringNewUdata(state, size, nullptr)
+        : nullptr;
+    state->top->value.ts = ts;
+    state->top->ttype = kLuaTypeUserdata;
+    if (state->top == state->stackLast) {
+        LuaDoCheckStack(state, 1);
+    }
+    state->top += 1;
+    return (ts != nullptr) ? ts->u.d.value : nullptr;
+}
+
+// [32/44] site=0x0040B410 slot=0x018F603C body=0x00470720 section=.text
+// Allocates and initializes a new LuaHash table with `nhash` initial capacity (luaH_new).
+LuaHash* LuaTableNew(LuaState* state, int32_t nhash, uint32_t aux) {
+    auto* t = static_cast<LuaHash*>(LuaMemRealloc(state, nullptr, sizeof(LuaHash)));
+    t->htag = kLuaTypeTable;
+    t->next = state->roottable;
+    state->roottable = t;
+    t->marked = t;
+    t->size = 0;
+    t->pad0C = aux;
+    state->nblocks += sizeof(LuaHash);
+    t->node = nullptr;
+    const uint32_t powSize = LuaPower2(static_cast<uint32_t>(nhash));
+    if (g_hooks.luaTableSetNodeVector != nullptr) {
+        g_hooks.luaTableSetNodeVector(state, t, powSize);
+    }
+    return t;
+}
+
+// [33/44] site=0x0040B570 slot=0x018FC3E8 body=0x019069F0 section=.securom
+// Finds or inserts `key` in table `t` and returns a pointer to its value slot (luaH_set).
+LuaTObject* LuaTableSet(LuaState* state, LuaHash* t, const LuaTObject* key) {
+    for (;;) {
+        LuaNode* mp = (g_hooks.luaTableMainPosition != nullptr)
+            ? g_hooks.luaTableMainPosition(t, key)
+            : nullptr;
+        if (mp == nullptr) {
+            if (g_hooks.luaError != nullptr) {
+                g_hooks.luaError(state, "table index is nil");
+            }
+            return nullptr;
+        }
+        LuaNode* n = mp;
+        do {
+            if (LuaEqualObj(key, &n->key) != 0) {
+                return &n->val;
+            }
+            n = n->next;
+        } while (n != nullptr);
+
+        if (mp->key.ttype != kLuaTypeNil) {
+            LuaNode* freepos = t->firstfree;
+            LuaNode* other = (mp > freepos && g_hooks.luaTableMainPosition != nullptr)
+                ? g_hooks.luaTableMainPosition(t, &mp->key)
+                : mp;
+            if (other != mp) {
+                while (other->next != mp) {
+                    other = other->next;
+                }
+                other->next = freepos;
+                *freepos = *mp;
+                mp->next = nullptr;
+            } else {
+                freepos->next = mp->next;
+                mp->next = freepos;
+                mp = freepos;
+            }
+        }
+        mp->key = *key;
+        for (;;) {
+            if (t->firstfree->key.ttype == kLuaTypeNil) {
+                return &mp->val;
+            }
+            if (t->firstfree == t->node) {
+                break;
+            }
+            t->firstfree -= 1;
+        }
+        if (g_hooks.luaTableRehash != nullptr) {
+            g_hooks.luaTableRehash(state, t);
+        }
+    }
+}
+
+// [34/44] site=0x0040C920 slot=0x018F5474 body=0x0045A730 section=.text
+// Patches the signed jump displacement of instruction `pc` to target `dest` (luaK_fixjump).
+// SecuROM rewrite: loads 0x3F from [0x018FC988] and rotates [0x018F76A8] by [0x0052EF45] to 0x00BD5FE0.
+void LuaCodeFixJump(LuaFuncState* fs, int32_t pc, int32_t dest) {
+    uint32_t& jmp = fs->f->code[pc];
+    if (dest == -1) {
+        jmp = (jmp & 0x3Fu) | 0x7FFFFF80u;
+        return;
+    }
+    const int32_t offset = dest - (pc + 1);
+    const int32_t absOffset = (offset < 0) ? -offset : offset;
+    if (absOffset > 0x01FFFFFF) {
+        if (g_hooks.luaSyntaxError != nullptr && fs->ls != nullptr) {
+            g_hooks.luaSyntaxError(
+                fs->ls,
+                "control structure too long",
+                reinterpret_cast<const char*>(static_cast<uintptr_t>(fs->ls->t.token)));
+        }
+    }
+    jmp = (jmp & 0x3Fu) | (static_cast<uint32_t>(offset + 0x01FFFFFF) << 6u);
+}
+
+// [35/44] site=0x0040C980 slot=0x018F6788 body=0x0047AA50 section=.text
+// Advances `fs->freereg` by `n` and updates `fs->f->maxstacksize` (luaK_deltastack).
+// SecuROM rewrite: loads 0x00BD5FFC ("function or expression too complex") from [0x018FCC14].
+void LuaCodeCheckStack(LuaFuncState* fs, int32_t n) {
+    fs->freereg = static_cast<int16_t>(fs->freereg + n);
+    const uint16_t cur = static_cast<uint16_t>(fs->freereg);
+    if (static_cast<int16_t>(cur) > fs->f->maxstacksize) {
+        if (static_cast<int16_t>(cur) > 250) {
+            if (g_hooks.luaSyntaxError != nullptr && fs->ls != nullptr) {
+                g_hooks.luaSyntaxError(
+                    fs->ls,
+                    "function or expression too complex",
+                    reinterpret_cast<const char*>(static_cast<uintptr_t>(fs->ls->t.token)));
+            }
+        }
+        fs->f->maxstacksize = static_cast<int16_t>(cur);
+    }
+}
+
+// [36/44] site=0x0040CA60 slot=0x018FBEFC body=0x00435790 section=.text
 // Checks whether the previous instruction is an open OP_CALL with MULT_RET (luaK_lastisopen).
 // SecuROM rewrite: loads MASK_B (0x00003FC0) from [0x018FC864].
 int32_t LuaCodeLastIsOpen(const LuaFuncState* fs) {
@@ -709,7 +970,7 @@ int32_t LuaCodeLastIsOpen(const LuaFuncState* fs) {
     return 0;
 }
 
-// [26/28] site=0x0040CAA0 slot=0x018F5C84 body=0x01913030 section=.securom
+// [37/44] site=0x0040CAA0 slot=0x018F5C84 body=0x01913030 section=.securom
 // Patches the B-argument of an open OP_CALL instruction to `nresults` and updates freereg (luaK_setcallreturns).
 // SecuROM rewrite: loads MASK_B (0x00003FC0) from [0x018FCAC0].
 void LuaCodeSetCallReturns(LuaFuncState* fs, int32_t nresults) {
@@ -717,23 +978,17 @@ void LuaCodeSetCallReturns(LuaFuncState* fs, int32_t nresults) {
     if ((inst & 0x3Fu) == 2u && (inst & 0x3FC0u) == 0x3FC0u) {
         uint32_t& slot = fs->f->code[fs->pc - 1];
         slot = (slot & 0xFFFF803Fu) | (static_cast<uint32_t>(nresults) << 6u);
-        fs->freereg = static_cast<int16_t>(fs->freereg + nresults);
-        const uint16_t cur = static_cast<uint16_t>(fs->freereg);
-        if (static_cast<int16_t>(cur) > fs->f->maxstacksize) {
-            if (static_cast<int16_t>(cur) > 250) {
-                if (g_hooks.luaSyntaxError != nullptr && fs->ls != nullptr) {
-                    g_hooks.luaSyntaxError(
-                        fs->ls,
-                        "function or expression too complex",
-                        reinterpret_cast<const char*>(static_cast<uintptr_t>(fs->ls->t.token)));
-                }
-            }
-            fs->f->maxstacksize = static_cast<int16_t>(cur);
-        }
+        LuaCodeCheckStack(fs, nresults);
     }
 }
 
-// [27/28] site=0x0040D2F0 slot=0x018F725C body=0x004975D0 section=.text
+// [38/44] site=0x0040D220 slot=0x018FC078 body=0x0042CE50 section=.text
+// Emits a 1-argument instruction via luaK_code2(fs, op, arg1, 0) (luaK_code1).
+int32_t LuaCode1(LuaFuncState* fs, int32_t op, int32_t arg1) {
+    return (g_hooks.luaCode2 != nullptr) ? g_hooks.luaCode2(fs, op, arg1, 0) : 0;
+}
+
+// [39/44] site=0x0040D2F0 slot=0x018F725C body=0x004975D0 section=.text
 // Marks the current pc as a jump target and patches pending jumps in fs->jpc (luaK_getlabel).
 // SecuROM rewrite: loads NO_REG (0xFF) from [0x018FCDB0].
 int32_t LuaCodeGetLabel(LuaFuncState* fs) {
@@ -749,7 +1004,7 @@ int32_t LuaCodeGetLabel(LuaFuncState* fs) {
     return fs->pc;
 }
 
-// [27/27] site=0x0040D5B0 slot=0x018FC418 body=0x01907050 section=.securom
+// [40/44] site=0x0040D5B0 slot=0x018FC418 body=0x01907050 section=.securom
 // Emits or coalesces OP_POP / OP_PUSHNIL to adjust the compile-time stack by `n` (luaK_adjuststack).
 // SecuROM rewrite: loads MASK_OP (0x3F) from [0x018FC924].
 void LuaCodeAdjustStack(LuaFuncState* fs, int32_t n) {
@@ -835,6 +1090,86 @@ void LuaCodeAdjustStack(LuaFuncState* fs, int32_t n) {
         fs->f->code[fs->pc] = pushNilInst;
         fs->pc += 1;
     }
+}
+
+// [41/44] site=0x0040DC40 slot=0x018FB15C body=0x0040B6E0 section=.text
+// Emits a unary jump-on-false or jump-on-true via codearith(fs, v, 1, op ? 42 : 40).
+void LuaCodeUnary(LuaFuncState* fs, LuaExpDesc* v, int32_t op) {
+    const int32_t opcode = (op != 0) ? 42 : 40;
+    if (g_hooks.luaCodeArith != nullptr) {
+        g_hooks.luaCodeArith(fs, v, 1, opcode);
+    }
+}
+
+// [42/44] site=0x0040E1D0 slot=0x018F5C74 body=0x0045EF60 section=.text
+// Emits the LHS jump or value evaluation before a binary operator's RHS is parsed (luaK_infix).
+// SecuROM rewrite: loads 1 from [0x018FCABC] to distinguish OPR_OR (13) from OPR_AND (12).
+void LuaCodeInfix(LuaLexState* ls, int32_t op, LuaExpDesc* v) {
+    if (op == 12) {
+        if (g_hooks.luaCodeArith != nullptr) {
+            g_hooks.luaCodeArith(ls->fs, v, 1, 42);
+        }
+    } else if (op == 13) {
+        if (g_hooks.luaCodeArith != nullptr) {
+            g_hooks.luaCodeArith(ls->fs, v, 0, 41);
+        }
+    } else {
+        if (g_hooks.luaCodePrefix != nullptr) {
+            g_hooks.luaCodePrefix(ls, v, 1);
+        }
+    }
+}
+
+// [43/44] site=0x0040E220 slot=0x018FB3A0 body=0x004A2BD0 section=.text
+// Finalizes a binary operator expression after its RHS `v2` is parsed (luaK_posfix).
+// SecuROM rewrite: loads 1 from [0x018FC6DC] to distinguish OPR_OR (13) from OPR_AND (12).
+void LuaCodePosfix(LuaLexState* ls, int32_t op, LuaExpDesc* v1, LuaExpDesc* v2) {
+    LuaFuncState* fs = ls->fs;
+    if (op == 12) {
+        if (g_hooks.luaCodeExp2Val != nullptr) {
+            g_hooks.luaCodeExp2Val(fs, v2);
+        }
+        if (v2->t == -1 && v2->f == -1) {
+            LuaCodeSetCallReturns(fs, 1);
+        }
+        v1->t = v2->t;
+        if (g_hooks.luaCodeConcat != nullptr) {
+            g_hooks.luaCodeConcat(fs, &v1->f, v2->f);
+        }
+    } else if (op == 13) {
+        if (g_hooks.luaCodeExp2Val != nullptr) {
+            g_hooks.luaCodeExp2Val(fs, v2);
+        }
+        if (v2->t == -1 && v2->f == -1) {
+            LuaCodeSetCallReturns(fs, 1);
+        }
+        v1->f = v2->f;
+        if (g_hooks.luaCodeConcat != nullptr) {
+            g_hooks.luaCodeConcat(fs, &v1->t, v2->t);
+        }
+    } else {
+        if (g_hooks.luaCodePrefix != nullptr) {
+            g_hooks.luaCodePrefix(ls, v2, 1);
+        }
+        const BinOprCodeEntry& entry = kBinOprTable[op];
+        if (g_hooks.luaCode2 != nullptr) {
+            g_hooks.luaCode2(fs, entry.opcode, entry.arg, 0);
+        }
+    }
+}
+
+// [44/44] site=0x0040E2F0 slot=0x018F4FDC body=0x0044DE30 section=.text
+// Allocates initial 1-bucket hash tables for `L->strt` and `L->udt` (luaS_init).
+void LuaStringInit(LuaState* state) {
+    state->strt.hash = static_cast<LuaTString**>(LuaMemRealloc(state, nullptr, sizeof(LuaTString*)));
+    state->udt.hash = static_cast<LuaTString**>(LuaMemRealloc(state, nullptr, sizeof(LuaTString*)));
+    state->nblocks += 2 * sizeof(LuaTString*);
+    state->udt.size = 1;
+    state->strt.size = 1;
+    state->udt.nuse = 0;
+    state->strt.nuse = 0;
+    state->udt.hash[0] = nullptr;
+    state->strt.hash[0] = nullptr;
 }
 
 }  // namespace ra3::core

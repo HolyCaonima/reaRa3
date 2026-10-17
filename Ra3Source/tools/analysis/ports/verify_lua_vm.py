@@ -55,6 +55,14 @@ SECUROM_IMMEDIATES: dict[int, int] = {
     0x018FCAC0: 0x00003FC0,  # 0x0040CAA0: MASK_B = 0x3FC0
     0x018FCDB0: 0x000000FF,  # 0x0040D2F0: NO_REG = 0xFF
     0x018FC924: 0x0000003F,  # 0x0040D5B0: MASK_OP = 0x3F
+    0x018FCBF8: 0x00000006,  # 0x0040A860: LUA_NTAGS = 6
+    0x018FC748: 0x00000001,  # 0x0040A8C0: 1 (luaD_checkstack(L, 1))
+    0x018FCAB8: 0x00000001,  # 0x0040AAD0: 1 (luaD_checkstack(L, 1))
+    0x018FC6D8: 0x00000000,  # 0x0040AEF0: 0 (luaS_newudata(L, size, NULL))
+    0x018FC988: 0x0000003F,  # 0x0040C920: MASK_OP = 0x3F
+    0x018FCC14: 0x00BD5FFC,  # 0x0040C980: "function or expression too complex"
+    0x018FCABC: 0x00000001,  # 0x0040E1D0: 1 (OPR_OR - OPR_AND)
+    0x018FC6DC: 0x00000001,  # 0x0040E220: 1 (OPR_OR - OPR_AND)
 }
 
 
@@ -679,6 +687,210 @@ class LuaVmOracle:
             tr.mix_word(fs_va)
             return 0
 
+        # 0x00406C40 luaV_tostring(L, obj)
+        def stub_vm_tostring(e: Emulator) -> int:
+            state_va = e.stack_arg(0)
+            obj_va = e.stack_arg(1)
+            tr.trace_calls += 1
+            tr.last_arg0 = state_va
+            tr.last_arg1 = obj_va
+            tr.mix_word(0xCA110022)
+            tr.mix_word(state_va)
+            tr.mix_word(obj_va)
+            if tr.stub_ret != 0:
+                return tr.stub_ret & 0xFFFFFFFF
+            ts_va = ARENA_BASE + 0x5100
+            w32(e, ts_va + 8, 5)
+            e.write(ts_va + 0x14, b"hello\x00")
+            wi32(e, obj_va, 3)
+            w32(e, obj_va + 8, ts_va)
+            return 0
+
+        # 0x0040E690 luaS_createudata(L, udata, tag)
+        def stub_createudata(e: Emulator) -> int:
+            state_va = e.stack_arg(0)
+            udata = e.stack_arg(1)
+            tag = e.stack_arg(2)
+            tr.trace_calls += 1
+            tr.last_arg0 = state_va
+            tr.last_arg1 = udata
+            tr.last_arg2 = tag
+            tr.mix_word(0xCA110023)
+            tr.mix_word(state_va)
+            tr.mix_word(udata)
+            tr.mix_word(tag)
+            return ARENA_BASE + 0x5200
+
+        # 0x0040E750 luaS_new(L, str)
+        def stub_str_new(e: Emulator) -> int:
+            state_va = e.stack_arg(0)
+            str_va = e.stack_arg(1)
+            tr.trace_calls += 1
+            tr.last_arg0 = state_va
+            tr.mix_word(0xCA110024)
+            tr.mix_word(state_va)
+            tr.mix_cstring(str_va)
+            return ARENA_BASE + 0x5300
+
+        # 0x00407020 luaV_getglobal(L, name)
+        def stub_vm_getglobal(e: Emulator) -> int:
+            state_va = e.stack_arg(0)
+            name_va = e.stack_arg(1)
+            tr.trace_calls += 1
+            tr.last_arg0 = state_va
+            tr.last_arg1 = name_va
+            tr.mix_word(0xCA110025)
+            tr.mix_word(state_va)
+            tr.mix_word(name_va)
+            val_va = ARENA_BASE + 0x5400
+            wi32(e, val_va, 2)
+            wu64(e, val_va + 8, 0x1122334455667788)
+            return val_va
+
+        # 0x0040E600 luaS_newudata(L, size, udata)
+        def stub_str_newudata(e: Emulator) -> int:
+            state_va = e.stack_arg(0)
+            size = e.stack_arg(1)
+            udata = e.stack_arg(2)
+            tr.trace_calls += 1
+            tr.last_arg0 = state_va
+            tr.last_arg1 = size
+            tr.last_arg2 = udata
+            tr.mix_word(0xCA110026)
+            tr.mix_word(state_va)
+            tr.mix_word(size)
+            tr.mix_word(udata)
+            ts_va = ARENA_BASE + 0x5500
+            w32(e, ts_va + 4, ARENA_BASE + 0x5600)
+            return ts_va
+
+        # 0x0040B380 setnodevector (ESI=t, EDI=size, stack0=L)
+        def stub_setnodevector(e: Emulator) -> int:
+            state_va = e.stack_arg(0)
+            t_va = e.register(r.UC_X86_REG_ESI)
+            size = e.register(r.UC_X86_REG_EDI)
+            tr.trace_calls += 1
+            tr.last_arg0 = state_va
+            tr.last_arg1 = t_va
+            tr.last_arg2 = size
+            wi32(e, t_va + 8, size)
+            tr.mix_word(0xCA110027)
+            tr.mix_word(state_va)
+            tr.mix_word(t_va)
+            tr.mix_word(size)
+            return 0
+
+        # 0x0040B060 luaH_mainposition(t, key)
+        def stub_mainposition(e: Emulator) -> int:
+            t_va = e.stack_arg(0)
+            key_va = e.stack_arg(1)
+            tr.trace_calls += 1
+            tr.last_arg0 = t_va
+            tr.last_arg1 = key_va
+            tr.mix_word(0xCA110028)
+            tr.mix_word(t_va)
+            tr.mix_word(key_va)
+            node_base = u32(e, t_va)
+            return node_base + tr.stub_ret * 0x28
+
+        # 0x0040B4B0 rehash (EAX=t, stack0=L)
+        def stub_rehash(e: Emulator) -> int:
+            t_va = e.register(r.UC_X86_REG_EAX)
+            state_va = e.stack_arg(0)
+            tr.trace_calls += 1
+            tr.last_arg0 = state_va
+            tr.last_arg1 = t_va
+            tr.mix_word(0xCA110029)
+            tr.mix_word(state_va)
+            tr.mix_word(t_va)
+            node_base = u32(e, t_va)
+            wi32(e, node_base + 0x28, 1)
+            w32(e, t_va + 0x10, node_base + 3 * 0x28)
+            wi32(e, node_base + 3 * 0x28, 1)
+            return 0
+
+        # 0x0040CDF0 luaK_code2(fs, op, arg1, arg2)
+        def stub_code2(e: Emulator) -> int:
+            fs_va = e.stack_arg(0)
+            op = e.stack_arg(1)
+            arg1 = e.stack_arg(2)
+            arg2 = e.stack_arg(3)
+            tr.trace_calls += 1
+            tr.last_arg0 = fs_va
+            tr.last_arg1 = op
+            tr.last_arg2 = arg1
+            tr.last_arg3 = arg2
+            tr.mix_word(0xCA11002A)
+            tr.mix_word(fs_va)
+            tr.mix_word(op)
+            tr.mix_word(arg1)
+            tr.mix_word(arg2)
+            pc = i32(e, fs_va + 0x10)
+            wi32(e, fs_va + 0x10, pc + 1)
+            return pc & 0xFFFFFFFF
+
+        # 0x0040DB40 codearith (EAX=v, ESI=fs, stack0=arg, stack1=op)
+        def stub_codearith(e: Emulator) -> int:
+            v_va = e.register(r.UC_X86_REG_EAX)
+            fs_va = e.register(r.UC_X86_REG_ESI)
+            arg = e.stack_arg(0)
+            op = e.stack_arg(1)
+            tr.trace_calls += 1
+            tr.last_arg0 = fs_va
+            tr.last_arg1 = v_va
+            tr.last_arg2 = arg
+            tr.last_arg3 = op
+            tr.mix_word(0xCA11002B)
+            tr.mix_word(fs_va)
+            tr.mix_word(v_va)
+            tr.mix_word(arg)
+            tr.mix_word(op)
+            return 0
+
+        # 0x0040D770 luaK_exp2val (EAX=fs, stack0=v)
+        def stub_exp2val(e: Emulator) -> int:
+            fs_va = e.register(r.UC_X86_REG_EAX)
+            v_va = e.stack_arg(0)
+            tr.trace_calls += 1
+            tr.last_arg0 = fs_va
+            tr.last_arg1 = v_va
+            tr.mix_word(0xCA11002C)
+            tr.mix_word(fs_va)
+            tr.mix_word(v_va)
+            return 0
+
+        # 0x0040CD30 luaK_concat(fs, l1, l2)
+        def stub_concat(e: Emulator) -> int:
+            fs_va = e.stack_arg(0)
+            l1_va = e.stack_arg(1)
+            l2 = i32(e, e.register(r.UC_X86_REG_ESP) + 12)
+            old_l1 = i32(e, l1_va)
+            wi32(e, l1_va, old_l1 * 10 + l2)
+            tr.trace_calls += 1
+            tr.last_arg0 = fs_va
+            tr.last_arg1 = old_l1 & 0xFFFFFFFF
+            tr.last_arg2 = l2 & 0xFFFFFFFF
+            tr.mix_word(0xCA11002D)
+            tr.mix_word(fs_va)
+            tr.mix_word(tr.last_arg1)
+            tr.mix_word(tr.last_arg2)
+            return 0
+
+        # 0x0040DC70 luaK_prefix(ls, v, n)
+        def stub_prefix(e: Emulator) -> int:
+            ls_va = e.stack_arg(0)
+            v_va = e.stack_arg(1)
+            n = e.stack_arg(2)
+            tr.trace_calls += 1
+            tr.last_arg0 = ls_va
+            tr.last_arg1 = v_va
+            tr.last_arg2 = n
+            tr.mix_word(0xCA11002E)
+            tr.mix_word(ls_va)
+            tr.mix_word(v_va)
+            tr.mix_word(n)
+            return 0
+
         emu.bind_function(0x004037D0, stub_lua_error, 0)
         emu.bind_function(0x00403FF0, stub_breakrun, 0)
         emu.bind_function(0x00403F80, stub_do_error, 0)
@@ -710,6 +922,19 @@ class LuaVmOracle:
         emu.bind_function(0x004041A0, stub_verror, 0)
         emu.bind_function(0x0040CBA0, stub_patchlistaux, 0)
         emu.bind_function(0x0040CD80, stub_rememberlineinfo, 0)
+        emu.bind_function(0x00406C40, stub_vm_tostring, 0)
+        emu.bind_function(0x0040E690, stub_createudata, 0)
+        emu.bind_function(0x0040E750, stub_str_new, 0)
+        emu.bind_function(0x00407020, stub_vm_getglobal, 0)
+        emu.bind_function(0x0040E600, stub_str_newudata, 0)
+        emu.bind_function(0x0040B380, stub_setnodevector, 0)
+        emu.bind_function(0x0040B060, stub_mainposition, 0)
+        emu.bind_function(0x0040B4B0, stub_rehash, 0)
+        emu.bind_function(0x0040CDF0, stub_code2, 0)
+        emu.bind_function(0x0040DB40, stub_codearith, 0)
+        emu.bind_function(0x0040D770, stub_exp2val, 0)
+        emu.bind_function(0x0040CD30, stub_concat, 0)
+        emu.bind_function(0x0040DC70, stub_prefix, 0)
 
 
 def run_checker(checker: Path, *args: str) -> str:
@@ -1472,6 +1697,357 @@ def build_scenarios(oracle: LuaVmOracle) -> list[tuple[str, list[str], Callable[
             ["adjuststack", str(n), hex(prev_inst), str(freereg), str(maxstack)],
             run_adjuststack,
         ))
+
+    # 29. 0x0040A440 LuaGetN
+    for index, ttype, aux_val in [(1, 4, 33), (1, 2, 33), (-1, 4, 77), (5, 4, 33)]:
+        def run_getn(index=index, ttype=ttype, aux_val=aux_val) -> str:
+            oracle.reset_arena()
+            stack = ARENA_BASE + 0x1000
+            ht = ARENA_BASE + 0x2000
+            w32(emu, ht + 0x0C, aux_val)
+            wi32(emu, stack + 16, ttype)
+            w32(emu, stack + 24, ht)
+            w32(emu, state_va + 0x04, stack)
+            w32(emu, state_va + 0x10, stack + 16)
+            w32(emu, state_va + 0x00, stack + 32)
+            res = struct.unpack("<i", struct.pack("<I", oracle.invoke(0x0040A440, state_va, index)))[0]
+            return f"ret={res}"
+        scenarios.append((
+            f"0x0040A440_getn_{index}_{ttype}_{aux_val}",
+            ["getn", str(index), str(ttype), str(aux_val)],
+            run_getn,
+        ))
+
+    # 30. 0x0040A5C0 LuaIsFunction
+    for index, ttype, raw_val in [(1, 1, 99), (1, 6, 42), (1, 4, 99), (5, 4, 99)]:
+        def run_isfunction(index=index, ttype=ttype, raw_val=raw_val) -> str:
+            oracle.reset_arena()
+            stack = ARENA_BASE + 0x1000
+            wi32(emu, stack + 16, ttype)
+            wu64(emu, stack + 24, raw_val)
+            w32(emu, state_va + 0x04, stack)
+            w32(emu, state_va + 0x10, stack + 16)
+            w32(emu, state_va + 0x00, stack + 32)
+            res = struct.unpack("<i", struct.pack("<I", oracle.invoke(0x0040A5C0, state_va, index)))[0]
+            return f"ret={res}"
+        scenarios.append((
+            f"0x0040A5C0_isfunction_{index}_{ttype}_{raw_val}",
+            ["isfunction", str(index), str(ttype), str(raw_val)],
+            run_isfunction,
+        ))
+
+    # 31. 0x0040A600 LuaToString
+    for ttype, stub_ret in [(3, 0), (2, 0), (2, 1)]:
+        def run_tostring(ttype=ttype, stub_ret=stub_ret) -> str:
+            oracle.reset_arena()
+            tr.stub_ret = stub_ret
+            stack = ARENA_BASE + 0x1000
+            ts = ARENA_BASE + 0x2000
+            emu.write(ts + 0x14, b"direct\x00")
+            wi32(emu, stack + 16, ttype)
+            w32(emu, stack + 24, ts)
+            w32(emu, state_va + 0x04, stack)
+            w32(emu, state_va + 0x10, stack + 16)
+            w32(emu, state_va + 0x00, stack + 32)
+            res = oracle.invoke(0x0040A600, state_va, 1)
+            return f"ret=0x{res:08x} calls={tr.trace_calls} hash=0x{tr.trace_hash:08x}"
+        scenarios.append((
+            f"0x0040A600_tostring_{ttype}_{stub_ret}",
+            ["tostring", str(ttype), str(stub_ret)],
+            run_tostring,
+        ))
+
+    # 32. 0x0040A860 LuaPushUserTag
+    for u_va, tag, at_last in [
+        (ARENA_BASE + 0x6000, -1, 0),
+        (ARENA_BASE + 0x6000, 0, 1),
+        (ARENA_BASE + 0x6000, 6, 0),
+        (ARENA_BASE + 0x6000, 3, 0),
+    ]:
+        def run_pushusertag(u_va=u_va, tag=tag, at_last=at_last) -> str:
+            oracle.reset_arena()
+            stack = ARENA_BASE + 0x1000
+            w32(emu, state_va + 0x04, stack)
+            w32(emu, state_va + 0x00, stack + 32)
+            w32(emu, state_va + 0x08, (stack + 32) if at_last else (stack + 160))
+            wi32(emu, state_va + 0x0C, 12)
+            wi32(emu, state_va + 0x4C, 5)
+            oracle.invoke(0x0040A860, state_va, u_va, tag)
+            return (
+                f"top=0x{u32(emu, state_va):08x} ttype={i32(emu, stack + 32)} "
+                f"val=0x{u32(emu, stack + 40):08x} calls={tr.trace_calls} hash=0x{tr.trace_hash:08x}"
+            )
+        scenarios.append((
+            f"0x0040A860_pushusertag_{tag}_{at_last}",
+            ["pushusertag", hex(u_va), str(tag), str(at_last)],
+            run_pushusertag,
+        ))
+
+    # 33. 0x0040A8C0 LuaGetGlobal
+    for at_last in [0, 1]:
+        def run_getglobal(at_last=at_last) -> str:
+            oracle.reset_arena()
+            stack = ARENA_BASE + 0x1000
+            w32(emu, state_va + 0x04, stack)
+            w32(emu, state_va + 0x00, stack + 32)
+            w32(emu, state_va + 0x08, (stack + 32) if at_last else (stack + 160))
+            wi32(emu, state_va + 0x0C, 12)
+            name_va = ARENA_BASE + 0x2000
+            emu.write(name_va, b"myGlobal\x00")
+            oracle.invoke(0x0040A8C0, state_va, name_va)
+            return (
+                f"top=0x{u32(emu, state_va):08x} ttype={i32(emu, stack + 32)} "
+                f"raw=0x{u64(emu, stack + 40):x} calls={tr.trace_calls} hash=0x{tr.trace_hash:08x}"
+            )
+        scenarios.append((
+            f"0x0040A8C0_getglobal_{at_last}",
+            ["getglobal", str(at_last)],
+            run_getglobal,
+        ))
+
+    # 34. 0x0040AAD0 LuaNewTable
+    for at_last in [0, 1]:
+        def run_newtable(at_last=at_last) -> str:
+            oracle.reset_arena()
+            stack = ARENA_BASE + 0x1000
+            w32(emu, state_va + 0x04, stack)
+            w32(emu, state_va + 0x00, stack + 32)
+            w32(emu, state_va + 0x08, (stack + 32) if at_last else (stack + 160))
+            wi32(emu, state_va + 0x0C, 12)
+            w32(emu, state_va + 0x28, ARENA_BASE + 0x2000)
+            w32(emu, state_va + 0x60, 40)
+            oracle.invoke(0x0040AAD0, state_va, 99)
+            ht_va = u32(emu, stack + 40)
+            return (
+                f"top=0x{u32(emu, state_va):08x} ttype={i32(emu, stack + 32)} "
+                f"ht=0x{ht_va:08x} aux={u32(emu, ht_va + 0x0C)} nblocks={u32(emu, state_va + 0x60)} "
+                f"calls={tr.trace_calls} hash=0x{tr.trace_hash:08x}"
+            )
+        scenarios.append((
+            f"0x0040AAD0_newtable_{at_last}",
+            ["newtable", str(at_last)],
+            run_newtable,
+        ))
+
+    # 35. 0x0040AEF0 LuaNewUserData
+    for size, at_last in [(32, 0), (128, 1)]:
+        def run_newuserdata(size=size, at_last=at_last) -> str:
+            oracle.reset_arena()
+            stack = ARENA_BASE + 0x1000
+            w32(emu, state_va + 0x04, stack)
+            w32(emu, state_va + 0x00, stack + 32)
+            w32(emu, state_va + 0x08, (stack + 32) if at_last else (stack + 160))
+            wi32(emu, state_va + 0x0C, 12)
+            res = oracle.invoke(0x0040AEF0, state_va, size)
+            return (
+                f"ret=0x{res:08x} top=0x{u32(emu, state_va):08x} "
+                f"ttype={i32(emu, stack + 32)} ts=0x{u32(emu, stack + 40):08x} "
+                f"calls={tr.trace_calls} hash=0x{tr.trace_hash:08x}"
+            )
+        scenarios.append((
+            f"0x0040AEF0_newuserdata_{size}_{at_last}",
+            ["newuserdata", str(size), str(at_last)],
+            run_newuserdata,
+        ))
+
+    # 36. 0x0040B410 LuaTableNew
+    for size in [0, 7, 16]:
+        def run_tablenew(size=size) -> str:
+            oracle.reset_arena()
+            w32(emu, state_va + 0x28, ARENA_BASE + 0x2000)
+            w32(emu, state_va + 0x60, 40)
+            res = oracle.invoke(0x0040B410, state_va, size, 0)
+            return (
+                f"ret=0x{res:08x} htag={i32(emu, res + 4)} next=0x{u32(emu, res + 0x14):08x} "
+                f"size={i32(emu, res + 8)} nblocks={u32(emu, state_va + 0x60)} "
+                f"calls={tr.trace_calls} hash=0x{tr.trace_hash:08x}"
+            )
+        scenarios.append((
+            f"0x0040B410_tablenew_{size}",
+            ["tablenew", str(size)],
+            run_tablenew,
+        ))
+
+    # 37. 0x0040B570 LuaTableSet
+    for key_type, mp_key_type, collide_mode in [
+        (2, 1, 0),
+        (2, 2, 0),
+        (2, 2, 1),
+        (2, 2, 3),
+    ]:
+        def run_tableset(key_type=key_type, mp_key_type=mp_key_type, collide_mode=collide_mode) -> str:
+            oracle.reset_arena()
+            ht = ARENA_BASE + 0x2000
+            nodes = ARENA_BASE + 0x2100
+            key = ARENA_BASE + 0x2300
+            w32(emu, ht, nodes)
+            wi32(emu, ht + 8, 4)
+            w32(emu, ht + 0x10, nodes + 3 * 0x28)
+            wi32(emu, nodes + 3 * 0x28, 1)
+            tr.stub_ret = 1
+            wi32(emu, key, key_type)
+            emu.write(key + 8, struct.pack("<d", 10.0))
+            n1 = nodes + 0x28
+            wi32(emu, n1, mp_key_type)
+            emu.write(n1 + 8, struct.pack("<d", 10.0 if collide_mode == 0 else 99.0))
+            wi32(emu, n1 + 0x10, 2)
+            if collide_mode == 3:
+                w32(emu, ht + 0x10, nodes)
+                wi32(emu, nodes, 2)
+            res = oracle.invoke(0x0040B570, state_va, ht, key)
+            return (
+                f"ret=0x{res:08x} ff=0x{u32(emu, ht + 0x10):08x} "
+                f"n1key={i32(emu, n1)} calls={tr.trace_calls} hash=0x{tr.trace_hash:08x}"
+            )
+        scenarios.append((
+            f"0x0040B570_tableset_{key_type}_{mp_key_type}_{collide_mode}",
+            ["tableset", str(key_type), str(mp_key_type), str(collide_mode)],
+            run_tableset,
+        ))
+
+    # 38. 0x0040C920 LuaCodeFixJump
+    for pc, dest, init_inst in [
+        (1, -1, 0x00000026),
+        (1, 5, 0x00000026),
+        (1, 0x02000000, 0x00000026),
+    ]:
+        def run_fixjump(pc=pc, dest=dest, init_inst=init_inst) -> str:
+            oracle.reset_arena()
+            code = ARENA_BASE + 0x3800
+            w32(emu, fs_va, proto_va)
+            w32(emu, fs_va + 8, ls_va)
+            wi32(emu, ls_va + 8, 285)
+            w32(emu, proto_va + 0x18, code)
+            w32(emu, code + pc * 4, init_inst)
+            oracle.invoke(
+                0x0040C920,
+                registers={"ebx": fs_va, "ecx": pc, "eax": dest},
+            )
+            return f"inst=0x{u32(emu, code + pc * 4):08x} calls={tr.trace_calls} hash=0x{tr.trace_hash:08x}"
+        scenarios.append((
+            f"0x0040C920_fixjump_{pc}_{dest}",
+            ["fixjump", str(pc), str(dest), hex(init_inst)],
+            run_fixjump,
+        ))
+
+    # 39. 0x0040C980 LuaCodeCheckStack
+    for freereg, maxstack, n in [(4, 8, 2), (6, 8, 5), (249, 249, 5)]:
+        def run_codecheckstack(freereg=freereg, maxstack=maxstack, n=n) -> str:
+            oracle.reset_arena()
+            w32(emu, fs_va, proto_va)
+            w32(emu, fs_va + 8, ls_va)
+            wi32(emu, ls_va + 8, 286)
+            wi16(emu, fs_va + 0x1C, freereg)
+            wi16(emu, proto_va + 0x24, maxstack)
+            oracle.invoke(0x0040C980, fs_va, n)
+            return f"maxstack={i16(emu, proto_va + 0x24)} calls={tr.trace_calls} hash=0x{tr.trace_hash:08x}"
+        scenarios.append((
+            f"0x0040C980_codecheckstack_{freereg}_{maxstack}_{n}",
+            ["codecheckstack", str(freereg), str(maxstack), str(n)],
+            run_codecheckstack,
+        ))
+
+    # 40. 0x0040D220 LuaCode1
+    for opcode, arg1 in [(6, 42), (18, 255)]:
+        def run_code1(opcode=opcode, arg1=arg1) -> str:
+            oracle.reset_arena()
+            wi32(emu, fs_va + 0x10, 7)
+            res = struct.unpack("<i", struct.pack("<I", oracle.invoke(0x0040D220, fs_va, opcode, arg1)))[0]
+            return f"ret={res} pc={i32(emu, fs_va + 0x10)} calls={tr.trace_calls} hash=0x{tr.trace_hash:08x}"
+        scenarios.append((
+            f"0x0040D220_code1_{opcode}_{arg1}",
+            ["code1", str(opcode), str(arg1)],
+            run_code1,
+        ))
+
+    # 41. 0x0040DC40 LuaCodeUnary
+    for unary_op in [0, 1]:
+        def run_codeunary(unary_op=unary_op) -> str:
+            oracle.reset_arena()
+            w32(emu, ls_va + 0x28, fs_va)
+            v_va = ARENA_BASE + 0x2500
+            oracle.invoke(0x0040DC40, fs_va, v_va, unary_op)
+            return (
+                f"calls={tr.trace_calls} hash=0x{tr.trace_hash:08x} "
+                f"a2=0x{tr.last_arg2:08x} a3=0x{tr.last_arg3:08x}"
+            )
+        scenarios.append((
+            f"0x0040DC40_codeunary_{unary_op}",
+            ["codeunary", str(unary_op)],
+            run_codeunary,
+        ))
+
+    # 42. 0x0040E1D0 LuaCodeInfix
+    for bin_op in [0, 12, 13]:
+        def run_codeinfix(bin_op=bin_op) -> str:
+            oracle.reset_arena()
+            w32(emu, ls_va + 0x28, fs_va)
+            v_va = ARENA_BASE + 0x2500
+            oracle.invoke(0x0040E1D0, ls_va, bin_op, v_va)
+            return (
+                f"calls={tr.trace_calls} hash=0x{tr.trace_hash:08x} "
+                f"a2=0x{tr.last_arg2:08x} a3=0x{tr.last_arg3:08x}"
+            )
+        scenarios.append((
+            f"0x0040E1D0_codeinfix_{bin_op}",
+            ["codeinfix", str(bin_op)],
+            run_codeinfix,
+        ))
+
+    # 43. 0x0040E220 LuaCodePosfix
+    for bin_op, v2t, v2f in [
+        (0, -1, -1),
+        (6, -1, -1),
+        (12, -1, -1),
+        (12, 5, 6),
+        (13, -1, -1),
+    ]:
+        def run_codeposfix(bin_op=bin_op, v2t=v2t, v2f=v2f) -> str:
+            oracle.reset_arena()
+            code = ARENA_BASE + 0x3800
+            w32(emu, ls_va + 0x28, fs_va)
+            w32(emu, fs_va, proto_va)
+            w32(emu, fs_va + 8, ls_va)
+            wi32(emu, fs_va + 0x10, 2)
+            wi32(emu, fs_va + 0x14, 0)
+            wi16(emu, fs_va + 0x1C, 4)
+            w32(emu, proto_va + 0x18, code)
+            wi16(emu, proto_va + 0x24, 6)
+            w32(emu, code + 4, 0x0000109C)
+            v1_va = ARENA_BASE + 0x2500
+            v2_va = ARENA_BASE + 0x2600
+            wi32(emu, v1_va + 4, 3)
+            wi32(emu, v1_va + 8, 4)
+            wi32(emu, v2_va + 4, v2t)
+            wi32(emu, v2_va + 8, v2f)
+            oracle.invoke(0x0040E220, ls_va, bin_op, v1_va, v2_va)
+            return (
+                f"v1t={i32(emu, v1_va + 4)} v1f={i32(emu, v1_va + 8)} "
+                f"code1=0x{u32(emu, code + 4):08x} freereg={i16(emu, fs_va + 0x1C)} "
+                f"calls={tr.trace_calls} hash=0x{tr.trace_hash:08x}"
+            )
+        scenarios.append((
+            f"0x0040E220_codeposfix_{bin_op}_{v2t}_{v2f}",
+            ["codeposfix", str(bin_op), str(v2t), str(v2f)],
+            run_codeposfix,
+        ))
+
+    # 44. 0x0040E2F0 LuaStringInit
+    def run_stringinit() -> str:
+        oracle.reset_arena()
+        w32(emu, state_va + 0x60, 16)
+        oracle.invoke(0x0040E2F0, state_va)
+        return (
+            f"strt=0x{u32(emu, state_va + 0x34):08x} udt=0x{u32(emu, state_va + 0x40):08x} "
+            f"ss={i32(emu, state_va + 0x2C)} us={i32(emu, state_va + 0x38)} "
+            f"sn={u32(emu, state_va + 0x30)} un={u32(emu, state_va + 0x3C)} "
+            f"nblocks={u32(emu, state_va + 0x60)} calls={tr.trace_calls} hash=0x{tr.trace_hash:08x}"
+        )
+    scenarios.append((
+        "0x0040E2F0_stringinit",
+        ["stringinit"],
+        run_stringinit,
+    ))
 
     return scenarios
 

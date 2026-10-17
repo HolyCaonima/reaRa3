@@ -422,6 +422,168 @@ void StubCodeRememberLineInfo(LuaFuncState* fs) {
     MixWord(g_trace.lastArg0);
 }
 
+int32_t StubVmToString(LuaState* state, LuaTObject* obj) {
+    g_trace.traceCalls += 1;
+    g_trace.lastArg0 = ToSimVa(state);
+    g_trace.lastArg1 = ToSimVa(obj);
+    MixWord(0xCA110022u);
+    MixWord(g_trace.lastArg0);
+    MixWord(g_trace.lastArg1);
+    if (g_trace.stubRet != 0) {
+        return g_trace.stubRet;
+    }
+    auto* ts = reinterpret_cast<LuaTString*>(FromSimVa(kArenaBase + 0x5100u));
+    ts->len = 5;
+    std::strcpy(reinterpret_cast<char*>(ts) + sizeof(LuaTString), "hello");
+    obj->ttype = kLuaTypeString;
+    obj->value.ts = ts;
+    return 0;
+}
+
+LuaTString* StubStringCreateUdata(LuaState* state, void* udata, int32_t tag) {
+    g_trace.traceCalls += 1;
+    g_trace.lastArg0 = ToSimVa(state);
+    g_trace.lastArg1 = ToSimVa(udata);
+    g_trace.lastArg2 = static_cast<uint32_t>(tag);
+    MixWord(0xCA110023u);
+    MixWord(g_trace.lastArg0);
+    MixWord(g_trace.lastArg1);
+    MixWord(g_trace.lastArg2);
+    return reinterpret_cast<LuaTString*>(FromSimVa(kArenaBase + 0x5200u));
+}
+
+LuaTString* StubStringNew(LuaState* state, const char* str) {
+    g_trace.traceCalls += 1;
+    g_trace.lastArg0 = ToSimVa(state);
+    MixWord(0xCA110024u);
+    MixWord(g_trace.lastArg0);
+    MixString(str);
+    return reinterpret_cast<LuaTString*>(FromSimVa(kArenaBase + 0x5300u));
+}
+
+const LuaTObject* StubVmGetGlobal(LuaState* state, LuaTString* name) {
+    g_trace.traceCalls += 1;
+    g_trace.lastArg0 = ToSimVa(state);
+    g_trace.lastArg1 = ToSimVa(name);
+    MixWord(0xCA110025u);
+    MixWord(g_trace.lastArg0);
+    MixWord(g_trace.lastArg1);
+    auto* val = reinterpret_cast<LuaTObject*>(FromSimVa(kArenaBase + 0x5400u));
+    val->ttype = kLuaTypeNumber;
+    val->value.raw = 0x1122334455667788ULL;
+    return val;
+}
+
+LuaTString* StubStringNewUdata(LuaState* state, uint32_t size, void* udata) {
+    g_trace.traceCalls += 1;
+    g_trace.lastArg0 = ToSimVa(state);
+    g_trace.lastArg1 = size;
+    g_trace.lastArg2 = ToSimVa(udata);
+    MixWord(0xCA110026u);
+    MixWord(g_trace.lastArg0);
+    MixWord(size);
+    MixWord(g_trace.lastArg2);
+    auto* ts = reinterpret_cast<LuaTString*>(FromSimVa(kArenaBase + 0x5500u));
+    ts->u.d.value = FromSimVa(kArenaBase + 0x5600u);
+    return ts;
+}
+
+void StubTableSetNodeVector(LuaState* state, LuaHash* t, uint32_t size) {
+    g_trace.traceCalls += 1;
+    g_trace.lastArg0 = ToSimVa(state);
+    g_trace.lastArg1 = ToSimVa(t);
+    g_trace.lastArg2 = size;
+    t->size = static_cast<int32_t>(size);
+    MixWord(0xCA110027u);
+    MixWord(g_trace.lastArg0);
+    MixWord(g_trace.lastArg1);
+    MixWord(size);
+}
+
+LuaNode* StubTableMainPosition(const LuaHash* t, const LuaTObject* key) {
+    g_trace.traceCalls += 1;
+    g_trace.lastArg0 = ToSimVa(t);
+    g_trace.lastArg1 = ToSimVa(key);
+    MixWord(0xCA110028u);
+    MixWord(g_trace.lastArg0);
+    MixWord(g_trace.lastArg1);
+    return &t->node[g_trace.stubRet];
+}
+
+void StubTableRehash(LuaState* state, LuaHash* t) {
+    g_trace.traceCalls += 1;
+    g_trace.lastArg0 = ToSimVa(state);
+    g_trace.lastArg1 = ToSimVa(t);
+    MixWord(0xCA110029u);
+    MixWord(g_trace.lastArg0);
+    MixWord(g_trace.lastArg1);
+    t->node[1].key.ttype = kLuaTypeNil;
+    t->firstfree = &t->node[3];
+    t->node[3].key.ttype = kLuaTypeNil;
+}
+
+int32_t StubCode2(LuaFuncState* fs, int32_t op, int32_t arg1, int32_t arg2) {
+    g_trace.traceCalls += 1;
+    g_trace.lastArg0 = ToSimVa(fs);
+    g_trace.lastArg1 = static_cast<uint32_t>(op);
+    g_trace.lastArg2 = static_cast<uint32_t>(arg1);
+    g_trace.lastArg3 = static_cast<uint32_t>(arg2);
+    MixWord(0xCA11002Au);
+    MixWord(g_trace.lastArg0);
+    MixWord(g_trace.lastArg1);
+    MixWord(g_trace.lastArg2);
+    MixWord(g_trace.lastArg3);
+    const int32_t pc = fs->pc;
+    fs->pc += 1;
+    return pc;
+}
+
+void StubCodeArith(LuaFuncState* fs, LuaExpDesc* v, int32_t arg, int32_t op) {
+    g_trace.traceCalls += 1;
+    g_trace.lastArg0 = ToSimVa(fs);
+    g_trace.lastArg1 = ToSimVa(v);
+    g_trace.lastArg2 = static_cast<uint32_t>(arg);
+    g_trace.lastArg3 = static_cast<uint32_t>(op);
+    MixWord(0xCA11002Bu);
+    MixWord(g_trace.lastArg0);
+    MixWord(g_trace.lastArg1);
+    MixWord(g_trace.lastArg2);
+    MixWord(g_trace.lastArg3);
+}
+
+int32_t StubCodeExp2Val(LuaFuncState* fs, LuaExpDesc* v) {
+    g_trace.traceCalls += 1;
+    g_trace.lastArg0 = ToSimVa(fs);
+    g_trace.lastArg1 = ToSimVa(v);
+    MixWord(0xCA11002Cu);
+    MixWord(g_trace.lastArg0);
+    MixWord(g_trace.lastArg1);
+    return 0;
+}
+
+void StubCodeConcat(LuaFuncState* fs, int32_t* l1, int32_t l2) {
+    g_trace.traceCalls += 1;
+    g_trace.lastArg0 = ToSimVa(fs);
+    g_trace.lastArg1 = static_cast<uint32_t>(*l1);
+    g_trace.lastArg2 = static_cast<uint32_t>(l2);
+    *l1 = (*l1 * 10) + l2;
+    MixWord(0xCA11002Du);
+    MixWord(g_trace.lastArg0);
+    MixWord(g_trace.lastArg1);
+    MixWord(g_trace.lastArg2);
+}
+
+void StubCodePrefix(LuaLexState* ls, LuaExpDesc* v, int32_t n) {
+    g_trace.traceCalls += 1;
+    g_trace.lastArg0 = ToSimVa(ls);
+    g_trace.lastArg1 = ToSimVa(v);
+    g_trace.lastArg2 = static_cast<uint32_t>(n);
+    MixWord(0xCA11002Eu);
+    MixWord(g_trace.lastArg0);
+    MixWord(g_trace.lastArg1);
+    MixWord(g_trace.lastArg2);
+}
+
 void InitHooks(uint8_t* arena) {
     g_trace = TraceState{};
     g_trace.arenaBase = arena;
@@ -459,6 +621,19 @@ void InitHooks(uint8_t* arena) {
     hooks.luaVError = &StubVError;
     hooks.luaCodePatchListAux = &StubCodePatchListAux;
     hooks.luaCodeRememberLineInfo = &StubCodeRememberLineInfo;
+    hooks.luaVmToString = &StubVmToString;
+    hooks.luaStringCreateUdata = &StubStringCreateUdata;
+    hooks.luaStringNew = &StubStringNew;
+    hooks.luaVmGetGlobal = &StubVmGetGlobal;
+    hooks.luaStringNewUdata = &StubStringNewUdata;
+    hooks.luaTableSetNodeVector = &StubTableSetNodeVector;
+    hooks.luaTableMainPosition = &StubTableMainPosition;
+    hooks.luaTableRehash = &StubTableRehash;
+    hooks.luaCode2 = &StubCode2;
+    hooks.luaCodeArith = &StubCodeArith;
+    hooks.luaCodeExp2Val = &StubCodeExp2Val;
+    hooks.luaCodeConcat = &StubCodeConcat;
+    hooks.luaCodePrefix = &StubCodePrefix;
     SetLuaVmRuntimeHooks(hooks);
 }
 
@@ -1206,6 +1381,372 @@ int main(int argc, char** argv) {
             fs->freereg,
             proto->maxstacksize,
             proto->code[fs->pc - 1],
+            g_trace.traceCalls,
+            g_trace.traceHash);
+        return 0;
+    }
+
+    if (op == "getn") {
+        if (argc != 5) {
+            return 2;
+        }
+        const int32_t index = static_cast<int32_t>(std::strtol(argv[2], nullptr, 0));
+        const int32_t ttype = static_cast<int32_t>(std::strtol(argv[3], nullptr, 0));
+        const uint32_t auxVal = static_cast<uint32_t>(std::strtoul(argv[4], nullptr, 0));
+        auto* stack = reinterpret_cast<LuaTObject*>(FromSimVa(kArenaBase + 0x1000u));
+        auto* ht = reinterpret_cast<LuaHash*>(FromSimVa(kArenaBase + 0x2000u));
+        ht->pad0C = auxVal;
+        stack[1].ttype = ttype;
+        stack[1].value.ht = ht;
+        state->stack = stack;
+        state->Cbase = stack + 1;
+        state->top = stack + 2;
+        const int32_t res = LuaGetN(state, index);
+        std::printf("ret=%d\n", res);
+        return 0;
+    }
+
+    if (op == "isfunction") {
+        if (argc != 5) {
+            return 2;
+        }
+        const int32_t index = static_cast<int32_t>(std::strtol(argv[2], nullptr, 0));
+        const int32_t ttype = static_cast<int32_t>(std::strtol(argv[3], nullptr, 0));
+        const uint32_t rawVal = static_cast<uint32_t>(std::strtoul(argv[4], nullptr, 0));
+        auto* stack = reinterpret_cast<LuaTObject*>(FromSimVa(kArenaBase + 0x1000u));
+        stack[1].ttype = ttype;
+        stack[1].value.raw = rawVal;
+        state->stack = stack;
+        state->Cbase = stack + 1;
+        state->top = stack + 2;
+        const int32_t res = LuaIsFunction(state, index);
+        std::printf("ret=%d\n", res);
+        return 0;
+    }
+
+    if (op == "tostring") {
+        if (argc != 4) {
+            return 2;
+        }
+        const int32_t ttype = static_cast<int32_t>(std::strtol(argv[2], nullptr, 0));
+        g_trace.stubRet = static_cast<int32_t>(std::strtol(argv[3], nullptr, 0));
+        auto* stack = reinterpret_cast<LuaTObject*>(FromSimVa(kArenaBase + 0x1000u));
+        auto* ts = reinterpret_cast<LuaTString*>(FromSimVa(kArenaBase + 0x2000u));
+        std::strcpy(reinterpret_cast<char*>(ts) + sizeof(LuaTString), "direct");
+        stack[1].ttype = ttype;
+        stack[1].value.ts = ts;
+        state->stack = stack;
+        state->Cbase = stack + 1;
+        state->top = stack + 2;
+        const char* res = LuaToString(state, 1);
+        std::printf(
+            "ret=0x%08x calls=%u hash=0x%08x\n",
+            ToSimVa(res),
+            g_trace.traceCalls,
+            g_trace.traceHash);
+        return 0;
+    }
+
+    if (op == "newtable") {
+        if (argc != 3) {
+            return 2;
+        }
+        const int32_t atLast = static_cast<int32_t>(std::strtol(argv[2], nullptr, 0));
+        auto* stack = reinterpret_cast<LuaTObject*>(FromSimVa(kArenaBase + 0x1000u));
+        state->stack = stack;
+        state->top = stack + 2;
+        state->stackLast = (atLast != 0) ? state->top : (stack + 10);
+        state->stackSize = 12;
+        state->roottable = reinterpret_cast<LuaHash*>(FromSimVa(kArenaBase + 0x2000u));
+        state->nblocks = 40;
+        LuaNewTable(state, 99);
+        std::printf(
+            "top=0x%08x ttype=%d ht=0x%08x aux=%u nblocks=%u calls=%u hash=0x%08x\n",
+            ToSimVa(state->top),
+            stack[2].ttype,
+            ToSimVa(stack[2].value.ht),
+            stack[2].value.ht->pad0C,
+            state->nblocks,
+            g_trace.traceCalls,
+            g_trace.traceHash);
+        return 0;
+    }
+
+    if (op == "pushusertag") {
+        if (argc != 5) {
+            return 2;
+        }
+        const uint32_t uVa = static_cast<uint32_t>(std::strtoul(argv[2], nullptr, 0));
+        const int32_t tag = static_cast<int32_t>(std::strtol(argv[3], nullptr, 0));
+        const int32_t atLast = static_cast<int32_t>(std::strtol(argv[4], nullptr, 0));
+        auto* stack = reinterpret_cast<LuaTObject*>(FromSimVa(kArenaBase + 0x1000u));
+        state->stack = stack;
+        state->top = stack + 2;
+        state->stackLast = (atLast != 0) ? state->top : (stack + 10);
+        state->stackSize = 12;
+        state->lastTag = 5;
+        LuaPushUserTag(state, FromSimVa(uVa), tag);
+        std::printf(
+            "top=0x%08x ttype=%d val=0x%08x calls=%u hash=0x%08x\n",
+            ToSimVa(state->top),
+            stack[2].ttype,
+            ToSimVa(stack[2].value.ts),
+            g_trace.traceCalls,
+            g_trace.traceHash);
+        return 0;
+    }
+
+    if (op == "getglobal") {
+        if (argc != 3) {
+            return 2;
+        }
+        const int32_t atLast = static_cast<int32_t>(std::strtol(argv[2], nullptr, 0));
+        auto* stack = reinterpret_cast<LuaTObject*>(FromSimVa(kArenaBase + 0x1000u));
+        state->stack = stack;
+        state->top = stack + 2;
+        state->stackLast = (atLast != 0) ? state->top : (stack + 10);
+        state->stackSize = 12;
+        auto* name = reinterpret_cast<char*>(FromSimVa(kArenaBase + 0x2000u));
+        std::strcpy(name, "myGlobal");
+        LuaGetGlobal(state, name);
+        std::printf(
+            "top=0x%08x ttype=%d raw=0x%llx calls=%u hash=0x%08x\n",
+            ToSimVa(state->top),
+            stack[2].ttype,
+            static_cast<unsigned long long>(stack[2].value.raw),
+            g_trace.traceCalls,
+            g_trace.traceHash);
+        return 0;
+    }
+
+    if (op == "newuserdata") {
+        if (argc != 4) {
+            return 2;
+        }
+        const uint32_t size = static_cast<uint32_t>(std::strtoul(argv[2], nullptr, 0));
+        const int32_t atLast = static_cast<int32_t>(std::strtol(argv[3], nullptr, 0));
+        auto* stack = reinterpret_cast<LuaTObject*>(FromSimVa(kArenaBase + 0x1000u));
+        state->stack = stack;
+        state->top = stack + 2;
+        state->stackLast = (atLast != 0) ? state->top : (stack + 10);
+        state->stackSize = 12;
+        void* res = LuaNewUserData(state, size);
+        std::printf(
+            "ret=0x%08x top=0x%08x ttype=%d ts=0x%08x calls=%u hash=0x%08x\n",
+            ToSimVa(res),
+            ToSimVa(state->top),
+            stack[2].ttype,
+            ToSimVa(stack[2].value.ts),
+            g_trace.traceCalls,
+            g_trace.traceHash);
+        return 0;
+    }
+
+    if (op == "tablenew") {
+        if (argc != 3) {
+            return 2;
+        }
+        const int32_t size = static_cast<int32_t>(std::strtol(argv[2], nullptr, 0));
+        state->roottable = reinterpret_cast<LuaHash*>(FromSimVa(kArenaBase + 0x2000u));
+        state->nblocks = 40;
+        LuaHash* res = LuaTableNew(state, size);
+        std::printf(
+            "ret=0x%08x htag=%d next=0x%08x size=%d nblocks=%u calls=%u hash=0x%08x\n",
+            ToSimVa(res),
+            res->htag,
+            ToSimVa(res->next),
+            res->size,
+            state->nblocks,
+            g_trace.traceCalls,
+            g_trace.traceHash);
+        return 0;
+    }
+
+    if (op == "tableset") {
+        if (argc != 5) {
+            return 2;
+        }
+        const int32_t keyType = static_cast<int32_t>(std::strtol(argv[2], nullptr, 0));
+        const int32_t mpKeyType = static_cast<int32_t>(std::strtol(argv[3], nullptr, 0));
+        const int32_t collideMode = static_cast<int32_t>(std::strtol(argv[4], nullptr, 0));
+        auto* ht = reinterpret_cast<LuaHash*>(FromSimVa(kArenaBase + 0x2000u));
+        auto* nodes = reinterpret_cast<LuaNode*>(FromSimVa(kArenaBase + 0x2100u));
+        auto* key = reinterpret_cast<LuaTObject*>(FromSimVa(kArenaBase + 0x2300u));
+        ht->node = nodes;
+        ht->size = 4;
+        ht->firstfree = &nodes[3];
+        nodes[3].key.ttype = kLuaTypeNil;
+        g_trace.stubRet = 1;
+        key->ttype = keyType;
+        key->value.n = 10.0;
+        nodes[1].key.ttype = mpKeyType;
+        nodes[1].key.value.n = (collideMode == 0) ? 10.0 : 99.0;
+        nodes[1].val.ttype = kLuaTypeNumber;
+        if (collideMode == 2) {
+            nodes[2].key.ttype = kLuaTypeNumber;
+            nodes[2].key.value.n = 20.0;
+            nodes[1].key = nodes[2].key;
+            // make othern (&nodes[2]) != mp (&nodes[1])
+            g_trace.stubRet = 1;
+        }
+        if (collideMode == 3) {
+            ht->firstfree = &nodes[0];
+            nodes[0].key.ttype = kLuaTypeNumber;
+        }
+        LuaTObject* res = LuaTableSet(state, ht, key);
+        std::printf(
+            "ret=0x%08x ff=0x%08x n1key=%d calls=%u hash=0x%08x\n",
+            ToSimVa(res),
+            ToSimVa(ht->firstfree),
+            nodes[1].key.ttype,
+            g_trace.traceCalls,
+            g_trace.traceHash);
+        return 0;
+    }
+
+    if (op == "code1") {
+        if (argc != 4) {
+            return 2;
+        }
+        const int32_t opcode = static_cast<int32_t>(std::strtol(argv[2], nullptr, 0));
+        const int32_t arg1 = static_cast<int32_t>(std::strtol(argv[3], nullptr, 0));
+        fs->pc = 7;
+        const int32_t res = LuaCode1(fs, opcode, arg1);
+        std::printf(
+            "ret=%d pc=%d calls=%u hash=0x%08x\n",
+            res,
+            fs->pc,
+            g_trace.traceCalls,
+            g_trace.traceHash);
+        return 0;
+    }
+
+    if (op == "fixjump") {
+        if (argc != 5) {
+            return 2;
+        }
+        const int32_t pc = static_cast<int32_t>(std::strtol(argv[2], nullptr, 0));
+        const int32_t dest = static_cast<int32_t>(std::strtol(argv[3], nullptr, 0));
+        const uint32_t initInst = static_cast<uint32_t>(std::strtoul(argv[4], nullptr, 0));
+        auto* code = reinterpret_cast<uint32_t*>(FromSimVa(kArenaBase + 0x3800u));
+        fs->f = proto;
+        fs->ls = ls;
+        ls->t.token = 285;
+        proto->code = code;
+        code[pc] = initInst;
+        LuaCodeFixJump(fs, pc, dest);
+        std::printf(
+            "inst=0x%08x calls=%u hash=0x%08x\n",
+            code[pc],
+            g_trace.traceCalls,
+            g_trace.traceHash);
+        return 0;
+    }
+
+    if (op == "codecheckstack") {
+        if (argc != 5) {
+            return 2;
+        }
+        const int32_t freereg = static_cast<int32_t>(std::strtol(argv[2], nullptr, 0));
+        const int32_t maxstack = static_cast<int32_t>(std::strtol(argv[3], nullptr, 0));
+        const int32_t n = static_cast<int32_t>(std::strtol(argv[4], nullptr, 0));
+        fs->f = proto;
+        fs->ls = ls;
+        ls->t.token = 286;
+        fs->freereg = static_cast<int16_t>(freereg);
+        proto->maxstacksize = static_cast<int16_t>(maxstack);
+        LuaCodeCheckStack(fs, n);
+        std::printf(
+            "maxstack=%d calls=%u hash=0x%08x\n",
+            proto->maxstacksize,
+            g_trace.traceCalls,
+            g_trace.traceHash);
+        return 0;
+    }
+
+    if (op == "codeunary") {
+        if (argc != 3) {
+            return 2;
+        }
+        const int32_t unaryOp = static_cast<int32_t>(std::strtol(argv[2], nullptr, 0));
+        auto* v = reinterpret_cast<LuaExpDesc*>(FromSimVa(kArenaBase + 0x2500u));
+        LuaCodeUnary(fs, v, unaryOp);
+        std::printf(
+            "calls=%u hash=0x%08x a2=0x%08x a3=0x%08x\n",
+            g_trace.traceCalls,
+            g_trace.traceHash,
+            g_trace.lastArg2,
+            g_trace.lastArg3);
+        return 0;
+    }
+
+    if (op == "codeinfix") {
+        if (argc != 3) {
+            return 2;
+        }
+        const int32_t binOp = static_cast<int32_t>(std::strtol(argv[2], nullptr, 0));
+        ls->fs = fs;
+        auto* v = reinterpret_cast<LuaExpDesc*>(FromSimVa(kArenaBase + 0x2500u));
+        LuaCodeInfix(ls, binOp, v);
+        std::printf(
+            "calls=%u hash=0x%08x a2=0x%08x a3=0x%08x\n",
+            g_trace.traceCalls,
+            g_trace.traceHash,
+            g_trace.lastArg2,
+            g_trace.lastArg3);
+        return 0;
+    }
+
+    if (op == "codeposfix") {
+        if (argc != 5) {
+            return 2;
+        }
+        const int32_t binOp = static_cast<int32_t>(std::strtol(argv[2], nullptr, 0));
+        const int32_t v2t = static_cast<int32_t>(std::strtol(argv[3], nullptr, 0));
+        const int32_t v2f = static_cast<int32_t>(std::strtol(argv[4], nullptr, 0));
+        auto* code = reinterpret_cast<uint32_t*>(FromSimVa(kArenaBase + 0x3800u));
+        ls->fs = fs;
+        fs->f = proto;
+        fs->ls = ls;
+        fs->pc = 2;
+        fs->lasttarget = 0;
+        fs->freereg = 4;
+        proto->code = code;
+        proto->maxstacksize = 6;
+        code[1] = 0x0000109Cu;  // OP_CALL (28)
+        auto* v1 = reinterpret_cast<LuaExpDesc*>(FromSimVa(kArenaBase + 0x2500u));
+        auto* v2 = reinterpret_cast<LuaExpDesc*>(FromSimVa(kArenaBase + 0x2600u));
+        v1->t = 3;
+        v1->f = 4;
+        v2->t = v2t;
+        v2->f = v2f;
+        LuaCodePosfix(ls, binOp, v1, v2);
+        std::printf(
+            "v1t=%d v1f=%d code1=0x%08x freereg=%d calls=%u hash=0x%08x\n",
+            v1->t,
+            v1->f,
+            code[1],
+            fs->freereg,
+            g_trace.traceCalls,
+            g_trace.traceHash);
+        return 0;
+    }
+
+    if (op == "stringinit") {
+        if (argc != 2) {
+            return 2;
+        }
+        state->nblocks = 16;
+        LuaStringInit(state);
+        std::printf(
+            "strt=0x%08x udt=0x%08x ss=%d us=%d sn=%u un=%u nblocks=%u calls=%u hash=0x%08x\n",
+            ToSimVa(state->strt.hash),
+            ToSimVa(state->udt.hash),
+            state->strt.size,
+            state->udt.size,
+            state->strt.nuse,
+            state->udt.nuse,
+            state->nblocks,
             g_trace.traceCalls,
             g_trace.traceHash);
         return 0;

@@ -439,6 +439,7 @@ struct LuaVmRuntimeHooks {
     void (*luaCodeArith)(LuaFuncState* fs, LuaExpDesc* v, int32_t arg, int32_t op) = nullptr;
     int32_t (*luaCodeExp2Val)(LuaFuncState* fs, LuaExpDesc* v) = nullptr;
     void (*luaCodeConcat)(LuaFuncState* fs, int32_t* l1, int32_t l2) = nullptr;
+    void (*luaCodePrefix)(LuaLexState* ls, LuaExpDesc* v, int32_t n) = nullptr;
 };
 
 void SetLuaVmRuntimeHooks(const LuaVmRuntimeHooks& hooks);
@@ -529,19 +530,67 @@ int32_t LuaTagOfObject(const LuaTObject* o);
 // [23/44] site=0x0040A120 slot=0x018FAEB8 body=0x0049F650 section=.text
 void LuaSetTagMethod(LuaState* state, int32_t tag, const char* event);
 
-// [24/27] site=0x0040A340 slot=0x018FC148 body=0x004431E0 section=.text
+// [24/44] site=0x0040A340 slot=0x018FC148 body=0x004431E0 section=.text
 void LuaPushValue(LuaState* state, int32_t index);
 
-// [25/28] site=0x0040CA60 slot=0x018FBEFC body=0x00435790 section=.text
+// [25/44] site=0x0040A440 slot=0x018FB260 body=0x0041AA80 section=.text
+int32_t LuaGetN(LuaState* state, int32_t index);
+
+// [26/44] site=0x0040A5C0 slot=0x018FB380 body=0x00426E30 section=.text
+int32_t LuaIsFunction(LuaState* state, int32_t index);
+
+// [27/44] site=0x0040A600 slot=0x018F50B8 body=0x004461A0 section=.text
+const char* LuaToString(LuaState* state, int32_t index);
+
+// [28/44] site=0x0040A860 slot=0x018F6608 body=0x0191B790 section=.securom
+void LuaPushUserTag(LuaState* state, void* udata, int32_t tag);
+
+// [29/44] site=0x0040A8C0 slot=0x018FB6F4 body=0x0043E3B0 section=.text
+void LuaGetGlobal(LuaState* state, const char* name);
+
+// [30/44] site=0x0040AAD0 slot=0x018F5C50 body=0x0045EDC0 section=.text
+void LuaNewTable(LuaState* state, uint32_t aux = 0);
+
+// [31/44] site=0x0040AEF0 slot=0x018FB394 body=0x0043D6E0 section=.text
+void* LuaNewUserData(LuaState* state, uint32_t size);
+
+// [32/44] site=0x0040B410 slot=0x018F603C body=0x00470720 section=.text
+LuaHash* LuaTableNew(LuaState* state, int32_t nhash, uint32_t aux = 0);
+
+// [33/44] site=0x0040B570 slot=0x018FC3E8 body=0x019069F0 section=.securom
+LuaTObject* LuaTableSet(LuaState* state, LuaHash* t, const LuaTObject* key);
+
+// [34/44] site=0x0040C920 slot=0x018F5474 body=0x0045A730 section=.text
+void LuaCodeFixJump(LuaFuncState* fs, int32_t pc, int32_t dest);
+
+// [35/44] site=0x0040C980 slot=0x018F6788 body=0x0047AA50 section=.text
+void LuaCodeCheckStack(LuaFuncState* fs, int32_t n);
+
+// [36/44] site=0x0040CA60 slot=0x018FBEFC body=0x00435790 section=.text
 int32_t LuaCodeLastIsOpen(const LuaFuncState* fs);
 
-// [26/28] site=0x0040CAA0 slot=0x018F5C84 body=0x01913030 section=.securom
+// [37/44] site=0x0040CAA0 slot=0x018F5C84 body=0x01913030 section=.securom
 void LuaCodeSetCallReturns(LuaFuncState* fs, int32_t nresults);
 
-// [27/28] site=0x0040D2F0 slot=0x018F725C body=0x004975D0 section=.text
+// [38/44] site=0x0040D220 slot=0x018FC078 body=0x0042CE50 section=.text
+int32_t LuaCode1(LuaFuncState* fs, int32_t op, int32_t arg1);
+
+// [39/44] site=0x0040D2F0 slot=0x018F725C body=0x004975D0 section=.text
 int32_t LuaCodeGetLabel(LuaFuncState* fs);
 
-// [28/28] site=0x0040D5B0 slot=0x018FC418 body=0x01907050 section=.securom
+// [40/44] site=0x0040D5B0 slot=0x018FC418 body=0x01907050 section=.securom
 void LuaCodeAdjustStack(LuaFuncState* fs, int32_t n);
+
+// [41/44] site=0x0040DC40 slot=0x018FB15C body=0x0040B6E0 section=.text
+void LuaCodeUnary(LuaFuncState* fs, LuaExpDesc* v, int32_t op);
+
+// [42/44] site=0x0040E1D0 slot=0x018F5C74 body=0x0045EF60 section=.text
+void LuaCodeInfix(LuaLexState* ls, int32_t op, LuaExpDesc* v);
+
+// [43/44] site=0x0040E220 slot=0x018FB3A0 body=0x004A2BD0 section=.text
+void LuaCodePosfix(LuaLexState* ls, int32_t op, LuaExpDesc* v1, LuaExpDesc* v2);
+
+// [44/44] site=0x0040E2F0 slot=0x018F4FDC body=0x0044DE30 section=.text
+void LuaStringInit(LuaState* state);
 
 }  // namespace ra3::core
