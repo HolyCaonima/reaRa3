@@ -1,0 +1,62 @@
+address	status	owner	module	notes
+007e0ba0	reversed	recon/common7e	common	disguiseGuardName; vtable 00c348c8 slot 2; mov eax, 0x00C34910 DisguiseGuardPositionStateMachine
+007e1470	reversed	recon/common7e	common	engagementTrackerName; vtable 00c35008 slot 2; mov eax, 0x00C34C44 EngagementTracker
+007e16f0	reversed	recon/common7e	common	forwardNested34; vtable 00c35320 slot 5; null nested clears AL and ret 8, else jmp [nested+0]+0x34
+007e1710	reversed	recon/common7e	common	copyNestedTriple; vtable 00c35320 slot 6; copies nested +0x44/+0x48/+0x4C then AL from +0x50; null writes nothing and clears AL
+007e1740	reversed	recon/common7e	common	forwardNested38; vtable 00c35320 slot 7; null nested ret 4 with EAX unchanged, else jmp [nested+0]+0x38
+007e24b0	reversed	recon/common7e	common	redAlertName; vtable 00c34c6c slot 2; mov eax, 0x00C34C7C RedAlert
+007e25f0	reversed	recon/common7e	common	scoredKillTrackerName; vtable 00c350ec slot 2; mov eax, 0x00C34C9C ScoredKillTracker
+007e2dd0	reversed	recon/common7e	common	adjustTunnelCount; vtable 00c35154 slot 0; dword +0x10 += 1 or -1 from the argument byte; EAX preserved; ret 4
+007e72b0	reversed	recon/common7e	common	moneyName; vtable 00c34ed0 slot 2; mov eax, 0x00C34EE0 Money
+007e72c0	reversed	recon/common7e	common	commandName; vtable 00c34ee8 slot 2; mov eax, 0x00C34EF8 Command
+007e7c00	reversed	recon/common7e	common	playerListName; vtable 00c34f84 slot 2; mov eax, 0x00C34FDC PlayerList
+007e96c0	reversed	recon/common7e	common	linkedTextLength; vtable 00c34eb0 slot 1; uint16 at buffer-4 through two pointers at +4, or 0
+007e9710	reversed	recon/common7e	common	linkedTextLengthPlus; vtable 00c34ec0 slot 1; dword at node+4 plus that uint16, or the dword when the buffer is null
+007e9bc0	reversed	recon/common7e	common	energyName; vtable 00c34fe8 slot 2; mov eax, 0x00C34FF8 Energy
+007e9ff0	reversed	recon/common7e	common	playerRelationMapName; vtable 00c35028 slot 2; mov eax, 0x00C35038 PlayerRelationMap
+007eae70	reversed	recon/common7e	common	playerTechManagerName; vtable 00c3504c slot 2; mov eax, 0x00C3505C PlayerTechManager
+007eb200	reversed	recon/common7e	common	resourceGatheringManagerName; vtable 00c350c0 slot 2; mov eax, 0x00C350D0 ResourceGatheringManager
+007eb480	reversed	recon/common7e	common	teamRelationMapName; vtable 00c350fc slot 2; mov eax, 0x00C3510C TeamRelationMap
+007ebfc0	reversed	recon/common7e	common	tunnelTrackerName; vtable 00c35158 slot 2; mov eax, 0x00C35168 TunnelTracker
+007ee9b0	reversed	recon/common7e	common	playerTeamListName; vtable 00c351b4 slot 2; mov eax, 0x00C351C4 PlayerTeamList
+007f0f90	reversed	recon/common7e	common	teamFactoryName; vtable 00c351dc slot 2; mov eax, 0x00C35224 TeamFactory
+007f5fa0	reversed	recon/common7e	common	playerName; vtable 00c35320 slot 2; mov eax, 0x00C35340 Player
+007f74a0	reversed	recon/common7e	common	teamTemplateInfoName; vtable 00c35380 slot 2; mov eax, 0x00C35390 TeamTemplateInfo
+007f7850	reversed	recon/common7e	common	teamName; vtable 00c353c0 slot 2; mov eax, 0x00BD1240 Team
+007f9f70	reversed	recon/common7e	common	teamPrototypeName; vtable 00c353dc slot 2; mov eax, 0x00C353EC TeamPrototype
+007fc3a0	reversed	recon/common7e	common	scoreKeeperName; vtable 00c354f0 slot 2; mov eax, 0x00C35500 ScoreKeeper; name slot only
+008028f0	reversed	recon/common7e	common	logicEvaTrackerName; vtable 00c4dfc8 slot 49; mov eax, 0x00C35A8C LogicEvaTracker
+00802900	reversed	recon/common7e	common	logicPlayingAudioTrackerName; vtable 00c4dfc8 slot 67; mov eax, 0x00C35AC0 LogicPlayingAudioTracker
+00802910	reversed	recon/common7e	common	logicViewTrackerName; vtable 00c4dcec slot 3; mov eax, 0x00C35ADC LogicViewTracker
+008052d0	reversed	recon/common7e	common	storeFlagCf; vtable 00c4def8 slot 31; stores argument low byte at +0xCF and returns it in AL; ret 4
+00805720	reversed	recon/common7e	common	availabilityByte; vtable 00c4def8 slot 21; +0xB9 when +0xBA is nonzero and dword +0xBC > 0, else indexed virtual +0x44 or AL cleared
+00805760	reversed	recon/common7e	common	byteB8UnlessBa; vtable 00c4def8 slot 22; AL is byte +0xB8 when byte +0xBA is 0, otherwise 0
+00805840	reversed	recon/common7e	common	byteAtD0; vtable 00c4def8 slot 39; mov al, [ecx+0xD0]
+00805850	reversed	recon/common7e	common	byteAt40; vtable 00c4def8 slot 40; mov al, [ecx+0x40]
+007e1620		recon/common7e	common	rejected: vtable 00c35320 slot 4 returns through x87 fld and a virtual call
+007e7c10		recon/common7e	common	rejected: adjustor thunk sub ecx, 0x24; jmp 0x007eab30; no distinct body
+007e9b10		recon/common7e	common	rejected: destructor calls free 0x004166B0
+007e9b60		recon/common7e	common	rejected: destructor walks a range then calls free 0x004166B0
+007e9d30		recon/common7e	common	rejected: destructor calls free 0x004166B0
+007eab30		recon/common7e	common	rejected: deleting destructor calls free 0x004166B0
+007eca30		recon/common7e	common	rejected: deleting destructor calls free 0x004166B0
+007ecf90		recon/common7e	common	rejected: deleting destructor calls free 0x004166B0
+007eeee0		recon/common7e	common	rejected: deleting destructor calls free 0x004166B0
+007f0480		recon/common7e	common	rejected: deleting destructor calls free 0x004166B0
+007f0fa0		recon/common7e	common	rejected: adjustor thunk sub ecx, 0x24; jmp 0x007fcb20
+007f1030		recon/common7e	common	rejected: deleting destructor calls free 0x004166B0
+007f38e0		recon/common7e	common	rejected: deleting destructor calls free 0x004166B0
+007f3be0		recon/common7e	common	rejected: deleting destructor calls free 0x004166B0
+007f74b0		recon/common7e	common	rejected: deleting destructor calls free 0x004166B0
+007f8df0		recon/common7e	common	rejected: deleting destructor calls freelist 0x005a9130
+007f9690		recon/common7e	common	rejected: deleting destructor calls free 0x004166B0
+007f9bd0		recon/common7e	common	rejected: thunk jmp 0x007f7e40 with no distinct body
+007f9be0		recon/common7e	common	rejected: zeros +0x64 and +0x68 then tail-jumps unreconstructed 0x007f7e40
+007fcb20		recon/common7e	common	rejected: deleting destructor calls free 0x004166B0
+007fcb40		recon/common7e	common	rejected: deleting destructor calls freelist 0x005a9110
+007fd280		recon/common7e	common	rejected: deleting destructor calls free 0x004166B0
+008029c0		recon/common7e	common	rejected: destructor calls free 0x004166B0
+00802f60		recon/common7e	common	rejected: destructor calls free 0x004166B0
+00802fe0		recon/common7e	common	rejected: thunk jmp [vtable+0x10] with no distinct body
+008056d0		recon/common7e	common	rejected: vtable 00c4def8 slot 20 reads global 0x00DF6B1C and forwards
+00805cd0		recon/common7e	common	rejected: deleting destructor calls free 0x004166B0

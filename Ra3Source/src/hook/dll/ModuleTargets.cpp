@@ -20,6 +20,7 @@ void appendScripts82Targets(std::vector<Target>& table);
 void appendAIStateTargets(std::vector<Target>& table);
 void appendWeaponLogicTargets(std::vector<Target>& table);
 void appendTerrainLogicTargets(std::vector<Target>& table);
+void appendCommonSubsystemTargets(std::vector<Target>& table);
 
 void appendModuleTargets(std::vector<Target>& table)
 {
@@ -39,6 +40,7 @@ void appendModuleTargets(std::vector<Target>& table)
     appendAIStateTargets(table);
     appendWeaponLogicTargets(table);
     appendTerrainLogicTargets(table);
+    appendCommonSubsystemTargets(table);
 }
 
 }  // namespace ra3hook
