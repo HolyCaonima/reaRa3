@@ -3,6 +3,8 @@ ra3_add_module(common
         include/ra3/common/ByteString.h
         include/ra3/common/Crc32.h
         include/ra3/common/GameString.h
+        include/ra3/common/Player.h
         src/ByteString.cpp
         src/Crc32.cpp
-        src/GameString.cpp)
+        src/GameString.cpp
+        src/Player.cpp)
