@@ -10,6 +10,7 @@ ra3_add_module(gamelogic
         include/ra3/gamelogic/ObjectUpdate69.h
         include/ra3/gamelogic/ProtectedCaveLogic.h
         include/ra3/gamelogic/BehaviorModules68.h
+        include/ra3/gamelogic/ObjectModules6E.h
         include/ra3/gamelogic/ObjectModules74.h
         include/ra3/gamelogic/ScriptsCluster.h
         include/ra3/gamelogic/SkirmishAIBaseBuild.h
@@ -30,6 +31,7 @@ ra3_add_module(gamelogic
         src/ObjectUpdate69.cpp
         src/ProtectedCaveLogic.cpp
         src/BehaviorModules68.cpp
+        src/ObjectModules6E.cpp
         src/ObjectModules74.cpp
         src/ScriptsCluster.cpp
         src/SkirmishAIBaseBuild.cpp
