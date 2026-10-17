@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 aistate7d、obj69b、obj70 合并）
+## 3. 现状（截至 obj69b、obj70、w3d56 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 2,411、unanalyzed 46,514（受保护函数已 reversed：entry-lost 104、inner-patched 14、
+  reversed 2,452、unanalyzed 46,473（受保护函数已 reversed：entry-lost 104、inner-patched 14、
   entry-recoverable 3）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
@@ -331,6 +331,13 @@
     `ra3/gamelogic/ObjectModules70.h`，设计见 `obj70.md`。主控复算 44 条 vt 与 44 条构造函数 `wr`，引用的
     构造函数都是台账函数；偏薄的 3 个（2 个调整后指针 getter、1 个常量写出）。集成态 oracle 121 例零差异，
     `spanOpen` 的 `!=→==` mutation 检出
+  - W3D 渲染层批次（`0x00560000–0x0057FFFF`，Grok）：41 个（View `00BE55C8`、W3DTerrainVisual `00BE38E8`、
+    W3DTerrainLogic `00BE39F8` 槽位，`009BA010` 调用的记录写出，View+0x26FC 内嵌表 `00BE3D98`、bounds 表
+    `00BE3ED8`、pose 表 `00BE3B38` 和 `00BE4BE0` 槽 53/55），无 hook；代码在 `ra3/render/W3DLayer56.h`，设计见
+    `w3d56.md`。派单早于访问器口径，4 个 `movss [ecx+X]` setter 加 1 个字节转 float getter 约占 12%，未超限。
+    `0x00561F00`（render56 延后的 scorch 转发）有 W3DTerrainVisual 槽 17 证明，以 `--replace-deferred` 原位替换。
+    引用的 10 个调用者/构造函数经新脚本 `work/probe/check_cited.py <claims>` 核对都是真入口。集成态 oracle
+    96 例零差异，`kSphereFirst` 偏移 mutation 检出
   - AI states 批次（`0x00790000–0x0079FFFF`，Grok）：48 个方法（Turret/UnitAI/AIDock/AIGuard/AIAttack
     各 state 的 onEnter/update/onExit 与条件槽位、FollowWaypointPath/Turret 状态机），无 hook，样板 0；
     代码在 `ra3/gamelogic/AIState79.h`，设计见 `aistate79.md`。归属全部为单个 split vtable 槽位，主控
@@ -376,10 +383,10 @@
     `recon/particles65`、`recon/render91`、`recon/obj6a`、`recon/protcave`、`recon/protentry2`、
     `recon/gamelogic82`、`recon/skirm87`、`recon/common5a`、`recon/render56`、`recon/objbehav68`、`recon/audio50`、
     `recon/aistate79`、`recon/render99`、`recon/net5d2`、`recon/obj69`、`recon/logic4d`、`recon/skirm8b`、
-    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`、`recon/render9b`、`recon/client52`、`recon/obj72`、`recon/aistate7c`、`recon/protcave2`、`recon/aistate7d`、`recon/obj69b`、`recon/obj70`：已合并（`789bcb1`、
+    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`、`recon/render9b`、`recon/client52`、`recon/obj72`、`recon/aistate7c`、`recon/protcave2`、`recon/aistate7d`、`recon/obj69b`、`recon/obj70`、`recon/w3d56`：已合并（`789bcb1`、
     `f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`、
     `9df37c8`、`760e231`、`79a7caa`、`9c14506`、`6234602`、`00c9a7a`、`be08241`、`ba97d03`、`bec182d`、
-    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`、`ae7caf5`、`0f0515f`、`989d91b`、`747eae9`、`8ee7d18`、`d8dfd05`、`284c239`、`dacb6b0`）。追加合并脚本在
+    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`、`ae7caf5`、`0f0515f`、`989d91b`、`747eae9`、`8ee7d18`、`d8dfd05`、`284c239`、`dacb6b0`、`3b872e2`）。追加合并脚本在
     冲突块以 `)` 收尾时会报 WARN，需手工检查括号（skirm87 合并时拼坏过一次 CMake）。受保护批次的站点/字符串/伪调用核对脚本见 `work/probe/check_protcave.py`、
     `work/probe/check_protentry2.py`，多快照槽值用 `work/probe/slot_snapshots.py`。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
@@ -399,11 +406,14 @@
       （`0x007B` 第二轮）、`recon/aistate7c2`（`0x007C` 第二轮）：AI states，代码进 `src/gamelogic`。
     - `recon/obj6c`（`0x006C–0x006D`，约 250 个在多继承模块的次级接口表里，类名经构造函数确定）、
       `recon/obj6e`（`0x006E–0x006F`）、`recon/obj72b`（`0x0072–0x0073` 第二轮）：对象模块。
-    - `recon/fx66`（`0x0066–0x0067` FX 粒子系统类，代码进 `src/gameclient`）、`recon/w3d56`
-      （`0x0056–0x0057` W3D 渲染层，代码进 `src/render`）。
+    - `recon/fx66`（`0x0066–0x0067` FX 粒子系统类，代码进 `src/gameclient`）、`recon/render9b2`
+      （18:20 补位，`0x009B` 第二轮：render9b 留下的 12 个宽命令体加剩余槽位候选，清单
+      `work/prompts/scope_render9b2.txt`，代码进 `src/render`）。
     派单由 `work/probe/make_brief.py <名> <base> <类前缀> <scope 文件> [模块]` 从 `obj72.md` 派生；
     AI states 的续轮派单直接改写上一轮的 `aistate*.md`。验收时除 `audit_batch.py` 外，还要核对
-    claims 里 `wr` 行引用的构造函数是不是真函数入口（obj69b 引用过 Ghidra 误切点和 cave 之后的续接地址）。
+    claims 里 `wr` 行引用的构造函数是不是真函数入口（obj69b 引用过 Ghidra 误切点和 cave 之后的续接地址），
+    用 `python work\probe\check_cited.py <claims>`（台账入口 + 前一字节为 ret/int3/nop 填充）。
+    `survey_block.py <lo> <hi> list` 输出逐函数候选（函数、表、槽、类名或帮助串开头），可直接当派单清单。
   - 14:00 补足 10 路，base 均为 `86baa8d`：`recon/objbehav68`（`0x00680000–0x0068FFFF`
     对象 behavior/update 模块，Gemini）、`recon/protentry`（已合并；由
     `recon/protentry2` 接续剩余 entry-lost 原生体）、`recon/protcave`（全部站点为 cave 的
@@ -443,7 +453,7 @@
   （17:50 重排）~~`0x007A0000` 第二轮 186~~（已开 aistate7a2）→ ~~`0x00790000` 第三轮 169~~（已开 aistate79c）→
   ~~`0x006C0000` 96~~（已开 obj6c，含 `0x006D`）→ ~~`0x00660000` 91~~（已开 fx66，含 `0x0067`）→ ~~`0x007B0000` 第二轮 89~~（已开 aistate7b2）→
   ~~`0x0072–0x0073` 第二轮 64+45~~（已开 obj72b）→ ~~`0x007C0000` 第二轮 77~~（已开 aistate7c2）→
-  （18:10 重排后剩余）`0x009B0000` 第二轮 73（render9b 留下 12 个宽命令体）→ `0x00690000` 第三轮 65 →
+  （18:10 重排后剩余）~~`0x009B0000` 第二轮 73~~（已开 render9b2）→ `0x00690000` 第三轮 65 →
   `0x006B0000` 第二轮 56 → `0x00680000` 第二轮 53（anyslot 403）→ `0x00750000` 40；下一轮用 `python work\probe\rank_blocks.py <在途块号...>` 重新排名
   （按具名 split vtable 非 getter 槽位里的未认领 clean 函数数），再用 `survey_block.py` 看类名与锚点。
   `0x0066`（FX 粒子模块）与 `0x006C` 的槽位多在无 slot-2 getter 的表里（主控用

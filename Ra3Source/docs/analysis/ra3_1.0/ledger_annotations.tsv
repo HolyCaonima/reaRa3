@@ -1862,7 +1862,7 @@ address	status	owner	module	notes
 005882c0	reversed	recon/render56	render	W3DTerrainVisual::intersectTerrain (0x005882C0; 0x00be38e8 slot 11; builds CastResultStruct, LineSegClass, RayCollisionTestClass and calls renderObj vtable+0x08; verify_render56.py 4/4)
 0058d1b0	reversed	recon/render56	render	W3DPropBuffer::initPropBuffer (0x0058D1B0; direct callee of 0x008ec630 at 0x008ec795, direct callee of 0x005806d0 at 0x005806d9, direct callee of 0x00588410 at 0x00588464, 0x00be38e8 slot 6; verify_render56.py 3/3)
 00562b70		recon/render56	render	Rejected ICF-shared vtable slot 3 body (`xor eax, eax; ret`) shared across 0x00be5cbc (W3DWaterRenderer), 0x00c2bcd8 (AIGuardGoingIdleState), and 0x00c2d168 (AIGoingIdleState)
-00561f00		recon/render56	render	Deferred W3DTerrainVisual slot 17 (`0x00be38e8` slot 17) wrapper calling `0x008e51a0` (`W3DScorchBuffer` wrapper around `0x0056ab00`)
+00561f00	reversed	recon/w3d56	render	ra3::render::terrain56ForwardScorch; 00be38e8 slot 17; slot 2 returns W3DTerrainVisual
 00563400		recon/render56	render	Deferred W3DTerrainLogic slot 21 (`0x00be39f8` slot 21) wrapper calling `0x008e4c30` -> `0x0056d970`
 00563420		recon/render56	render	Deferred W3DTerrainLogic slot 24 (`0x00be39f8` slot 24) wrapper calling `0x008e4cb0` -> `0x0056d9d0`
 00563440		recon/render56	render	Deferred W3DTerrainLogic slot 25 (`0x00be39f8` slot 25) wrapper calling `0x008e4d30` -> `0x0056da40`
@@ -2864,3 +2864,43 @@ address	status	owner	module	notes
 0071fa60	reversed	recon/obj70	gamelogic	ra3::gamelogic::BezierProjectileBehavior_copyAim; secondary vtable 00c10f20 slot 7, class BezierProjectileBehavior from constructor 006c6370 storing primary 00c11090; same body is also slot 7 of 00c13de0 and is counted once
 0071fdd0	reversed	recon/obj70	gamelogic	ra3::gamelogic::BridgeBuilderBehavior_xfer; vtable 00c1aab8 slot 3 of BridgeBuilderBehavior
 0071fe60	reversed	recon/obj70	gamelogic	ra3::gamelogic::EncloseBehavior_xfer; vtable 00c08a48 slot 3 of EncloseBehavior
+005609f0	reversed	recon/w3d56	render	ra3::render::client56Latch; 00be4be0 slot 55; class inferred, 0058c700 stores 00be4be0
+005615c0	reversed	recon/w3d56	render	ra3::render::scorch56Xfer; 00be3cac slot 3; slot 2 returns TScorch
+00561ea0	reversed	recon/w3d56	render	ra3::render::terrain56ForwardA; 00be38e8 slot 13; slot 2 returns W3DTerrainVisual
+00561ed0	reversed	recon/w3d56	render	ra3::render::terrain56ForwardB; 00be38e8 slots 14 and 15; slot 2 returns W3DTerrainVisual
+00562320	reversed	recon/w3d56	render	ra3::render::view56BeginTrackedMove; 00be55c8 slot 36; slot 2 returns View
+005623e0	reversed	recon/w3d56	render	ra3::render::view56BeginTrackedMoveHeld; 00be55c8 slot 37; slot 2 returns View
+00562650	reversed	recon/w3d56	render	ra3::render::view56UpdateZoom; call from 0056bed0 at 0056bf51; 0056bed0 is 00be55c8 slot 44
+005626d0	reversed	recon/w3d56	render	ra3::render::view56UpdatePitch; call from 0056bf60 at 0056c01e; 0056bf60 is 00be55c8 slot 45
+00562770	reversed	recon/w3d56	render	ra3::render::view56UpdateHeight; call from 0056c030 at 0056c0b6; 0056c030 is 00be55c8 slot 46
+005627f0	reversed	recon/w3d56	render	ra3::render::view56UpdateAngle; call from 0056c0c0 at 0056c146; 0056c0c0 is 00be55c8 slot 47
+00562890	reversed	recon/w3d56	render	ra3::render::view56SetPauseFlag; 00be55c8 slot 104; slot 2 returns View
+005633a0	reversed	recon/w3d56	render	ra3::render::terrain56SyncCell; 00be39f8 slot 5; slot 2 returns W3DTerrainLogic
+005633e0	reversed	recon/w3d56	render	ra3::render::terrain56HeightOrZero; 00be39f8 slot 19; slot 2 returns W3DTerrainLogic
+005634c0	reversed	recon/w3d56	render	ra3::render::terrain56XferHeader; 00be39f8 slot 3; slot 2 returns W3DTerrainLogic
+005637d0	reversed	recon/w3d56	render	ra3::render::record56WriteVec3; call from 009ba010 at 009ba0a4; 009ba010 is 00c61534 slot 4
+00563870	reversed	recon/w3d56	render	ra3::render::record56WriteFloatUnlessEqual; call from 009ba010 at 009ba046; 009ba010 is 00c61534 slot 4
+00565d30	reversed	recon/w3d56	render	ra3::render::pose56CopyTranslation; 00be3b38 slot 17; class inferred, 00565ca0 stores 00be3b38
+00567550	reversed	recon/w3d56	render	ra3::render::client56SetFlag; 00be4be0 slot 53; class inferred, 0058c700 stores 00be4be0
+005676a0	reversed	recon/w3d56	render	ra3::render::bounds56Copy; 00be3ed8 slot 3; class inferred, 005833e0 stores 00be3ed8
+005676d0	reversed	recon/w3d56	render	ra3::render::bounds56Assign; 00be3ed8 slot 4; class inferred, 005833e0 stores 00be3ed8
+00567700	reversed	recon/w3d56	render	ra3::render::bounds56Intersect; 00be3ed8 slot 5; class inferred, 005833e0 stores 00be3ed8
+0056b2c0	reversed	recon/w3d56	render	ra3::render::terrain56SampleIndex; 00be38e8 slot 10; slot 2 returns W3DTerrainVisual
+0056b9e0	reversed	recon/w3d56	render	ra3::render::view56SphereVisible; 00be55c8 slot 58; slot 2 returns View
+0056ba70	reversed	recon/w3d56	render	ra3::render::view56PublishListener; 00be55c8 slot 56; slot 2 returns View
+0056bce0	reversed	recon/w3d56	render	ra3::render::view56FollowHeightRatio; 00be55c8 slot 136; slot 2 returns View
+0056bed0	reversed	recon/w3d56	render	ra3::render::view56BeginZoom; 00be55c8 slot 44; slot 2 returns View
+0056c030	reversed	recon/w3d56	render	ra3::render::view56BeginHeight; 00be55c8 slot 46; slot 2 returns View
+0056c0c0	reversed	recon/w3d56	render	ra3::render::view56BeginAngle; 00be55c8 slot 47; slot 2 returns View
+0056c2b0	reversed	recon/w3d56	render	ra3::render::view56TranslateSamples; 00be55c8 slot 32; slot 2 returns View
+0056c390	reversed	recon/w3d56	render	ra3::render::ease56ResetTrack; 00be4214 slot 2; slot 2 is this body, class inferred
+0056ee80	reversed	recon/w3d56	render	ra3::render::terrain56FillExtent; 00be39f8 slot 12; slot 2 returns W3DTerrainLogic
+0056f2a0	reversed	recon/w3d56	render	ra3::render::record56WriteVec4; call from 009ba010 at 009ba0e3; 009ba010 is 00c61534 slot 4
+0056f2f0	reversed	recon/w3d56	render	ra3::render::record56WritePair; call from 009ba010 at 009ba070; 009ba010 is 00c61534 slot 4
+0056f540	reversed	recon/w3d56	render	ra3::render::mat56Transpose; call from 00589390 at 00589555; 00589390 is 00be4220 slot 0
+00572120	reversed	recon/w3d56	render	ra3::render::view56EmbeddedFlagFloat; 00be3d98 slot 5; 00594a80 stores 00be3d98 at View+0x26fc
+00572130	reversed	recon/w3d56	render	ra3::render::view56EmbeddedSet4; 00be3d98 slot 6; 00594a80 stores 00be3d98 at View+0x26fc
+00572140	reversed	recon/w3d56	render	ra3::render::view56EmbeddedSet8; 00be3d98 slot 7; 00594a80 stores 00be3d98 at View+0x26fc
+00572150	reversed	recon/w3d56	render	ra3::render::view56EmbeddedSet12; 00be3d98 slot 8; 00594a80 stores 00be3d98 at View+0x26fc
+00572160	reversed	recon/w3d56	render	ra3::render::view56EmbeddedSet16; 00be3d98 slot 9; 00594a80 stores 00be3d98 at View+0x26fc
+0057c860	reversed	recon/w3d56	render	ra3::render::view56ClearCameraMotion; 00be55c8 slot 85; slot 2 returns View

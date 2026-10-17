@@ -5687,7 +5687,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00560800	FUN_00560800	.text	49		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::storeQuad11C; derived slot 33; interleaved dword writes and +12C flag verified
 00560840	FUN_00560840	.text	264		clean	unknown		unanalyzed	
 00560950	FUN_00560950	.text	159		clean	unknown		unanalyzed	
-005609f0	FUN_005609f0	.text	28		clean	unknown		unanalyzed	
+005609f0	FUN_005609f0	.text	28		clean	render	recon/w3d56	reversed	ra3::render::client56Latch; 00be4be0 slot 55; class inferred, 0058c700 stores 00be4be0
 00560a10	FUN_00560a10	.text	7		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::loadField118; derived slot 61; dword load verified
 00560a20	FUN_00560a20	.text	6		clean	unknown		unanalyzed	
 00560a30	FUN_00560a30	.text	174		clean	unknown		unanalyzed	
@@ -5733,7 +5733,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00561340	FUN_00561340	.text	175		clean	render	recon/render56	reversed	W3DRoadBuffer::adjustRoadStacking (0x00561340; direct callee of 0x00585900 at 0x00585e6b, direct callee of 0x005a7a60 at 0x005a7a93, direct callee of 0x00908ed0 at 0x00908f1b, 0x00be4290 slot 1; verify_render56.py 5/5)
 005613f0	FUN_005613f0	.text	210		clean	unknown		unanalyzed	
 005615a0	FUN_005615a0	.text	21		clean	render	recon/render56	reversed	W3DScorchBuffer::clearAllScorches (0x005615A0; direct callee of 0x008fd1e0 at 0x008fd206, 0x00c54618 slot 11; zeros +0x4660..+0x4668; verify_render56.py 3/3)
-005615c0	FUN_005615c0	.text	128		clean	unknown		unanalyzed	
+005615c0	FUN_005615c0	.text	128		clean	render	recon/w3d56	reversed	ra3::render::scorch56Xfer; 00be3cac slot 3; slot 2 returns TScorch
 00561640	FUN_00561640	.text	51		clean	unknown		unanalyzed	
 00561680	FUN_00561680	.text	30		clean	unknown		unanalyzed	
 005616a0	FUN_005616a0	.text	53		clean	unknown		unanalyzed	
@@ -5753,9 +5753,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00561e10	FUN_00561e10	.text	87		clean	render	recon/render56	reversed	W3DTerrainVisual::partialMapUpdate (0x00561E10; 0x00be38e8 slot 21; expands IRegion2D by 1 cell and forwards to m_terrainRenderObject vtable+0x28; verify_render56.py 4/4)
 00561e70	FUN_00561e70	.text	14		clean	render	recon/render56	reversed	W3DTerrainVisual::getTerrainVisualBorderSize (0x00561E70; 0x00be38e8 slot 23; returns m_worldHeightMap (+0x30) border size at +0x2c; verify_render56.py 4/4; hook tvbordersize explicitOnly)
 00561e80	FUN_00561e80	.text	17		clean	render	recon/render56	reversed	W3DTerrainVisual::removeAllBibs (0x00561E80; 0x00be38e8 slot 18; forwards to m_terrainRenderObject (+0x28) vtable+0x4c; verify_render56.py 3/3)
-00561ea0	FUN_00561ea0	.text	33		clean	unknown		unanalyzed	
-00561ed0	FUN_00561ed0	.text	33		clean	unknown		unanalyzed	
-00561f00	FUN_00561f00	.text	28		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainVisual slot 17 (`0x00be38e8` slot 17) wrapper calling `0x008e51a0` (`W3DScorchBuffer` wrapper around `0x0056ab00`)
+00561ea0	FUN_00561ea0	.text	33		clean	render	recon/w3d56	reversed	ra3::render::terrain56ForwardA; 00be38e8 slot 13; slot 2 returns W3DTerrainVisual
+00561ed0	FUN_00561ed0	.text	33		clean	render	recon/w3d56	reversed	ra3::render::terrain56ForwardB; 00be38e8 slots 14 and 15; slot 2 returns W3DTerrainVisual
+00561f00	FUN_00561f00	.text	28		clean	render	recon/w3d56	reversed	ra3::render::terrain56ForwardScorch; 00be38e8 slot 17; slot 2 returns W3DTerrainVisual
 00561f20	FUN_00561f20	.text	8		clean	unknown		unanalyzed	
 00561f30	FUN_00561f30	.text	68		clean	unknown		unanalyzed	
 00561f80	FUN_00561f80	.text	213		clean	unknown		unanalyzed	
@@ -5768,18 +5768,18 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005622a0	FUN_005622a0	.text	29		clean	render	recon/w3dview	reversed	ra3::render::clearFilter; oracle 500/500 object bytes and cleanup
 005622c0	FUN_005622c0	.text	49		clean	render	recon/w3dview	reversed	ra3::render::setFilter; oracle 500/500 object bytes and cleanup
 00562300	FUN_00562300	.text	17		clean	unknown		unanalyzed	
-00562320	FUN_00562320	.text	191		clean	unknown		unanalyzed	
-005623e0	FUN_005623e0	.text	195		clean	unknown		unanalyzed	
+00562320	FUN_00562320	.text	191		clean	render	recon/w3d56	reversed	ra3::render::view56BeginTrackedMove; 00be55c8 slot 36; slot 2 returns View
+005623e0	FUN_005623e0	.text	195		clean	render	recon/w3d56	reversed	ra3::render::view56BeginTrackedMoveHeld; 00be55c8 slot 37; slot 2 returns View
 005624b0	FUN_005624b0	.text	182		clean	unknown		unanalyzed	
 00562570	FUN_00562570	.text	75		clean	render	recon/w3dview	reversed	ra3::render::cameraMovementFinished; oracle 500/500 return and cleanup
 005625c0	FUN_005625c0	.text	18		clean	render	recon/w3dview	reversed	ra3::render::cameraLockEquals; oracle 500/500 return and cleanup
 005625e0	FUN_005625e0	.text	97		clean	unknown		unanalyzed	
-00562650	FUN_00562650	.text	128		clean	unknown		unanalyzed	
-005626d0	FUN_005626d0	.text	148		clean	unknown		unanalyzed	
-00562770	FUN_00562770	.text	128		clean	unknown		unanalyzed	
-005627f0	FUN_005627f0	.text	128		clean	unknown		unanalyzed	
+00562650	FUN_00562650	.text	128		clean	render	recon/w3d56	reversed	ra3::render::view56UpdateZoom; call from 0056bed0 at 0056bf51; 0056bed0 is 00be55c8 slot 44
+005626d0	FUN_005626d0	.text	148		clean	render	recon/w3d56	reversed	ra3::render::view56UpdatePitch; call from 0056bf60 at 0056c01e; 0056bf60 is 00be55c8 slot 45
+00562770	FUN_00562770	.text	128		clean	render	recon/w3d56	reversed	ra3::render::view56UpdateHeight; call from 0056c030 at 0056c0b6; 0056c030 is 00be55c8 slot 46
+005627f0	FUN_005627f0	.text	128		clean	render	recon/w3d56	reversed	ra3::render::view56UpdateAngle; call from 0056c0c0 at 0056c146; 0056c0c0 is 00be55c8 slot 47
 00562870	FUN_00562870	.text	30		clean	unknown		unanalyzed	
-00562890	FUN_00562890	.text	36		clean	unknown		unanalyzed	
+00562890	FUN_00562890	.text	36		clean	render	recon/w3d56	reversed	ra3::render::view56SetPauseFlag; 00be55c8 slot 104; slot 2 returns View
 005628c0	FUN_005628c0	.text	55		clean	unknown		unanalyzed	
 00562900	FUN_00562900	.text	13		clean	unknown		unanalyzed	
 00562910	FUN_00562910	.text	7		clean	render	recon/w3dview	reversed	ra3::render::cameraShakeX; oracle 1500/1500 full 80-bit ST0 at CW 007f/027f/037f
@@ -5813,16 +5813,16 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00563300	FUN_00563300	.text	6		clean	unknown		unanalyzed	
 00563310	FUN_00563310	.text	45		clean	unknown		unanalyzed	
 00563340	FUN_00563340	.text	95		clean	unknown		unanalyzed	
-005633a0	FUN_005633a0	.text	33		clean	unknown		unanalyzed	
+005633a0	FUN_005633a0	.text	33		clean	render	recon/w3d56	reversed	ra3::render::terrain56SyncCell; 00be39f8 slot 5; slot 2 returns W3DTerrainLogic
 005633d0	AptFrameStack::GetHashSize	.text	5		clean	unknown		unanalyzed	
-005633e0	FUN_005633e0	.text	31		clean	unknown		unanalyzed	
+005633e0	FUN_005633e0	.text	31		clean	render	recon/w3d56	reversed	ra3::render::terrain56HeightOrZero; 00be39f8 slot 19; slot 2 returns W3DTerrainLogic
 00563400	FUN_00563400	.text	32		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainLogic slot 21 (`0x00be39f8` slot 21) wrapper calling `0x008e4c30` -> `0x0056d970`
 00563420	FUN_00563420	.text	32		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainLogic slot 24 (`0x00be39f8` slot 24) wrapper calling `0x008e4cb0` -> `0x0056d9d0`
 00563440	FUN_00563440	.text	32		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainLogic slot 25 (`0x00be39f8` slot 25) wrapper calling `0x008e4d30` -> `0x0056da40`
 00563460	FUN_00563460	.text	32		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainLogic slot 26 (`0x00be39f8` slot 26) wrapper calling `0x008e4db0` -> `0x0056dab0`
 00563480	FUN_00563480	.text	32		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainLogic slot 22 (`0x00be39f8` slot 22) wrapper calling `0x008e4e30` -> `0x0056db20`
 005634a0	FUN_005634a0	.text	32		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainLogic slot 23 (`0x00be39f8` slot 23) wrapper calling `0x008e4eb0` -> `0x0056db80`
-005634c0	FUN_005634c0	.text	47		clean	unknown		unanalyzed	
+005634c0	FUN_005634c0	.text	47		clean	render	recon/w3d56	reversed	ra3::render::terrain56XferHeader; 00be39f8 slot 3; slot 2 returns W3DTerrainLogic
 005634f0	thunk_FUN_008623d0	.text	5		clean	unknown		unanalyzed	
 00563500	FUN_00563500	.text	18		clean	unknown		unanalyzed	
 00563520	FUN_00563520	.text	30		clean	render	recon/render56	reversed	BaseHeightMapRenderObjClass::initStreamLockHelper (0x00563520; direct callee of 0x00580a90 at 0x00580bbd, callee of 0x0058bbc0 at 0x0058bc13, direct callee of 0x00591e00 at 0x00591f6d, 0x00be4290 slot 9; verify_render56.py 3/3)
@@ -5830,9 +5830,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005635b0	FUN_005635b0	.text	60		clean	unknown		unanalyzed	
 005635f0	FUN_005635f0	.text	227		clean	render	recon/render56	reversed	MinMaxAABox::vec3SignMaskMin (0x005635F0; direct callee of 0x00564f80 at 0x00564ff6; SSE sign-bit component-wise Vector3 min; verify_render56.py 3/3)
 005636e0	FUN_005636e0	.text	227		clean	render	recon/render56	reversed	MinMaxAABox::vec3SignMaskMax (0x005636E0; direct callee of 0x00564f80 at 0x00565048; SSE sign-bit component-wise Vector3 max; verify_render56.py 3/3)
-005637d0	FUN_005637d0	.text	66		clean	unknown		unanalyzed	
+005637d0	FUN_005637d0	.text	66		clean	render	recon/w3d56	reversed	ra3::render::record56WriteVec3; call from 009ba010 at 009ba0a4; 009ba010 is 00c61534 slot 4
 00563820	FUN_00563820	.text	57		inner-patched	unknown		unanalyzed	
-00563870	FUN_00563870	.text	73		clean	unknown		unanalyzed	
+00563870	FUN_00563870	.text	73		clean	render	recon/w3d56	reversed	ra3::render::record56WriteFloatUnlessEqual; call from 009ba010 at 009ba046; 009ba010 is 00c61534 slot 4
 005638c0	FUN_005638c0	.text	75		clean	unknown		unanalyzed	
 00563910	FUN_00563910	.text	73		clean	unknown		unanalyzed	
 00563960	FUN_00563960	.text	10		clean	unknown		unanalyzed	
@@ -5889,7 +5889,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00565b00	FUN_00565b00	.text	402		clean	unknown		unanalyzed	
 00565ca0	FUN_00565ca0	.text	118		clean	unknown		unanalyzed	
 00565d20	FUN_00565d20	.text	4		clean	unknown		unanalyzed	
-00565d30	FUN_00565d30	.text	24		clean	unknown		unanalyzed	
+00565d30	FUN_00565d30	.text	24		clean	render	recon/w3d56	reversed	ra3::render::pose56CopyTranslation; 00be3b38 slot 17; class inferred, 00565ca0 stores 00be3b38
 00565d50	FUN_00565d50	.text	36		clean	unknown		unanalyzed	
 00565d80	FUN_00565d80	.text	31		clean	unknown		unanalyzed	
 00565da0	FUN_00565da0	.text	63		clean	unknown		unanalyzed	
@@ -5916,13 +5916,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00566f90	FUN_00566f90	.text	743		clean	unknown		unanalyzed	
 00567280	FUN_00567280	.text	303		clean	unknown		unanalyzed	
 005673b0	FUN_005673b0	.text	402		clean	unknown		unanalyzed	
-00567550	FUN_00567550	.text	33		clean	unknown		unanalyzed	
+00567550	FUN_00567550	.text	33		clean	render	recon/w3d56	reversed	ra3::render::client56SetFlag; 00be4be0 slot 53; class inferred, 0058c700 stores 00be4be0
 00567580	FUN_00567580	.text	134		clean	unknown		unanalyzed	
 00567610	FUN_00567610	.text	75		clean	unknown		unanalyzed	
 00567660	FUN_00567660	.text	64		clean	unknown		unanalyzed	
-005676a0	FUN_005676a0	.text	33		clean	unknown		unanalyzed	
-005676d0	FUN_005676d0	.text	41		clean	unknown		unanalyzed	
-00567700	FUN_00567700	.text	194		clean	unknown		unanalyzed	
+005676a0	FUN_005676a0	.text	33		clean	render	recon/w3d56	reversed	ra3::render::bounds56Copy; 00be3ed8 slot 3; class inferred, 005833e0 stores 00be3ed8
+005676d0	FUN_005676d0	.text	41		clean	render	recon/w3d56	reversed	ra3::render::bounds56Assign; 00be3ed8 slot 4; class inferred, 005833e0 stores 00be3ed8
+00567700	FUN_00567700	.text	194		clean	render	recon/w3d56	reversed	ra3::render::bounds56Intersect; 00be3ed8 slot 5; class inferred, 005833e0 stores 00be3ed8
 005677d0	FUN_005677d0	.text	337		clean	unknown		unanalyzed	
 00567930	FUN_00567930	.text	328		clean	unknown		unanalyzed	
 00567a80	FUN_00567a80	.text	34		clean	unknown		unanalyzed	
@@ -5972,7 +5972,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0056b130	FUN_0056b130	.text	50		clean	unknown		unanalyzed	
 0056b170	FUN_0056b170	.text	275		clean	unknown		unanalyzed	
 0056b290	FUN_0056b290	.text	38		clean	render	recon/render56	reversed	W3DTerrainVisual::getTerrainVisualColorAt (0x0056B290; 0x00be38e8 slot 8; forwards to m_worldHeightMap->getTerrainColorAt (0x00562df0); verify_render56.py 4/4)
-0056b2c0	FUN_0056b2c0	.text	47		clean	unknown		unanalyzed	
+0056b2c0	FUN_0056b2c0	.text	47		clean	render	recon/w3d56	reversed	ra3::render::terrain56SampleIndex; 00be38e8 slot 10; slot 2 returns W3DTerrainVisual
 0056b2f0	FUN_0056b2f0	.text	143		clean	render	recon/render56	reversed	W3DTerrainVisual::setRawMapHeightAndFlags (0x0056B2F0; 0x00be38e8 slot 19; updates heightmap sample and cell flag byte; verify_render56.py 8/8)
 0056b380	FUN_0056b380	.text	45		clean	render	recon/render56	reversed	W3DTerrainVisual::getCellFlags (0x0056B380; 0x00be38e8 slot 22; reads cell flag byte at (x+border,y+border); verify_render56.py 7/7; hook tvcellflags explicitOnly)
 0056b3b0	FUN_0056b3b0	.text	304		clean	unknown		unanalyzed	
@@ -5983,20 +5983,20 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0056b6f0	FUN_0056b6f0	.text	192		clean	unknown		unanalyzed	
 0056b7b0	FUN_0056b7b0	.text	325		clean	unknown		unanalyzed	
 0056b900	FUN_0056b900	.text	215		clean	unknown		unanalyzed	
-0056b9e0	FUN_0056b9e0	.text	132		clean	unknown		unanalyzed	
-0056ba70	FUN_0056ba70	.text	100		clean	unknown		unanalyzed	
+0056b9e0	FUN_0056b9e0	.text	132		clean	render	recon/w3d56	reversed	ra3::render::view56SphereVisible; 00be55c8 slot 58; slot 2 returns View
+0056ba70	FUN_0056ba70	.text	100		clean	render	recon/w3d56	reversed	ra3::render::view56PublishListener; 00be55c8 slot 56; slot 2 returns View
 0056bae0	FUN_0056bae0	.text	196		clean	unknown		unanalyzed	
 0056bbb0	FUN_0056bbb0	.text	148		clean	unknown		unanalyzed	
 0056bc50	FUN_0056bc50	.text	141		clean	unknown		unanalyzed	
-0056bce0	FUN_0056bce0	.text	37		clean	unknown		unanalyzed	
+0056bce0	FUN_0056bce0	.text	37		clean	render	recon/w3d56	reversed	ra3::render::view56FollowHeightRatio; 00be55c8 slot 136; slot 2 returns View
 0056bd10	FUN_0056bd10	.text	434		clean	unknown		unanalyzed	
-0056bed0	FUN_0056bed0	.text	139		clean	unknown		unanalyzed	
+0056bed0	FUN_0056bed0	.text	139		clean	render	recon/w3d56	reversed	ra3::render::view56BeginZoom; 00be55c8 slot 44; slot 2 returns View
 0056bf60	FUN_0056bf60	.text	200		clean	unknown		unanalyzed	
-0056c030	FUN_0056c030	.text	144		clean	unknown		unanalyzed	
-0056c0c0	FUN_0056c0c0	.text	144		clean	unknown		unanalyzed	
+0056c030	FUN_0056c030	.text	144		clean	render	recon/w3d56	reversed	ra3::render::view56BeginHeight; 00be55c8 slot 46; slot 2 returns View
+0056c0c0	FUN_0056c0c0	.text	144		clean	render	recon/w3d56	reversed	ra3::render::view56BeginAngle; 00be55c8 slot 47; slot 2 returns View
 0056c150	FUN_0056c150	.text	337		clean	unknown		unanalyzed	
-0056c2b0	FUN_0056c2b0	.text	208		clean	unknown		unanalyzed	
-0056c390	FUN_0056c390	.text	163		clean	unknown		unanalyzed	
+0056c2b0	FUN_0056c2b0	.text	208		clean	render	recon/w3d56	reversed	ra3::render::view56TranslateSamples; 00be55c8 slot 32; slot 2 returns View
+0056c390	FUN_0056c390	.text	163		clean	render	recon/w3d56	reversed	ra3::render::ease56ResetTrack; 00be4214 slot 2; slot 2 is this body, class inferred
 0056c440	FUN_0056c440	.text	225		clean	unknown		unanalyzed	
 0056c530	FUN_0056c530	.text	151		clean	unknown		unanalyzed	
 0056c5d0	FUN_0056c5d0	.text	17		inner-patched	unknown		unanalyzed	
@@ -6039,7 +6039,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0056ec10	FUN_0056ec10	.text	162		clean	render	recon/render56	reversed	W3DTerrainLogic::getTerrainLogicExtent (0x0056EC10; 0x00be39f8 slot 10; reads active boundary entry at +0x54/+0x64 and scales by 10.0f; verify_render56.py 4/4)
 0056ecc0	FUN_0056ecc0	.text	225		clean	render	recon/render56	reversed	W3DTerrainLogic::getMaximumPathfindExtent (0x0056ECC0; 0x00be39f8 slot 11; computes min/max across boundary entries in +0x54..+0x58 and scales by 10.0f; verify_render56.py 4/4)
 0056edb0	FUN_0056edb0	.text	200		clean	render	recon/render56	reversed	W3DTerrainLogic::getSmallestTerrainExtent (0x0056EDB0; 0x00be39f8 slot 14; merges scaled boundary entries into zero-initialized extent; verify_render56.py 4/4)
-0056ee80	FUN_0056ee80	.text	129		clean	unknown		unanalyzed	
+0056ee80	FUN_0056ee80	.text	129		clean	render	recon/w3d56	reversed	ra3::render::terrain56FillExtent; 00be39f8 slot 12; slot 2 returns W3DTerrainLogic
 0056ef10	FUN_0056ef10	.text	113		clean	unknown		unanalyzed	
 0056ef90	FUN_0056ef90	.text	77		clean	unknown		unanalyzed	
 0056efe0	FUN_0056efe0	.text	53		clean	unknown		unanalyzed	
@@ -6048,13 +6048,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0056f220	FUN_0056f220	.text	32		clean	unknown		unanalyzed	
 0056f240	FUN_0056f240	.text	23		clean	unknown		unanalyzed	
 0056f260	FUN_0056f260	.text	60		clean	unknown		unanalyzed	
-0056f2a0	FUN_0056f2a0	.text	69		clean	unknown		unanalyzed	
-0056f2f0	FUN_0056f2f0	.text	58		clean	unknown		unanalyzed	
+0056f2a0	FUN_0056f2a0	.text	69		clean	render	recon/w3d56	reversed	ra3::render::record56WriteVec4; call from 009ba010 at 009ba0e3; 009ba010 is 00c61534 slot 4
+0056f2f0	FUN_0056f2f0	.text	58		clean	render	recon/w3d56	reversed	ra3::render::record56WritePair; call from 009ba010 at 009ba070; 009ba010 is 00c61534 slot 4
 0056f330	FUN_0056f330	.text	60		clean	unknown		unanalyzed	
 0056f370	FUN_0056f370	.text	97		clean	math	recon/ports2	verified	Vector2 normalize, SSE then x87 reciprocal sqrt; ra3::math::normalize; oracle 2014/2014 at CW 007f/027f/037f Debug+Release; NaN payload emulator-unreliable; live shadow 570/570, replace 570 calls in a skirmish (运行 20/21)
 0056f490	FUN_0056f490	.text	89		clean	unknown		unanalyzed	
 0056f4f0	FUN_0056f4f0	.text	79		clean	unknown		unanalyzed	
-0056f540	FUN_0056f540	.text	57		clean	unknown		unanalyzed	
+0056f540	FUN_0056f540	.text	57		clean	render	recon/w3d56	reversed	ra3::render::mat56Transpose; call from 00589390 at 00589555; 00589390 is 00be4220 slot 0
 0056f580	FUN_0056f580	.text	1106		clean	unknown		unanalyzed	
 0056f9e0	FUN_0056f9e0	.text	70		clean	unknown		unanalyzed	
 0056fa30	FUN_0056fa30	.text	24		clean	unknown		unanalyzed	
@@ -6094,11 +6094,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005720f0	AptFloat::GetFloat	.text	4		clean	unknown		unanalyzed	
 00572100	FUN_00572100	.text	4		clean	unknown		unanalyzed	
 00572110	AptCharacterTextInst::GetTextWidth	.text	4		clean	unknown		unanalyzed	
-00572120	FUN_00572120	.text	13		clean	unknown		unanalyzed	
-00572130	AptRI3DHelper::SetXRotation	.text	14		clean	unknown		unanalyzed	
-00572140	AptRI3DHelper::SetYRotation	.text	14		clean	unknown		unanalyzed	
-00572150	FUN_00572150	.text	14		clean	unknown		unanalyzed	
-00572160	FUN_00572160	.text	14		clean	unknown		unanalyzed	
+00572120	FUN_00572120	.text	13		clean	render	recon/w3d56	reversed	ra3::render::view56EmbeddedFlagFloat; 00be3d98 slot 5; 00594a80 stores 00be3d98 at View+0x26fc
+00572130	AptRI3DHelper::SetXRotation	.text	14		clean	render	recon/w3d56	reversed	ra3::render::view56EmbeddedSet4; 00be3d98 slot 6; 00594a80 stores 00be3d98 at View+0x26fc
+00572140	AptRI3DHelper::SetYRotation	.text	14		clean	render	recon/w3d56	reversed	ra3::render::view56EmbeddedSet8; 00be3d98 slot 7; 00594a80 stores 00be3d98 at View+0x26fc
+00572150	FUN_00572150	.text	14		clean	render	recon/w3d56	reversed	ra3::render::view56EmbeddedSet12; 00be3d98 slot 8; 00594a80 stores 00be3d98 at View+0x26fc
+00572160	FUN_00572160	.text	14		clean	render	recon/w3d56	reversed	ra3::render::view56EmbeddedSet16; 00be3d98 slot 9; 00594a80 stores 00be3d98 at View+0x26fc
 00572170	FUN_00572170	.text	10		clean	unknown		unanalyzed	
 00572180	FUN_00572180	.text	1241		clean	unknown		unanalyzed	
 00572660	FUN_00572660	.text	199		clean	unknown		unanalyzed	
@@ -6190,7 +6190,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0057c6f0	FUN_0057c6f0	.text	256		clean	unknown		unanalyzed	
 0057c7f0	FUN_0057c7f0	.text	73		clean	unknown		unanalyzed	
 0057c840	FUN_0057c840	.text	30		clean	unknown		unanalyzed	
-0057c860	FUN_0057c860	.text	88		clean	unknown		unanalyzed	
+0057c860	FUN_0057c860	.text	88		clean	render	recon/w3d56	reversed	ra3::render::view56ClearCameraMotion; 00be55c8 slot 85; slot 2 returns View
 0057c8c0	FUN_0057c8c0	.text	185		clean	unknown		unanalyzed	
 0057c980	FUN_0057c980	.text	617		clean	unknown		unanalyzed	
 0057cbf0	FUN_0057cbf0	.text	408		clean	unknown		unanalyzed	
