@@ -82,6 +82,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/luavmcheck)
     add_subdirectory(tools/gamelogic82check)
     add_subdirectory(tools/skirm87check)
+    add_subdirectory(tools/net5d2check)
 endif()
 
 if(RA3_BUILD_TESTS)

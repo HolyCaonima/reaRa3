@@ -5,4 +5,6 @@ ra3_add_module(net
         include/ra3/net/LobbySession.h
         LobbySession.cpp
         include/ra3/net/CommandMessage.h
-        CommandMessage.cpp)
+        CommandMessage.cpp
+        include/ra3/net/ReliableTransport5D.h
+        ReliableTransport5D.cpp)
