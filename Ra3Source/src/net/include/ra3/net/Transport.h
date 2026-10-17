@@ -73,4 +73,9 @@ std::uint32_t takeEndpointSlot(
     void* owner, std::uint32_t slot, Endpoint& endpoint) noexcept;
 void updateEndpointSlot(void* owner, std::uint16_t slot, const Endpoint& endpoint) noexcept;
 
+std::int32_t countNonzeroBytes(const std::uint8_t* begin, const std::uint8_t* end) noexcept;
+std::int32_t minimumCombinedMagnitude(
+    const std::int32_t* firstBegin, const std::int32_t* firstEnd,
+    const std::int32_t* secondBegin, const std::int32_t* secondEnd) noexcept;
+
 }  // namespace ra3::net

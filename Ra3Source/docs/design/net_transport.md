@@ -51,10 +51,12 @@ Generals `GameNetwork/Transport.cpp`、`NetPacket.cpp`、`NetCommandMsg.cpp`
 | `005d77e0`,`005d7850`,`005d7880`,`005d78f0` | `TimeBuckets` 系列 | 初始化、清空、累计、求和 |
 | `005d7ae0` | `scramblePacketWords` | XOR 序列并逐 dword 网络字节序 |
 | `005d7ea0`,`005d7f20`,`005d7f70`,`005d7fc0` | endpoint 槽系列 | 清除、设置、取走、更新 |
+| `005d88e0` | `countNonzeroBytes` | 统计字节区间中的非零项 |
+| `005d8910` | `minimumCombinedMagnitude` | 两个等长整数区间的最小合成幅值 |
 
 ## Hook 策略
 
-只挂了七个不会触发 socket、线程同步或分配器的入口。矩阵、包和游戏对象读取
+只挂了九个不会触发 socket、线程同步或分配器的入口。矩阵、包和游戏对象读取
 目标均 `explicitOnly=true`。只读入口先计算 Ra3Source 结果，再调用原函数并比较
 标量；两个状态变换对调用前快照应用我们的实现，再与原函数写出的精确范围比较。
 延迟窗口、队列、endpoint 槽和时间桶可能由网络线程并发修改，刻意不挂。

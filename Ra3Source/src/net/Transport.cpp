@@ -1,6 +1,7 @@
 #include <ra3/net/Transport.h>
 
 #include <algorithm>
+#include <cmath>
 #include <cstring>
 
 namespace ra3::net {
@@ -98,7 +99,7 @@ char* copyBounded(char* destination, const char* source, char* end) noexcept
     // ra3_1.0.game 0x005D64C0.
     if (end == nullptr) {
         std::strcpy(destination, source);
-        return destination + std::strlen(source);
+        return destination + std::strlen(source) + 1;
     }
     if (end <= destination) {
         return destination;
@@ -110,7 +111,7 @@ char* copyBounded(char* destination, const char* source, char* end) noexcept
         end[-1] = '\0';
         return end;
     }
-    return destination + length;
+    return destination + length + 1;
 }
 
 // ra3_1.0.game 0x005D69C5.
@@ -472,6 +473,35 @@ void updateEndpointSlot(void* owner, std::uint16_t slot, const Endpoint& endpoin
     if (slot < 6) {
         std::memcpy(static_cast<std::uint8_t*>(owner) + 0x40E04 + slot * 12u, &endpoint, 8);
     }
+}
+
+// ra3_1.0.game 0x005D88E0.
+std::int32_t countNonzeroBytes(const std::uint8_t* begin, const std::uint8_t* end) noexcept
+{
+    std::int32_t result = 0;
+    while (begin != end) {
+        result += *begin++ != 0 ? 1 : 0;
+    }
+    return result;
+}
+
+// ra3_1.0.game 0x005D8910.
+std::int32_t minimumCombinedMagnitude(
+    const std::int32_t* firstBegin, const std::int32_t* firstEnd,
+    const std::int32_t* secondBegin, const std::int32_t* secondEnd) noexcept
+{
+    if (firstBegin == nullptr || secondBegin == nullptr
+        || firstEnd - firstBegin != secondEnd - secondBegin) {
+        return 0x1FC02;
+    }
+    std::int32_t minimum = 0x1FC02;
+    while (firstBegin != firstEnd) {
+        const std::int32_t sum = *firstBegin * *firstBegin + *secondBegin * *secondBegin;
+        minimum = std::min(minimum, sum);
+        ++firstBegin;
+        ++secondBegin;
+    }
+    return static_cast<std::int32_t>(std::sqrt(static_cast<float>(minimum)));
 }
 
 }  // namespace ra3::net

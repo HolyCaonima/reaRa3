@@ -204,6 +204,29 @@ void run(const std::string& line)
         encode(bytes.data(), bytes.size());
         std::cout << '\n';
         return;
+    } else if (operation == "bucketinit") {
+        const auto interval = number<std::uint32_t>(input);
+        const auto duration = number<std::uint32_t>(input);
+        const auto now = number<std::uint32_t>(input);
+        std::vector<float> storage(duration / interval == 0 ? 1u : duration / interval, 123.0f);
+        ra3::net::TimeBuckets buckets{};
+        ra3::net::initializeTimeBuckets(buckets, interval, duration, storage.data(), now);
+        std::cout << buckets.count << ' ' << buckets.interval << ' ' << buckets.epoch << ' ';
+        encode(storage.data(), storage.size() * sizeof(float));
+        std::cout << '\n';
+        return;
+    } else if (operation == "countnonzero") {
+        result = static_cast<std::uint32_t>(
+            ra3::net::countNonzeroBytes(bytes.data(), bytes.data() + bytes.size()));
+    } else if (operation == "minmag") {
+        std::string secondHex;
+        input >> secondHex;
+        const auto second = decode(secondHex);
+        result = static_cast<std::uint32_t>(ra3::net::minimumCombinedMagnitude(
+            reinterpret_cast<const std::int32_t*>(bytes.data()),
+            reinterpret_cast<const std::int32_t*>(bytes.data() + bytes.size()),
+            reinterpret_cast<const std::int32_t*>(second.data()),
+            reinterpret_cast<const std::int32_t*>(second.data() + second.size())));
     } else {
         std::cout << "error\n";
         return;

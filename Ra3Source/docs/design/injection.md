@@ -174,6 +174,8 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `netcopyrecord` | `0x005D75E0` 传输记录复制 | thiscall（2，EAX=this） | 6 | `ra3::net::copyTransportRecord` | offline-verified, live pending；仅显式键启用 |
 | `netconnectioncode` | `0x005D7640` 四字节连接代码 | cdecl（3） | 5 | `ra3::net::makeConnectionCode` | offline-verified, live pending |
 | `netopaquevalue` | `0x005D77D0` 四字节状态设置 | thiscall（1，EAX=value） | 6 | `ra3::net::setOpaqueValue` | offline-verified, live pending；仅显式键启用 |
+| `netnonzerobytes` | `0x005D88E0` 字节区间非零计数 | cdecl（1） | 5 | `ra3::net::countNonzeroBytes` | offline-verified, live pending；仅显式键启用 |
+| `netminimummagnitude` | `0x005D8910` 双整数区间最小合成幅值 | cdecl（2） | 5 | `ra3::net::minimumCombinedMagnitude` | offline-verified, live pending；仅显式键启用 |
 
 这些目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节

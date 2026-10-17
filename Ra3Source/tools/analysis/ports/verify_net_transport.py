@@ -63,6 +63,23 @@ def verify(executable: Path) -> None:
         return destination
 
     emu.bind_function(0x004D2EDA, memcpy_stub)
+    memmove_stub = emu.bind_stub(memcpy_stub)
+
+    def strncpy_stub(machine: Emulator) -> int:
+        destination = machine.stack_arg(0)
+        source = machine.stack_arg(1)
+        count = machine.stack_arg(2)
+        text = bytearray()
+        for index in range(count):
+            value = machine.read(source + index, 1)[0]
+            text.append(value)
+            if value == 0:
+                text.extend(b"\0" * (count - index - 1))
+                break
+        machine.write(destination, bytes(text))
+        return destination
+
+    strncpy_address = emu.bind_stub(strncpy_stub)
 
     def counted(name: str) -> None:
         totals[name] = totals.get(name, 0) + 1
@@ -79,6 +96,23 @@ def verify(executable: Path) -> None:
 
         for _ in range(CASES):
             emu.reset_data()
+            emu.write(0x00BBA544, struct.pack("<I", strncpy_address))
+            source_text = rng.randbytes(rng.randrange(80)).replace(b"\0", b"\x01") + b"\0"
+            destination = rng.randbytes(rng.randrange(len(source_text), 129))
+            end_offset = rng.choice((-1, 0, rng.randrange(len(destination) + 1)))
+            destination_pointer = emu.alloc(destination)
+            source_pointer = emu.alloc(source_text)
+            end_pointer = 0 if end_offset < 0 else destination_pointer + end_offset
+            game = emu.call(0x005D64C0, [destination_pointer, source_pointer, end_pointer])
+            ours, output = cpp_memory(
+                checker, "copybounded", destination, source_text.hex(),
+                (2**64 - 1) if end_offset < 0 else end_offset)
+            assert (game.eax - destination_pointer, game.stack_cleanup,
+                    emu.read(destination_pointer, len(destination))) == (ours, 0, output)
+            counted("copyBounded")
+
+        for _ in range(CASES):
+            emu.reset_data()
             data = bytearray(rng.randbytes(0x500))
             pointer = emu.alloc(bytes(data))
             game = emu.call(0x005D6A00, ecx=pointer)
@@ -89,6 +123,21 @@ def verify(executable: Path) -> None:
                 None)
             assert (game.eax - pointer, game.stack_cleanup) == (ours, 0)
             counted("resetConnectionMatrix")
+
+        for _ in range(CASES):
+            emu.reset_data()
+            data = rng.randbytes(0x500)
+            row = rng.randrange(10)
+            column = rng.randrange(10)
+            pointer = emu.alloc(data)
+            game = emu.call(0x005D69C5, [0, column], eax=row, ecx=pointer)
+            ours, _ = cpp_memory(checker, "cell", data, row, column)
+            normalized = 0xFFFFFFFF if game.eax == 0 else game.eax - pointer
+            if ours == 0xFFFFFFFF:
+                ours = 0
+                normalized = 0 if game.eax == 0 else normalized
+            assert (normalized, game.stack_cleanup) == (ours, 8)
+            counted("matrixCell")
 
         for _ in range(CASES):
             emu.reset_data()
@@ -145,6 +194,56 @@ def verify(executable: Path) -> None:
             ours, output = cpp_memory(checker, "latency", bytes(data), sample)
             assert (game.eax, game.stack_cleanup, emu.read(pointer, len(data))) == (ours, 4, output)
             counted("addLatencySample")
+
+        for address, operation in ((0x005D6FA0, "rawappend"), (0x005D70A0, "framedappend")):
+            for _ in range(CASES):
+                emu.reset_data()
+                emu.write(0x00BBA500, struct.pack("<I", memmove_stub))
+                old_size = rng.randrange(1, 300)
+                old = rng.randbytes(old_size)
+                read = rng.randrange(old_size + 1) if operation == "rawappend" else 0
+                write = rng.randrange(read, old_size + 1)
+                incoming = rng.randbytes(rng.randrange(256))
+                capacity = rng.randrange(write, old_size + 1)
+                old_pointer = emu.alloc(old)
+                source = emu.alloc(incoming)
+                replacement = emu.alloc(b"\xCC" * (write + len(incoming) + 2))
+                queue = emu.alloc(struct.pack("<IIII", old_pointer, capacity, read, write))
+                allocations: list[int] = []
+                frees: list[int] = []
+
+                def allocate(machine: Emulator) -> int:
+                    allocations.append(machine.stack_arg(0))
+                    return replacement
+
+                def release(machine: Emulator) -> int:
+                    frees.append(machine.stack_arg(0))
+                    return 0
+
+                emu.bind_function(0x00416840, allocate)
+                emu.bind_function(0x004166B0, release)
+                game = emu.call(address, [source, len(incoming)], ecx=queue)
+                cpp = checker.call(
+                    f"{operation} {old.hex()} {capacity} {read} {write} "
+                    f"{incoming.hex() or '.'}").split()
+                ours_capacity, ours_read, ours_write = map(int, cpp[:3])
+                ours_data = bytes.fromhex(cpp[3])
+                game_queue = emu.read(queue, 16)
+                game_data_pointer, game_capacity, game_read, game_write = struct.unpack(
+                    "<IIII", game_queue)
+                game_tuple = (game.stack_cleanup, game_capacity, game_read, game_write,
+                              emu.read(game_data_pointer, game_write))
+                ours_tuple = (8, ours_capacity, ours_read, ours_write, ours_data)
+                assert game_tuple == ours_tuple, (operation, game_tuple, ours_tuple)
+                assert game.eax == game_data_pointer + (
+                    game_write - len(incoming))
+                needed = ((write - read if operation == "rawappend" else write)
+                          + len(incoming) + (0 if operation == "rawappend"
+                                             else (1 if len(incoming) < 0x80 else 2)))
+                reallocated = capacity < needed
+                assert allocations == ([needed] if reallocated else [])
+                assert frees == ([old_pointer] if reallocated else [])
+                counted(operation)
 
         for _ in range(CASES):
             emu.reset_data()
@@ -211,6 +310,24 @@ def verify(executable: Path) -> None:
 
         for _ in range(CASES):
             emu.reset_data()
+            interval = rng.randrange(1, 5000)
+            duration = rng.randrange(interval, interval * 64)
+            now = rng.randrange(0x100000000)
+            count = max(duration // interval, 1)
+            storage = emu.alloc(b"\x7B" * (count * 4))
+            owner = emu.alloc(rng.randbytes(16))
+            emu.bind_function(0x009C9790, lambda _emu, current=now: current)
+            emu.bind_function(0x00416840, lambda machine, value=storage: value)
+            game = emu.call(0x005D77E0, [interval, duration], ecx=owner)
+            cpp = checker.call(f"bucketinit . {interval} {duration} {now}").split()
+            assert (game.eax, game.stack_cleanup, emu.read(owner + 4, 12),
+                    emu.read(storage, count * 4)) == (
+                        owner, 8, struct.pack("<III", int(cpp[0]), int(cpp[1]), int(cpp[2])),
+                        bytes.fromhex(cpp[3]))
+            counted("initializeTimeBuckets")
+
+        for _ in range(CASES):
+            emu.reset_data()
             count = rng.randrange(1, 65)
             values = b"".join(struct.pack("<f", rng.uniform(-1000.0, 1000.0))
                               for _ in range(count))
@@ -266,6 +383,23 @@ def verify(executable: Path) -> None:
                 game.eax, 4, bytes(expected), bytes(expected))
             del ours
             counted("setOpaqueValue")
+
+        def htonl_stub(machine: Emulator) -> int:
+            value = machine.stack_arg(0)
+            return struct.unpack("<I", struct.pack(">I", value))[0]
+
+        emu.bind_function(0x00B8DBFC, htonl_stub, stack_cleanup=4)
+        for _ in range(CASES):
+            emu.reset_data()
+            byte_count = rng.randrange(-8, 260)
+            words = max((byte_count + (3 if byte_count < 0 else 0)) // 4, 0)
+            data = rng.randbytes(max(words * 4, 4))
+            pointer = emu.alloc(data)
+            game = emu.call(0x005D7AE0, eax=byte_count, ecx=pointer)
+            ours, output = cpp_memory(checker, "scramble", data, byte_count)
+            assert (game.stack_cleanup, emu.read(pointer, len(data))) == (0, output)
+            del ours
+            counted("scramblePacketWords")
 
         for address, operation, cleanup in (
             (0x005D7EA0, "endpointclear", 4),
@@ -327,6 +461,32 @@ def verify(executable: Path) -> None:
                             emu.read(pointer + 0x40E00, 72)) == (
                                 ours_handle, cleanup, endpoint, output)
                 counted(operation)
+
+        for _ in range(CASES):
+            emu.reset_data()
+            data = rng.randbytes(rng.randrange(1, 512))
+            data_pointer = emu.alloc(data)
+            span = emu.alloc(struct.pack("<II", data_pointer, data_pointer + len(data)))
+            game = emu.call(0x005D88E0, [span])
+            ours, _ = cpp_memory(checker, "countnonzero", data)
+            assert (game.eax, game.stack_cleanup) == (ours, 0)
+            counted("countNonzeroBytes")
+
+        for _ in range(CASES):
+            emu.reset_data()
+            count = rng.randrange(1, 65)
+            first_values = [rng.randrange(-100, 101) for _ in range(count)]
+            second_values = [rng.randrange(-100, 101) for _ in range(count)]
+            first = struct.pack(f"<{count}i", *first_values)
+            second = struct.pack(f"<{count}i", *second_values)
+            first_pointer = emu.alloc(first)
+            second_pointer = emu.alloc(second)
+            first_span = emu.alloc(struct.pack("<II", first_pointer, first_pointer + len(first)))
+            second_span = emu.alloc(struct.pack("<II", second_pointer, second_pointer + len(second)))
+            game = emu.call(0x005D8910, [first_span, second_span])
+            ours, _ = cpp_memory(checker, "minmag", first, second.hex() or ".")
+            assert (game.eax, game.stack_cleanup) == (ours, 0)
+            counted("minimumCombinedMagnitude")
 
         print("net transport oracle:")
         for name, count in totals.items():

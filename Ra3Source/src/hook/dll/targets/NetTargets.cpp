@@ -16,6 +16,14 @@ TargetState activePendingState;
 TargetState copyRecordState;
 TargetState connectionCodeState;
 TargetState opaqueValueState;
+TargetState nonzeroBytesState;
+TargetState minimumMagnitudeState;
+
+template <typename T>
+struct Range {
+    const T* begin;
+    const T* end;
+};
 
 bool __fastcall rowConnectedHook(void* self, void*, std::uint16_t row)
 {
@@ -122,6 +130,39 @@ std::uint32_t __fastcall opaqueValueHook(void* self, void*, std::uint32_t value)
     return game;
 }
 
+std::int32_t __cdecl nonzeroBytesHook(const Range<std::uint8_t>* range)
+{
+    ++nonzeroBytesState.calls;
+    const auto ours = ra3::net::countNonzeroBytes(range->begin, range->end);
+    if (nonzeroBytesState.mode == Mode::replace) {
+        return ours;
+    }
+    using Original = std::int32_t(__cdecl*)(const Range<std::uint8_t>*);
+    const auto game = reinterpret_cast<Original>(nonzeroBytesState.original)(range);
+    recordScalar("netnonzerobytes", nonzeroBytesState,
+                 static_cast<std::uint32_t>(game), static_cast<std::uint32_t>(ours));
+    return game;
+}
+
+std::int32_t __cdecl minimumMagnitudeHook(
+    const Range<std::int32_t>* first, const Range<std::int32_t>* second)
+{
+    ++minimumMagnitudeState.calls;
+    const auto ours = ra3::net::minimumCombinedMagnitude(
+        first == nullptr ? nullptr : first->begin, first == nullptr ? nullptr : first->end,
+        second == nullptr ? nullptr : second->begin, second == nullptr ? nullptr : second->end);
+    if (minimumMagnitudeState.mode == Mode::replace) {
+        return ours;
+    }
+    using Original = std::int32_t(__cdecl*)(
+        const Range<std::int32_t>*, const Range<std::int32_t>*);
+    const auto game =
+        reinterpret_cast<Original>(minimumMagnitudeState.original)(first, second);
+    recordScalar("netminimummagnitude", minimumMagnitudeState,
+                 static_cast<std::uint32_t>(game), static_cast<std::uint32_t>(ours));
+    return game;
+}
+
 }  // namespace
 
 void appendNetTargets(std::vector<Target>& table)
@@ -147,6 +188,12 @@ void appendNetTargets(std::vector<Target>& table)
     table.push_back({"netopaquevalue", 0x001D77D0,
         {0x8B, 0x44, 0x24, 0x04, 0x89, 0x01, 0xC2, 0x04, 0x00, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC},
         6, reinterpret_cast<void*>(&opaqueValueHook), &opaqueValueState, true});
+    table.push_back({"netnonzerobytes", 0x001D88E0,
+        {0x8B, 0x4C, 0x24, 0x04, 0x56, 0x8B, 0x31, 0x8B, 0x49, 0x04, 0x2B, 0xCE, 0x33, 0xC0, 0x33, 0xD2},
+        5, reinterpret_cast<void*>(&nonzeroBytesHook), &nonzeroBytesState, true});
+    table.push_back({"netminimummagnitude", 0x001D8910,
+        {0x51, 0x8B, 0x44, 0x24, 0x08, 0x85, 0xC0, 0x56, 0x74, 0x75, 0x8B, 0x4C, 0x24, 0x10, 0x85, 0xC9},
+        5, reinterpret_cast<void*>(&minimumMagnitudeHook), &minimumMagnitudeState, true});
 }
 
 }  // namespace ra3hook
