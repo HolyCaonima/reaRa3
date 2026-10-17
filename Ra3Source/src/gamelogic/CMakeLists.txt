@@ -26,6 +26,7 @@ ra3_add_module(gamelogic
         include/ra3/gamelogic/SkirmishAI8B.h
         src/AIState7A.cpp
         include/ra3/gamelogic/AIState7B.h
+        include/ra3/gamelogic/AIState7B2.h
         include/ra3/gamelogic/AIState79B.h
         include/ra3/gamelogic/AIState7C.h
         src/AIStateMachine7C.cpp
@@ -55,6 +56,7 @@ ra3_add_module(gamelogic
         include/ra3/gamelogic/ObjectModules72.h
         src/ObjectUpdates78.cpp
         src/AIState7B.cpp
+        src/AIState7B2.cpp
         src/AIState79B.cpp
         src/ObjectModules72.cpp
         src/AIState7C.cpp
