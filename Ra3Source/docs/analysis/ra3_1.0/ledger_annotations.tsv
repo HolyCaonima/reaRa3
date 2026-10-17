@@ -3002,3 +3002,46 @@ address	status	owner	module	notes
 0079f880	reversed	recon/aistate79c	gamelogic	ra3::gamelogic::unitAIHordeExitGoalOnEnter; 00c2ec38 slot 4; slot 2 returns UnitAIHordeExitGoalState
 0079fd20	reversed	recon/aistate79c	gamelogic	ra3::gamelogic::unitAIMoveToGoalOnEnter; 00c31668 slot 4; slot 2 returns UnitAIMoveToGoalState; slot-2 getter 0079fed0 is shared by 00c31668 and 00c2ef40, so one table is a subclass inheriting the name (controller)
 0079fee0	reversed	recon/aistate79c	gamelogic	ra3::gamelogic::unitAIMoveToGoalCopyOnEnter; 00c2ef40 slot 4; slot 2 returns UnitAIMoveToGoalState; slot-2 getter 0079fed0 is shared by 00c31668 and 00c2ef40, so one table is a subclass inheriting the name (controller)
+007a0f30	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIGuardIdleState_update; 00c2bc78 slot 5; slot 2 returns AIGuardIdleState
+007a1cb0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIGarrisonedState_xfer; 00c2c268 slot 3; slot 2 returns AIGarrisonedState
+007a1fc0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIInternalMoveToState_xfer; 00c2d6d8 slot 3, also 00c2f388, 00c2f448, 00c30310, 00c31488, 00c31b10, 00c31b60, 00c31bb0, 00c31c00 and 00c32468 slot 3; slot 2 returns AIInternalMoveToState, AIMoveToState, AIMoveOutOfTheWayState, AIMoveForBoarding, AIMoveToAndCollectState and AIMoveToCoverState; slot-2 getter 0079c430 is shared by 00c2d6d8, 00c31b10, 00c31b60, 00c31bb0 and 00c31c00, so those five tables are AIInternalMoveToState or subclasses inheriting its name (controller)
+007a28d0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIBackAwayState_xfer; 00c2f6b8 slot 3; slot 2 returns AIBackAwayState
+007a2a20	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIAttackApproachTargetState_xfer; 00c2f718 slot 3; slot 2 returns AIAttackApproachTargetState
+007a2bb0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIAttackPositionApproachTargetState_xfer; 00c2f788 slot 3; slot 2 returns AIAttackPositionApproachTargetState
+007a2cf0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIAttackMeleeHordeApproachTargetState_xfer; 00c2f800 slot 3; slot 2 returns AIAttackMeleeHordeApproachTargetState
+007a34d0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIAttackPursueTargetState_xfer; 00c2f878 slot 3; slot 2 returns AIAttackPursueTargetState
+007a3620	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIAttackFireDuringApproachState_xfer; 00c2f8e8 slot 3; slot 2 returns AIAttackFireDuringApproachState
+007a3ad0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIAttackMeleeSquishState_xfer; 00c2f9c8 slot 3; slot 2 returns AIAttackMeleeSquishState
+007a3c00	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIAttackMeleeEngageState_xfer; 00c2fa38 slot 3; slot 2 returns AIAttackMeleeEngageState
+007a3e20	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIFollowPathState_xfer; 00c2fb10 slot 3; slot 2 returns AIFollowPathState
+007a3f90	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIFollowPathAsTeamState_xfer; 00c2fb78 slot 3; slot 2 returns AIFollowPathAsTeamState
+007a4200	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIAttackMoveToState_xfer; 00c32180 slot 3; slot 2 returns AIAttackMoveToState
+007a44d0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIFollowWaypointPathState_xfer; 00c2fcb0 slot 3 and 00c324d0 slot 3; slot 2 returns AIFollowWaypointPathState and AIFollowWaypointPathStateAndEvacuate
+007a4650	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIFollowWaypointPathExactState_xfer; 00c2fd20 slot 3; slot 2 returns AIFollowWaypointPathExactState
+007a5400	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIAttackPositionFireWeaponState_onEnter; 00c2ca48 slot 4; slot 2 returns AIAttackPositionFireWeaponState
+007a5510	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIAttackPositionFireWeaponState_update; 00c2ca48 slot 5; slot 2 returns AIAttackPositionFireWeaponState
+007a55b0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIWaitUntilFinishedFiringState_onEnter; 00c2cb88 slot 4; slot 2 returns AIWaitUntilFinishedFiringState
+007a5d00	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIHordeEnterState_onEnter; 00c2cea0 slot 4; slot 2 returns AIHordeEnterState
+007a6020	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIGoingIdleState_onEnter; 00c2d168 slot 4; slot 2 returns AIGoingIdleState
+007a6140	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AITunnelNetworkGuardState_update; 00c2d230 slot 5; slot 2 returns AITunnelNetworkGuardState
+007a6390	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIChargeTargetState_xfer; 00c2ff50 slot 3; slot 2 returns AIChargeTargetState
+007a6530	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIPrepareForBoarding_onEnter; 00c2d300 slot 4; slot 2 returns AIPrepareForBoarding
+007a68f0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AITNGuardReturnState_xfer; 00c33840 slot 3; slot 2 returns AITNGuardReturnState
+007a9220	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::JetAIAttackMoveToGoalState_onEnter; 00c2dbd0 slot 4; slot 2 returns JetAIAttackMoveToGoalState
+007a93f0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::JetAILandingApproachState_onEnter; 00c2dc40 slot 4; slot 2 returns JetAILandingApproachState
+007a94e0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::UnitAILandState_update; 00c30b70 slot 5; slot 2 returns UnitAILandState
+007a9580	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::UnitAIParkOrientState_onEnter; 00c2dde8 slot 4; slot 2 returns UnitAIParkOrientState
+007a9610	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::UnitAIParkOrientState_onExit; 00c2dde8 slot 6; slot 2 returns UnitAIParkOrientState
+007a9690	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::UnitAIReloadAmmoState_onEnter; 00c29ed8 slot 4; slot 2 returns UnitAIReloadAmmoState
+007a98b0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::UnitAITakeOffState_update; 00c30bd0 slot 5; slot 2 returns UnitAITakeOffState
+007aaa40	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::UnitAIAttackMoveToGoalState_onEnter; 00c2e2f8 slot 4; slot 2 returns UnitAIAttackMoveToGoalState
+007aaac0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::UnitAIAttackPositionState_onEnter; 00c2e3d0 slot 4; slot 2 returns UnitAIAttackPositionState
+007aabd0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::UnitAICombinedUnitIdleState_onEnter; 00c2aba8 slot 4; slot 2 returns UnitAICombinedUnitIdleState
+007ab170	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::UnitAIEnterGoalState_onEnter; 00c2e718 slot 4; slot 2 returns UnitAIEnterGoalState
+007ab4f0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIFollowExitProductionPathState_onEnter; 00c31210 slot 4; slot 2 returns AIFollowExitProductionPathState
+007abec0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::UnitAIMoveOnPathState_onExit; 00c2ed20 slot 6; slot 2 returns UnitAIMoveOnPathState
+007ac1f0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::UnitAIMoveOutOfTheWayState_onEnter; 00c2ed88 slot 4; slot 2 returns UnitAIMoveOutOfTheWayState
+007acf90	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::UnitAIParachuteToGroundState_onEnter; 00c2f018 slot 4; slot 2 returns UnitAIParachuteToGroundState
+007ad4c0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AI_xfer; 00c31a50 slot 3; slot 2 returns AI
+007aebf0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIHarvestWorkSiteState_onEnter; 00c2bec8 slot 4; slot 2 returns AIHarvestWorkSiteState
+007af6f0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIPlayer_offerTeam; 00c336a0 slot 25 and 00c33718 slot 25; slot 2 returns AIPlayer and AISkirmishPlayer
