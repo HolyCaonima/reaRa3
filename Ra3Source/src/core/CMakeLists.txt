@@ -8,10 +8,12 @@ ra3_add_module(core
         include/ra3/core/Result.h
         include/ra3/core/SkuDef.h
         include/ra3/core/StringUtil.h
+        include/ra3/core/TextFile4D.h
         src/FileUtil.cpp
         src/GameConfig.cpp
         src/IniFile.cpp
         src/LuaVmPorts.cpp
-        src/SkuDef.cpp)
+        src/SkuDef.cpp
+        src/TextFile4D.cpp)
 
 target_compile_definitions(ra3_core PRIVATE RA3_DEFAULT_CONFIG_PATH="${RA3_DEFAULT_CONFIG}")
