@@ -1,11 +1,13 @@
 ra3_add_module(common
     SOURCES
         include/ra3/common/ByteString.h
+        include/ra3/common/CommonSubsystem.h
         include/ra3/common/Crc32.h
         include/ra3/common/GameString.h
         include/ra3/common/Player.h
         include/ra3/common/ThingTemplate.h
         src/ByteString.cpp
+        src/CommonSubsystem.cpp
         src/Crc32.cpp
         src/GameString.cpp
         src/Player.cpp
