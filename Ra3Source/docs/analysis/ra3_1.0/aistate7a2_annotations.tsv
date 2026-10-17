@@ -1,7 +1,7 @@
 address	status	owner	module	notes
 007a0f30	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIGuardIdleState_update; 00c2bc78 slot 5; slot 2 returns AIGuardIdleState
 007a1cb0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIGarrisonedState_xfer; 00c2c268 slot 3; slot 2 returns AIGarrisonedState
-007a1fc0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIInternalMoveToState_xfer; 00c2d6d8 slot 3, also 00c2f388, 00c2f448, 00c30310, 00c31488, 00c31b10, 00c31b60, 00c31bb0, 00c31c00 and 00c32468 slot 3; slot 2 returns AIInternalMoveToState, AIMoveToState, AIMoveOutOfTheWayState, AIMoveForBoarding, AIMoveToAndCollectState and AIMoveToCoverState
+007a1fc0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIInternalMoveToState_xfer; 00c2d6d8 slot 3, also 00c2f388, 00c2f448, 00c30310, 00c31488, 00c31b10, 00c31b60, 00c31bb0, 00c31c00 and 00c32468 slot 3; slot 2 returns AIInternalMoveToState, AIMoveToState, AIMoveOutOfTheWayState, AIMoveForBoarding, AIMoveToAndCollectState and AIMoveToCoverState; slot-2 getter 0079c430 is shared by 00c2d6d8, 00c31b10, 00c31b60, 00c31bb0 and 00c31c00, so those five tables are AIInternalMoveToState or subclasses inheriting its name (controller)
 007a28d0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIBackAwayState_xfer; 00c2f6b8 slot 3; slot 2 returns AIBackAwayState
 007a2a20	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIAttackApproachTargetState_xfer; 00c2f718 slot 3; slot 2 returns AIAttackApproachTargetState
 007a2bb0	reversed	recon/aistate7a2	gamelogic	ra3::gamelogic::AIAttackPositionApproachTargetState_xfer; 00c2f788 slot 3; slot 2 returns AIAttackPositionApproachTargetState
