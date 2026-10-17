@@ -15,6 +15,7 @@ ra3_add_shared_library(ra3hook
         dll/Targets.h
         dll/targets/PlayerTargets.cpp
         dll/targets/NetTargets.cpp
+        dll/targets/StringBase2Targets.cpp
     DEPS
         Ra3::asset
         Ra3::common
