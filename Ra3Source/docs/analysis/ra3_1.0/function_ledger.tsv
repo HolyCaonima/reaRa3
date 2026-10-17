@@ -8014,7 +8014,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005d5fb0	FUN_005d5fb0	.text	22		clean	unknown		unanalyzed	
 005d5fd0	FUN_005d5fd0	.text	22		clean	unknown		unanalyzed	
 005d5ff0	FUN_005d5ff0	.text	13		clean	unknown		unanalyzed	
-005d6000	FUN_005d6000	.text	9		clean	unknown		unanalyzed	
+005d6000	FUN_005d6000	.text	9		clean	net	recon/net	reversed	ra3::net::clearPairPointers; Unicorn/netcheck 500 cases
 005d6010	FUN_005d6010	.text	38		clean	unknown		unanalyzed	
 005d6040	FUN_005d6040	.text	108		clean	unknown		unanalyzed	
 005d60b0	FUN_005d60b0	.text	54		clean	unknown		unanalyzed	
@@ -8027,7 +8027,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005d6430	FUN_005d6430	.text	27		clean	unknown		unanalyzed	
 005d6450	FUN_005d6450	.text	72		clean	unknown		unanalyzed	
 005d64a0	FUN_005d64a0	.text	20		clean	unknown		unanalyzed	
-005d64c0	FUN_005d64c0	.text	129		clean	unknown		unanalyzed	
+005d64c0	FUN_005d64c0	.text	129		clean	net	recon/net	reversed	ra3::net::copyBounded; Unicorn/netcheck 500 cases plus strncpy trace
 005d6650	FUN_005d6650	.text	55		clean	unknown		unanalyzed	
 005d6690	FUN_005d6690	.text	27		clean	unknown		unanalyzed	
 005d66b0	FUN_005d66b0	.text	18		clean	unknown		unanalyzed	
@@ -8046,57 +8046,57 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005d6930	FUN_005d6930	.text	110		clean	unknown		unanalyzed	
 005d69a0	FUN_005d69a0	.text	31		clean	unknown		unanalyzed	
 005d69c0	thunk_FUN_0044b026	.text	5		clean	unknown		unanalyzed	
-005d69c5	FUN_005d69c5	.text	47		clean	unknown		unanalyzed	
-005d6a00	FUN_005d6a00	.text	94		clean	unknown		unanalyzed	
-005d6a70	FUN_005d6a70	.text	74		clean	unknown		unanalyzed	
+005d69c5	FUN_005d69c5	.text	47		clean	net	recon/net	reversed	ra3::net::matrixCell; Unicorn/netcheck 500 cases
+005d6a00	FUN_005d6a00	.text	94		clean	net	recon/net	reversed	ra3::net::resetConnectionMatrix; Unicorn/netcheck 500 cases
+005d6a70	FUN_005d6a70	.text	74		clean	net	recon/net	reversed	ra3::net::rowHasConnectedPeer; Unicorn/netcheck 500 cases
 005d6ac0	FUN_005d6ac0	.text	195		clean	unknown		unanalyzed	
 005d6b90	FUN_005d6b90	.text	102		clean	unknown		unanalyzed	
-005d6c00	FUN_005d6c00	.text	49		clean	unknown		unanalyzed	
+005d6c00	FUN_005d6c00	.text	49		clean	net	recon/net	reversed	ra3::net::connectionValue; Unicorn/netcheck 500 cases
 005d6c40	FUN_005d6c40	.text	132	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
 005d6cd0	FUN_005d6cd0	.text	132	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
 005d6d60	FUN_005d6d60	.text	236	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
-005d6e50	FUN_005d6e50	.text	77		clean	unknown		unanalyzed	
-005d6ea0	FUN_005d6ea0	.text	97		clean	unknown		unanalyzed	
+005d6e50	FUN_005d6e50	.text	77		clean	net	recon/net	reversed	ra3::net::elapsedPastTimeout(peer); Unicorn/netcheck 500 cases
+005d6ea0	FUN_005d6ea0	.text	97		clean	net	recon/net	reversed	ra3::net::addLatencySample; Unicorn/netcheck 500 cases
 005d6f10	FUN_005d6f10	.text	62		clean	unknown		unanalyzed	
 005d6f50	FUN_005d6f50	.text	79		clean	unknown		unanalyzed	
-005d6fa0	FUN_005d6fa0	.text	127		clean	unknown		unanalyzed	
-005d7020	FUN_005d7020	.text	113		clean	unknown		unanalyzed	
-005d70a0	FUN_005d70a0	.text	153		clean	unknown		unanalyzed	
+005d6fa0	FUN_005d6fa0	.text	127		clean	net	recon/net	reversed	ra3::net::compactAndAppend; Unicorn/netcheck 500 cases plus allocator/free trace
+005d7020	FUN_005d7020	.text	113		clean	net	recon/net	reversed	ra3::net::popFramed; Unicorn/netcheck 500 cases
+005d70a0	FUN_005d70a0	.text	153		clean	net	recon/net	reversed	ra3::net::appendFramed; Unicorn/netcheck 500 cases plus allocator/free trace
 005d7140	FUN_005d7140	.text	161		clean	unknown		unanalyzed	
 005d71f0	FUN_005d71f0	.text	87		clean	unknown		unanalyzed	
-005d7250	FUN_005d7250	.text	77		clean	unknown		unanalyzed	
-005d72a0	FUN_005d72a0	.text	44		clean	unknown		unanalyzed	
+005d7250	FUN_005d7250	.text	77		clean	net	recon/net	reversed	ra3::net::elapsedPastTimeout(session); Unicorn/netcheck 500 cases
+005d72a0	FUN_005d72a0	.text	44		clean	net	recon/net	reversed	ra3::net::packetHeaderSize; Unicorn/netcheck 500 cases
 005d72d0	FUN_005d72d0	.text	62		clean	unknown		unanalyzed	
 005d7310	FUN_005d7310	.text	217		clean	unknown		unanalyzed	
 005d73f0	FUN_005d73f0	.text	99		clean	unknown		unanalyzed	
 005d7460	FUN_005d7460	.text	140		inner-patched	unknown		unanalyzed	
-005d7500	FUN_005d7500	.text	145		clean	unknown		unanalyzed	
-005d75e0	FUN_005d75e0	.text	29		clean	unknown		unanalyzed	
+005d7500	FUN_005d7500	.text	145		clean	net	recon/net	reversed	ra3::net::activePeerPendingTotal; Unicorn/netcheck 500 cases
+005d75e0	FUN_005d75e0	.text	29		clean	net	recon/net	reversed	ra3::net::copyTransportRecord; Unicorn/netcheck 500 cases
 005d7600	FUN_005d7600	.text	30		clean	unknown		unanalyzed	
 005d7620	FUN_005d7620	.text	27		clean	unknown		unanalyzed	
-005d7640	FUN_005d7640	.text	103		clean	unknown		unanalyzed	
+005d7640	FUN_005d7640	.text	103		clean	net	recon/net	reversed	ra3::net::makeConnectionCode; Unicorn/netcheck 500 cases
 005d76b0	FUN_005d76b0	.text	82		clean	unknown		unanalyzed	
 005d7710	FUN_005d7710	.text	68		clean	unknown		unanalyzed	
 005d7760	FUN_005d7760	.text	109		clean	unknown		unanalyzed	
-005d77d0	FUN_005d77d0	.text	9		clean	unknown		unanalyzed	
-005d77e0	FUN_005d77e0	.text	103		clean	unknown		unanalyzed	
-005d7850	FUN_005d7850	.text	38		clean	unknown		unanalyzed	
-005d7880	FUN_005d7880	.text	112		clean	unknown		unanalyzed	
-005d78f0	FUN_005d78f0	.text	129		clean	unknown		unanalyzed	
+005d77d0	FUN_005d77d0	.text	9		clean	net	recon/net	reversed	ra3::net::setOpaqueValue; Unicorn/netcheck 500 cases
+005d77e0	FUN_005d77e0	.text	103		clean	net	recon/net	reversed	ra3::net::initializeTimeBuckets; Unicorn/netcheck 500 cases plus allocator trace
+005d7850	FUN_005d7850	.text	38		clean	net	recon/net	reversed	ra3::net::resetTimeBuckets; Unicorn/netcheck 500 cases
+005d7880	FUN_005d7880	.text	112		clean	net	recon/net	reversed	ra3::net::addTimeBucketValue; Unicorn/netcheck 500 cases
+005d78f0	FUN_005d78f0	.text	129		clean	net	recon/net	reversed	ra3::net::sumTimeBuckets; Unicorn/netcheck 500 cases
 005d7980	FUN_005d7980	.text	41		clean	unknown		unanalyzed	
 005d79b0	FUN_005d79b0	.text	41		clean	unknown		unanalyzed	
 005d79e0	FUN_005d79e0	.text	10		clean	unknown		unanalyzed	
 005d79f0	FUN_005d79f0	.text	10		clean	unknown		unanalyzed	
 005d7a00	FUN_005d7a00	.text	189	SageEngine\source\GameEngine\gamenetwork\TickerDataHandler.cpp	clean	net		unanalyzed	
 005d7ac0	FUN_005d7ac0	.text	28		inner-patched	unknown		unanalyzed	
-005d7ae0	FUN_005d7ae0	.text	62		clean	unknown		unanalyzed	
+005d7ae0	FUN_005d7ae0	.text	62		clean	net	recon/net	reversed	ra3::net::scramblePacketWords; Unicorn/netcheck 500 cases
 005d7b20	FUN_005d7b20	.text	316		clean	unknown		unanalyzed	
 005d7c60	FUN_005d7c60	.text	397		clean	unknown		unanalyzed	
 005d7df0	FUN_005d7df0	.text	175		clean	unknown		unanalyzed	
-005d7ea0	FUN_005d7ea0	.text	124		clean	unknown		unanalyzed	
-005d7f20	FUN_005d7f20	.text	68		clean	unknown		unanalyzed	
-005d7f70	FUN_005d7f70	.text	67		clean	unknown		unanalyzed	
-005d7fc0	FUN_005d7fc0	.text	45		clean	unknown		unanalyzed	
+005d7ea0	FUN_005d7ea0	.text	124		clean	net	recon/net	reversed	ra3::net::clearEndpointSlot; Unicorn/netcheck 500 cases
+005d7f20	FUN_005d7f20	.text	68		clean	net	recon/net	reversed	ra3::net::setEndpointSlot; Unicorn/netcheck 500 cases
+005d7f70	FUN_005d7f70	.text	67		clean	net	recon/net	reversed	ra3::net::takeEndpointSlot; Unicorn/netcheck 500 cases
+005d7fc0	FUN_005d7fc0	.text	45		clean	net	recon/net	reversed	ra3::net::updateEndpointSlot; Unicorn/netcheck 500 cases
 005d7ff0	FUN_005d7ff0	.text	42		clean	unknown		unanalyzed	
 005d8002	FUN_005d8002	.text	41	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 005d8070	FUN_005d8070	.text	70		clean	unknown		unanalyzed	
@@ -8120,8 +8120,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005d8680	FUN_005d8680	.text	242		clean	unknown		unanalyzed	
 005d8780	FUN_005d8780	.text	184		clean	unknown		unanalyzed	
 005d8840	FUN_005d8840	.text	82		clean	unknown		unanalyzed	
-005d88e0	FUN_005d88e0	.text	38		clean	unknown		unanalyzed	
-005d8910	FUN_005d8910	.text	135		clean	unknown		unanalyzed	
+005d88e0	FUN_005d88e0	.text	38		clean	net	recon/net	reversed	ra3::net::countNonzeroBytes; Unicorn/netcheck 500 cases
+005d8910	FUN_005d8910	.text	135		clean	net	recon/net	reversed	ra3::net::minimumCombinedMagnitude; Unicorn/netcheck 500 cases
 005d89a0	thunk_FUN_005d4150	.text	5		clean	unknown		unanalyzed	
 005d89b0	FUN_005d89b0	.text	281		clean	unknown		unanalyzed	
 005d8ad0	FUN_005d8ad0	.text	289		clean	unknown		unanalyzed	
