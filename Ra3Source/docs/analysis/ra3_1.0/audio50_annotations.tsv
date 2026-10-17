@@ -1,0 +1,31 @@
+address	status	owner	module	notes
+00502270	reversed	recon/audio50	audio	ra3::audio::resolveSpeakerCenterChannel; called from 00515050 at 00515423, and 00515050 is called from RenderingSound.cpp 00515B70 at 00515E2F.
+00502540	reversed	recon/audio50	audio	ra3::audio::bindSoundProvider; called from SagePathMusicManager vtable 00BDF3A4 slot 1 (00506710) at 0050674E.
+00502fb0	reversed	recon/audio50	audio	ra3::audio::sageAudioManagerEmptyEventAddress; SageAudioManager instance vtable 00BDF5A8 slot 73. 0051BA00 stores that vtable at object+0. Slot 2 of 00BDF5A8 is not a name getter; the name comes from subsystem vtable 00BDF594.
+00502ff0	reversed	recon/audio50	audio	ra3::audio::sageAudioManagerStopAllImmediately; SageAudioManager instance vtable 00BDF5A8 slot 4.
+00503290	reversed	recon/audio50	audio	ra3::audio::sageAudioManagerListenerOrientationCount; SageAudioManager instance vtable 00BDF5A8 slot 20.
+00503300	reversed	recon/audio50	audio	ra3::audio::sageAudioManagerSubsystemNameAddress; subsystem vtable 00BDF594 slot 2, mov eax, 00BDEDB4 ("SageAudioManager"). 0051BA00 stores 00BDF594 at object+0x24.
+00503400	reversed	recon/audio50	audio	ra3::audio::sagePathMusicManagerSubsystemNameAddress; SagePathMusicManager vtable 00BDF3A4 slot 2, mov eax, 00BDEDC8 ("SagePathMusicManager").
+005044f0	reversed	recon/audio50	audio	ra3::audio::initAudioEventHandle; direct call from SageAudioManager.cpp 0051E560 at 0051E698.
+00504560	reversed	recon/audio50	audio	ra3::audio::releaseAudioEventHandle; direct call from SageAudioManager.cpp 005161C0 at 00516398.
+005045c0	reversed	recon/audio50	audio	ra3::audio::releasePlayingAudioHandle; direct call from SageAudioManager.cpp 0051E560 at 0051E9F4.
+005045e0	reversed	recon/audio50	audio	ra3::audio::unlinkPlayingAudioNode; called from 00519740 at 005198E9. 00519740 is called from EASTL allocator.h 00519C50 at 00519FB0.
+00504ac0	reversed	recon/audio50	audio	ra3::audio::testAudioEventCategoryBit; direct call from SageAudioManager.cpp 0051D3C0 at 0051D607.
+00504af0	reversed	recon/audio50	audio	ra3::audio::intersectsAudioEventCategoryMask; called from 00508510 at 005085E2. 00508510 is called from RenderingSound.cpp 00515B70 at 00515E28.
+00504c80	reversed	recon/audio50	audio	ra3::audio::recomputePlayerCategoryVolume; called from 00505340 at 00505384. 00505340 is called from SageAudioManager vtable slot 71 (00506670).
+00504df0	reversed	recon/audio50	audio	ra3::audio::recomputePlayerCategoryProduct; called from 00505340 at 00505375.
+00504ec0	reversed	recon/audio50	audio	ra3::audio::decrementPlayerVolumeCounters; called from 0051EFF0 at 0051F182. 0051EFF0 is SageAudioManager instance vtable 00BDF5A8 slot 5.
+00505340	reversed	recon/audio50	audio	ra3::audio::acquireVolumeModifierLock; called from SageAudioManager vtable 00BDF5A8 slot 71 (00506670) at 00506675.
+005053b0	reversed	recon/audio50	audio	ra3::audio::releaseVolumeModifierLock; called from SageAudioManager vtable 00BDF5A8 slot 72 (00506680) at 00506685.
+00506430	reversed	recon/audio50	audio	ra3::audio::sageAudioManagerQuerySuppressed; SageAudioManager instance vtable 00BDF5A8 slot 101.
+00506670	reversed	recon/audio50	audio	ra3::audio::sageAudioManagerOnAcquireVolumeModifierLock; SageAudioManager instance vtable 00BDF5A8 slot 71.
+00506680	reversed	recon/audio50	audio	ra3::audio::sageAudioManagerOnReleaseVolumeModifierLock; SageAudioManager instance vtable 00BDF5A8 slot 72.
+00506c20	reversed	recon/audio50	audio	ra3::audio::initCategoryBitsFour; called from vtable 00BDC45C slot 2 (004D9E20) at 004D9E2F. That slot is not a mov/ret name getter.
+00506c90	reversed	recon/audio50	audio	ra3::audio::initCategoryBitsTwo; called from 00508510 at 00508594. 00508510 is called from RenderingSound.cpp 00515B70 at 00515E28.
+00507720	reversed	recon/audio50	audio	ra3::audio::hasActiveRenderCursor; direct call from SageAudioManager.cpp 0051D3C0 at 0051D6BB.
+00508640	reversed	recon/audio50	audio	ra3::audio::appendPlayingAudioNode; called from 005181E0 at 005182DD. 005181E0 is called from 00519740 at 005198C8, and 00519740 is called from EASTL allocator.h 00519C50 at 00519FB0.
+0050b090	reversed	recon/audio50	audio	ra3::audio::sagePathMusicManagerTransferState; SagePathMusicManager vtable 00BDF3A4 slot 3.
+0050df80	reversed	recon/audio50	audio	ra3::audio::eraseListenerRecord; tail-called from 0050E510 at 0050E517. 0050E510 is SageAudioManager instance vtable 00BDF5A8 slot 92.
+0050e510	reversed	recon/audio50	audio	ra3::audio::sageAudioManagerRemoveListenerEntry; SageAudioManager instance vtable 00BDF5A8 slot 92.
+0050fa80	reversed	recon/audio50	audio	ra3::audio::applyListedVolumeModifiers; called from 0050FD50 at 0050FD6D. 0050FD50 is called from RenderingSound.cpp 00515B70 at 00515DB6.
+0050fd50	reversed	recon/audio50	audio	ra3::audio::refreshRenderingPlayerVolumes; direct call from RenderingSound.cpp 00515B70 at 00515DB6.
