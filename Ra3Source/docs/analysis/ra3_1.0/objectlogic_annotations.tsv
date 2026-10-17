@@ -1,0 +1,30 @@
+address	status	owner	module	notes
+00685dc0	reversed	recon/objectlogic	gamelogic	WeaponTemplate zero aim value; x87 return
+006a2400	reversed	recon/objectlogic	gamelogic	WeaponSet first weapon and bounded slot
+006a2430	reversed	recon/objectlogic	gamelogic	WeaponSet indexed weapon
+006a2440	reversed	recon/objectlogic	gamelogic	WeaponSet current weapon inactivity
+006a24a0	reversed	recon/objectlogic	gamelogic	WeaponSet aggregate anti masks
+006a24f0	reversed	recon/objectlogic	gamelogic	WeaponSet longest-range weapon position
+006a2560	reversed	recon/objectlogic	gamelogic	WeaponSet matching anti-mask count
+006a25f0	reversed	recon/objectlogic	gamelogic	WeaponSet template lookup
+006a2630	reversed	recon/objectlogic	gamelogic	WeaponSet effective minimum range
+006a2840	reversed	recon/objectlogic	gamelogic	WeaponStateMachine deadline
+006a2ab0	reversed	recon/objectlogic	gamelogic	WeaponStateMachine randomized duration; assertion source path
+006a2bd0	reversed	recon/objectlogic	gamelogic	WeaponStateMachine readiness fraction update
+006a2d30	reversed	recon/objectlogic	gamelogic	WeaponTemplate speed multiplier; x87 return
+006a2dc0	reversed	recon/objectlogic	gamelogic	WeaponTemplate attack range for target; x87 return
+006a3120	reversed	recon/objectlogic	gamelogic	WeaponTemplate target effect selection
+006a82f0	reversed	recon/objectlogic	gamelogic	Weapon constructor; exact 0x78-byte layout
+006a8530	reversed	recon/objectlogic	gamelogic	Weapon minimum-range target test
+006a8580	reversed	recon/objectlogic	gamelogic	Weapon readiness fraction; x87 return
+006a8650	reversed	recon/objectlogic	gamelogic	Weapon object-filter acceptance
+006a86c0	reversed	recon/objectlogic	gamelogic	Weapon pre-fire state test
+006a8700	reversed	recon/objectlogic	gamelogic	Weapon pitch acceptance
+006a8840	reversed	recon/objectlogic	gamelogic	Weapon attack suppression by state
+006a8870	reversed	recon/objectlogic	gamelogic	Weapon can-fire-now state predicate
+006a88f0	reversed	recon/objectlogic	gamelogic	Weapon cached target position and transform
+006bd260	reversed	recon/objectlogic	gamelogic	WeaponCoolDownState deadline
+006bd2c0	reversed	recon/objectlogic	gamelogic	WeaponCoolDownState enter
+006bd310	reversed	recon/objectlogic	gamelogic	WeaponCoolDownState update
+006ed440	reversed	recon/objectlogic	gamelogic	WeaponReloadState update
+006ed4a0	reversed	recon/objectlogic	gamelogic	WeaponReloadState enter
