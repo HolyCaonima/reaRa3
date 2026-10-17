@@ -1,0 +1,57 @@
+address	status	owner	module	notes
+00881130	reversed	recon/skirmishai89	gamelogic	AIBudgetStateManager::normalizeStateScores; call 00881130 008863b0 00886435
+00882190	reversed	recon/skirmishai89	gamelogic	AIUpgrade::resetBuildPosition; vt 00882190 00c52d48 19
+00882400	reversed	recon/skirmishai89	gamelogic	AIBuildableStructure::setBuildPosition; vt 00882400 00c527c8 26
+00882a90	reversed	recon/skirmishai89	gamelogic	AIBuildPersonalityConfig::findBitmaskFloatOrZero; call 00882a90 008849f0 00884a3b
+00882ae0	reversed	recon/skirmishai89	gamelogic	AIBuildPersonalityConfig::findEntry20ByBit; call 00882ae0 008849f0 00884a2d
+00882c30	reversed	recon/skirmishai89	gamelogic	AIBuildPersonalityConfig::findBitmaskFloatOrOne; call 00882c30 007f5900 007f595c
+00884550	reversed	recon/skirmishai89	gamelogic	AIBaseBuilder::updateBasePriorityFlags; call 00884550 008c6510 008c6534
+00884c40		recon/skirmishai89	gamelogic	AIBuilder::hasActiveBuilderAtPosition; owned by call 00884c40 008aacb0 but the builder-slot walk is not in the differential oracle
+00886320	reversed	recon/skirmishai89	gamelogic	AIBudgetState::evaluateHeuristicProduct; call 00886320 008863b0 008863fc
+00887170	reversed	recon/skirmishai89	gamelogic	AIBuildableQueue::popNextTemplateId; call 00887170 00893020 008930b8
+00887300	reversed	recon/skirmishai89	gamelogic	AIBuildableRegistry::findEntryByTemplateId; call 00887300 00887860 00887863
+008878c0	reversed	recon/skirmishai89	gamelogic	AIBuildableRegistry::lookupNestedValue; call 008878c0 008c4d40 008c4d63
+00887d60	reversed	recon/skirmishai89	gamelogic	AIBuildableEntry::init; call 00887d60 008d2130 008d222b
+0088a0e0	reversed	recon/skirmishai89	gamelogic	AIBankAccount::sumWeightedRequestsAbovePriority; call 0088a0e0 008900b0 008900dc
+0088ad80	reversed	recon/skirmishai89	gamelogic	AIBuilder::sumQueuedPowerDelta; call 0088ad80 00892670 0089270f
+0088ae10		recon/skirmishai89	gamelogic	AIBuilder::countQueuedTemplate; no vt or call chain to a vtable whose slot 2 is a ledger function
+0088afc0	reversed	recon/skirmishai89	gamelogic	AIBuilder::notifyObjectConstructed; call 0088afc0 00743010 00743110
+0088bc10	reversed	recon/skirmishai89	gamelogic	AIEconomyStatsSubobject::initWithOwner; call 0088bc10 008b31b0 008b3202
+0088be50	reversed	recon/skirmishai89	gamelogic	AIEconomyStats::findStatValueByKey; call 0088be50 00782ec0 00782f93
+0088be90	reversed	recon/skirmishai89	gamelogic	AIEconomyStatsSlidingWindow::pruneExpiredSamples; call 0088be90 00897ed0 00897ed6
+0088d120	reversed	recon/skirmishai89	gamelogic	AIBuildableGroup::containsTemplateId; call 0088d120 0088d1a0 0088d1c5
+0088d1a0	reversed	recon/skirmishai89	gamelogic	AIBuildableCategoryMap::containsTemplateId; call 0088d1a0 008c6590 008c65e2
+0088de50	reversed	recon/skirmishai89	gamelogic	AIBuildableIterator::advanceToNextActive; call 0088de50 008ca380 008ca417
+0088dec0	reversed	recon/skirmishai89	gamelogic	AIBuildableCategoryMap::findFirstActiveForKey; call 0088dec0 008ca380 008ca3a7
+008900b0	reversed	recon/skirmishai89	gamelogic	AIBankAccount::canAffordRequest; call 008900b0 008cf360 008cf48b
+00890400	reversed	recon/skirmishai89	gamelogic	AIBase::getPosition; call 00890400 008a2bd0 008a2dca
+00890600	reversed	recon/skirmishai89	gamelogic	AIBaseQueryCriteria::isCandidateBetterThanBest; call 00890600 008908c0 00890972
+008908c0	reversed	recon/skirmishai89	gamelogic	AIBaseBuilder::findBestMatchingBase; call 008908c0 008a2bd0 008a2dbf
+008925b0		recon/skirmishai89	gamelogic	AIBuildState::claimFirstMatchingBuilderSlot; owned, deferred: builder-slot claim is not in the differential oracle
+00892670		recon/skirmishai89	gamelogic	AIBaseBuilder::hasEnoughPowerForTemplate; owned, deferred: power check is not in the differential oracle
+00893520		recon/skirmishai89	gamelogic	AIBuildState::shouldEstablishNewBase; owned, deferred: new-base predicate is not in the differential oracle
+00893880	reversed	recon/skirmishai89	gamelogic	AIBuildState::findActiveObjectBySlotKey; call 00893880 00896760 0089679f
+00893920	reversed	recon/skirmishai89	gamelogic	AIBuildState::getSlotAuxiliaryIdIfObjectAlive; call 00893920 008d0550 008d071b
+00893a00	reversed	recon/skirmishai89	gamelogic	AIBuildState::hasAliveTrackedObjectForCandidate; call 00893a00 008a0dc0 008a0dc9
+00897bb0	reversed	recon/skirmishai89	gamelogic	AIEconomyStatsSubobject::initDefault; call 00897bb0 00897f90 00898019
+00897ed0	reversed	recon/skirmishai89	gamelogic	AIEconomyStats::updateSlidingWindow; vt 00897ed0 00c51e0c 4
+0089a6d0	reversed	recon/skirmishai89	gamelogic	AIBuildableEntry::resolveStructureObject; call 0089a6d0 008a1840 008a1981
+0089a740	reversed	recon/skirmishai89	gamelogic	AIBuildableEntry::getStructureOrFallbackPosition; call 0089a740 007e54c0 007e54eb
+0089ac90		recon/skirmishai89	gamelogic	AIBuildableStructureTracker::init; no vt or call chain to a vtable whose slot 2 is a ledger function
+0089af50	reversed	recon/skirmishai89	gamelogic	AIBuildHeuristic::initBase; call 0089af50 007f74d0 007f75f7
+0089d070	reversed	recon/skirmishai89	gamelogic	AIBuilder::hasActiveBuildableEntryForObjectId; call 0089d070 008a2bd0 008a2d8b
+0089d0d0	reversed	recon/skirmishai89	gamelogic	AIBuilder::hasActiveBuildableEntryAtPosition; call 0089d0d0 008a3fa0 008a4007
+0089dd90	reversed	recon/skirmishai89	gamelogic	AIBuildableCandidateVector::eraseRange68; call 0089dd90 008c46e0 008c482c
+0089e700	reversed	recon/skirmishai89	gamelogic	AIBaseQueryCriteria::insertionSortBounded; call 0089e700 008cb8f0 008cb98a
+0089e750	reversed	recon/skirmishai89	gamelogic	AIBaseQueryCriteria::insertionSortUnguarded; call 0089e750 008cb8f0 008cb9bb
+0089f140	reversed	recon/skirmishai89	gamelogic	AIBaseQueryCriteria::selectMedianOfThree; call 0089f140 008c6180 008c6208
+0089f1d0	reversed	recon/skirmishai89	gamelogic	AIBaseQueryCriteria::partitionByPivot; call 0089f1d0 008c6180 008c6213
+0089f480		recon/skirmishai89	gamelogic	AIBuildHeuristicStore::init; no vt or call chain to a vtable whose slot 2 is a ledger function
+0089fe10	reversed	recon/skirmishai89	gamelogic	AIBaseBuilder::pruneAssignedStructures; call 0089fe10 008c62d0 008c62d9
+0089feb0		recon/skirmishai89	gamelogic	AIBuildStateManager::removeMatchingOrProducedTemplate; owned, deferred: template removal is not in the differential oracle
+008aab70	reversed	recon/skirmishai89	gamelogic	AIBuildableStructure::getEffectivePriority; vt 008aab70 00c527c8 6
+008aabb0	reversed	recon/skirmishai89	gamelogic	AIBuildableStructure::getValuePerCost; vt 008aabb0 00c527c8 11
+008aabe0	reversed	recon/skirmishai89	gamelogic	AIBuildableUnit::getValuePerCost; vt 008aabe0 00c52cd8 12
+008aac20	reversed	recon/skirmishai89	gamelogic	AIRebuildableStructure::getScaledDelayFrames; vt 008aac20 00c53048 15
+008aeeb0	reversed	recon/skirmishai89	gamelogic	AIBaseBuilder::moveStructureToUnderConstruction; call 008aeeb0 008af000 008af068
+008aef30	reversed	recon/skirmishai89	gamelogic	AIBaseBuilder::moveStructureToCompleted; call 008aef30 008af000 008af04e
