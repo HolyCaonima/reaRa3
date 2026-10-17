@@ -167,10 +167,24 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `unicodestringremovelast` | `0x004CAF90` `StringBase<wchar_t>` 删除末字符 | thiscall | 5 | `ra3::common::removeLastGameCharacter` | live verified；仅显式键启用 |
 | `unicodestringset` | `0x004CB9B0` `StringBase<wchar_t>` 设置 (text, length) | thiscall（2） | 6 | `ra3::common::setGameString` | live verified；仅显式键启用 |
 | `unicodestringconcat` | `0x004CBA00` `StringBase<wchar_t>` 追加 (text, length) | thiscall（2） | 7 | `ra3::common::concatGameString` | live verified；仅显式键启用 |
+| `w3dviewwirepending` | `0x00562290` 延迟线框标志 | thiscall（1） | 10 | `ra3::render::setWireframePending` | offline-verified, live pending；仅显式键启用 |
+| `w3dviewclearfilter` | `0x005622A0` 清过滤器状态 | thiscall（1） | 7 | `ra3::render::clearFilter` | offline-verified, live pending；仅显式键启用 |
+| `w3dviewfilter` | `0x005622C0` 设置过滤器状态 | thiscall（2） | 7 | `ra3::render::setFilter` | offline-verified, live pending；仅显式键启用 |
+| `w3dviewmovementfinished` | `0x00562570` 相机移动完成测试 | thiscall | 7 | `ra3::render::cameraMovementFinished` | offline-verified, live pending；仅显式键启用 |
+| `w3dviewlockequals` | `0x005625C0` 相机锁定 ObjectId 比较 | thiscall（1） | 6 | `ra3::render::cameraLockEquals` | offline-verified, live pending；仅显式键启用 |
+| `w3dviewclearshake` | `0x00562950` 清相机抖动状态 | thiscall | 5 | `ra3::render::clearCameraShake` | offline-verified, live pending；仅显式键启用 |
+| `w3dviewshakeactive` | `0x00562940` 抖动标志原始字节 | thiscall | 6 | `ra3::render::cameraShakeActive` | offline-verified, live pending；仅显式键启用 |
+| `w3dviewshakeflag0` | `0x00562990` 抖动标志 `+0x2737` | thiscall（1） | 10 | `ra3::render::setCameraShakeFlag0` | offline-verified, live pending；仅显式键启用 |
+| `w3dviewshakeflag1` | `0x005629A0` 抖动标志 `+0x2736` | thiscall（1） | 10 | `ra3::render::setCameraShakeFlag1` | offline-verified, live pending；仅显式键启用 |
+| `w3dviewshakeflag2` | `0x005629B0` 抖动标志 `+0x2735` | thiscall（1） | 10 | `ra3::render::setCameraShakeFlag2` | offline-verified, live pending；仅显式键启用 |
+| `w3dviewshakeflag3` | `0x005629C0` 抖动标志 `+0x2738` | thiscall（1） | 10 | `ra3::render::setCameraShakeFlag3` | offline-verified, live pending；仅显式键启用 |
 
-上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
+本节原有的 17 个 common/math 新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节
 （源串按 `count` 截断求长，目标缓冲可能短于 `count`）。
+
+11 个 W3DView 目标也逐个复核了 expected16、stolen 前缀和返回形式；状态变换只比较
+原函数确实写入的字节。它们在离线 oracle 通过后登记，尚未实机启用。
 
 ports2 的 17 个目标同样逐个用 `disasm.py --hook-only` 复核 expected16、完整指令边界、
 位置无关前缀和函数内后向边。写指针的 shadow 先在临时对象上计算结果，原函数仍是唯一

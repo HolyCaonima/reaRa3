@@ -1,0 +1,20 @@
+address	status	owner	module	notes
+00562250	reversed	recon/w3dview	render	ra3::render::scaledHeight; oracle 500/500 at CW 007f, wider-CW extended product retained for live shadow
+00562260	reversed	recon/w3dview	render	ra3::render::guardBandBias; oracle 50/50 including EAX hidden pointer result
+00562290	reversed	recon/w3dview	render	ra3::render::setWireframePending; oracle 50/50 object bytes and cleanup
+005622a0	reversed	recon/w3dview	render	ra3::render::clearFilter; oracle 500/500 object bytes and cleanup
+005622c0	reversed	recon/w3dview	render	ra3::render::setFilter; oracle 500/500 object bytes and cleanup
+00562570	reversed	recon/w3dview	render	ra3::render::cameraMovementFinished; oracle 500/500 return and cleanup
+005625c0	reversed	recon/w3dview	render	ra3::render::cameraLockEquals; oracle 500/500 return and cleanup
+00562910	reversed	recon/w3dview	render	ra3::render::cameraShakeX; oracle 1500/1500 full 80-bit ST0 at CW 007f/027f/037f
+00562920	reversed	recon/w3dview	render	ra3::render::cameraShakeY; oracle 1500/1500 full 80-bit ST0 at CW 007f/027f/037f
+00562930	reversed	recon/w3dview	render	ra3::render::cameraShakeIntensity; oracle 1500/1500 full 80-bit ST0 at CW 007f/027f/037f
+00562940	reversed	recon/w3dview	render	ra3::render::cameraShakeActive; oracle 50/50 raw byte return and cleanup
+00562950	reversed	recon/w3dview	render	ra3::render::clearCameraShake; oracle 500/500 object bytes and cleanup
+00562990	reversed	recon/w3dview	render	ra3::render::setCameraShakeFlag0; oracle 50/50 object bytes and cleanup
+005629a0	reversed	recon/w3dview	render	ra3::render::setCameraShakeFlag1; oracle 50/50 object bytes and cleanup
+005629b0	reversed	recon/w3dview	render	ra3::render::setCameraShakeFlag2; oracle 50/50 object bytes and cleanup
+005629c0	reversed	recon/w3dview	render	ra3::render::setCameraShakeFlag3; oracle 50/50 object bytes and cleanup
+00568b60	reversed	recon/w3dview	render	ra3::render::setRainEnabled; oracle 500/500 random arrays
+00568e40	reversed	recon/w3dview	render	ra3::render::fillRainIndices; oracle full 16000-quad index buffer
+005abc30	reversed	recon/w3dview	render	ra3::render::configureEase; oracle 1500/1500 random finite inputs and cleanup
