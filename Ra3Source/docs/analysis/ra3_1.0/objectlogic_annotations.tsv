@@ -1,0 +1,51 @@
+address	status	owner	module	notes
+00685cc0	reversed	recon/objectlogic	gamelogic	WeaponInitState update; vtable 00bf9648
+00685d20	reversed	recon/objectlogic	gamelogic	WeaponFireState update deadline and transition
+00685da0	reversed	recon/objectlogic	gamelogic	Weapon state deadline update
+00685dc0	reversed	recon/objectlogic	gamelogic	WeaponTemplate zero aim value; x87 return
+00685dd0	reversed	recon/objectlogic	gamelogic	WeaponTemplate attack range for pitch; x87 return
+00685e70	reversed	recon/objectlogic	gamelogic	WeaponTemplate nonnegative minimum range; x87 return
+00685ea0	reversed	recon/objectlogic	gamelogic	WeaponTemplate attack range; x87 return
+00685ef0	reversed	recon/objectlogic	gamelogic	WeaponTemplate pre-attack low frame endpoint
+00685f70	reversed	recon/objectlogic	gamelogic	WeaponTemplate pre-attack high frame endpoint
+00685ff0	reversed	recon/objectlogic	gamelogic	WeaponTemplate firing low frame endpoint
+00686070	reversed	recon/objectlogic	gamelogic	WeaponTemplate firing high frame endpoint
+00686110	reversed	recon/objectlogic	gamelogic	WeaponTemplate cooldown low frame endpoint
+00686190	reversed	recon/objectlogic	gamelogic	WeaponTemplate cooldown high frame endpoint
+00686210	reversed	recon/objectlogic	gamelogic	WeaponTemplate reload low frame endpoint
+00686290	reversed	recon/objectlogic	gamelogic	WeaponTemplate reload high frame endpoint
+00686310	reversed	recon/objectlogic	gamelogic	WeaponTemplate idle-after-firing frames
+00686380	reversed	recon/objectlogic	gamelogic	WeaponTemplate hold-after-firing frames
+006863f0	reversed	recon/objectlogic	gamelogic	WeaponTemplate suspend-FX frames
+006a2400	reversed	recon/objectlogic	gamelogic	WeaponSet first weapon and bounded slot
+006a2430	reversed	recon/objectlogic	gamelogic	WeaponSet indexed weapon
+006a2440	reversed	recon/objectlogic	gamelogic	WeaponSet current weapon inactivity
+006a2480	reversed	recon/objectlogic	gamelogic	WeaponSet owner token lookup
+006a24a0	reversed	recon/objectlogic	gamelogic	WeaponSet aggregate anti masks
+006a24f0	reversed	recon/objectlogic	gamelogic	WeaponSet longest-range weapon position
+006a2560	reversed	recon/objectlogic	gamelogic	WeaponSet matching anti-mask count
+006a25f0	reversed	recon/objectlogic	gamelogic	WeaponSet template lookup
+006a2630	reversed	recon/objectlogic	gamelogic	WeaponSet effective minimum range
+006a2840	reversed	recon/objectlogic	gamelogic	WeaponStateMachine deadline
+006a2a70	reversed	recon/objectlogic	gamelogic	WeaponInitState releasing destructor
+006a2ab0	reversed	recon/objectlogic	gamelogic	WeaponStateMachine randomized duration; assertion source path
+006a2b40	reversed	recon/objectlogic	gamelogic	WeaponStateMachine target-ID refresh
+006a2bd0	reversed	recon/objectlogic	gamelogic	WeaponStateMachine readiness fraction update
+006a2d30	reversed	recon/objectlogic	gamelogic	WeaponTemplate speed multiplier; x87 return
+006a2dc0	reversed	recon/objectlogic	gamelogic	WeaponTemplate attack range for target; x87 return
+006a2ee0	reversed	recon/objectlogic	gamelogic	WeaponTemplate target-kind mask test
+006a3120	reversed	recon/objectlogic	gamelogic	WeaponTemplate target effect selection
+006a82f0	reversed	recon/objectlogic	gamelogic	Weapon constructor; exact 0x78-byte layout
+006a8530	reversed	recon/objectlogic	gamelogic	Weapon minimum-range target test
+006a8580	reversed	recon/objectlogic	gamelogic	Weapon readiness fraction; x87 return
+006a8650	reversed	recon/objectlogic	gamelogic	Weapon object-filter acceptance
+006a86c0	reversed	recon/objectlogic	gamelogic	Weapon pre-fire state test
+006a8700	reversed	recon/objectlogic	gamelogic	Weapon pitch acceptance
+006a8840	reversed	recon/objectlogic	gamelogic	Weapon attack suppression by state
+006a8870	reversed	recon/objectlogic	gamelogic	Weapon can-fire-now state predicate
+006a88f0	reversed	recon/objectlogic	gamelogic	Weapon cached target position and transform
+006bd260	reversed	recon/objectlogic	gamelogic	WeaponCoolDownState deadline
+006bd2c0	reversed	recon/objectlogic	gamelogic	WeaponCoolDownState enter
+006bd310	reversed	recon/objectlogic	gamelogic	WeaponCoolDownState update
+006ed440	reversed	recon/objectlogic	gamelogic	WeaponReloadState update
+006ed4a0	reversed	recon/objectlogic	gamelogic	WeaponReloadState enter

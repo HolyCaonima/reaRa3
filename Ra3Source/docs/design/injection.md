@@ -495,6 +495,19 @@ replace 模式下 `matches` 表示 Ra3Source 解码成功并把结果交给游�
 对局。尚未覆盖：长时间对局与存读档；窗口出现前的少量调用可能早于注入，shadow 无法
 证明覆盖了全部调用。
 
+### 5.9 ObjectLogic Weapon 安全子集（离线完成）
+
+`ObjectLogicTargets.cpp` 增加 16 个 `explicitOnly` 目标：11 个
+WeaponTemplate 秒数到逻辑帧的纯转换、两个 state deadline 查询、WeaponSet 的索引与
+owner token 查询，以及 cooldown 状态查询。所有成员函数包装都用
+`__fastcall(this, edx, ...)` 表达 `__thiscall`，并保留原 `ret` 清栈约定。
+
+本批次没有构造/析构、分配器、状态切换、全局写入或线程操作目标；x87 返回函数也没有
+进入 hook 子集，避免把 C++ `float` 临时值误当成完整十字节 ST0。16 个目标默认关闭，
+只能逐键显式启用。按本任务约束未启动或注入游戏，因此目前只有 run35 快照离线
+oracle 证据，没有新增实机 shadow/replace 运行号。函数边界、延后项与浮点约束见
+`objectlogic_weapon_cluster.md`。
+
 ## 6. 已知风险
 
 - Toolhelp32 快照与新线程创建之间仍有理论竞态；当前事务覆盖快照中所有其他线程，
