@@ -21634,8 +21634,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0085c580	FUN_0085c580	.text	30		clean	unknown		unanalyzed	
 0085c5a0	FUN_0085c5a0	.text	30		clean	unknown		unanalyzed	
 0085c5c0	FUN_0085c5c0	.text	20		clean	unknown		unanalyzed	
-0085c5e0	FUN_0085c5e0	.text	11		clean	unknown		unanalyzed	
-0085c650	FUN_0085c650	.text	28		clean	unknown		unanalyzed	
+0085c5e0	FUN_0085c5e0	.text	11		clean	sim	recon/terrainlogic	reversed	TerrainLogic::getTerrainBoundaryVector; returns this + index*8 + 0x50; ra3::sim::getTerrainBoundaryVector; oracle 8 cases; hook terrainboundaryvec (explicitOnly)
+0085c650	FUN_0085c650	.text	28		clean	sim	recon/terrainlogic	reversed	TerrainLogic::setActiveBoundary; updates +0x88 when changed and tail-calls vtable +0x28; ra3::sim::setTerrainActiveBoundary; oracle 20 cases
 0085c670	FUN_0085c670	.text	8		clean	unknown		unanalyzed	
 0085c680	FUN_0085c680	.text	73		clean	unknown		unanalyzed	
 0085c6d0	FUN_0085c6d0	.text	68		clean	unknown		unanalyzed	
@@ -21644,7 +21644,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0085c8d0	FUN_0085c8d0	.text	374		clean	unknown		unanalyzed	
 0085ca50	FUN_0085ca50	.text	21		clean	unknown		unanalyzed	
 0085ca70	FUN_0085ca70	.text	5		clean	unknown		unanalyzed	
-0085ca80	FUN_0085ca80	.text	27		clean	unknown		unanalyzed	
+0085ca80	FUN_0085ca80	.text	27		clean	sim	recon/terrainlogic	reversed	TerrainLogic::getOriginGroundHeight; dispatches vtable +0x18 at (0,0,normal); ra3::sim::getOriginGroundHeight; oracle 6 cases across 3 FPU CWs
 0085caa0	FUN_0085caa0	.text	37		clean	unknown		unanalyzed	
 0085cad0	FUN_0085cad0	.text	54		clean	unknown		unanalyzed	
 0085cb10	FUN_0085cb10	.text	57		clean	unknown		unanalyzed	
@@ -21652,7 +21652,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0085cb90	FUN_0085cb90	.text	24		clean	unknown		unanalyzed	
 0085cbc0	FUN_0085cbc0	.text	91		clean	unknown		unanalyzed	
 0085cc20	FUN_0085cc20	.text	73		clean	unknown		unanalyzed	
-0085cc70	FUN_0085cc70	.text	41		clean	unknown		unanalyzed	
+0085cc70	FUN_0085cc70	.text	41		clean	sim	recon/terrainlogic	reversed	TerrainLogic::getWaterHeightFromHandle; null check then vbtable +0x1C -> vtable +0x08 int height -> fild; ra3::sim::getWaterHeightFromHandle; oracle 21 cases across 3 FPU CWs
 0085cca0	FUN_0085cca0	.text	56		clean	unknown		unanalyzed	
 0085cce0	FUN_0085cce0	.text	5		clean	unknown		unanalyzed	
 0085ccf0	FUN_0085ccf0	.text	5		clean	unknown		unanalyzed	
@@ -21666,26 +21666,26 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0085cfc0	FUN_0085cfc0	.text	123		clean	unknown		unanalyzed	
 0085d0b0	FUN_0085d0b0	.text	55		clean	unknown		unanalyzed	
 0085d0f0	FUN_0085d0f0	.text	30		clean	unknown		unanalyzed	
-0085d110	FUN_0085d110	.text	772		clean	unknown		unanalyzed	
+0085d110	FUN_0085d110	.text	772		clean	sim	recon/terrainlogic	reversed	pointInTriangle2D; 2D arbitrary-axis triangle containment with colinear segment fallback and boundary bit 2 in *inOutFlags; ra3::sim::pointInTriangle2D; oracle 129 cases; hook pointintriangle2d
 0085d420	FUN_0085d420	.text	668		clean	unknown		unanalyzed	
 0085d6c0	FUN_0085d6c0	.text	287		clean	unknown		unanalyzed	
-0085d7e0	FUN_0085d7e0	.text	82		clean	unknown		unanalyzed	
-0085d840	FUN_0085d840	.text	72		clean	unknown		unanalyzed	
-0085d890	FUN_0085d890	.text	358		clean	unknown		unanalyzed	
-0085da00	FUN_0085da00	.text	14		clean	unknown		unanalyzed	
-0085da10	FUN_0085da10	.text	51		clean	unknown		unanalyzed	
-0085da50	FUN_0085da50	.text	730		clean	unknown		unanalyzed	
-0085dd30	FUN_0085dd30	.text	188		clean	unknown		unanalyzed	
-0085ddf0	FUN_0085ddf0	.text	30		clean	unknown		unanalyzed	
+0085d7e0	FUN_0085d7e0	.text	82		clean	sim	recon/terrainlogic	reversed	FindPositionOptions::FindPositionOptions; initializes 0x44-byte options struct (vptr 0x00A66C38, startAngle -99999.8984375f, maxZDelta 1e10f); ra3::sim::initializeFindPositionOptions; oracle 25 cases; hook findposoptionsinit (explicitOnly)
+0085d840	FUN_0085d840	.text	72		clean	sim	recon/terrainlogic	reversed	BridgeInfo::BridgeInfo; zeroes 0x34-byte BridgeInfo struct; ra3::sim::initializeBridgeInfo; oracle 25 cases; hook bridgeinfoinit (explicitOnly)
+0085d890	FUN_0085d890	.text	358		clean	sim	recon/terrainlogic	reversed	Bridge::isPointOnBridge; checks 2D bounds (+0x38), then PolygonTrigger::pointInTrigger (+0x4C) or two pointInTriangle2D calls; ra3::sim::isPointOnBridge; oracle 120 cases
+0085da00	FUN_0085da00	.text	14		clean	sim	recon/terrainlogic	reversed	TerrainLogic::hasTerrainBoundaries; compares vector begin (+0x50) and end (+0x54); ra3::sim::hasTerrainBoundaries; oracle 4 cases; hook terrainhasboundaries (explicitOnly)
+0085da10	FUN_0085da10	.text	51		clean	sim	recon/terrainlogic	reversed	TerrainLogic::getTerrainBoundary2D; bounds-checked 8-byte Coord2D read from +0x50..+0x54 via x87 fld/fstp; ra3::sim::getTerrainBoundary2D; oracle 6 cases; hook terrainboundary2d (explicitOnly)
+0085da50	FUN_0085da50	.text	730		clean	sim	recon/terrainlogic	reversed	lineInRegion2D; Cohen-Sutherland 2D segment-box intersection; ra3::sim::lineInRegion2D; oracle 127 cases; hook lineinregion2d
+0085dd30	FUN_0085dd30	.text	188		clean	sim	recon/terrainlogic	reversed	TerrainLogic::addWaypointLink; links waypoint IDs in g_waypointListHead (0x00DFC194) with biDirectional reverse link (+0x5C); ra3::sim::addWaypointLink; oracle 8 cases
+0085ddf0	FUN_0085ddf0	.text	30		clean	sim	recon/terrainlogic	reversed	TerrainLogic::getGroundHeight (base); zeroes optional normal and returns 0.0f in ST0; ra3::sim::getBaseGroundHeight; oracle 6 cases across 3 FPU CWs; hook terraingroundheightbase (explicitOnly)
 0085de10	FUN_0085de10	.text	73		clean	unknown		unanalyzed	
-0085de60	FUN_0085de60	.text	30		clean	unknown		unanalyzed	
+0085de60	FUN_0085de60	.text	30		clean	sim	recon/terrainlogic	reversed	TerrainLogic::getLayerHeight (base); zeroes optional normal and returns 0.0f in ST0; ra3::sim::getBaseLayerHeight; oracle 12 cases across 3 FPU CWs; hook terrainlayerheightbase (explicitOnly)
 0085de80	FUN_0085de80	.text	276		clean	unknown		unanalyzed	
-0085dfa0	FUN_0085dfa0	.text	270		clean	unknown		unanalyzed	
-0085e0b0	FUN_0085e0b0	.text	743		clean	unknown		unanalyzed	
-0085e3a0	FUN_0085e3a0	.text	178		clean	unknown		unanalyzed	
+0085dfa0	FUN_0085dfa0	.text	270		clean	sim	recon/terrainlogic	reversed	TerrainLogic::findClosestEdgePoint; clamps to nearest edge of getExtent (vtable +0x28) and queries getGroundHeight (+0x18); ra3::sim::findClosestEdgePoint; oracle 40 cases
+0085e0b0	FUN_0085e0b0	.text	743		clean	sim	recon/terrainlogic	reversed	TerrainLogic::clipLineToMapExtent; ray-casts from p2 (inside getExtentIncludingBorder +0x2C) along p1-p2 to map border and queries getLayerHeight; ra3::sim::clipLineToMapExtent; oracle 40 cases
+0085e3a0	FUN_0085e3a0	.text	178		clean	sim	recon/terrainlogic	reversed	TerrainLogic::findFarthestEdgePoint; selects farthest corner of getExtent (+0x28) and queries getGroundHeight (+0x18); ra3::sim::findFarthestEdgePoint; oracle 40 cases
 0085e460	FUN_0085e460	.text	907		clean	unknown		unanalyzed	
-0085e7f0	FUN_0085e7f0	.text	79		clean	unknown		unanalyzed	
-0085e840	FUN_0085e840	.text	123		clean	unknown		unanalyzed	
+0085e7f0	FUN_0085e7f0	.text	79		clean	sim	recon/terrainlogic	reversed	TerrainLogic::getTerrainBoundaryRegion; scales IRegion2D at (*(this+0x54))[index] by 10.0f into Region2D; ra3::sim::getTerrainBoundaryRegion; oracle 2 cases; hook terrainboundaryregion (explicitOnly)
+0085e840	FUN_0085e840	.text	123		clean	sim	recon/terrainlogic	reversed	clampPositionToMapExtent; clamps Coord3D* to TheTerrainLogic (0x00DFC190) extent via findClosestEdgePoint; ra3::sim::clampPositionToMapExtent; oracle 41 cases
 0085e910	FUN_0085e910	.text	61		clean	unknown		unanalyzed	
 0085e950	FUN_0085e950	.text	81		clean	unknown		unanalyzed	
 0085e9b0	FUN_0085e9b0	.text	102		clean	unknown		unanalyzed	
@@ -21700,7 +21700,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0085ebf0	FUN_0085ebf0	.text	8		clean	unknown		unanalyzed	
 0085ec00	FUN_0085ec00	.text	8		clean	unknown		unanalyzed	
 0085ec10	FUN_0085ec10	.text	39		clean	unknown		unanalyzed	
-0085ec40	FUN_0085ec40	.text	431		clean	unknown		unanalyzed	
+0085ec40	FUN_0085ec40	.text	431		clean	sim	recon/terrainlogic	reversed	Plane3D::setFromPoints; cross product (v2-v1)x(v3-v1) with x87 rsqrt normalization and (0,0,1,0) degenerate fallback; ra3::sim::setPlaneFromPoints; oracle 99 cases across 3 FPU CWs; hook planesetfrompoints (explicitOnly)
 0085edf0	FUN_0085edf0	.text	97		clean	unknown		unanalyzed	
 0085ee60	FUN_0085ee60	.text	103		clean	unknown		unanalyzed	
 0085eed0	FUN_0085eed0	.text	1035		clean	unknown		unanalyzed	
@@ -21718,24 +21718,24 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0085f740	FUN_0085f740	.text	28		clean	unknown		unanalyzed	
 0085f760	FUN_0085f760	.text	695		clean	unknown		unanalyzed	
 0085fa20	FUN_0085fa20	.text	36		clean	unknown		unanalyzed	
-0085fa50	FUN_0085fa50	.text	127		clean	unknown		unanalyzed	
-0085fad0	FUN_0085fad0	.text	641		clean	unknown		unanalyzed	
-0085fd60	FUN_0085fd60	.text	691		clean	unknown		unanalyzed	
-00860020	FUN_00860020	.text	718		clean	unknown		unanalyzed	
-008602f0	FUN_008602f0	.text	117		clean	unknown		unanalyzed	
+0085fa50	FUN_0085fa50	.text	127		clean	sim	recon/terrainlogic	reversed	Bridge::projectPointAlongSpan; 2D span projection onto toLeft-fromLeft using x87 rsqrt; ra3::sim::projectPointAlongBridgeSpan; oracle 120 cases across 3 FPU CWs; hook bridgeprojectalongspan (explicitOnly)
+0085fad0	FUN_0085fad0	.text	641		clean	sim	recon/terrainlogic	reversed	Bridge::isCellOnEnd; checks whether cell Region2D intersects inset fromLeft..fromRight or toLeft..toRight segments; ra3::sim::isCellOnBridgeEnd; oracle 120 cases across 3 FPU CWs; hook bridgecellonend (explicitOnly)
+0085fd60	FUN_0085fd60	.text	691		clean	sim	recon/terrainlogic	reversed	Bridge::isCellOnSide; checks whether cell Region2D intersects 1x or 2x 10.2f-offset side segments; ra3::sim::isCellOnBridgeSide; oracle 120 cases across 3 FPU CWs; hook bridgecellonside (explicitOnly)
+00860020	FUN_00860020	.text	718		clean	sim	recon/terrainlogic	reversed	Bridge::isCellEntryPoint; checks whether cell Region2D intersects 10.0f-outset / 20.0f-widened entry segments and outputs end Z; ra3::sim::isCellBridgeEntryPoint; oracle 120 cases across 3 FPU CWs; hook bridgecellentrypoint (explicitOnly)
+008602f0	FUN_008602f0	.text	117		clean	sim	recon/terrainlogic	reversed	TerrainLogic::getMaximumPathfindExtentCenter; midpoint of getMaximumPathfindExtent (vtable +0x38); ra3::sim::getMaximumPathfindExtentCenter; oracle 20 cases
 00860370	FUN_00860370	.text	62		clean	unknown		unanalyzed	
-008603b0	FUN_008603b0	.text	529		clean	unknown		unanalyzed	
+008603b0	FUN_008603b0	.text	529		clean	sim	recon/terrainlogic	reversed	makeAlignToNormalMatrix; builds Matrix3x4 from yaw angle (fcos/fsin), position, and terrain normal; ra3::sim::makeAlignToNormalMatrix; oracle 90 cases across 3 FPU CWs; hook aligntonormalmatrix
 008605d0	FUN_008605d0	.text	78		clean	unknown		unanalyzed	
-00860630	FUN_00860630	.text	48		clean	unknown		unanalyzed	
-00860660	FUN_00860660	.text	84		clean	unknown		unanalyzed	
+00860630	FUN_00860630	.text	48		clean	sim	recon/terrainlogic	reversed	TerrainLogic::findBridgeAt; walks bridgeListHead (+0x68) calling Bridge::isPointOnBridge; ra3::sim::findBridgeAt; oracle 30 cases
+00860660	FUN_00860660	.text	84		clean	sim	recon/terrainlogic	reversed	TerrainLogic::findBridgeLayerAt; walks bridgeListHead (+0x68) for matching layer (+0x48) calling isPointOnIntactBridge or isPointOnBridge; ra3::sim::findBridgeLayerAt; oracle 240 cases
 008606c0	FUN_008606c0	.text	337		clean	unknown		unanalyzed	
 00860820	FUN_00860820	.text	33		clean	unknown		unanalyzed	
 00860850	FUN_00860850	.text	8		clean	unknown		unanalyzed	
 00860860	FUN_00860860	.text	69		clean	unknown		unanalyzed	
 00860940	FUN_00860940	.text	8		clean	unknown		unanalyzed	
 00860950	FUN_00860950	.text	198		clean	unknown		unanalyzed	
-00860a20	FUN_00860a20	.text	10		clean	unknown		unanalyzed	
-00860a30	FUN_00860a30	.text	4		clean	unknown		unanalyzed	
+00860a20	FUN_00860a20	.text	10		clean	sim	recon/terrainlogic	reversed	Waypoint::setBiDirectional; writes bool at waypoint +0x5C; ra3::sim::setWaypointBiDirectional; oracle 2 cases; hook waypointsetbidir (explicitOnly)
+00860a30	FUN_00860a30	.text	4		clean	sim	recon/terrainlogic	reversed	Waypoint::getBiDirectional; returns the raw byte at waypoint +0x5C in AL (upper EAX is caller residue); ra3::sim::getWaypointBiDirectional; oracle 5 cases incl. non-boolean bytes; hook waypointgetbidir (explicitOnly)
 00860a40	FUN_00860a40	.text	11		clean	unknown		unanalyzed	
 00860a50	FUN_00860a50	.text	11		clean	unknown		unanalyzed	
 00860a60	FUN_00860a60	.text	11		clean	unknown		unanalyzed	
@@ -21761,14 +21761,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008613e0	FUN_008613e0	.text	41		clean	unknown		unanalyzed	
 00861410	FUN_00861410	.text	31		clean	unknown		unanalyzed	
 00861430	FUN_00861430	.text	31		clean	unknown		unanalyzed	
-00861450	FUN_00861450	.text	93		clean	unknown		unanalyzed	
-008614b0	FUN_008614b0	.text	449		clean	unknown		unanalyzed	
-00861680	FUN_00861680	.text	971		clean	unknown		unanalyzed	
+00861450	FUN_00861450	.text	93		clean	sim	recon/terrainlogic	reversed	Bridge::isPointOnIntactBridge; checks isPointOnBridge and verifies span projection is outside damaged intervals (+0x50..+0x54); ra3::sim::isPointOnIntactBridge; oracle 150 cases across 3 FPU CWs
+008614b0	FUN_008614b0	.text	449		clean	sim	recon/terrainlogic	reversed	Bridge::pickBridge; intersects segment from->to with bridge plane and checks isPointOnIntactBridge; ra3::sim::pickBridge; oracle 150 cases across 3 FPU CWs
+00861680	FUN_00861680	.text	971		clean	sim	recon/terrainlogic	reversed	Bridge::getBridgeHeight; computes bridge height and optional normal via quadratic ramp interpolation (+0x4C != 0) or plane raycast; ra3::sim::getBridgeHeight; oracle 240 cases across 3 FPU CWs
 00861a70	FUN_00861a70	.text	129		clean	unknown	recon/hookcat	reversed	hook candidate: 按带长度前缀字符串在线性链中查找节点
 00861b00	FUN_00861b00	.text	414		clean	unknown		unanalyzed	
-00861cb0	FUN_00861cb0	.text	380		clean	unknown		unanalyzed	
-00861e30	FUN_00861e30	.text	254		clean	unknown		unanalyzed	
-00861f40	FUN_00861f40	.text	200		clean	unknown		unanalyzed	
+00861cb0	FUN_00861cb0	.text	380		clean	sim	recon/terrainlogic	reversed	TerrainLogic::getLayerForDestination; finds closest intact bridge layer or wall layer (17) when pos->z > groundOrWaterHeight - 1.0f; ra3::sim::getLayerForDestination; oracle 75 cases across 3 FPU CWs
+00861e30	FUN_00861e30	.text	254		clean	sim	recon/terrainlogic	reversed	TerrainLogic::getHighestLayerForDestination; finds bridge layer minimizing |pos->z - bridgeHeight + 0.0002f| at or below pos->z + 0.0002f; ra3::sim::getHighestLayerForDestination; oracle 150 cases across 3 FPU CWs
+00861f40	FUN_00861f40	.text	200		clean	sim	recon/terrainlogic	reversed	TerrainLogic::getHighestBridgeLayerForDestination; finds bridge layer with highest bridgeHeight >= groundHeight; ra3::sim::getHighestBridgeLayerForDestination; oracle 150 cases across 3 FPU CWs
 00862010	FUN_00862010	.text	271		clean	unknown		unanalyzed	
 00862120	FUN_00862120	.text	249		clean	unknown		unanalyzed	
 00862220	FUN_00862220	.text	114		clean	unknown		unanalyzed	
@@ -21781,7 +21781,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00862570	FUN_00862570	.text	31		clean	unknown		unanalyzed	
 00862590	FUN_00862590	.text	31		clean	unknown		unanalyzed	
 008625b0	FUN_008625b0	.text	31		clean	unknown		unanalyzed	
-008627f0	FUN_008627f0	.text	33		clean	unknown		unanalyzed	
+008627f0	FUN_008627f0	.text	33		clean	sim	recon/terrainlogic	reversed	TerrainLogic::getFirstWaterTableHeight; reads first water table entry integer height (+0x70) via fild or fldz; ra3::sim::getFirstWaterTableHeight; oracle 36 cases across 3 FPU CWs; hook terrainfirstwaterheight (explicitOnly)
 00862820	FUN_00862820	.text	191		clean	unknown		unanalyzed	
 008628e0	FUN_008628e0	.text	106		clean	unknown		unanalyzed	
 00862950	FUN_00862950	.text	73		clean	unknown		unanalyzed	
@@ -21836,9 +21836,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00863930	FUN_00863930	.text	351		clean	unknown		unanalyzed	
 00863a90	FUN_00863a90	.text	676		clean	unknown		unanalyzed	
 00863d40	FUN_00863d40	.text	439		clean	unknown		unanalyzed	
-00863f00	FUN_00863f00	.text	139		clean	unknown		unanalyzed	
+00863f00	FUN_00863f00	.text	139		clean	sim	recon/terrainlogic	reversed	TerrainLogic::alignOnTerrain; resolves layer via getLayerForDestination, queries getLayerHeight (+2.5f bias if layer > 1), and builds Matrix3x4; ra3::sim::alignOnTerrain; oracle 150 cases across 3 FPU CWs
 00863f90	FUN_00863f90	.text	501		clean	unknown		unanalyzed	
-00864190	FUN_00864190	.text	46		clean	unknown		unanalyzed	
+00864190	FUN_00864190	.text	46		clean	sim	recon/terrainlogic	reversed	TerrainLogic::updateCachedWaterGridHeight; writes first water table entry height to *(float*)(this+0x3C); ra3::sim::updateCachedWaterGridHeight; oracle 36 cases; hook terrainupdatewatergrid (explicitOnly)
 008641c0	FUN_008641c0	.text	171		clean	unknown		unanalyzed	
 00864270	FUN_00864270	.text	67		clean	unknown		unanalyzed	
 008642c0	FUN_008642c0	.text	70		clean	unknown		unanalyzed	
@@ -21883,12 +21883,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00865ed0	FUN_00865ed0	.text	381		clean	unknown		unanalyzed	
 00866050	FUN_00866050	.text	317		clean	unknown		unanalyzed	
 00866190	FUN_00866190	.text	275		clean	unknown		unanalyzed	
-008662b0	FUN_008662b0	.text	6		clean	unknown		unanalyzed	
+008662b0	FUN_008662b0	.text	6		clean	sim	recon/terrainlogic	reversed	"TerrainLogic::getName; returns ""TerrainLogic"" (0x00C4F820); ra3::sim::getTerrainLogicSubsystemName; oracle 1 case"
 008662c0	FUN_008662c0	.text	8		clean	unknown		unanalyzed	
 008662d0	FUN_008662d0	.text	219		clean	unknown		unanalyzed	
 008663b0	FUN_008663b0	.text	124		clean	unknown		unanalyzed	
 00866430	FUN_00866430	.text	816		clean	unknown		unanalyzed	
-00866760	FUN_00866760	.text	1089		clean	unknown		unanalyzed	
+00866760	FUN_00866760	.text	1089		clean	sim	recon/terrainlogic	unanalyzed	tryPositionAtPolarOffset; computes polar candidate (cos/sin), clips to map extent, and delegates to 0x008678E0
 00866bb0	FUN_00866bb0	.text	436	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00866d80	FUN_00866d80	.text	211		clean	unknown		unanalyzed	
 00866e60	FUN_00866e60	.text	186		clean	unknown		unanalyzed	
@@ -21897,14 +21897,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008671c0	FUN_008671c0	.text	1088		clean	unknown		unanalyzed	
 00867610	FUN_00867610	.text	87		clean	unknown		unanalyzed	
 00867670	FUN_00867670	.text	620		clean	unknown		unanalyzed	
-008678e0	FUN_008678e0	.text	1616		clean	unknown		unanalyzed	
+008678e0	FUN_008678e0	.text	1616		clean	sim	recon/terrainlogic	unanalyzed	PartitionManager::tryPosition; 2231-byte candidate position validator coupled to PartitionManager/Object/AIPathfind/WaveGuide; deferred
 00867f40	FUN_00867f40	.text	96		clean	unknown		unanalyzed	
 00867fa0	FUN_00867fa0	.text	235		clean	unknown		unanalyzed	
 008680a0	FUN_008680a0	.text	431		clean	unknown		unanalyzed	
 00868250	FUN_00868250	.text	403		clean	unknown		unanalyzed	
-008683f0	FUN_008683f0	.text	118		clean	unknown		unanalyzed	
-00868470	FUN_00868470	.text	68		clean	unknown		unanalyzed	
-008684c0	FUN_008684c0	.text	480	SageEngine\source\GameEngine\gamelogic\map\TerrainLogic.cpp	clean	gamelogic		unanalyzed	
+008683f0	FUN_008683f0	.text	118		clean	sim	recon/terrainlogic	reversed	Waypoint::resolveLinks; resolves links[0..7] (+0x20..+0x3C), prevLink (+0x44), and secondaryLink (+0x40) via TheTerrainLogic->findWaypointByID (0x008663B0); ra3::sim::resolveWaypointLinks; oracle 15 cases
+00868470	FUN_00868470	.text	68		clean	sim	recon/terrainlogic	reversed	TerrainLogic::adjustNewMapWaypoints; adds getGroundHeight to each waypoint Z in g_waypointListHead (0x00DFC194) and calls 0x00866BB0; ra3::sim::adjustNewMapWaypoints; oracle 15 cases
+008684c0	FUN_008684c0	.text	480	SageEngine\source\GameEngine\gamelogic\map\TerrainLogic.cpp	clean	sim	recon/terrainlogic	reversed	findPositionAround; certain source anchor TerrainLogic.cpp:3158; returns *center if outside pathfind extent, else concentric ring search (dr=5.0f) with GameLogicRandomValueReal (0x005A9550) and ceil (0x00BBA4DC); ra3::sim::findPositionAround; oracle 54 cases across 3 FPU CWs
 00868710	FUN_00868710	.text	44		clean	unknown		unanalyzed	
 00868740	FUN_00868740	.text	47		clean	unknown		unanalyzed	
 00868770	FUN_00868770	.text	49		clean	unknown		unanalyzed	
