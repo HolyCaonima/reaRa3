@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 aistate79b 合并）
+## 3. 现状（截至 render9b 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 2,070、unanalyzed 46,855（受保护函数已 reversed：entry-lost 104、inner-patched 14、
+  reversed 2,118、unanalyzed 46,807（受保护函数已 reversed：entry-lost 104、inner-patched 14、
   entry-recoverable 3）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
@@ -279,6 +279,13 @@
     代码在 `ra3/gamelogic/AIState79B.h`，设计见 `aistate79b.md`。归属全为具名 split vtable 槽位，
     主控复算 `fails=0` 并按调用剖面确认 xfer 都有自身字段。13 个延后行（尾跳、x87、调用参数数不一）。
     集成态 oracle 124 例零差异；`0x471→0x472` mutation 以 checker 桩队列报错的形式检出
+  - 渲染脚本解释器批次（`0x009B0000–0x009BFFFF`，Grok）：48 个函数（各脚本命令类 vtable slot 3
+    解析 / slot 4 执行：clear/goto/else/elif/endproc/return/callproc/setshader/settexture/casttexture/
+    setint/setbool/event 等，外加 shader/texture 按名查找、float/int 记号解析，以及无 slot-2 getter
+    的 pass/surface 表槽位），无 hook，样板 0；代码在 `ra3/render/RenderScript9B.h`，设计见
+    `render9b.md`。命令类名取自 slot 2 返回的用法串；主控复算 `fails=0`，并把 9–30 字节的小体逐条
+    反汇编，确认都写字段或调用（不是返回常量桩）。12 个宽命令体（各 parse 与 renderquad exec）留待后续。
+    集成态 oracle 111 例零差异，`parseClearCommand` 的 `>=1→>=2` mutation 检出
   - AI states 批次（`0x00790000–0x0079FFFF`，Grok）：48 个方法（Turret/UnitAI/AIDock/AIGuard/AIAttack
     各 state 的 onEnter/update/onExit 与条件槽位、FollowWaypointPath/Turret 状态机），无 hook，样板 0；
     代码在 `ra3/gamelogic/AIState79.h`，设计见 `aistate79.md`。归属全部为单个 split vtable 槽位，主控
@@ -324,10 +331,10 @@
     `recon/particles65`、`recon/render91`、`recon/obj6a`、`recon/protcave`、`recon/protentry2`、
     `recon/gamelogic82`、`recon/skirm87`、`recon/common5a`、`recon/render56`、`recon/objbehav68`、`recon/audio50`、
     `recon/aistate79`、`recon/render99`、`recon/net5d2`、`recon/obj69`、`recon/logic4d`、`recon/skirm8b`、
-    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`：已合并（`789bcb1`、
+    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`、`recon/render9b`：已合并（`789bcb1`、
     `f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`、
     `9df37c8`、`760e231`、`79a7caa`、`9c14506`、`6234602`、`00c9a7a`、`be08241`、`ba97d03`、`bec182d`、
-    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`）。追加合并脚本在
+    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`、`ae7caf5`）。追加合并脚本在
     冲突块以 `)` 收尾时会报 WARN，需手工检查括号（skirm87 合并时拼坏过一次 CMake）。受保护批次的站点/字符串/伪调用核对脚本见 `work/probe/check_protcave.py`、
     `work/probe/check_protentry2.py`，多快照槽值用 `work/probe/slot_snapshots.py`。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
@@ -350,6 +357,8 @@
     主控手工替换）、`recon/aistate7c`（`0x007C0000–0x007CFFFF` 剩余 200 个 clean，142 个在具名
     split vtable 非 getter 槽位，Grok）、`recon/render9b`（`0x009B0000–0x009BFFFF` 渲染管线脚本命令
     解释器，slot 2 返回各命令的用法串，Grok）。当前 Grok 9 路、Gemini 1 路。
+  - render9b 合并后补位：`recon/aistate7a2`（`0x007A0000–0x007AFFFF` 第二轮，AI states，186 个在具名
+    split vtable 非 getter 槽位，`AIStates.cpp`/`GetStrafePosition.cpp` 锚点，Grok）。
   - aistate79b 合并后补位：`recon/w3d56`（`0x00560000–0x0057FFFF` W3D 渲染层：W3DView 覆盖、
     W3DTerrainLogic/Visual、rain/stream/tracer manager、W3DDisplay，代码进 `src/render`，Grok）。
   - aistate7b 合并后补位：`recon/client52`（`0x00520000–0x0053FFFF` GameClient：`View` 槽位方法、
@@ -394,7 +403,8 @@
   （已开 aistate7c）→ ~~`0x009B0000` 106~~（已开 render9b）→ ~~`0x00720000` 95~~（已开 obj72，含 `0x0073`）→
   ~~`0x00690000` 第二轮~~（已开 obj69b）→ ~~`0x007D0000`~~（已开 aistate7d）→ ~~`0x006E0000`~~（已开 obj6e，含 `0x006F`）→ ~~`0x00710000`~~（已开
   obj70，含 `0x0070`）→ ~~`0x00520000`~~（已开 client52，含 `0x0053`）→ ~~`0x00560000`~~（已开 w3d56，含 `0x0057`）→
-  `0x00660000` → `0x006C0000`；下一轮用 `python work\probe\rank_blocks.py <在途块号...>` 重新排名
+  （17:50 重排）~~`0x007A0000` 第二轮 186~~（已开 aistate7a2）→ `0x00790000` 第三轮 169 →
+  `0x006C0000` 96 → `0x00660000` 91 → `0x007B0000` 第二轮 89 → `0x009B0000` 第二轮 73；下一轮用 `python work\probe\rank_blocks.py <在途块号...>` 重新排名
   （按具名 split vtable 非 getter 槽位里的未认领 clean 函数数），再用 `survey_block.py` 看类名与锚点。
   `0x0066`（FX 粒子模块）与 `0x006C` 的槽位多在无 slot-2 getter 的表里（主控用
   `work/probe/survey_block.py <lo> <hi>` 复查），类名只能推断，排在后面；protcave 已由 protcave2 接续。`0x00A0`–`0x00BA` 区段数量

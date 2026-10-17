@@ -28780,7 +28780,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b2d80	FUN_009b2d80	.text	20		clean	unknown		unanalyzed	
 009b2da0	FUN_009b2da0	.text	72		clean	unknown		unanalyzed	
 009b2df0	FUN_009b2df0	.text	60		clean	unknown		unanalyzed	
-009b2e30	FUN_009b2e30	.text	9		clean	unknown		unanalyzed	
+009b2e30	FUN_009b2e30	.text	9		clean	render	recon/render9b	reversed	ra3::render::clearStreamBindings; 00c5ec94 slot 2; slot 2 is this body, not a usage getter, so the class name is inferred
 009b2e40	FUN_009b2e40	.text	7		clean	unknown		unanalyzed	
 009b2e50	FUN_009b2e50	.text	58		clean	unknown		unanalyzed	
 009b2e90	FUN_009b2e90	.text	376		clean	unknown		unanalyzed	
@@ -28788,15 +28788,15 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b3040	FUN_009b3040	.text	6		clean	unknown		unanalyzed	
 009b3050	FUN_009b3050	.text	6		clean	unknown		unanalyzed	
 009b3060	FUN_009b3060	.text	115		clean	unknown		unanalyzed	
-009b30e0	FUN_009b30e0	.text	30		clean	unknown		unanalyzed	
-009b3100	FUN_009b3100	.text	33		clean	unknown		unanalyzed	
-009b3130	FUN_009b3130	.text	33		clean	unknown		unanalyzed	
-009b3160	FUN_009b3160	.text	26		clean	unknown		unanalyzed	
-009b3180	FUN_009b3180	.text	33		clean	unknown		unanalyzed	
-009b31b0	FUN_009b31b0	.text	25		clean	unknown		unanalyzed	
+009b30e0	FUN_009b30e0	.text	30		clean	render	recon/render9b	reversed	ra3::render::execGotoCommand; 00c609ec slot 4; slot 2 returns goto [name] - jump to label (set with : Label) and continue execution
+009b3100	FUN_009b3100	.text	33		clean	render	recon/render9b	reversed	ra3::render::execClearCommand; 00c60a50 slot 4; slot 2 returns clear - clears the current target (color, depth, and stencil)
+009b3130	FUN_009b3130	.text	33		clean	render	recon/render9b	reversed	ra3::render::execClearColorCommand; 00c60aa4 slot 4; slot 2 returns clearcolor - clears the color channels of the current target
+009b3160	FUN_009b3160	.text	26		clean	render	recon/render9b	reversed	ra3::render::execClearTargetCommand; 00c60b04 slot 4; slot 2 returns cleartarget [index] - set the surface for the specified target (0-3 for render targets, 4 for depth) to NULL
+009b3180	FUN_009b3180	.text	33		clean	render	recon/render9b	reversed	ra3::render::execClearZCommand; 00c60bf8 slot 4; slot 2 returns clearz - clear the depth and stencil values on current target
+009b31b0	FUN_009b31b0	.text	25		clean	render	recon/render9b	reversed	ra3::render::execSetClearDepthCommand; 00c60cf0 slot 4; slot 2 returns setcleardepth [depth] [(optional) stencil] - sets depth value to use when target is cleared
 009b31d0	FUN_009b31d0	.text	5		clean	unknown		unanalyzed	
-009b31e0	FUN_009b31e0	.text	16		clean	unknown		unanalyzed	
-009b31f0	FUN_009b31f0	.text	16		clean	unknown		unanalyzed	
+009b31e0	FUN_009b31e0	.text	16		clean	render	recon/render9b	reversed	ra3::render::parseEndProcCommand; 00c611dc slot 3; slot 2 returns endproc - marks the end of a procedure defintion
+009b31f0	FUN_009b31f0	.text	16		clean	render	recon/render9b	reversed	ra3::render::parseReturnCommand; 00c61310 slot 3; slot 2 returns return - returns from the current procedure to the parent caller
 009b3200	FUN_009b3200	.text	57		clean	unknown		unanalyzed	
 009b3240	FUN_009b3240	.text	339		clean	unknown		unanalyzed	
 009b33a0	FUN_009b33a0	.text	9		clean	unknown		unanalyzed	
@@ -28827,19 +28827,19 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b4450	FUN_009b4450	.text	2679		clean	unknown		unanalyzed	
 009b4ed0	FUN_009b4ed0	.text	1000		clean	unknown		unanalyzed	
 009b52c0	FUN_009b52c0	.text	102		clean	unknown		unanalyzed	
-009b5330	FUN_009b5330	.text	19		clean	unknown		unanalyzed	
+009b5330	FUN_009b5330	.text	19		clean	render	recon/render9b	reversed	ra3::render::flushActiveTarget; 00c5db18 slot 11; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
 009b5350	FUN_009b5350	.text	26		clean	unknown		unanalyzed	
 009b5370	FUN_009b5370	.text	7		clean	unknown		unanalyzed	
 009b5380	FUN_009b5380	.text	144		clean	unknown		unanalyzed	
 009b5430	FUN_009b5430	.text	155		clean	unknown		unanalyzed	
-009b54d0	FUN_009b54d0	.text	58		clean	unknown		unanalyzed	
-009b5510	FUN_009b5510	.text	58		clean	unknown		unanalyzed	
-009b5550	FUN_009b5550	.text	61		clean	unknown		unanalyzed	
+009b54d0	FUN_009b54d0	.text	58		clean	render	recon/render9b	reversed	ra3::render::applyNamedSampler; 00c5db18 slot 7; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b5510	FUN_009b5510	.text	58		clean	render	recon/render9b	reversed	ra3::render::applyNamedState; 00c5db18 slot 6; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b5550	FUN_009b5550	.text	61		clean	render	recon/render9b	reversed	ra3::render::applyNamedStage; 00c5db18 slot 5; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
 009b5590	FUN_009b5590	.text	93		clean	unknown		unanalyzed	
 009b55f0	FUN_009b55f0	.text	612		clean	unknown		unanalyzed	
-009b5860	FUN_009b5860	.text	21		clean	unknown		unanalyzed	
-009b5880	FUN_009b5880	.text	21		clean	unknown		unanalyzed	
-009b58a0	FUN_009b58a0	.text	29		clean	unknown		unanalyzed	
+009b5860	FUN_009b5860	.text	21		clean	render	recon/render9b	reversed	ra3::render::releasePrimarySurface; 00c5db10 slot 0; the table has two slots and no usage getter, so the class name is inferred
+009b5880	FUN_009b5880	.text	21		clean	render	recon/render9b	reversed	ra3::render::releaseSecondarySurface; 00c5db10 slot 1; the table has two slots and no usage getter, so the class name is inferred
+009b58a0	FUN_009b58a0	.text	29		clean	render	recon/render9b	reversed	ra3::render::resetPassOverrides; 00c600f0 slot 2; slot 2 is this body, not a usage getter, so the class name is inferred
 009b58c0	FUN_009b58c0	.text	156		clean	unknown		unanalyzed	
 009b5960	FUN_009b5960	.text	103		clean	unknown		unanalyzed	
 009b59d0	FUN_009b59d0	.text	106		clean	unknown		unanalyzed	
@@ -28858,7 +28858,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b6150	FUN_009b6150	.text	115		clean	unknown		unanalyzed	
 009b61d0	FUN_009b61d0	.text	189		clean	unknown		unanalyzed	
 009b62b0	FUN_009b62b0	.text	156		clean	unknown		unanalyzed	
-009b6b80	FUN_009b6b80	.text	38		clean	unknown		unanalyzed	
+009b6b80	FUN_009b6b80	.text	38		clean	render	recon/render9b	reversed	ra3::render::assignStreamSource; 00c5ec94 slot 1; slot 2 is 009b2e30 and is not a usage getter, so the class name is inferred
 009b6bb0	FUN_009b6bb0	.text	6		clean	unknown		unanalyzed	
 009b6bc0	FUN_009b6bc0	.text	6		clean	unknown		unanalyzed	
 009b6bd0	FUN_009b6bd0	.text	170		clean	unknown		unanalyzed	
@@ -28879,43 +28879,43 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b6e70	FUN_009b6e70	.text	6		clean	unknown		unanalyzed	
 009b6e80	FUN_009b6e80	.text	6		clean	unknown		unanalyzed	
 009b6e90	FUN_009b6e90	.text	6		clean	unknown		unanalyzed	
-009b6ea0	FUN_009b6ea0	.text	161		clean	unknown		unanalyzed	
+009b6ea0	FUN_009b6ea0	.text	161		clean	render	recon/render9b	reversed	ra3::render::execElifCommand; 00c60860 slot 4, shared with elifnot 00c608f0 slot 4; slot 2 of 00c60860 returns elif [scopeBlock] [scopeParm]
 009b6f50	FUN_009b6f50	.text	6		clean	unknown		unanalyzed	
 009b6f60	FUN_009b6f60	.text	6		clean	unknown		unanalyzed	
-009b6f70	FUN_009b6f70	.text	107		clean	unknown		unanalyzed	
-009b6fe0	FUN_009b6fe0	.text	48		clean	unknown		unanalyzed	
+009b6f70	FUN_009b6f70	.text	107		clean	render	recon/render9b	reversed	ra3::render::parseElseCommand; 00c60984 slot 3; slot 2 returns else - opposing conditional execution block
+009b6fe0	FUN_009b6fe0	.text	48		clean	render	recon/render9b	reversed	ra3::render::execElseCommand; 00c60984 slot 4; slot 2 returns else - opposing conditional execution block
 009b7010	FUN_009b7010	.text	6		clean	unknown		unanalyzed	
 009b7020	FUN_009b7020	.text	6		clean	unknown		unanalyzed	
 009b7030	FUN_009b7030	.text	6		clean	unknown		unanalyzed	
 009b7040	FUN_009b7040	.text	6		clean	unknown		unanalyzed	
-009b7050	FUN_009b7050	.text	14		clean	unknown		unanalyzed	
+009b7050	FUN_009b7050	.text	14		clean	render	recon/render9b	reversed	ra3::render::parseClearCommand; 00c60a50 slot 3, shared with clearcolor 00c60aa4 slot 3 and clearz 00c60bf8 slot 3; slot 2 of 00c60a50 returns the clear usage string
 009b7060	FUN_009b7060	.text	6		clean	unknown		unanalyzed	
 009b7070	FUN_009b7070	.text	6		clean	unknown		unanalyzed	
 009b7080	FUN_009b7080	.text	6		clean	unknown		unanalyzed	
 009b7090	FUN_009b7090	.text	6		clean	unknown		unanalyzed	
-009b70a0	FUN_009b70a0	.text	106		clean	unknown		unanalyzed	
+009b70a0	FUN_009b70a0	.text	106		clean	render	recon/render9b	reversed	ra3::render::parseClearTargetCommand; 00c60b04 slot 3; slot 2 returns the cleartarget usage string
 009b7110	FUN_009b7110	.text	6		clean	unknown		unanalyzed	
 009b7120	FUN_009b7120	.text	6		clean	unknown		unanalyzed	
 009b7130	FUN_009b7130	.text	6		clean	unknown		unanalyzed	
 009b7140	FUN_009b7140	.text	6		clean	unknown		unanalyzed	
-009b7150	FUN_009b7150	.text	37		clean	unknown		unanalyzed	
+009b7150	FUN_009b7150	.text	37		clean	render	recon/render9b	reversed	ra3::render::execSetClearColorCommand; 00c60c54 slot 4; slot 2 returns setclearcolor [red] [green] [blue] [alpha]
 009b7180	FUN_009b7180	.text	6		clean	unknown		unanalyzed	
 009b7190	FUN_009b7190	.text	6		clean	unknown		unanalyzed	
 009b71a0	FUN_009b71a0	.text	6		clean	unknown		unanalyzed	
 009b71b0	FUN_009b71b0	.text	6		clean	unknown		unanalyzed	
-009b71c0	FUN_009b71c0	.text	45		clean	unknown		unanalyzed	
+009b71c0	FUN_009b71c0	.text	45		clean	render	recon/render9b	reversed	ra3::render::execSetDepthCommand; 00c60db8 slot 4; slot 2 returns setdepth [name] - sets the current depth buffer to surface specified by name
 009b71f0	FUN_009b71f0	.text	6		clean	unknown		unanalyzed	
 009b7200	FUN_009b7200	.text	6		clean	unknown		unanalyzed	
 009b7210	FUN_009b7210	.text	386		clean	unknown		unanalyzed	
 009b73a0	FUN_009b73a0	.text	6		clean	unknown		unanalyzed	
 009b73b0	FUN_009b73b0	.text	6		clean	unknown		unanalyzed	
-009b73c0	FUN_009b73c0	.text	44		clean	unknown		unanalyzed	
+009b73c0	FUN_009b73c0	.text	44		clean	render	recon/render9b	reversed	ra3::render::execBeginEventCommand; 00c61050 slot 4; slot 2 returns beginevent [name] - tags an event for profiling system (PIX)
 009b73f0	FUN_009b73f0	.text	6		clean	unknown		unanalyzed	
 009b7400	FUN_009b7400	.text	6		clean	unknown		unanalyzed	
-009b7410	FUN_009b7410	.text	38		clean	unknown		unanalyzed	
+009b7410	FUN_009b7410	.text	38		clean	render	recon/render9b	reversed	ra3::render::execEndEventCommand; 00c610b0 slot 4; slot 2 returns endevent [name] - marks the end of an event for profiling system (PIX)
 009b7440	FUN_009b7440	.text	6		clean	unknown		unanalyzed	
 009b7450	FUN_009b7450	.text	6		clean	unknown		unanalyzed	
-009b7460	FUN_009b7460	.text	44		clean	unknown		unanalyzed	
+009b7460	FUN_009b7460	.text	44		clean	render	recon/render9b	reversed	ra3::render::execSetMarkerCommand; 00c61118 slot 4; slot 2 returns setmarker [name] - sets a marker for profiling system (PIX)
 009b7490	FUN_009b7490	.text	6		clean	unknown		unanalyzed	
 009b74a0	FUN_009b74a0	.text	6		clean	unknown		unanalyzed	
 009b74b0	FUN_009b74b0	.text	6		clean	unknown		unanalyzed	
@@ -28934,42 +28934,42 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b7580	FUN_009b7580	.text	6		clean	unknown		unanalyzed	
 009b7590	FUN_009b7590	.text	6		clean	unknown		unanalyzed	
 009b75a0	FUN_009b75a0	.text	6		clean	unknown		unanalyzed	
-009b75b0	FUN_009b75b0	.text	78		clean	unknown		unanalyzed	
+009b75b0	FUN_009b75b0	.text	78		clean	render	recon/render9b	reversed	ra3::render::execSetIntCommand; 00c6162c slot 4; slot 2 returns setint [scopeblock] [parmName] [value]
 009b7600	FUN_009b7600	.text	6		clean	unknown		unanalyzed	
 009b7610	FUN_009b7610	.text	6		clean	unknown		unanalyzed	
-009b7620	FUN_009b7620	.text	80		clean	unknown		unanalyzed	
+009b7620	FUN_009b7620	.text	80		clean	render	recon/render9b	reversed	ra3::render::execSetBoolCommand; 00c616a0 slot 4; slot 2 returns setbool [scopeblock] [parmName] [value]
 009b7670	FUN_009b7670	.text	195		clean	unknown		unanalyzed	
-009b7740	FUN_009b7740	.text	186		clean	unknown		unanalyzed	
+009b7740	FUN_009b7740	.text	186		clean	render	recon/render9b	reversed	ra3::render::findShaderByName; callee of 009b8150 at 009b8165; 009b8150 is 00c5f1e4 slot 3
 009b7800	FUN_009b7800	.text	186		clean	unknown		unanalyzed	
 009b78c0	FUN_009b78c0	.text	186		clean	unknown		unanalyzed	
-009b7980	FUN_009b7980	.text	189		clean	unknown		unanalyzed	
+009b7980	FUN_009b7980	.text	189		clean	render	recon/render9b	reversed	ra3::render::findTextureByName; callee of 009b8230 at 009b824e; 009b8230 is 00c5f448 slot 3
 009b7a40	FUN_009b7a40	.text	186		clean	unknown		unanalyzed	
 009b7b00	FUN_009b7b00	.text	195		clean	unknown		unanalyzed	
 009b7bd0	FUN_009b7bd0	.text	186		clean	unknown		unanalyzed	
 009b7c90	FUN_009b7c90	.text	195		clean	unknown		unanalyzed	
 009b7d60	FUN_009b7d60	.text	111		clean	unknown		unanalyzed	
 009b7dd0	FUN_009b7dd0	.text	125		clean	unknown		unanalyzed	
-009b7e50	FUN_009b7e50	.text	152		clean	unknown		unanalyzed	
-009b7ef0	FUN_009b7ef0	.text	149		clean	unknown		unanalyzed	
+009b7e50	FUN_009b7e50	.text	152		clean	render	recon/render9b	reversed	ra3::render::parseFloatTokens; callee of 009b9cc0 at 009b9cd5 and of 009b9fc0 at 009b9ff6; 009b9cc0 is 00c60c54 slot 3
+009b7ef0	FUN_009b7ef0	.text	149		clean	render	recon/render9b	reversed	ra3::render::parseIntTokens; callee of 009b9cf0 at 009b9d24; 009b9cf0 is 00c60cf0 slot 3
 009b7f90	FUN_009b7f90	.text	40		clean	unknown		unanalyzed	
 009b7fc0	FUN_009b7fc0	.text	139		clean	unknown		unanalyzed	
 009b8050	FUN_009b8050	.text	22		clean	unknown		unanalyzed	
-009b8070	FUN_009b8070	.text	151		clean	unknown		unanalyzed	
-009b8110	FUN_009b8110	.text	58		clean	unknown		unanalyzed	
-009b8150	FUN_009b8150	.text	68		clean	unknown		unanalyzed	
-009b81a0	FUN_009b81a0	.text	41		clean	unknown		unanalyzed	
-009b81d0	FUN_009b81d0	.text	94		clean	unknown		unanalyzed	
-009b8230	FUN_009b8230	.text	109		clean	unknown		unanalyzed	
-009b82a0	FUN_009b82a0	.text	44		clean	unknown		unanalyzed	
+009b8070	FUN_009b8070	.text	151		clean	render	recon/render9b	reversed	ra3::render::execSetShaderCommand; 00c5f010 slot 4; slot 2 returns setshader [name] [(optional) technique]
+009b8110	FUN_009b8110	.text	58		clean	render	recon/render9b	reversed	ra3::render::execSetShaderOverrideCommand; 00c5f164 slot 4; slot 2 returns setshaderoverride [name] [technique]
+009b8150	FUN_009b8150	.text	68		clean	render	recon/render9b	reversed	ra3::render::parseClearShaderOverrideCommand; 00c5f1e4 slot 3; slot 2 returns clearshaderoverride [name] - resets the technique for the shader to use back to default.
+009b81a0	FUN_009b81a0	.text	41		clean	render	recon/render9b	reversed	ra3::render::execClearShaderOverrideCommand; 00c5f1e4 slot 4; slot 2 returns the clearshaderoverride usage string
+009b81d0	FUN_009b81d0	.text	94		clean	render	recon/render9b	reversed	ra3::render::execSetTextureCommand; 00c5f26c slot 4; slot 2 returns settexture [scopeBlock] [scopeParm] [name]
+009b8230	FUN_009b8230	.text	109		clean	render	recon/render9b	reversed	ra3::render::parseCastTextureCommand; 00c5f448 slot 3; slot 2 returns casttexture [name] [format]
+009b82a0	FUN_009b82a0	.text	44		clean	render	recon/render9b	reversed	ra3::render::execCastTextureCommand; 00c5f448 slot 4; slot 2 returns the casttexture usage string
 009b82d0	FUN_009b82d0	.text	96		clean	unknown		unanalyzed	
 009b8330	FUN_009b8330	.text	84		clean	unknown		unanalyzed	
 009b8390	FUN_009b8390	.text	84		clean	unknown		unanalyzed	
 009b83f0	FUN_009b83f0	.text	87		clean	unknown		unanalyzed	
 009b8450	FUN_009b8450	.text	588		clean	unknown		unanalyzed	
 009b86a0	FUN_009b86a0	.text	146		clean	unknown		unanalyzed	
-009b8740	FUN_009b8740	.text	88		clean	unknown		unanalyzed	
-009b87a0	FUN_009b87a0	.text	95		clean	unknown		unanalyzed	
-009b8800	FUN_009b8800	.text	59		clean	unknown		unanalyzed	
+009b8740	FUN_009b8740	.text	88		clean	render	recon/render9b	reversed	ra3::render::bindTechniquePass; 00c5db18 slot 10; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b87a0	FUN_009b87a0	.text	95		clean	render	recon/render9b	reversed	ra3::render::querySurfaceExtent; 00c5db18 slot 4; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b8800	FUN_009b8800	.text	59		clean	render	recon/render9b	reversed	ra3::render::selectPassConstant; 00c5db18 slot 9; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
 009b8840	FUN_009b8840	.text	49		clean	unknown		unanalyzed	
 009b8880	FUN_009b8880	.text	31		clean	unknown		unanalyzed	
 009b8b10	FUN_009b8b10	.text	478		clean	unknown		unanalyzed	
@@ -28994,11 +28994,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b9ab0	FUN_009b9ab0	.text	31		clean	unknown		unanalyzed	
 009b9ad0	FUN_009b9ad0	.text	367		clean	unknown		unanalyzed	
 009b9c40	FUN_009b9c40	.text	116		clean	unknown		unanalyzed	
-009b9cc0	FUN_009b9cc0	.text	35		clean	unknown		unanalyzed	
-009b9cf0	FUN_009b9cf0	.text	85		clean	unknown		unanalyzed	
+009b9cc0	FUN_009b9cc0	.text	35		clean	render	recon/render9b	reversed	ra3::render::parseSetClearColorCommand; 00c60c54 slot 3; slot 2 returns the setclearcolor usage string
+009b9cf0	FUN_009b9cf0	.text	85		clean	render	recon/render9b	reversed	ra3::render::parseSetClearDepthCommand; 00c60cf0 slot 3; slot 2 returns the setcleardepth usage string
 009b9d50	FUN_009b9d50	.text	192		clean	unknown		unanalyzed	
 009b9e10	FUN_009b9e10	.text	429		clean	unknown		unanalyzed	
-009b9fc0	FUN_009b9fc0	.text	74		clean	unknown		unanalyzed	
+009b9fc0	FUN_009b9fc0	.text	74		clean	render	recon/render9b	reversed	ra3::render::parseRenderQuadCommand; 00c6136c slot 3, shared with renderfullquad 00c61450 slot 3; slot 2 of 00c6136c returns renderquad [(optional) red]
 009ba010	FUN_009ba010	.text	232		clean	unknown		unanalyzed	
 009ba120	FUN_009ba120	.text	84		clean	unknown		unanalyzed	
 009ba180	FUN_009ba180	.text	363		clean	unknown		unanalyzed	
@@ -29037,10 +29037,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009bbfa0	FUN_009bbfa0	.text	195		clean	unknown		unanalyzed	
 009bc070	FUN_009bc070	.text	191		clean	unknown		unanalyzed	
 009bc130	FUN_009bc130	.text	207		clean	unknown		unanalyzed	
-009bc200	FUN_009bc200	.text	76		clean	unknown		unanalyzed	
+009bc200	FUN_009bc200	.text	76		clean	render	recon/render9b	reversed	ra3::render::execEndProcCommand; 00c611dc slot 4, shared with return 00c61310 slot 4; slot 2 of 00c611dc returns the endproc usage string
 009bc250	FUN_009bc250	.text	184		clean	unknown		unanalyzed	
 009bc310	FUN_009bc310	.text	190		clean	unknown		unanalyzed	
-009bc3d0	FUN_009bc3d0	.text	78		clean	unknown		unanalyzed	
+009bc3d0	FUN_009bc3d0	.text	78		clean	render	recon/render9b	reversed	ra3::render::execCallProcCommand; 00c612c4 slot 4; slot 2 returns callproc [name] - calls the named procedure
 009bc420	FUN_009bc420	.text	856		clean	unknown		unanalyzed	
 009bc780	FUN_009bc780	.text	901		clean	unknown		unanalyzed	
 009bcb10	FUN_009bcb10	.text	288		clean	unknown		unanalyzed	

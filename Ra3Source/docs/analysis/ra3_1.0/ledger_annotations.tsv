@@ -2535,3 +2535,51 @@ address	status	owner	module	notes
 0079ee50		recon/aistate79b	gamelogic	rejected: UnitAIFollowPathState onExit uses fldz
 0079f1c0		recon/aistate79b	gamelogic	rejected: UnitAIFollowWaypointPathExactState onExit uses x87 (dump fp=2)
 0079f8e0		recon/aistate79b	gamelogic	rejected: UnitAIHordeMoveToGoalAndEnterState onEnter uses x87 (dump fp=2)
+009b3100	reversed	recon/render9b	render	ra3::render::execClearCommand; 00c60a50 slot 4; slot 2 returns clear - clears the current target (color, depth, and stencil)
+009b3130	reversed	recon/render9b	render	ra3::render::execClearColorCommand; 00c60aa4 slot 4; slot 2 returns clearcolor - clears the color channels of the current target
+009b3160	reversed	recon/render9b	render	ra3::render::execClearTargetCommand; 00c60b04 slot 4; slot 2 returns cleartarget [index] - set the surface for the specified target (0-3 for render targets, 4 for depth) to NULL
+009b3180	reversed	recon/render9b	render	ra3::render::execClearZCommand; 00c60bf8 slot 4; slot 2 returns clearz - clear the depth and stencil values on current target
+009b30e0	reversed	recon/render9b	render	ra3::render::execGotoCommand; 00c609ec slot 4; slot 2 returns goto [name] - jump to label (set with : Label) and continue execution
+009b31b0	reversed	recon/render9b	render	ra3::render::execSetClearDepthCommand; 00c60cf0 slot 4; slot 2 returns setcleardepth [depth] [(optional) stencil] - sets depth value to use when target is cleared
+009b31e0	reversed	recon/render9b	render	ra3::render::parseEndProcCommand; 00c611dc slot 3; slot 2 returns endproc - marks the end of a procedure defintion
+009b31f0	reversed	recon/render9b	render	ra3::render::parseReturnCommand; 00c61310 slot 3; slot 2 returns return - returns from the current procedure to the parent caller
+009b2e30	reversed	recon/render9b	render	ra3::render::clearStreamBindings; 00c5ec94 slot 2; slot 2 is this body, not a usage getter, so the class name is inferred
+009b5330	reversed	recon/render9b	render	ra3::render::flushActiveTarget; 00c5db18 slot 11; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b54d0	reversed	recon/render9b	render	ra3::render::applyNamedSampler; 00c5db18 slot 7; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b5510	reversed	recon/render9b	render	ra3::render::applyNamedState; 00c5db18 slot 6; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b5550	reversed	recon/render9b	render	ra3::render::applyNamedStage; 00c5db18 slot 5; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b5860	reversed	recon/render9b	render	ra3::render::releasePrimarySurface; 00c5db10 slot 0; the table has two slots and no usage getter, so the class name is inferred
+009b5880	reversed	recon/render9b	render	ra3::render::releaseSecondarySurface; 00c5db10 slot 1; the table has two slots and no usage getter, so the class name is inferred
+009b58a0	reversed	recon/render9b	render	ra3::render::resetPassOverrides; 00c600f0 slot 2; slot 2 is this body, not a usage getter, so the class name is inferred
+009b6b80	reversed	recon/render9b	render	ra3::render::assignStreamSource; 00c5ec94 slot 1; slot 2 is 009b2e30 and is not a usage getter, so the class name is inferred
+009b6ea0	reversed	recon/render9b	render	ra3::render::execElifCommand; 00c60860 slot 4, shared with elifnot 00c608f0 slot 4; slot 2 of 00c60860 returns elif [scopeBlock] [scopeParm]
+009b6f70	reversed	recon/render9b	render	ra3::render::parseElseCommand; 00c60984 slot 3; slot 2 returns else - opposing conditional execution block
+009b6fe0	reversed	recon/render9b	render	ra3::render::execElseCommand; 00c60984 slot 4; slot 2 returns else - opposing conditional execution block
+009b7050	reversed	recon/render9b	render	ra3::render::parseClearCommand; 00c60a50 slot 3, shared with clearcolor 00c60aa4 slot 3 and clearz 00c60bf8 slot 3; slot 2 of 00c60a50 returns the clear usage string
+009b70a0	reversed	recon/render9b	render	ra3::render::parseClearTargetCommand; 00c60b04 slot 3; slot 2 returns the cleartarget usage string
+009b7150	reversed	recon/render9b	render	ra3::render::execSetClearColorCommand; 00c60c54 slot 4; slot 2 returns setclearcolor [red] [green] [blue] [alpha]
+009b71c0	reversed	recon/render9b	render	ra3::render::execSetDepthCommand; 00c60db8 slot 4; slot 2 returns setdepth [name] - sets the current depth buffer to surface specified by name
+009b73c0	reversed	recon/render9b	render	ra3::render::execBeginEventCommand; 00c61050 slot 4; slot 2 returns beginevent [name] - tags an event for profiling system (PIX)
+009b7410	reversed	recon/render9b	render	ra3::render::execEndEventCommand; 00c610b0 slot 4; slot 2 returns endevent [name] - marks the end of an event for profiling system (PIX)
+009b7460	reversed	recon/render9b	render	ra3::render::execSetMarkerCommand; 00c61118 slot 4; slot 2 returns setmarker [name] - sets a marker for profiling system (PIX)
+009b75b0	reversed	recon/render9b	render	ra3::render::execSetIntCommand; 00c6162c slot 4; slot 2 returns setint [scopeblock] [parmName] [value]
+009b7620	reversed	recon/render9b	render	ra3::render::execSetBoolCommand; 00c616a0 slot 4; slot 2 returns setbool [scopeblock] [parmName] [value]
+009b7740	reversed	recon/render9b	render	ra3::render::findShaderByName; callee of 009b8150 at 009b8165; 009b8150 is 00c5f1e4 slot 3
+009b7980	reversed	recon/render9b	render	ra3::render::findTextureByName; callee of 009b8230 at 009b824e; 009b8230 is 00c5f448 slot 3
+009b7e50	reversed	recon/render9b	render	ra3::render::parseFloatTokens; callee of 009b9cc0 at 009b9cd5 and of 009b9fc0 at 009b9ff6; 009b9cc0 is 00c60c54 slot 3
+009b7ef0	reversed	recon/render9b	render	ra3::render::parseIntTokens; callee of 009b9cf0 at 009b9d24; 009b9cf0 is 00c60cf0 slot 3
+009b8070	reversed	recon/render9b	render	ra3::render::execSetShaderCommand; 00c5f010 slot 4; slot 2 returns setshader [name] [(optional) technique]
+009b8110	reversed	recon/render9b	render	ra3::render::execSetShaderOverrideCommand; 00c5f164 slot 4; slot 2 returns setshaderoverride [name] [technique]
+009b8150	reversed	recon/render9b	render	ra3::render::parseClearShaderOverrideCommand; 00c5f1e4 slot 3; slot 2 returns clearshaderoverride [name] - resets the technique for the shader to use back to default.
+009b81a0	reversed	recon/render9b	render	ra3::render::execClearShaderOverrideCommand; 00c5f1e4 slot 4; slot 2 returns the clearshaderoverride usage string
+009b81d0	reversed	recon/render9b	render	ra3::render::execSetTextureCommand; 00c5f26c slot 4; slot 2 returns settexture [scopeBlock] [scopeParm] [name]
+009b8230	reversed	recon/render9b	render	ra3::render::parseCastTextureCommand; 00c5f448 slot 3; slot 2 returns casttexture [name] [format]
+009b82a0	reversed	recon/render9b	render	ra3::render::execCastTextureCommand; 00c5f448 slot 4; slot 2 returns the casttexture usage string
+009b8740	reversed	recon/render9b	render	ra3::render::bindTechniquePass; 00c5db18 slot 10; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b87a0	reversed	recon/render9b	render	ra3::render::querySurfaceExtent; 00c5db18 slot 4; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b8800	reversed	recon/render9b	render	ra3::render::selectPassConstant; 00c5db18 slot 9; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b9cc0	reversed	recon/render9b	render	ra3::render::parseSetClearColorCommand; 00c60c54 slot 3; slot 2 returns the setclearcolor usage string
+009b9cf0	reversed	recon/render9b	render	ra3::render::parseSetClearDepthCommand; 00c60cf0 slot 3; slot 2 returns the setcleardepth usage string
+009b9fc0	reversed	recon/render9b	render	ra3::render::parseRenderQuadCommand; 00c6136c slot 3, shared with renderfullquad 00c61450 slot 3; slot 2 of 00c6136c returns renderquad [(optional) red]
+009bc200	reversed	recon/render9b	render	ra3::render::execEndProcCommand; 00c611dc slot 4, shared with return 00c61310 slot 4; slot 2 of 00c611dc returns the endproc usage string
+009bc3d0	reversed	recon/render9b	render	ra3::render::execCallProcCommand; 00c612c4 slot 4; slot 2 returns callproc [name] - calls the named procedure
