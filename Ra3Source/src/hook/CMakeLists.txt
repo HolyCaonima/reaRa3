@@ -16,6 +16,7 @@ ra3_add_shared_library(ra3hook
         dll/targets/PlayerTargets.cpp
         dll/targets/NetTargets.cpp
         dll/targets/RenderTargets.cpp
+        dll/targets/Render8eTargets.cpp
         dll/targets/GameClientTargets.cpp
     DEPS
         Ra3::asset
