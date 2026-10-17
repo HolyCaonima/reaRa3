@@ -686,27 +686,26 @@ int main(int argc, char* argv[]) {
             const bool r = groupContainsTemplateId_88D120(grp, targetTid);
             std::cout << "ret=" << (r ? 1 : 0) << "\n";
         } else {
-            alignas(16) std::uint8_t self[0x30]{};
+            // The walk's end sentinels are embedded (self+8 and outer+0x18). Their flag byte
+            // sits past the node, so the storage has to extend past that byte or the next
+            // object overwrites it and increment never reaches the end.
+            alignas(16) std::uint8_t self[0x50]{};
             auto* outerSent = reinterpret_cast<RbTreeNodeView*>(self + 0x08);
             outerSent->isSentinelAt2D = 1u;
 
-            RbTreeNodeView outerNode{};
-            auto* innerSent = reinterpret_cast<RbTreeNodeView*>(
-                reinterpret_cast<std::uint8_t*>(&outerNode) + 0x18);
-            writeU8(innerSent, 0x2D, 1u);
+            alignas(16) std::uint8_t outerBytes[0x50]{};
+            auto* outerNode = reinterpret_cast<RbTreeNodeView*>(outerBytes);
+            auto* innerSent = reinterpret_cast<RbTreeNodeView*>(outerBytes + 0x18);
+            innerSent->isSentinelAt2D = 1u;
 
             RbTreeNodeView innerNode{};
-            innerNode.rightAt0 = innerSent;
-            innerNode.leftAt4 = innerSent;
             innerNode.parentAt8 = innerSent;
             innerNode.valueAt14 = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(grp));
 
-            outerNode.rightAt0 = outerSent;
-            outerNode.leftAt4 = outerSent;
-            outerNode.parentAt8 = outerSent;
-            outerNode.nestedLeftmostAt1C = (count > 0) ? &innerNode : innerSent;
+            outerNode->parentAt8 = outerSent;
+            outerNode->nestedLeftmostAt1C = (count > 0) ? &innerNode : innerSent;
 
-            writePtr(self, 0x0C, (count > 0) ? &outerNode : outerSent);
+            writePtr(self, 0x0C, (count > 0) ? outerNode : outerSent);
             const bool r = categoryMapContainsTemplateId_88D1A0(self, targetTid);
             std::cout << "ret=" << (r ? 1 : 0) << "\n";
         }

@@ -178,7 +178,7 @@ static_assert(sizeof(EconomySampleView) == 0x08);
 // 1. 0x00881130 — AIBudgetStateManager::normalizeStateScores
 void normalizeBudgetStateScores_881130(AIBudgetStateManagerView* self) noexcept;
 
-// 2. 0x00882190 — AIBuildable::resetBuildPosition
+// 2. 0x00882190 — AIUpgrade::resetBuildPosition
 void resetBuildPosition_882190(void* self, Coord3DView* outPos) noexcept;
 
 // 3. 0x00882400 — AIBuildableStructure::setBuildPosition

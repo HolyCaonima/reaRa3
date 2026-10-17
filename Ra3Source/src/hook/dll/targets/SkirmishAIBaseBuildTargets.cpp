@@ -13,12 +13,10 @@ constexpr auto relaxed = std::memory_order_relaxed;
 
 TargetState g_findEntry20ByBitState;
 TargetState g_findEntryByTemplateIdState;
-TargetState g_countQueuedTemplateState;
 TargetState g_groupContainsTemplateIdState;
 TargetState g_canAffordRequestState;
 TargetState g_isCandidateBetterThanBestState;
 TargetState g_findBestMatchingBaseState;
-TargetState g_hasEnoughPowerForTemplateState;
 
 std::uint32_t addressValue(const void* value) noexcept {
     return static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(value));
@@ -68,29 +66,7 @@ void* __fastcall hookedFindEntryByTemplateId(
     return game;
 }
 
-// 3. 0x0088AE10 (RVA 0x0048AE10) — AIBuilder::countQueuedTemplate
-std::int32_t __fastcall hookedCountQueuedTemplate(
-    const void* self,
-    void* /*edx*/,
-    std::uint32_t templateId) noexcept {
-    auto& state = g_countQueuedTemplateState;
-    state.calls.fetch_add(1, relaxed);
-    const std::int32_t ours = sbb::countQueuedTemplate_88AE10(self, templateId);
-    if (state.mode == Mode::replace) {
-        return ours;
-    }
-    using OriginalFn = std::int32_t(__thiscall*)(const void*, std::uint32_t);
-    const std::int32_t game =
-        reinterpret_cast<OriginalFn>(state.original)(self, templateId);
-    recordScalar(
-        "SkirmishAIBaseBuild.countQueuedTemplate",
-        state,
-        static_cast<std::uint32_t>(game),
-        static_cast<std::uint32_t>(ours));
-    return game;
-}
-
-// 4. 0x0088D120 (RVA 0x0048D120) — AIBuildableGroup::containsTemplateId
+// 3. 0x0088D120 (RVA 0x0048D120) — AIBuildableGroup::containsTemplateId
 std::uint8_t __fastcall hookedGroupContainsTemplateId(
     const void* self,
     void* /*edx*/,
@@ -193,29 +169,6 @@ sbb::AIBaseView* __fastcall hookedFindBestMatchingBase(
     return game;
 }
 
-// 8. 0x00892670 (RVA 0x00492670) — AIBaseBuilder::hasEnoughPowerForTemplate
-std::uint8_t __fastcall hookedHasEnoughPowerForTemplate(
-    const void* self,
-    void* /*edx*/,
-    const void* buildRequest) noexcept {
-    auto& state = g_hasEnoughPowerForTemplateState;
-    state.calls.fetch_add(1, relaxed);
-    const std::uint8_t ours =
-        sbb::hasEnoughPowerForTemplate_892670(self, buildRequest) ? 1u : 0u;
-    if (state.mode == Mode::replace) {
-        return ours;
-    }
-    using OriginalFn = std::uint8_t(__thiscall*)(const void*, const void*);
-    const std::uint8_t game =
-        reinterpret_cast<OriginalFn>(state.original)(self, buildRequest);
-    recordScalar(
-        "SkirmishAIBaseBuild.hasEnoughPowerForTemplate",
-        state,
-        game != 0u ? 1u : 0u,
-        ours);
-    return game;
-}
-
 }  // namespace
 
 void appendSkirmishAIBaseBuildTargets(std::vector<Target>& table) {
@@ -238,16 +191,6 @@ void appendSkirmishAIBaseBuildTargets(std::vector<Target>& table) {
             5U,
             reinterpret_cast<void*>(&hookedFindEntryByTemplateId),
             &g_findEntryByTemplateIdState,
-            true,
-        },
-        {
-            "SkirmishAIBaseBuild.countQueuedTemplate",
-            0x0048AE10U,
-            {0x83, 0xEC, 0x08, 0x8B, 0x81, 0x40, 0x05, 0x00,
-             0x00, 0x8B, 0x91, 0x38, 0x05, 0x00, 0x00, 0x56},
-            9U,
-            reinterpret_cast<void*>(&hookedCountQueuedTemplate),
-            &g_countQueuedTemplateState,
             true,
         },
         {
@@ -288,16 +231,6 @@ void appendSkirmishAIBaseBuildTargets(std::vector<Target>& table) {
             5U,
             reinterpret_cast<void*>(&hookedFindBestMatchingBase),
             &g_findBestMatchingBaseState,
-            true,
-        },
-        {
-            "SkirmishAIBaseBuild.hasEnoughPowerForTemplate",
-            0x00492670U,
-            {0x53, 0x56, 0x8B, 0xF1, 0x8B, 0x4C, 0x24, 0x0C,
-             0x8B, 0x51, 0x10, 0x8B, 0x46, 0x14, 0x8B, 0x0D},
-            8U,
-            reinterpret_cast<void*>(&hookedHasEnoughPowerForTemplate),
-            &g_hasEnoughPowerForTemplateState,
             true,
         },
     });

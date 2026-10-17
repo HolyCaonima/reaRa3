@@ -1750,7 +1750,7 @@ void removeMatchingOrProducedTemplate_89FEB0(
 float getEffectivePriority_8AAB70(const void* self) noexcept {
     const float basePriority = readF32(self, 0x08);
     const float overridePriority = readF32(self, 0x24);
-    if (overridePriority > basePriority && basePriority == -1.0f) {
+    if (overridePriority > basePriority && basePriority != -1.0f) {
         return overridePriority;
     }
     return basePriority;
