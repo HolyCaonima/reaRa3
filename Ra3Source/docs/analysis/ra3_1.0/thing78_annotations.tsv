@@ -1,0 +1,41 @@
+address	status	owner	module	notes
+007806f0	reversed	recon/thing78	gamelogic	ra3::gamelogic::applyTimedBonus; 00c0dc34 slot 3; slot 2 006ad8a0 is not a name getter
+00781ed0	reversed	recon/thing78	gamelogic	ra3::gamelogic::stepBalloon; 00c0b578 slot 5 BalloonMoveToGroundState
+00782e20	reversed	recon/thing78	gamelogic	ra3::gamelogic::releaseAttached; 00c01180 slot 98; slot 2 0065f220 is not a name getter
+00782e70	reversed	recon/thing78	gamelogic	ra3::gamelogic::childHasMarker; 00c13440 slot 40; slot 2 006cafd0 is not a name getter
+00783940	reversed	recon/thing78	gamelogic	ra3::gamelogic::forwardPair; 00bf9a40 slot 3; slot 2 00735a90 is not a name getter
+00783e70	reversed	recon/thing78	gamelogic	ra3::gamelogic::forwardIfPositive; 00c07b48 slot 3; slot 2 00735a90 is not a name getter
+007843d0	reversed	recon/thing78	gamelogic	ra3::gamelogic::classifyPair; 00c15200 slot 29; slot 2 006b4190 is not a name getter
+00784490	reversed	recon/thing78	gamelogic	ra3::gamelogic::probeWithMaxFloat; 00c183f0 slot 30; slot 2 006b4190 is not a name getter
+00784910	reversed	recon/thing78	gamelogic	ra3::gamelogic::gateAndForward; 00c00f4c slot 20; slot 2 0067e580 is not a name getter
+00786da0	reversed	recon/thing78	gamelogic	ra3::gamelogic::gateAndForwardAlt; 00c15200 slot 27; slot 2 006b4190 is not a name getter
+007874a0	reversed	recon/thing78	gamelogic	ra3::gamelogic::xferGatherEject; 00c20848 slot 3 GatherEjectUpdate
+007877d0	reversed	recon/thing78	gamelogic	ra3::gamelogic::xferSqueezeFling; 00c225f0 slot 3 SqueezeFlingUpdate
+007879f0	reversed	recon/thing78	gamelogic	ra3::gamelogic::xferLineSegment; 00c28380 slot 3 LineSegmentDamageUpdate
+00788470	reversed	recon/thing78	gamelogic	ra3::gamelogic::lineSegmentNameKey; 00c28380 slot 4 LineSegmentDamageUpdate; NAMEKEY cache of 00c283d8
+007885e0	reversed	recon/thing78	gamelogic	ra3::gamelogic::writeModuleDataWord; 00bdbc08 slot 5 BehaviorModule
+00788650	reversed	recon/thing78	common	ra3::common::assignTagged; called from 00911260 at 00911271; 00911260 called by W3DScriptedModelDraw 00911910 at 0091193c; writes vtable 00c28498
+007886c0	reversed	recon/thing78	common	ra3::common::cachedScalar; called by AIEnterState 007db740 at 007db76a
+007886e0	reversed	recon/thing78	common	ra3::common::firstSlot; called by HighlanderBody 006906e0 at 0069070f
+00788730	reversed	recon/thing78	common	ra3::common::templateField130; called by AIBuildableStructure 008c4de0 at 008c4e5f
+00788750	reversed	recon/thing78	common	ra3::common::templatePlus230; called from 004f5780 at 004f5b17; 004f5780 called by UnitAIExitGoalState 007ab310 at 007ab3bf
+00788760	reversed	recon/thing78	common	ra3::common::field2C4; called by AIBuildableStructure 008d2130 at 008d247a
+00788770	reversed	recon/thing78	common	ra3::common::scaleCount; called by SlaughterHordeContain 0077caa0 at 0077caf3
+00788800	reversed	recon/thing78	common	ra3::common::scaleToFloat; called by 0078bda0 at 0078bdb4; 0078bda0 called by DozerActionDoActionState 006fe4a0 at 006fe91f
+00787bd0	reversed	recon/thing78	gamelogic	ra3::gamelogic::tickSqueeze; called by 00787ce0 at 00787d42; 00787ce0 is 00c22648 slot 0 and slot 2 004d6780 is not a name getter
+0078b690	reversed	recon/thing78	common	ra3::common::resolveDisplayName; called by 0078de50 at 0078df81; 0078de50 pushes ThingTemplate.cpp string 00c29210
+0078b730	reversed	recon/thing78	gamelogic	ra3::gamelogic::xferDrawModule; 00c54498 slot 3 DrawModule
+0078b7a0	reversed	recon/thing78	common	ra3::common::initMatrixRecord; called from 0076b240 at 0076b269; 0076b240 called by 004d7970 at 004d7995; 004d7970 called by GameLogic 004ede90 at 004ee212; writes vtable 00c284c8
+0078b870	reversed	recon/thing78	common	ra3::common::directionCache; called by AttachUpdate 006e6830 at 006e69ac
+0078b8e0	reversed	recon/thing78	common	ra3::common::directionWrite; called by AIUpdateInterface 00785b90 at 00785ec2; 00785b90 is 00c22118 slot 168
+0078b990	reversed	recon/thing78	common	ra3::common::cachedHeight; called from 006b3200 at 006b3246; 006b3200 called by MoveToGroundState 0077ce90 at 0077ce94
+0078ba00	reversed	recon/thing78	common	ra3::common::transformPoint; called by OpenContain 0075e110 at 0075e2b2
+0078bb60	reversed	recon/thing78	common	ra3::common::findSpanRecord; called from 008ba680 at 008ba888; 008ba680 called by 008bade0 at 008bae46; 008bade0 called by AIBuildableStructure 008d2130 at 008d24db
+0078bda0	reversed	recon/thing78	common	ra3::common::scaleByClock; called by DozerActionDoActionState 006fe4a0 at 006fe91f
+0078bdf0	reversed	recon/thing78	common	ra3::common::objectFlagPair; called from 00879050 at 00879559; 00879050 called by SpecialAbilityUpdate 00731e00 at 00732110
+0078bf60	reversed	recon/thing78	common	ra3::common::dispatchKeyed; called from 0076b240 at 0076b8fc; 0076b240 is on the GameLogic 004ede90 chain
+0078bfb0	reversed	recon/thing78	common	ra3::common::normalizeColumn; called by MoveInStraightLineState 006b3270 at 006b327e
+0078cb90	reversed	recon/thing78	common	ra3::common::ensureAudioIds; called by 0078d4f0 at 0078d4fa
+0078d4f0	reversed	recon/thing78	common	ra3::common::resolveAudioChain; called from 005cd2b0 at 005cd3a5; 005cd2b0 called by 005cdc50 at 005cdccb; 005cdc50 called by GameStateMap 00550620 at 00550b6e
+0078d520	reversed	recon/thing78	common	ra3::common::lookupMappedValue; called from 00740fb0 at 00740fc4; 00740fb0 called by 007527c0 at 00752869; 007527c0 called by AIUpdateInterface 00752ab0 at 00752b4e
+0078d560	reversed	recon/thing78	common	ra3::common::selectDensestMask; called from 00795cf0 at 00795d26; 00795cf0 called by HighlanderBody 006906e0 at 006906fa
