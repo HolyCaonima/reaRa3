@@ -1,0 +1,41 @@
+address	status	owner	module	notes
+007d0980	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiStateMachineNewSlot19; 00c30378 slot 19; slot 2 returns AIStateMachine
+007d09b0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiStateMachineNewSlot20; 00c30378 slot 20; slot 2 returns AIStateMachine
+007d09e0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiStateMachineNewSlot21; 00c30378 slot 21; slot 2 returns AIStateMachine
+007d0a00	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::disguiseHoldGroundConstruct; called from 007d0aa0 at 007d0abd; writes vtables 00c343f8 and 00c2e640
+007d0aa0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::unitAIDisguiseHoldGroundClone; 00c30770 slot 19; slot 2 returns UnitAIDisguiseHoldGroundState
+007d0ad0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::unitAILocateNodeConsider; 00c2a1a0 slots 4 and 5; slot 2 returns UnitAILocateNodeState
+007d0b30	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiDockProcessDockUpdate; 00c2bc10 slot 5; slot 2 returns AIDockProcessDockState
+007d0d00	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiGuardReturnOnEnter; 00c31d08 slot 4; slot 2 returns AIGuardReturnState
+007d1860	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiAttackAimOnEnter; 00c2c8a8 slot 4; slot 2 returns AIAttackAimAtTargetState
+007d19b0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiAttackAimAtTargetUpdate; 00c2c8a8 slot 5; slot 2 returns AIAttackAimAtTargetState
+007d19c0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiStateMachineNewSlot9; 00c2c4c8 slot 9; slot 2 returns AIStateMachine
+007d1a00	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiTunnelNetworkGuardXfer; 00c2d230 slot 3; slot 2 returns AITunnelNetworkGuardState
+007d1aa0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiTunnelNetworkGuardOnEnter; 00c2d230 slot 4; slot 2 returns AITunnelNetworkGuardState
+007d1d60	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::turretAIXfer; 00c345a8 slot 3; slot 2 returns TurretAI
+007d2f90	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::turretAIReadAim; called from 007d6090 at 007d60b7
+007d6050	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::turretAIAimSlot19; 00c2a788 slot 19; slot 2 returns TurretAIAimTurretState
+007d6090	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::turretAIAimUpdate; 00c2a788 slot 5; slot 2 returns TurretAIAimTurretState
+007d6230	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::turretAIFireWeaponUpdate; 00c2a860 slot 5; slot 2 returns TurretAIFireWeaponState
+007da4d0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiPlayerSlot16; 00c336a0 slot 16; slot 2 returns AIPlayer
+007da590	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiPlayerSlot19; 00c336a0 slot 19; slot 2 returns AIPlayer
+007da660	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::workOrderXfer; 00c31ea4 slot 3; slot 2 returns WorkOrder
+007dabc0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiPlayerSlot26; 00c336a0 slot 26; slot 2 returns AIPlayer
+007dad30	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiPlayerSlot5; 00c336a0 slot 5; slot 2 returns AIPlayer
+007db090	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiIdleUpdate; 00c2c520 slot 5; slot 2 returns AIIdleState
+007db430	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiCowerUpdate; 00c2c708 slot 5; slot 2 returns AICowerState
+007db530	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiBackAwayUpdate; 00c2f6b8 slot 5; slot 2 returns AIBackAwayState
+007db660	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiMoveAndEvacuateUpdate; 00c2fbe0 slot 5; slot 2 returns AIMoveAndEvacuateState
+007db6c0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiFollowWaypointEvacuateUpdate; 00c324d0 slot 5; slot 2 returns AIFollowWaypointPathStateAndEvacuate
+007dbb20	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiFaceStateUpdate; 00c2d950 slot 5; slot 2 returns AIFaceState
+007dbbc0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiChargeTargetOnEnter; 00c2ff50 slot 4; slot 2 returns AIChargeTargetState
+007dbf70	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiMoveToAndEvacuateUpdate; 00c30228 slot 5; slot 2 returns AIMoveToAndEvacuateState
+007dc160	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiPrepareForBoardingUpdate; 00c2d300 slot 5; slot 2 returns AIPrepareForBoarding
+007dc1b0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiTNGuardReturnUpdate; 00c33840 slot 5; slot 2 returns AITNGuardReturnState
+007dc680	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::squadXfer; 00c32318 slot 3; slot 2 returns Squad
+007dcaa0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiAttackSquadBindTarget; called from 007dfe70 at 007dff30
+007de580	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiFaceStateUpdateWide; 00c2f248 slot 5; slot 2 returns AIFaceState
+007df320	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::unitAIPickTargetApplySpan; called from 007dfcf0 at 007dfd76
+007dfcf0	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::unitAIPickTargetOnEnter; 00c2b630 slot 4; slot 2 returns UnitAIPickTargetFromSquadState
+007dfe70	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiAttackSquadOnEnter; 00c2cd88 slot 4; slot 2 returns AIAttackSquadState
+007dff50	reversed	recon/aistate7d	gamelogic	ra3::gamelogic::aiAttackSquadUpdate; 00c2cd88 slot 5; slot 2 returns AIAttackSquadState
