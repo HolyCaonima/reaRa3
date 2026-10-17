@@ -123,6 +123,26 @@ void run(const std::vector<std::string>& words)
         std::cout << ra3::gamelogic::weaponEntryName(entry) << '\n';
         return;
     }
+    if (words[0] == "alias" && words.size() == 1U) {
+        ra3::gamelogic::WeaponRuntimeData weapon{};
+        weapon.hasCachedTarget = 1;
+        weapon.cachedTargetObjectId = 20;
+        weapon.cachedTargetPosition = {2.0F, 3.0F, 4.0F};
+        const bool valid = ra3::gamelogic::cachedTargetPosition(
+            weapon, 20, nullptr, weapon.cachedTargetPosition);
+        std::array<std::uint32_t, 3> bits{};
+        std::memcpy(bits.data(), &weapon.cachedTargetPosition, sizeof(bits));
+        const auto flags = std::cout.flags();
+        const char fill = std::cout.fill();
+        std::cout << (valid ? '1' : '0') << std::hex << std::setfill('0');
+        for (const std::uint32_t value : bits) {
+            std::cout << std::setw(8) << value;
+        }
+        std::cout.flags(flags);
+        std::cout.fill(fill);
+        std::cout << '\n';
+        return;
+    }
     throw std::runtime_error("unknown command");
 }
 

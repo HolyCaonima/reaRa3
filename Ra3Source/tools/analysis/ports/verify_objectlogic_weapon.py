@@ -68,6 +68,15 @@ class Checker:
             raise RuntimeError(f"objectlogiccheck rejected {command!r}")
         return result
 
+    def alias(self) -> str:
+        assert self.process.stdin is not None and self.process.stdout is not None
+        self.process.stdin.write("alias\n")
+        self.process.stdin.flush()
+        result = self.process.stdout.readline().strip()
+        if not result or result == "error":
+            raise RuntimeError("objectlogiccheck rejected alias case")
+        return result
+
     def close(self) -> None:
         assert self.process.stdin is not None
         self.process.stdin.write("quit\n")
@@ -693,6 +702,27 @@ def native_projection(snapshot: Path, address: int) -> str:
     raise AssertionError(f"missing native scenario for 0x{address:08X}")
 
 
+def native_alias_projection(snapshot: Path) -> str:
+    emu = Emulator(capture=str(snapshot))
+    weapon = emu.alloc(bytes(0x78))
+    target = emu.alloc(bytes(0xE0))
+    emu.write(weapon + 0x58, struct.pack("<I", 20))
+    emu.write(weapon + 0x62, b"\1")
+    vector = struct.pack("<III", *(float_bits(value) for value in (2.0, 3.0, 4.0)))
+    emu.write(weapon + 0x4C, vector)
+    emu.write(target + 0xDC, struct.pack("<I", 20))
+    before = emu.read(weapon, 0x78)
+    result = emu.call(
+        0x006A88F0, [weapon + 0x4C, target], ecx=weapon)
+    after = emu.read(weapon, 0x78)
+    if result.stack_cleanup != 8 or (result.eax & 0xFF) != 1:
+        raise AssertionError("006A88F0 alias ABI")
+    if after != before:
+        raise AssertionError("006A88F0 in-place alias changed untouched bytes")
+    values = struct.unpack("<III", emu.read(weapon + 0x4C, 12))
+    return "1" + "".join(f"{value:08x}" for value in values)
+
+
 def verify(executable: Path, snapshot: Path, mutation_proof: bool) -> None:
     if len(ENTRIES) != 50 or len(set(ENTRIES)) != 50:
         raise AssertionError("accepted entry set must contain 50 unique VAs")
@@ -718,6 +748,13 @@ def verify(executable: Path, snapshot: Path, mutation_proof: bool) -> None:
                 mutated = checker.call(address, mutate=True)
                 if mutated != expected:
                     mutations_detected += 1
+        native_alias = native_alias_projection(snapshot)
+        port_alias = checker.alias()
+        if native_alias != port_alias:
+            mismatches += 1
+            print(
+                f"mismatch 0x006A88F0 alias: "
+                f"game={native_alias} port={port_alias}", file=sys.stderr)
     finally:
         checker.close()
     if mismatches:
@@ -727,7 +764,7 @@ def verify(executable: Path, snapshot: Path, mutation_proof: bool) -> None:
             f"mutation sensitivity {mutations_detected}/{len(ENTRIES)}")
     print(
         f"objectlogic weapon: entries={len(ENTRIES)} "
-        f"observations={len(ENTRIES)} mismatches=0 "
+        f"observations={len(ENTRIES) + 1} mismatches=0 "
         f"mutations={mutations_detected if mutation_proof else 'not-run'}")
 
 
