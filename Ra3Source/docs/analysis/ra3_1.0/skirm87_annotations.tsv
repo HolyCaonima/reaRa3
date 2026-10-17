@@ -1,0 +1,42 @@
+address	status	owner	module	notes
+00873e00	reversed	recon/skirm87	gameclient	ra3::gameclient::xferAnimationSoundClientBehavior; 00c4fe40 slot 3; slot 2 returns AnimationSoundClientBehavior
+00873eb0	reversed	recon/skirm87	gameclient	ra3::gameclient::xferModelConditionClientBehavior; 00c500b8 slot 3; slot 2 returns ModelConditionAudioLoopClientBehavior
+00874160	reversed	recon/skirm87	gameclient	ra3::gameclient::clientBehaviorRecordOrNull; 00c4fe40 slot 13; slot 2 returns AnimationSoundClientBehavior
+00874170	reversed	recon/skirm87	gameclient	ra3::gameclient::xferRandomSoundSelector; 00c50318 slot 3; slot 2 returns RandomSoundSelectorClientBehavior
+00874250	reversed	recon/skirm87	gameclient	ra3::gameclient::xferBeaconClientUpdate; 00c4ff48 slot 3; slot 2 returns BeaconClientUpdate
+00874470	reversed	recon/skirm87	gameclient	ra3::gameclient::xferLargeGroupAudio; 00c503e0 slot 3; slot 2 returns LargeGroupAudioClientUpdate
+00874870	reversed	recon/skirm87	gameclient	ra3::gameclient::audioLoopRecordOrNull; 00c500b8 slot 10; slot 2 returns ModelConditionAudioLoopClientBehavior
+0087c400	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferAIBank; 00c52e20 slot 3; slot 2 returns AIBank
+0087c4d0	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferBuildHeuristicStore; 00c52338 slot 3; slot 2 returns AIBuildHeuristicStore
+0087c730	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferEconomyManager; 00c53114 slot 3; slot 2 returns AIEconomyManager
+0087c830	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferRedAlertManager; 00c51768 slot 3; slot 2 returns AIRedAlertManager
+0087cb80	reversed	recon/skirm87	gamelogic	ra3::gamelogic::attackObjectPresent; 00c517f0 slot 5; slot 2 returns AISpecialPowerUpdatableAttackObject
+0087d2a0	reversed	recon/skirm87	gamelogic	ra3::gamelogic::clearSimpleDefenseAlertByte; 00c53334 slot 7; slot 2 returns AISimpleDefenseTactic
+0087d2b0	reversed	recon/skirm87	gamelogic	ra3::gamelogic::applySimpleDefenseTacticMode; 00c53334 slot 8; slot 2 returns AISimpleDefenseTactic
+0087d3e0	reversed	recon/skirm87	gamelogic	ra3::gamelogic::rollAITacticActivation; 00c532fc slot 8; slot 2 returns AIReactiveDefenseTactic
+0087d6e0	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferStrategyManager; 00c52724 slot 3; slot 2 returns AIStrategyManager
+0087d760	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferPrerequisiteBuilder; 00c51bc4 slot 3; slot 2 returns AIPrerequisiteBuilder
+0087d7d0	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferUnitBuilder; 00c51c08 slot 3; slot 2 returns AIUnitBuilder
+0087d860	reversed	recon/skirm87	gamelogic	ra3::gamelogic::copyBuildableStructureScore; 00c527c8 slot 8; slot 2 returns AIBuildableStructure
+0087d870	reversed	recon/skirm87	gamelogic	ra3::gamelogic::ensureBuildablePhaseFour; 00c52cd8 slot 17; slot 2 returns AIBuildableUnit
+0087d890	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferBuildableStructureFactory; 00c52dbc slot 3; slot 2 returns AIBuildableStructureFactory
+0087d940	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferEmergencyManager; 00c5193c slot 3; slot 2 returns AIEmergencyManager
+0087dc90	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferSubsystemEnabler; 00c515bc slot 3; slot 2 returns SkirmishAISubSystemEnabler
+0087edd0	reversed	recon/skirm87	gamelogic	ra3::gamelogic::copyBuildableStructureAnchor; 00c527c8 slot 19; slot 2 returns AIBuildableStructure
+0087f450	reversed	recon/skirm87	gamelogic	ra3::gamelogic::aiRedAlertFrameReached; 00c51768 slot 8; slot 2 returns AIRedAlertManager
+0087fd80	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferSpecialPowerAttackObject; 00c517f0 slot 3; slot 2 returns AISpecialPowerUpdatableAttackObject
+00881820	reversed	recon/skirm87	gamelogic	ra3::gamelogic::tacticArgumentPresent; 00c5336c slot 5; slot 2 returns AIStaticDefenseTactic
+008822e0	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferSharedBuildRecord; 00c52768 slot 3; slot 2 is 00411440 and does not return a class name
+00885700	reversed	recon/skirm87	gamelogic	ra3::gamelogic::armAIRedAlertFrame; 00c51768 slot 6; slot 2 returns AIRedAlertManager
+00885bb0	reversed	recon/skirm87	gamelogic	ra3::gamelogic::findSimpleExpansionRecord; direct callee of 00886640 at 00886648; 00886640 is 00c533dc slot 10
+008865e0	reversed	recon/skirm87	gamelogic	ra3::gamelogic::applyStaticDefenseTacticRecord; 00c5336c slot 8; slot 2 returns AIStaticDefenseTactic
+00886640	reversed	recon/skirm87	gamelogic	ra3::gamelogic::cacheSimpleExpansionRecord; 00c533dc slot 10; slot 2 returns AISimpleExpansionTactic
+00886660	reversed	recon/skirm87	gamelogic	ra3::gamelogic::applySimpleSiegeTacticFlag; 00c53524 slot 8; slot 2 returns AISimpleSiegeTactic
+00886680	reversed	recon/skirm87	gamelogic	ra3::gamelogic::applyHuntTacticFlags; 00c53560 slot 8; slot 2 returns AIHuntTactic
+00887870	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferBuildableUnit; 00c52cd8 slot 3; slot 2 returns AIBuildableUnit
+00887be0	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferAIUpgrade; 00c52d48 slot 3; slot 2 returns AIUpgrade
+00887c90	reversed	recon/skirm87	gamelogic	ra3::gamelogic::xferUpgradeOpeningMove; 00c53280 slot 3; slot 2 returns AIUpgradeOpeningMove
+00882e20	reversed	recon/skirm87	gamelogic	ra3::gamelogic::copyRebuildableStructurePosition; 00c53048 slot 19; slot 2 returns AIRebuildableStructure
+00882e60	reversed	recon/skirm87	gamelogic	ra3::gamelogic::rebuildableStructurePositionPointer; 00c53048 slot 24; slot 2 returns AIRebuildableStructure
+00882e70	reversed	recon/skirm87	gamelogic	ra3::gamelogic::rebuildableStructureRadiusOrZero; 00c53048 slot 27; slot 2 returns AIRebuildableStructure
+00882e90	reversed	recon/skirm87	gamelogic	ra3::gamelogic::rebuildableStructureRadiusPointer; 00c53048 slot 28; slot 2 returns AIRebuildableStructure
