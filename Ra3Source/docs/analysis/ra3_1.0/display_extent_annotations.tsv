@@ -1,0 +1,21 @@
+address	status	owner	module	notes
+005d5b20	reversed	recon/grokclean2	gameclient	DisplayExtent::storePrimaryExtent; vtables 00BE06D0/00BE4BE0 slot 15; store dword at +0x4C; ctor anchors 00532670 and 0058C700. ICF with 00C8DB70 slot 26, same store, counted once. Offline oracle only.
+00560db0	reversed	recon/grokclean2	gameclient	DisplayExtent::storeSecondaryExtent; slot 16; store dword at +0x50. Offline oracle only.
+0052af80	reversed	recon/grokclean2	gameclient	DisplayExtent::loadPrimaryExtent; slot 17; load dword at +0x4C. Offline oracle only.
+00740fa0	reversed	recon/grokclean2	gameclient	DisplayExtent::loadSecondaryExtent; slot 18; load dword at +0x50. Module-estimate vtable-conflict is not the owner. Offline oracle only.
+0052af90	reversed	recon/grokclean2	gameclient	DisplayExtent::loadFlag5E; slot 19; mov al,[ecx+5E], EAX[31:8] unchanged. Offline oracle only.
+0052afa0	reversed	recon/grokclean2	gameclient	DisplayExtent::secondaryTimesFourBelowPrimaryTimesThree; slot 20; 1 iff uint32(4*(+0x50)) < uint32(3*(+0x4C)). Offline oracle only.
+0052afc0	reversed	recon/grokclean2	gameclient	DisplayExtent::storeFlag5F; slot 22; one byte at +0x5F from the stack argument, EAX[31:8] unchanged. Offline oracle only.
+0052afd0	reversed	recon/grokclean2	gameclient	DisplayExtent::loadFlag5F; slot 23; mov al,[ecx+5F]. Offline oracle only.
+0052afe0	reversed	recon/grokclean2	gameclient	DisplayExtent::storeFlag60; base vtable 00BE06D0 slot 24 only. Derived slot 24 is 005603B0 and is not this function. Offline oracle only.
+00ada7c0	reversed	recon/grokclean2	gameclient	DisplayExtent::loadFlag60; slot 25; mov al,[ecx+60]. Offline oracle only.
+0052af60	reversed	recon/grokclean2	gameclient	DisplayExtent::storeTriple64; slot 30; interleaved copy of three dwords to +0x64/+0x68/+0x6C. Offline oracle only.
+0051fb90	reversed	recon/grokclean2	gameclient	DisplayExtent::storePair74; slot 50; two stack dwords to +0x74 and +0x78. Drawable.cpp neighbor estimate is not the owner. Offline oracle only.
+0051fbb0	reversed	recon/grokclean2	gameclient	DisplayExtent::loadField74; slot 51; load dword at +0x74. ICF with 00C8E9F8 slot 25, counted once. Offline oracle only.
+0052b000	reversed	recon/grokclean2	gameclient	DisplayExtent::storeFieldCC; slot 57; store dword at +0xCC. Offline oracle only.
+0058c900	reversed	recon/grokclean2	gameclient	DisplayExtent::loadFlag12C; derived vtable 00BE4BE0 slot 34; mov al,[ecx+12C]. Offline oracle only.
+0058c910	reversed	recon/grokclean2	gameclient	DisplayExtent::storeFlag12C; derived slot 35; one byte at +0x12C. Offline oracle only.
+0058c920	reversed	recon/grokclean2	gameclient	DisplayExtent::loadField110; derived slot 36; load dword at +0x110. Offline oracle only.
+0058c930	reversed	recon/grokclean2	gameclient	DisplayExtent::storeField110; derived slot 37; store dword at +0x110. Offline oracle only.
+00560800	reversed	recon/grokclean2	gameclient	DisplayExtent::storeQuad11C; derived slot 33; interleaved four dwords at +0x11C and then byte +0x12C = 1. Offline oracle only.
+00560a10	reversed	recon/grokclean2	gameclient	DisplayExtent::loadField118; derived slot 61; load dword at +0x118, no dereference. recon/grokclean1 listed this VA as deferred, not implemented. Offline oracle only.

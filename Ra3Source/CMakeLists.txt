@@ -64,6 +64,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/audioeventcheck)
     add_subdirectory(tools/objectlogiccheck)
     add_subdirectory(tools/uicheck)
+    add_subdirectory(tools/displaycheck)
 endif()
 
 if(RA3_BUILD_TESTS)
