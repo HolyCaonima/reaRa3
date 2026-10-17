@@ -35,7 +35,7 @@ already reconstructed mask helpers and run as real code. `0x007E1930` is the
 | `00691250` | `hordeContainAnchorRejected` | `00C21520` slot 150; `0073CB3B` stores `HordeContain` `00C21A98`; `0073CB8A` stores `00C21520` at `+0x16C` |
 | `006912E0` | `hordeContainForwardId` | `00C21520` slot 45; same constructor |
 | `00691660` | `hordeContainRelayAnchor` | `00C21520` slot 135; same constructor |
-| `00691C30` | `hordeContainRecordSpanPointer` | `00C0A7D0` slot 107; `0074D2C6` stores `HordeContain` `00C21A98`; `0074D555` stores `00C0A7D0` |
+| `00691C30` | `hordeContainRecordSpanPointer` | `00C0A7D0` slot 107; HordeContain constructor `0074D290` stores `00C21A98` at `[esi]` (`0074D2C6`), then allocates a 0x7C-byte helper whose vtable `00C0A7D0` it stores at `0074D555` (controller: `0074D2C6` is mid-function; the helper is owned by HordeContain, not HordeContain itself) |
 | `00691CB0` | `hordeContainSelectRecordId` | `00C0A7D0` slot 104; same record constructor |
 | `00691E20` | `garrisonContainSlotPointer` | `00C21BF0` slot 62; `0074DFD6` stores `GarrisonContain` `00C21E90`; `0074DFEA` stores `00C21BF0` at `+0x24` |
 | `00691FC0` | `garrisonContainCopySlotTriple` | `00C21BF0` slot 71; same constructor |

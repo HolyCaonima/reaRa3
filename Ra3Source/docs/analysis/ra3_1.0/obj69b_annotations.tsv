@@ -4,7 +4,7 @@ address	status	owner	module	notes
 00691250	reversed	recon/obj69b	gamelogic	ra3::gamelogic::hordeContainAnchorRejected; 00c21520 slot 150; 0073cb3b stores HordeContain 00c21a98; 0073cb8a stores 00c21520 at this+0x16c
 006912e0	reversed	recon/obj69b	gamelogic	ra3::gamelogic::hordeContainForwardId; 00c21520 slot 45; same HordeContain constructor store as 00691250
 00691660	reversed	recon/obj69b	gamelogic	ra3::gamelogic::hordeContainRelayAnchor; 00c21520 slot 135; same HordeContain constructor store as 00691250
-00691c30	reversed	recon/obj69b	gamelogic	ra3::gamelogic::hordeContainRecordSpanPointer; 00c0a7d0 slot 107; 0074d2c6 stores HordeContain 00c21a98; 0074d555 stores 00c0a7d0
+00691c30	reversed	recon/obj69b	gamelogic	ra3::gamelogic::hordeContainRecordSpanPointer; 00c0a7d0 slot 107; HordeContain constructor 0074d290 (not a ledger function; Ghidra has no entry for it) stores 00c21a98 at [esi] (0074d2c6), then allocates a 0x7c-byte helper, sets its +4 to the HordeContain and stores 00c0a7d0 as its vtable (0074d555), so 00c0a7d0 is a HordeContain-owned helper class (controller)
 00691cb0	reversed	recon/obj69b	gamelogic	ra3::gamelogic::hordeContainSelectRecordId; 00c0a7d0 slot 104; same record constructor stores as 00691c30
 00691e20	reversed	recon/obj69b	gamelogic	ra3::gamelogic::garrisonContainSlotPointer; 00c21bf0 slot 62; 0074dfd6 stores GarrisonContain 00c21e90; 0074dfea stores 00c21bf0 at this+0x24
 00691fc0	reversed	recon/obj69b	gamelogic	ra3::gamelogic::garrisonContainCopySlotTriple; 00c21bf0 slot 71; same GarrisonContain constructor store as 00691e20
