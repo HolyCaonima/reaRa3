@@ -1,5 +1,6 @@
 ra3_add_module(gamelogic
     SOURCES
+        include/ra3/gamelogic/AIState7A.h
         include/ra3/gamelogic/AIStateMachine7C.h
         include/ra3/gamelogic/AITNGuardViews.h
         include/ra3/gamelogic/AIStateViews.h
@@ -13,6 +14,7 @@ ra3_add_module(gamelogic
         include/ra3/gamelogic/WeaponLogic.h
         include/ra3/gamelogic/ScriptNamedQueries.h
         include/ra3/gamelogic/SkirmishAI87.h
+        src/AIState7A.cpp
         src/AIStateMachine7C.cpp
         src/AITNGuardViews.cpp
         src/AIStateViews.cpp
