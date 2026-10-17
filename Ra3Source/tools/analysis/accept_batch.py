@@ -35,6 +35,7 @@ from disasm import DEFAULT_EXE, Image, position_dependent  # noqa: E402
 DOCS = "Ra3Source/docs/analysis/ra3_1.0"
 LEDGER = f"{DOCS}/function_ledger.tsv"
 MAIN_ANNOTATIONS = f"{DOCS}/ledger_annotations.tsv"
+ADDITIONS = f"{DOCS}/function_additions.tsv"
 TARGETS_DIR = "Ra3Source/src/hook/dll/targets/"
 CORE_TARGETS = "Ra3Source/src/hook/dll/Targets.cpp"
 SHARED_FILES = {
@@ -157,8 +158,8 @@ def check_doc_bytes(head: str, docs: list[str], entries: dict[str, dict], report
                     continue
                 mentioned.add(key)
                 va = entry["rva"] + IMAGE_BASE
-                addresses = {int(c, 16) for c in cells if re.fullmatch(r"0x[0-9A-Fa-f]{8}", c)}
-                if addresses and va not in addresses:
+                addresses = {int(c, 16) for c in cells if re.fullmatch(r"(?:0x)?[0-9A-Fa-f]{8}", c)}
+                if addresses and va not in addresses and entry["rva"] not in addresses:
                     report.error(f"doc {path}: row for {key} quotes "
                                  f"{', '.join(f'0x{a:08X}' for a in sorted(addresses))}, code has 0x{va:08X}")
                 for cell in cells:
@@ -232,6 +233,10 @@ def main() -> int:
             report.error(f"branch adds {path}, which main also has with different content")
 
     ledger = {row["address"]: row for row in read_tsv(show(main_ref, LEDGER) or "")}
+    for ref in (main_ref, head):
+        for row in read_tsv(show(ref, ADDITIONS) or ""):
+            ledger.setdefault(row["entry"].strip().lower(),
+                              {"size": row["size"], "securom": "clean (function_additions)"})
 
     head_targets = all_targets(head)
     base_targets = all_targets(base)
