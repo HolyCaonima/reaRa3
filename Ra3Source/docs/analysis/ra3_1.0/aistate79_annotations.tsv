@@ -1,0 +1,66 @@
+address	status	owner	module	notes
+00796f20	reversed	recon/aistate79	gamelogic	ra3::gamelogic::followWaypointPathStoreTolerance; 00c29a48 slot 16; slot 2 returns FollowWaypointPathStateMachine
+00796f50	reversed	recon/aistate79	gamelogic	ra3::gamelogic::followWaypointPathStoreFlag; 00c29a48 slot 18; slot 2 returns FollowWaypointPathStateMachine
+007970a0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIParkedOnExit; 00c2dd88 slot 6; slot 2 returns UnitAIPArkedState
+007971e0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIGetBestBoneOnExit; 00c2a080 slot 6; slot 2 returns UnitAIGetBestBoneState
+00797380	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIUpdateNodeOnEnter; 00c2a2e0 slot 4; slot 2 returns UnitAIUpdateNodeState
+00797440	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIWaitForDeliveryUpdate; 00c2a348 slot 5; slot 2 returns UnitAIWaitForDeliveryState
+00797470	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIWaitForDeliveryOnExit; 00c2a348 slot 6; slot 2 returns UnitAIWaitForDeliveryState
+007974d0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIWaitForMinerUpdate; 00c2a410 slot 5; slot 2 returns UnitAIWaitForMinerState
+00797960	reversed	recon/aistate79	gamelogic	ra3::gamelogic::turretAIIdleOnEnter; 00c29b20 slot 4; slot 2 returns TurretAIIdleState; 0079797d pushes 00c2a8c8 TurretStates\Idle.cpp
+007979a0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::turretAIIdleUpdate; 00c29b20 slot 5; slot 2 returns TurretAIIdleState
+00797ac0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIAimFireAtPositionOnEnter; 00c2aa10 slot 4; slot 2 returns UnitAIAimFireAtPositionState
+00797b00	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIAimFireAtPositionOnExit; 00c2aa10 slot 6; slot 2 returns UnitAIAimFireAtPositionState
+00797c50	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIAttackObjectSlot19; 00c2e368 slot 19; slot 2 returns UnitAIAttackObjectState
+00797c80	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIAttackPositionSlot19; 00c2e3d0 slot 19; slot 2 returns UnitAIAttackPositionState
+00797d60	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAICreatePathOnExit; 00c2ac10 slot 6; slot 2 returns UnitAICreatePathState
+00797dd0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIDeleteOnEnter; 00c2ad40 slot 4; slot 2 returns UnitAIDeleteState
+007981f0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIForceAttackObjectSlot19; 00c2e9b8 slot 19; slot 2 returns UnitAIForceAttackObjectState
+007982d0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIHoldFireOnEnter; 00c2b2f8 slot 4; slot 2 returns UnitAIHoldFireState
+007983d0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIIdleOnEnter; 00c2b4a0 slot 4; slot 2 returns UnitAIIdleState
+00798690	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIRotateToAngleOnExit; 00c2b708 slot 6; slot 2 returns UnitAIRotateToAngleState
+007987c0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAISetLocomotorOnEnter; 00c2b850 slot 4; slot 2 returns UnitAISetLocomotorState
+00798880	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAISuperStateSlot15; 00c2b9f8 slot 15; slot 2 returns UnitAISuperState
+007988f0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAITimedIdleOnEnter; 00c2ba60 slot 4; slot 2 returns UnitAITimedIdleState
+00798900	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAITimedIdleUpdate; 00c2ba60 slot 5; slot 2 returns UnitAITimedIdleState
+007989e0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIWaitForOccupantsOnExit; 00c2bac8 slot 6; slot 2 returns UnitAIWaitForOccupantsState
+00798cf0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::aiDockWaitForClearanceOnEnter; 00c2bba8 slot 4; slot 2 returns AIDockWaitForClearanceState
+00798dc0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::aiDockProcessDockOnExit; 00c2bc10 slot 6; slot 2 returns AIDockProcessDockState
+00798f00	reversed	recon/aistate79	gamelogic	ra3::gamelogic::aiGuardRetaliateMachineSlot18; 00c2bd98 slot 18; slot 2 returns AIGuardRetaliateMachine
+00799890	reversed	recon/aistate79	gamelogic	ra3::gamelogic::aiIdleOnEnter; 00c2c520 slot 4; slot 2 returns AIIdleState; 007998b2 pushes 00c2c1a8 AIStates.cpp
+00799920	reversed	recon/aistate79	gamelogic	ra3::gamelogic::aiInternalMoveToSlot19; 00c2d6d8 slot 19; slot 2 returns AIInternalMoveToState
+0079a0a0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::aiAimFireOnExit; 00c2c910 slot 6; slot 2 returns AIAimFireState
+0079a0c0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::aiAimFireSlot19; 00c2c910 slot 19; slot 2 returns AIAimFireState
+0079a3d0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::aiAttackStateSlot17; 00c2cce0 slot 17; slot 2 returns AIAttackState
+0079a4f0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::aiAttackSquadStateSlot17; 00c2cd88 slot 17; slot 2 returns AIAttackSquadState
+0079b470	reversed	recon/aistate79	gamelogic	ra3::gamelogic::turretAIHoldTurretUpdate; 00c29ab8 slot 5; slot 2 returns TurretAIHoldTurretState
+0079c490	reversed	recon/aistate79	gamelogic	ra3::gamelogic::aiFaceStateSlot8; 00c2d950 slot 8; slot 2 returns AIFaceState
+0079c520	reversed	recon/aistate79	gamelogic	ra3::gamelogic::turretStateMachineSlot13; 00c29c50 slot 13; slot 2 returns TurretStateMachine
+0079c550	reversed	recon/aistate79	gamelogic	ra3::gamelogic::turretStateMachineOnExit; 00c29c50 slot 6; slot 2 returns TurretStateMachine
+0079c580	reversed	recon/aistate79	gamelogic	ra3::gamelogic::turretStateMachineSlot7; 00c29c50 slot 7; slot 2 returns TurretStateMachine
+0079c8d0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAICheckFarEnoughOnEnter; 00c29d20 slot 4; slot 2 returns UnitAICheckFarEnoughState
+0079cc20	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIParkedOnEnter; 00c2dd88 slot 4; slot 2 returns UnitAIPArkedState
+0079ccf0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIParkOrientUpdate; 00c2dde8 slot 5; slot 2 returns UnitAIParkOrientState
+0079cfa0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIWaitForClearanceOnEnter; 00c2df30 slot 4; slot 2 returns UnitAIWaitForClearanceState
+0079e0c0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIAttemptSkipMoveOnEnter; 00c2aa80 slot 4; slot 2 returns UnitAIAttemptSkipMoveState
+0079e150	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAICanEnterUpdate; 00c2ab48 slot 5; slot 2 returns UnitAICanEnterState
+0079e4d0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAICreatePathExactOnEnter; 00c2ac78 slot 4; slot 2 returns UnitAICreatePathExactState
+0079ea60	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIEnterCoverOnEnter; 00c2afa0 slot 4; slot 2 returns UnitAIEnterCoverState
+0079f3d0	reversed	recon/aistate79	gamelogic	ra3::gamelogic::unitAIGarrisonedIdleUpdate; 00c2b1b8 slot 5; slot 2 returns UnitAIGarrisonedIdleState
+00796eb0		recon/aistate79	gamelogic	rejected: GuardPositionStateMachine slot 2, mov eax, imm32; ret
+00796ec0		recon/aistate79	gamelogic	rejected: GuardPositionStateMachine slot 0 destructor, calls 005b2370 and 004166b0
+00796f40		recon/aistate79	gamelogic	rejected: FollowWaypointPathStateMachine slot 15 is fld dword ptr [ecx+0x90]; ret
+00797570		recon/aistate79	gamelogic	rejected: UnitAIFreeFallState onEnter uses fnstcw/fld
+007978d0		recon/aistate79	gamelogic	rejected: TurretAIHoldTurretState onEnter uses fnstcw/fld
+00797db0		recon/aistate79	gamelogic	rejected: shared or eax, 0xffffffff; ret stub
+007984c0		recon/aistate79	gamelogic	rejected: ParachuteToGroundStateMachine slot 0 destructor, calls 005b2370 and 004166b0
+00799b60		recon/aistate79	gamelogic	rejected: mov al, 1; ret stub
+0079a1c0		recon/aistate79	gamelogic	rejected: AIAttackFireWeaponState slot 19 is mov ecx, [ecx+0x18]; jmp 005b9f30
+0079c4f0		recon/aistate79	gamelogic	rejected: TurretStateMachine slot 0 destructor, calls 005b2370 and 004166b0
+0079db10		recon/aistate79	gamelogic	rejected: UnitAIAimFireAtPositionState slot 19 copies goal floats with fld/fstp
+0079e010		recon/aistate79	gamelogic	rejected: AttackSquadStateMachine slot 0 destructor, calls 005b2370 and 004166b0
+0079e050		recon/aistate79	gamelogic	rejected: UnitAIAttackSquadState slot 19 operator-new factory, calls 00416820 then 0079df40
+0079e8e0		recon/aistate79	gamelogic	rejected: DisguiseWhenIdleStateMachine slot 0 destructor, calls 005b2370 and 004166b0
+0079e920		recon/aistate79	gamelogic	rejected: UnitAIDisguiseWhenIdleState slot 19 operator-new factory, calls 00416820 then 0079e820
+0079f810		recon/aistate79	gamelogic	rejected: HordeExitGoalStateMachine slot 0 destructor, calls 005b2370 and 004166b0
+0079f850		recon/aistate79	gamelogic	rejected: UnitAIHordeExitGoalState slot 19 operator-new factory, calls 00416820 then 0079f750
