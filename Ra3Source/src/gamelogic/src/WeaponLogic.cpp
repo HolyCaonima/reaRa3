@@ -37,12 +37,6 @@ ProbeObservation floatResult(float value, std::uint32_t cleanup = 0) noexcept
     return result;
 }
 
-std::uint32_t stateCode(const ProbeInput& input) noexcept
-{
-    return input.words[0] == 0 ? static_cast<std::uint32_t>(WeaponStateType::invalid)
-                               : input.words[1];
-}
-
 }  // namespace
 
 int secondsToFrames(float seconds, float logicRate, float timeScale) noexcept
@@ -133,6 +127,35 @@ bool cachedTargetPosition(
     return true;
 }
 
+void initializeWeaponRuntime(
+    WeaponRuntimeData& weapon, const WeaponTemplateData* weaponTemplate,
+    std::uint32_t slot, std::uint32_t now,
+    std::uint32_t suspendFxFrames) noexcept
+{
+    const std::array<std::uint8_t, 3> reserved{
+        weapon.reserved31[0], weapon.reserved31[1], weapon.reserved31[2]};
+    weapon = {};
+    weapon.reserved31[0] = reserved[0];
+    weapon.reserved31[1] = reserved[1];
+    weapon.reserved31[2] = reserved[2];
+    weapon.vtable = 0x00C07D54U;
+    weapon.weaponTemplate = weaponTemplate;
+    weapon.target = slot;
+    weapon.nextReadyFrame =
+        weaponTemplate == nullptr ? 0U : now + suspendFxFrames;
+    weapon.lastShotFrame = 0x7FFFFFFFU;
+    weapon.maxShots =
+        weaponTemplate == nullptr ? 1U : weaponTemplate->maxShots;
+    weapon.pitchLimited = static_cast<std::uint8_t>(
+        weaponTemplate != nullptr
+        && (weaponTemplate->minimumPitch > -3.1415927410125732F
+            || weaponTemplate->maximumPitch < 3.1415927410125732F));
+    weapon.aimPitch = -1.0F;
+    weapon.minimumAimPitch = -1.0F;
+    weapon.maximumAimPitch = -1.0F;
+    weapon.ammo = -1;
+}
+
 ProbeObservation evaluateWeaponEntry(
     WeaponEntry entry, const ProbeInput& input) noexcept
 {
@@ -140,54 +163,10 @@ ProbeObservation evaluateWeaponEntry(
     const std::uint32_t start = input.words[1];
     const std::uint32_t duration = input.words[2];
     const std::uint32_t deadline = start + duration;
-    const float logicRate = input.values[6];
-    const float timeScale = input.values[7];
 
     switch (entry) {
-    case WeaponEntry::initUpdate:
-        return integerResult(input.words[0] != 0 ? 0xFFFFFFFFU : input.words[1]);
-    case WeaponEntry::fireUpdate: {
-        ProbeObservation result = integerResult(
-            now > deadline ? input.words[4] : 0U);
-        if (now > deadline && input.words[3] == 0) {
-            result.writes[0] = 0;
-            result.writeMask = 1;
-        }
-        return result;
-    }
-    case WeaponEntry::stateDeadlineUpdate:
-        return integerResult(now < deadline ? 0U : 0xFFFFFFFFU);
     case WeaponEntry::zeroAimValue:
         return floatResult(0.0F, 8);
-    case WeaponEntry::attackRangeForPitch: {
-        WeaponTemplateData data{};
-        data.attackRange = input.values[0];
-        data.requestAssistRange = input.values[1];
-        data.approachFactor = input.values[2];
-        data.pitchTolerance = input.values[3];
-        return floatResult(weaponAttackRange(data, input.values[4]), 4);
-    }
-    case WeaponEntry::minimumAttackRange:
-        return floatResult(std::max(0.0F, input.values[0] - 5.0F));
-    case WeaponEntry::attackRange:
-        return floatResult(input.values[0]);
-    case WeaponEntry::preAttackLowFrames:
-    case WeaponEntry::firingLowFrames:
-    case WeaponEntry::coolDownLowFrames:
-    case WeaponEntry::reloadLowFrames:
-        return integerResult(static_cast<std::uint32_t>(
-            secondsToFrames(input.values[0], logicRate, timeScale)));
-    case WeaponEntry::preAttackHighFrames:
-    case WeaponEntry::firingHighFrames:
-    case WeaponEntry::coolDownHighFrames:
-    case WeaponEntry::reloadHighFrames:
-        return integerResult(static_cast<std::uint32_t>(
-            secondsToFrames(input.values[1], logicRate, timeScale)));
-    case WeaponEntry::idleAfterFiringFrames:
-    case WeaponEntry::holdAfterFiringFrames:
-    case WeaponEntry::suspendFxFrames:
-        return integerResult(static_cast<std::uint32_t>(
-            secondsToFrames(input.values[0], logicRate, timeScale)));
     case WeaponEntry::firstWeaponAndSlot: {
         ProbeObservation result = integerResult(input.words[0], 4);
         if (input.words[0] != 0 && input.words[1] != 0) {
@@ -199,13 +178,14 @@ ProbeObservation evaluateWeaponEntry(
     case WeaponEntry::weaponAtSlot:
         return integerResult(input.words[input.words[7] % 6U], 4);
     case WeaponEntry::currentWeaponInactive:
-        if (input.words[0] >= 6U || input.words[1] != 4U
-            || input.words[2] == 0) {
+        if (static_cast<std::int32_t>(input.words[0]) < 0
+            || input.words[0] >= 6U) {
             return integerResult(1);
         }
+        if (input.words[1] != 4U || input.words[2] == 0) {
+            return integerResult(0);
+        }
         return integerResult(input.words[3] == 0 ? 1U : 0U);
-    case WeaponEntry::ownerWeaponSetToken:
-        return integerResult(input.words[0] != 0 ? input.words[1] : 0U);
     case WeaponEntry::rebuildWeaponMasks: {
         ProbeObservation result{};
         for (std::size_t index = 0; index != 6; ++index) {
@@ -242,16 +222,23 @@ ProbeObservation evaluateWeaponEntry(
     }
     case WeaponEntry::findWeaponTemplate:
         return integerResult(
-            input.words[0] == input.words[6] ? input.words[7] : 0U, 8);
+            input.words[0] != 0 && input.words[0] == input.words[6]
+                ? input.words[7] : 0U, 8);
     case WeaponEntry::effectiveMinimumRange:
-        return floatResult(
-            input.words[0] != 0 ? input.values[1]
-                                : std::max(0.0F, input.values[0] - 5.0F),
-            12);
+        if (input.words[0] != 0) {
+            return floatResult(input.values[1], 12);
+        } else {
+            const float minimum = std::max(0.0F, input.values[0] - 5.0F);
+            if (minimum > input.values[1]) {
+                return floatResult(minimum - input.values[1], 12);
+            }
+            if (input.values[1] > input.values[2]) {
+                return floatResult(input.values[1] - input.values[2], 12);
+            }
+            return floatResult(0.0F, 12);
+        }
     case WeaponEntry::stateDeadline:
         return integerResult(deadline);
-    case WeaponEntry::releaseInitState:
-        return integerResult(input.words[0], 4);
     case WeaponEntry::chooseStateDuration: {
         const auto span = input.words[2] - input.words[1] + 1U;
         const auto random = input.words[3] % span + input.words[1];
@@ -259,21 +246,18 @@ ProbeObservation evaluateWeaponEntry(
         return integerResult(static_cast<std::uint32_t>(
             static_cast<float>(random) / divisor), 8);
     }
-    case WeaponEntry::refreshTargetId: {
-        ProbeObservation result = integerResult(input.words[3]);
-        if (input.words[0] == 0 && input.words[1] != 0) {
-            result.writes[0] = input.words[2];
-            result.writeMask = 1;
-        }
-        return result;
-    }
     case WeaponEntry::updateReadyFraction: {
+        if (input.words[3] == 0 || input.words[4] == 0xFFFFFFFFU) {
+            return integerResult(0xFFFFFFFEU);
+        }
         const float denominator =
             static_cast<float>(std::max(input.words[2], 1U));
         const float value = boundedUnit(
             static_cast<float>(now - start) / denominator);
-        ProbeObservation result = integerResult(
-            now > deadline ? input.words[4] : 0xFFFFFFFFU);
+        const std::uint32_t transition = deadline <= now
+            ? 0xFFFFFFFFU
+            : (input.words[5] != 0 ? 0xFFFFFFFFU : 0U);
+        ProbeObservation result = integerResult(transition);
         result.writes[0] = floatBits(value);
         result.writeMask = 1;
         return result;
@@ -290,19 +274,9 @@ ProbeObservation evaluateWeaponEntry(
         data.pitchTolerance = input.values[3];
         return floatResult(weaponAttackRange(data, -input.values[4]), 4);
     }
-    case WeaponEntry::acceptsTargetKind: {
-        if ((input.words[2] & 1U) != 0) {
-            return integerResult(1, 12);
-        }
-        const std::uint32_t kind =
-            input.words[1] == 2 ? 1U : (input.words[1] != 0 ? 3U : 2U);
-        return integerResult(
-            (input.words[0] & (1U << (kind & 31U))) != 0 ? 1U : 0U, 12);
-    }
     case WeaponEntry::targetEffectValue:
         return integerResult(
-            input.words[0] != 0 && input.words[1] != 0
-                    && input.words[2] == 4
+            input.words[3] != 0 && input.words[2] == 4
                 ? input.words[3]
                 : input.words[4],
             4);
@@ -315,53 +289,101 @@ ProbeObservation evaluateWeaponEntry(
     case WeaponEntry::targetWithinMinimumRange: {
         const float range = std::max(0.0F, input.values[0] - 5.0F);
         return integerResult(
-            range > 0.0F && input.values[1] * input.values[1] <= range * range,
+            range > 0.0F && input.values[1] < range * range,
             8);
     }
-    case WeaponEntry::readinessFraction:
+    case WeaponEntry::readinessFraction: {
+        if (input.words[2] == 0) {
+            return floatResult(1.0F);
+        }
+        const std::uint32_t state = input.words[5] == 0
+            ? static_cast<std::uint32_t>(WeaponStateType::invalid)
+            : input.words[4];
+        if (state == 0U) {
+            return floatResult(1.0F);
+        }
+        if (state == 1U || state == 4U || state > 5U) {
+            return floatResult(0.0F);
+        }
+        const std::uint32_t finish = input.words[1];
+        const std::uint32_t stateStart = input.words[3];
+        if (now >= finish) {
+            return floatResult(1.0F);
+        }
+        const std::uint32_t stateDuration = finish - stateStart;
+        const std::uint32_t elapsed = now - stateStart;
+        if (stateDuration == 0U || elapsed >= stateDuration) {
+            return floatResult(1.0F);
+        }
         return floatResult(
-            input.words[0] == 0 ? 0.0F
-                                : boundedUnit(static_cast<float>(now - start)
-                                              / std::max(input.values[0], 1.0F)));
+            static_cast<float>(elapsed) / static_cast<float>(stateDuration));
+    }
     case WeaponEntry::acceptsObjectFilter:
+        if (input.words[0] != 0 && input.words[2] != 0) {
+            return integerResult(0, 4);
+        }
         return integerResult(
-            (input.words[0] | input.words[1]) == 0
-                    || (input.words[0] & input.words[2]) != 0,
-            4);
+            input.words[1] == 0 || input.words[3] != 0, 4);
     case WeaponEntry::isPreFireState:
-        return integerResult(stateCode(input) == 2U ? 1U : 0U);
-    case WeaponEntry::targetWithinPitch:
         return integerResult(
-            input.words[0] != 0 || input.words[1] == 0
-                    || std::fabs(input.values[0]) < 10.0F,
+            input.words[0] != 0 && input.words[2] != 0
+                && input.words[1] == 2U,
+            0);
+    case WeaponEntry::targetWithinPitch: {
+        if (input.words[0] != 0 || input.words[1] == 0
+            || std::fabs(input.values[1] - input.values[0]) < 10.0F) {
+            return integerResult(1, 8);
+        }
+        const float first = input.values[2];
+        const float second = input.values[3];
+        const float minimum = input.values[4];
+        const float maximum = input.values[5];
+        const bool firstInside = first >= minimum && first <= maximum;
+        const bool secondInside = second >= minimum && second <= maximum;
+        return integerResult(
+            firstInside || secondInside
+                || (first <= minimum && second >= maximum),
             8);
+    }
     case WeaponEntry::suppressesAttack:
         return integerResult(
-            input.words[0] != 0 && stateCode(input) == 5U ? 0U : input.words[3],
+            input.words[2] != 0 && input.words[0] != 0
+                    && input.words[1] == 5U
+                ? 0U : input.words[3],
             4);
     case WeaponEntry::canFireNow: {
-        const auto state = stateCode(input);
+        if (input.words[0] == 0) {
+            return integerResult(0);
+        }
+        const auto state = input.words[1] == 0
+            ? 0U
+            : (input.words[2] != 0 ? input.words[3] : 0xF423FU);
         return integerResult(
-            input.words[2] != 0
-                && (state == 0U || state == 1U || state == 2U
-                    || input.words[3] != 0));
+            state == 1U || state == 2U
+                || (state == 0U && input.words[4] != 0));
     }
     case WeaponEntry::getCachedTargetPosition: {
         const bool valid = input.words[0] != 0
-            && (input.words[1] == 0 || input.words[1] == input.words[2]);
+            && input.words[2] != 0 && input.words[1] == input.words[3];
         ProbeObservation result = integerResult(valid ? 1U : 0U, 8);
         if (valid) {
-            result.writes = {floatBits(input.values[0]), floatBits(input.values[1]),
-                             floatBits(input.values[2]), 0};
+            Vector3 value{
+                input.values[0], input.values[1], input.values[2]};
+            if (input.words[4] != 0) {
+                value.x = input.values[3] * value.x + input.values[6];
+                value.y = input.values[4] * value.y + input.values[7];
+                value.z = input.values[5] * value.z;
+            }
+            result.writes = {
+                floatBits(value.x), floatBits(value.y),
+                floatBits(value.z), 0};
             result.writeMask = 7;
         }
         return result;
     }
     case WeaponEntry::coolDownDeadline:
         return integerResult(
-            deadline
-            + (input.words[3] > 0 ? (input.words[4] + input.words[5] + 1U) / 2U
-                                  : 0U));
+            deadline + (input.words[4] + input.words[5] + 1U) / 2U);
     case WeaponEntry::enterCoolDownState: {
         ProbeObservation result = integerResult(input.words[7]);
         result.writes = {now, input.words[1], 3U, 0};
@@ -371,14 +393,17 @@ ProbeObservation evaluateWeaponEntry(
     case WeaponEntry::coolDownUpdate:
         return integerResult(input.words[0] > 0 ? 0xFFFFFFFEU : 0U);
     case WeaponEntry::reloadUpdate: {
-        ProbeObservation result =
-            integerResult(input.words[0] > input.words[1] ? 0xFFFFFFFFU : 0U);
+        ProbeObservation result = integerResult(0xFFFFFFFFU);
         result.writes[0] = input.words[2] == 0 ? 0x7FFFFFFFU : input.words[2];
         result.writeMask = 1;
         return result;
     }
     case WeaponEntry::enterReloadState: {
-        ProbeObservation result = integerResult(0, 4);
+        ProbeObservation result = integerResult(
+            (input.words[0] & 0x4000U) != 0
+                ? input.words[7]
+                : ((input.words[0] >> 14U) & 0xFFFFFF01U),
+            4);
         result.writes = {0U, input.words[0] & ~0x4000U, 0U, 0U};
         result.writeMask = 3;
         return result;
@@ -392,41 +417,20 @@ const char* weaponEntryName(WeaponEntry entry) noexcept
 {
 #define RA3_WEAPON_NAME(value) case WeaponEntry::value: return #value
     switch (entry) {
-    RA3_WEAPON_NAME(initUpdate);
-    RA3_WEAPON_NAME(fireUpdate);
-    RA3_WEAPON_NAME(stateDeadlineUpdate);
     RA3_WEAPON_NAME(zeroAimValue);
-    RA3_WEAPON_NAME(attackRangeForPitch);
-    RA3_WEAPON_NAME(minimumAttackRange);
-    RA3_WEAPON_NAME(attackRange);
-    RA3_WEAPON_NAME(preAttackLowFrames);
-    RA3_WEAPON_NAME(preAttackHighFrames);
-    RA3_WEAPON_NAME(firingLowFrames);
-    RA3_WEAPON_NAME(firingHighFrames);
-    RA3_WEAPON_NAME(coolDownLowFrames);
-    RA3_WEAPON_NAME(coolDownHighFrames);
-    RA3_WEAPON_NAME(reloadLowFrames);
-    RA3_WEAPON_NAME(reloadHighFrames);
-    RA3_WEAPON_NAME(idleAfterFiringFrames);
-    RA3_WEAPON_NAME(holdAfterFiringFrames);
-    RA3_WEAPON_NAME(suspendFxFrames);
     RA3_WEAPON_NAME(firstWeaponAndSlot);
     RA3_WEAPON_NAME(weaponAtSlot);
     RA3_WEAPON_NAME(currentWeaponInactive);
-    RA3_WEAPON_NAME(ownerWeaponSetToken);
     RA3_WEAPON_NAME(rebuildWeaponMasks);
     RA3_WEAPON_NAME(longestRangeWeaponPosition);
     RA3_WEAPON_NAME(matchingAntiMaskCount);
     RA3_WEAPON_NAME(findWeaponTemplate);
     RA3_WEAPON_NAME(effectiveMinimumRange);
     RA3_WEAPON_NAME(stateDeadline);
-    RA3_WEAPON_NAME(releaseInitState);
     RA3_WEAPON_NAME(chooseStateDuration);
-    RA3_WEAPON_NAME(refreshTargetId);
     RA3_WEAPON_NAME(updateReadyFraction);
     RA3_WEAPON_NAME(weaponSpeedMultiplier);
     RA3_WEAPON_NAME(attackRangeForTarget);
-    RA3_WEAPON_NAME(acceptsTargetKind);
     RA3_WEAPON_NAME(targetEffectValue);
     RA3_WEAPON_NAME(initializeWeapon);
     RA3_WEAPON_NAME(targetWithinMinimumRange);

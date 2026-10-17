@@ -23,6 +23,8 @@ struct WeaponTemplateData {
     float requestAssistRange;
     float approachFactor;
     float pitchTolerance;
+    float minimumPitch;
+    float maximumPitch;
     float idleAfterFiringSeconds;
     float holdAfterFiringSeconds;
     float suspendFxSeconds;
@@ -98,43 +100,26 @@ bool isFiring(const WeaponRuntimeData& weapon) noexcept;
 bool cachedTargetPosition(
     const WeaponRuntimeData& weapon, std::uint32_t targetObjectId,
     const float* transform3x4, Vector3& output) noexcept;
+void initializeWeaponRuntime(
+    WeaponRuntimeData& weapon, const WeaponTemplateData* weaponTemplate,
+    std::uint32_t slot, std::uint32_t now,
+    std::uint32_t suspendFxFrames) noexcept;
 
 enum class WeaponEntry : std::uint32_t {
-    initUpdate = 0x00685CC0,
-    fireUpdate = 0x00685D20,
-    stateDeadlineUpdate = 0x00685DA0,
     zeroAimValue = 0x00685DC0,
-    attackRangeForPitch = 0x00685DD0,
-    minimumAttackRange = 0x00685E70,
-    attackRange = 0x00685EA0,
-    preAttackLowFrames = 0x00685EF0,
-    preAttackHighFrames = 0x00685F70,
-    firingLowFrames = 0x00685FF0,
-    firingHighFrames = 0x00686070,
-    coolDownLowFrames = 0x00686110,
-    coolDownHighFrames = 0x00686190,
-    reloadLowFrames = 0x00686210,
-    reloadHighFrames = 0x00686290,
-    idleAfterFiringFrames = 0x00686310,
-    holdAfterFiringFrames = 0x00686380,
-    suspendFxFrames = 0x006863F0,
     firstWeaponAndSlot = 0x006A2400,
     weaponAtSlot = 0x006A2430,
     currentWeaponInactive = 0x006A2440,
-    ownerWeaponSetToken = 0x006A2480,
     rebuildWeaponMasks = 0x006A24A0,
     longestRangeWeaponPosition = 0x006A24F0,
     matchingAntiMaskCount = 0x006A2560,
     findWeaponTemplate = 0x006A25F0,
     effectiveMinimumRange = 0x006A2630,
     stateDeadline = 0x006A2840,
-    releaseInitState = 0x006A2A70,
     chooseStateDuration = 0x006A2AB0,
-    refreshTargetId = 0x006A2B40,
     updateReadyFraction = 0x006A2BD0,
     weaponSpeedMultiplier = 0x006A2D30,
     attackRangeForTarget = 0x006A2DC0,
-    acceptsTargetKind = 0x006A2EE0,
     targetEffectValue = 0x006A3120,
     initializeWeapon = 0x006A82F0,
     targetWithinMinimumRange = 0x006A8530,
