@@ -74,7 +74,13 @@ void probe(const std::vector<std::string>& words, bool mutate)
     const auto entry = static_cast<ra3::gamelogic::WeaponEntry>(number(words[1]));
     auto result = ra3::gamelogic::evaluateWeaponEntry(entry, input);
     if (mutate) {
-        result.eax ^= 1U;
+        if (hasFloatReturn(entry)) {
+            result.st0Bits ^= 0x00800000U;
+        } else if (result.writeMask != 0) {
+            result.writes[0] ^= 1U;
+        } else {
+            result.eax ^= 1U;
+        }
     }
     const auto flags = std::cout.flags();
     const char fill = std::cout.fill();

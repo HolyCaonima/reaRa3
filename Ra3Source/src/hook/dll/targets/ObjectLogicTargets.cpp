@@ -100,7 +100,7 @@ std::uint32_t deadlineUpdateImpl(const void* object)
         rawDword(object, 0x24) + rawDword(object, 0x28);
     const auto* logic =
         *reinterpret_cast<const std::uint8_t* const*>(0x00DEBA64);
-    return rawDword(logic, 0x58) < deadline ? 0xFFFFFFFFU : 0U;
+    return rawDword(logic, 0x58) < deadline ? 0U : 0xFFFFFFFFU;
 }
 
 #define RA3_DURATION_IMPL(name, offset, high, missing) \

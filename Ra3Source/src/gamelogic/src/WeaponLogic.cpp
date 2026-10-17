@@ -148,7 +148,7 @@ ProbeObservation evaluateWeaponEntry(
         return integerResult(input.words[0] != 0 ? 0xFFFFFFFFU : input.words[1]);
     case WeaponEntry::fireUpdate: {
         ProbeObservation result = integerResult(
-            now > deadline ? input.words[4] : 0xFFFFFFFFU);
+            now > deadline ? input.words[4] : 0U);
         if (now > deadline && input.words[3] == 0) {
             result.writes[0] = 0;
             result.writeMask = 1;
@@ -156,7 +156,7 @@ ProbeObservation evaluateWeaponEntry(
         return result;
     }
     case WeaponEntry::stateDeadlineUpdate:
-        return integerResult(now > deadline ? 0U : 0xFFFFFFFFU);
+        return integerResult(now < deadline ? 0U : 0xFFFFFFFFU);
     case WeaponEntry::zeroAimValue:
         return floatResult(0.0F, 8);
     case WeaponEntry::attackRangeForPitch: {
@@ -199,11 +199,11 @@ ProbeObservation evaluateWeaponEntry(
     case WeaponEntry::weaponAtSlot:
         return integerResult(input.words[input.words[7] % 6U], 4);
     case WeaponEntry::currentWeaponInactive:
-        return integerResult(
-            input.words[0] < 6U && input.words[1] == 4U
-                    && input.words[2] != 0 && input.words[3] == 0
-                ? 1U
-                : 0U);
+        if (input.words[0] >= 6U || input.words[1] != 4U
+            || input.words[2] == 0) {
+            return integerResult(1);
+        }
+        return integerResult(input.words[3] == 0 ? 1U : 0U);
     case WeaponEntry::ownerWeaponSetToken:
         return integerResult(input.words[0] != 0 ? input.words[1] : 0U);
     case WeaponEntry::rebuildWeaponMasks: {
@@ -260,7 +260,7 @@ ProbeObservation evaluateWeaponEntry(
             static_cast<float>(random) / divisor), 8);
     }
     case WeaponEntry::refreshTargetId: {
-        ProbeObservation result{};
+        ProbeObservation result = integerResult(input.words[3]);
         if (input.words[0] == 0 && input.words[1] != 0) {
             result.writes[0] = input.words[2];
             result.writeMask = 1;
@@ -320,7 +320,7 @@ ProbeObservation evaluateWeaponEntry(
     }
     case WeaponEntry::readinessFraction:
         return floatResult(
-            input.words[0] == 0 || input.words[1] > 5U ? 0.0F
+            input.words[0] == 0 ? 0.0F
                                 : boundedUnit(static_cast<float>(now - start)
                                               / std::max(input.values[0], 1.0F)));
     case WeaponEntry::acceptsObjectFilter:
