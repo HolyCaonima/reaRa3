@@ -7,12 +7,14 @@ namespace ra3hook {
 void appendPlayerTargets(std::vector<Target>& table);
 void appendNetTargets(std::vector<Target>& table);
 void appendRenderTargets(std::vector<Target>& table);
+void appendGameClientTargets(std::vector<Target>& table);
 
 void appendModuleTargets(std::vector<Target>& table)
 {
     appendPlayerTargets(table);
     appendNetTargets(table);
     appendRenderTargets(table);
+    appendGameClientTargets(table);
 }
 
 }  // namespace ra3hook
