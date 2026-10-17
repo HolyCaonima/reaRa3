@@ -15962,8 +15962,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007277e0	FUN_007277e0	.text	52		clean	unknown		unanalyzed	
 00727820	FUN_00727820	.text	11		clean	unknown		unanalyzed	
 0072782b	FUN_0072782b	.text	285		clean	unknown		unanalyzed	
-00727950	FUN_00727950	.text	6		clean	unknown		unanalyzed	
-00727960	FUN_00727960	.text	47		clean	unknown		unanalyzed	
+00727950	FUN_00727950	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"OpenContain::getModuleName (00C1FB90 slot 2; slot2 name ""OpenContain"" at 00C1FC30; 2 oracle cases; explicitOnly hook)"
+00727960	FUN_00727960	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"OpenContain::getModuleNameKey (00C1FB90 slot 4; slot2 name ""OpenContain"" at 00C1FC30; guard 00DF9948 cache 00DF9944 via NAMEKEY 00986150; 4 oracle cases)"
 00727990	FUN_00727990	.text	14		clean	unknown		unanalyzed	
 007279a0	FUN_007279a0	.text	107	SageEngine\source\GameEngine\GameLogic\Object\Contain\OpenContain.h	clean	gamelogic		unanalyzed	
 00727a10	FUN_00727a10	.text	107	SageEngine\source\GameEngine\GameLogic\Object\Contain\OpenContain.h	clean	gamelogic		unanalyzed	
@@ -15978,8 +15978,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00727cc0	FUN_00727cc0	.text	103		clean	unknown		unanalyzed	
 00727d30	FUN_00727d30	.text	124		clean	unknown		unanalyzed	
 00727db0	FUN_00727db0	.text	109		clean	unknown		unanalyzed	
-00727e20	FUN_00727e20	.text	6		clean	unknown		unanalyzed	
-00727e30	FUN_00727e30	.text	47		clean	unknown		unanalyzed	
+00727e20	FUN_00727e20	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"TransportContain::getModuleName (00C200A0 slot 2; slot2 name ""TransportContain"" at 00C20150; 2 oracle cases)"
+00727e30	FUN_00727e30	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"TransportContain::getModuleNameKey (00C200A0 slot 4; slot2 name ""TransportContain"" at 00C20150; guard 00DF9950 cache 00DF994C via NAMEKEY 00986150; 4 oracle cases)"
 00727e60	FUN_00727e60	.text	17		clean	unknown		unanalyzed	
 00727e80	FUN_00727e80	.text	8		clean	unknown		unanalyzed	
 00727e90	FUN_00727e90	.text	593		clean	unknown		unanalyzed	
@@ -16010,8 +16010,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00729160	FUN_00729160	.text	30		clean	unknown		unanalyzed	
 00729180	FUN_00729180	.text	331		clean	unknown		unanalyzed	
 007292d0	FUN_007292d0	.text	194		clean	unknown		unanalyzed	
-007293f0	FUN_007293f0	.text	6		clean	unknown		unanalyzed	
-00729400	FUN_00729400	.text	47		clean	unknown		unanalyzed	
+007293f0	FUN_007293f0	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"DelayedWeaponFireSpecialAbilityUpdate::getModuleName (00C202F0 slot 2; slot2 name ""DelayedWeaponFireSpecialAbilityUpdate"" at 00C2039C; 2 oracle cases)"
+00729400	FUN_00729400	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"DelayedWeaponFireSpecialAbilityUpdate::getModuleNameKey (00C202F0 slot 4; slot2 name ""DelayedWeaponFireSpecialAbilityUpdate"" at 00C2039C; guard 00DF9958 cache 00DF9954 via NAMEKEY 00986150; 4 oracle cases)"
 00729430	FUN_00729430	.text	8		clean	unknown		unanalyzed	
 00729440	FUN_00729440	.text	64		clean	unknown		unanalyzed	
 00729480	FUN_00729480	.text	64		clean	unknown		unanalyzed	
@@ -16055,7 +16055,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0072aa30	FUN_0072aa30	.text	30		clean	unknown		unanalyzed	
 0072aa50	FUN_0072aa50	.text	560		clean	unknown		unanalyzed	
 0072adb0	FUN_0072adb0	.text	497		clean	unknown		unanalyzed	
-0072afb0	FUN_0072afb0	.text	6		clean	unknown		unanalyzed	
+0072afb0	FUN_0072afb0	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"LuaSpyData::getModuleName (00C20460 slot 2; slot2 name ""LuaSpyData"" at 00C20470; 2 oracle cases)"
 0072afc0	FUN_0072afc0	.text	66		clean	unknown		unanalyzed	
 0072b010	FUN_0072b010	.text	70		clean	unknown		unanalyzed	
 0072b060	FUN_0072b060	.text	1129		clean	unknown		unanalyzed	
@@ -16106,8 +16106,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0072f4b0	FUN_0072f4b0	.text	172		clean	unknown		unanalyzed	
 0072f560	FUN_0072f560	.text	13		clean	unknown		unanalyzed	
 0072f570	FUN_0072f570	.text	490		clean	unknown		unanalyzed	
-0072f820	FUN_0072f820	.text	6		clean	unknown		unanalyzed	
-0072f830	FUN_0072f830	.text	47		clean	unknown		unanalyzed	
+0072f820	FUN_0072f820	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"BoobyTrapUpdate::getModuleName (00C20660 slot 2; slot2 name ""BoobyTrapUpdate"" at 00C206E4; 2 oracle cases)"
+0072f830	FUN_0072f830	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"BoobyTrapUpdate::getModuleNameKey (00C20660 slot 4; slot2 name ""BoobyTrapUpdate"" at 00C206E4; guard 00DF9984 cache 00DF9980 via NAMEKEY 00986150; 4 oracle cases)"
 0072f860	FUN_0072f860	.text	529		clean	unknown		unanalyzed	
 0072fa80	FUN_0072fa80	.text	266		clean	unknown		unanalyzed	
 0072fb90	FUN_0072fb90	.text	204		clean	unknown		unanalyzed	
@@ -16123,18 +16123,18 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00730200	FUN_00730200	.text	209		clean	unknown		unanalyzed	
 007302e0	FUN_007302e0	.text	422		clean	unknown		unanalyzed	
 00730490	FUN_00730490	.text	91		clean	unknown		unanalyzed	
-007304f0	FUN_007304f0	.text	6		clean	unknown		unanalyzed	
-00730500	FUN_00730500	.text	47		clean	unknown		unanalyzed	
+007304f0	FUN_007304f0	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"GatherEjectUpdate::getModuleName (00C20848 slot 2; slot2 name ""GatherEjectUpdate"" at 00BF8904; 2 oracle cases)"
+00730500	FUN_00730500	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"GatherEjectUpdate::getModuleNameKey (00C20848 slot 4; slot2 name ""GatherEjectUpdate"" at 00BF8904; guard 00DF998C cache 00DF9988 via NAMEKEY 00986150; 4 oracle cases)"
 00730530	FUN_00730530	.text	130		clean	unknown		unanalyzed	
 007305c0	FUN_007305c0	.text	93		clean	unknown		unanalyzed	
-00730660	FUN_00730660	.text	6		clean	unknown		unanalyzed	
-00730670	FUN_00730670	.text	47		clean	unknown		unanalyzed	
+00730660	FUN_00730660	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"LeechTargetingAttachUpdate::getModuleName (00C209E8 slot 2; slot2 name ""LeechTargetingAttachUpdate"" at 00C20A5C; 2 oracle cases)"
+00730670	FUN_00730670	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"LeechTargetingAttachUpdate::getModuleNameKey (00C209E8 slot 4; slot2 name ""LeechTargetingAttachUpdate"" at 00C20A5C; guard 00DF9994 cache 00DF9990 via NAMEKEY 00986150; 4 oracle cases)"
 007306a0	FUN_007306a0	.text	165		clean	unknown		unanalyzed	
 00730750	FUN_00730750	.text	226		clean	unknown		unanalyzed	
 00730840	FUN_00730840	.text	318		clean	unknown		unanalyzed	
 00730980	FUN_00730980	.text	294		clean	unknown		unanalyzed	
-00730af0	FUN_00730af0	.text	6		clean	unknown		unanalyzed	
-00730b00	FUN_00730b00	.text	47		clean	unknown		unanalyzed	
+00730af0	FUN_00730af0	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"MoneyGainAttachUpdate::getModuleName (00C20BC0 slot 2; slot2 name ""MoneyGainAttachUpdate"" at 00C20C34; 2 oracle cases)"
+00730b00	FUN_00730b00	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"MoneyGainAttachUpdate::getModuleNameKey (00C20BC0 slot 4; slot2 name ""MoneyGainAttachUpdate"" at 00C20C34; guard 00DF999C cache 00DF9998 via NAMEKEY 00986150; 4 oracle cases)"
 00730b30	FUN_00730b30	.text	64		clean	unknown		unanalyzed	
 00730b70	FUN_00730b70	.text	64		clean	unknown		unanalyzed	
 00730bb0	FUN_00730bb0	.text	90		clean	unknown		unanalyzed	
@@ -16164,8 +16164,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00732490	FUN_00732490	.text	333		clean	unknown		unanalyzed	
 007325e0	FUN_007325e0	.text	149		clean	unknown		unanalyzed	
 00732680	FUN_00732680	.text	1862		clean	unknown		unanalyzed	
-00732e30	FUN_00732e30	.text	6		clean	unknown		unanalyzed	
-00732e40	FUN_00732e40	.text	47		clean	unknown		unanalyzed	
+00732e30	FUN_00732e30	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"StealUnitUpdate::getModuleName (00C20D90 slot 2; slot2 name ""StealUnitUpdate"" at 00C20E14; 2 oracle cases)"
+00732e40	FUN_00732e40	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"StealUnitUpdate::getModuleNameKey (00C20D90 slot 4; slot2 name ""StealUnitUpdate"" at 00C20E14; guard 00DF99BC cache 00DF99B8 via NAMEKEY 00986150; 4 oracle cases)"
 00732e70	FUN_00732e70	.text	365		clean	unknown		unanalyzed	
 00732fe0	FUN_00732fe0	.text	30		clean	unknown		unanalyzed	
 00733000	FUN_00733000	.text	50		clean	unknown		unanalyzed	
@@ -16287,8 +16287,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0073cae0	FUN_0073cae0	.text	47		clean	unknown		unanalyzed	
 0073cb10	FUN_0073cb10	.text	30		clean	unknown		unanalyzed	
 0073cb30	FUN_0073cb30	.text	293		clean	unknown		unanalyzed	
-0073cc60	FUN_0073cc60	.text	6		clean	unknown		unanalyzed	
-0073cc70	FUN_0073cc70	.text	47		clean	unknown		unanalyzed	
+0073cc60	FUN_0073cc60	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"HordeContain::getModuleName (00C21A98 slot 2; slot2 name ""HordeContain"" at 00C21B64; 2 oracle cases; explicitOnly hook)"
+0073cc70	FUN_0073cc70	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"HordeContain::getModuleNameKey (00C21A98 slot 4; slot2 name ""HordeContain"" at 00C21B64; guard 00DF9ABC cache 00DF9AB8 via NAMEKEY 00986150; 4 oracle cases)"
 0073cca0	FUN_0073cca0	.text	17		clean	unknown		unanalyzed	
 0073ccc0	FUN_0073ccc0	.text	17		clean	unknown		unanalyzed	
 0073cce0	FUN_0073cce0	.text	20		clean	unknown		unanalyzed	
@@ -16310,8 +16310,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0073d920	FUN_0073d920	.text	167		clean	unknown		unanalyzed	
 0073d9d0	FUN_0073d9d0	.text	825		clean	unknown		unanalyzed	
 0073dd20	FUN_0073dd20	.text	74		clean	unknown		unanalyzed	
-0073dd70	FUN_0073dd70	.text	6		clean	unknown		unanalyzed	
-0073dd80	FUN_0073dd80	.text	47		clean	unknown		unanalyzed	
+0073dd70	FUN_0073dd70	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"GarrisonContain::getModuleName (00C21E90 slot 2; slot2 name ""GarrisonContain"" at 00C21F3C; 2 oracle cases)"
+0073dd80	FUN_0073dd80	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"GarrisonContain::getModuleNameKey (00C21E90 slot 4; slot2 name ""GarrisonContain"" at 00C21F3C; guard 00DF9AC4 cache 00DF9AC0 via NAMEKEY 00986150; 4 oracle cases)"
 0073ddb0	FUN_0073ddb0	.text	10		clean	unknown		unanalyzed	
 0073ddc0	FUN_0073ddc0	.text	8		clean	unknown		unanalyzed	
 0073ddd0	FUN_0073ddd0	.text	29		inner-patched	unknown		unanalyzed	
@@ -16381,8 +16381,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00740bc0	FUN_00740bc0	.text	75		clean	unknown		unanalyzed	
 00740c10	FUN_00740c10	.text	120		clean	unknown		unanalyzed	
 00740c90	FUN_00740c90	.text	10		inner-patched	unknown		unanalyzed	
-00740f10	FUN_00740f10	.text	6		clean	unknown		unanalyzed	
-00740f20	FUN_00740f20	.text	47		clean	unknown		unanalyzed	
+00740f10	FUN_00740f10	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"AIUpdateInterface::getModuleName (00C22118 slot 2; slot2 name ""AIUpdateInterface"" at 00C223CC; 2 oracle cases; explicitOnly hook)"
+00740f20	FUN_00740f20	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"AIUpdateInterface::getModuleNameKey (00C22118 slot 4; slot2 name ""AIUpdateInterface"" at 00C223CC; guard 00DF9ACC cache 00DF9AC8 via NAMEKEY 00986150; 4 oracle cases)"
 00740f50	FUN_00740f50	.text	14		clean	unknown		unanalyzed	
 00740f60	FUN_00740f60	.text	24		clean	unknown		unanalyzed	
 00740f80	FUN_00740f80	.text	10		clean	unknown		unanalyzed	
@@ -16422,8 +16422,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00743140	FUN_00743140	.text	49		clean	unknown		unanalyzed	
 00743180	FUN_00743180	.text	352		clean	unknown		unanalyzed	
 007432e0	FUN_007432e0	.text	1038		clean	unknown		unanalyzed	
-00743760	FUN_00743760	.text	6		clean	unknown		unanalyzed	
-00743770	FUN_00743770	.text	47		clean	unknown		unanalyzed	
+00743760	FUN_00743760	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"SqueezeFlingUpdate::getModuleName (00C225F0 slot 2; slot2 name ""SqueezeFlingUpdate"" at 00C22658; 2 oracle cases)"
+00743770	FUN_00743770	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"SqueezeFlingUpdate::getModuleNameKey (00C225F0 slot 4; slot2 name ""SqueezeFlingUpdate"" at 00C22658; guard 00DF9AE4 cache 00DF9AE0 via NAMEKEY 00986150; 4 oracle cases)"
 007437a0	FUN_007437a0	.text	64		clean	unknown		unanalyzed	
 007437e0	FUN_007437e0	.text	101		clean	unknown		unanalyzed	
 00743850	FUN_00743850	.text	228		clean	unknown		unanalyzed	
@@ -16557,14 +16557,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0074e550	FUN_0074e550	.text	171		clean	unknown		unanalyzed	
 0074e600	FUN_0074e600	.text	78		clean	unknown		unanalyzed	
 0074e650	FUN_0074e650	.text	384		clean	unknown		unanalyzed	
-0074e7d0	FUN_0074e7d0	.text	6		clean	unknown		unanalyzed	
-0074e7e0	FUN_0074e7e0	.text	47		clean	unknown		unanalyzed	
+0074e7d0	FUN_0074e7d0	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"SlaughterHordeContain::getModuleName (00C22E28 slot 2; slot2 name ""SlaughterHordeContain"" at 00C22EEC; 2 oracle cases)"
+0074e7e0	FUN_0074e7e0	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"SlaughterHordeContain::getModuleNameKey (00C22E28 slot 4; slot2 name ""SlaughterHordeContain"" at 00C22EEC; guard 00DF9B68 cache 00DF9B64 via NAMEKEY 00986150; 4 oracle cases)"
 0074e810	FUN_0074e810	.text	457		clean	unknown		unanalyzed	
 0074e9f0	FUN_0074e9f0	.text	102		clean	unknown		unanalyzed	
-0074ea60	FUN_0074ea60	.text	6		clean	unknown		unanalyzed	
-0074ea70	FUN_0074ea70	.text	47		clean	unknown		unanalyzed	
-0074eaa0	FUN_0074eaa0	.text	6		clean	unknown		unanalyzed	
-0074eab0	FUN_0074eab0	.text	47		clean	unknown		unanalyzed	
+0074ea60	FUN_0074ea60	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"GarrisonStealthContain::getModuleName (00C23218 slot 2; slot2 name ""GarrisonStealthContain"" at 00C232C4; 2 oracle cases)"
+0074ea70	FUN_0074ea70	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"GarrisonStealthContain::getModuleNameKey (00C23218 slot 4; slot2 name ""GarrisonStealthContain"" at 00C232C4; guard 00DF9B70 cache 00DF9B6C via NAMEKEY 00986150; 4 oracle cases)"
+0074eaa0	FUN_0074eaa0	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"HealContain::getModuleName (00C235F0 slot 2; slot2 name ""HealContain"" at 00C236AC; 2 oracle cases)"
+0074eab0	FUN_0074eab0	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"HealContain::getModuleNameKey (00C235F0 slot 4; slot2 name ""HealContain"" at 00C236AC; guard 00DF9B78 cache 00DF9B74 via NAMEKEY 00986150; 4 oracle cases)"
 0074eae0	FUN_0074eae0	.text	16		clean	unknown		unanalyzed	
 0074eaf0	FUN_0074eaf0	.text	465	SageEngine\source\GameEngine\gamelogic\object\Contain\InfiltratorContain.cpp	clean	gamelogic		unanalyzed	
 0074ecd0	FUN_0074ecd0	.text	347		clean	unknown		unanalyzed	
@@ -16574,8 +16574,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0074f800	FUN_0074f800	.text	534		clean	unknown		unanalyzed	
 0074fa20	FUN_0074fa20	.text	325		clean	unknown		unanalyzed	
 0074fb70	FUN_0074fb70	.text	98		clean	unknown		unanalyzed	
-0074fbe0	FUN_0074fbe0	.text	6		clean	unknown		unanalyzed	
-0074fbf0	FUN_0074fbf0	.text	47		clean	unknown		unanalyzed	
+0074fbe0	FUN_0074fbe0	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"TunnelContain::getModuleName (00C23A98 slot 2; slot2 name ""TunnelContain"" at 00C23B5C; 2 oracle cases)"
+0074fbf0	FUN_0074fbf0	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"TunnelContain::getModuleNameKey (00C23A98 slot 4; slot2 name ""TunnelContain"" at 00C23B5C; guard 00DF9B80 cache 00DF9B7C via NAMEKEY 00986150; 4 oracle cases)"
 0074fc20	FUN_0074fc20	.text	14		clean	unknown		unanalyzed	
 0074fc30	FUN_0074fc30	.text	4		clean	unknown		unanalyzed	
 0074fc40	FUN_0074fc40	.text	7		clean	unknown		unanalyzed	
@@ -16608,34 +16608,34 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00751a30	FUN_00751a30	.text	76		clean	unknown		unanalyzed	
 00751a80	FUN_00751a80	.text	195		clean	unknown		unanalyzed	
 00751b50	FUN_00751b50	.text	176		clean	unknown		unanalyzed	
-00751c00	FUN_00751c00	.text	6		clean	unknown		unanalyzed	
-00751c10	FUN_00751c10	.text	47		clean	unknown		unanalyzed	
+00751c00	FUN_00751c00	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"AnimalAIUpdate::getModuleName (00C23D58 slot 2; slot2 name ""AnimalAIUpdate"" at 00C2400C; 2 oracle cases)"
+00751c10	FUN_00751c10	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"AnimalAIUpdate::getModuleNameKey (00C23D58 slot 4; slot2 name ""AnimalAIUpdate"" at 00C2400C; guard 00DF9B88 cache 00DF9B84 via NAMEKEY 00986150; 4 oracle cases)"
 00751c40	FUN_00751c40	.text	9		clean	unknown		unanalyzed	
 00751c50	FUN_00751c50	.text	17		clean	unknown		unanalyzed	
-00751c70	FUN_00751c70	.text	6		clean	unknown		unanalyzed	
-00751c80	FUN_00751c80	.text	47		clean	unknown		unanalyzed	
+00751c70	FUN_00751c70	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"AssaultTransportAIUpdate::getModuleName (00C24180 slot 2; slot2 name ""AssaultTransportAIUpdate"" at 00C24434; 2 oracle cases)"
+00751c80	FUN_00751c80	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"AssaultTransportAIUpdate::getModuleNameKey (00C24180 slot 4; slot2 name ""AssaultTransportAIUpdate"" at 00C24434; guard 00DF9B90 cache 00DF9B8C via NAMEKEY 00986150; 4 oracle cases)"
 00751cb0	FUN_00751cb0	.text	14		clean	unknown		unanalyzed	
-00751cc0	FUN_00751cc0	.text	6		clean	unknown		unanalyzed	
-00751cd0	FUN_00751cd0	.text	47		clean	unknown		unanalyzed	
+00751cc0	FUN_00751cc0	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"DeployStyleAIUpdate::getModuleName (00C245B0 slot 2; slot2 name ""DeployStyleAIUpdate"" at 00C24864; 2 oracle cases)"
+00751cd0	FUN_00751cd0	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"DeployStyleAIUpdate::getModuleNameKey (00C245B0 slot 4; slot2 name ""DeployStyleAIUpdate"" at 00C24864; guard 00DF9B98 cache 00DF9B94 via NAMEKEY 00986150; 4 oracle cases)"
 00751d00	FUN_00751d00	.text	19		clean	unknown		unanalyzed	
 00751d20	FUN_00751d20	.text	176		clean	unknown		unanalyzed	
-00751dd0	FUN_00751dd0	.text	6		clean	unknown		unanalyzed	
-00751de0	FUN_00751de0	.text	47		clean	unknown		unanalyzed	
+00751dd0	FUN_00751dd0	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"DozerAIUpdate::getModuleName (00C24A50 slot 2; slot2 name ""DozerAIUpdate"" at 00C24D04; 2 oracle cases; explicitOnly hook)"
+00751de0	FUN_00751de0	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"DozerAIUpdate::getModuleNameKey (00C24A50 slot 4; slot2 name ""DozerAIUpdate"" at 00C24D04; guard 00DF9BA0 cache 00DF9B9C via NAMEKEY 00986150; 4 oracle cases)"
 00751e10	AptCIH::GetAnimationInst	.text	4		clean	unknown		unanalyzed	
 00751e20	FUN_00751e20	.text	13		clean	unknown		unanalyzed	
 00751e30	FUN_00751e30	.text	7		clean	unknown		unanalyzed	
 00751e40	FUN_00751e40	.text	11		clean	unknown		unanalyzed	
 00751e50	FUN_00751e50	.text	11		clean	unknown		unanalyzed	
 00751e60	FUN_00751e60	.text	55		clean	unknown		unanalyzed	
-00751ea0	FUN_00751ea0	.text	6		clean	unknown		unanalyzed	
-00751eb0	FUN_00751eb0	.text	47		clean	unknown		unanalyzed	
+00751ea0	FUN_00751ea0	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"HordeAIUpdate::getModuleName (00C24EE0 slot 2; slot2 name ""HordeAIUpdate"" at 00C25194; 2 oracle cases)"
+00751eb0	FUN_00751eb0	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"HordeAIUpdate::getModuleNameKey (00C24EE0 slot 4; slot2 name ""HordeAIUpdate"" at 00C25194; guard 00DF9BA8 cache 00DF9BA4 via NAMEKEY 00986150; 4 oracle cases)"
 00751ee0	FUN_00751ee0	.text	17		clean	unknown		unanalyzed	
 00751f00	FUN_00751f00	.text	400		clean	unknown		unanalyzed	
 00752090	FUN_00752090	.text	172		clean	unknown		unanalyzed	
 00752140	FUN_00752140	.text	365		clean	unknown		unanalyzed	
 007522b0	FUN_007522b0	.text	116		clean	unknown		unanalyzed	
-00752330	FUN_00752330	.text	6		clean	unknown		unanalyzed	
-00752340	FUN_00752340	.text	47		clean	unknown		unanalyzed	
+00752330	FUN_00752330	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"SupplyTruckAIUpdate::getModuleName (00C25398 slot 2; slot2 name ""SupplyTruckAIUpdate"" at 00C2564C; 2 oracle cases)"
+00752340	FUN_00752340	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"SupplyTruckAIUpdate::getModuleNameKey (00C25398 slot 4; slot2 name ""SupplyTruckAIUpdate"" at 00C2564C; guard 00DF9BB0 cache 00DF9BAC via NAMEKEY 00986150; 4 oracle cases)"
 00752370	FUN_00752370	.text	12		clean	unknown		unanalyzed	
 00752380	FUN_00752380	.text	10		clean	unknown		unanalyzed	
 00752390	FUN_00752390	.text	10		clean	unknown		unanalyzed	
@@ -16643,10 +16643,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007523b0	FUN_007523b0	.text	4		clean	unknown		unanalyzed	
 007523c0	FUN_007523c0	.text	27		clean	unknown		unanalyzed	
 007523e0	FUN_007523e0	.text	17		clean	unknown		unanalyzed	
-00752400	FUN_00752400	.text	6		clean	unknown		unanalyzed	
-00752410	FUN_00752410	.text	47		clean	unknown		unanalyzed	
-00752440	FUN_00752440	.text	6		clean	unknown		unanalyzed	
-00752450	FUN_00752450	.text	47		clean	unknown		unanalyzed	
+00752400	FUN_00752400	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"TransportAIUpdate::getModuleName (00C257C0 slot 2; slot2 name ""TransportAIUpdate"" at 00C25A74; 2 oracle cases)"
+00752410	FUN_00752410	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"TransportAIUpdate::getModuleNameKey (00C257C0 slot 4; slot2 name ""TransportAIUpdate"" at 00C25A74; guard 00DF9BB8 cache 00DF9BB4 via NAMEKEY 00986150; 4 oracle cases)"
+00752440	FUN_00752440	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"WanderAIUpdate::getModuleName (00C25BE8 slot 2; slot2 name ""WanderAIUpdate"" at 00C25E9C; 2 oracle cases)"
+00752450	FUN_00752450	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"WanderAIUpdate::getModuleNameKey (00C25BE8 slot 4; slot2 name ""WanderAIUpdate"" at 00C25E9C; guard 00DF9BC0 cache 00DF9BBC via NAMEKEY 00986150; 4 oracle cases)"
 00752480	FUN_00752480	.text	219		clean	unknown		unanalyzed	
 0075255f	FUN_0075255f	.text	1		clean	unknown		unanalyzed	
 00752560	FUN_00752560	.text	30		clean	unknown		unanalyzed	
@@ -16781,8 +16781,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0075c0a0	FUN_0075c0a0	.text	1522	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 0075c6a0	FUN_0075c6a0	.text	329		clean	unknown		unanalyzed	
 0075c7f0	FUN_0075c7f0	.text	121		clean	unknown		unanalyzed	
-0075c870	FUN_0075c870	.text	6		clean	unknown		unanalyzed	
-0075c880	FUN_0075c880	.text	47		clean	unknown		unanalyzed	
+0075c870	FUN_0075c870	.text	6		clean	gamelogic	recon/gamelogic72	reversed	"HordeGarrisonContain::getModuleName (00C26980 slot 2; slot2 name ""HordeGarrisonContain"" at 00C26A3C; 2 oracle cases)"
+0075c880	FUN_0075c880	.text	47		clean	gamelogic	recon/gamelogic72	reversed	"HordeGarrisonContain::getModuleNameKey (00C26980 slot 4; slot2 name ""HordeGarrisonContain"" at 00C26A3C; guard 00DF9BF0 cache 00DF9BEC via NAMEKEY 00986150; 4 oracle cases)"
 0075c8b0	FUN_0075c8b0	.text	30		clean	unknown		unanalyzed	
 0075c8d0	FUN_0075c8d0	.text	104		clean	unknown		unanalyzed	
 0075c940	FUN_0075c940	.text	82		clean	unknown		unanalyzed	
