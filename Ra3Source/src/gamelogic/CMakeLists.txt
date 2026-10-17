@@ -34,8 +34,11 @@ ra3_add_module(gamelogic
         src/SkirmishAI87.cpp
         src/AIState79.cpp
         src/SkirmishAI8B.cpp
+        include/ra3/gamelogic/ObjectUpdates78.h
+        src/ObjectUpdates78.cpp
     PUBLIC_DEPS
-        Ra3::sim)
+        Ra3::sim
+        Ra3::common)
 
 if(MSVC AND CMAKE_SIZEOF_VOID_P EQUAL 4)
     target_compile_options(ra3_gamelogic PRIVATE /arch:SSE2 /fp:precise)
