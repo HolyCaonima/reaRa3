@@ -6,11 +6,13 @@ namespace ra3hook {
 // call it below; keys must stay unique across all tables.
 void appendPlayerTargets(std::vector<Target>& table);
 void appendNetTargets(std::vector<Target>& table);
+void appendAIStateTargets(std::vector<Target>& table);
 
 void appendModuleTargets(std::vector<Target>& table)
 {
     appendPlayerTargets(table);
     appendNetTargets(table);
+    appendAIStateTargets(table);
 }
 
 }  // namespace ra3hook

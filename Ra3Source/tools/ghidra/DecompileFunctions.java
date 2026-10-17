@@ -3,6 +3,7 @@
 //
 // Selectors:
 //   0x00401000 / 00401000   function containing that address
+//   range:<start>-<end>      every function whose entry is in the inclusive range
 //   string:<text>           every function referencing a defined string containing <text>
 //   calls:<address>         every function calling the function at <address>
 //   entry:<address>         function starting at <address>, created in memory if Ghidra missed it
@@ -13,6 +14,7 @@ import ghidra.app.decompiler.DecompInterface;
 import ghidra.app.decompiler.DecompileResults;
 import ghidra.app.script.GhidraScript;
 import ghidra.program.model.address.Address;
+import ghidra.program.model.address.AddressSet;
 import ghidra.program.model.listing.Data;
 import ghidra.program.model.listing.Function;
 import ghidra.program.model.symbol.Reference;
@@ -63,7 +65,16 @@ public class DecompileFunctions extends GhidraScript {
     }
 
     private void select(String selector, Map<Function, String> selected) throws Exception {
-        if (selector.startsWith("string:")) {
+        if (selector.startsWith("range:")) {
+            String[] bounds = selector.substring("range:".length()).split("-", 2);
+            if (bounds.length != 2) {
+                throw new IllegalArgumentException("bad range selector: " + selector);
+            }
+            AddressSet range = new AddressSet(toAddr(bounds[0]), toAddr(bounds[1]));
+            for (Function f : currentProgram.getFunctionManager().getFunctions(range, true)) {
+                selected.putIfAbsent(f, selector);
+            }
+        } else if (selector.startsWith("string:")) {
             String needle = selector.substring("string:".length());
             for (Data data : currentProgram.getListing().getDefinedData(true)) {
                 monitor.checkCancelled();
