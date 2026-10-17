@@ -14,8 +14,9 @@
 - 用户只给宏观要求，全程由 agent 自主完成，不要频繁提问。
 - **速度优先**（2026-10-17）：实机游戏验证能省就省。单批函数靠离线 oracle 证明正确；
   累计**几百到几千个**新函数后，才跑一次合并的实机 shadow + replace。
-- **子 agent**：用 `gpt-5.6-sol-medium`，保持 3–5 个并行，各自在 git worktree 分支
-  （`recon/<module>`）里干活，由主控合并。
+- **子 agent**：用户 11:18 决定后续新批次用 `gemini-4-argon-medium`（速度/成本优先，
+  主控继续负责严格复验）；保持 10 个并行，各自在 git worktree 分支（`recon/<module>`）
+  里干活，由主控合并。11:18 前已经启动的 10 路是 `inherit`，不为换模型中断在途工作。
 - **受保护代码纳入范围**（2026-10-17，用户选定的边界）：
   - 范围是**游戏自己的**受保护函数（台账 `securom` 为 `inner-patched` 432、
     `entry-lost` 653、`entry-recoverable` 121、`patched` 8）。
@@ -103,7 +104,8 @@
    返回 `thunk VA → 真实体 VA`：移植 entry-lost 函数时要 oracle 真实体，而不是那 6 字节 thunk。
    `.text/.rdata/.data` 仍取磁盘（运行时 `.text` 与磁盘逐字节相同；`.data` 保持装载期值）；
    SecuROM 自己的节（`Stext` 等）永不映射。
-3. **大批量并行移植**：🚧 持续进行。保持 10 个 gpt-5.6-sol 子 agent，每个负责一个成块子系统，每批
+3. **大批量并行移植**：🚧 持续进行。保持 10 个 `gemini-4-argon-medium` 子 agent，
+   每个负责一个成块子系统，每批
    50–200 个函数，每批带 oracle 脚本。优先成块的 gamelogic/gameclient 簇，例如
    `0x0065xxxx–0x0066xxxx` 粒子/特效（大量调用 client RandomVariable），用 Generals 源码
    命名，不要挑零散的匿名字段访问器。已合并四批共 126 个新 reversed；主控每次合并均跑
