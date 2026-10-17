@@ -27,6 +27,7 @@ ra3_add_shared_library(ra3hook
         dll/targets/UiTargets.cpp
         dll/targets/Scripts82Targets.cpp
         dll/targets/AIStateTargets.cpp
+        dll/targets/SkirmishAIBaseBuildTargets.cpp
         dll/targets/WeaponLogicTargets.cpp
         dll/targets/TerrainLogicTargets.cpp
         dll/targets/ThingTemplateTargets.cpp

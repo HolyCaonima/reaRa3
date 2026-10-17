@@ -18,6 +18,7 @@ void appendGameClient92Targets(std::vector<Target>& table);
 void appendUiTargets(std::vector<Target>& table);
 void appendScripts82Targets(std::vector<Target>& table);
 void appendAIStateTargets(std::vector<Target>& table);
+void appendSkirmishAIBaseBuildTargets(std::vector<Target>& table);
 void appendWeaponLogicTargets(std::vector<Target>& table);
 void appendTerrainLogicTargets(std::vector<Target>& table);
 void appendThingTemplateTargets(std::vector<Target>& table);
@@ -45,6 +46,7 @@ void appendModuleTargets(std::vector<Target>& table)
     appendUiTargets(table);
     appendScripts82Targets(table);
     appendAIStateTargets(table);
+    appendSkirmishAIBaseBuildTargets(table);
     appendWeaponLogicTargets(table);
     appendTerrainLogicTargets(table);
     appendThingTemplateTargets(table);
