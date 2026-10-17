@@ -41,7 +41,8 @@ std::uint32_t sageAudioManagerSubsystemNameAddress() noexcept;
 std::uint32_t sagePathMusicManagerSubsystemNameAddress() noexcept;
 
 // 0x005044F0. Callee of SageAudioManager.cpp 0051E560. ret 4, returns this.
-void* initAudioEventHandle(void* handle, void* eventObject) noexcept;
+// The stack argument is the address of the event pointer (caller passes &object+0x14).
+void* initAudioEventHandle(void* handle, void* eventSlot) noexcept;
 
 // 0x00504560. Callee of SageAudioManager.cpp 005161C0.
 std::uint32_t releaseAudioEventHandle(void* handle) noexcept;

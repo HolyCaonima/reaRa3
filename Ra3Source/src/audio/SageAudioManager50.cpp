@@ -11,7 +11,7 @@ namespace {
 
 [[noreturn]] void untestedPath(const char* what) noexcept {
     std::fputs(what, stderr);
-    std::_exit(2);
+    ::_exit(2);
 }
 
 float loadFloat(std::uintptr_t address) noexcept {
@@ -77,11 +77,12 @@ constexpr std::uint32_t kCategoryBitMask = 0x1Fu;
 std::uint32_t resolveSpeakerCenterChannel() noexcept {
     const auto mode = loadU32(kSpeakerModeAddress);
     if (mode == 0xFFFFFFFFu) {
+        // 00502288: eax is the system pointer; only AL is replaced by the channel byte.
         const auto system = loadU32(kAudioSystemAddress);
         const auto index = *reinterpret_cast<const std::uint32_t*>(system + 0x2E4u);
         const auto channel = *reinterpret_cast<const std::uint32_t*>(system + index * 4u + 0x54u);
         const auto enabled = *reinterpret_cast<const std::uint8_t*>(channel + 0x29u);
-        return (channel & 0xFFFFFF00u) | enabled;
+        return (system & 0xFFFFFF00u) | enabled;
     }
     if (mode == 0u) {
         return 0u;
@@ -111,7 +112,9 @@ std::uint32_t sagePathMusicManagerSubsystemNameAddress() noexcept {
     return kSagePathMusicManagerNameAddress;
 }
 
-void* initAudioEventHandle(void* handle, void* eventObject) noexcept {
+void* initAudioEventHandle(void* handle, void* eventSlot) noexcept {
+    // 005044F2 reads the pointer stored at the argument, then writes that pointer.
+    auto* eventObject = *reinterpret_cast<void**>(eventSlot);
     *reinterpret_cast<void**>(handle) = eventObject;
     if (eventObject != nullptr) {
         *reinterpret_cast<std::uint32_t*>(static_cast<std::uint8_t*>(eventObject) + 0x98u) += 1u;

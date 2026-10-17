@@ -54,25 +54,85 @@ std::uint32_t __fastcall transferBodyStub(void* self, void*, void* arg) {
     return 0x77u;
 }
 
-std::uint8_t* mapPage(std::uintptr_t address) {
-    void* page = VirtualAlloc(reinterpret_cast<void*>(address), 0x1000, MEM_COMMIT | MEM_RESERVE,
+// VirtualAlloc reservations must start on the 64 KiB allocation granularity.
+std::uint8_t* mapRegion(std::uintptr_t address, std::size_t bytes) {
+    constexpr std::uintptr_t kGranularity = 0x10000u;
+    const auto start = address & ~(kGranularity - 1u);
+    const auto tail = (address + bytes + kGranularity - 1u) & ~(kGranularity - 1u);
+    void* page = VirtualAlloc(reinterpret_cast<void*>(start), tail - start, MEM_COMMIT | MEM_RESERVE,
                               PAGE_READWRITE);
     if (page == nullptr) {
-        std::cerr << "VirtualAlloc failed at 0x" << std::hex << address << " err " << std::dec
-                  << GetLastError() << "\n";
+        std::cerr << "VirtualAlloc failed at 0x" << std::hex << start << " size 0x" << (tail - start)
+                  << " err " << std::dec << GetLastError() << "\n";
         std::exit(1);
     }
     return static_cast<std::uint8_t*>(page);
 }
 
+// Python's process mitigation enables bottom-up ASLR, and a child inherits it.
+// That packs private allocations over the game globals. Relaunch with it off
+// and hand the same stdin/stdout to the inner process.
+void relaunchForFixedAddresses() {
+    if (GetEnvironmentVariableA("RA3_AUDIO50_INNER", nullptr, 0) != 0) {
+        return;
+    }
+    if (!SetEnvironmentVariableA("RA3_AUDIO50_INNER", "1")) {
+        std::cerr << "SetEnvironmentVariable failed\n";
+        std::exit(1);
+    }
+    SIZE_T bytes = 0;
+    InitializeProcThreadAttributeList(nullptr, 1, 0, &bytes);
+    auto* attributes = static_cast<PPROC_THREAD_ATTRIBUTE_LIST>(HeapAlloc(GetProcessHeap(), 0, bytes));
+    if (attributes == nullptr || !InitializeProcThreadAttributeList(attributes, 1, 0, &bytes)) {
+        std::cerr << "InitializeProcThreadAttributeList failed\n";
+        std::exit(1);
+    }
+    DWORD64 policy = PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF |
+                     PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_OFF |
+                     PROCESS_CREATION_MITIGATION_POLICY_HIGH_ENTROPY_ASLR_ALWAYS_OFF;
+    if (!UpdateProcThreadAttribute(attributes, 0, PROC_THREAD_ATTRIBUTE_MITIGATION_POLICY, &policy,
+                                   sizeof(policy), nullptr, nullptr)) {
+        std::cerr << "UpdateProcThreadAttribute failed " << GetLastError() << "\n";
+        std::exit(1);
+    }
+    STARTUPINFOEXA startup{};
+    startup.StartupInfo.cb = sizeof(startup);
+    startup.StartupInfo.dwFlags = STARTF_USESTDHANDLES;
+    startup.StartupInfo.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
+    startup.StartupInfo.hStdOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+    startup.StartupInfo.hStdError = GetStdHandle(STD_ERROR_HANDLE);
+    startup.lpAttributeList = attributes;
+    char path[MAX_PATH] = {};
+    GetModuleFileNameA(nullptr, path, MAX_PATH);
+    std::string command = GetCommandLineA();
+    PROCESS_INFORMATION process{};
+    if (!CreateProcessA(path, command.data(), nullptr, nullptr, TRUE, EXTENDED_STARTUPINFO_PRESENT,
+                        nullptr, nullptr, &startup.StartupInfo, &process)) {
+        std::cerr << "CreateProcess failed " << GetLastError() << "\n";
+        std::exit(1);
+    }
+    WaitForSingleObject(process.hProcess, INFINITE);
+    DWORD code = 1;
+    GetExitCodeProcess(process.hProcess, &code);
+    CloseHandle(process.hThread);
+    CloseHandle(process.hProcess);
+    DeleteProcThreadAttributeList(attributes);
+    HeapFree(GetProcessHeap(), 0, attributes);
+    std::exit(static_cast<int>(code));
+}
+
 void installRuntime() {
-    g_dee = mapPage(0x00DEE000u);
-    g_ca7 = mapPage(0x00CA7000u);
-    g_ca9 = mapPage(0x00CA9000u);
-    g_bd9 = mapPage(0x00BD9000u);
-    g_df0 = mapPage(0x00DF0000u);
-    g_df6 = mapPage(0x00DF6000u);
-    auto* vtPage = mapPage(kVtablePage);
+    auto* dataBd = mapRegion(0x00BD0000u, 0x10000u);
+    auto* dataCa = mapRegion(0x00CA0000u, 0x10000u);
+    auto* dataDe = mapRegion(0x00DE0000u, 0x10000u);
+    auto* dataDf = mapRegion(0x00DF0000u, 0x10000u);
+    g_bd9 = dataBd + 0x9000u;
+    g_ca7 = dataCa + 0x7000u;
+    g_ca9 = dataCa + 0x9000u;
+    g_dee = dataDe + 0xE000u;
+    g_df0 = dataDf;
+    g_df6 = dataDf + 0x6000u;
+    auto* vtPage = mapRegion(kVtablePage, 0x1000u);
     g_vtable = reinterpret_cast<std::uintptr_t>(vtPage);
     auto* slots = reinterpret_cast<std::uintptr_t*>(vtPage);
     g_releaseStub = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(&releaseStub));
@@ -141,7 +201,11 @@ std::string toHex(const std::uint8_t* data, std::size_t size) {
 }
 
 std::uint32_t parseU32(const std::string& text) {
-    return static_cast<std::uint32_t>(std::strtoul(text.c_str(), nullptr, 0));
+    const int base = (text.size() > 1 && text[0] == '0' && text[1] != 'x' && text[1] != 'X' &&
+                      text.find_first_of("abcdefABCDEF") != std::string::npos)
+                         ? 16
+                         : 0;
+    return static_cast<std::uint32_t>(std::strtoul(text.c_str(), nullptr, base));
 }
 
 void applyPatches(const std::string& text) {
@@ -204,11 +268,11 @@ std::vector<Fixup> parseFixups(const std::string& text) {
     return out;
 }
 
-void* blobPtr(std::vector<std::uint8_t>& blob, std::uint32_t offset) {
-    if (offset == kNull) {
+void* blobPtr(std::uint8_t* blob, std::size_t size, std::uint32_t offset) {
+    if (offset == kNull || blob == nullptr || offset >= size) {
         return nullptr;
     }
-    return blob.data() + offset;
+    return blob + offset;
 }
 
 std::uint32_t stubMarker(std::uint32_t value) {
@@ -272,7 +336,7 @@ std::vector<std::uint8_t> captureGlobals(std::uintptr_t blobBase, std::size_t bl
     return out;
 }
 
-std::uint32_t run(std::uint32_t va, void* self, std::vector<std::uint8_t>& blob, std::uint32_t a0,
+std::uint32_t run(std::uint32_t va, void* self, std::uint8_t* blob, std::size_t blobSize, std::uint32_t a0,
                   std::uint32_t a1, std::uint32_t a2, std::uint32_t a3, std::uint32_t eax) {
     using namespace ra3::audio;
     switch (va) {
@@ -290,7 +354,7 @@ std::uint32_t run(std::uint32_t va, void* self, std::vector<std::uint8_t>& blob,
         return sagePathMusicManagerSubsystemNameAddress();
     case 0x005044F0:
         return static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
-            initAudioEventHandle(self, blobPtr(blob, a0))));
+            initAudioEventHandle(self, blobPtr(blob, blobSize, a0))));
     case 0x00504560:
         return releaseAudioEventHandle(self);
     case 0x005045C0:
@@ -300,7 +364,7 @@ std::uint32_t run(std::uint32_t va, void* self, std::vector<std::uint8_t>& blob,
     case 0x00504AC0:
         return testAudioEventCategoryBit(self, a0);
     case 0x00504AF0:
-        return intersectsAudioEventCategoryMask(self, reinterpret_cast<std::uint32_t*>(blobPtr(blob, a0)));
+        return intersectsAudioEventCategoryMask(self, reinterpret_cast<std::uint32_t*>(blobPtr(blob, blobSize, a0)));
     case 0x00504C80:
         recomputePlayerCategoryVolume(self, a0, a1);
         return 0;
@@ -309,15 +373,15 @@ std::uint32_t run(std::uint32_t va, void* self, std::vector<std::uint8_t>& blob,
     case 0x00504EC0:
         return decrementPlayerVolumeCounters(self);
     case 0x00505340:
-        return acquireVolumeModifierLock(blobPtr(blob, a0));
+        return acquireVolumeModifierLock(blobPtr(blob, blobSize, a0));
     case 0x005053B0:
-        return releaseVolumeModifierLock(blobPtr(blob, a0));
+        return releaseVolumeModifierLock(blobPtr(blob, blobSize, a0));
     case 0x00506670:
-        return sageAudioManagerOnAcquireVolumeModifierLock(blobPtr(blob, a0));
+        return sageAudioManagerOnAcquireVolumeModifierLock(blobPtr(blob, blobSize, a0));
     case 0x00506680:
-        return sageAudioManagerOnReleaseVolumeModifierLock(blobPtr(blob, a0));
+        return sageAudioManagerOnReleaseVolumeModifierLock(blobPtr(blob, blobSize, a0));
     case 0x00506430:
-        return sageAudioManagerQuerySuppressed(blobPtr(blob, a0), eax);
+        return sageAudioManagerQuerySuppressed(blobPtr(blob, blobSize, a0), eax);
     case 0x00506C20:
         return static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
             initCategoryBitsFour(self, a0, a1, a2, a3)));
@@ -325,20 +389,20 @@ std::uint32_t run(std::uint32_t va, void* self, std::vector<std::uint8_t>& blob,
         return static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
             initCategoryBitsTwo(self, a0, a1)));
     case 0x00502540:
-        return bindSoundProvider(self, blobPtr(blob, a0));
+        return bindSoundProvider(self, blobPtr(blob, blobSize, a0));
     case 0x00507720:
         return hasActiveRenderCursor(self);
     case 0x00508640:
         return static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
-            appendPlayingAudioNode(self, blobPtr(blob, a0))));
+            appendPlayingAudioNode(self, blobPtr(blob, blobSize, a0))));
     case 0x0050B090:
-        return sagePathMusicManagerTransferState(self, blobPtr(blob, a0));
+        return sagePathMusicManagerTransferState(self, blobPtr(blob, blobSize, a0));
     case 0x0050DF80:
         return eraseListenerRecord(self, a0);
     case 0x0050E510:
         return sageAudioManagerRemoveListenerEntry(self, a0, eax);
     case 0x0050FA80:
-        return applyListedVolumeModifiers(self, blobPtr(blob, a0), a1);
+        return applyListedVolumeModifiers(self, blobPtr(blob, blobSize, a0), a1);
     case 0x0050FD50:
         return refreshRenderingPlayerVolumes(self);
     default:
@@ -367,19 +431,28 @@ void runLine(const std::string& line) {
     }
     baselineGlobals();
     applyPatches(patchStr);
-    auto blob = parseHex(blobHex);
-    const auto base = reinterpret_cast<std::uintptr_t>(blob.data());
+    const auto raw = parseHex(blobHex);
+    // 256-byte alignment keeps "mov al, mem" residues at the same blob offset
+    // on both sides of the oracle. malloc's 16-byte alignment does not.
+    std::vector<std::uint8_t> holder(raw.size() + 255u);
+    const auto base = raw.empty()
+                         ? 0u
+                         : (reinterpret_cast<std::uintptr_t>(holder.data()) + 255u) & ~std::uintptr_t{255u};
+    auto* blob = raw.empty() ? nullptr : reinterpret_cast<std::uint8_t*>(base);
+    if (!raw.empty()) {
+        std::memcpy(blob, raw.data(), raw.size());
+    }
     for (const auto& fix : parseFixups(fixStr)) {
         if (fix.kind == Fixup::Vtable) {
-            std::memcpy(blob.data() + fix.offset, &g_vtable, 4);
+            std::memcpy(blob + fix.offset, &g_vtable, 4);
         } else if (fix.kind == Fixup::GlobalPtr) {
             const auto target = static_cast<std::uint32_t>(base + fix.offset);
             std::memcpy(reinterpret_cast<void*>(fix.global), &target, 4);
         } else {
             std::uint32_t rel = 0;
-            std::memcpy(&rel, blob.data() + fix.offset, 4);
+            std::memcpy(&rel, blob + fix.offset, 4);
             const auto abs = static_cast<std::uint32_t>(base + rel);
-            std::memcpy(blob.data() + fix.offset, &abs, 4);
+            std::memcpy(blob + fix.offset, &abs, 4);
         }
     }
     const bool absolute = !selfStr.empty() && (selfStr[0] == 'A' || selfStr[0] == 'a');
@@ -387,8 +460,8 @@ void runLine(const std::string& line) {
     void* self = nullptr;
     if (absolute) {
         self = reinterpret_cast<void*>(selfOff);
-    } else if (selfOff != kNull && selfOff < blob.size()) {
-        self = blob.data() + selfOff;
+    } else if (blob != nullptr && selfOff != kNull && selfOff < raw.size()) {
+        self = blob + selfOff;
     }
     const auto fpcw = static_cast<std::uint16_t>(parseU32(fpcwStr));
     unsigned short saved = 0;
@@ -396,22 +469,22 @@ void runLine(const std::string& line) {
         fnstcw saved
         fldcw fpcw
     }
-    auto ret = run(parseU32(vaStr), self, blob, parseU32(a0Str), parseU32(a1Str), parseU32(a2Str),
-                   parseU32(a3Str), parseU32(eaxStr));
+    auto ret = run(parseU32(vaStr), self, blob, raw.size(), parseU32(a0Str), parseU32(a1Str),
+                   parseU32(a2Str), parseU32(a3Str), parseU32(eaxStr));
     __asm { fldcw saved }
-    if (!blob.empty()) {
-        normalizeDwords(blob.data(), blob.size(), base, blob.size());
-        ret = normalize(ret, base, blob.size());
+    if (!raw.empty()) {
+        normalizeDwords(blob, raw.size(), base, raw.size());
+        ret = normalize(ret, base, raw.size());
     }
-    const auto globals = captureGlobals(base, blob.size());
-    std::cout << "ret=0x" << std::hex << std::setw(8) << std::setfill('0') << ret
-              << " blob=" << toHex(blob.data(), blob.size())
-              << " g=" << toHex(globals.data(), globals.size()) << std::endl;
+    const auto globals = captureGlobals(base, raw.size());
+    std::cout << "ret=0x" << std::hex << std::setw(8) << std::setfill('0') << ret << " blob="
+              << toHex(blob, raw.size()) << " g=" << toHex(globals.data(), globals.size()) << std::endl;
 }
 
 }  // namespace
 
 int main(int argc, char** argv) {
+    relaunchForFixedAddresses();
     installRuntime();
     if (argc == 2 && std::string(argv[1]) == "--batch") {
         std::string line;

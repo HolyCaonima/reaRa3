@@ -48,7 +48,10 @@ def fhex(value: float) -> str:
 
 
 def put(blob: bytearray, offset: int, data: bytes) -> None:
-    blob[offset:offset + len(data)] = data
+    end = offset + len(data)
+    if offset < 0 or end > len(blob):
+        raise AssertionError(f"put out of range +0x{offset:X} size 0x{len(blob):X}")
+    blob[offset:end] = data
 
 
 def u32(data: bytes, offset: int) -> int:
@@ -268,7 +271,7 @@ class Oracle:
 
         self._baseline()
         self._apply_patches(patches)
-        base = self.emu.alloc(raw if raw else b"\0")
+        base = self.emu.alloc(raw if raw else b"\0", alignment=256)
         size = len(raw)
         for item in [] if fixups in ("-", ".") else fixups.split(","):
             if item.startswith("t@"):
@@ -289,7 +292,9 @@ class Oracle:
 
         decoded = []
         for index, value in enumerate(stack):
-            if index in pointer_args and value != NULL and size and value < size:
+            if value == NULL:
+                decoded.append(0)
+            elif index in pointer_args and size and value < size:
                 decoded.append(base + value)
             else:
                 decoded.append(value)
@@ -314,7 +319,8 @@ class Oracle:
             cpp_ret &= 0xFF
         if compare != "none" and game_ret != cpp_ret:
             raise AssertionError(
-                f"0x{va:08X}: return mismatch game=0x{game_ret:08X} cpp=0x{cpp_ret:08X}"
+                f"0x{va:08X}: return mismatch game=0x{game_ret:08X} cpp=0x{cpp_ret:08X} "
+                f"raw=0x{result.eax & 0xFFFFFFFF:08X} base=0x{base:08X} size=0x{size:X}"
             )
         self.counts[va] += 1
 
@@ -355,20 +361,19 @@ def _cases(o: Oracle) -> None:
     # 00502270 speaker mode.
     for mode, _name in ((0, "zero"), (1, "one"), (2, "other"), (0x101, "high")):
         o.invoke(0x00502270, zeros(0), [], patches=f"0x00CA7E7C={le(mode)}")
-    system = zeros(0x80)
-    put(system, 0x2E4, le(0).encode() if False else struct.pack("<I", 0))
-    put(system, 0x54, struct.pack("<I", 0x40))
-    channel = zeros(0x40)
-    channel[0x29] = 0xAB
-    blob = system + channel
+    # Channel sits 0x100 past the system so the preserved system high bits
+    # differ from the channel pointer's high bits.
+    system = zeros(0x300)
+    put(system, 0x2E4, struct.pack("<I", 0))
+    put(system, 0x54, struct.pack("<I", 0x100))
+    system[0x129] = 0xAB
     o.invoke(
-        0x00502270, blob, [], fixups="0x54,g00DF6098@0",
+        0x00502270, system, [], fixups="0x54,g0x00DF6098@0",
         patches="0x00CA7E7C=" + le(0xFFFFFFFF),
     )
-    channel[0x29] = 0x00
-    blob = system + channel
+    system[0x129] = 0x00
     o.invoke(
-        0x00502270, blob, [], fixups="0x54,g00DF6098@0",
+        0x00502270, system, [], fixups="0x54,g0x00DF6098@0",
         patches="0x00CA7E7C=" + le(0xFFFFFFFF),
     )
 
@@ -396,37 +401,36 @@ def _cases(o: Oracle) -> None:
     for count in (0, 1, 7, 0x100):
         o.invoke(0x00503290, zeros(0), [], patches=f"0x00CA7D7C={le(count)}")
 
-    # 005044F0
-    handle = zeros(0x10)
-    event = zeros(0xA0)
-    blob = handle + event
-    o.invoke(0x005044F0, blob, [NULL], pointer_args=(0,))
-    o.invoke(0x005044F0, blob, [0x10], fixups="-", pointer_args=(0,))
-    put(event, 0x98, struct.pack("<I", 4))
-    blob = handle + event
-    o.invoke(0x005044F0, blob, [0x10], pointer_args=(0,))
+    # 005044F0 copies the dword at the slot (caller passes &event) into the handle.
+    slot = zeros(0xC0)
+    o.invoke(0x005044F0, slot, [0], self_off="0x10", pointer_args=(0,))
+    put(slot, 0, struct.pack("<I", 0x20))
+    put(slot, 0xB8, struct.pack("<I", 4))
+    o.invoke(0x005044F0, slot, [0], self_off="0x10", fixups="0", pointer_args=(0,))
+    put(slot, 0xB8, struct.pack("<I", 0))
+    o.invoke(0x005044F0, slot, [0], self_off="0x10", fixups="0", pointer_args=(0,))
 
     # 00504560
     obj = zeros(0xB0)
     o.invoke(0x00504560, obj, [])
     put(obj, 0, struct.pack("<I", 0x10))
     put(obj, 0x10 + 0x98, struct.pack("<I", 2))
-    o.invoke(0x00504560, obj, [])
+    o.invoke(0x00504560, obj, [], fixups="0")
     put(obj, 0x10 + 0x98, struct.pack("<I", 1))
     put(obj, 0x10 + 0x94, struct.pack("<I", 0))
-    o.invoke(0x00504560, obj, [], fixups="t@0xA4")
+    o.invoke(0x00504560, obj, [], fixups="0,t@0xA4")
     put(obj, 0x10 + 0x98, struct.pack("<i", 0))
-    o.invoke(0x00504560, obj, [], fixups="t@0xA4")
+    o.invoke(0x00504560, obj, [], fixups="0,t@0xA4")
 
     # 005045C0. The handle's first dword is the object.
     play = zeros(0x20)
     o.invoke(0x005045C0, play, [], eax=0xA5A5A5A5)
     put(play, 0, struct.pack("<I", 0x10))
     put(play, 0x14, struct.pack("<I", 3))
-    o.invoke(0x005045C0, play, [], eax=0xA5A5A5A5, fixups="t@0x10")
+    o.invoke(0x005045C0, play, [], eax=0xA5A5A5A5, fixups="0,t@0x10")
     put(play, 0x14, struct.pack("<I", 1))
-    o.invoke(0x005045C0, play, [], eax=0xA5A5A5A5, fixups="t@0x10")
-    o.invoke(0x005045C0, play, [], eax=0, fixups="t@0x10")
+    o.invoke(0x005045C0, play, [], eax=0xA5A5A5A5, fixups="0,t@0x10")
+    o.invoke(0x005045C0, play, [], eax=0, fixups="0,t@0x10")
 
     # 005045E0 node at 0, prev at 0x20, next at 0x40, owner at 0x60.
     def node_blob(prev: int | None, nxt: int | None) -> bytearray:
@@ -436,10 +440,10 @@ def _cases(o: Oracle) -> None:
         put(raw, 8, struct.pack("<I", 0 if nxt is None else 0x40))
         return raw
 
-    o.invoke(0x005045E0, node_blob(0x20, 0x40), [], compare="ptr")
-    o.invoke(0x005045E0, node_blob(None, 0x40), [], compare="ptr")
-    o.invoke(0x005045E0, node_blob(0x20, None), [], compare="ptr")
-    o.invoke(0x005045E0, node_blob(None, None), [], compare="ptr")
+    o.invoke(0x005045E0, node_blob(0x20, 0x40), [], fixups="0,4,8", compare="ptr")
+    o.invoke(0x005045E0, node_blob(None, 0x40), [], fixups="0,8", compare="ptr")
+    o.invoke(0x005045E0, node_blob(0x20, None), [], fixups="0,4", compare="ptr")
+    o.invoke(0x005045E0, node_blob(None, None), [], fixups="0", compare="ptr")
 
     # 00504AC0 / 00504AF0
     info = zeros(0x90)
@@ -477,7 +481,7 @@ def _cases(o: Oracle) -> None:
     put(settings, 0x78, struct.pack("<f", 2.0))
     o.invoke(
         0x00504C80, volume_player() + settings, [0, 1],
-        fixups="g00DF03F8@0x200", compare="none",
+        fixups="g0x00DF03F8@0x200", compare="none",
     )
     o.invoke(
         0x00504C80, volume_player(), [0, 0], compare="none",
@@ -500,7 +504,7 @@ def _cases(o: Oracle) -> None:
             put(raw, 0x100 + 0xD4, struct.pack("<I", 0x200))
             put(raw, 0x200, struct.pack("<II", 1, struct.unpack("<I", struct.pack("<f", 0.5))[0]))
             put(raw, 0x208, struct.pack("<II", 0, struct.unpack("<I", struct.pack("<f", 0.25))[0]))
-            fix += ",0x1D4,g00DF03F8@0x100"
+            fix += ",0x1D4,g0x00DF03F8@0x100"
         o.invoke(
             0x00504DF0, raw, [0], fixups=fix, compare="ptr",
             patches=f"0x00DEE1C8={le(lock)}",
@@ -544,6 +548,7 @@ def _cases(o: Oracle) -> None:
     o.invoke(0x005053B0, zeros(4), [NULL], pointer_args=(0,), patches="0x00DEE1C8=" + le(0))
     o.invoke(0x005053B0, zeros(4), [NULL], pointer_args=(0,), patches="0x00DEE1C8=" + le(1), compare="none")
     o.invoke(0x00506680, zeros(4), [NULL], pointer_args=(0,), patches="0x00DEE1C8=" + le(5))
+    o.invoke(0x00506680, zeros(4), [NULL], pointer_args=(0,), patches="0x00DEE1C8=" + le(0))
     empty_guard = zeros(0x20)
     o.invoke(0x00505340, empty_guard, [0], pointer_args=(0,), patches="0x00DEE1C8=" + le(8))
     o.invoke(0x00506670, empty_guard, [0], pointer_args=(0,), compare="none")
@@ -556,9 +561,9 @@ def _cases(o: Oracle) -> None:
     put(request, 0x30, struct.pack("<I", 0))
     put(request, 0x0C, struct.pack("<I", 0x20))
     put(request, 0x20 + 0x74, struct.pack("<I", 0))
-    o.invoke(0x00506430, request, [0], eax=0xA5A5A5A5, pointer_args=(0,))
+    o.invoke(0x00506430, request, [0], eax=0xA5A5A5A5, pointer_args=(0,), fixups="0x0C")
     put(request, 0x20 + 0x74, struct.pack("<I", 0x2))
-    o.invoke(0x00506430, request, [0], pointer_args=(0,))
+    o.invoke(0x00506430, request, [0], pointer_args=(0,), fixups="0x0C")
 
     # 00506C20 / 00506C90. Pre-fill so uncleared words stay visible.
     bits = bytearray(b"\xFF" * 16)
@@ -575,12 +580,12 @@ def _cases(o: Oracle) -> None:
     put(cursor, 0, struct.pack("<I", 0x10))
     put(cursor, 0x20, struct.pack("<I", 0x40))
     put(cursor, 0x60, struct.pack("<I", 0x70))
-    o.invoke(0x00507720, cursor, [])
+    o.invoke(0x00507720, cursor, [], fixups="0,0x20,0x60")
     put(cursor, 0x60, struct.pack("<I", 0))
     put(cursor, 0x2C, struct.pack("<I", 0x70))
-    o.invoke(0x00507720, cursor, [])
+    o.invoke(0x00507720, cursor, [], fixups="0,0x20,0x2C")
     put(cursor, 0x2C, struct.pack("<I", 0))
-    o.invoke(0x00507720, cursor, [])
+    o.invoke(0x00507720, cursor, [], fixups="0,0x20")
 
     # 00508640
     node = zeros(0x20)
@@ -597,13 +602,13 @@ def _cases(o: Oracle) -> None:
     manager = zeros(0x60)
     stream = zeros(0x20)
     put(stream, 4, struct.pack("<I", 4))
-    o.invoke(0x0050B090, manager + stream, [0x60], fixups="t@0x60")
+    o.invoke(0x0050B090, manager + stream, [0x60], fixups="t@0x60", pointer_args=(0,))
     put(stream, 4, struct.pack("<I", 0x14))
-    o.invoke(0x0050B090, manager + stream, [0x60], fixups="t@0x60")
+    o.invoke(0x0050B090, manager + stream, [0x60], fixups="t@0x60", pointer_args=(0,))
     put(stream, 4, struct.pack("<I", 0))
-    o.invoke(0x0050B090, manager + stream, [0x60], fixups="t@0x60")
+    o.invoke(0x0050B090, manager + stream, [0x60], fixups="t@0x60", pointer_args=(0,))
     put(stream, 4, struct.pack("<I", 8))
-    o.invoke(0x0050B090, manager + stream, [0x60], fixups="t@0x60")
+    o.invoke(0x0050B090, manager + stream, [0x60], fixups="t@0x60", pointer_args=(0,))
 
     # 0050DF80
     def cache_with(keys: list[int], target: int) -> None:
@@ -653,7 +658,7 @@ def _cases(o: Oracle) -> None:
         put(raw, 0x100 + 0xF0, struct.pack("<I", begin))
         put(raw, 0x100 + 0xF4, struct.pack("<I", end))
         for index, (category, sample) in enumerate(records):
-            put(raw, begin + index * 8, struct.pack("<If", category, sample))
+            put(raw, begin + index * 8, struct.pack("<if", category, sample))
         return raw
 
     fix = "0x4C,0x50,0x54,0x200,0x1F0,0x1F4"
@@ -694,7 +699,7 @@ def _cases(o: Oracle) -> None:
         put(raw, 0xC0 + 0xF0, struct.pack("<I", begin))
         put(raw, 0xC0 + 0xF4, struct.pack("<I", end))
         for slot, (category, sample) in enumerate(records):
-            put(raw, begin + slot * 8, struct.pack("<If", category, sample))
+            put(raw, begin + slot * 8, struct.pack("<if", category, sample))
         return raw
 
     render_fix = "0x4,0x4C,0x80,0x1B0,0x1B4"
