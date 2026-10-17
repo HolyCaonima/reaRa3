@@ -4,10 +4,12 @@ ra3_add_module(gameclient
         include/ra3/gameclient/DrawableAccess.h
         include/ra3/gameclient/GameClient92.h
         include/ra3/gameclient/ParticleModules.h
+        include/ra3/gameclient/ParticleModules65.h
         src/DisplayExtent.cpp
         src/DrawableAccess.cpp
         src/GameClient92.cpp
         src/ParticleModules.cpp
+        src/ParticleModules65.cpp
     PUBLIC_DEPS
         Ra3::math
         Ra3::sim)

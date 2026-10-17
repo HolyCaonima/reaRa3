@@ -34,6 +34,7 @@ ra3_add_shared_library(ra3hook
         dll/targets/CommonSubsystemTargets.cpp
         dll/targets/Drawable52Targets.cpp
         dll/targets/GameLogic72Targets.cpp
+        dll/targets/ParticleModules65Targets.cpp
     DEPS
         Ra3::audio
         Ra3::asset
