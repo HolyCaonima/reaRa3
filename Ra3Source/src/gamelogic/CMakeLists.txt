@@ -2,9 +2,11 @@ ra3_add_module(gamelogic
     SOURCES
         include/ra3/gamelogic/AITNGuardViews.h
         include/ra3/gamelogic/Behavior.h
+        include/ra3/gamelogic/ScriptsCluster.h
+        include/ra3/gamelogic/WeaponLogic.h
         src/AITNGuardViews.cpp
         src/Behavior.cpp
-        include/ra3/gamelogic/WeaponLogic.h
+        src/ScriptsCluster.cpp
         src/WeaponLogic.cpp)
 
 if(MSVC AND CMAKE_SIZEOF_VOID_P EQUAL 4)

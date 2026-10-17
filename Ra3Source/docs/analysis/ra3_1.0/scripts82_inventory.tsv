@@ -1,0 +1,65 @@
+address	size	crc32	status	hook_safe	proposed_name	notes
+0x00804590	68	0xA6C4617A	reversed	1	ScriptAction::isUnitAction	90-entry unit action predicate (__thiscall, ret) preserving full 32-bit EAX; Unicorn-verified
+0x00804780	104	0x33A1ABE4	reversed	1	ScriptAction::isTeamAction	106-entry team action predicate (__thiscall, ret) preserving full 32-bit EAX; Unicorn-verified
+0x008049A0	73	0x4B81251D	reversed	1	ScriptAction::isTeamOrUnitAction	104-entry team-or-unit action predicate (__thiscall, ret) preserving full 32-bit EAX; Unicorn-verified
+0x0081A3A0	31	0xAC6E416D	inventory-only	0	ScriptBase::scalarDeletingDestructor	Inventory-only: scalar deleting destructor
+0x0081A3C0	53	0xA3A5158E	inventory-only	0	ScriptSubobject::scalarDeletingDestructor	Inventory-only: scalar deleting destructor
+0x0081A400	18	0x6F2ED002	inventory-only	0	ScriptEngine::forwardGlobalCallback	Inventory-only: pure forwarding stub
+0x0081A420	106	0x2E18B822	reversed	0	ScriptEngine::canEvaluateScript	Script evaluation gate (__thiscall, ret 4) zeroing m_curTime (+0x48) and checking active/difficulty/frame; Unicorn-verified
+0x0081A4A0	45	0xEB204A9A	reversed	0	ScriptEngine::clearTrackedObjectPointer	Clears matching object pointer in m_trackedObjects (+0x17D74..+0x17D78); Unicorn-verified
+0x0081A4D0	65	0x014F6440	reversed	0	ScriptEngine::setSequentialTimerForObject	Sets m_framesToWait (+0x20) on first SequentialScript matching obj->m_id (+0xDC); Unicorn-verified
+0x0081A520	52	0x98879165	reversed	0	ScriptEngine::setSequentialTimerForTeam	Sets m_framesToWait (+0x20) on first SequentialScript matching team (+0x04); Unicorn-verified
+0x0081A560	75	0x9E634368	inventory-only	0	ScriptEngine::findTrackedObjectByTemplateHandle	Inventory-only: depends on unresolved template handle resolver
+0x0081A5B0	82	0xB0153D66	reversed	0	ScriptEngine::notifyOfObjectDestruction	Clears matching object pointer in m_trackedObjects and cached pointers at +0x17D70/+0x17D68; Unicorn-verified
+0x0081A610	82	0x0FD1A43F	inventory-only	0	ScriptEngine::applyParameterTemplateHandle	Inventory-only: depends on unresolved template handle resolver
+0x0081A700	73	0x805ABF6C	reversed	0	ScriptList::markAllScriptsAndGroupsActive	Marks all scripts (+0x1C/+0x30) and groups (+0x44/+0x58) active (+0x0C=1); Unicorn-verified
+0x0081A750	46	0x7EBBBA12	reversed	1	Parameter::getCoord3D	Extracts Coord3D (+0x14..+0x1C) when m_paramType==0x10; Unicorn-verified
+0x0081AA40	26	0xE4E98D4D	reversed	1	IntVector::sumElements	Sums int32 range [begin, end); Unicorn-verified
+0x0081AA60	63	0xA0E768F1	reversed	1	SightingKey::less	16-byte sighting key comparator (__stdcall, ret 8); Unicorn-verified
+0x0081AAA0	184	0x18BBC6C7	reversed	1	SightingTree::find	RB-tree lookup on SightingKey (__thiscall, ret 8); Unicorn-verified
+0x0081AB60	103	0xEB16C86E	reversed	1	SightingTree::lowerBound	RB-tree lower_bound on SightingKey (__thiscall, ret 8); Unicorn-verified
+0x0081B130	70	0x0C9B3BE8	reversed	0	Parameter::Parameter	48-byte Parameter constructor (__thiscall, ret 8); Unicorn-verified
+0x0081B600	58	0x4C8CE17C	inventory-only	0	ScriptEngine::triggerEvaOrAudioEvent	Inventory-only: dispatches to external AudioEvent/Eva subsystem
+0x0081BE00	44	0xB73D4987	reversed	0	SequentialScript::SequentialScript	44-byte SequentialScript constructor (vtable 0x00C4D4F4); Unicorn-verified
+0x0081BEC0	37	0x64E98E78	inventory-only	0	ScriptEngine::seedFrameRandomState	Inventory-only: global PRNG seed helper
+0x0081BEF0	42	0x6AC7114E	inventory-only	0	ScriptEngine::seedClientRandomState	Inventory-only: global client PRNG seed helper
+0x0081BF20	88	0xE6CC11E9	inventory-only	0	ScriptEngine::releaseAllFlagNodes	Inventory-only: RB-tree teardown / allocator routine
+0x0081BF90	82	0x57EC88C4	reversed	0	ScriptCounterDefaultMap::lookupOrDefault	Counter default lookup returning double in st(0); Unicorn-verified
+0x0081BFF0	97	0xE1C7C578	reversed	0	ScriptEngine::isTrackedObjectDestroyedByName	FNV-1a hash lookup in m_trackedObjects returning objectPtr==0; Unicorn-verified
+0x0081C3E0	95	0x7DFF4396	reversed	0	Script::Script	80-byte Script constructor (vtable 0x00C4D57C); Unicorn-verified
+0x0081C530	134	0x8E6EBBD5	inventory-only	0	ActionTemplate::ActionTemplate	Inventory-only: template registration constructor
+0x0081DD80	51	0xB2FC04AD	inventory-only	0	ScriptStringNode::ScriptStringNode	Inventory-only: internal tree node constructor
+0x0081DE20	76	0xF187D6FD	reversed	1	ScriptIndexedEntry::lowerBoundById	Binary search on 12-byte ScriptIndexedEntry array; Unicorn-verified
+0x0081DE70	204	0xA8E2794A	reversed	0	ScriptListIndex::lowerBoundByName	Binary search on sorted index array into 20-byte named script entries; Unicorn-verified
+0x0081DF50	97	0xF2232F06	reversed	1	DualHashTree::find	RB-tree lookup on 64-bit (prefixHash, nameHash) key; Unicorn-verified
+0x0081DFC0	61	0xD097AEFE	reversed	0	ScriptWaypointInfo::copyFrom	36-byte ScriptWaypointInfo copy helper; Unicorn-verified
+0x0081E030	57	0xB7976532	inventory-only	0	ScriptListEntry::copyFrom	Inventory-only: internal vector copy helper
+0x0081F710	156	0x99894E3F	reversed	0	ScriptConditions::evaluateSkirmishCommandButtonIsReady	Skirmish command button readiness condition (__stdcall, ret 8); Unicorn-verified
+0x0081F7B0	111	0x6F859EB2	reversed	0	ScriptConditions::evaluateBridgeBroken	Bridge broken condition (__stdcall, ret 4); Unicorn-verified
+0x0081F820	114	0x64436FAD	inventory-only	0	ScriptConditions::evaluateTechTreeStatus	Inventory-only: direct callee 0x00401E90 jumps through SecuROM stub slot 0x018FB2A0
+0x0081F8A0	91	0x5F7520BE	reversed	0	ScriptConditions::evaluatePlatform	Platform condition (__stdcall, ret 4) comparing PC/360/PS3; Unicorn-verified
+0x0081F900	242	0x325F230D	inventory-only	0	ScriptEngine::appendDebugWatchMessage	Inventory-only: formats and appends debug watch strings
+0x0081FA00	209	0x7E52E431	reversed	0	ScriptEngine::findFlagByName	Side-qualified flag lookup via FNV-1a and DualHashTree::find; Unicorn-verified
+0x0081FAE0	90	0x785D6B4D	reversed	0	ScriptEngine::qualifyWithCurrentSidePrefix	Qualifies raw script name with m_currentSidePrefix (+0x17D60); Unicorn-verified
+0x0081FB40	247	0x04B1F285	reversed	0	ScriptEngine::findAttackInfo	Looks up or appends AttackInfo in m_attackInfo[1..m_numAttackInfo-1]; Unicorn-verified
+0x0081FC40	107	0xF47B2AA5	reversed	0	ScriptEngine::getObjectCount	Per-player object count lookup in tree at (playerIdx+0xDA2)*28; Unicorn-verified
+0x0081FCB0	47	0x44AB8722	inventory-only	0	OrCondition::scalarDeletingDestructor	Inventory-only: scalar deleting destructor
+0x0081FCE0	117	0x0DB1E2AE	inventory-only	0	OrCondition::duplicate	Inventory-only: deep-clone allocator routine
+0x0081FD60	43	0x22AD90C5	reversed	0	ScriptEngine::hasSightingEntry	Sighting tree membership query on this+0x18330; Unicorn-verified
+0x0081FD90	236	0x7EB6247D	inventory-only	0	ScriptEngine::formatScriptLogMessage	Inventory-only: debug log formatting helper
+0x0081FE80	616	0x354E3B67	inventory-only	0	ScriptEngine::getTeamNamed	Inventory-only: broad team/player resolution routine
+0x008200F0	183	0xB0FFA8DC	inventory-only	0	ScriptEngine::evaluateConditionTeamOrUnit	Inventory-only: dispatches through broad condition evaluation table
+0x008201B0	197	0xABD47C69	reversed	0	ScriptEngine::isSpecialPowerTriggeredOrComplete	Searches/unlinks per-player special power event list; Unicorn-verified
+0x00820280	140	0x1BE2C6B1	reversed	0	ScriptEngine::isScienceAcquiredOrUpgradeComplete	Searches/unlinks per-player science/upgrade event list; Unicorn-verified
+0x00820370	337	0xFDAB65A5	inventory-only	0	ScriptEngine::recordSpecialPowerTriggered	Inventory-only: allocates and links special power event node
+0x008204D0	91	0x97F8D437	inventory-only	0	ScriptEngine::recordScienceOrUpgradeEvent	Inventory-only: allocates and links science/upgrade event node
+0x00820530	30	0xC166B1B7	inventory-only	0	Parameter::Destructor	Inventory-only: trivial destructor
+0x00820550	102	0x026CD74E	inventory-only	0	Condition::scalarDeletingDestructor	Inventory-only: scalar deleting destructor
+0x008205C0	111	0x1D9AC021	inventory-only	0	Condition::setConditionType	Inventory-only: calls condition template resolver 0x0081A630 which has an unresolved indirect tail
+0x00820630	317	0xD32BF855	reversed	0	Parameter::qualifyPlayerSide	Remaps <Local Player...> SIDE strings to <1st Human Player...>; Unicorn-verified
+0x00820780	992	0xC9DBE9E5	inventory-only	0	Parameter::ReadParameterDataChunk	Inventory-only: DataChunkInput parser anchored at 0x00820780 = Scripts.cpp
+0x00820B70	239	0x24AAE396	reversed	0	ScriptAction::setActionType	Allocates/initializes m_parms from ActionTemplate at TheScriptEngine+0x48+clamp(type,0..0x23C)*0x80; Unicorn-verified
+0x00820C60	102	0x2BE7CED8	inventory-only	0	ScriptAction::scalarDeletingDestructor	Inventory-only: scalar deleting destructor
+0x00820CD0	289	0xBCCF4D3E	inventory-only	0	ScriptAction::duplicate	Inventory-only: deep-clone allocator routine
+0x00820E00	175	0xBCE7AF8F	reversed	0	ScriptAction::getTeamInvolved	Resolves team parameter (m_parms[1] for 210/352/385, m_parms[0] for other 103 team actions); Unicorn-verified
+0x00821080	1942	0x26A4140C	inventory-only	0	Condition::ParseConditionDataChunk	Inventory-only: DataChunkInput condition parser in Scripts.cpp
