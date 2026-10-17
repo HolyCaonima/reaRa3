@@ -283,7 +283,7 @@ int runSelfTest() {
     wp2.id = 202;
     wp2.location = {30.0F, 40.0F, 7.0F};
     setWaypointBiDirectional(wp1, true);
-    CHECK(getWaypointBiDirectional(wp1));
+    CHECK(getWaypointBiDirectional(wp1) == 1U);
     addWaypointLink(&wp1, 101, 202);
     CHECK(wp1.numLinks == 1 && wp1.links[0] == reinterpret_cast<std::uintptr_t>(&wp2));
     CHECK(wp2.numLinks == 1 && wp2.links[0] == reinterpret_cast<std::uintptr_t>(&wp1));
@@ -858,7 +858,7 @@ void dispatchCommand(const std::string& line) {
         std::string wpH;
         in >> wpH;
         const WaypointData wp = decodeStruct<WaypointData>(wpH);
-        std::cout << (getWaypointBiDirectional(wp) ? 1 : 0) << "\n";
+        std::cout << static_cast<unsigned>(getWaypointBiDirectional(wp)) << "\n";
         return;
     }
     if (op == "pointonintactbridge") {

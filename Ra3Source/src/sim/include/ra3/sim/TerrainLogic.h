@@ -239,8 +239,8 @@ float __fastcall getBridgeHeightExtended(
 // ra3_1.0.game 0x00860A20.
 void setWaypointBiDirectional(WaypointData& waypoint, bool biDirectional) noexcept;
 
-// ra3_1.0.game 0x00860A30.
-bool getWaypointBiDirectional(const WaypointData& waypoint) noexcept;
+// ra3_1.0.game 0x00860A30. Returns the stored byte unnormalized.
+std::uint8_t getWaypointBiDirectional(const WaypointData& waypoint) noexcept;
 
 // ra3_1.0.game 0x0085DD30.
 void addWaypointLink(WaypointData* waypointListHead, std::int32_t id1, std::int32_t id2) noexcept;

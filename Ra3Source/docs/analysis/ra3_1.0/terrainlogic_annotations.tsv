@@ -1,5 +1,5 @@
 address	status	owner	module	notes
-0085c5e0	reversed	recon/terrainlogic	sim	TerrainLogic::getTerrainBoundaryVector; returns this + index*16 + 0x60; ra3::sim::getTerrainBoundaryVector; oracle 8 cases; hook terrainboundaryvec (explicitOnly)
+0085c5e0	reversed	recon/terrainlogic	sim	TerrainLogic::getTerrainBoundaryVector; returns this + index*8 + 0x50; ra3::sim::getTerrainBoundaryVector; oracle 8 cases; hook terrainboundaryvec (explicitOnly)
 0085c650	reversed	recon/terrainlogic	sim	TerrainLogic::setActiveBoundary; updates +0x88 when changed and tail-calls vtable +0x28; ra3::sim::setTerrainActiveBoundary; oracle 20 cases
 0085ca80	reversed	recon/terrainlogic	sim	TerrainLogic::getOriginGroundHeight; dispatches vtable +0x18 at (0,0,normal); ra3::sim::getOriginGroundHeight; oracle 6 cases across 3 FPU CWs
 0085cc70	reversed	recon/terrainlogic	sim	TerrainLogic::getWaterHeightFromHandle; null check then vbtable +0x1C -> vtable +0x08 int height -> fild; ra3::sim::getWaterHeightFromHandle; oracle 21 cases across 3 FPU CWs
@@ -28,7 +28,7 @@ address	status	owner	module	notes
 00860630	reversed	recon/terrainlogic	sim	TerrainLogic::findBridgeAt; walks bridgeListHead (+0x68) calling Bridge::isPointOnBridge; ra3::sim::findBridgeAt; oracle 30 cases
 00860660	reversed	recon/terrainlogic	sim	TerrainLogic::findBridgeLayerAt; walks bridgeListHead (+0x68) for matching layer (+0x48) calling isPointOnIntactBridge or isPointOnBridge; ra3::sim::findBridgeLayerAt; oracle 240 cases
 00860a20	reversed	recon/terrainlogic	sim	Waypoint::setBiDirectional; writes bool at waypoint +0x5C; ra3::sim::setWaypointBiDirectional; oracle 2 cases; hook waypointsetbidir (explicitOnly)
-00860a30	reversed	recon/terrainlogic	sim	Waypoint::getBiDirectional; reads bool at waypoint +0x5C; ra3::sim::getWaypointBiDirectional; oracle 2 cases; hook waypointgetbidir (explicitOnly)
+00860a30	reversed	recon/terrainlogic	sim	Waypoint::getBiDirectional; returns the raw byte at waypoint +0x5C in AL (upper EAX is caller residue); ra3::sim::getWaypointBiDirectional; oracle 5 cases incl. non-boolean bytes; hook waypointgetbidir (explicitOnly)
 00861450	reversed	recon/terrainlogic	sim	Bridge::isPointOnIntactBridge; checks isPointOnBridge and verifies span projection is outside damaged intervals (+0x50..+0x54); ra3::sim::isPointOnIntactBridge; oracle 150 cases across 3 FPU CWs
 008614b0	reversed	recon/terrainlogic	sim	Bridge::pickBridge; intersects segment from->to with bridge plane and checks isPointOnIntactBridge; ra3::sim::pickBridge; oracle 150 cases across 3 FPU CWs
 00861680	reversed	recon/terrainlogic	sim	Bridge::getBridgeHeight; computes bridge height and optional normal via quadratic ramp interpolation (+0x4C != 0) or plane raycast; ra3::sim::getBridgeHeight; oracle 240 cases across 3 FPU CWs
@@ -39,9 +39,9 @@ address	status	owner	module	notes
 00863f00	reversed	recon/terrainlogic	sim	TerrainLogic::alignOnTerrain; resolves layer via getLayerForDestination, queries getLayerHeight (+2.5f bias if layer > 1), and builds Matrix3x4; ra3::sim::alignOnTerrain; oracle 150 cases across 3 FPU CWs
 00864190	reversed	recon/terrainlogic	sim	TerrainLogic::updateCachedWaterGridHeight; writes first water table entry height to *(float*)(this+0x3C); ra3::sim::updateCachedWaterGridHeight; oracle 36 cases; hook terrainupdatewatergrid (explicitOnly)
 008662b0	reversed	recon/terrainlogic	sim	TerrainLogic::getName; returns "TerrainLogic" (0x00C4F820); ra3::sim::getTerrainLogicSubsystemName; oracle 1 case
-00866760	analyzed	recon/terrainlogic	sim	tryPositionAtPolarOffset; computes polar candidate (cos/sin), clips to map extent, and delegates to 0x008678E0
-008678e0	analyzed	recon/terrainlogic	sim	PartitionManager::tryPosition; 2231-byte candidate position validator coupled to PartitionManager/Object/AIPathfind/WaveGuide; deferred
+00866760		recon/terrainlogic	sim	tryPositionAtPolarOffset; computes polar candidate (cos/sin), clips to map extent, and delegates to 0x008678E0
+008678e0		recon/terrainlogic	sim	PartitionManager::tryPosition; 2231-byte candidate position validator coupled to PartitionManager/Object/AIPathfind/WaveGuide; deferred
 008683f0	reversed	recon/terrainlogic	sim	Waypoint::resolveLinks; resolves links[0..7] (+0x20..+0x3C), prevLink (+0x44), and secondaryLink (+0x40) via TheTerrainLogic->findWaypointByID (0x008663B0); ra3::sim::resolveWaypointLinks; oracle 15 cases
 00868470	reversed	recon/terrainlogic	sim	TerrainLogic::adjustNewMapWaypoints; adds getGroundHeight to each waypoint Z in g_waypointListHead (0x00DFC194) and calls 0x00866BB0; ra3::sim::adjustNewMapWaypoints; oracle 15 cases
 008684c0	reversed	recon/terrainlogic	sim	findPositionAround; certain source anchor TerrainLogic.cpp:3158; returns *center if outside pathfind extent, else concentric ring search (dr=5.0f) with GameLogicRandomValueReal (0x005A9550) and ceil (0x00BBA4DC); ra3::sim::findPositionAround; oracle 54 cases across 3 FPU CWs
-008686a0	analyzed	recon/terrainlogic	sim	findPositionAround7; 445-byte 7-arg ring search calling 0x008678E0 and 0x00867430; deferred
+008686a0		recon/terrainlogic	sim	findPositionAround7; 445-byte 7-arg ring search calling 0x008678E0 and 0x00867430; deferred

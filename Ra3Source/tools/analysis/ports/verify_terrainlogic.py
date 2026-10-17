@@ -842,6 +842,19 @@ def verify_executable(executable: Path) -> dict[str, int]:
         assert (res_g.eax & 0xFF) == ours_g
         bump("0x00860A30_getWaypointBiDirectional")
 
+    # The getter returns the stored byte as-is, so non-boolean bytes must survive.
+    for raw_flag in (0x02, 0x80, 0xFF):
+        emu.reset_data()
+        wp_raw = bytearray(rng.randbytes(0x60))
+        wp_raw[0x5C] = raw_flag
+        a_wp = emu.alloc(bytes(wp_raw))
+        res_g = emu.call(0x00860A30, [], ecx=a_wp)
+        assert res_g.stack_cleanup == 0
+        assert emu.read(a_wp, 0x60) == bytes(wp_raw)
+        ours_g = int(cpp.call(f"wpgetbi {bytes(wp_raw).hex()}"))
+        assert (res_g.eax & 0xFF) == ours_g == raw_flag
+        bump("0x00860A30_getWaypointBiDirectional")
+
     # 34, 35, 36, 38. Layer destination queries & alignOnTerrain
     for cw in CONTROL_WORDS:
         cpp.set_cw(cw)

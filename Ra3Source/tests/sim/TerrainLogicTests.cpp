@@ -63,6 +63,18 @@ RA3_TEST(TerrainLogicStructInitializers) {
     RA3_CHECK_EQ(info.bridgeObjectId, 0);
 }
 
+RA3_TEST(TerrainLogicWaypointBiDirectionalAccessors) {
+    using namespace ra3::sim;
+
+    WaypointData waypoint{};
+    setWaypointBiDirectional(waypoint, true);
+    RA3_CHECK_EQ(getWaypointBiDirectional(waypoint), 1U);
+    setWaypointBiDirectional(waypoint, false);
+    RA3_CHECK_EQ(getWaypointBiDirectional(waypoint), 0U);
+    waypoint.biDirectional = 0x80U;
+    RA3_CHECK_EQ(getWaypointBiDirectional(waypoint), 0x80U);
+}
+
 RA3_TEST(TerrainLogicGeometryAndClipping) {
     using namespace ra3::sim;
 

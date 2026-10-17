@@ -47,9 +47,10 @@ using MakeAlignToNormalMatrixFn = void(__cdecl*)(
     ra3::sim::Matrix3x4* mtx);
 using WaypointSetBiDirectionalFn = void(__thiscall*)(
     ra3::sim::WaypointData* self, bool biDirectional);
+using WaypointGetBiDirectionalFn = std::uint8_t(__thiscall*)(
+    const ra3::sim::WaypointData* self);
 using TerrainFirstWaterHeightFn = float(__thiscall*)(const void* self);
 using TerrainUpdateWaterGridHeightFn = void(__thiscall*)(void* self);
-using TerrainSubsystemNameFn = const char*(__thiscall*)(const void* self);
 
 TargetState g_terrainBoundaryVectorState;
 TargetState g_pointInTriangle2DState;
@@ -68,9 +69,9 @@ TargetState g_bridgeIsCellOnSideState;
 TargetState g_bridgeIsCellEntryPointState;
 TargetState g_makeAlignToNormalMatrixState;
 TargetState g_waypointSetBiDirectionalState;
+TargetState g_waypointGetBiDirectionalState;
 TargetState g_terrainFirstWaterHeightState;
 TargetState g_terrainUpdateWaterGridHeightState;
-TargetState g_terrainSubsystemNameState;
 
 void* __fastcall hookedTerrainBoundaryVector(
     void* self, void* /*edx*/, std::int32_t index) noexcept {
@@ -82,7 +83,7 @@ void* __fastcall hookedTerrainBoundaryVector(
     }
     void* const game = reinterpret_cast<BoundaryVectorFn>(state.original)(self, index);
     recordScalar(
-        "terrainboundaryvector", state,
+        "terrainboundaryvec", state,
         static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(game)),
         static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(ours)));
     return game;
@@ -121,7 +122,7 @@ ra3::sim::FindPositionOptions* __fastcall hookedFindPositionOptionsInit(
     ra3::sim::FindPositionOptions ourCopy = *self;
     ra3::sim::initializeFindPositionOptions(ourCopy);
     auto* const gameRet = reinterpret_cast<FindPositionOptionsInitFn>(state.original)(self);
-    recordOutput("findpositionoptionsinit", state, self, &ourCopy, sizeof(ourCopy));
+    recordOutput("findposoptionsinit", state, self, &ourCopy, sizeof(ourCopy));
     return gameRet;
 }
 
@@ -413,7 +414,7 @@ std::uint8_t __fastcall hookedBridgeIsCellOnEnd(
         return ours;
     }
     const auto game = reinterpret_cast<BridgeCellRegionFn>(state.original)(self, cell);
-    recordScalar("bridgeiscellonend", state, game, ours);
+    recordScalar("bridgecellonend", state, game, ours);
     return game;
 }
 
@@ -427,7 +428,7 @@ std::uint8_t __fastcall hookedBridgeIsCellOnSide(
         return ours;
     }
     const auto game = reinterpret_cast<BridgeCellRegionFn>(state.original)(self, cell);
-    recordScalar("bridgeiscellonside", state, game, ours);
+    recordScalar("bridgecellonside", state, game, ours);
     return game;
 }
 
@@ -446,11 +447,11 @@ std::uint8_t __fastcall hookedBridgeIsCellEntryPoint(
     const auto game = reinterpret_cast<BridgeCellEntryPointFn>(state.original)(
         self, cell, outEntryHeight);
     if (game != ours) {
-        recordScalar("bridgeiscellentrypoint", state, game, ours);
+        recordScalar("bridgecellentrypoint", state, game, ours);
     } else if (game != 0U) {
-        recordOutput("bridgeiscellentrypoint", state, outEntryHeight, &ourHeight, sizeof(float));
+        recordOutput("bridgecellentrypoint", state, outEntryHeight, &ourHeight, sizeof(float));
     } else {
-        recordScalar("bridgeiscellentrypoint", state, game, ours);
+        recordScalar("bridgecellentrypoint", state, game, ours);
     }
     return game;
 }
@@ -467,7 +468,7 @@ void __cdecl hookedMakeAlignToNormalMatrix(
     ra3::sim::Matrix3x4 ourMtx = *mtx;
     ra3::sim::makeAlignToNormalMatrix(angle, *pos, *normal, ourMtx);
     reinterpret_cast<MakeAlignToNormalMatrixFn>(state.original)(angle, pos, normal, mtx);
-    recordOutput("makealigntonormalmatrix", state, mtx, &ourMtx, sizeof(ourMtx));
+    recordOutput("aligntonormalmatrix", state, mtx, &ourMtx, sizeof(ourMtx));
 }
 
 void __fastcall hookedWaypointSetBiDirectional(
@@ -481,7 +482,23 @@ void __fastcall hookedWaypointSetBiDirectional(
     ra3::sim::WaypointData ourWp = *self;
     ra3::sim::setWaypointBiDirectional(ourWp, biDirectional);
     reinterpret_cast<WaypointSetBiDirectionalFn>(state.original)(self, biDirectional);
-    recordScalar("waypointsetbidirectional", state, self->biDirectional, ourWp.biDirectional);
+    recordScalar("waypointsetbidir", state, self->biDirectional, ourWp.biDirectional);
+}
+
+// The native body is `mov al, [ecx+5Ch]; ret`: AL is the raw stored byte and the
+// upper EAX bits are caller residue, which no caller can consume.
+std::uint8_t __fastcall hookedWaypointGetBiDirectional(
+    const ra3::sim::WaypointData* self, void* /*edx*/) noexcept {
+    auto& state = g_waypointGetBiDirectionalState;
+    state.calls.fetch_add(1, relaxed);
+    const std::uint8_t ours = ra3::sim::getWaypointBiDirectional(*self);
+    if (state.mode == Mode::replace) {
+        return ours;
+    }
+    const std::uint8_t game =
+        reinterpret_cast<WaypointGetBiDirectionalFn>(state.original)(self);
+    recordScalar("waypointgetbidir", state, game, ours);
+    return game;
 }
 
 #if defined(_MSC_VER) && defined(_M_IX86)
@@ -538,20 +555,7 @@ void __fastcall hookedTerrainUpdateWaterGridHeight(void* self, void* /*edx*/) no
     const float ourVal = *slot;
     *slot = saved;
     reinterpret_cast<TerrainUpdateWaterGridHeightFn>(state.original)(self);
-    recordOutput("terrainupdatewatergridheight", state, slot, &ourVal, sizeof(float));
-}
-
-const char* __fastcall hookedTerrainLogicSubsystemName(
-    const void* self, void* /*edx*/) noexcept {
-    auto& state = g_terrainSubsystemNameState;
-    state.calls.fetch_add(1, relaxed);
-    const char* const ours = ra3::sim::getTerrainLogicSubsystemName(self);
-    if (state.mode == Mode::replace) {
-        return ours;
-    }
-    const char* const game = reinterpret_cast<TerrainSubsystemNameFn>(state.original)(self);
-    recordOutput("terrainlogicsubsystemname", state, game, ours, 13);
-    return game;
+    recordOutput("terrainupdatewatergrid", state, slot, &ourVal, sizeof(float));
 }
 
 }  // namespace
@@ -559,7 +563,7 @@ const char* __fastcall hookedTerrainLogicSubsystemName(
 void appendTerrainLogicTargets(std::vector<Target>& table) {
     table.insert(table.end(), {
         {
-            "terrainboundaryvector",
+            "terrainboundaryvec",
             0x0045C5E0U,
             {0x8B, 0x44, 0x24, 0x04, 0x8D, 0x44, 0xC1, 0x50,
              0xC2, 0x04, 0x00, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC},
@@ -579,14 +583,14 @@ void appendTerrainLogicTargets(std::vector<Target>& table) {
             false,
         },
         {
-            "findpositionoptionsinit",
+            "findposoptionsinit",
             0x0045D7E0U,
             {0x0F, 0x57, 0xC0, 0x8B, 0xC1, 0x33, 0xC9, 0x89,
              0x08, 0x89, 0x48, 0x04, 0x89, 0x48, 0x08, 0x89},
             5U,
             reinterpret_cast<void*>(&hookedFindPositionOptionsInit),
             &g_findPositionOptionsInitState,
-            false,
+            true,
         },
         {
             "bridgeinfoinit",
@@ -596,7 +600,7 @@ void appendTerrainLogicTargets(std::vector<Target>& table) {
             5U,
             reinterpret_cast<void*>(&hookedBridgeInfoInit),
             &g_bridgeInfoInitState,
-            false,
+            true,
         },
         {
             "terrainhasboundaries",
@@ -666,7 +670,7 @@ void appendTerrainLogicTargets(std::vector<Target>& table) {
             7U,
             reinterpret_cast<void*>(&hookedPlaneSetFromPoints),
             &g_planeSetFromPointsState,
-            false,
+            true,
         },
         {
             "bridgeprojectalongspan",
@@ -679,7 +683,7 @@ void appendTerrainLogicTargets(std::vector<Target>& table) {
             true,
         },
         {
-            "bridgeiscellonend",
+            "bridgecellonend",
             0x0045FAD0U,
             {0x83, 0xEC, 0x48, 0xF3, 0x0F, 0x10, 0x49, 0x14,
              0xD9, 0xE8, 0xF3, 0x0F, 0x10, 0x51, 0x18, 0xF3},
@@ -689,7 +693,7 @@ void appendTerrainLogicTargets(std::vector<Target>& table) {
             true,
         },
         {
-            "bridgeiscellonside",
+            "bridgecellonside",
             0x0045FD60U,
             {0x83, 0xEC, 0x4C, 0xF3, 0x0F, 0x10, 0x59, 0x10,
              0xF3, 0x0F, 0x5C, 0x59, 0x04, 0xF3, 0x0F, 0x10},
@@ -699,7 +703,7 @@ void appendTerrainLogicTargets(std::vector<Target>& table) {
             true,
         },
         {
-            "bridgeiscellentrypoint",
+            "bridgecellentrypoint",
             0x00460020U,
             {0x83, 0xEC, 0x44, 0xF3, 0x0F, 0x10, 0x41, 0x14,
              0xD9, 0xE8, 0xF3, 0x0F, 0x5C, 0x41, 0x08, 0xF3},
@@ -709,7 +713,7 @@ void appendTerrainLogicTargets(std::vector<Target>& table) {
             true,
         },
         {
-            "makealigntonormalmatrix",
+            "aligntonormalmatrix",
             0x004603B0U,
             {0x83, 0xEC, 0x24, 0xD9, 0x44, 0x24, 0x28, 0x8B,
              0x44, 0x24, 0x30, 0xD9, 0xC0, 0x8B, 0x08, 0xD9},
@@ -719,13 +723,23 @@ void appendTerrainLogicTargets(std::vector<Target>& table) {
             false,
         },
         {
-            "waypointsetbidirectional",
+            "waypointsetbidir",
             0x00460A20U,
             {0x8A, 0x44, 0x24, 0x04, 0x88, 0x41, 0x5C, 0xC2,
              0x04, 0x00, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC},
             7U,
             reinterpret_cast<void*>(&hookedWaypointSetBiDirectional),
             &g_waypointSetBiDirectionalState,
+            true,
+        },
+        {
+            "waypointgetbidir",
+            0x00460A30U,
+            {0x8A, 0x41, 0x5C, 0xC3, 0xCC, 0xCC, 0xCC, 0xCC,
+             0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC},
+            5U,
+            reinterpret_cast<void*>(&hookedWaypointGetBiDirectional),
+            &g_waypointGetBiDirectionalState,
             true,
         },
         {
@@ -739,7 +753,7 @@ void appendTerrainLogicTargets(std::vector<Target>& table) {
             true,
         },
         {
-            "terrainupdatewatergridheight",
+            "terrainupdatewatergrid",
             0x00464190U,
             {0x8B, 0x41, 0x30, 0x8B, 0x50, 0x1C, 0x2B, 0x50,
              0x18, 0xC1, 0xFA, 0x03, 0x3B, 0xC0, 0x75, 0x04},
@@ -747,16 +761,6 @@ void appendTerrainLogicTargets(std::vector<Target>& table) {
             reinterpret_cast<void*>(&hookedTerrainUpdateWaterGridHeight),
             &g_terrainUpdateWaterGridHeightState,
             true,
-        },
-        {
-            "terrainlogicsubsystemname",
-            0x004662B0U,
-            {0xB8, 0x20, 0xF8, 0xC4, 0x00, 0xC3, 0xCC, 0xCC,
-             0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC},
-            5U,
-            reinterpret_cast<void*>(&hookedTerrainLogicSubsystemName),
-            &g_terrainSubsystemNameState,
-            false,
         },
     });
 }

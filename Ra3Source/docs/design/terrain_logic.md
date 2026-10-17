@@ -112,13 +112,13 @@ Verified from `0x0085D7E0` and `0x008684C0`:
 
 ---
 
-## 3. Accepted Reconstructed Functions (30 Functions)
+## 3. Accepted Reconstructed Functions (43 Functions)
 
-All 30 functions have closed control flow in `ra3_1.0.game` and pass differential verification against Unicorn execution of the shipped binary across Debug and Release builds.
+All 43 functions have closed control flow in `ra3_1.0.game` and pass differential verification against Unicorn execution of the shipped binary.
 
 | # | Address | Size | ABI / Cleanup | Reconstructed Symbol | Summary |
 |---|---|---|---|---|---|
-| 1 | `0x0085C5E0` | 12 | `__thiscall` (`ret 4`) | `ra3::sim::getTerrainBoundaryVector` | Returns `reinterpret_cast<uint8_t*>(this) + index * 16 + 0x60` |
+| 1 | `0x0085C5E0` | 12 | `__thiscall` (`ret 4`) | `ra3::sim::getTerrainBoundaryVector` | Returns `reinterpret_cast<uint8_t*>(this) + index * 8 + 0x50` |
 | 2 | `0x0085C650` | 29 | `__thiscall` (`ret 4`) | `ra3::sim::setTerrainActiveBoundary` | If `newBoundary != this->activeBoundary (+0x88)`, stores it and tail-jumps to `vtable[+0x28]` |
 | 3 | `0x0085CA80` | 28 | `__thiscall` (`ret 8`, `ST0`) | `ra3::sim::getOriginGroundHeight` | Calls `this->vtable[+0x18](0.0f, 0.0f, normal)` |
 | 4 | `0x0085CC70` | 45 | `__thiscall` (`ret 4`, `ST0`) | `ra3::sim::getWaterHeightFromHandle` (`Extended`) | If `handle == nullptr` returns `0.0f`, else dispatches through vbtable at `handle+0x1C` (`vtable[+0x08]`) and `fild`s the returned `int32_t` |
@@ -147,7 +147,7 @@ All 30 functions have closed control flow in `ra3_1.0.game` and pass differentia
 | 27 | `0x00860630` | 48 | `__thiscall` (`ret 4`) | `ra3::sim::findBridgeAt` | Walks `this->bridgeListHead (+0x68)` and returns first `BridgeData*` where `isPointOnBridge(loc)` is true |
 | 28 | `0x00860660` | 79 | `__thiscall` (`ret 0x0C`) | `ra3::sim::findBridgeLayerAt` | Walks `this->bridgeListHead (+0x68)` for matching `layer` and tests `isPointOnIntactBridge` (if `clip`) or `isPointOnBridge` |
 | 29 | `0x00860A20` | 8 | `__thiscall` (`ret 4`) | `ra3::sim::setWaypointBiDirectional` | Stores `biDirectional` at `waypoint + 0x5C` |
-| 30 | `0x00860A30` | 5 | `__thiscall` (`ret`) | `ra3::sim::getWaypointBiDirectional` | Reads `biDirectional` from `waypoint + 0x5C` |
+| 30 | `0x00860A30` | 5 | `__thiscall` (`ret`) | `ra3::sim::getWaypointBiDirectional` | Returns the raw `biDirectional` byte at `waypoint + 0x5C` in AL (not normalized; upper EAX is caller residue) |
 | 31 | `0x00861450` | 89 | `__thiscall` (`ret 4`) | `ra3::sim::isPointOnIntactBridge` | Tests `isPointOnBridge(loc)` and verifies `projectPointAlongBridgeSpan(loc)` is outside all `[lo, hi]` intervals in `spanBegin..spanEnd` |
 | 32 | `0x008614B0` | 449 | `__thiscall` (`ret 0x0C`) | `ra3::sim::pickBridge` | Intersects segment `from -> to` with bridge `Plane3D` and checks `isPointOnIntactBridge` |
 | 33 | `0x00861680` | 971 | `__thiscall` (`ret 8`, `ST0`) | `ra3::sim::getBridgeHeight` (`Extended`) | Computes bridge height and optional normal via either quadratic ramp interpolation (`bridgePolygon != nullptr`) or plane intersection (`dz = 1000.0f`) |
@@ -162,7 +162,7 @@ All 30 functions have closed control flow in `ra3_1.0.game` and pass differentia
 | 42 | `0x00868470` | 68 | `__thiscall` (`ret 4`) | `ra3::sim::adjustNewMapWaypoints` | Adds `this->getGroundHeight(wp->x, wp->y, nullptr)` to every waypoint's `z` and calls `0x00866BB0` |
 | 43 | `0x008684C0` | 480 | `__cdecl` (`ret`) | `ra3::sim::findPositionAround` | Certain source anchor (`TerrainLogic.cpp:3158`): returns `*center` if outside pathfind extent, else searches concentric rings (`dr = 5.0f`) around random/fixed start angle via `0x00866760` |
 
-*(Note: The 30 accepted functions are the 30 pure/closed-evidence functions in `Ra3Source/src/sim/include/ra3/sim/TerrainLogic.h` plus the 13 coupled bridge/layer/waypoint/search helpers also exposed in `TerrainLogic.h` and verified in the same differential oracle—43 total functions verified in `verify_terrainlogic.py`, of which the core 30 self-contained functions and 13 callback-parameterized helpers are all in `ra3::sim`.)*
+*(Note: the 43 entries are 30 self-contained functions plus 13 callback-parameterized bridge/layer/waypoint/search helpers; all are declared in `Ra3Source/src/sim/include/ra3/sim/TerrainLogic.h` and exercised by `verify_terrainlogic.py`.)*
 
 ---
 
@@ -172,28 +172,32 @@ Registered in `Ra3Source/src/hook/dll/targets/TerrainLogicTargets.cpp` (`appendT
 
 | Hook Name | Address | Stolen | `expected16` | ABI / Return | `explicitOnly` | Notes |
 |---|---|---|---|---|---|---|
-| `terrainboundaryvec` | `0x0085C5E0` | 8 | `8B442404C1E0048D440860C20400CC8B` | `__fastcall(this, edx, idx) -> void*` | `true` | Pointer arithmetic on `this` |
-| `pointintriangle2d` | `0x0085D110` | 6 | `8B44241483EC1083F801538B5C241855` | `__cdecl` (`bool`, 1-byte `*inOutFlags`) | `false` | Pure 2D geometry |
-| `findposoptionsinit` | `0x0085D7E0` | 5 | `33C089410489410889410C8941108941` | `__fastcall(this, edx) -> FindPositionOptions*` | `true` | Mutates `0x44`-byte struct |
-| `bridgeinfoinit` | `0x0085D840` | 8 | `0F57C033D2F30F1101F30F114104F30F` | `__fastcall(this, edx) -> BridgeInfo*` | `true` | Mutates `0x34`-byte struct |
-| `terrainhasboundaries` | `0x0085DA00` | 6 | `8B415033D23B41540F95C28AC2C3CCCC` | `__fastcall(this, edx) -> bool` | `true` | State accessor |
-| `terrainboundary2d` | `0x0085DA10` | 6 | `8B41508B51542BD08B442404C1FA033B` | `__fastcall(this, edx, idx, outX, outY) -> bool` | `true` | Compares `*outX`/`*outY` only when `true` |
-| `lineinregion2d` | `0x0085DA50` | 8 | `8B4C240C8B542404F30F100233C00F2F` | `__cdecl` (`bool`) | `false` | Pure 2D segment-box clip |
-| `terraingroundheightbase` | `0x0085DDF0` | 6 | `8B44240CD9EE85C074130F57C0F30F11` | `__fastcall` + naked x87 `tbyte` wrapper | `true` | Preserves 80-bit `ST0` + optional `Coord3D*` |
-| `terrainlayerheightbase` | `0x0085DE60` | 6 | `8B442410D9EE85C074130F57C0F30F11` | `__fastcall` + naked x87 `tbyte` wrapper | `true` | Preserves 80-bit `ST0` + optional `Coord3D*` |
-| `terrainboundaryregion` | `0x0085E7F0` | 7 | `8B41548B4C2408C1E10403C1F30F2A00` | `__fastcall(this, edx, outRegion, idx)` | `true` | Writes 16-byte `Region2D` |
+| `terrainboundaryvec` | `0x0085C5E0` | 8 | `8B4424048D44C150C20400CCCCCCCCCC` | `__fastcall(this, edx, idx) -> void*` | `true` | Pointer arithmetic on `this` |
+| `pointintriangle2d` | `0x0085D110` | 7 | `83EC248B54243C8B4C2438538B5C2430` | `__cdecl` (`bool`, 1-byte `*inOutFlags`) | `false` | Pure 2D geometry |
+| `findposoptionsinit` | `0x0085D7E0` | 5 | `0F57C08BC133C9890889480489480889` | `__fastcall(this, edx) -> FindPositionOptions*` | `true` | Mutates `0x44`-byte struct |
+| `bridgeinfoinit` | `0x0085D840` | 5 | `0F57C08BC1F30F1100F30F114004F30F` | `__fastcall(this, edx) -> BridgeInfo*` | `true` | Mutates `0x34`-byte struct |
+| `terrainhasboundaries` | `0x0085DA00` | 5 | `8B415033D23B41540F95C28AC2C3CCCC` | `__fastcall(this, edx) -> bool` | `true` | State accessor |
+| `terrainboundary2d` | `0x0085DA10` | 6 | `8B51542B51508B442404C1FA033BC272` | `__fastcall(this, edx, idx, outX, outY) -> bool` | `true` | Compares `*outX`/`*outY` only when `true` |
+| `lineinregion2d` | `0x0085DA50` | 7 | `83EC088B442414F30F1030F30F107808` | `__cdecl` (`bool`) | `false` | Pure 2D segment-box clip |
+| `terraingroundheightbase` | `0x0085DDF0` | 6 | `8B44240CD9EE85C074110F57C0F30F11` | `__fastcall` + naked x87 `tbyte` wrapper | `true` | Preserves 80-bit `ST0` + optional `Coord3D*` |
+| `terrainlayerheightbase` | `0x0085DE60` | 6 | `8B442410D9EE85C074110F57C0F30F11` | `__fastcall` + naked x87 `tbyte` wrapper | `true` | Preserves 80-bit `ST0` + optional `Coord3D*` |
+| `terrainboundaryregion` | `0x0085E7F0` | 12 | `8B442408F30F10058495BD00C1E00403` | `__fastcall(this, edx, outRegion, idx)` | `true` | Writes 16-byte `Region2D` |
 | `planesetfrompoints` | `0x0085EC40` | 7 | `83EC0C8B442418F30F1020F30F106804` | `__fastcall(this, edx, v1, v2, v3)` | `true` | Writes 16-byte `Plane3D` |
 | `bridgeprojectalongspan` | `0x0085FA50` | 8 | `83EC0CF30F10411CF30F5C4104F30F10` | `__fastcall` + naked x87 `tbyte` wrapper | `true` | Preserves 80-bit `ST0` |
-| `bridgecellonend` | `0x0085FAD0` | 8 | `83EC48F30F104128D9E8F30F5C4110F3` | `__fastcall(this, edx, cell) -> bool` | `true` | Bridge cell geometry |
+| `bridgecellonend` | `0x0085FAD0` | 8 | `83EC48F30F104914D9E8F30F105118F3` | `__fastcall(this, edx, cell) -> bool` | `true` | Bridge cell geometry |
 | `bridgecellonside` | `0x0085FD60` | 8 | `83EC4CF30F105910F30F5C5904F30F10` | `__fastcall(this, edx, cell) -> bool` | `true` | Bridge cell geometry |
 | `bridgecellentrypoint` | `0x00860020` | 8 | `83EC44F30F104114D9E8F30F5C4108F3` | `__fastcall(this, edx, cell, outH) -> bool` | `true` | Compares `*outH` only when `true` |
 | `aligntonormalmatrix` | `0x008603B0` | 7 | `83EC24D94424288B442430D9C08B08D9` | `__cdecl` (`Matrix3x4` output) | `false` | Pure 3D basis construction |
-| `waypointsetbidir` | `0x00860A20` | 5 | `8A44240488415CC20400CCCCCCCCCCCC` | `__fastcall(this, edx, bi)` | `true` | Mutates `waypoint + 0x5C` |
-| `waypointgetbidir` | `0x00860A30` | 5 | `8A415CC3CCCCCCCCCCCCCCCCCCCCCCCC` | `__fastcall(this, edx) -> bool` | `true` | Accesses `waypoint + 0x5C` |
+| `waypointsetbidir` | `0x00860A20` | 7 | `8A44240488415CC20400CCCCCCCCCCCC` | `__fastcall(this, edx, bi)` | `true` | Mutates `waypoint + 0x5C` |
+| `waypointgetbidir` | `0x00860A30` | 5 | `8A415CC3CCCCCCCCCCCCCCCCCCCCCCCC` | `__fastcall(this, edx) -> std::uint8_t` (raw byte in AL) | `true` | Reads `waypoint + 0x5C`; stolen prefix is `mov al,[ecx+5Ch]; ret; int3`, same shape as main's `audioeventshouldfade` |
 | `terrainfirstwaterheight` | `0x008627F0` | 6 | `8B49308B411C2B4118C1F8033BC97504` | `__fastcall` + naked x87 `tbyte` wrapper | `true` | Preserves 80-bit `ST0` |
 | `terrainupdatewatergrid` | `0x00864190` | 6 | `8B41308B501C2B5018C1FA033BC07504` | `__fastcall(this, edx)` | `true` | Mutates `*(float*)(this + 0x3C)` |
 
-Functions that invoke virtual methods on `TheTerrainLogic` (`0x0085CA80`, `0x0085DFA0`, `0x0085E0B0`, `0x0085E3A0`, `0x0085E840`, `0x008602F0`, `0x00861CB0`, `0x00861E30`, `0x00861F40`, `0x00863F00`), call `PolygonTrigger::pointInTrigger` (`0x0085D890`, `0x00860630`, `0x00860660`, `0x00861450`, `0x008614B0`, `0x00861680`), mutate waypoint/global state (`0x0085C650`, `0x0085DD30`, `0x008683F0`, `0x00868470`), or advance `g_logicRandom` (`0x008684C0`) are intentionally not hooked to avoid double-execution or global side effects in shadow mode. `0x008662B0` is only 6 bytes (`mov eax, 0x00C4F820; ret`) followed by `int3` padding without room for a safe non-overlapping trampoline and is therefore not hooked.
+17 targets are `explicitOnly=true`; only the three pure geometry functions
+(`pointintriangle2d`, `lineinregion2d`, `aligntonormalmatrix`) follow the
+configuration's default mode.
+
+Functions that invoke virtual methods on `TheTerrainLogic` (`0x0085CA80`, `0x0085DFA0`, `0x0085E0B0`, `0x0085E3A0`, `0x0085E840`, `0x008602F0`, `0x00861CB0`, `0x00861E30`, `0x00861F40`, `0x00863F00`), call `PolygonTrigger::pointInTrigger` (`0x0085D890`, `0x00860630`, `0x00860660`, `0x00861450`, `0x008614B0`, `0x00861680`), mutate waypoint/global state (`0x0085C650`, `0x0085DD30`, `0x008683F0`, `0x00868470`), or advance `g_logicRandom` (`0x008684C0`) are intentionally not hooked to avoid double-execution or global side effects in shadow mode. `0x008662B0` (`mov eax, 0x00C4F820; ret`) only returns the constant subsystem-name literal; it is reconstructed and oracle-checked but deliberately not hooked.
 
 ---
 
@@ -218,6 +222,7 @@ Functions that invoke virtual methods on `TheTerrainLogic` (`0x0085CA80`, `0x008
 - **Unit & Integration Tests (`ctest -C Debug` / `ctest -C Release`)**: `3/3` pass (`unit`, `game_data`, `hook_integration`) in both configurations.
 - **Differential Oracle (`Ra3Source/tools/analysis/ports/verify_terrainlogic.py`)**:
   - Executes all 43 functions (the 30 self-contained functions + 13 callback-parameterized `TerrainLogic`/`Bridge`/`Waypoint` functions) in `ra3_1.0.game` via Unicorn against `ra3_terrainlogiccheck.exe` (`Debug` and `Release`).
-  - **2,865 scenarios per configuration** (5,730 total across Debug and Release) covering normal, boundary, colinear, degenerate zero-length, `NaN`, and pseudo-random inputs across x87 FPU control words `0x007F` (24-bit), `0x027F` (53-bit), and `0x037F` (64-bit).
-  - **0 mismatches** in both Debug and Release.
-  - **Deliberate mutation proof**: Injects a deliberate +4 byte offset mutation (`mutate 1`), verifies that the differential oracle detects the mismatch against Unicorn, restores (`mutate 0`), and confirms parity is restored.
+  - **2,868 scenarios** in Release (the initial delivery ran 2,865 in both Debug and Release; the follow-up added three non-boolean `waypointgetbidir` bytes) covering normal, boundary, colinear, degenerate zero-length, `NaN`, and pseudo-random inputs across x87 FPU control words `0x007F` (24-bit), `0x027F` (53-bit), and `0x037F` (64-bit).
+  - **0 mismatches**.
+  - **Harness check**: `mutate 1` offsets the `terrainboundaryvec` result by 4 and the oracle must report it; `mutate 0` restores parity.
+  - **Semantic mutation**: temporarily setting `kSideOffset` to `10.0f` makes the oracle fail in the `isCellOnBridgeSide` comparison; restoring the shipped `10.2f` (`0x41233333`) returns to zero mismatches.

@@ -878,8 +878,8 @@ void setWaypointBiDirectional(WaypointData& waypoint, bool biDirectional) noexce
 }
 
 // ra3_1.0.game 0x00860A30
-bool getWaypointBiDirectional(const WaypointData& waypoint) noexcept {
-    return waypoint.biDirectional != 0U;
+std::uint8_t getWaypointBiDirectional(const WaypointData& waypoint) noexcept {
+    return waypoint.biDirectional;
 }
 
 // ra3_1.0.game 0x0085DD30
