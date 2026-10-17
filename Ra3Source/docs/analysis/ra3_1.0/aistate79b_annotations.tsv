@@ -1,0 +1,62 @@
+address	status	owner	module	notes
+00797b80	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIAimForceFireAtObjectOnEnter; 00c2e280 slot 4; slot 2 returns UnitAIAimForceFireAtObjectState
+00797c00	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIAimForceFireAtObjectOnExit; 00c2e280 slot 6; slot 2 returns UnitAIAimForceFireAtObjectState
+00797660	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::saAIPackOnEnter; 00c2a598 slot 4; slot 2 returns SA_AIPackState
+00797760	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::saAITriggerOnEnter; 00c2a658 slot 4; slot 2 returns SA_AITriggerState
+007977c0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::saAIUnpackOnEnter; 00c2a6b8 slot 4; slot 2 returns SA_AIUnpackState
+00797fa0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIEndPathMoveOnEnter; 00c2ae60 slot 4; slot 2 returns UnitAIEndPathMoveState
+00798310	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIHordeForceMembersToExitGoalOnEnter; 00c2b3c0 slot 4; slot 2 returns UnitAIHordeForceMembersToExitGoalState
+00798560	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIResetEnterOnEnter; 00c2b6a0 slot 4; slot 2 returns UnitAIResetEnterState
+00798f80	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiGuardRetaliateMachineXfer; 00c2bd98 slot 3; slot 2 returns AIGuardRetaliateMachine
+00799a20	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiMoveToStateSASlot19; 00c2f3e8 slot 19; slot 2 returns AIMoveToStateSA
+00799c30	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiCowerOnExit; 00c2c708 slot 6; slot 2 returns AICowerState
+0079a310	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiWaitUntilFinishedFiringUpdate; 00c2cb88 slot 5; slot 2 returns AIWaitUntilFinishedFiringState
+0079a520	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiAttackSquadXfer; 00c2cd88 slot 3; slot 2 returns AIAttackSquadState
+0079a620	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiDockOnExit; 00c2cde8 slot 6; slot 2 returns AIDockState
+0079a680	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiDockUpdate; 00c2cde8 slot 5; slot 2 returns AIDockState
+0079a780	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIHordeEnterGoalUpdate; 00c2b358 slot 5; slot 2 returns UnitAIHordeEnterGoalState
+0079a800	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiHordeExitOnEnter; 00c2cf00 slot 4; slot 2 returns AIHordeExitState
+0079a870	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiHordeExitUpdate; 00c2cf00 slot 5; slot 2 returns AIHordeExitState
+0079a9b0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiHordeExitOnExit; 00c2cf00 slot 6; slot 2 returns AIHordeExitState
+0079aac0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiExitOnEnter; 00c2cf60 slot 4; slot 2 returns AIExitState
+0079ab10	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiExitUpdate; 00c2cf60 slot 5; slot 2 returns AIExitState
+0079ac50	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiGuardXfer; 00c2d030 slot 3; slot 2 returns AIGuardState
+0079ad70	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiGuardUpdate; 00c2d030 slot 5; slot 2 returns AIGuardState
+0079adf0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiGuardAreaXfer; 00c2d0a8 slot 3; slot 2 returns AIGuardAreaState
+0079af50	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiGuardObjectXfer; 00c2d108 slot 3; slot 2 returns AIGuardObjectState
+0079afd0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiGuardObjectOnEnter; 00c2d108 slot 4; slot 2 returns AIGuardObjectState
+0079b130	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiAttackAreaXfer; 00c2d298 slot 3; slot 2 returns AIAttackAreaState
+0079b720	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::aiPickUpCrateOnEnter; 00c30160 slot 4; slot 2 returns AIPickUpCrateState
+0079c820	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIHeliEvacuateXfer; 00c2d9a8 slot 3; slot 2 returns UnitAIHeliEvacuateState
+0079cda0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIReturnForLandingOnExit; 00c2de50 slot 6; slot 2 returns UnitAIReturnForLandingState
+0079cfd0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIDeliverOreOnExit; 00c2df98 slot 6; slot 2 returns UnitAIDeliverOreState
+0079d2a0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIDockWithNodeOnExit; 00c2e000 slot 6; slot 2 returns UnitAIDockWithNodeState
+0079d930	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::saAIPrepareOnEnter; 00c2a5f8 slot 4; slot 2 returns SA_AIPrepareState
+0079d9b0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::saAIValidateApproachTargetOnEnter; 00c2a718 slot 4; slot 2 returns SA_AIValidateApproachTargetState
+0079deb0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIAttackObjectXfer; 00c2e368 slot 3; slot 2 returns UnitAIAttackObjectState
+0079e190	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAICombinedUnitOnEnter; 00c2e508 slot 4; slot 2 returns UnitAICombinedUnitState
+0079e960	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIDoSpecialPowerOnEnter; 00c2e6b0 slot 4; slot 2 returns UnitAIDoSpecialPowerState
+0079e9c0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIEndWaypointPathMoveOnEnter; 00c2aec8 slot 4; slot 2 returns UnitAIEndWaypointPathMoveState
+0079eba0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIEnterGoalOnExit; 00c2e718 slot 6; slot 2 returns UnitAIEnterGoalState
+0079ec10	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIExitGoalOnExit; 00c2e780 slot 6; slot 2 returns UnitAIExitGoalState
+0079eef0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::followWaypointPathMachineXfer; 00c29a48 slot 3; slot 2 returns FollowWaypointPathStateMachine
+0079f030	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIFollowWaypointPathOnEnter; 00c2e850 slot 4; slot 2 returns UnitAIFollowWaypointPathState
+0079f150	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIFollowWaypointPathExactOnEnter; 00c2e940 slot 4; slot 2 returns UnitAIFollowWaypointPathExactState
+0079f290	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIForceAttackObjectOnExit; 00c2e9b8 slot 6; slot 2 returns UnitAIForceAttackObjectState
+0079f610	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIHordeEnterGoalOnEnter; 00c2b358 slot 4; slot 2 returns UnitAIHordeEnterGoalState
+0079f6f0	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIHordeEnterGoalOnExit; 00c2b358 slot 6; slot 2 returns UnitAIHordeEnterGoalState
+0079fc40	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIMoveOnPathXfer; 00c2ed20 slot 3; slot 2 returns UnitAIMoveOnPathState
+0079ff10	reversed	recon/aistate79b	gamelogic	ra3::gamelogic::unitAIMoveToGoalOnExit; 00c2ef40 slot 6; slot 2 returns UnitAIMoveToGoalState
+00797ed0		recon/aistate79b	gamelogic	rejected: UnitAIDisguiseState slot 6 caches SpecialDisguiseUpdate then jmp 00729d50, which indirect-jumps through [0x018ed5a4]
+00797f70		recon/aistate79b	gamelogic	rejected: UnitAIDoSpecialPowerState slot 6 is mov eax,[ecx+0x20]; mov ecx,[ecx+0x18]; mov ecx,[ecx+0x24]; mov [esp+4],eax; jmp 006d25a0
+00799020		recon/aistate79b	gamelogic	rejected: AIGuardRetaliateAttackAggressorState slot 6 calls 00687c90 once with no argument and again with one
+00799b70		recon/aistate79b	gamelogic	rejected: AICowerState onEnter uses x87 (dump fp=2); the integer oracle does not carry ST0
+0079b790		recon/aistate79b	gamelogic	rejected: AITNGuardAttackAggressorState slot 6 calls 00687c90 once with no argument and again with one
+00798230		recon/aistate79b	gamelogic	rejected: UnitAIGetMoveAwayFromPathState onEnter flds 00be700c into 005ac4f0
+0079acd0		recon/aistate79b	gamelogic	rejected: AIGuardState onEnter uses x87 (dump fp=2)
+0079cbc0		recon/aistate79b	gamelogic	rejected: UnitAILandState slot 19 uses x87 (dump fp=2)
+0079cd20		recon/aistate79b	gamelogic	rejected: UnitAIRequestClearanceState onEnter uses x87 (dump fp=2)
+0079ec70		recon/aistate79b	gamelogic	rejected: UnitAIFindCoverState onEnter uses x87 (dump fp=2)
+0079ee50		recon/aistate79b	gamelogic	rejected: UnitAIFollowPathState onExit uses fldz
+0079f1c0		recon/aistate79b	gamelogic	rejected: UnitAIFollowWaypointPathExactState onExit uses x87 (dump fp=2)
+0079f8e0		recon/aistate79b	gamelogic	rejected: UnitAIHordeMoveToGoalAndEnterState onEnter uses x87 (dump fp=2)

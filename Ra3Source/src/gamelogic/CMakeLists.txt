@@ -22,6 +22,7 @@ ra3_add_module(gamelogic
         include/ra3/gamelogic/SkirmishAI8B.h
         src/AIState7A.cpp
         include/ra3/gamelogic/AIState7B.h
+        include/ra3/gamelogic/AIState79B.h
         src/AIStateMachine7C.cpp
         src/AITNGuardViews.cpp
         src/AIStateViews.cpp
@@ -44,6 +45,7 @@ ra3_add_module(gamelogic
         include/ra3/gamelogic/ObjectUpdates78.h
         src/ObjectUpdates78.cpp
         src/AIState7B.cpp
+        src/AIState79B.cpp
     PUBLIC_DEPS
         Ra3::sim
         Ra3::common)
