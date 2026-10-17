@@ -70,6 +70,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/aistatecheck)
     add_subdirectory(tools/weaponlogiccheck)
     add_subdirectory(tools/thingtemplatecheck)
+    add_subdirectory(tools/relodetokcheck)
 endif()
 
 if(RA3_BUILD_TESTS)
