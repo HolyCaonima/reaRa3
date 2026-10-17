@@ -168,8 +168,6 @@ void* resolveStateOwner(void* statePtr) noexcept
 
 std::uint32_t __fastcall moveOutOfTheWayOnEnter_007C0BD0(void* statePtr, void*)
 {
-    constexpr const char* kKey =
-        "gamelogic.aistatemachine7c.move_out_of_the_way_on_enter_007c0bd0";
     TargetState& state = g_moveOutOfTheWayOnEnter;
     state.calls.fetch_add(1, kRelaxed);
 
@@ -190,15 +188,17 @@ std::uint32_t __fastcall moveOutOfTheWayOnEnter_007C0BD0(void* statePtr, void*)
     const std::uint32_t game =
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
-    recordOutput(kKey, state, gameBytes + 0x20, copy.data() + 0x20, 12);
-    recordOutput(kKey, state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_out_of_the_way_on_enter_007c0bd0",
+        state, gameBytes + 0x20, copy.data() + 0x20, 12);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_out_of_the_way_on_enter_007c0bd0",
+        state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
     return game;
 }
 
 std::uint32_t __fastcall moveAndTightenOnEnter_007C0C80(void* statePtr, void*)
 {
-    constexpr const char* kKey =
-        "gamelogic.aistatemachine7c.move_and_tighten_on_enter_007c0c80";
     TargetState& state = g_moveAndTightenOnEnter;
     state.calls.fetch_add(1, kRelaxed);
 
@@ -237,19 +237,23 @@ std::uint32_t __fastcall moveAndTightenOnEnter_007C0C80(void* statePtr, void*)
     const std::uint32_t game =
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
-    recordOutput(kKey, state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_and_tighten_on_enter_007c0c80",
+        state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
     if (targetSubObj != 0) {
-        recordOutput(kKey, state, gameBytes + 0x20, copy.data() + 0x20, 12);
+        recordOutput(
+            "gamelogic.aistatemachine7c.move_and_tighten_on_enter_007c0c80",
+            state, gameBytes + 0x20, copy.data() + 0x20, 12);
     } else {
-        recordScalar(kKey, state, game, ours);
+        recordScalar(
+            "gamelogic.aistatemachine7c.move_and_tighten_on_enter_007c0c80",
+            state, game, ours);
     }
     return game;
 }
 
 std::uint32_t __fastcall moveAwayFromRepulsorsOnEnter_007C0D00(void* statePtr, void*)
 {
-    constexpr const char* kKey =
-        "gamelogic.aistatemachine7c.move_away_from_repulsors_on_enter_007c0d00";
     TargetState& state = g_moveAwayFromRepulsorsOnEnter;
     state.calls.fetch_add(1, kRelaxed);
 
@@ -269,16 +273,20 @@ std::uint32_t __fastcall moveAwayFromRepulsorsOnEnter_007C0D00(void* statePtr, v
     const std::uint32_t game =
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
-    recordOutput(kKey, state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
-    recordOutput(kKey, state, gameBytes + 0x50, copy.data() + 0x50, 4);
-    recordOutput(kKey, state, gameBytes + 0x54, copy.data() + 0x54, 1);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_away_from_repulsors_on_enter_007c0d00",
+        state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_away_from_repulsors_on_enter_007c0d00",
+        state, gameBytes + 0x50, copy.data() + 0x50, 4);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_away_from_repulsors_on_enter_007c0d00",
+        state, gameBytes + 0x54, copy.data() + 0x54, 1);
     return game;
 }
 
 std::uint32_t __fastcall attackApproachTargetOnEnter_007C0D70(void* statePtr, void*)
 {
-    constexpr const char* kKey =
-        "gamelogic.aistatemachine7c.attack_approach_target_on_enter_007c0d70";
     TargetState& state = g_attackApproachTargetOnEnter;
     state.calls.fetch_add(1, kRelaxed);
 
@@ -298,20 +306,26 @@ std::uint32_t __fastcall attackApproachTargetOnEnter_007C0D70(void* statePtr, vo
     const std::uint32_t game =
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
-    recordOutput(kKey, state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
+    recordOutput(
+        "gamelogic.aistatemachine7c.attack_approach_target_on_enter_007c0d70",
+        state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
     if (ours != 0xFFFFFFFEu) {
-        recordOutput(kKey, state, gameBytes + 0x50, copy.data() + 0x50, 4);
-        recordOutput(kKey, state, gameBytes + 0x54, copy.data() + 0x54, 1);
+        recordOutput(
+            "gamelogic.aistatemachine7c.attack_approach_target_on_enter_007c0d70",
+            state, gameBytes + 0x50, copy.data() + 0x50, 4);
+        recordOutput(
+            "gamelogic.aistatemachine7c.attack_approach_target_on_enter_007c0d70",
+            state, gameBytes + 0x54, copy.data() + 0x54, 1);
     } else {
-        recordScalar(kKey, state, game, ours);
+        recordScalar(
+            "gamelogic.aistatemachine7c.attack_approach_target_on_enter_007c0d70",
+            state, game, ours);
     }
     return game;
 }
 
 std::uint32_t __fastcall moveToTargetObjectOnEnter_007C0EE0(void* statePtr, void*)
 {
-    constexpr const char* kKey =
-        "gamelogic.aistatemachine7c.move_to_target_object_on_enter_007c0ee0";
     TargetState& state = g_moveToTargetObjectOnEnter;
     state.calls.fetch_add(1, kRelaxed);
 
@@ -332,18 +346,22 @@ std::uint32_t __fastcall moveToTargetObjectOnEnter_007C0EE0(void* statePtr, void
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
     if (ours != 0xFFFFFFFEu) {
-        recordOutput(kKey, state, gameBytes + 0x50, copy.data() + 0x50, 4);
-        recordOutput(kKey, state, gameBytes + 0x54, copy.data() + 0x54, 1);
+        recordOutput(
+            "gamelogic.aistatemachine7c.move_to_target_object_on_enter_007c0ee0",
+            state, gameBytes + 0x50, copy.data() + 0x50, 4);
+        recordOutput(
+            "gamelogic.aistatemachine7c.move_to_target_object_on_enter_007c0ee0",
+            state, gameBytes + 0x54, copy.data() + 0x54, 1);
     } else {
-        recordScalar(kKey, state, game, ours);
+        recordScalar(
+            "gamelogic.aistatemachine7c.move_to_target_object_on_enter_007c0ee0",
+            state, game, ours);
     }
     return game;
 }
 
 std::uint32_t __fastcall moveAndEvacuateOnEnter_007C3520(void* statePtr, void*)
 {
-    constexpr const char* kKey =
-        "gamelogic.aistatemachine7c.move_and_evacuate_on_enter_007c3520";
     TargetState& state = g_moveAndEvacuateOnEnter;
     state.calls.fetch_add(1, kRelaxed);
 
@@ -363,16 +381,20 @@ std::uint32_t __fastcall moveAndEvacuateOnEnter_007C3520(void* statePtr, void*)
     const std::uint32_t game =
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
-    recordOutput(kKey, state, gameBytes + 0x20, copy.data() + 0x20, 12);
-    recordOutput(kKey, state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
-    recordOutput(kKey, state, gameBytes + 0x50, copy.data() + 0x50, 12);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_and_evacuate_on_enter_007c3520",
+        state, gameBytes + 0x20, copy.data() + 0x20, 12);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_and_evacuate_on_enter_007c3520",
+        state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_and_evacuate_on_enter_007c3520",
+        state, gameBytes + 0x50, copy.data() + 0x50, 12);
     return game;
 }
 
 std::uint32_t __fastcall moveWithStatusFlagsOnEnter_007C3680(void* statePtr, void*)
 {
-    constexpr const char* kKey =
-        "gamelogic.aistatemachine7c.move_with_status_flags_on_enter_007c3680";
     TargetState& state = g_moveWithStatusFlagsOnEnter;
     state.calls.fetch_add(1, kRelaxed);
 
@@ -408,16 +430,20 @@ std::uint32_t __fastcall moveWithStatusFlagsOnEnter_007C3680(void* statePtr, voi
     const std::uint32_t game =
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
-    recordOutput(kKey, state, gameBytes + 0x20, copy.data() + 0x20, 12);
-    recordOutput(kKey, state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
-    recordOutput(kKey, state, gameBytes + 0x50, copy.data() + 0x50, 1);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_with_status_flags_on_enter_007c3680",
+        state, gameBytes + 0x20, copy.data() + 0x20, 12);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_with_status_flags_on_enter_007c3680",
+        state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_with_status_flags_on_enter_007c3680",
+        state, gameBytes + 0x50, copy.data() + 0x50, 1);
     return game;
 }
 
 std::uint32_t __fastcall moveValidatedOnEnter_007C4BE0(void* statePtr, void*)
 {
-    constexpr const char* kKey =
-        "gamelogic.aistatemachine7c.move_validated_on_enter_007c4be0";
     TargetState& state = g_moveValidatedOnEnter;
     state.calls.fetch_add(1, kRelaxed);
 
@@ -445,9 +471,15 @@ std::uint32_t __fastcall moveValidatedOnEnter_007C4BE0(void* statePtr, void*)
     const std::uint32_t game =
         reinterpret_cast<std::uint32_t(__thiscall*)(void*)>(state.original)(statePtr);
     const auto* const gameBytes = static_cast<const std::uint8_t*>(statePtr);
-    recordOutput(kKey, state, gameBytes + 0x20, copy.data() + 0x20, 12);
-    recordOutput(kKey, state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
-    recordOutput(kKey, state, gameBytes + 0x50, copy.data() + 0x50, 1);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_validated_on_enter_007c4be0",
+        state, gameBytes + 0x20, copy.data() + 0x20, 12);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_validated_on_enter_007c4be0",
+        state, gameBytes + 0x4C, copy.data() + 0x4C, 1);
+    recordOutput(
+        "gamelogic.aistatemachine7c.move_validated_on_enter_007c4be0",
+        state, gameBytes + 0x50, copy.data() + 0x50, 1);
     return game;
 }
 
