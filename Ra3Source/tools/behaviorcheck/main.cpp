@@ -17,6 +17,7 @@ using ra3::gamelogic::GarrisonStatusInput;
 using ra3::gamelogic::PhysicsContact;
 using ra3::gamelogic::PhysicsRuntime;
 using ra3::gamelogic::SpawnCrateState;
+using ra3::gamelogic::SpawnCrateTiming;
 using ra3::gamelogic::TimedCondition;
 using ra3::gamelogic::Vector3;
 
@@ -378,6 +379,7 @@ Buffer evaluate(std::uint32_t address, const Buffer& input)
         break;
     case 0x006B9510: {
         PhysicsContact firstValue{};
+        firstValue.id = input.word(6);
         PhysicsContact* first = input.boolean(0) ? &firstValue : nullptr;
         PhysicsContact* last = first;
         PhysicsContact contact{};
@@ -389,6 +391,7 @@ Buffer evaluate(std::uint32_t address, const Buffer& input)
         output.word(2, count);
         output.word(3, contact.next);
         output.word(4, contact.previous);
+        output.word(5, firstValue.next);
         break;
     }
     case 0x006B9580: {
@@ -445,7 +448,7 @@ Buffer evaluate(std::uint32_t address, const Buffer& input)
     case 0x006B9BB0:
     {
         const auto result = clearPhysicsStatusesAndSet(
-            input.word(0), input.word(1), input.word(2));
+            input.word(0), input.word(1), input.word(2), input.boolean(3));
         output.word(0, result.statusA8);
         output.word(1, result.statusB8);
         output.word(2, result.conditionWasSet ? 1U : 0U);
@@ -456,7 +459,9 @@ Buffer evaluate(std::uint32_t address, const Buffer& input)
         std::memcpy(&state, input.bytes.data() + 0x100, sizeof(state));
         initializeSpawnCrateState(
             state, input.word(0), input.word(1),
-            input.word(2), input.real(3));
+            SpawnCrateTiming{
+                input.boolean(2), input.real(3),
+                input.real(4), input.real(5)});
         std::memcpy(output.bytes.data(), &state, sizeof(state));
         break;
     }

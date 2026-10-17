@@ -110,7 +110,8 @@ bool preferGarrisonPoint(
     std::int32_t currentPoint, std::int32_t candidatePoint,
     float currentDistance, float candidateDistance) noexcept
 {
-    return candidatePoint != -1
+    return currentPoint != -1
+        && candidatePoint != -1
         && candidatePoint != currentPoint
         && candidateDistance < currentDistance;
 }
@@ -226,6 +227,9 @@ std::int32_t nearestContainedObject2D(
 std::int32_t consumeScaledSpawnCount(
     std::int32_t configuredCount, float& oneShotScale) noexcept
 {
+    if (configuredCount <= 0) {
+        return configuredCount;
+    }
     if (oneShotScale == 1.0F) {
         return configuredCount;
     }
@@ -426,7 +430,7 @@ void resetSpecialProgress(
     for (std::size_t index = 0; index < count; ++index) {
         childProgress[index] = 0.0F;
     }
-    baseProgress = 0.0F;
+    baseProgress = 1.0F;
 }
 
 // ra3_1.0.game 0x006B44E0.
@@ -689,6 +693,8 @@ void appendPhysicsContact(
     contact.previous = last == nullptr ? 0U : last->id;
     if (first == nullptr) {
         first = &contact;
+    } else {
+        last->next = contact.id;
     }
     last = &contact;
     ++count;
@@ -769,17 +775,18 @@ bool needsAirborneStatus(float threshold, std::uint32_t objectStatus) noexcept
 // ra3_1.0.game 0x006B9BB0.
 PhysicsStatusResult clearPhysicsStatusesAndSet(
     std::uint32_t statusA8, std::uint32_t statusB8,
-    std::uint32_t condition) noexcept
+    std::uint32_t condition, bool conditionAlreadySet) noexcept
 {
     statusB8 &= ~0x00000280U;
     statusA8 &= ~0xC6018000U;
-    return {statusA8, statusB8, condition != 0};
+    static_cast<void>(condition);
+    return {statusA8, statusB8, !conditionAlreadySet};
 }
 
 // ra3_1.0.game 0x006BA5D0.
 void initializeSpawnCrateState(
     SpawnCrateState& state, std::uint32_t owner, std::uint32_t moduleData,
-    std::uint32_t currentFrame, float delayFrames) noexcept
+    const SpawnCrateTiming& timing) noexcept
 {
     state.words[0] = 0x00C0DD78U;
     state.words[1] = moduleData;
@@ -794,8 +801,19 @@ void initializeSpawnCrateState(
     state.words[10] = 0;
     state.words[11] = 0;
     state.words[13] = 0;
+    double delayFrames = 0.0;
+    if (timing.hasManager) {
+        delayFrames = static_cast<double>(timing.managerScale)
+            * static_cast<double>(timing.framesPerSecond);
+        delayFrames *= static_cast<double>(timing.delay);
+        delayFrames = std::ceil(delayFrames);
+    } else {
+        delayFrames = static_cast<double>(timing.framesPerSecond)
+            * static_cast<double>(timing.delay);
+        delayFrames = std::trunc(delayFrames);
+    }
     state.words[14] = static_cast<std::uint32_t>(
-        std::ceil(static_cast<float>(currentFrame) * delayFrames));
+        static_cast<std::int32_t>(delayFrames));
 }
 
 }  // namespace ra3::gamelogic

@@ -74,12 +74,63 @@ two ways:
 Float entries compare caller-rounded float32 results or explicit vectors.
 Constructors start from nonzero sentinels where padding preservation matters.
 List tests preserve native aliasing, and status tests verify both selected bits
-and dirty callbacks.  Every entry also runs through a deliberate output-bit
-mutation; equality would fail the oracle.
+and dirty callbacks.  The lean mutation policy runs one nontrivial
+`0x006BA5D0` constructor scenario through a deliberate output-bit mutation;
+equality would fail the oracle.  It does not inflate the catalog with one
+mutation per function.
 
 The oracle maps only the shipped `.text`, `.rdata`, and load-time `.data`
 images.  It does not launch or inject into the game.  No SecuROM VM is
 executed.
+
+The 26 entries that originally had no native case are exactly `0x006B1540`,
+`0x006B1670`, `0x006B16E0`, `0x006B1900`, `0x006B20E0`, `0x006B2220`,
+`0x006B2260`, `0x006B2320`, `0x006B23B0`, `0x006B2690`, `0x006B3270`,
+`0x006B3660`, `0x006B39A0`, `0x006B3F10`, `0x006B3FC0`, `0x006B4070`,
+`0x006B40F0`, `0x006B4A40`, `0x006B5AF0`, `0x006B5BA0`, `0x006B5C20`,
+`0x006B7B00`, `0x006B8CF0`, `0x006B9510`, `0x006B9BB0`, and `0x006BA5D0`.
+Their strengthened cases use callbacks only as explicit framework inputs or
+effect recorders.  In particular, `0x006B40F0` executes the real
+`0x006956A0` tail helper: child resolver stubs expose child objects, child
+virtual calls write observable zero progress, and the real tail invokes the
+base `+0x44` virtual with `1.0F`.  `0x006B2220` and `0x006B2260` execute the
+real `0x009C9980` successor helper for the second-node match.  The
+`0x006BA5D0` cases execute both the null-manager truncation path and the
+non-null-manager `ceil` path with an ST0-returning CRT boundary.
+
+Several contracts deliberately normalize engine-owned layouts instead of
+claiming raw-layout equality:
+
+- For `0x006B7B00`, native source bytes `+0x08..+0x34` map to the framework's
+  12 `weaponState` words and source `+0x38..+0x40` maps to `origin`.  Native
+  destination `+0x48` maps to `reserved` and `+0x50` maps to `phase`.  Source
+  status bit `+0xBC:4` and the dirty callback map to `statusSet` and `dirty`.
+  The oracle compares each of those native fields explicitly; it does not
+  compare the compact C++ object as a native byte layout.
+- For `0x006B9510`, native module `+0x34`, `+0x38`, and `+0x40` are
+  first-contact pointer, last-contact pointer, and count.  Native contact links
+  are pointers at `+0x54/+0x58`; compact `PhysicsContact::next/previous` store
+  the corresponding contact IDs.  Empty and nonempty cases normalize
+  `oldLast->+0x54 = newContact` to `oldLast.next = newContact.id`, and
+  `newContact->+0x58 = oldLast` to `newContact.previous = oldLast.id`.
+  Physics-owner notification fields outside this list contract are not claimed
+  as raw framework fields.
+
+Other callback boundaries follow the same rule: relation tests, garrison-point
+queries, damage matching, adjusted terrain Z, child-ID resolution, and base
+progress are explicit checker inputs; station assignment, damage dispatch, and
+dirty notifications are observed effects.  No helper that implements a
+claimed write or decision is replaced with a constant success result.
+
+The recovered edge contracts are explicit in the framework.  `0x006B1900`
+rejects `currentPoint == -1` before considering a candidate.  `0x006B23B0`
+leaves the one-shot scale untouched when the configured count is zero or
+negative.  At `0x006B9BB0`, the condition argument is a zero-based bit index,
+so condition zero is valid; `conditionWasSet` means the bit changed from clear
+to set, not that the numeric index was nonzero.  `0x006BA5D0` writes words
+0--11, 13, and 14 while preserving word 12.  Its null-manager timing truncates
+`framesPerSecond * delay`, whereas its manager path stores
+`ceil(managerScale * framesPerSecond * delay)`.
 
 ## Hook boundary
 

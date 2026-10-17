@@ -82,6 +82,13 @@ struct SpawnCrateState {
     std::array<std::uint32_t, 15> words;
 };
 
+struct SpawnCrateTiming {
+    bool hasManager;
+    float framesPerSecond;
+    float managerScale;
+    float delay;
+};
+
 struct PhysicsStatusResult {
     std::uint32_t statusA8;
     std::uint32_t statusB8;
@@ -231,9 +238,9 @@ bool removePhysicsOverlap(
 bool needsAirborneStatus(float threshold, std::uint32_t objectStatus) noexcept;         // 0x006B9B70
 PhysicsStatusResult clearPhysicsStatusesAndSet(
     std::uint32_t statusA8, std::uint32_t statusB8,
-    std::uint32_t condition) noexcept;                                                // 0x006B9BB0
+    std::uint32_t condition, bool conditionAlreadySet) noexcept;                      // 0x006B9BB0
 void initializeSpawnCrateState(
     SpawnCrateState& state, std::uint32_t owner, std::uint32_t moduleData,
-    std::uint32_t currentFrame, float delayFrames) noexcept;                          // 0x006BA5D0
+    const SpawnCrateTiming& timing) noexcept;                                         // 0x006BA5D0
 
 }  // namespace ra3::gamelogic

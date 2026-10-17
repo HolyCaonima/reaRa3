@@ -1,7 +1,8 @@
 """Differential checks for the RA3 0x006B GameLogic behavior cluster.
 
-Every catalog entry is exercised through the C++ per-entry checker, including
-an intentional output mutation, and through its shipped clean body in Emulator.
+Every catalog entry is exercised through the C++ per-entry checker and its
+shipped clean body in Emulator.  One representative nontrivial constructor
+scenario also carries an intentional output mutation.
 For methods that orchestrate engine-owned objects, stubs expose the exact
 callback arguments and writes that implement the reconstructed decision.  The
 oracle also checks stack cleanup, EAX where meaningful, x87 float returns,
@@ -658,7 +659,9 @@ def compare_direct(
         game = emu.call(0x006B1900, [target, pair])
         scenario = bytearray(SIZE)
         put_u32(scenario, 0, 0xFFFFFFFF)
-        put_u32(scenario, 1, 0xFFFFFFFF)
+        put_u32(scenario, 1, 0)
+        put_f32(scenario, 2, 10.0)
+        put_f32(scenario, 3, 1.0)
         ours = checked(0x006B1900, scenario)
         record(0x006B1900, (
             u32(ours, 0) != 0 or game.stack_cleanup != 0))
@@ -694,19 +697,42 @@ def compare_direct(
             or game.stack_cleanup != 4))
         totals[0x006B20E0] = totals.get(0x006B20E0, 0) + 1
 
-    for address in (0x006B2220, 0x006B2260):
-        for _ in range(cases):
-            vtable = emu.alloc(bytes(0x48))
-            base_stub = emu.bind_stub(lambda _: 0)
-            emu.write(vtable + 0x44, struct.pack("<I", base_stub))
-            owner = emu.alloc(bytes(0x80))
-            emu.write(owner, struct.pack("<I", vtable))
-            game = emu.call(address, ecx=owner)
-            scenario = bytearray(SIZE)
-            ours = checked(address, scenario)
-            record(address, (
-                game.eax != u32(ours, 0) or game.stack_cleanup != 0))
-            totals[address] = totals.get(address, 0) + 1
+    for address, wanted in ((0x006B2220, 0), (0x006B2260, 1)):
+        scenario_kinds = (
+            (False, ()),
+            (True, (wanted,)),
+            (True, (1 - wanted, wanted)),
+        )
+        for base_check, kinds in scenario_kinds:
+            for _ in range(cases):
+                vtable = emu.alloc(bytes(0x48))
+                base_stub = emu.bind_stub(
+                    lambda _, value=base_check: 1 if value else 0)
+                emu.write(vtable + 0x44, struct.pack("<I", base_stub))
+                owner = emu.alloc(bytes(0x80))
+                emu.write(owner, struct.pack("<I", vtable))
+                sentinel = owner + 0x68
+                if not kinds:
+                    emu.write(owner + 0x6C, struct.pack("<I", sentinel))
+                else:
+                    nodes = [emu.alloc(bytes(0x18)) for _ in kinds]
+                    emu.write(owner + 0x6C, struct.pack("<I", nodes[0]))
+                    for index, (node, kind) in enumerate(zip(nodes, kinds)):
+                        successor = (
+                            nodes[index + 1]
+                            if index + 1 < len(nodes) else 0)
+                        emu.write(node, struct.pack("<I", successor))
+                        emu.write(node + 0x14, struct.pack("<I", kind))
+                game = emu.call(address, ecx=owner)
+                scenario = bytearray(SIZE)
+                put_u32(scenario, 0, 1 if base_check else 0)
+                put_u32(scenario, 1, len(kinds))
+                scenario[0x100:0x100 + len(kinds)] = bytes(kinds)
+                ours = checked(address, scenario)
+                record(address, (
+                    (game.eax & 0xFF) != u32(ours, 0)
+                    or game.stack_cleanup != 0))
+                totals[address] = totals.get(address, 0) + 1
 
     for _ in range(cases):
         owner = emu.alloc(bytes(0x80))
@@ -730,25 +756,27 @@ def compare_direct(
             or game.stack_cleanup != 4))
         totals[0x006B2320] = totals.get(0x006B2320, 0) + 1
 
-    for _ in range(cases):
-        configured = 2
-        scale = 0.25
-        entries = emu.alloc(struct.pack("<II", 0, configured))
-        data = emu.alloc(bytes(0x140))
-        emu.write(data + 0x128, struct.pack("<II", 1, entries))
-        owner = emu.alloc(bytes(0x160))
-        emu.write(owner + 4, struct.pack("<I", data))
-        emu.write(owner + 0x154, struct.pack("<f", scale))
-        game = emu.call(0x006B23B0, ecx=owner)
-        scenario = bytearray(SIZE)
-        put_u32(scenario, 0, configured)
-        put_f32(scenario, 1, scale)
-        ours = checked(0x006B23B0, scenario)
-        record(0x006B23B0, (
-            u32(ours, 0) != 0
-            or emu.read(owner + 0x154, 4) != ours[4:8]
-            or game.stack_cleanup != 0))
-        totals[0x006B23B0] = totals.get(0x006B23B0, 0) + 1
+    for configured in (2, 0, -3):
+        for _ in range(cases):
+            scale = 0.25
+            entries = emu.alloc(struct.pack(
+                "<II", 0, configured & 0xFFFFFFFF))
+            data = emu.alloc(bytes(0x140))
+            emu.write(data + 0x128, struct.pack("<II", 1, entries))
+            owner = emu.alloc(bytes(0x160))
+            emu.write(owner + 4, struct.pack("<I", data))
+            emu.write(owner + 0x154, struct.pack("<f", scale))
+            game = emu.call(0x006B23B0, ecx=owner)
+            scenario = bytearray(SIZE)
+            put_u32(scenario, 0, configured)
+            put_f32(scenario, 1, scale)
+            ours = checked(0x006B23B0, scenario)
+            expected_result = 0 if configured > 0 else configured & 0xFFFFFFFF
+            record(0x006B23B0, (
+                u32(ours, 0) != expected_result
+                or emu.read(owner + 0x154, 4) != ours[4:8]
+                or game.stack_cleanup != 0))
+            totals[0x006B23B0] = totals.get(0x006B23B0, 0) + 1
 
     damage_match = 1
     emu.bind_function(0x0078B960, lambda _: damage_match, stack_cleanup=8)
@@ -905,25 +933,82 @@ def compare_direct(
             or game.stack_cleanup != 4))
         totals[0x006B4070] = totals.get(0x006B4070, 0) + 1
 
-    reset_calls = 0
+    child_by_id: dict[int, int] = {}
+    child_reset_calls: list[int] = []
+    base_progress_values: list[int] = []
 
-    def reset_stub(_: Emulator) -> int:
-        nonlocal reset_calls
-        reset_calls += 1
+    def child_lookup_stub(machine: Emulator) -> int:
+        return child_by_id.get(machine.stack_arg(0), 0)
+
+    def child_reset_stub(machine: Emulator) -> int:
+        child = machine.register(x86_const.UC_X86_REG_ECX)
+        child_reset_calls.append(child)
+        machine.write(child + 4, struct.pack("<f", 0.0))
         return 0
 
-    emu.bind_function(0x006956A0, reset_stub)
+    def base_progress_stub(machine: Emulator) -> int:
+        value = machine.stack_arg(0)
+        base_progress_values.append(value)
+        machine.write(
+            machine.register(x86_const.UC_X86_REG_ECX) + 4,
+            struct.pack("<I", value))
+        return 0
+
+    emu.bind_function(0x00687720, child_lookup_stub, stack_cleanup=4)
+    child_reset_address = emu.bind_stub(child_reset_stub)
+    base_progress_address = emu.bind_stub(
+        base_progress_stub, stack_cleanup=4)
     for _ in range(cases):
-        reset_calls = 0
+        child_by_id.clear()
+        child_reset_calls.clear()
+        base_progress_values.clear()
+        child_ids = [rng.getrandbits(32) for _ in range(2)]
+        child_values = [rng.uniform(0.1, 0.9) for _ in child_ids]
+        children: list[int] = []
+        child_vtable = emu.alloc(bytes(0x24))
+        emu.write(
+            child_vtable + 0x20, struct.pack("<I", child_reset_address))
+        for child_id, child_value in zip(child_ids, child_values):
+            child = emu.alloc(bytes(8))
+            emu.write(
+                child, struct.pack("<If", child_vtable, child_value))
+            child_by_id[child_id] = child
+            children.append(child)
+
+        ids = emu.alloc(struct.pack("<II", *child_ids))
         data = emu.alloc(bytes(0x1C8))
-        module = emu.alloc(bytes(0x20))
+        emu.write(data + 0x1C0, struct.pack("<II", len(child_ids), ids))
+
+        descriptor_data = emu.alloc(bytes(0x20))
+        descriptor = emu.alloc(bytes(12))
+        emu.write(descriptor + 8, struct.pack("<I", descriptor_data))
+        descriptor_address = emu.bind_stub(lambda _: descriptor)
+        base_vtable = emu.alloc(bytes(0x48))
+        emu.write(
+            base_vtable + 0x1C, struct.pack("<I", descriptor_address))
+        emu.write(
+            base_vtable + 0x44, struct.pack("<I", base_progress_address))
+
+        module = emu.alloc(bytes(0x30))
         emu.write(module, struct.pack("<I", data))
-        game = emu.call(0x006B40F0, ecx=module + 0xC)
+        emu.write(module + 4, struct.pack("<I", 1))
+        interior = module + 0xC
+        emu.write(interior, struct.pack("<I", base_vtable))
+        emu.write(interior + 4, struct.pack("<f", 0.75))
+        game = emu.call(0x006B40F0, ecx=interior)
         scenario = bytearray(SIZE)
+        put_u32(scenario, 0, len(child_values))
         put_f32(scenario, 1, 0.75)
+        for index, value in enumerate(child_values):
+            put_f32(scenario, 0x100 // 4 + index, value)
         ours = checked(0x006B40F0, scenario)
         record(0x006B40F0, (
-            u32(ours, 1) != 0 or reset_calls != 1
+            [emu.read(child + 4, 4) for child in children]
+            != [ours[0x100 + index * 4:0x104 + index * 4]
+                for index in range(len(children))]
+            or base_progress_values != [u32(ours, 1)]
+            or emu.read(interior + 4, 4) != ours[4:8]
+            or child_reset_calls != children
             or game.stack_cleanup != 0))
         totals[0x006B40F0] = totals.get(0x006B40F0, 0) + 1
 
@@ -1002,6 +1087,7 @@ def compare_direct(
             emu.read(destination, 48) != ours[:48]
             or emu.read(destination + 0x30, 12) != ours[48:60]
             or struct.unpack("<I", emu.read(destination + 0x50, 4))[0] != u32(ours, 15)
+            or emu.read(destination + 0x48, 4) != ours[64:68]
             or ((struct.unpack("<I", emu.read(source + 0xBC, 4))[0] >> 4) & 1)
             != u32(ours, 17)
             or fire_dirty_calls != u32(ours, 18)
@@ -1018,24 +1104,50 @@ def compare_direct(
             or game.stack_cleanup != 0))
         totals[0x006B8CF0] = totals.get(0x006B8CF0, 0) + 1
 
-    for _ in range(cases):
-        game_object = emu.alloc(bytes(0xE0))
-        module = emu.alloc(bytes(0x140))
-        contact = emu.alloc(bytes(0x60))
-        emu.write(module + 8, struct.pack("<I", game_object))
-        game = emu.call(0x006B9510, [contact], ecx=module)
-        scenario = bytearray(SIZE)
-        ours = checked(0x006B9510, scenario)
-        record(0x006B9510, (
-            (struct.unpack("<I", emu.read(module + 0x34, 4))[0] == contact)
-            != (u32(ours, 0) != 0)
-            or (struct.unpack("<I", emu.read(module + 0x38, 4))[0] == contact)
-            != (u32(ours, 1) != 0)
-            or emu.read(module + 0x40, 4) != ours[8:12]
-            or emu.read(contact + 0x54, 4) != ours[12:16]
-            or emu.read(contact + 0x58, 4) != ours[16:20]
-            or game.stack_cleanup != 4))
-        totals[0x006B9510] = totals.get(0x006B9510, 0) + 1
+    for has_prior in (False, True):
+        for _ in range(cases):
+            game_object = emu.alloc(bytes(0xE0))
+            module = emu.alloc(bytes(0x140))
+            prior = emu.alloc(bytes(0x60)) if has_prior else 0
+            contact = emu.alloc(bytes(0x60))
+            prior_id = rng.getrandbits(32)
+            contact_id = rng.getrandbits(32)
+            count = rng.randrange(1, 20) if has_prior else 0
+            emu.write(module + 8, struct.pack("<I", game_object))
+            emu.write(module + 0x34, struct.pack("<II", prior, prior))
+            emu.write(module + 0x40, struct.pack("<I", count))
+            emu.write(contact + 0x38, struct.pack("<I", contact_id))
+            if has_prior:
+                emu.write(prior + 0x38, struct.pack("<I", prior_id))
+            game = emu.call(0x006B9510, [contact], ecx=module)
+            scenario = bytearray(SIZE)
+            put_u32(scenario, 0, 1 if has_prior else 0)
+            put_u32(scenario, 1, contact_id)
+            put_u32(scenario, 2, count)
+            put_u32(scenario, 6, prior_id)
+            ours = checked(0x006B9510, scenario)
+            native_first = struct.unpack(
+                "<I", emu.read(module + 0x34, 4))[0]
+            native_last = struct.unpack(
+                "<I", emu.read(module + 0x38, 4))[0]
+            native_previous = struct.unpack(
+                "<I", emu.read(contact + 0x58, 4))[0]
+            normalized_previous = (
+                prior_id if has_prior and native_previous == prior else 0)
+            native_prior_next = (
+                struct.unpack("<I", emu.read(prior + 0x54, 4))[0]
+                if has_prior else 0)
+            normalized_prior_next = (
+                contact_id if native_prior_next == contact else 0)
+            record(0x006B9510, (
+                (native_first == contact) != (u32(ours, 0) != 0)
+                or (native_last == contact) != (u32(ours, 1) != 0)
+                or emu.read(module + 0x40, 4) != ours[8:12]
+                or emu.read(contact + 0x54, 4) != b"\0\0\0\0"
+                or normalized_previous != u32(ours, 4)
+                or normalized_prior_next != u32(ours, 5)
+                or game.stack_cleanup != 4))
+            totals[0x006B9510] = totals.get(0x006B9510, 0) + 1
 
     condition_dirty_calls = 0
 
@@ -1045,70 +1157,111 @@ def compare_direct(
         return 0
 
     emu.bind_function(0x006A4FB0, condition_dirty_stub)
-    for _ in range(cases):
-        status_a8 = rng.getrandbits(32)
-        status_b8 = rng.getrandbits(32)
-        condition = 3
-        obj = emu.alloc(bytes(0x420))
-        emu.write(obj + 0xA8, struct.pack("<I", status_a8))
-        emu.write(obj + 0xB8, struct.pack("<I", status_b8))
-        module = emu.alloc(bytes(12))
-        emu.write(module + 8, struct.pack("<I", obj))
-        condition_dirty_calls = 0
-        game = emu.call(0x006B9BB0, [condition], ecx=module)
-        scenario = bytearray(SIZE)
-        put_u32(scenario, 0, status_a8)
-        put_u32(scenario, 1, status_b8)
-        put_u32(scenario, 2, condition)
-        ours = checked(0x006B9BB0, scenario)
-        condition_set = (
-            struct.unpack("<I", emu.read(obj + 0xA0, 4))[0] & (1 << condition)) != 0
-        record(0x006B9BB0, (
-            emu.read(obj + 0xA8, 4) != ours[:4]
-            or emu.read(obj + 0xB8, 4) != ours[4:8]
-            or condition_set != (u32(ours, 2) != 0)
-            or condition_dirty_calls == 0
-            or game.stack_cleanup != 4))
-        totals[0x006B9BB0] = totals.get(0x006B9BB0, 0) + 1
+    for condition, already_set in ((0, False), (42, False), (42, True)):
+        for _ in range(cases):
+            status_a8 = rng.getrandbits(32) | 0xC6018000
+            status_b8 = rng.getrandbits(32) | 0x00000280
+            obj = emu.alloc(bytes(0x420))
+            emu.write(obj + 0xA8, struct.pack("<I", status_a8))
+            emu.write(obj + 0xB8, struct.pack("<I", status_b8))
+            condition_word = obj + 0xA0 + 4 * (condition >> 5)
+            condition_mask = 1 << (condition & 31)
+            emu.write(
+                condition_word,
+                struct.pack("<I", condition_mask if already_set else 0))
+            module = emu.alloc(bytes(12))
+            emu.write(module + 8, struct.pack("<I", obj))
+            condition_dirty_calls = 0
+            game = emu.call(0x006B9BB0, [condition], ecx=module)
+            scenario = bytearray(SIZE)
+            put_u32(scenario, 0, status_a8)
+            put_u32(scenario, 1, status_b8)
+            put_u32(scenario, 2, condition)
+            put_u32(scenario, 3, 1 if already_set else 0)
+            ours = checked(0x006B9BB0, scenario)
+            condition_set = (
+                struct.unpack("<I", emu.read(condition_word, 4))[0]
+                & condition_mask) != 0
+            expected_dirty_calls = (
+                (status_a8 & 0xC6018000).bit_count()
+                + (status_b8 & 0x00000280).bit_count()
+                + (0 if already_set else 1))
+            record(0x006B9BB0, (
+                emu.read(obj + 0xA8, 4) != ours[:4]
+                or emu.read(obj + 0xB8, 4) != ours[4:8]
+                or not condition_set
+                or (u32(ours, 2) != 0) == already_set
+                or condition_dirty_calls != expected_dirty_calls
+                or game.stack_cleanup != 4))
+            totals[0x006B9BB0] = totals.get(0x006B9BB0, 0) + 1
 
-    for _ in range(cases):
-        owner_value = rng.getrandbits(32)
-        owner_vtable = emu.alloc(bytes(12))
-        owner_id_stub = emu.bind_stub(lambda _: owner_value)
-        emu.write(owner_vtable + 8, struct.pack("<I", owner_id_stub))
-        owner_object = emu.alloc(struct.pack("<I", owner_vtable))
-        data = emu.alloc(bytes(0x20))
-        initial = rng.randbytes(0x3C)
-        destination = emu.alloc(initial)
-        emu.write(0x00DEBA64, struct.pack("<I", 0))
-        game = emu.call(0x006BA5D0, [owner_object, data], ecx=destination)
-        scenario = bytearray(SIZE)
-        put_u32(scenario, 0, owner_value)
-        put_u32(scenario, 1, data)
-        put_u32(scenario, 2, 1)
-        put_f32(scenario, 3, 0.0)
-        scenario[0x100:0x13C] = initial
-        ours = checked(0x006BA5D0, scenario)
-        record(0x006BA5D0, (
-            emu.read(destination, 0x3C) != ours[:0x3C]
-            or game.eax != destination or game.stack_cleanup != 8))
-        totals[0x006BA5D0] = totals.get(0x006BA5D0, 0) + 1
+    # Imported ceil returns through ST0.  This local native stub changes x87
+    # rounding to +infinity for FRNDINT and restores the caller's control word.
+    ceil_stub = emu.alloc(bytes.fromhex(
+        "83ec04d93c24668b042466894424026681642402fff3"
+        "66814c24020008d96c2402dd442408d9fcd92c2483c404c3"))
+    timing_scenarios = (
+        (False, 10.0, 2.0, 1.75, 17),
+        (True, 10.0, 1.5, 1.25, 19),
+    )
+    for has_manager, frames_per_second, manager_scale, delay, expected in (
+            timing_scenarios):
+        for _ in range(cases):
+            owner_value = rng.getrandbits(32)
+            owner_vtable = emu.alloc(bytes(12))
+            owner_id_stub = emu.bind_stub(
+                lambda _, value=owner_value: value)
+            emu.write(owner_vtable + 8, struct.pack("<I", owner_id_stub))
+            owner_object = emu.alloc(struct.pack("<I", owner_vtable))
+            data = emu.alloc(bytes(0x20))
+            emu.write(data + 0x0C, struct.pack("<f", delay))
+            initial = rng.randbytes(0x3C)
+            destination = emu.alloc(initial)
+            emu.write(
+                0x00DEEEE8, struct.pack("<f", frames_per_second))
+            if has_manager:
+                manager = emu.alloc(bytes(0x1C8))
+                emu.write(
+                    manager + 0x1C4, struct.pack("<f", manager_scale))
+                emu.write(0x00DEBA64, struct.pack("<I", manager))
+            else:
+                emu.write(0x00DEBA64, struct.pack("<I", 0))
+            emu.write(0x00BBA4DC, struct.pack("<I", ceil_stub))
+            game = emu.call(
+                0x006BA5D0, [owner_object, data], ecx=destination)
+            scenario = bytearray(SIZE)
+            put_u32(scenario, 0, owner_value)
+            put_u32(scenario, 1, data)
+            put_u32(scenario, 2, 1 if has_manager else 0)
+            put_f32(scenario, 3, frames_per_second)
+            put_f32(scenario, 4, manager_scale)
+            put_f32(scenario, 5, delay)
+            scenario[0x100:0x13C] = initial
+            ours = checked(0x006BA5D0, scenario)
+            record(0x006BA5D0, (
+                emu.read(destination, 0x3C) != ours[:0x3C]
+                or u32(ours, 14) != expected
+                or game.eax != destination or game.stack_cleanup != 8))
+            totals[0x006BA5D0] = totals.get(0x006BA5D0, 0) + 1
 
     return bad, totals
 
 
-def verify_catalog_mutation(
+def verify_representative_mutation(
         checker: Checker, rng: random.Random) -> tuple[int, dict[int, int]]:
-    bad = 0
-    totals: dict[int, int] = {}
-    for address in ENTRIES:
-        blob = bytes(SIZE)
-        ordinary = checker.call("eval", address, blob)
-        mutated = checker.call("mutate", address, blob)
-        if ordinary == mutated or ordinary[0] == mutated[0]:
-            bad += 1
-        totals[address] = 1
-    return bad, totals
+    address = 0x006BA5D0
+    scenario = bytearray(SIZE)
+    put_u32(scenario, 0, rng.getrandbits(32))
+    put_u32(scenario, 1, rng.getrandbits(32))
+    put_u32(scenario, 2, 1)
+    put_f32(scenario, 3, 10.0)
+    put_f32(scenario, 4, 1.5)
+    put_f32(scenario, 5, 1.25)
+    scenario[0x100:0x13C] = rng.randbytes(0x3C)
+    ordinary = checker.call("eval", address, bytes(scenario))
+    mutated = checker.call("mutate", address, bytes(scenario))
+    bad = 1 if ordinary == mutated or ordinary[0] == mutated[0] else 0
+    return bad, {address: 1}
 
 
 def main() -> int:
@@ -1122,7 +1275,7 @@ def main() -> int:
         emu = Emulator()
         direct_bad, direct_totals = compare_direct(
             emu, checker, rng, args.cases)
-        mutation_bad, mutation_totals = verify_catalog_mutation(
+        mutation_bad, mutation_totals = verify_representative_mutation(
             checker, rng)
     finally:
         checker.close()
@@ -1132,6 +1285,9 @@ def main() -> int:
     print(
         f"GameLogic behavior: {len(ENTRIES)} entries, {total} cases, "
         f"{bad} mismatches")
+    print(
+        "  representative mutation 006ba5d0: "
+        f"{'detected' if mutation_bad == 0 else 'not detected'}")
     for address in ENTRIES:
         print(
             f"  {address:08x}: native={direct_totals.get(address, 0)} "
