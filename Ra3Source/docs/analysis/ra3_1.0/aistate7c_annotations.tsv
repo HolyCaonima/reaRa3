@@ -22,10 +22,10 @@ address	status	owner	module	notes
 007c9630	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::UnitAIReturnToSourceAndEnterState_onEnter; 00c2f1d0 slot 4; slot 2 returns UnitAIReturnToSourceAndEnterState
 007c9830	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::UnitAIStartMoveState_onEnter; 00c2b8b8 slot 4; slot 2 returns UnitAIStartMoveState
 007c9df0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIDockApproachState_onEnter; 00c31aa8 slot 4; slot 2 returns AIDockApproachState
-007c9ea0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIInternalMoveToState_onEnter; 00c31b10 slot 4; slot 2 returns AIInternalMoveToState
-007c9f40	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIInternalMoveToState_onEnter_007c9f40; 00c31b60 slot 4; slot 2 returns AIInternalMoveToState
-007c9ff0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIInternalMoveToState_onEnter_007c9ff0; 00c31bb0 slot 4; slot 2 returns AIInternalMoveToState
-007ca180	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIInternalMoveToState_onEnter_007ca180; 00c31c00 slot 4; slot 2 returns AIInternalMoveToState
+007c9ea0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIInternalMoveToState_onEnter; 00c31b10 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller)
+007c9f40	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIInternalMoveToState_onEnter_007c9f40; 00c31b60 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller)
+007c9ff0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIInternalMoveToState_onEnter_007c9ff0; 00c31bb0 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller)
+007ca180	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIInternalMoveToState_onEnter_007ca180; 00c31c00 slot 4; slot 2 returns AIInternalMoveToState; slot 2 is getter 0x0079c430, shared by tables 00c31b10/00c31b60/00c31bb0/00c31c00, so this table may belong to a subclass that inherits the name (controller)
 007ca460	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIGuardMoveToAttack_onEnter; 00c31ca0 slot 4; slot 2 returns AIGuardMoveToAttack
 007ca680	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIGuardReturnState_onEnter; 00c31d70 slot 4; slot 2 returns AIGuardReturnState
 007ca7c0	reversed	recon/aistate7c	gamelogic	ra3::gamelogic::AIGuardReturnState_update; 00c31d70 slot 5; slot 2 returns AIGuardReturnState
