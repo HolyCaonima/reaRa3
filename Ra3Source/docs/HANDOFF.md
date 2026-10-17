@@ -196,8 +196,8 @@
   ~~`0x006A0000–0x006BFFFF`~~（已开 obj6a）→ ~~`0x007E0000–0x0080FFFF`~~（已开
   common7e）→ ~~`0x00720000–0x0075FFFF`~~（已开 gamelogic72，Grok）→ ~~`0x00560000`~~（已开
   render56，Gemini）→ ~~`0x005A0000`~~（已开 common5a，Grok）→ ~~`0x00500000`~~（已开 audio50，Gemini）→
-  `0x00870000` gamelogic/gameclient 301（Gemini）→ `0x004D0000` GameLogic 核心 261（Gemini）
-  → `0x00990000` render 140（Gemini）→ ~~`0x00820000–0x0083FFFF`~~（已开 gamelogic82，Grok）。
+  `0x00870000` gamelogic/gameclient 301（Grok）→ `0x00990000` render 140（Grok）→
+  `0x004D0000` GameLogic 核心 261（Gemini，最难）→ ~~`0x00820000–0x0083FFFF`~~（已开 gamelogic82，Grok）。
   受保护批次合并后，按剩余 body/cave 数量再开下一路。
 - **验收教训**：子 agent 的交付说明可能与提交不符（protentry 的证据地址、gamelogic7c 的
   vtable 地址与源路径均为编造的）。vtable 所有权声明一律用脚本反查：在 `.rdata` 中找函数
@@ -216,6 +216,11 @@
   完成耗时和最终有效重建数；没有账单遥测时不推断精确 token 成本。Grok 的前两批只分配
   clean 低风险簇，并提高证据门槛：逐项核对 `reversed` ↔ C++ ↔ shipped 行为，主控额外
   抽查反汇编、ABI、hook 前缀与写集；归属模糊、身份指纹冒充语义或重复认领立即退回。
+- **模型分流调整**（用户 15:25 决定）：改为约 7 路 Grok、3 路 Gemini，Gemini 只做最难的
+  （受保护代码、GameLogic 核心、重 x87/ABI 簇）；在跑的 Gemini 批次不中断，空出的位优先补
+  Grok 直到 7:3。依据见 `batch_metrics.tsv`：截至 15:20，Grok 5 批 165 个函数、交付与代码
+  一致、0 次断连，但倾向挑样板（派单限定样板 ≤30%）；Gemini 3 批 141 个函数、代码过
+  oracle，但 3 批证据均有编造、约 10 次断连，交付一律由主控脚本重推证据。
   两个 Grok 低风险批次均经主控反汇编抽查后无需实质返工；后续简单叶簇可按普通强度
   使用 Grok，复杂 ABI、构造器和状态机仍优先 Gemini。
 - **验收按风险分级**（用户 12:13、12:15 决定，避免重复验证）：
