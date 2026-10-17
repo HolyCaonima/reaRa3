@@ -1,0 +1,54 @@
+address	status	owner	module	notes
+009236c0	verified	recon/gameclient92	gameclient	MusicCondition throttled cached evaluation; short-circuit callback count, x87 truncation and +0x10/+0x14 writes checked
+00923740	verified	recon/gameclient92	gameclient	MusicScriptConditionFactory runtime type name; explicit-only hook gc92conditionfactoryname
+00923750	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_And runtime type name; explicit-only hook gc92andconditionname
+00923760	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_AnyTrackPlaying runtime type name; explicit-only hook gc92anytrackplayingname
+00923890	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_EngagementCount runtime type name; explicit-only hook gc92engagementcountname
+00923950	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_EvaEventPlayedRecently runtime type name; explicit-only hook gc92evaeventrecentname
+00923960	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_HitBySuperWeapon runtime type name; explicit-only hook gc92hitbysuperweaponname
+00923970	verified	recon/gameclient92	gameclient	LocalPlayerIsObserver predicate; all early/query/fallback branches differentially checked
+009239c0	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_LocalPlayerIsObserver runtime type name; explicit-only hook gc92localobservername
+009239d0	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_LocalPlayerKillRatio runtime type name; explicit-only hook gc92localkillrationame
+009239e0	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_Not runtime type name; explicit-only hook gc92notconditionname
+009239f0	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_ObjectsNearEvaEvent runtime type name; explicit-only hook gc92objectsnearevaname
+00923a00	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_ObjectsOfTypeExist runtime type name; explicit-only hook gc92objectsoftypename
+00923a10	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_Or runtime type name; explicit-only hook gc92orconditionname
+00923a20	verified	recon/gameclient92	gameclient	PathMusic state valid/active predicate; partial-AL return checked
+00923a30	verified	recon/gameclient92	gameclient	PathMusic matching-state activation handler; ret 4 and conditional byte write checked
+00923a50	verified	recon/gameclient92	gameclient	PathMusic matching-state deactivation handler; ret 4 and conditional byte write checked
+00923a70	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_PathMusicStateCurrentlyActive runtime type name; explicit-only hook gc92currentpathstatename
+00923ad0	verified	recon/gameclient92	gameclient	PathMusic typed activation event handler; disabled and matching timestamp/state writes checked
+00923b20	verified	recon/gameclient92	gameclient	PathMusic typed deactivation event handler; disabled and matching timestamp/state writes checked
+00923b70	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_PathMusicStateLastActive runtime type name; explicit-only hook gc92lastpathstatename
+00923be0	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_ScoredKillCount runtime type name; explicit-only hook gc92scoredkillcountname
+00923bf0	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_SpecificTrackTypePlaying runtime type name; explicit-only hook gc92specifictracktypename
+00923c00	verified	recon/gameclient92	gameclient	TimeFromStartOfLevel frame/seconds x87 predicate; full unsigned-frame conversion and float-bit differential
+00923c50	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_TimeFromStartOfLevel runtime type name; explicit-only hook gc92timefromstartname
+00923c60	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_TrackPlayedCount runtime type name; explicit-only hook gc92trackplayedcountname
+00923c70	verified	recon/gameclient92	gameclient	MusicScriptConditionNugget_UnitsFarFromBase runtime type name; explicit-only hook gc92unitsfarfrombasename
+00923c80	verified	recon/gameclient92	gameclient	Five-way MusicComparison with exact epsilon 0x3A83126F; randomized SSE float32 differential
+00923d30	verified	recon/gameclient92	gameclient	MusicScriptingSystem runtime type name; explicit-only hook gc92musicscriptingsystemname
+00923e20	verified	recon/gameclient92	gameclient	And condition short-circuit evaluator; empty/mixed/all-true callback result and call count checked
+00923ef0	verified	recon/gameclient92	gameclient	EngagementCount unsigned threshold predicate; randomized differential
+00923f00	verified	recon/gameclient92	gameclient	Not condition child evaluator; null and both child values checked
+00923f50	verified	recon/gameclient92	gameclient	Or condition short-circuit evaluator; empty/mixed/all-false callback result and call count checked
+00923f80	verified	recon/gameclient92	gameclient	PathMusicStateLastActive elapsed-time comparison; finite float differential across five operators
+009241f0	verified	recon/gameclient92	gameclient	TrackPlayedCount player-cache predicate; stale-player write/refresh and lazy current-player count checked
+00924bd0	verified	recon/gameclient92	gameclient	AnyTrackPlaying runtime constructor; full seeded write-set/ret 4/EAX differential
+00924c00	verified	recon/gameclient92	gameclient	EvaEventPlayedRecently runtime constructor; full seeded write-set/ret 4/EAX differential
+00924c30	verified	recon/gameclient92	gameclient	LocalPlayerIsObserver runtime constructor; full seeded write-set/ret 4/EAX differential
+00924d10	verified	recon/gameclient92	gameclient	PathMusicStateCurrentlyActive listener constructor; secondary self-anchor and writes checked
+00924d90	verified	recon/gameclient92	gameclient	PathMusicStateLastActive listener constructor; secondary self-anchor and writes checked
+00924e20	verified	recon/gameclient92	gameclient	SpecificTrackTypePlaying runtime constructor; full seeded write-set/ret 4/EAX differential
+00924e50	verified	recon/gameclient92	gameclient	TimeFromStartOfLevel runtime constructor; full seeded write-set/ret 4/EAX differential
+00924e90	verified	recon/gameclient92	gameclient	TrackPlayedCount runtime constructor; full seeded write-set/ret 4/EAX differential
+00925290	verified	recon/gameclient92	gameclient	EngagementCount runtime constructor; player-cache and complete seeded write set checked
+00925360	verified	recon/gameclient92	gameclient	HitBySuperWeapon listener constructor; x87 truncate-to-zero duration ticks and embedded self-anchor checked
+009256d0	verified	recon/gameclient92	gameclient	ObjectsNearEvaEvent runtime constructor; full seeded write-set/ret 4/EAX differential
+00925700	verified	recon/gameclient92	gameclient	ObjectsOfTypeExist constructor; both 15-slot filter arrays represented and presence byte checked
+00925810	verified	recon/gameclient92	gameclient	UnitsFarFromBase runtime constructor; full seeded write-set/ret 4/EAX differential
+00925990	verified	recon/gameclient92	gameclient	And runtime constructor empty-list path; vector triplet and complete seeded writes checked
+00925d70	verified	recon/gameclient92	gameclient	Or runtime constructor empty-list path; vector triplet and complete seeded writes checked
+00926130	verified	recon/gameclient92	gameclient	LocalPlayerKillRatio constructor; embedded 0x34 record/self-anchor and cache writes checked
+00926380	verified	recon/gameclient92	gameclient	ScoredKillCount constructor; vector/player-cache fields and complete seeded writes checked
+00926470	verified	recon/gameclient92	gameclient	ScoredKillCount weighted-record evaluator; cache-valid/stale/invalid clear-refresh branches and signed-wrap vector differential

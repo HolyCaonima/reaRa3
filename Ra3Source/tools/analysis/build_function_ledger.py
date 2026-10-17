@@ -16,6 +16,9 @@ Manual state lives in ledger_annotations.tsv (address, status, owner, module,
 notes) next to the ledger, so regenerating never loses claims or findings.
 Non-empty annotation fields override the generated ones.
 
+Functions missed by the bulk exporter can be recorded in
+function_additions.tsv next to the ledger, using the functions.tsv columns.
+
 Usage:
   python tools/analysis/build_function_ledger.py \
       --inputs work/analysis/ghidra \
@@ -166,6 +169,11 @@ def main() -> int:
         type=pathlib.Path,
         help="manual ledger state (default: ledger_annotations.tsv next to --out)",
     )
+    parser.add_argument(
+        "--additions",
+        type=pathlib.Path,
+        help="manual function rows (default: function_additions.tsv next to --out)",
+    )
     args = parser.parse_args()
 
     functions = args.inputs / "functions.tsv"
@@ -174,6 +182,7 @@ def main() -> int:
         return 1
 
     annotations = load_annotations(args.annotations or args.out.parent / "ledger_annotations.tsv")
+    additions = args.additions or args.out.parent / "function_additions.tsv"
     unused = set(annotations)
     source_map = load_source_map(args.inputs / "source_file_functions.tsv")
     securom = load_securom_status(
@@ -187,16 +196,26 @@ def main() -> int:
     securom_counts = collections.Counter()
     rows = 0
 
-    with functions.open(encoding="utf-8") as src, args.out.open(
-        "w", encoding="utf-8", newline=""
-    ) as dst:
-        reader = csv.DictReader(src, delimiter="\t")
+    with functions.open(encoding="utf-8") as src:
+        function_rows = list(csv.DictReader(src, delimiter="\t"))
+    if additions.exists():
+        with additions.open(encoding="utf-8") as src:
+            function_rows.extend(csv.DictReader(src, delimiter="\t"))
+    addresses = [row["entry"].lower() for row in function_rows]
+    if len(addresses) != len(set(addresses)):
+        duplicates = sorted(
+            address for address, count in collections.Counter(addresses).items()
+            if count > 1)
+        raise ValueError(f"duplicate function rows: {' '.join(duplicates)}")
+    function_rows.sort(key=lambda row: int(row["entry"], 16))
+
+    with args.out.open("w", encoding="utf-8", newline="") as dst:
         writer = csv.writer(dst, delimiter="\t", lineterminator="\n")
         writer.writerow(
             ["address", "name", "section", "size", "source_file",
              "securom", "module", "owner", "status", "notes"]
         )
-        for row in reader:
+        for row in function_rows:
             addr = row["entry"].lower()
             section = row["block"]
             source_file = source_map.get(addr, "")
