@@ -84,6 +84,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/gamelogic82check)
     add_subdirectory(tools/skirm87check)
     add_subdirectory(tools/common5acheck)
+    add_subdirectory(tools/aistate79check)
 endif()
 
 if(RA3_BUILD_TESTS)
