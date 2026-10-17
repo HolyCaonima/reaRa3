@@ -167,6 +167,20 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `unicodestringremovelast` | `0x004CAF90` `StringBase<wchar_t>` 删除末字符 | thiscall | 5 | `ra3::common::removeLastGameCharacter` | live verified；仅显式键启用 |
 | `unicodestringset` | `0x004CB9B0` `StringBase<wchar_t>` 设置 (text, length) | thiscall（2） | 6 | `ra3::common::setGameString` | live verified；仅显式键启用 |
 | `unicodestringconcat` | `0x004CBA00` `StringBase<wchar_t>` 追加 (text, length) | thiscall（2） | 7 | `ra3::common::concatGameString` | live verified；仅显式键启用 |
+| `playeradjustcounter` | `0x007E1530` Player `+0x125c` 饱和计数 | thiscall（1） | 10 | `Player::adjustCounter125c` | offline-verified, live pending；仅显式键启用 |
+| `playeractive` | `0x007E1BA0` Player 活跃状态 | thiscall | 7 | `Player::isPlayerActive` | offline-verified, live pending；仅显式键启用 |
+| `scoreaddd0` | `0x007E2600` ScoreKeeper 增量 | thiscall（1） | 5 | `ScoreKeeper::addD0` | offline-verified, live pending；仅显式键启用 |
+| `scoreincrement100` | `0x007E2650` ScoreKeeper 计数 | thiscall | 5 | `ScoreKeeper::increment100` | offline-verified, live pending；仅显式键启用 |
+| `scoreincremente8` | `0x007E2670` ScoreKeeper 计数 | thiscall | 5 | `ScoreKeeper::incrementE8` | offline-verified, live pending；仅显式键启用 |
+| `scoreincrementec` | `0x007E2690` ScoreKeeper 计数 | thiscall | 5 | `ScoreKeeper::incrementEc` | offline-verified, live pending；仅显式键启用 |
+| `scoreincrementf0` | `0x007E26B0` ScoreKeeper 计数 | thiscall | 5 | `ScoreKeeper::incrementF0` | offline-verified, live pending；仅显式键启用 |
+| `scoreincrementd8` | `0x007E26D0` ScoreKeeper 计数 | thiscall | 5 | `ScoreKeeper::incrementD8` | offline-verified, live pending；仅显式键启用 |
+| `scoreadddc` | `0x007E26F0` ScoreKeeper 增量 | thiscall（1） | 5 | `ScoreKeeper::addDc` | offline-verified, live pending；仅显式键启用 |
+| `scorestoptimer` | `0x007E2710` ScoreKeeper 停止计时 | thiscall | 6 | `ScoreKeeper::stopTimer` | offline-verified, live pending；仅显式键启用 |
+| `scoreflag134` | `0x007E2800` ScoreKeeper 标志 | thiscall（1） | 10 | `ScoreKeeper::setFlag134` | offline-verified, live pending；仅显式键启用 |
+| `scoreflag135` | `0x007E2810` ScoreKeeper 标志 | thiscall（1） | 10 | `ScoreKeeper::setFlag135` | offline-verified, live pending；仅显式键启用 |
+| `scoremark134` | `0x007E2820` ScoreKeeper 标志 | thiscall | 7 | `ScoreKeeper::markFlag134` | offline-verified, live pending；仅显式键启用 |
+| `scoreaddmoney` | `0x007E2830` ScoreKeeper 资金累计 | thiscall（1） | 5 | `ScoreKeeper::addMoney` | offline-verified, live pending；仅显式键启用 |
 
 上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节

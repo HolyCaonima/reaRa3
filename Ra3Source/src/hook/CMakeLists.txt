@@ -13,6 +13,7 @@ ra3_add_shared_library(ra3hook
         dll/RuntimeDump.h
         dll/Targets.cpp
         dll/Targets.h
+        dll/targets/PlayerTargets.cpp
     DEPS
         Ra3::asset
         Ra3::common
