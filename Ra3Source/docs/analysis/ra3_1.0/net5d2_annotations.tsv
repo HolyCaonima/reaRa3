@@ -1,0 +1,43 @@
+address	status	owner	module	notes
+005d3260	reversed	recon/net5d2	net	ra3::net::endpointsEqual; call from 0060D390 at 0060D3E6, and 0060D390 is vtable 00BEF6E8 slot 37
+005d3290	reversed	recon/net5d2	net	ra3::net::endpointsDiffer; call from 0060CD10 at 0060CE85, and 0060CD10 is vtable 00BEF6E8 slot 43
+005d32c0	reversed	recon/net5d2	net	ra3::net::clampTinyState; call from 0060CD10 at 0060CFB9, vtable 00BEF6E8 slot 43
+005d3770	reversed	recon/net5d2	net	ra3::net::childByte2E; vtable 00BF0DDC slot 4, slot 2 is 005EB960 and not a name getter
+005d3790	reversed	recon/net5d2	net	ra3::net::childByte2D; vtable 00BF0DDC slot 5, slot 2 is 005EB960 and not a name getter
+005d37b0	reversed	recon/net5d2	net	ra3::net::childDword30; vtable 00BF0DDC slot 10, slot 2 is 005EB960 and not a name getter
+005d37d0	reversed	recon/net5d2	net	ra3::net::childField8C; vtable 00BF0DDC slot 13, slot 2 is 005EB960 and not a name getter
+005d3c50	reversed	recon/net5d2	net	ra3::net::childByte29; vtable 00BF0BB4 slot 4, slot 2 is 005EB960 and not a name getter
+005d3c70	reversed	recon/net5d2	net	ra3::net::childByte28; vtable 00BF0BB4 slot 5, slot 2 is 005EB960 and not a name getter
+005d4010	reversed	recon/net5d2	net	ra3::net::cursorFieldsDiffer; vtable 00BF1198 slot 8, slot 2 is 005EBEA0 and not a name getter
+005d4920	reversed	recon/net5d2	net	ra3::net::storePair124; vtable 00BF1558 slot 97, slot 2 is 00622B00 and not a name getter
+005d4960	reversed	recon/net5d2	net	ra3::net::flagOrPointerSet; vtable 00BF1558 slot 64, slot 2 is 00622B00 and not a name getter
+005d4df0	reversed	recon/net5d2	net	ra3::net::initTaggedPointer; call from 00AB5000 at 00AB5018, and 00AB5000 is vtable 00C730A4 slot 8
+005d5450	reversed	recon/net5d2	net	ra3::net::natBufferRead; vtable 00BEE470 slot 3, slot 2 is 004CE130 and not a name getter
+005d5540	reversed	recon/net5d2	net	ra3::net::natBufferSeek; vtable 00BEE470 slot 5, slot 2 is 004CE130 and not a name getter
+005d5b50	reversed	recon/net5d2	net	ra3::net::otherSlotSharesId; call from 005C5650 at 005C5A37, which pushes GameStart.cpp:557 at 00BE9860
+005d5bd0	reversed	recon/net5d2	net	ra3::net::clearSlotIpAddresses; SkirmishGameInfo vtable 00BDC918 slot 14
+005d5c00	reversed	recon/net5d2	net	ra3::net::stateIsSixOrSeven; call from 00B1F5C0 at 00B1F5CC, and 00B1F5C0 is vtable 00C7D3F8 slot 3
+005d5c40	reversed	recon/net5d2	net	ra3::net::dismissIndexedSlot; SkirmishGameInfo vtable 00BDC918 slot 34
+005d5f80	reversed	recon/net5d2	net	ra3::net::slotStateIsAi; call from 005CD2B0 at 005CD2DE, which pushes GameStart.cpp:1637 at 00BE9F30
+005d6010	reversed	recon/net5d2	net	ra3::net::chainNodeAt; vtable 00BEF6E8 slot 48, slot 2 is 004D6430 and not a name getter
+005d6040	reversed	recon/net5d2	net	ra3::net::unlinkWideChain; call from 005EF520 at 005EF62D, and 005EF520 is vtable 00BEF6E8 slot 18
+005d60b0	reversed	recon/net5d2	net	ra3::net::findEndpointNode; vtable 00BEF6E8 slot 61, slot 2 is 004D6430 and not a name getter
+005d60f0	reversed	recon/net5d2	net	ra3::net::unlinkShortChain; call from 00601210 at 0060130B, and 00601210 is vtable 00BEF6E8 slot 29
+005d6140	reversed	recon/net5d2	net	ra3::net::headEndpointMatches; vtable 00BEF6E8 slot 52, slot 2 is 004D6430 and not a name getter
+005d6430	reversed	recon/net5d2	net	ra3::net::recordAtFc; call from 0060CD10 at 0060CF0E, vtable 00BEF6E8 slot 43
+005d6840	reversed	recon/net5d2	net	ra3::net::attachAndRetain; call from 005C0E80 at 005C0E95, and 005C0E80 is vtable 00BE8538 slot 1
+005d68b0	reversed	recon/net5d2	net	ra3::net::linkStateIsOne; vtable 00BEEDB0 slot 15, slot 2 is 004D6430 and not a name getter
+005d68c0	reversed	recon/net5d2	net	ra3::net::linkChildField8; vtable 00BEEDB0 slot 27, slot 2 is 004D6430 and not a name getter
+005d68d0	reversed	recon/net5d2	net	ra3::net::clampChannelStamp; vtable 00BEEDB0 slot 35, slot 2 is 004D6430 and not a name getter
+005d68f0	reversed	recon/net5d2	net	ra3::net::setChannelBit; vtable 00BEEDB0 slot 36, slot 2 is 004D6430 and not a name getter
+005d8480	reversed	recon/net5d2	net	ra3::net::childDword6C; vtable 00BF0DDC slot 11, slot 2 is 005EB960 and not a name getter
+005d84a0	reversed	recon/net5d2	net	ra3::net::childDword7C; vtable 00BF0DDC slot 12, slot 2 is 005EB960 and not a name getter
+005db600	reversed	recon/net5d2	net	ra3::net::initFloatExtents; call from 004F6C50 at 004F6E11, and 004F6C50 is vtable 00BDCC74 slot 4
+005db640	reversed	recon/net5d2	net	ra3::net::occupiedRecordField; call from 0062F890 at 0062FD32, and 0062F890 is vtable 00BEF6E8 slot 5
+005db670	reversed	recon/net5d2	net	ra3::net::setOccupiedRecordField; call from 0060CD10 at 0060CEAE, vtable 00BEF6E8 slot 43
+005dbff0	reversed	recon/net5d2	net	ra3::net::countAcceptedSlots; E9 at 004DD2C0, and 004DD2C0 is SkirmishGameInfo vtable 00BDC918 slot 6
+005dc180	reversed	recon/net5d2	net	ra3::net::findLocalHumanSlot; GameInfo vtable 00BE8018 slot 12
+005dc1c0	reversed	recon/net5d2	net	ra3::net::slotZeroIsLocalHuman; GameInfo vtable 00BE8018 slot 11
+005dc1f0	reversed	recon/net5d2	net	ra3::net::otherSlotIsHuman; GameInfo vtable 00BE8018 slot 17
+005dcf10	reversed	recon/net5d2	net	ra3::net::clearLanHumanReady; LANGameInfo vtable 00BEFCA0 slot 13
+005dd100	reversed	recon/net5d2	net	ra3::net::channelFrameReached; vtable 00BEEDB0 slot 31, slot 2 is 004D6430 and not a name getter
