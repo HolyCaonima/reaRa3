@@ -1,5 +1,5 @@
 address	status	owner	module	notes
-006a16a0	reversed	recon/obj6a	gamelogic	weaponSetCallSlot1C. 00C1F320 slot 1. Slot 2 of 00C1F320 is 007194B0, which returns the class-name string WeaponSetUpdate at 00C1F378. The same function installs this vtable at 00743F66.
+006a16a0	reversed	recon/obj6a	gamelogic	weaponSetCallSlot1C. 00C1F320 slot 1. Slot 2 of 00C1F320 is 007194B0, which returns the class-name string WeaponSetUpdate at 00C1F378. The function at 00743F50 writes this vtable at 00743F66 after call 004D6790.
 006a1aa0	reversed	recon/obj6a	gamelogic	audioLoopUpgradeXfer. 00BF9318 slot 3. Slot 2 of 00BF9318 returns the class-name string AudioLoopUpgrade.
 006a1c80	reversed	recon/obj6a	gamelogic	techUpgradeXfer. 00C10AA0 slot 3. Slot 2 of 00C10AA0 returns the class-name string TechUpgrade.
 006a2220	reversed	recon/obj6a	gamelogic	techUpgradeReceiverXfer. 00BF9580 slot 3. Slot 2 of 00BF9580 returns the class-name string TechUpgradeReceiver.
