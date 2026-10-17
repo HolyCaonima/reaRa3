@@ -1,0 +1,45 @@
+address	status	owner	module	notes
+007006c0	reversed	recon/obj70	gamelogic	ra3::gamelogic::BoobyTrapUpdate_capture; vtable 00c20660 slot 25 of BoobyTrapUpdate
+00700f30	reversed	recon/obj70	gamelogic	ra3::gamelogic::MagneticEffectUpdate_onBit; secondary vtable 00c193ac slot 1, class MagneticEffectUpdate from constructor 007783e0 storing primary 00c19510
+007011c0	reversed	recon/obj70	gamelogic	ra3::gamelogic::OCLMonitorSpecialAbilityUpdate_forward; secondary vtable 00c1eca4 slot 0, class OCLMonitorSpecialAbilityUpdate from constructor 00730bb0 storing primary 00c1ee08
+00701410	reversed	recon/obj70	gamelogic	ra3::gamelogic::LinearDamageUpdate_relayIfArmed; secondary vtable 00c0d538 slot 7, class LinearDamageUpdate from constructor 006b8580 storing primary 00c0d4e0
+00702360	reversed	recon/obj70	gamelogic	ra3::gamelogic::SpecialAbilityUpdate_pointInside; secondary vtable 00c14184 slot 7, class SpecialAbilityUpdate from constructor 00701f40 storing primary 00c142d8
+007035c0	reversed	recon/obj70	gamelogic	ra3::gamelogic::SubObjectsUpgrade_relay; secondary vtable 00c1f388 slot 2, class SubObjectsUpgrade from constructor 00719880 storing primary 00c1f4e8
+007037f0	reversed	recon/obj70	gamelogic	ra3::gamelogic::SubStructureBuildUpgrade_maskIf; secondary vtable 00c10754 slot 2, class SubStructureBuildUpgrade from constructor 00703690 storing primary 00c108b0
+00703f70	reversed	recon/obj70	gamelogic	ra3::gamelogic::WeaponReadyState_poll; vtable 00bf9708 slot 4 of WeaponReadyState
+00703fd0	reversed	recon/obj70	gamelogic	ra3::gamelogic::WeaponFireState_enter; vtable 00bf97d8 slot 6 of WeaponFireState
+00704050	reversed	recon/obj70	gamelogic	ra3::gamelogic::WeaponOutOfAmmoState_enter; vtable 00bf98a0 slot 4 of WeaponOutOfAmmoState
+00706190	reversed	recon/obj70	gamelogic	ra3::gamelogic::GhostObject_linkWatcher; secondary vtable 00c1f574 slot 1, class GhostObject from constructor 0071a870 storing primary 00c1f584
+0070afd0	reversed	recon/obj70	gamelogic	ra3::gamelogic::NotifyWhenAttackingBehavior_clearIds; secondary vtable 00c08c94 slot 0, class NotifyWhenAttackingBehavior from constructor 006f6de0 storing primary 00c08df8
+0070c900	reversed	recon/obj70	gamelogic	ra3::gamelogic::StoreTemplateIDBehavior_pushId; secondary vtable 00c099e8 slot 0, class StoreTemplateIDBehavior from constructor 006c7be0 storing primary 00c09b20
+0070d490	reversed	recon/obj70	gamelogic	ra3::gamelogic::StancesBehavior_accumulate; vtable 00c11840 slot 58 of StancesBehavior
+0070d570	reversed	recon/obj70	gamelogic	ra3::gamelogic::StancesBehavior_clearRecords; vtable 00c11840 slot 33 of StancesBehavior
+0070eab0	reversed	recon/obj70	gamelogic	ra3::gamelogic::HordeContain_collectIds; secondary vtable 00c21520 slot 10, class HordeContain from constructor 0073cb30 storing primary 00c21a98
+0070eb30	reversed	recon/obj70	gamelogic	ra3::gamelogic::HordeContain_refresh; vtable 00c21a98 slot 1 of HordeContain
+00710bf0	reversed	recon/obj70	gamelogic	ra3::gamelogic::BeamSpecialAbilityUpdate_adjustB4; secondary vtable 00c1b928 slot 7, class BeamSpecialAbilityUpdate from constructor 00728950 storing primary 00c1ba58
+00710c20	reversed	recon/obj70	gamelogic	ra3::gamelogic::BeamSpecialAbilityUpdate_adjustB0; secondary vtable 00c1b928 slot 16, class BeamSpecialAbilityUpdate from constructor 00728950 storing primary 00c1ba58
+00710c50	reversed	recon/obj70	gamelogic	ra3::gamelogic::BeamSpecialAbilityUpdate_sameOwner; secondary vtable 00c1b8d4 slot 2, class BeamSpecialAbilityUpdate from constructor 00728950 storing primary 00c1ba58
+00710c80	reversed	recon/obj70	gamelogic	ra3::gamelogic::BeamSpecialAbilityUpdate_setMask46; secondary vtable 00c1b918 slot 2, class BeamSpecialAbilityUpdate from constructor 00728950 storing primary 00c1ba58
+00711a40	reversed	recon/obj70	gamelogic	ra3::gamelogic::GiveOrRestoreUpgradeSpecialPower_try; secondary vtable 00c1c874 slot 6, class GiveOrRestoreUpgradeSpecialPower from constructor 00729540 storing primary 00c1c9d8
+00711f10	reversed	recon/obj70	gamelogic	ra3::gamelogic::RecallUnitsSpecialPower_filter; secondary vtable 00c183f0 slot 20, class RecallUnitsSpecialPower from constructor 006fdde0 storing primary 00c185c8
+00712370	reversed	recon/obj70	gamelogic	ra3::gamelogic::SpecialDisguiseUpdate_seed; secondary vtable 00c1d5f8 slot 2, class SpecialDisguiseUpdate from constructor 00729cf0 storing primary 00c1d738
+00712730	reversed	recon/obj70	gamelogic	ra3::gamelogic::SpecialPowerModule_trigger; vtable 00c01108 slot 23 of SpecialPowerModule
+007128c0	reversed	recon/obj70	gamelogic	ra3::gamelogic::SwitchLocomotorsSpecialAbilityUpdate_latch; vtable 00c1d960 slot 22 of SwitchLocomotorsSpecialAbilityUpdate
+00712ef0	reversed	recon/obj70	gamelogic	ra3::gamelogic::WeaponFireSpecialAbilityUpdate_sameOwner; secondary vtable 00c1e7a0 slot 2, class WeaponFireSpecialAbilityUpdate from constructor 00712dc0 storing primary 00c1e918; same body is also slot 2 of 00c20174 and is counted once
+00714240	reversed	recon/obj70	gamelogic	ra3::gamelogic::AIUpdateInterface_applyProne; vtable 00c22118 slot 79 of AIUpdateInterface; name key string at 00c053b8 is ProneUpdate
+00714d10	reversed	recon/obj70	gamelogic	ra3::gamelogic::BombardAreaUpdate_xfer; vtable 00c0cad0 slot 3 of BombardAreaUpdate
+00714dc0	reversed	recon/obj70	gamelogic	ra3::gamelogic::EmotionTrackerUpdate_release; secondary vtable 00c13a70 slot 0, class EmotionTrackerUpdate from constructor 006cda30 storing primary 00c13bb8
+007155f0	reversed	recon/obj70	gamelogic	ra3::gamelogic::LiftObjectUpdate_xfer; vtable 00c0d338 slot 3 of LiftObjectUpdate
+00715c20	reversed	recon/obj70	gamelogic	ra3::gamelogic::MagneticEffectUpdate_xfer; vtable 00c19510 slot 3 of MagneticEffectUpdate
+00715ee0	reversed	recon/obj70	gamelogic	ra3::gamelogic::OCLMonitorSpecialAbilityUpdate_spanOpen; vtable 00c1ee08 slot 42 of OCLMonitorSpecialAbilityUpdate
+00715fe0	reversed	recon/obj70	gamelogic	ra3::gamelogic::LinearDamageUpdate_clearIfUnset; secondary vtable 00c0d538 slot 5, class LinearDamageUpdate from constructor 006b8580 storing primary 00c0d4e0
+00716a30	reversed	recon/obj70	gamelogic	ra3::gamelogic::ProductionUpdate_doorCode; secondary vtable 00c19580 slot 1, class ProductionUpdate from constructor 006e8ed0 storing primary 00c19788
+00716aa0	reversed	recon/obj70	gamelogic	ra3::gamelogic::ProductionUpdate_scanOrPush; secondary vtable 00c19580 slot 13, class ProductionUpdate from constructor 006e8ed0 storing primary 00c19788
+00717d30	reversed	recon/obj70	gamelogic	ra3::gamelogic::ShieldSphereManager_retarget; secondary vtable 00c05cb4 slot 5, class ShieldSphereManager from constructor 006b9980 storing primary 00c05ca4
+00718120	reversed	recon/obj70	gamelogic	ra3::gamelogic::ShieldSphereUpdate_xfer; vtable 00c14120 slot 3 of ShieldSphereUpdate
+00718200	reversed	recon/obj70	gamelogic	ra3::gamelogic::BehaviorModule_clearMotion; secondary vtable 00bf8da8 slot 2, class BehaviorModule from constructor 0069f890 storing primary 00bdbc08
+0071c9f0	reversed	recon/obj70	gamelogic	ra3::gamelogic::Object_maskedFind; secondary vtable 00c27530 slot 2, class Object from constructor 0076b240 storing primary 00c27548
+0071f060	reversed	recon/obj70	gamelogic	ra3::gamelogic::BeamTargetModule_xfer; vtable 00c08480 slot 3 of BeamTargetModule
+0071fa60	reversed	recon/obj70	gamelogic	ra3::gamelogic::BezierProjectileBehavior_copyAim; secondary vtable 00c10f20 slot 7, class BezierProjectileBehavior from constructor 006c6370 storing primary 00c11090; same body is also slot 7 of 00c13de0 and is counted once
+0071fdd0	reversed	recon/obj70	gamelogic	ra3::gamelogic::BridgeBuilderBehavior_xfer; vtable 00c1aab8 slot 3 of BridgeBuilderBehavior
+0071fe60	reversed	recon/obj70	gamelogic	ra3::gamelogic::EncloseBehavior_xfer; vtable 00c08a48 slot 3 of EncloseBehavior
