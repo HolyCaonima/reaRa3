@@ -1,0 +1,68 @@
+address	status	owner	module	notes
+00520170	reversed	recon/drawable52	gameclient	addSwayOffset. Called from constructor callers 0x0052BAD0 (0x0052C13E) and 0x0052C3D0 (0x0052CA3F); those functions call the Drawable.cpp-asserting function 0x0051FCB0 (at 0x0052BAF2 / 0x0052C3F1).
+00520220	reversed	recon/drawable52	gameclient	integrateSwayAngle. Called from the same constructor callers at 0x0052C0DC and 0x0052C938.
+00520380	reversed	recon/drawable52	gameclient	ensureAuxRecord. Direct call from Drawable::xfer 0x0053EE30 at 0x0053FB0D.
+005209b0	reversed	recon/drawable52	gameclient	visitModules20. Primary Drawable vtable 0x00BE1058 slot 8, pointer stored at 0x00BE1078.
+00520cb0	reversed	recon/drawable52	gameclient	readTintEnvelope. TintEnvelope vtable 0x00BDFFD4 slot 3, pointer stored at 0x00BDFFE0; that vtable is installed by Drawable::xfer.
+00520f50	reversed	recon/drawable52	gameclient	queryModulesB0. Primary Drawable vtable 0x00BE1058 slot 9, pointer stored at 0x00BE107C.
+00523140	reversed	recon/drawable52	gameclient	readCountedBlock. Direct call from Drawable::xfer at 0x0053EEFF.
+00524010	reversed	recon/drawable52	gameclient	publishArgument. 0x005371D0 calls it at 0x00537217 with the same this (esi) it passes to secondary-vtable callee publishCondition 0x00524050 at 0x0053721E.
+00524050	reversed	recon/drawable52	gameclient	publishCondition. Direct call from secondary Drawable vtable slot syncSecondary 0x0052DEF0 at 0x0052DF3F.
+00524310	reversed	recon/drawable52	gameclient	updateSwayState. Direct call to the Drawable.cpp-asserting function 0x0051FCB0.
+00525bd0	reversed	recon/drawable52	gameclient	publishScalar. Primary Drawable vtable 0x00BE1058 slot 5, pointer stored at 0x00BE106C.
+00525cf0	reversed	recon/drawable52	gameclient	positionPointer. Direct call from Drawable.cpp-asserting function 0x0052C1C0 at 0x0052C273.
+00525d40	reversed	recon/drawable52	gameclient	releaseTracked. Direct call from Drawable::xfer at 0x0053FEB7.
+00525da0	reversed	recon/drawable52	gameclient	clearAttachedBit. Direct call to xfer callee releaseTracked 0x00525D40.
+005261a0	reversed	recon/drawable52	gameclient	tintEnvelopeStatic. TintEnvelope vtable 0x00BDFFD4 slot 2, pointer stored at 0x00BDFFDC.
+005268e0	reversed	recon/drawable52	gameclient	resolveRecord. Direct callee of applyAlternate 0x0052DA30 and selectRecordKey 0x0052CDD0; applyAlternate is reached from setAttachedAndRefresh, which calls xfer callee releaseTracked.
+0052a800	reversed	recon/drawable52	gameclient	copyTwelveDwords. Direct call from secondary Drawable vtable slot syncSecondary 0x0052DEF0 at 0x0052DF37.
+0052b960	reversed	recon/drawable52	gameclient	assignByte25A. Direct call to secondary-vtable callee publishCondition 0x00524050.
+0052b980	reversed	recon/drawable52	gameclient	assignByte25B. Direct call to secondary-vtable callee publishCondition 0x00524050.
+0052cdd0	reversed	recon/drawable52	gameclient	selectRecordKey. Direct call to resolveRecord 0x005268E0.
+0052d790	reversed	recon/drawable52	gameclient	transformPointer. Direct call from Drawable::xfer at 0x0053EF09.
+0052d8f0	reversed	recon/drawable52	gameclient	installResolved. Direct call to xfer callee releaseTracked 0x00525D40.
+0052d990	reversed	recon/drawable52	gameclient	refreshIfVisible. Direct call to xfer callee releaseTracked 0x00525D40.
+0052d9e0	reversed	recon/drawable52	gameclient	refreshSupplied. Direct call to installResolved 0x0052D8F0, which calls xfer callee releaseTracked.
+0052da30	reversed	recon/drawable52	gameclient	applyAlternate. Direct callee of setAttachedAndRefresh 0x0052DBD0, which calls xfer callee releaseTracked; also calls resolveRecord.
+0052dae0	reversed	recon/drawable52	gameclient	assignFlag13DBit1. Direct call to refreshIfVisible 0x0052D990, which calls xfer callee releaseTracked.
+0052dbd0	reversed	recon/drawable52	gameclient	setAttachedAndRefresh. Direct call to xfer callee releaseTracked 0x00525D40.
+0052dc90	reversed	recon/drawable52	gameclient	refreshModuleGate. Direct call from Drawable::xfer at 0x0053F90E.
+0052ddb0	reversed	recon/drawable52	gameclient	assignFlag13CBit1. Direct call to xfer callee refreshModuleGate 0x0052DC90.
+0052def0	reversed	recon/drawable52	gameclient	syncSecondary. Secondary Drawable vtable 0x00BE1048 slot 1, pointer stored at 0x00BE104C.
+00520010		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00520990		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00520b40		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00520bd0		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00520c10		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00520db0		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00521090		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523990		recon/drawable52	gameclient	Deferred. Deleting destructor of the sway-state helper, not an accessor.
+00523bb0		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523bf0		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523e60		recon/drawable52	gameclient	Deferred. Ledger securom inner-patched, not a clean body.
+00523ec0		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523ef0		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523f20		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523f40		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523f90		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523fc0		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00523fe0		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+005240c0		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00524110		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+005242b0		recon/drawable52	gameclient	Deferred. Ledger securom inner-patched, not a clean body.
+00524500		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+00524530		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+0052b060		recon/drawable52	gameclient	Deferred. Six-byte thunk, no distinct behavior.
+0052b0e0		recon/drawable52	gameclient	Deferred. Deleting destructor, not an accessor.
+0052b2f0		recon/drawable52	gameclient	Deferred. Large update body, not an accessor. Ownership anchor only.
+0052b930		recon/drawable52	gameclient	Deferred. Entry-recoverable thunk, not a clean body.
+0052ba80		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+0052bad0		recon/drawable52	gameclient	Deferred. Large constructor caller, not an accessor. Ownership anchor only.
+0052c3d0		recon/drawable52	gameclient	Deferred. Large constructor caller, not an accessor. Ownership anchor only.
+0052cd70		recon/drawable52	gameclient	Deferred. Entry-recoverable thunk, not a clean body.
+0052d670		recon/drawable52	gameclient	Deferred. Module-list walk with no vtable slot and no call edge to an anchored Drawable function.
+0052d6b0		recon/drawable52	gameclient	Deferred. Ledger securom inner-patched, not a clean body.
+0052d730		recon/drawable52	gameclient	Deferred. No vtable slot. Its call to publishArgument is not by itself an anchored Drawable edge.
+0052d830		recon/drawable52	gameclient	Deferred. Calls entry-recoverable 0x0052B060. Not an accessor.
+0052db30		recon/drawable52	gameclient	Deferred. Ledger securom inner-patched, not a clean body.
+0052df80		recon/drawable52	gameclient	Deferred. No vtable slot and no call edge to an anchored Drawable function.
