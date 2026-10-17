@@ -36,6 +36,7 @@ ra3_add_shared_library(ra3hook
         dll/targets/GameLogic72Targets.cpp
         dll/targets/ParticleModules65Targets.cpp
         dll/targets/StateMachineTargets.cpp
+        dll/targets/Render56Targets.cpp
     DEPS
         Ra3::audio
         Ra3::asset

@@ -27,6 +27,7 @@ void appendDrawable52Targets(std::vector<Target>& table);
 void appendGameLogic72Targets(std::vector<Target>& table);
 void appendParticleModules65Targets(std::vector<Target>& table);
 void appendStateMachineTargets(std::vector<Target>& table);
+void appendRender56Targets(std::vector<Target>& table);
 
 void appendModuleTargets(std::vector<Target>& table)
 {
@@ -53,6 +54,7 @@ void appendModuleTargets(std::vector<Target>& table)
     appendGameLogic72Targets(table);
     appendParticleModules65Targets(table);
     appendStateMachineTargets(table);
+    appendRender56Targets(table);
 }
 
 }  // namespace ra3hook
