@@ -7907,41 +7907,41 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005d4910	FUN_005d4910	.text	6		clean	unknown		unanalyzed	
 005d4920	FUN_005d4920	.text	23		clean	unknown		unanalyzed	
 005d4940	FUN_005d4940	.text	11		clean	unknown		unanalyzed	
-005d4950	FUN_005d4950	.text	7		clean	unknown		unanalyzed	
+005d4950	FUN_005d4950	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::byte0134; vtable 00BF1558 slot 63; +0x134 byte load; ctor 006225A0/reset 00622B30
 005d4960	FUN_005d4960	.text	27		clean	unknown		unanalyzed	
 005d4980	FUN_005d4980	.text	111		clean	unknown		unanalyzed	
 005d49f0	FUN_005d49f0	.text	10		clean	unknown		unanalyzed	
 005d4a00	FUN_005d4a00	.text	8		clean	unknown		unanalyzed	
 005d4a10	FUN_005d4a10	.text	8		clean	unknown		unanalyzed	
-005d4a20	AptAnimationTarget::GetInputSet	.text	4		clean	unknown		unanalyzed	
+005d4a20	AptAnimationTarget::GetInputSet	.text	4		clean	net	recon/grokclean1	reversed	LobbySession::field0018; vtable 00BF1558 slot 80; +0x18 address of embedded field; ctor 006225A0/reset 00622B30
 005d4a30	FUN_005d4a30	.text	8		clean	unknown		unanalyzed	
-005d4a40	FUN_005d4a40	.text	4		clean	unknown		unanalyzed	
-005d4a50	FUN_005d4a50	.text	7		clean	unknown		unanalyzed	
+005d4a40	FUN_005d4a40	.text	4		clean	net	recon/grokclean1	reversed	LobbySession::field001C; vtable 00BF1558 slot 82; +0x1C address of embedded field; ctor 006225A0/reset 00622B30
+005d4a50	FUN_005d4a50	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::field1E4C; vtable 00BF1558 slot 91; +0x1E4C address of embedded field; ctor 006225A0/reset 00622B30
 005d4a60	FUN_005d4a60	.text	13		inner-patched	unknown		unanalyzed	
-005d4a90	FUN_005d4a90	.text	13		clean	unknown		unanalyzed	
-005d4aa0	FUN_005d4aa0	.text	13		clean	unknown		unanalyzed	
-005d4ab0	FUN_005d4ab0	.text	7		clean	unknown		unanalyzed	
-005d4ac0	FUN_005d4ac0	.text	7		clean	unknown		unanalyzed	
-005d4ad0	FUN_005d4ad0	.text	13		clean	unknown		unanalyzed	
-005d4ae0	FUN_005d4ae0	.text	7		clean	unknown		unanalyzed	
-005d4af0	FUN_005d4af0	.text	13		clean	unknown		unanalyzed	
-005d4b00	FUN_005d4b00	.text	13		clean	unknown		unanalyzed	
-005d4b10	FUN_005d4b10	.text	13		clean	unknown		unanalyzed	
-005d4b20	FUN_005d4b20	.text	13		clean	unknown		unanalyzed	
-005d4b30	FUN_005d4b30	.text	13		clean	unknown		unanalyzed	
-005d4b40	FUN_005d4b40	.text	7		clean	unknown		unanalyzed	
-005d4b50	FUN_005d4b50	.text	7		clean	unknown		unanalyzed	
-005d4b60	FUN_005d4b60	.text	7		clean	unknown		unanalyzed	
-005d4b70	FUN_005d4b70	.text	7		clean	unknown		unanalyzed	
-005d4b80	FUN_005d4b80	.text	7		clean	unknown		unanalyzed	
-005d4b90	FUN_005d4b90	.text	7		clean	unknown		unanalyzed	
-005d4ba0	FUN_005d4ba0	.text	7		clean	unknown		unanalyzed	
-005d4bb0	FUN_005d4bb0	.text	7		clean	unknown		unanalyzed	
-005d4bc0	FUN_005d4bc0	.text	7		clean	unknown		unanalyzed	
-005d4bd0	FUN_005d4bd0	.text	13		clean	unknown		unanalyzed	
-005d4be0	FUN_005d4be0	.text	7		clean	unknown		unanalyzed	
-005d4bf0	FUN_005d4bf0	.text	13		clean	unknown		unanalyzed	
-005d4c00	FUN_005d4c00	.text	7		clean	unknown		unanalyzed	
+005d4a90	FUN_005d4a90	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setByte0120; vtable 00BF1558 slot 69; +0x120 byte store from stack argument; ctor 006225A0/reset 00622B30
+005d4aa0	FUN_005d4aa0	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setByte0121; vtable 00BF1558 slot 70; +0x121 byte store from stack argument; ctor 006225A0/reset 00622B30
+005d4ab0	FUN_005d4ab0	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::byte0120; vtable 00BF1558 slot 71; +0x120 byte load; ctor 006225A0/reset 00622B30
+005d4ac0	FUN_005d4ac0	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::byte0121; vtable 00BF1558 slot 72; +0x121 byte load; ctor 006225A0/reset 00622B30
+005d4ad0	FUN_005d4ad0	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setDword012C; vtable 00BF1558 slot 105; +0x12C dword store from stack argument; ctor 006225A0/reset 00622B30
+005d4ae0	FUN_005d4ae0	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword012C; vtable 00BF1558 slot 106; +0x12C dword load; ctor 006225A0/reset 00622B30
+005d4af0	FUN_005d4af0	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setDword1E8C; vtable 00BF1558 slot 112; +0x1E8C dword store from stack argument; ctor 006225A0/reset 00622B30
+005d4b00	FUN_005d4b00	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setDword1E90; vtable 00BF1558 slot 113; +0x1E90 dword store from stack argument; ctor 006225A0/reset 00622B30
+005d4b10	FUN_005d4b10	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setDword1E94; vtable 00BF1558 slot 114; +0x1E94 dword store from stack argument; ctor 006225A0/reset 00622B30
+005d4b20	FUN_005d4b20	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setDword1EA0; vtable 00BF1558 slot 117; +0x1EA0 dword store from stack argument; ctor 006225A0/reset 00622B30
+005d4b30	FUN_005d4b30	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setDword1EA4; vtable 00BF1558 slot 118; +0x1EA4 dword store from stack argument; ctor 006225A0/reset 00622B30
+005d4b40	FUN_005d4b40	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword1E8C; vtable 00BF1558 slot 121; +0x1E8C dword load; ctor 006225A0/reset 00622B30
+005d4b50	FUN_005d4b50	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword1E90; vtable 00BF1558 slot 122; +0x1E90 dword load; ctor 006225A0/reset 00622B30
+005d4b60	FUN_005d4b60	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword1E94; vtable 00BF1558 slot 123; +0x1E94 dword load; ctor 006225A0/reset 00622B30
+005d4b70	FUN_005d4b70	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword1E98; vtable 00BF1558 slot 124; +0x1E98 dword load; ctor 006225A0/reset 00622B30
+005d4b80	FUN_005d4b80	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword1E9C; vtable 00BF1558 slot 125; +0x1E9C dword load; ctor 006225A0/reset 00622B30
+005d4b90	FUN_005d4b90	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword1EA0; vtable 00BF1558 slot 126; +0x1EA0 dword load; ctor 006225A0/reset 00622B30
+005d4ba0	FUN_005d4ba0	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword1EA4; vtable 00BF1558 slot 127; +0x1EA4 dword load; ctor 006225A0/reset 00622B30
+005d4bb0	FUN_005d4bb0	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword1EAC; vtable 00BF1558 slot 128; +0x1EAC dword load; ctor 006225A0/reset 00622B30
+005d4bc0	FUN_005d4bc0	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword1EB0; vtable 00BF1558 slot 129; +0x1EB0 dword load; ctor 006225A0/reset 00622B30
+005d4bd0	FUN_005d4bd0	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setByte1EB4; vtable 00BF1558 slot 131; +0x1EB4 byte store from stack argument; ctor 006225A0/reset 00622B30
+005d4be0	FUN_005d4be0	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::byte1EB4; vtable 00BF1558 slot 132; +0x1EB4 byte load; ctor 006225A0/reset 00622B30
+005d4bf0	FUN_005d4bf0	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setDword1EB8; vtable 00BF1558 slot 133; +0x1EB8 dword store from stack argument; ctor 006225A0/reset 00622B30
+005d4c00	FUN_005d4c00	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword1EB8; vtable 00BF1558 slot 134; +0x1EB8 dword load; ctor 006225A0/reset 00622B30
 005d4c10	FUN_005d4c10	.text	99		clean	unknown		unanalyzed	
 005d4c80	FUN_005d4c80	.text	44		clean	unknown		unanalyzed	
 005d4cb0	FUN_005d4cb0	.text	113		clean	unknown		unanalyzed	
@@ -9449,35 +9449,35 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0062225f	FUN_0062225f	.text	479		clean	unknown		unanalyzed	
 00622440	FUN_00622440	.text	341		clean	unknown		unanalyzed	
 006225a0	FUN_006225a0	.text	628		clean	unknown		unanalyzed	
-00622820	FUN_00622820	.text	7		clean	unknown		unanalyzed	
-00622830	FUN_00622830	.text	12		clean	unknown		unanalyzed	
+00622820	FUN_00622820	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::byte00FC; vtable 00BF1558 slot 5; +0xFC byte load; ctor 006225A0/reset 00622B30
+00622830	FUN_00622830	.text	12		clean	net	recon/grokclean1	reversed	LobbySession::dwordE8IsNonzero; vtable 00BF1558 slot 14; +0xE8 dword nonzero predicate; ctor 006225A0/reset 00622B30
 00622840	FUN_00622840	.text	11		clean	unknown		unanalyzed	
-00622850	FUN_00622850	.text	13		clean	unknown		unanalyzed	
-00622860	FUN_00622860	.text	7		clean	unknown		unanalyzed	
-00622870	FUN_00622870	.text	13		clean	unknown		unanalyzed	
-00622880	FUN_00622880	.text	7		clean	unknown		unanalyzed	
-00622890	FUN_00622890	.text	7		clean	unknown		unanalyzed	
-006228a0	FUN_006228a0	.text	7		clean	unknown		unanalyzed	
+00622850	FUN_00622850	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setDword00F4; vtable 00BF1558 slot 17; +0xF4 dword store from stack argument; ctor 006225A0/reset 00622B30
+00622860	FUN_00622860	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword00F4; vtable 00BF1558 slot 18; +0xF4 dword load; ctor 006225A0/reset 00622B30
+00622870	FUN_00622870	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setDword00F8; vtable 00BF1558 slot 19; +0xF8 dword store from stack argument; ctor 006225A0/reset 00622B30
+00622880	FUN_00622880	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword00F8; vtable 00BF1558 slot 20; +0xF8 dword load; ctor 006225A0/reset 00622B30
+00622890	FUN_00622890	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::field0098; vtable 00BF1558 slot 25; +0x98 address of embedded field; ctor 006225A0/reset 00622B30
+006228a0	FUN_006228a0	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::field00B4; vtable 00BF1558 slot 26; +0xB4 address of embedded field; ctor 006225A0/reset 00622B30
 006228b0	FUN_006228b0	.text	11		clean	unknown		unanalyzed	
-006228c0	FUN_006228c0	.text	7		clean	unknown		unanalyzed	
+006228c0	FUN_006228c0	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword0104; vtable 00BF1558 slot 39; +0x104 dword load; ctor 006225A0/reset 00622B30
 006228d0	FUN_006228d0	.text	11		clean	unknown		unanalyzed	
 006228e0	FUN_006228e0	.text	11		clean	unknown		unanalyzed	
 006228f0	FUN_006228f0	.text	11		clean	unknown		unanalyzed	
 00622900	FUN_00622900	.text	11		clean	unknown		unanalyzed	
-00622910	FUN_00622910	.text	13		clean	unknown		unanalyzed	
-00622920	FUN_00622920	.text	13		clean	unknown		unanalyzed	
-00622930	FUN_00622930	.text	4		clean	unknown		unanalyzed	
-00622940	FUN_00622940	.text	7		clean	unknown		unanalyzed	
-00622950	FUN_00622950	.text	7		clean	unknown		unanalyzed	
+00622910	FUN_00622910	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setDword0118; vtable 00BF1558 slot 48; +0x118 dword store from stack argument; ctor 006225A0/reset 00622B30
+00622920	FUN_00622920	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setDword011C; vtable 00BF1558 slot 50; +0x11C dword store from stack argument; ctor 006225A0/reset 00622B30
+00622930	FUN_00622930	.text	4		clean	net	recon/grokclean1	reversed	LobbySession::field007C; vtable 00BF1558 slot 32; +0x7C address of embedded field; ctor 006225A0/reset 00622B30
+00622940	FUN_00622940	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::field00DC; vtable 00BF1558 slot 34; +0xDC address of embedded field; ctor 006225A0/reset 00622B30
+00622950	FUN_00622950	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword1E2C; vtable 00BF1558 slot 68; +0x1E2C dword load; ctor 006225A0/reset 00622B30
 00622960	FUN_00622960	.text	5		clean	unknown		unanalyzed	
 00622970	FUN_00622970	.text	8		clean	unknown		unanalyzed	
-00622980	FUN_00622980	.text	7		clean	unknown		unanalyzed	
-00622990	FUN_00622990	.text	7		clean	unknown		unanalyzed	
+00622980	FUN_00622980	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword0124; vtable 00BF1558 slot 98; +0x124 dword load; ctor 006225A0/reset 00622B30
+00622990	FUN_00622990	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::dword0128; vtable 00BF1558 slot 100; +0x128 dword load; ctor 006225A0/reset 00622B30
 006229a0	FUN_006229a0	.text	5		clean	unknown		unanalyzed	
 006229b0	FUN_006229b0	.text	19		clean	unknown		unanalyzed	
 006229d0	FUN_006229d0	.text	14		clean	unknown		unanalyzed	
-006229e0	FUN_006229e0	.text	7		clean	unknown		unanalyzed	
-006229f0	FUN_006229f0	.text	13		clean	unknown		unanalyzed	
+006229e0	FUN_006229e0	.text	7		clean	net	recon/grokclean1	reversed	LobbySession::byte1E88; vtable 00BF1558 slot 110; +0x1E88 byte load; ctor 006225A0/reset 00622B30
+006229f0	FUN_006229f0	.text	13		clean	net	recon/grokclean1	reversed	LobbySession::setByte1E88; vtable 00BF1558 slot 111; +0x1E88 byte store from stack argument; ctor 006225A0/reset 00622B30
 00622a00	FUN_00622a00	.text	25		clean	unknown		unanalyzed	
 00622a20	FUN_00622a20	.text	25		clean	unknown		unanalyzed	
 00622a40	FUN_00622a40	.text	25		clean	unknown		unanalyzed	
