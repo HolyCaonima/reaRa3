@@ -610,7 +610,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00416d40	thunk_FUN_01973bb0	.text	6		entry-lost	unknown		unanalyzed	
 00416dd0	FUN_00416dd0	.text	31		clean	unknown		unanalyzed	
 00416e60	FUN_00416e60	.text	109	Libraries\Source\assetmanager\AssetList\PartialAssetList.cpp	clean	asset	main	reversed	"PartialAssetList.cpp:64 ""Patch streams not alllowed to be partial"""
-00416ed0	thunk_FUN_01978aa0	.text	6		entry-lost	unknown		unanalyzed	
+00416ed0	thunk_FUN_01978aa0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	assetMemoryCompare(lhs, rhs, byteCount): entry-lost thunk site=0x00416ED0 slot=0x018FB790 body=0x004416E0 section=.text; word-first byte-fallback comparator returning -1/0/+1; called by assetByteSpanLess (0x00447740); verified against run35 capture (6 scenarios, 0 mismatches).
 00416f60	FUN_00416f60	.text	74		clean	unknown		unanalyzed	
 00416fb0	FUN_00416fb0	.text	14		clean	unknown		unanalyzed	
 00416fc0	FUN_00416fc0	.text	27		clean	unknown		unanalyzed	
@@ -628,22 +628,22 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004171d6	FUN_004171d6	.text	10		clean	unknown		unanalyzed	
 004171e0	FUN_004171e0	.text	11		clean	unknown		unanalyzed	
 004171eb	FUN_004171eb	.text	10		clean	unknown		unanalyzed	
-00417200	thunk_FUN_019811b0	.text	6		entry-lost	unknown		unanalyzed	
+00417200	thunk_FUN_019811b0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloApplyPointerOffsets(relocationTable, instanceBuffer): entry-lost thunk site=0x00417200 slot=0x018F502C body=0x0043A1D0 section=.text; in-place .relo pointer fixup loop terminated by 0xFFFFFFFF; anchored by resourcemanager.cpp (0x00BC8F00 at 0x00417220) and asset_layout.md section 2.1; verified against run35 capture (4 scenarios, 0 mismatches).
 00417206	FUN_00417206	.text	23		clean	unknown		unanalyzed	
 00417220	FUN_00417220	.text	176	Libraries\Source\assetmanager\resourcemanager.cpp	clean	asset	recon/types	reversed	Libraries\Source\assetmanager\resourcemanager.cpp: registers handler descriptors {vtable, typeId, typeHash}; 164 clean direct callers exported (asset_types_program.tsv)
 00417300	thunk_FUN_01973b60	.text	6		entry-lost	unknown		unanalyzed	
 00417306	FUN_00417306	.text	10		clean	unknown		unanalyzed	
 00417310	FUN_00417310	.text	24		clean	unknown		unanalyzed	
-00417380	thunk_FUN_01981a00	.text	6		entry-lost	unknown		unanalyzed	
+00417380	thunk_FUN_01981a00	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	ReloScratchBuffer::ensureCapacity(requiredBytes): entry-lost thunk site=0x00417380 slot=0x018F51BC body=0x0043E450 section=.text; __thiscall 8-byte scratch buffer grower freeing old buffer via 0x004166B0 and allocating via 0x00416840 when requiredBytes > capacity; verified against run35 capture (4 scenarios, 0 mismatches).
 00417386	FUN_00417386	.text	11		clean	unknown		unanalyzed	
 004173b0	FUN_004173b0	.text	31		clean	asset	recon/vclass	reversed	name=AssetHandlerTemplate::scalar_deleting_destructor; slot=0; shared_by=2 handlers; small_constants=0x4; 已由 Ghidra 反编译并结合调用约定确认语义
 004174e0	FUN_004174e0	.text	97		clean	unknown		unanalyzed	
-00417550	thunk_FUN_01974340	.text	6		entry-lost	unknown		unanalyzed	
+00417550	thunk_FUN_01974340	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneCoord3D(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x00417550 slot=0x018F6724 body=0x0047A780 section=.text; nullable 12-byte Coord3D/Vector3 cloner allocating via 0x004165A0; called by LaserStateModuleData (0x00459520) and HordeGarrisonContainModuleData (0x0048A520); verified against run35 capture (3 scenarios, 0 mismatches).
 004175a0	FUN_004175a0	.text	20		inner-patched	unknown		unanalyzed	
 00417630	FUN_00417630	.text	53		clean	unknown		unanalyzed	
 00417670	FUN_00417670	.text	50		clean	unknown		unanalyzed	
-004176b0	thunk_FUN_01979080	.text	6		entry-lost	unknown		unanalyzed	
-00417700	thunk_FUN_0197d290	.text	6		entry-lost	unknown		unanalyzed	
+004176b0	thunk_FUN_01979080	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneString(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x004176B0 slot=0x018FA7A4 body=0x00424730 section=.text; nullable 8-byte String cloner allocating via 0x004165A0 and delegating to 0x004174E0; verified against run35 capture (3 scenarios, 0 mismatches).
+00417700	thunk_FUN_0197d290	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	unanalyzed	Deferred entry-lost detokenizer helper (site=0x00417700 slot=0x018FB9A4 body=0x018FE250 section=.securom): calls unresolved/virtualized sub-detokenizer path; deferred until callee closure is recovered.
 004177a0	FUN_004177a0	.text	135		clean	unknown		unanalyzed	
 00417939	FUN_00417939	.text	11		clean	unknown		unanalyzed	
 00417b00	FUN_00417b00	.text	25		clean	unknown		unanalyzed	
@@ -656,7 +656,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00417d9d	FUN_00417d9d	.text	11		clean	unknown		unanalyzed	
 00417db0	FUN_00417db0	.text	360		clean	asset	recon/types	verified	resourcemanager.cpp neighborhood: lowercase SuperFastHash core (bytes,length,seed,finalize); ra3::asset::hashName; 118,232/118,232 instanceIds; live hook namehash shadow 5579/5579, replace 5554/5554 (injection.md 5.4)
 00417fe0	FUN_00417fe0	.text	61		clean	unknown		unanalyzed	
-00418090	thunk_FUN_019742c0	.text	6		entry-lost	unknown		unanalyzed	
+00418090	thunk_FUN_019742c0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	ReloStreamHeader::clear(): entry-lost thunk site=0x00418090 slot=0x018F6020 body=0x0043B110 section=.text; __thiscall 32-byte stream header zero-initializer returning this; verified against run35 capture (2 scenarios, 0 mismatches).
 00418096	FUN_00418096	.text	10		clean	unknown		unanalyzed	
 004180b0	FUN_004180b0	.text	66		clean	unknown		unanalyzed	
 00418100	FUN_00418100	.text	201		clean	unknown		unanalyzed	
@@ -690,8 +690,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0041c442	FUN_0041c442	.text	160		clean	unknown		unanalyzed	
 0041cab0	FUN_0041cab0	.text	35		clean	unknown		unanalyzed	
 0041cad3	FUN_0041cad3	.text	357		clean	unknown		unanalyzed	
-0041cf20	FUN_0041cf20	.text	32		entry-lost	unknown		unanalyzed	
-0041d0b0	thunk_FUN_0197d0e0	.text	6		entry-lost	unknown		unanalyzed	
+0041cf20	FUN_0041cf20	.text	32		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x0041CF20 slot=0x018F556C body=0x0190C480 section=.securom; ReloDetokenizeFields<ModuleData> walker (BaseModules.xsd: fieldId 0x19B042A0/typeHash 0x23E650B8 -> +0x00, 0x8CDC9898/0xBDF07965 -> +0x04); verified against run35 capture (4 scenarios, 0 mismatches).
+0041d0b0	thunk_FUN_0197d0e0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeObjectStatusValidationDataType(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x0041D0B0 slot=0x018FB250 body=0x0046DC80 section=.text; ReloDetokenizeFields<ObjectStatusValidationDataType> walker (BaseModules.xsd: ForbiddenStatus 0x312281FD/0xA7BD811E -> +0x00 28B, RequiredStatus 0x239EB201/0xA7BD811E -> +0x1C 28B); called by 0x004430E0; verified against run35 capture (4 scenarios, 0 mismatches).
 0041d1c1	FUN_0041d1c1	.text	11		clean	unknown		unanalyzed	
 0041d270	FUN_0041d270	.text	90		clean	unknown		unanalyzed	
 0041d460	FUN_0041d460	.text	14		clean	unknown		unanalyzed	
@@ -760,17 +760,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0042be60	FUN_0042be60	.text	175		clean	unknown		unanalyzed	
 0042bf10	FUN_0042bf10	.text	250		clean	unknown		unanalyzed	
 0042c010	FUN_0042c010	.text	125		clean	unknown		unanalyzed	
-0042c120	thunk_FUN_01974da0	.text	6		entry-lost	unknown		unanalyzed	
+0042c120	thunk_FUN_01974da0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeAttackAssistResponseBehaviorModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x0042C120 slot=0x018F62C0 body=0x01918630 section=.securom; ReloDetokenizeFields<AttackAssistResponseBehaviorModuleData> walker (base BehaviorModuleData 0x0041D270, ObjectStatusBitFlags +0x08, +0x24, +0x28); verified against run35 capture (4 scenarios, 0 mismatches).
 0042c1e0	FUN_0042c1e0	.text	164		clean	unknown		unanalyzed	
 0042c3c0	FUN_0042c3c0	.text	149		clean	unknown		unanalyzed	
 0042c460	FUN_0042c460	.text	289		clean	unknown		unanalyzed	
 0042c590	FUN_0042c590	.text	199		clean	unknown		unanalyzed	
 0042c740	FUN_0042c740	.text	129		clean	unknown		unanalyzed	
-0042c8b0	thunk_FUN_01979970	.text	6		entry-lost	unknown		unanalyzed	
+0042c8b0	thunk_FUN_01979970	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeQueueDockModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x0042C8B0 slot=0x018FAA0C body=0x00492CA0 section=.text; ReloDetokenizeFields<QueueDockModuleData> walker (base UpdateModuleData 0x00431F70, 5 String bone prefix fields +0x08..+0x28 via 0x004174E0, scalar +0x30); verified against run35 capture (4 scenarios, 0 mismatches).
 0042c9f1	FUN_0042c9f1	.text	11		clean	unknown		unanalyzed	
 0042ca90	FUN_0042ca90	.text	206		clean	unknown		unanalyzed	
 0042cb5e	FUN_0042cb5e	.text	599		clean	unknown		unanalyzed	
-0042cdc0	thunk_FUN_01982470	.text	6		entry-lost	unknown		unanalyzed	
+0042cdc0	thunk_FUN_01982470	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeStructurePlacementBehaviorModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x0042CDC0 slot=0x018F6710 body=0x0191BDE0 section=.securom; ReloDetokenizeFields<StructurePlacementBehaviorModuleData> walker (base BehaviorModuleData 0x0041D270, sub-field +0x08 via 0x00418D60); verified against run35 capture (4 scenarios, 0 mismatches).
 0042ce90	FUN_0042ce90	.text	1376		clean	unknown		unanalyzed	
 0042d3f0	FUN_0042d3f0	.text	53		clean	unknown		unanalyzed	
 0042d520	FUN_0042d520	.text	118		clean	unknown		unanalyzed	
@@ -968,11 +968,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0043b9d0	FUN_0043b9d0	.text	14		clean	unknown		unanalyzed	
 0043b9e0	FUN_0043b9e0	.text	104		clean	unknown		unanalyzed	
 0043ba50	FUN_0043ba50	.text	114		clean	unknown		unanalyzed	
-0043bad0	thunk_FUN_0197a720	.text	6		entry-lost	unknown		unanalyzed	
+0043bad0	thunk_FUN_0197a720	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneValue8(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x0043BAD0 slot=0x018FB8A0 body=0x0043FBC0 section=.text; nullable 8-byte value direct cloner allocating via 0x004165A0; verified against run35 capture (3 scenarios, 0 mismatches).
 0043bb10	thunk_FUN_0197e810	.text	6		entry-lost	unknown		unanalyzed	
 0043beac	FUN_0043beac	.text	10		clean	unknown		unanalyzed	
-0043bf60	thunk_FUN_0197e7b0	.text	6		entry-lost	unknown		unanalyzed	
-0043bfb0	thunk_FUN_019835b0	.text	6		entry-lost	unknown		unanalyzed	
+0043bf60	thunk_FUN_0197e7b0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneObjectStatusBitFlags(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x0043BF60 slot=0x018F5A18 body=0x00455D70 section=.text; nullable 28-byte ObjectStatusBitFlags direct cloner allocating via 0x004165A0; verified against run35 capture (3 scenarios, 0 mismatches).
+0043bfb0	thunk_FUN_019835b0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneValue60(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x0043BFB0 slot=0x018F6E64 body=0x0048F3F0 section=.text; nullable 60-byte value direct cloner allocating via 0x004165A0; verified against run35 capture (3 scenarios, 0 mismatches).
 0043bfc0	FUN_0043bfc0	.text	13		clean	unknown		unanalyzed	
 0043c254	FUN_0043c254	.text	11		clean	unknown		unanalyzed	
 0043c3fc	FUN_0043c3fc	.text	10		clean	unknown		unanalyzed	
@@ -985,9 +985,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0043d6af	FUN_0043d6af	.text	11		clean	unknown		unanalyzed	
 0043d6ba	FUN_0043d6ba	.text	11		clean	unknown		unanalyzed	
 0043d6c5	FUN_0043d6c5	.text	10		clean	unknown		unanalyzed	
-0043d6d0	thunk_FUN_019763d0	.text	6		entry-lost	unknown		unanalyzed	
-0043d780	thunk_FUN_0197ead0	.text	6		entry-lost	unknown		unanalyzed	
-0043d830	thunk_FUN_01983900	.text	6		entry-lost	unknown		unanalyzed	
+0043d6d0	thunk_FUN_019763d0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	unanalyzed	Deferred entry-lost detokenizer walker (site=0x0043D6D0 slot=0x018F6E54 body=0x01930AB0 section=.securom): multi-field complexType walker outside current 46-function batch scope.
+0043d780	thunk_FUN_0197ead0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	unanalyzed	Deferred entry-lost detokenizer walker (site=0x0043D780 slot=0x018FBDC8 body=0x01901810 section=.securom): multi-field complexType walker outside current 46-function batch scope.
+0043d830	thunk_FUN_01983900	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneStruct60_419580(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x0043D830 slot=0x018F5BF4 body=0x0045EA50 section=.text; nullable 60-byte struct cloner allocating via 0x004165A0, zeroing via memset (0x004D2F98), and delegating to 0x00419580; verified against run35 capture (3 scenarios, 0 mismatches).
 0043df50	thunk_FUN_01db4000	.text	6		entry-lost	unknown		unanalyzed	
 0043e19f	FUN_0043e19f	.text	24	SageEngine\source\GameEngine\gamenetwork\ReliableTransport.cpp	clean	net		unanalyzed	
 0043e57c	FUN_0043e57c	.text	11		clean	unknown		unanalyzed	
@@ -1003,7 +1003,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0043fb94	FUN_0043fb94	.text	11		clean	unknown		unanalyzed	
 0043fc2d	FUN_0043fc2d	.text	11		clean	unknown		unanalyzed	
 0043fc38	FUN_0043fc38	.text	11		clean	unknown		unanalyzed	
-0043fc60	thunk_FUN_01983de0	.text	6		entry-lost	unknown		unanalyzed	
+0043fc60	thunk_FUN_01983de0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneStruct20_423860(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x0043FC60 slot=0x018F6EB0 body=0x00490490 section=.text; nullable 20-byte struct cloner allocating via 0x004165A0 and delegating to 0x00423860; verified against run35 capture (3 scenarios, 0 mismatches).
 0043fc70	FUN_0043fc70	.text	13		clean	unknown		unanalyzed	
 0043fcb0	thunk_FUN_01db9000	.text	6		entry-lost	unknown		unanalyzed	
 0043feb7	FUN_0043feb7	.text	10		clean	unknown		unanalyzed	
@@ -1014,10 +1014,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00440078	FUN_00440078	.text	10		clean	unknown		unanalyzed	
 00440160	FUN_00440160	.text	145		clean	unknown		unanalyzed	
 00440394	FUN_00440394	.text	11		clean	unknown		unanalyzed	
-004404a0	thunk_FUN_01976790	.text	6		entry-lost	unknown		unanalyzed	
+004404a0	thunk_FUN_01976790	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneScalar32(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x004404A0 slot=0x018F6FE0 body=0x0047BB20 section=.text; nullable 4-byte scalar direct cloner allocating via 0x004165A0; verified against run35 capture (3 scenarios, 0 mismatches).
 004404b2	FUN_004404b2	.text	23		clean	unknown		unanalyzed	
 004404c9	FUN_004404c9	.text	11		clean	unknown		unanalyzed	
-00440580	thunk_FUN_0197ee00	.text	6		entry-lost	unknown		unanalyzed	
+00440580	thunk_FUN_0197ee00	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	unanalyzed	Deferred entry-lost detokenizer walker (site=0x00440580 slot=0x018FBF80 body=0x01903590 section=.securom): multi-field complexType walker outside current 46-function batch scope.
 0044060c	FUN_0044060c	.text	10		clean	unknown		unanalyzed	
 004406b0	FUN_004406b0	.text	11		clean	unknown		unanalyzed	
 00440b2c	FUN_00440b2c	.text	10		clean	unknown		unanalyzed	
@@ -1033,7 +1033,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0044281c	FUN_0044281c	.text	23		clean	unknown		unanalyzed	
 00442833	FUN_00442833	.text	10		clean	unknown		unanalyzed	
 004428a8	FUN_004428a8	.text	11		clean	unknown		unanalyzed	
-004428c0	thunk_FUN_01984390	.text	6		entry-lost	unknown		unanalyzed	
+004428c0	thunk_FUN_01984390	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneStruct12_41D1E0(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x004428C0 slot=0x018F6100 body=0x0046DF20 section=.text; nullable 12-byte struct cloner allocating via 0x004165A0 and delegating to 0x0041D1E0; verified against run35 capture (3 scenarios, 0 mismatches).
 004428d0	FUN_004428d0	.text	41		patched	unknown		unanalyzed	
 00442ada	FUN_00442ada	.text	10		clean	unknown		unanalyzed	
 00442af0	FUN_00442af0	.text	33		entry-lost	unknown		unanalyzed	
@@ -1044,7 +1044,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00442d50	FUN_00442d50	.text	32		entry-lost	unknown		unanalyzed	
 00442ed0	FUN_00442ed0	.text	65		clean	unknown		unanalyzed	
 00442fc0	thunk_FUN_0197b1a0	.text	6		entry-lost	unknown		unanalyzed	
-004430e0	thunk_FUN_019842e0	.text	6		entry-lost	unknown		unanalyzed	
+004430e0	thunk_FUN_019842e0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneObjectStatusValidationDataType(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x004430E0 slot=0x018F57DC body=0x0045CCA0 section=.text; nullable 56-byte ObjectStatusValidationDataType cloner allocating via 0x004165A0, zeroing via 0x004D2F98, and calling intra-cluster 0x0041D0B0; verified against run35 capture (3 scenarios, 0 mismatches).
 00443130	thunk_FUN_01976cd0	.text	6		entry-lost	unknown		unanalyzed	
 00443163	FUN_00443163	.text	11		clean	unknown		unanalyzed	
 00443180	thunk_FUN_0197f1f0	.text	6		entry-recoverable	unknown		unanalyzed	
@@ -1069,7 +1069,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00443860	thunk_FUN_01de9000	.text	6		entry-lost	unknown		unanalyzed	
 004438e1	FUN_004438e1	.text	10		clean	unknown		unanalyzed	
 004439b0	thunk_FUN_01984250	.text	6		entry-lost	unknown		unanalyzed	
-00443a50	thunk_FUN_01976c30	.text	6		entry-lost	unknown		unanalyzed	
+00443a50	thunk_FUN_01976c30	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	unanalyzed	Deferred entry-lost detokenizer walker (site=0x00443A50 slot=0x018FAAF4 body=0x00481BB0 section=.text): multi-field complexType walker outside current 46-function batch scope.
 00443b60	thunk_FUN_01984220	.text	6		entry-lost	unknown		unanalyzed	
 00443c00	FUN_00443c00	.text	6		entry-lost	unknown		unanalyzed	
 00443cb0	thunk_FUN_0197b100	.text	6		entry-lost	unknown		unanalyzed	
@@ -1190,12 +1190,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00445660	FUN_00445660	.text	48		clean	unknown		unanalyzed	
 00445690	FUN_00445690	.text	56		clean	unknown		unanalyzed	
 00445910	thunk_FUN_022a0000	.text	6		entry-lost	unknown		unanalyzed	
-004459b0	thunk_FUN_0197b0a0	.text	6		entry-lost	unknown		unanalyzed	
+004459b0	thunk_FUN_0197b0a0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	unanalyzed	Deferred entry-lost detokenizer walker (site=0x004459B0 slot=0x018FB45C body=0x004A3420 section=.text): multi-field complexType walker outside current 46-function batch scope.
 00445a60	thunk_FUN_0197f0f0	.text	6		entry-lost	unknown		unanalyzed	
-00445b10	thunk_FUN_01984180	.text	6		entry-lost	unknown		unanalyzed	
+00445b10	thunk_FUN_01984180	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	unanalyzed	Deferred entry-lost detokenizer cloner/helper (site=0x00445B10 slot=0x018F6DF8 body=0x0048D1D0 section=.text): calls unresolved entry-lost target 0x00445910 (slot=0x018FA280); deferred per evidence rules.
 00445b60	thunk_FUN_026e0000	.text	6		entry-lost	unknown		unanalyzed	
 00445bb0	thunk_FUN_0197f0d0	.text	6		entry-recoverable	unknown		unanalyzed	
-00445c10	thunk_FUN_01984150	.text	6		entry-lost	unknown		unanalyzed	
+00445c10	thunk_FUN_01984150	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneStruct36_4323B0(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x00445C10 slot=0x018F6F14 body=0x00490690 section=.text; nullable 36-byte struct cloner allocating via 0x004165A0 and delegating to 0x004323B0; verified against run35 capture (3 scenarios, 0 mismatches).
 00445cec	FUN_00445cec	.text	10		clean	unknown		unanalyzed	
 00445d01	FUN_00445d01	.text	11		clean	unknown		unanalyzed	
 00445e54	FUN_00445e54	.text	11		clean	unknown		unanalyzed	
@@ -1227,15 +1227,15 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004473f0	thunk_FUN_01976f60	.text	6		entry-lost	unknown		unanalyzed	
 00447490	thunk_FUN_02820000	.text	6		entry-recoverable	unknown		unanalyzed	
 00447540	thunk_FUN_0197f3b0	.text	6		entry-lost	unknown		unanalyzed	
-00447740	thunk_FUN_01976f30	.text	6		entry-lost	unknown		unanalyzed	
+00447740	thunk_FUN_01976f30	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	assetByteSpanLess(lhs, rhs): entry-lost thunk site=0x00447740 slot=0x018F6F50 body=0x00491B00 section=.text; lexicographical '<' comparator over two 8-byte [begin, end) spans calling intra-cluster assetMemoryCompare (0x00416ED0); verified against run35 capture (6 scenarios, 0 mismatches).
 004477b0	thunk_FUN_029d0000	.text	6		entry-lost	unknown		unanalyzed	
-00447870	thunk_FUN_01984510	.text	6		entry-lost	unknown		unanalyzed	
+00447870	thunk_FUN_01984510	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	unanalyzed	Deferred entry-lost detokenizer walker (site=0x00447870 slot=0x018F6150 body=0x0046E370 section=.text): multi-field complexType walker outside current 46-function batch scope.
 004479e0	FUN_004479e0	.text	911	Libraries\Source\assetmanager\Stream\ResourceManagerFileStream.cpp	clean	asset	main	reversed	ResourceManagerFileStream.cpp: opens .imp/.relo/.bin, compares leading u32 with the manifest stream checksum; ra3::asset::validateStreamBundle, AssetStream::loadDecoded
 00447d70	FUN_00447d70	.text	86		clean	asset	recon/layout2	reversed	ResourceManagerFileStream record callback; validates record count, allocates count*0x30 and delegates stream opening/checksum validation to 0x004479E0
 00447dd0	thunk_FUN_02830000	.text	6		entry-lost	unknown		unanalyzed	
 00447e30	FUN_00447e30	.text	177		clean	asset	recon/layout2	reversed	walks 12-byte typed fixup descriptors, converts descriptor-relative offsets with the instance base and dispatches EvaEvent/special typed fixups
 00448070	thunk_FUN_01977380	.text	6		entry-recoverable	unknown		unanalyzed	
-00448170	thunk_FUN_01984a00	.text	6		entry-lost	unknown		unanalyzed	
+00448170	thunk_FUN_01984a00	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeAudioVoiceEntry(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x00448170 slot=0x018F594C body=0x0045CF90 section=.text; ReloDetokenizeFields<AudioVoiceEntry> walker (base SoundOrEvaEvent 0x00447E30, AudioVoiceReferentialEntry +0x08); verified against run35 capture (4 scenarios, 0 mismatches).
 004482a0	thunk_FUN_0197f700	.text	6		entry-recoverable	unknown		unanalyzed	
 00448300	thunk_FUN_019849d0	.text	6		entry-lost	unknown		unanalyzed	
 00448360	FUN_00448360	.text	17		inner-patched	unknown		unanalyzed	
@@ -1296,13 +1296,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00454690	FUN_00454690	.text	857		clean	unknown		unanalyzed	
 004549f0	FUN_004549f0	.text	100		clean	unknown		unanalyzed	
 00454a54	FUN_00454a54	.text	322		clean	unknown		unanalyzed	
-00454bf0	thunk_FUN_01984ee0	.text	6		entry-lost	unknown		unanalyzed	
+00454bf0	thunk_FUN_01984ee0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeHighlanderBodyModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x00454BF0 slot=0x018F7350 body=0x004AF880 section=.text; ReloDetokenizeFields<HighlanderBodyModuleData> walker (base ActiveBodyModuleData 0x00454690); verified against run35 capture (4 scenarios, 0 mismatches).
 00454c50	thunk_FUN_029c0000	.text	6		entry-lost	unknown		unanalyzed	
 00454cf0	thunk_FUN_0197fab0	.text	6		entry-lost	unknown		unanalyzed	
 00454d41	FUN_00454d41	.text	104		clean	unknown		unanalyzed	
 00454d50	thunk_FUN_01d59000	.text	6		entry-lost	unknown		unanalyzed	
 00454dd0	FUN_00454dd0	.text	218		clean	unknown		unanalyzed	
-00454f10	thunk_FUN_0197fa90	.text	6		entry-lost	unknown		unanalyzed	
+00454f10	thunk_FUN_0197fa90	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	unanalyzed	Deferred entry-lost detokenizer walker (site=0x00454F10 slot=0x018F6404 body=0x00478230 section=.text): multi-field complexType walker outside current 46-function batch scope.
 00454f63	FUN_00454f63	.text	10		clean	unknown		unanalyzed	
 00454fb0	FUN_00454fb0	.text	81		clean	unknown		unanalyzed	
 00455001	FUN_00455001	.text	190		clean	unknown		unanalyzed	
@@ -1386,7 +1386,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00459000	FUN_00459000	.text	149		clean	unknown		unanalyzed	
 00459095	FUN_00459095	.text	313		clean	unknown		unanalyzed	
 00459200	FUN_00459200	.text	795		clean	unknown		unanalyzed	
-00459520	thunk_FUN_01980070	.text	6		entry-lost	unknown		unanalyzed	
+00459520	thunk_FUN_01980070	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeLaserStateModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x00459520 slot=0x018F5010 body=0x01907EB0 section=.securom; ReloDetokenizeFields<LaserStateModuleData> walker calling intra-cluster 0x00417550 (reloCloneCoord3D) and 0x004430E0 (reloCloneObjectStatusValidationDataType); verified against run35 capture (4 scenarios, 0 mismatches).
 004596f0	FUN_004596f0	.text	101		clean	unknown		unanalyzed	
 00459755	FUN_00459755	.text	211		clean	unknown		unanalyzed	
 00459830	FUN_00459830	.text	519		clean	unknown		unanalyzed	
@@ -1438,17 +1438,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0045d0d0	thunk_FUN_01985320	.text	6		entry-lost	unknown		unanalyzed	
 0045d180	thunk_FUN_01977a90	.text	6		entry-lost	unknown		unanalyzed	
 0045d960	thunk_FUN_0197c220	.text	6		entry-recoverable	unknown		unanalyzed	
-0045d9f0	thunk_FUN_01980520	.text	6		entry-lost	unknown		unanalyzed	
-0045e570	thunk_FUN_01977f20	.text	6		entry-lost	unknown		unanalyzed	
+0045d9f0	thunk_FUN_01980520	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneSoundOrEvaEvent(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x0045D9F0 slot=0x018F55B4 body=0x00450950 section=.text; nullable 8-byte SoundOrEvaEvent cloner allocating via 0x004165A0 and delegating to 0x00447E30; verified against run35 capture (3 scenarios, 0 mismatches).
+0045e570	thunk_FUN_01977f20	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneStruct44_44A230(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x0045E570 slot=0x018FA2F8 body=0x0040B970 section=.text; nullable 44-byte struct cloner allocating via 0x004165A0 and delegating to 0x0044A230; verified against run35 capture (3 scenarios, 0 mismatches).
 0045e9a0	FUN_0045e9a0	.text	158	RtsXmlPipeline\0.0-dev\include\RtsXmlPipeline\ReloDetokenizers.h	clean	asset	recon/layout2	reversed	ReloDetokenizers.h:127 unknown-polymorphic fatal cleanup; releases the +4/+8 allocations and owner
 0045f0f0	thunk_FUN_019808e0	.text	6		entry-lost	unknown		unanalyzed	
 0045f240	thunk_FUN_019782e0	.text	6		entry-lost	unknown		unanalyzed	
 0045f367	FUN_0045f367	.text	55		clean	unknown		unanalyzed	
-0045f460	thunk_FUN_01985d90	.text	6		entry-lost	unknown		unanalyzed	
-0045f5d0	thunk_FUN_01980890	.text	6		entry-lost	unknown		unanalyzed	
+0045f460	thunk_FUN_01985d90	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneStruct8_455B10(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x0045F460 slot=0x018F6224 body=0x004724A0 section=.text; nullable 8-byte struct cloner allocating via 0x004165A0 and delegating to 0x00455B10; verified against run35 capture (3 scenarios, 0 mismatches).
+0045f5d0	thunk_FUN_01980890	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneStruct8_448070(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x0045F5D0 slot=0x018F511C body=0x00446480 section=.text; nullable 8-byte struct cloner allocating via 0x004165A0 and delegating to 0x00448070; verified against run35 capture (3 scenarios, 0 mismatches).
 0045f620	thunk_FUN_01985d70	.text	6		entry-lost	unknown		unanalyzed	
 0045f710	thunk_FUN_01985d50	.text	6		entry-lost	unknown		unanalyzed	
-0045f830	thunk_FUN_0197c480	.text	6		entry-lost	unknown		unanalyzed	
+0045f830	thunk_FUN_0197c480	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	unanalyzed	Deferred entry-lost detokenizer walker (site=0x0045F830 slot=0x018FB7E0 body=0x004DAB30 section=.text): multi-field complexType walker outside current 46-function batch scope.
 0045f970	FUN_0045f970	.text	48		clean	unknown		unanalyzed	
 0045f9a0	FUN_0045f9a0	.text	56		clean	unknown		unanalyzed	
 0045f9e0	FUN_0045f9e0	.text	39		clean	unknown		unanalyzed	
@@ -1532,10 +1532,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00460bd0	FUN_00460bd0	.text	56		clean	unknown		unanalyzed	
 00460c10	FUN_00460c10	.text	56		clean	unknown		unanalyzed	
 00461120	FUN_00461120	.text	29		clean	unknown		unanalyzed	
-004617b0	thunk_FUN_01985d20	.text	6		entry-lost	unknown		unanalyzed	
+004617b0	thunk_FUN_01985d20	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneStruct8_45B590(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x004617B0 slot=0x018F666C body=0x0047A6F0 section=.text; nullable 8-byte struct cloner allocating via 0x004165A0 and delegating to 0x0045B590; verified against run35 capture (3 scenarios, 0 mismatches).
 00461800	thunk_FUN_01d87000	.text	6		entry-lost	unknown		unanalyzed	
-00461860	thunk_FUN_01980850	.text	6		entry-lost	unknown		unanalyzed	
-004618b0	thunk_FUN_01985cf0	.text	6		entry-lost	unknown		unanalyzed	
+00461860	thunk_FUN_01980850	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	unanalyzed	Deferred entry-lost detokenizer cloner/helper (site=0x00461860 slot=0x018F5504 body=0x0044DBA0 section=.text): calls unresolved entry-lost target 0x0045F240 (slot=0x018F73C0); deferred per evidence rules.
+004618b0	thunk_FUN_01985cf0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	unanalyzed	Deferred entry-lost detokenizer cloner/helper (site=0x004618B0 slot=0x018F6874 body=0x0047AED0 section=.text): calls unresolved entry-lost target 0x00461800 (slot=0x018FA6BC); deferred per evidence rules.
 00461900	thunk_FUN_02560000	.text	6		entry-lost	unknown		unanalyzed	
 00461d80	thunk_FUN_01d62000	.text	6		entry-lost	unknown		unanalyzed	
 00461e7b	FUN_00461e7b	.text	19		clean	unknown		unanalyzed	
@@ -1596,7 +1596,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00471d80	thunk_FUN_01978900	.text	6		entry-lost	unknown		unanalyzed	
 00471fa0	FUN_00471fa0	.text	138		clean	unknown		unanalyzed	
 0047202a	FUN_0047202a	.text	341		clean	unknown		unanalyzed	
-00472180	thunk_FUN_01980ff0	.text	6		entry-lost	unknown		unanalyzed	
+00472180	thunk_FUN_01980ff0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeSubObjectsUpgradeModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x00472180 slot=0x018F5114 body=0x01908CA0 section=.securom; ReloDetokenizeFields<SubObjectsUpgradeModuleData> walker (base UpgradeModuleData 0x00453ED0, sub-field +0x24 via 0x0045F4B0); verified against run35 capture (4 scenarios, 0 mismatches).
 00472250	FUN_00472250	.text	571		clean	unknown		unanalyzed	
 00472520	FUN_00472520	.text	164		clean	unknown		unanalyzed	
 004725c4	FUN_004725c4	.text	690		clean	unknown		unanalyzed	
@@ -1605,7 +1605,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00472d00	FUN_00472d00	.text	380		clean	unknown		unanalyzed	
 00472e80	FUN_00472e80	.text	151		clean	unknown		unanalyzed	
 00472f50	FUN_00472f50	.text	149		clean	unknown		unanalyzed	
-00473100	thunk_FUN_01980fb0	.text	6		entry-lost	unknown		unanalyzed	
+00473100	thunk_FUN_01980fb0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeShipSlowDeathBehaviorModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x00473100 slot=0x018F5104 body=0x00446370 section=.text; ReloDetokenizeFields<ShipSlowDeathBehaviorModuleData> walker (base SlowDeathBehaviorModuleData 0x0046FFE0); verified against run35 capture (4 scenarios, 0 mismatches).
 00473160	FUN_00473160	.text	99		clean	unknown		unanalyzed	
 004731c3	FUN_004731c3	.text	934		clean	unknown		unanalyzed	
 00473730	FUN_00473730	.text	112		clean	unknown		unanalyzed	
@@ -1663,7 +1663,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00477de0	thunk_FUN_024c0000	.text	6		entry-lost	unknown		unanalyzed	
 00478910	thunk_FUN_01973ef0	.text	6		entry-lost	unknown		unanalyzed	
 00478a40	thunk_FUN_01978d10	.text	6		entry-lost	unknown		unanalyzed	
-00478ba0	thunk_FUN_01981540	.text	6		entry-lost	unknown		unanalyzed	
+00478ba0	thunk_FUN_01981540	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneStruct24_467520(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x00478BA0 slot=0x018F6584 body=0x0047AC00 section=.text; nullable 24-byte struct cloner allocating via 0x004165A0 and delegating to 0x00467520; verified against run35 capture (3 scenarios, 0 mismatches).
 00478bf0	thunk_FUN_01973ec0	.text	6		entry-lost	unknown		unanalyzed	
 00478cf0	thunk_FUN_01978ce0	.text	6		entry-lost	unknown		unanalyzed	
 00478da0	thunk_FUN_01981520	.text	6		entry-lost	unknown		unanalyzed	
@@ -1733,7 +1733,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0047be70	thunk_FUN_019790a0	.text	6		entry-lost	unknown		unanalyzed	
 0047be90	FUN_0047be90	.text	698		clean	asset	recon/types	verified	runtime string-to-instanceId wrapper: strlen, then 00417DB0(name,length,length,1); ra3::asset::instanceIdFromName
 0047c150	FUN_0047c150	.text	59		clean	unknown		unanalyzed	
-0047c190	thunk_FUN_01981eb0	.text	6		entry-lost	unknown		unanalyzed	
+0047c190	thunk_FUN_01981eb0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeFXShaderMaterial(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x0047C190 slot=0x018F5184 body=0x01909340 section=.securom; ReloDetokenizeFields<FXShaderMaterial> walker (ShaderName +0x00, TechniqueName +0x08, Constants +0x10 via 0x00476A50, TechniqueIndex +0x18 u8); verified against run35 capture (4 scenarios, 0 mismatches).
 0047c27b	FUN_0047c27b	.text	56		clean	unknown		unanalyzed	
 0047d2e0	FUN_0047d2e0	.text	581		clean	unknown		unanalyzed	
 0047e7bd	FUN_0047e7bd	.text	20		clean	unknown		unanalyzed	
@@ -1764,7 +1764,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00480d50	thunk_FUN_0197d550	.text	6		entry-lost	unknown		unanalyzed	
 00480dc0	FUN_00480dc0	.text	91		clean	unknown		unanalyzed	
 00480e20	thunk_FUN_01981d50	.text	6		entry-lost	unknown		unanalyzed	
-004812d0	thunk_FUN_0197d500	.text	6		entry-lost	unknown		unanalyzed	
+004812d0	thunk_FUN_0197d500	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneStruct8_47EF30(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x004812D0 slot=0x018FB6DC body=0x0043BD10 section=.text; nullable 8-byte struct cloner allocating via 0x004165A0 and delegating to 0x0047EF30; verified against run35 capture (3 scenarios, 0 mismatches).
 00481320	thunk_FUN_01981d00	.text	6		entry-lost	unknown		unanalyzed	
 00481420	thunk_FUN_01974620	.text	6		entry-lost	unknown		unanalyzed	
 00481520	thunk_FUN_025b0000	.text	6		entry-lost	unknown		unanalyzed	
@@ -1808,8 +1808,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00489cb0	thunk_FUN_02460000	.text	6		entry-lost	unknown		unanalyzed	
 00489d30	FUN_00489d30	.text	266		clean	unknown		unanalyzed	
 00489e3a	FUN_00489e3a	.text	1519		clean	unknown		unanalyzed	
-0048a430	thunk_FUN_01979770	.text	6		entry-lost	unknown		unanalyzed	
-0048a520	thunk_FUN_0197d8b0	.text	6		entry-lost	unknown		unanalyzed	
+0048a430	thunk_FUN_01979770	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeGarrisonContainModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x0048A430 slot=0x018FA7A8 body=0x0044F800 section=.text; ReloDetokenizeFields<GarrisonContainModuleData> walker (base OpenContainModuleData 0x004890D0, InitialRoster +0x94 via 0x0042B1A0, bool flags +0x9C/+0x9D/+0x9E); called by 0x0048A520; verified against run35 capture (4 scenarios, 0 mismatches).
+0048a520	thunk_FUN_0197d8b0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeHordeGarrisonContainModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x0048A520 slot=0x018FB9E0 body=0x018FE520 section=.securom; ReloDetokenizeFields<HordeGarrisonContainModuleData> walker calling intra-cluster 0x0048A430 (reloDetokenizeGarrisonContainModuleData) and 0x00417550 (reloCloneCoord3D x3); verified against run35 capture (4 scenarios, 0 mismatches).
 0048a640	FUN_0048a640	.text	74		clean	unknown		unanalyzed	
 0048a68a	FUN_0048a68a	.text	194		clean	unknown		unanalyzed	
 0048a750	FUN_0048a750	.text	118		clean	unknown		unanalyzed	
@@ -1822,7 +1822,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0048b519	FUN_0048b519	.text	181		clean	unknown		unanalyzed	
 0048b5d0	FUN_0048b5d0	.text	316		clean	unknown		unanalyzed	
 0048b710	FUN_0048b710	.text	548		clean	unknown		unanalyzed	
-0048b940	thunk_FUN_01974b40	.text	6		entry-lost	unknown		unanalyzed	
+0048b940	thunk_FUN_01974b40	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeCaptureSpecialAbilityUpdateModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x0048B940 slot=0x018F6E88 body=0x00487B30 section=.text; ReloDetokenizeFields<CaptureSpecialAbilityUpdateModuleData> walker (base SpecialAbilityUpdateModuleData 0x0048AB00); verified against run35 capture (4 scenarios, 0 mismatches).
 0048b9a0	FUN_0048b9a0	.text	17		inner-patched	unknown		unanalyzed	
 0048bc10	FUN_0048bc10	.text	141		clean	unknown		unanalyzed	
 0048bca0	FUN_0048bca0	.text	361		clean	unknown		unanalyzed	
@@ -1877,7 +1877,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0048f3e0	thunk_FUN_01d86000	.text	6		entry-lost	unknown		unanalyzed	
 0048f470	FUN_0048f470	.text	279		clean	unknown		unanalyzed	
 0048f740	FUN_0048f740	.text	30		clean	unknown		unanalyzed	
-0048f7c0	thunk_FUN_01982150	.text	6		entry-lost	unknown		unanalyzed	
+0048f7c0	thunk_FUN_01982150	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	unanalyzed	Deferred entry-lost detokenizer cloner/helper (site=0x0048F7C0 slot=0x018F583C body=0x0043DE10 section=.text): calls unresolved entry-lost target 0x0048EA30 (slot=0x018F521C); deferred per evidence rules.
 0049004c	FUN_0049004c	.text	3		clean	unknown		unanalyzed	
 0049004f	FUN_0049004f	.text	2		clean	unknown		unanalyzed	
 00490052	FUN_00490052	.text	132		clean	unknown		unanalyzed	
@@ -1956,13 +1956,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00492ea0	FUN_00492ea0	.text	6		clean	unknown		unanalyzed	
 00492ea6	FUN_00492ea6	.text	2313		clean	unknown		unanalyzed	
 004937b0	thunk_FUN_01dca000	.text	6		entry-lost	unknown		unanalyzed	
-00493870	thunk_FUN_0197dc90	.text	6		entry-lost	unknown		unanalyzed	
+00493870	thunk_FUN_0197dc90	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeW3DTankDrawModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x00493870 slot=0x018FBFF8 body=0x01903AA0 section=.securom; ReloDetokenizeFields<W3DTankDrawModuleData> walker (base W3DScriptedModelDrawModuleData 0x00492EA0, ArticulationBone +0xD8 via 0x00442ED0, TreadDebris +0xDC via 0x00442F20); verified against run35 capture (4 scenarios, 0 mismatches).
 00493960	FUN_00493960	.text	147		clean	unknown		unanalyzed	
 004939f3	FUN_004939f3	.text	1218		clean	unknown		unanalyzed	
 00494130	FUN_00494130	.text	188		clean	unknown		unanalyzed	
 004941f0	FUN_004941f0	.text	131		clean	unknown		unanalyzed	
 00494273	FUN_00494273	.text	357		clean	unknown		unanalyzed	
-00494430	thunk_FUN_019826c0	.text	6		entry-lost	unknown		unanalyzed	
+00494430	thunk_FUN_019826c0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeToggleStatusSpecialAbilityUpdateModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x00494430 slot=0x018F591C body=0x019104B0 section=.securom; ReloDetokenizeFields<ToggleStatusSpecialAbilityUpdateModuleData> walker (base SpecialAbilityUpdateModuleData 0x0048AB00, ToggleEntry +0xF0 via 0x00490830, ActivateAllSimultaneously +0xF8 default 1); verified against run35 capture (4 scenarios, 0 mismatches).
 00494753	FUN_00494753	.text	956		clean	unknown		unanalyzed	
 00494950	thunk_FUN_01975000	.text	6		entry-lost	unknown		unanalyzed	
 00494a10	thunk_FUN_0197dc70	.text	6		entry-lost	unknown		unanalyzed	
@@ -1974,7 +1974,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00494fe0	FUN_00494fe0	.text	62		clean	unknown		unanalyzed	
 00495020	FUN_00495020	.text	62		clean	unknown		unanalyzed	
 00495060	FUN_00495060	.text	62		clean	unknown		unanalyzed	
-00495180	thunk_FUN_01979ad0	.text	6		entry-lost	unknown		unanalyzed	
+00495180	thunk_FUN_01979ad0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneStruct88_4944E0(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x00495180 slot=0x018FA8B0 body=0x004290B0 section=.text; nullable 88-byte struct cloner allocating via 0x004165A0, zeroing via 0x004D2F98, and delegating to 0x004944E0; verified against run35 capture (3 scenarios, 0 mismatches).
 004951d0	FUN_004951d0	.text	125		clean	unknown		unanalyzed	
 00495310	FUN_00495310	.text	258	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00495544	FUN_00495544	.text	1		clean	unknown		unanalyzed	
@@ -2048,7 +2048,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004a7fa9	FUN_004a7fa9	.text	275		clean	unknown		unanalyzed	
 004a80c0	FUN_004a80c0	.text	224		clean	unknown		unanalyzed	
 004a81a0	FUN_004a81a0	.text	219		clean	unknown		unanalyzed	
-004a8280	FUN_004a8280	.text	32		entry-lost	unknown		unanalyzed	
+004a8280	FUN_004a8280	.text	32		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeRecallUnitsSpecialPowerModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x004A8280 slot=0x018FAB2C body=0x0044D880 section=.text; ReloDetokenizeFields<RecallUnitsSpecialPowerModuleData> walker (base SpecialPowerModuleData 0x004A71D0, +0x1C0 u32 default 4, +0x1C4 u8 default 1); verified against run35 capture (4 scenarios, 0 mismatches).
 004a8330	FUN_004a8330	.text	234		clean	unknown		unanalyzed	
 004a8420	FUN_004a8420	.text	184		clean	unknown		unanalyzed	
 004a84e0	FUN_004a84e0	.text	183		clean	unknown		unanalyzed	
@@ -2059,23 +2059,23 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004a8840	FUN_004a8840	.text	115		clean	unknown		unanalyzed	
 004a88b3	FUN_004a88b3	.text	221		clean	unknown		unanalyzed	
 004a8990	FUN_004a8990	.text	184		clean	unknown		unanalyzed	
-004a8a50	thunk_FUN_01979fb0	.text	6		entry-lost	unknown		unanalyzed	
+004a8a50	thunk_FUN_01979fb0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeAttackTargetSpecialPowerModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x004A8A50 slot=0x018FBB14 body=0x00440590 section=.text; ReloDetokenizeFields<AttackTargetSpecialPowerModuleData> walker (base SpecialPowerModuleData 0x004A71D0); verified against run35 capture (4 scenarios, 0 mismatches).
 004a8ab0	FUN_004a8ab0	.text	553		clean	unknown		unanalyzed	
 004a8ce0	FUN_004a8ce0	.text	211		clean	unknown		unanalyzed	
 004a8db3	FUN_004a8db3	.text	227		clean	unknown		unanalyzed	
-004a8ea0	thunk_FUN_0197e080	.text	6		entry-lost	unknown		unanalyzed	
+004a8ea0	thunk_FUN_0197e080	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeActivateModuleSpecialPower(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x004A8EA0 slot=0x018F5C00 body=0x01912C20 section=.securom; ReloDetokenizeFields<ActivateModuleSpecialPower> walker (base SpecialPowerModuleData 0x004A71D0, SpecialPowerModules +0x1C0 via 0x004475F0); verified against run35 capture (4 scenarios, 0 mismatches).
 004a8f30	FUN_004a8f30	.text	616		clean	unknown		unanalyzed	
 004a91a0	FUN_004a91a0	.text	76		clean	unknown		unanalyzed	
 004a91ec	FUN_004a91ec	.text	154		clean	unknown		unanalyzed	
 004a9290	FUN_004a9290	.text	162		clean	unknown		unanalyzed	
 004a9340	FUN_004a9340	.text	415		clean	unknown		unanalyzed	
-004a94e0	thunk_FUN_01982bf0	.text	6		entry-lost	unknown		unanalyzed	
+004a94e0	thunk_FUN_01982bf0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeMoneyCrateCollideModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x004A94E0 slot=0x018F5B08 body=0x0045DC60 section=.text; ReloDetokenizeFields<MoneyCrateCollideModuleData> walker (base CrateCollideModuleData 0x004A8F30, MoneyProvided +0x6C default 0); verified against run35 capture (4 scenarios, 0 mismatches).
 004a9560	thunk_FUN_019755e0	.text	6		entry-recoverable	unknown		unanalyzed	
-004a9600	thunk_FUN_01979f90	.text	6		entry-lost	unknown		unanalyzed	
+004a9600	thunk_FUN_01979f90	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloDetokenizeVeterancyCrateCollideModuleData(instanceBase, fields, dstStruct, context): entry-lost thunk site=0x004A9600 slot=0x018FAF74 body=0x0049FDA0 section=.text; ReloDetokenizeFields<VeterancyCrateCollideModuleData> walker (base CrateCollideModuleData 0x004A8F30, RangeOfEffect +0x6C, Experience +0x70, IsPilot/+0x74, AffectsUpToLevel/+0x75); verified against run35 capture (4 scenarios, 0 mismatches).
 004a96e0	FUN_004a96e0	.text	115		clean	unknown		unanalyzed	
 004a9753	FUN_004a9753	.text	351		clean	unknown		unanalyzed	
 004a98c0	thunk_FUN_0197e050	.text	6		entry-lost	unknown		unanalyzed	
-004a9ab0	thunk_FUN_01982bd0	.text	6		entry-lost	unknown		unanalyzed	
+004a9ab0	thunk_FUN_01982bd0	.text	6		entry-lost	asset/ReloDetokenizers	recon/protentry	reversed	reloCloneStruct40_4A7120(instanceBase, srcField, dstPtrSlot, context): entry-lost thunk site=0x004A9AB0 slot=0x018F6BCC body=0x0048FE70 section=.text; nullable 40-byte struct cloner allocating via 0x004165A0 and delegating to 0x004A7120; verified against run35 capture (3 scenarios, 0 mismatches).
 004a9b60	FUN_004a9b60	.text	62		clean	unknown		unanalyzed	
 004a9ba0	FUN_004a9ba0	.text	62		clean	unknown		unanalyzed	
 004a9be0	FUN_004a9be0	.text	56		clean	unknown		unanalyzed	

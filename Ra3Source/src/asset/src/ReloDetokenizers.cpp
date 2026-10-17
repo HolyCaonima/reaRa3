@@ -179,7 +179,7 @@ bool assetByteSpanLess(const AssetByteSpan* lhs, const AssetByteSpan* rhs) noexc
 // Group 2: ReloClone_<Type> Nullable Struct/Field Cloners (20 functions)
 // ============================================================================
 
-// 0x00417550 -> 0x0047A780 (.text, slot 0x018F50E4)
+// 0x00417550 -> 0x0047A780 (.text, slot 0x018F6724)
 void reloCloneCoord3D(
     const void* /*instanceBase*/,
     const void* srcField,
@@ -190,7 +190,7 @@ void reloCloneCoord3D(
     cloneDirectBytes(srcField, dstPtrSlot, 0x0Cu, hooks);
 }
 
-// 0x004176B0 -> 0x00424730 (.text, slot 0x018F5104)
+// 0x004176B0 -> 0x00424730 (.text, slot 0x018FA7A4)
 void reloCloneString(
     const void* instanceBase,
     const void* srcField,
@@ -201,7 +201,7 @@ void reloCloneString(
     cloneWithExternalDetokenizer(0x004174E0u, instanceBase, srcField, dstPtrSlot, context, 0x08u, hooks);
 }
 
-// 0x0043BAD0 -> 0x0043FBC0 (.text, slot 0x018F50A0)
+// 0x0043BAD0 -> 0x0043FBC0 (.text, slot 0x018FB8A0)
 void reloCloneValue8(
     const void* /*instanceBase*/,
     const void* srcField,
@@ -212,7 +212,7 @@ void reloCloneValue8(
     cloneDirectBytes(srcField, dstPtrSlot, 0x08u, hooks);
 }
 
-// 0x0043BF60 -> 0x00455D70 (.text, slot 0x018F6CC0)
+// 0x0043BF60 -> 0x00455D70 (.text, slot 0x018F5A18)
 void reloCloneObjectStatusBitFlags(
     const void* /*instanceBase*/,
     const void* srcField,
@@ -223,7 +223,7 @@ void reloCloneObjectStatusBitFlags(
     cloneDirectBytes(srcField, dstPtrSlot, 0x1Cu, hooks);
 }
 
-// 0x0043BFB0 -> 0x0048F3F0 (.text, slot 0x018FA648)
+// 0x0043BFB0 -> 0x0048F3F0 (.text, slot 0x018F6E64)
 void reloCloneValue60(
     const void* /*instanceBase*/,
     const void* srcField,
@@ -234,7 +234,7 @@ void reloCloneValue60(
     cloneDirectBytes(srcField, dstPtrSlot, 0x3Cu, hooks);
 }
 
-// 0x0043D830 -> 0x0045EA50 (.text, slot 0x018F5FD8)
+// 0x0043D830 -> 0x0045EA50 (.text, slot 0x018F5BF4)
 void reloCloneStruct60_419580(
     const void* instanceBase,
     const void* srcField,
@@ -245,7 +245,7 @@ void reloCloneStruct60_419580(
     cloneWithExternalDetokenizer(0x00419580u, instanceBase, srcField, dstPtrSlot, context, 0x3Cu, hooks);
 }
 
-// 0x0043FC60 -> 0x00490490 (.text, slot 0x018F90D0)
+// 0x0043FC60 -> 0x00490490 (.text, slot 0x018F6EB0)
 void reloCloneStruct20_423860(
     const void* instanceBase,
     const void* srcField,
@@ -256,7 +256,7 @@ void reloCloneStruct20_423860(
     cloneWithExternalDetokenizer(0x00423860u, instanceBase, srcField, dstPtrSlot, context, 0x14u, hooks);
 }
 
-// 0x004404A0 -> 0x0047BB20 (.text, slot 0x018FB410)
+// 0x004404A0 -> 0x0047BB20 (.text, slot 0x018F6FE0)
 void reloCloneScalar32(
     const void* /*instanceBase*/,
     const void* srcField,
@@ -267,7 +267,7 @@ void reloCloneScalar32(
     cloneDirectBytes(srcField, dstPtrSlot, 0x04u, hooks);
 }
 
-// 0x004428C0 -> 0x0046DF20 (.text, slot 0x018FAF70)
+// 0x004428C0 -> 0x0046DF20 (.text, slot 0x018F6100)
 void reloCloneStruct12_41D1E0(
     const void* instanceBase,
     const void* srcField,
@@ -278,7 +278,7 @@ void reloCloneStruct12_41D1E0(
     cloneWithExternalDetokenizer(0x0041D1E0u, instanceBase, srcField, dstPtrSlot, context, 0x0Cu, hooks);
 }
 
-// 0x004430E0 -> 0x0045CCA0 (.text, slot 0x018FAF78)
+// 0x004430E0 -> 0x0045CCA0 (.text, slot 0x018F57DC)
 void reloCloneObjectStatusValidationDataType(
     const void* instanceBase,
     const void* srcField,
@@ -301,7 +301,7 @@ void reloCloneObjectStatusValidationDataType(
         hooks);
 }
 
-// 0x00445C10 -> 0x00490690 (.text, slot 0x018FA668)
+// 0x00445C10 -> 0x00490690 (.text, slot 0x018F6F14)
 void reloCloneStruct36_4323B0(
     const void* instanceBase,
     const void* srcField,
@@ -312,7 +312,7 @@ void reloCloneStruct36_4323B0(
     cloneWithExternalDetokenizer(0x004323B0u, instanceBase, srcField, dstPtrSlot, context, 0x24u, hooks);
 }
 
-// 0x0045D9F0 -> 0x00450950 (.text, slot 0x018F97B0)
+// 0x0045D9F0 -> 0x00450950 (.text, slot 0x018F55B4)
 void reloCloneSoundOrEvaEvent(
     const void* instanceBase,
     const void* srcField,
@@ -323,7 +323,7 @@ void reloCloneSoundOrEvaEvent(
     cloneWithExternalDetokenizer(0x00447E30u, instanceBase, srcField, dstPtrSlot, context, 0x08u, hooks);
 }
 
-// 0x0045E570 -> 0x0040B970 (.text, slot 0x018FAFAC)
+// 0x0045E570 -> 0x0040B970 (.text, slot 0x018FA2F8)
 void reloCloneStruct44_44A230(
     const void* instanceBase,
     const void* srcField,
@@ -334,7 +334,7 @@ void reloCloneStruct44_44A230(
     cloneWithExternalDetokenizer(0x0044A230u, instanceBase, srcField, dstPtrSlot, context, 0x2Cu, hooks);
 }
 
-// 0x0045F460 -> 0x004724A0 (.text, slot 0x018FAFBC)
+// 0x0045F460 -> 0x004724A0 (.text, slot 0x018F6224)
 void reloCloneStruct8_455B10(
     const void* instanceBase,
     const void* srcField,
@@ -345,7 +345,7 @@ void reloCloneStruct8_455B10(
     cloneWithExternalDetokenizer(0x00455B10u, instanceBase, srcField, dstPtrSlot, context, 0x08u, hooks);
 }
 
-// 0x0045F5D0 -> 0x00446480 (.text, slot 0x018F8120)
+// 0x0045F5D0 -> 0x00446480 (.text, slot 0x018F511C)
 void reloCloneStruct8_448070(
     const void* instanceBase,
     const void* srcField,
@@ -356,7 +356,7 @@ void reloCloneStruct8_448070(
     cloneWithExternalDetokenizer(0x00448070u, instanceBase, srcField, dstPtrSlot, context, 0x08u, hooks);
 }
 
-// 0x004617B0 -> 0x0047A6F0 (.text, slot 0x018FAFC8)
+// 0x004617B0 -> 0x0047A6F0 (.text, slot 0x018F666C)
 void reloCloneStruct8_45B590(
     const void* instanceBase,
     const void* srcField,
@@ -367,7 +367,7 @@ void reloCloneStruct8_45B590(
     cloneWithExternalDetokenizer(0x0045B590u, instanceBase, srcField, dstPtrSlot, context, 0x08u, hooks);
 }
 
-// 0x00478BA0 -> 0x0047AC00 (.text, slot 0x018FA6AC)
+// 0x00478BA0 -> 0x0047AC00 (.text, slot 0x018F6584)
 void reloCloneStruct24_467520(
     const void* instanceBase,
     const void* srcField,
@@ -378,7 +378,7 @@ void reloCloneStruct24_467520(
     cloneWithExternalDetokenizer(0x00467520u, instanceBase, srcField, dstPtrSlot, context, 0x18u, hooks);
 }
 
-// 0x004812D0 -> 0x0043BD10 (.text, slot 0x018F9A60)
+// 0x004812D0 -> 0x0043BD10 (.text, slot 0x018FB6DC)
 void reloCloneStruct8_47EF30(
     const void* instanceBase,
     const void* srcField,
@@ -389,7 +389,7 @@ void reloCloneStruct8_47EF30(
     cloneWithExternalDetokenizer(0x0047EF30u, instanceBase, srcField, dstPtrSlot, context, 0x08u, hooks);
 }
 
-// 0x00495180 -> 0x004290B0 (.text, slot 0x018FAF28)
+// 0x00495180 -> 0x004290B0 (.text, slot 0x018FA8B0)
 void reloCloneStruct88_4944E0(
     const void* instanceBase,
     const void* srcField,
@@ -400,7 +400,7 @@ void reloCloneStruct88_4944E0(
     cloneWithExternalDetokenizer(0x004944E0u, instanceBase, srcField, dstPtrSlot, context, 0x58u, hooks);
 }
 
-// 0x004A9AB0 -> 0x0048FE70 (.text, slot 0x018FB100)
+// 0x004A9AB0 -> 0x0048FE70 (.text, slot 0x018F6BCC)
 void reloCloneStruct40_4A7120(
     const void* instanceBase,
     const void* srcField,
@@ -415,7 +415,7 @@ void reloCloneStruct40_4A7120(
 // Group 3: ReloDetokenizeFields_<Type> Field-Descriptor Walkers (21 functions)
 // ============================================================================
 
-// 0x0041CF20 -> 0x0190C480 (.securom, slot 0x018F5FC0): ModuleData
+// 0x0041CF20 -> 0x0190C480 (.securom, slot 0x018F556C): ModuleData
 void reloDetokenizeModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -441,7 +441,7 @@ void reloDetokenizeModuleData(
     }
 }
 
-// 0x0041D0B0 -> 0x0046DC80 (.text, slot 0x018F5FE8): ObjectStatusValidationDataType
+// 0x0041D0B0 -> 0x0046DC80 (.text, slot 0x018FB250): ObjectStatusValidationDataType
 void reloDetokenizeObjectStatusValidationDataType(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -466,7 +466,7 @@ void reloDetokenizeObjectStatusValidationDataType(
     }
 }
 
-// 0x0042C120 -> 0x01918630 (.securom, slot 0x018F9040): AttackAssistResponseBehaviorModuleData
+// 0x0042C120 -> 0x01918630 (.securom, slot 0x018F62C0): AttackAssistResponseBehaviorModuleData
 void reloDetokenizeAttackAssistResponseBehaviorModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -499,7 +499,7 @@ void reloDetokenizeAttackAssistResponseBehaviorModuleData(
     }
 }
 
-// 0x0042C8B0 -> 0x00492CA0 (.text, slot 0x018F9080): QueueDockModuleData
+// 0x0042C8B0 -> 0x00492CA0 (.text, slot 0x018FAA0C): QueueDockModuleData
 void reloDetokenizeQueueDockModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -544,7 +544,7 @@ void reloDetokenizeQueueDockModuleData(
     }
 }
 
-// 0x0042CDC0 -> 0x0191BDE0 (.securom, slot 0x018F90BC): StructurePlacementBehaviorModuleData
+// 0x0042CDC0 -> 0x0191BDE0 (.securom, slot 0x018F6710): StructurePlacementBehaviorModuleData
 void reloDetokenizeStructurePlacementBehaviorModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -569,7 +569,7 @@ void reloDetokenizeStructurePlacementBehaviorModuleData(
     }
 }
 
-// 0x00448170 -> 0x0045CF90 (.text, slot 0x018F97B4): AudioVoiceEntry
+// 0x00448170 -> 0x0045CF90 (.text, slot 0x018F594C): AudioVoiceEntry
 void reloDetokenizeAudioVoiceEntry(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -594,7 +594,7 @@ void reloDetokenizeAudioVoiceEntry(
     }
 }
 
-// 0x00454BF0 -> 0x004AF880 (.text, slot 0x018F991C): HighlanderBodyModuleData
+// 0x00454BF0 -> 0x004AF880 (.text, slot 0x018F7350): HighlanderBodyModuleData
 void reloDetokenizeHighlanderBodyModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -613,7 +613,7 @@ void reloDetokenizeHighlanderBodyModuleData(
     }
 }
 
-// 0x00459520 -> 0x01907EB0 (.securom, slot 0x018F9974): LaserStateModuleData
+// 0x00459520 -> 0x01907EB0 (.securom, slot 0x018F5010): LaserStateModuleData
 void reloDetokenizeLaserStateModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -669,7 +669,7 @@ void reloDetokenizeLaserStateModuleData(
     }
 }
 
-// 0x00472180 -> 0x01908CA0 (.securom, slot 0x018F99E8): SubObjectsUpgradeModuleData
+// 0x00472180 -> 0x01908CA0 (.securom, slot 0x018F5114): SubObjectsUpgradeModuleData
 void reloDetokenizeSubObjectsUpgradeModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -694,7 +694,7 @@ void reloDetokenizeSubObjectsUpgradeModuleData(
     }
 }
 
-// 0x00473100 -> 0x00446370 (.text, slot 0x018F9A00): ShipSlowDeathBehaviorModuleData
+// 0x00473100 -> 0x00446370 (.text, slot 0x018F5104): ShipSlowDeathBehaviorModuleData
 void reloDetokenizeShipSlowDeathBehaviorModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -713,7 +713,7 @@ void reloDetokenizeShipSlowDeathBehaviorModuleData(
     }
 }
 
-// 0x0047C190 -> 0x01909340 (.securom, slot 0x018F9A1C): FXShaderMaterial
+// 0x0047C190 -> 0x01909340 (.securom, slot 0x018F5184): FXShaderMaterial
 void reloDetokenizeFXShaderMaterial(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -747,7 +747,7 @@ void reloDetokenizeFXShaderMaterial(
     }
 }
 
-// 0x0048A430 -> 0x0044F800 (.text, slot 0x018F9A9C): GarrisonContainModuleData
+// 0x0048A430 -> 0x0044F800 (.text, slot 0x018FA7A8): GarrisonContainModuleData
 void reloDetokenizeGarrisonContainModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -785,7 +785,7 @@ void reloDetokenizeGarrisonContainModuleData(
     }
 }
 
-// 0x0048A520 -> 0x018FE520 (.securom, slot 0x018F9AA0): HordeGarrisonContainModuleData
+// 0x0048A520 -> 0x018FE520 (.securom, slot 0x018FB9E0): HordeGarrisonContainModuleData
 void reloDetokenizeHordeGarrisonContainModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -843,7 +843,7 @@ void reloDetokenizeHordeGarrisonContainModuleData(
     }
 }
 
-// 0x0048B940 -> 0x00487B30 (.text, slot 0x018F9AAC): CaptureSpecialAbilityUpdateModuleData
+// 0x0048B940 -> 0x00487B30 (.text, slot 0x018F6E88): CaptureSpecialAbilityUpdateModuleData
 void reloDetokenizeCaptureSpecialAbilityUpdateModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -862,7 +862,7 @@ void reloDetokenizeCaptureSpecialAbilityUpdateModuleData(
     }
 }
 
-// 0x00493870 -> 0x01903AA0 (.securom, slot 0x018F9AE8): W3DTankDrawModuleData
+// 0x00493870 -> 0x01903AA0 (.securom, slot 0x018FBFF8): W3DTankDrawModuleData
 void reloDetokenizeW3DTankDrawModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -891,7 +891,7 @@ void reloDetokenizeW3DTankDrawModuleData(
     }
 }
 
-// 0x00494430 -> 0x019104B0 (.securom, slot 0x018F9B00): ToggleStatusSpecialAbilityUpdateModuleData
+// 0x00494430 -> 0x019104B0 (.securom, slot 0x018F591C): ToggleStatusSpecialAbilityUpdateModuleData
 void reloDetokenizeToggleStatusSpecialAbilityUpdateModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -921,7 +921,7 @@ void reloDetokenizeToggleStatusSpecialAbilityUpdateModuleData(
     }
 }
 
-// 0x004A8280 -> 0x0044D880 (.text, slot 0x018FB078): RecallUnitsSpecialPowerModuleData
+// 0x004A8280 -> 0x0044D880 (.text, slot 0x018FAB2C): RecallUnitsSpecialPowerModuleData
 void reloDetokenizeRecallUnitsSpecialPowerModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -952,7 +952,7 @@ void reloDetokenizeRecallUnitsSpecialPowerModuleData(
     }
 }
 
-// 0x004A8A50 -> 0x00440590 (.text, slot 0x018FB0A4): AttackTargetSpecialPowerModuleData
+// 0x004A8A50 -> 0x00440590 (.text, slot 0x018FBB14): AttackTargetSpecialPowerModuleData
 void reloDetokenizeAttackTargetSpecialPowerModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -971,7 +971,7 @@ void reloDetokenizeAttackTargetSpecialPowerModuleData(
     }
 }
 
-// 0x004A8EA0 -> 0x01912C20 (.securom, slot 0x018FB0D0): ActivateModuleSpecialPower
+// 0x004A8EA0 -> 0x01912C20 (.securom, slot 0x018F5C00): ActivateModuleSpecialPower
 void reloDetokenizeActivateModuleSpecialPower(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -996,7 +996,7 @@ void reloDetokenizeActivateModuleSpecialPower(
     }
 }
 
-// 0x004A94E0 -> 0x0045DC60 (.text, slot 0x018FB0EC): MoneyCrateCollideModuleData
+// 0x004A94E0 -> 0x0045DC60 (.text, slot 0x018F5B08): MoneyCrateCollideModuleData
 void reloDetokenizeMoneyCrateCollideModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,
@@ -1022,7 +1022,7 @@ void reloDetokenizeMoneyCrateCollideModuleData(
     }
 }
 
-// 0x004A9600 -> 0x0049FDA0 (.text, slot 0x018FB0F4): VeterancyCrateCollideModuleData
+// 0x004A9600 -> 0x0049FDA0 (.text, slot 0x018FAF74): VeterancyCrateCollideModuleData
 void reloDetokenizeVeterancyCrateCollideModuleData(
     const void* instanceBase,
     const ReloFieldDescriptor* fields,

@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 thingtemplate 合并）
+## 3. 现状（截至 protentry 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 919、unanalyzed 48,006。`securom` 分类：clean 47,777、entry-lost 653、
+  reversed 965、unanalyzed 47,960（受保护函数已 reversed：entry-lost 60、inner-patched 2）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
 - **hook**：282 个目标（其中 235 个只认显式键）。原有 86 个全部 replace 时，Release
@@ -113,6 +113,13 @@
     （写入该 vtable）/ `ThingTemplate.cpp` 锚点的直接调用边，主控逐条核对。126 个候选因
     无所有权边、生命周期、EASTL、x87 等被拒。`0x0078E7C0` 为 Ghidra 漏建函数，已登记
     `function_additions.tsv`；同时补登记了早先 stringbase2/audioevent 认领的 3 个漏建函数
+  - asset relo detokenizer 批次（首个受保护批次，Gemini）：46 个 entry-lost 入口，原生体
+    来自 run35（36 个在 `.text` 空隙、10 个在 `.securom`），21 个字段 walker、20 个 clone
+    助手和 5 个原语；代码在 `ra3/asset/ReloDetokenizers.h`，设计见
+    `relo_detokenizers.md`（主控补写）。主控核对了 46 条 site/slot/body 与
+    `securom_sites.tsv` 一致、`.text` 原生体不与台账函数重叠；交付说明里的字符串地址和
+    "回调登记表"不实，C++ 注释中 41 个 slot 号错误，均已按二进制更正。集成态 Release
+    166 场景零差异；两处语义 mutation 检出。无 hook
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
@@ -127,8 +134,8 @@
     类簇，Grok，可脚本核对的逐行所有权证明）补位，base `f535fe2`。
   - `recon/render91`：`0x00900000–0x0091FFFF` W3D draw module 簇，Gemini，base `5d16a5b`。
   - 14:00 补足 10 路，base 均为 `86baa8d`：`recon/objbehav68`（`0x00680000–0x0068FFFF`
-    对象 behavior/update 模块，Gemini）、`recon/protentry`（run35 已恢复原生体的
-    entry-lost 函数，Gemini，无 hook）、`recon/protcave`（全部站点为 cave 的
+    对象 behavior/update 模块，Gemini）、`recon/protentry`（已合并；由
+    `recon/protentry2` 接续剩余 entry-lost 原生体）、`recon/protcave`（全部站点为 cave 的
     inner-patched/entry-recoverable 函数，Gemini，无 hook）、`recon/drawable52`
     （`0x00520000–0x0052FFFF` Drawable 访问器，Grok，逐行所有权证明）、
     `recon/particles65`（`0x00650000–0x0067FFFF` 粒子模块，Gemini）、`recon/net5d`
@@ -154,7 +161,9 @@
   `0x00870000` gamelogic/gameclient 301（Gemini）→ `0x004D0000` GameLogic 核心 261（Gemini）
   → `0x00990000` render 140（Gemini）→ `0x00820000–0x0083FFFF` gamelogic 250（Grok）。
   受保护批次合并后，按剩余 body/cave 数量再开下一路。
-- **验收教训**：子 agent 的交付说明可能与提交不符。合并前用脚本从目标表直接核对
+- **验收教训**：子 agent 的交付说明可能与提交不符（protentry 的证据地址即为编造的）。
+  受保护批次除 `accept_batch.py` 外，主控还要用脚本把注释中的 site/slot/body 与
+  `securom_sites.tsv` 对齐，并抽查所引字符串、表引用确实存在。合并前用脚本从目标表直接核对
   键名、explicitOnly 计数与二进制 expected16，并核对 record 键与注释一致；旧 base 的
   分支可能新建与主分支同名的头文件（WeaponLogic 合并时即需改名为 `UpdateModules.h`）；
   批次自带的 `--mutated` 若只是事后翻转输出，主控需另做一次实现层语义 mutation。每支独立 worktree，完成后主控逐支
