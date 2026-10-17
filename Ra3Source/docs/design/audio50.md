@@ -22,7 +22,7 @@
 | `0x005044F0` | `initAudioEventHandle` | SageAudioManager.cpp `0051E560` 在 `0051E698` 调用 |
 | `0x00504560` | `releaseAudioEventHandle` | SageAudioManager.cpp `005161C0` 在 `00516398` 调用 |
 | `0x005045C0` | `releasePlayingAudioHandle` | SageAudioManager.cpp `0051E560` 在 `0051E9F4` 调用 |
-| `0x005045E0` | `unlinkPlayingAudioNode` | `00519740` 在 `005198E9` 调用；`00519740` 由 EASTL `allocator.h` `00519C50` 在 `00519FB0` 调用 |
+| `0x005045E0` | `unlinkPlayingAudioNode` | `00519740` 在 `005198E9` 调用；`00519740` 由 `00519C50` 在 `00519FB0` 调用；`00519C50` 由 `00BDF594` slot 3 `0051A1C0`（SageAudioManager）在 `0051A3E1` 调用 |
 | `0x00504AC0` | `testAudioEventCategoryBit` | SageAudioManager.cpp `0051D3C0` 在 `0051D607` 调用 |
 | `0x00504AF0` | `intersectsAudioEventCategoryMask` | `00508510` 在 `005085E2` 调用；`00508510` 由 RenderingSound.cpp `00515B70` 在 `00515E28` 调用 |
 | `0x00504C80` | `recomputePlayerCategoryVolume` | `00505340` 在 `00505384` 调用 |
@@ -36,12 +36,14 @@
 | `0x00506C20` | `initCategoryBitsFour` | vtable `00BDC45C` slot 2 `004D9E20` 在 `004D9E2F` 调用。该 slot 不是类名 getter |
 | `0x00506C90` | `initCategoryBitsTwo` | `00508510` 在 `00508594` 调用 |
 | `0x00507720` | `hasActiveRenderCursor` | SageAudioManager.cpp `0051D3C0` 在 `0051D6BB` 调用 |
-| `0x00508640` | `appendPlayingAudioNode` | `005181E0` 在 `005182DD` 调用；`005181E0` 由 `00519740` 在 `005198C8` 调用 |
+| `0x00508640` | `appendPlayingAudioNode` | `005181E0` 在 `005182DD` 调用；`005181E0` 由 `00519740` 在 `005198C8` 调用；`00519740` 经 `00519C50` 归到 `00BDF594` slot 3 `0051A1C0`（同上） |
 | `0x0050B090` | `sagePathMusicManagerTransferState` | `00BDF3A4` slot 3 |
 | `0x0050DF80` | `eraseListenerRecord` | `0050E510` 在 `0050E517` 尾调用 |
 | `0x0050E510` | `sageAudioManagerRemoveListenerEntry` | `00BDF5A8` slot 92 |
 | `0x0050FA80` | `applyListedVolumeModifiers` | `0050FD50` 在 `0050FD6D` 调用 |
 | `0x0050FD50` | `refreshRenderingPlayerVolumes` | RenderingSound.cpp `00515B70` 在 `00515DB6` 调用 |
+
+主控复核：`00519C50` 只压入 EASTL `allocator.h` 断言串，通用头文件不能证明归属，所以上面两行改为从 SageAudioManager vtable `00BDF594` slot 3 起算；SageAudioManager.cpp（`00BDF4D8`）与 RenderingSound.cpp（`00BDF450`）的压栈分别在 `0051E857`、`005162BF`、`0051D51C` 与 `00515DD7`。以上均经 `work/probe/verify_ownership.py` 复算，`fails=0`。
 
 `00504DF0` 在锁 `00DEE1C8` 大于 0 时调用 `00559D60`（`mov eax, [00DF03F8]; ret`）取得设置对象，再按 `+0xD0` 计数和 `+0xD4` 行指针做乘法。音量函数 `00504C80` 用同一次调用。`00502270` 在模式为 -1 时只改 AL，高 24 位仍是 `00DF6098` 里的系统指针。`005044F0` 先读参数指向的 dword，再写入句柄。
 
