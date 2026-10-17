@@ -29,6 +29,7 @@ ra3_add_module(gamelogic
         src/AIState7A.cpp
         src/AIState7A2.cpp
         include/ra3/gamelogic/AIState7B.h
+        include/ra3/gamelogic/AIState7B2.h
         include/ra3/gamelogic/AIState79B.h
         include/ra3/gamelogic/AIState7C.h
         include/ra3/gamelogic/AIState79C.h
@@ -61,6 +62,7 @@ ra3_add_module(gamelogic
         include/ra3/gamelogic/ObjectModules6C.h
         src/ObjectUpdates78.cpp
         src/AIState7B.cpp
+        src/AIState7B2.cpp
         src/AIState79B.cpp
         src/ObjectModules72.cpp
         src/AIState7C.cpp
