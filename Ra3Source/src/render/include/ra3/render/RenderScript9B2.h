@@ -48,13 +48,13 @@ std::uint32_t execIfNotCommand(std::uint8_t* command, std::uint8_t* context, std
 std::uint32_t execIfCommand(std::uint8_t* command, std::uint8_t* context, std::uint8_t* parsed, std::uint8_t* state, std::uint8_t* ip) noexcept;
 std::uint32_t execEndIfCommand(std::uint8_t* command, std::uint8_t* context, std::uint8_t* parsed, std::uint8_t* state, std::uint8_t* ip) noexcept;
 
-// Inferred: pass-constant flushers. Slot 2 is 009B58A0, not a usage string.
-std::uint32_t flushConstantsHalf(std::uint8_t* self) noexcept;
-std::uint32_t flushConstantsAll(std::uint8_t* self) noexcept;
-std::uint32_t flushConstantsMinusOne(std::uint8_t* self) noexcept;
-std::uint32_t flushConstantsThird(std::uint8_t* self) noexcept;
-std::uint32_t flushConstantsMinusTwoMode5(std::uint8_t* self) noexcept;
-std::uint32_t flushConstantsMinusTwoMode6(std::uint8_t* self) noexcept;
+// Vertex-batch flushes, one per D3DPRIMITIVETYPE (DrawPrimitiveUP). Slot 2 is 009B58A0, not a usage string.
+std::uint32_t flushLineList(std::uint8_t* self) noexcept;
+std::uint32_t flushPointList(std::uint8_t* self) noexcept;
+std::uint32_t flushLineStrip(std::uint8_t* self) noexcept;
+std::uint32_t flushTriangleList(std::uint8_t* self) noexcept;
+std::uint32_t flushTriangleStrip(std::uint8_t* self) noexcept;
+std::uint32_t flushTriangleFan(std::uint8_t* self) noexcept;
 
 std::uint32_t dispatchDirtyState(std::uint8_t* self, std::uint32_t maskA, std::uint32_t maskB) noexcept;
 std::uint32_t classifyPrimitive(std::uint8_t* self, std::uint8_t* record) noexcept;

@@ -833,6 +833,8 @@ def build(oracle: Oracle) -> None:
     for va in (0x009B58C0, 0x009B5960, 0x009B59D0, 0x009B5A40, 0x009B5AF0, 0x009B5B60):
         flush(va, "zero", 0)
         flush(va, "five", 5)
+        flush(va, "seven", 7)
+        flush(va, "eleven", 11)
 
     blob = zeros(0x220)
     put(blob, 0x60, 0xE0)

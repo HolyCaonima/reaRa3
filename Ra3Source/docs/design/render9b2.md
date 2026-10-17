@@ -43,7 +43,7 @@ These names are inference. Slot 2 is not `mov eax, imm32; ret`.
 
 | Vtable | Slot 2 | Counted |
 | --- | --- | --- |
-| `00C600F0`, `00C60108`, `00C60120`, `00C60138`, `00C60150`, `00C60168` | `009B58A0` | the six constant flushes, each at slot 3 |
+| `00C600F0`, `00C60108`, `00C60120`, `00C60138`, `00C60150`, `00C60168` | `009B58A0` | the six DrawPrimitiveUP vertex-batch flushes, each at slot 3 |
 | `00C5F4C8` | `009B38A0` | dirty dispatch `009B3910` at slot 4 |
 | `00C5DB18` | `009A8750` | classify `009B5380` slot 17, matrix order `009B5430` slot 16, constant-routine select `009BB040` slot 18 |
 | `00C60338` | `009B60D0` | dynamic stream bind `009B9630` at slot 1 |
@@ -64,7 +64,7 @@ Parse bodies allocate a `Scrape::Variable` (`00C5DA48`) through the manager, int
 
 `renderquad` and `renderfullquad` return 0 when the state shader is 0 or the gate byte is 0. Otherwise they log the command name (`00C61380` / `00C61464`), bind, set three render states, emit the viewport-sized positions, bind clear, and restore the saved pass.
 
-The six flushes share the prologue read at `009B58C0`: call `009C4B80` on pass+0xF8, optionally the nested pass virtual, then `009C4550`. Half (`009B58C0`) and thirds (`009B5A40`) upload, then `memmove` the remainder via `004D2EDA` and return that destination pointer. The other four upload a different count and then zero the field; their returns stayed 0 in the cases the oracle ran. The grouping is inferred from the shared prologue, not from a usage string.
+The six vertex-batch flushes share the prologue read at `009B58C0`: call `009C4B80` on pass+0xF8, optionally the nested pass virtual, then `009C4550`. Half (`009B58C0`) and thirds (`009B5A40`) upload, then `memmove` the remainder via `004D2EDA` and return that destination pointer. The other four upload a different count and then zero the field; their returns stayed 0 in the cases the oracle ran. The six bodies end in device vtable +0x14C, `IDirect3DDevice9::DrawPrimitiveUP`, with primitive type 1-6 and the matching primitive count (point list n, line list n/2, line strip n-1, triangle list n/3, strip and fan n-2), so they are named by D3DPRIMITIVETYPE. List types keep the leftover vertices.
 
 `dispatchDirtyState` tests the primary object, walks the node list at +0x24 (each node is the stored pointer minus 8) and calls the cdecl function at node+0x20, then updates the device through vtable+0x108/+0x100 or +0x104. `classifyPrimitive` and `selectConstantRoutine` are the kind switches on `00C5DB18`. `readMatrixOrder` queries `MatrixOrder` (`00C600D4`), compares the result with `d3d` / `gl`, logs `00C60094` on anything else, then queries `DefaultParameterScopeBlock` (`00C60078`). `bindDynamicStream` multiplies the count by the source stride. When the object flag and the local flag are both zero it copies the globals at `00E1B418` and `00E1B41C` (both 0 in this image). Otherwise it returns the virtual base pointer.
 

@@ -227,16 +227,17 @@ void preparePass(std::uint8_t* pass) noexcept {
     store32(pass, 0x10C, 0xCDu);
 }
 
-void uploadConstants(std::uint8_t* self, std::int32_t count, std::uint32_t mode) noexcept {
-    if (count <= 0) {
+// Device vtable +0x14C is IDirect3DDevice9::DrawPrimitiveUP; primitiveType is a D3DPRIMITIVETYPE.
+void drawPrimitiveUP(std::uint8_t* self, std::int32_t primitiveCount, std::uint32_t primitiveType) noexcept {
+    if (primitiveCount <= 0) {
         return;
     }
     auto* pass = ptr(load32(self, 0x24));
     auto* device = ptr(load32(pass, 0x0C));
     const auto stride = load32(ptr(load32(self, 0x1C)), 0x0C);
-    const auto source = load32(self, 4);
+    const auto vertices = load32(self, 4);
     auto* fn = reinterpret_cast<Call5>(load32(ptr(load32(device, 0)), 0x14C));
-    fn(device, nullptr, addr(device), mode, static_cast<std::uint32_t>(count), source, stride);
+    fn(device, nullptr, addr(device), primitiveType, static_cast<std::uint32_t>(primitiveCount), vertices, stride);
 }
 
 std::uint32_t keepRemainder(std::uint8_t* self, std::int32_t remainder) noexcept {
@@ -796,63 +797,63 @@ std::uint32_t execEndIfCommand(std::uint8_t*, std::uint8_t* context, std::uint8_
     return 1u;
 }
 
-std::uint32_t flushConstantsHalf(std::uint8_t* self) noexcept {
+std::uint32_t flushLineList(std::uint8_t* self) noexcept {
     auto* pass = ptr(load32(self, 0x24));
     preparePass(pass);
     const auto count = static_cast<std::int32_t>(load32(self, 0x10));
     const auto half = towardZeroDiv2(count);
-    uploadConstants(self, half, 2u);
+    drawPrimitiveUP(self, half, 2u);
     if (half > 0) {
         return keepRemainder(self, count - half * 2);
     }
     return 0u;
 }
 
-std::uint32_t flushConstantsAll(std::uint8_t* self) noexcept {
+std::uint32_t flushPointList(std::uint8_t* self) noexcept {
     preparePass(ptr(load32(self, 0x24)));
     const auto count = static_cast<std::int32_t>(load32(self, 0x10));
-    uploadConstants(self, count, 1u);
+    drawPrimitiveUP(self, count, 1u);
     if (count > 0) {
         clearCount(self);
     }
     return 0u;
 }
 
-std::uint32_t flushConstantsMinusOne(std::uint8_t* self) noexcept {
+std::uint32_t flushLineStrip(std::uint8_t* self) noexcept {
     preparePass(ptr(load32(self, 0x24)));
     const auto count = static_cast<std::int32_t>(load32(self, 0x10)) - 1;
-    uploadConstants(self, count, 3u);
+    drawPrimitiveUP(self, count, 3u);
     if (count > 0) {
         clearCount(self);
     }
     return 0u;
 }
 
-std::uint32_t flushConstantsThird(std::uint8_t* self) noexcept {
+std::uint32_t flushTriangleList(std::uint8_t* self) noexcept {
     preparePass(ptr(load32(self, 0x24)));
     const auto count = static_cast<std::int32_t>(load32(self, 0x10));
     const auto third = count / 3;
-    uploadConstants(self, third, 4u);
+    drawPrimitiveUP(self, third, 4u);
     if (third > 0) {
         return keepRemainder(self, count - third * 3);
     }
     return 0u;
 }
 
-std::uint32_t flushConstantsMinusTwoMode5(std::uint8_t* self) noexcept {
+std::uint32_t flushTriangleStrip(std::uint8_t* self) noexcept {
     preparePass(ptr(load32(self, 0x24)));
     const auto count = static_cast<std::int32_t>(load32(self, 0x10)) - 2;
-    uploadConstants(self, count, 5u);
+    drawPrimitiveUP(self, count, 5u);
     if (count > 0) {
         clearCount(self);
     }
     return 0u;
 }
 
-std::uint32_t flushConstantsMinusTwoMode6(std::uint8_t* self) noexcept {
+std::uint32_t flushTriangleFan(std::uint8_t* self) noexcept {
     preparePass(ptr(load32(self, 0x24)));
     const auto count = static_cast<std::int32_t>(load32(self, 0x10)) - 2;
-    uploadConstants(self, count, 6u);
+    drawPrimitiveUP(self, count, 6u);
     if (count > 0) {
         clearCount(self);
     }
