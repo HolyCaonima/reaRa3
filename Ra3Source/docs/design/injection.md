@@ -167,8 +167,27 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `unicodestringremovelast` | `0x004CAF90` `StringBase<wchar_t>` 删除末字符 | thiscall | 5 | `ra3::common::removeLastGameCharacter` | live verified；仅显式键启用 |
 | `unicodestringset` | `0x004CB9B0` `StringBase<wchar_t>` 设置 (text, length) | thiscall（2） | 6 | `ra3::common::setGameString` | live verified；仅显式键启用 |
 | `unicodestringconcat` | `0x004CBA00` `StringBase<wchar_t>` 追加 (text, length) | thiscall（2） | 7 | `ra3::common::concatGameString` | live verified；仅显式键启用 |
+| `fxpscylvelocityruntime` | `0x006620A0` cylindrical velocity 运行时构造 | thiscall（1，EAX=this） | 6 | `initializeCylindricalVelocityRuntime` | offline-verified, live pending；仅显式键启用 |
+| `fxpslinevolumeruntime` | `0x00662330` line volume 运行时构造 | thiscall（1，EAX=this） | 6 | `initializeLineVolumeRuntime` | offline-verified, live pending；仅显式键启用 |
+| `fxpspointvelocitytemplate` | `0x00662570` point velocity 模板构造 | thiscall（1，EAX=this） | 6 | `initializePointVelocityTemplate` | offline-verified, live pending；仅显式键启用 |
+| `fxpssplinevolumeruntime` | `0x006627C0` spline volume 运行时构造 | thiscall（1，EAX=this） | 6 | `initializeSplineVolumeRuntime` | offline-verified, live pending；仅显式键启用 |
+| `fxpsupdatelifetime` | `0x0066A710` update lifetime 字段指针 | thiscall | 6 | `defaultUpdateLifetimeData` | offline-verified, live pending；仅显式键启用 |
+| `fxpsupdatesize` | `0x0066A720` update size 字段指针 | thiscall | 6 | `defaultUpdateSizeData` | offline-verified, live pending；仅显式键启用 |
+| `fxpsupdaterotation` | `0x0066A730` update rotation 字段指针 | thiscall | 6 | `defaultUpdateRotationData` | offline-verified, live pending；仅显式键启用 |
+| `fxpsgpuframesperrow` | `0x0066AB50` GPU frames-per-row getter | thiscall | 6 | `gpuFramesPerRow` | offline-verified, live pending；仅显式键启用 |
+| `fxpsgputotalframes` | `0x0066AB60` GPU total-frames getter | thiscall | 6 | `gpuTotalFrames` | offline-verified, live pending；仅显式键启用 |
+| `fxpsgpuspeed` | `0x0066AB70` GPU speed getter（x87 ST0） | thiscall | 6 | `gpuSpeedMultiplier` | offline-verified, live pending；仅显式键启用 |
+| `fxpsgpusinglerow` | `0x0066AB80` GPU single-row getter | thiscall | 6 | `gpuSingleRow` | offline-verified, live pending；仅显式键启用 |
+| `fxpsgpusortparticles` | `0x0066AB90` GPU sort getter | thiscall | 6 | `gpuSortParticles` | offline-verified, live pending；仅显式键启用 |
+| `fxpsgpumiscword` | `0x0066ABA0` GPU misc word getter | thiscall | 6 | `gpuMiscWord` | offline-verified, live pending；仅显式键启用 |
+| `fxpsgpusoftparticles` | `0x0066ABB0` GPU soft-particles AL getter | thiscall | 6 | `gpuEnableSoftParticles` | offline-verified, live pending；仅显式键启用 |
+| `fxpsgpumiscvalues` | `0x0066ABC0` GPU 四 float 输出 | thiscall（1） | 7 | `gpuMiscValues` | offline-verified, live pending；仅显式键启用 |
 
-上述 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
+FXPS 的 15 个目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关。构造函数
+在副本上应用重建变换后比较实际布局，getter 只比较返回值或原函数写出的缓冲，全部要求
+显式键启用。
+
+上述字符串的 17 个新增目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节
 （源串按 `count` 截断求长，目标缓冲可能短于 `count`）。
 
