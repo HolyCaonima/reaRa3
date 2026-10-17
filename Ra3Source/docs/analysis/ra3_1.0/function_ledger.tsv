@@ -14120,7 +14120,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c71c0	FUN_006c71c0	.text	47		clean	unknown		unanalyzed	
 006c71f0	FUN_006c71f0	.text	84		clean	unknown		unanalyzed	
 006c7250	FUN_006c7250	.text	139		clean	unknown		unanalyzed	
-006c72e0	FUN_006c72e0	.text	175		clean	unknown		unanalyzed	
+006c72e0	FUN_006c72e0	.text	175		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::PassiveAreaEffectBehavior_apply; 00c11230 slot 25; slot 2 returns PassiveAreaEffectBehavior
 006c7420	FUN_006c7420	.text	6		clean	unknown		unanalyzed	
 006c7430	FUN_006c7430	.text	47		clean	unknown		unanalyzed	
 006c7460	FUN_006c7460	.text	111		clean	unknown		unanalyzed	
@@ -14154,7 +14154,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c8380	FUN_006c8380	.text	10		inner-patched	gamelogic	recon/protcave2	reversed	runDestroyActiveBodyBase: inner-patched site 0x006c8384 -> 0x006c838a slot 0x018f2b94; direct callee of 0x006d9c20 at 0x006d9c37; 0x006d9c20 is 0x00c11d28 slot 0; 2 oracle cases
 006c8410	FUN_006c8410	.text	6		clean	unknown		unanalyzed	
 006c8420	FUN_006c8420	.text	47		clean	unknown		unanalyzed	
-006c8450	FUN_006c8450	.text	23		clean	unknown		unanalyzed	
+006c8450	FUN_006c8450	.text	23		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::StancesBehavior_latchGoal; 00c11840 slot 50; slot 2 returns StancesBehavior
 006c8470	FUN_006c8470	.text	7		clean	unknown		unanalyzed	
 006c8480	FUN_006c8480	.text	7		clean	unknown		unanalyzed	
 006c8490	FUN_006c8490	.text	13		clean	unknown		unanalyzed	
@@ -14162,12 +14162,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c84b0	FUN_006c84b0	.text	7		clean	unknown		unanalyzed	
 006c84c0	FUN_006c84c0	.text	7		clean	unknown		unanalyzed	
 006c84d0	FUN_006c84d0	.text	13		clean	unknown		unanalyzed	
-006c84e0	FUN_006c84e0	.text	16		clean	unknown		unanalyzed	
+006c84e0	FUN_006c84e0	.text	16		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::HighlanderBody_readIfUnset; 00c11d28 slot 23; slot 2 returns HighlanderBody; same body at 00c11fb0 ImmortalBody, 00c12238 ManagedActiveBody, 00c124c8 ManagerBody
 006c84f0	FUN_006c84f0	.text	8		clean	unknown		unanalyzed	
-006c8500	FUN_006c8500	.text	42		clean	unknown		unanalyzed	
-006c8530	FUN_006c8530	.text	44		clean	unknown		unanalyzed	
+006c8500	FUN_006c8500	.text	42		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::StancesBehavior_setBit; 00c11840 slot 45; slot 2 returns StancesBehavior
+006c8530	FUN_006c8530	.text	44		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::StancesBehavior_clearBit; 00c11840 slot 46; slot 2 returns StancesBehavior
 006c8560	FUN_006c8560	.text	113		clean	unknown		unanalyzed	
-006c85e0	FUN_006c85e0	.text	109		clean	unknown		unanalyzed	
+006c85e0	FUN_006c85e0	.text	109		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::HighlanderBody_applyTemplate; 00c11d28 slot 22; slot 2 returns HighlanderBody; same body at 00c11fb0 ImmortalBody, 00c12238 ManagedActiveBody, 00c124c8 ManagerBody
 006c8650	FUN_006c8650	.text	6		clean	unknown		unanalyzed	
 006c8660	FUN_006c8660	.text	47		clean	unknown		unanalyzed	
 006c8690	FUN_006c8690	.text	6		clean	unknown		unanalyzed	
@@ -14180,12 +14180,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c87b0	FUN_006c87b0	.text	257		clean	unknown		unanalyzed	
 006c88c0	FUN_006c88c0	.text	105		clean	unknown		unanalyzed	
 006c8930	FUN_006c8930	.text	122		clean	unknown		unanalyzed	
-006c89b0	FUN_006c89b0	.text	48		clean	unknown		unanalyzed	
+006c89b0	FUN_006c89b0	.text	48		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AttributeCrateCollide_onCollide; 00c1b3f8 slot 23; slot 2 returns AttributeCrateCollide
 006c89e0	FUN_006c89e0	.text	520		clean	unknown		unanalyzed	
 006c8bf0	FUN_006c8bf0	.text	32		clean	unknown		unanalyzed	
 006c8c10	FUN_006c8c10	.text	179		clean	unknown		unanalyzed	
 006c8cd0	FUN_006c8cd0	.text	447		clean	unknown		unanalyzed	
-006c8e90	FUN_006c8e90	.text	138		clean	unknown		unanalyzed	
+006c8e90	FUN_006c8e90	.text	138		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::HordeContain_removeMember; 00c21a98 slot 50; slot 2 returns HordeContain
 006c8f20	FUN_006c8f20	.text	130		clean	unknown		unanalyzed	
 006c8fb0	FUN_006c8fb0	.text	27		clean	unknown		unanalyzed	
 006c8fd0	FUN_006c8fd0	.text	325		clean	unknown		unanalyzed	
@@ -14204,7 +14204,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c9ae0	FUN_006c9ae0	.text	49		clean	unknown		unanalyzed	
 006c9b20	FUN_006c9b20	.text	258		clean	unknown		unanalyzed	
 006c9c30	FUN_006c9c30	.text	137		clean	unknown		unanalyzed	
-006c9cc0	FUN_006c9cc0	.text	104		clean	unknown		unanalyzed	
+006c9cc0	FUN_006c9cc0	.text	104		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::OpenContain_removeByKey; 00c1fb90 slot 23; slot 2 returns OpenContain
 006c9d30	FUN_006c9d30	.text	115		clean	unknown		unanalyzed	
 006c9db0	FUN_006c9db0	.text	405		clean	unknown		unanalyzed	
 006c9f50	FUN_006c9f50	.text	107		clean	unknown		unanalyzed	
@@ -14253,7 +14253,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006cb2e0	FUN_006cb2e0	.text	47		clean	unknown		unanalyzed	
 006cb380	FUN_006cb380	.text	6		clean	unknown		unanalyzed	
 006cb390	FUN_006cb390	.text	47		clean	unknown		unanalyzed	
-006cb3c0	FUN_006cb3c0	.text	105		clean	unknown		unanalyzed	
+006cb3c0	FUN_006cb3c0	.text	105		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::ToggleDeploySpecialAbilityUpdate_tryDeploy; 00c1e010 slot 44; slot 2 returns ToggleDeploySpecialAbilityUpdate
 006cb480	FUN_006cb480	.text	6		clean	unknown		unanalyzed	
 006cb490	FUN_006cb490	.text	47		clean	unknown		unanalyzed	
 006cb4c0	FUN_006cb4c0	.text	40		clean	unknown		unanalyzed	
@@ -14271,35 +14271,35 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006cbda0	FUN_006cbda0	.text	20		clean	unknown		unanalyzed	
 006cbdc0	FUN_006cbdc0	.text	548		clean	unknown		unanalyzed	
 006cbff0	FUN_006cbff0	.text	194		clean	unknown		unanalyzed	
-006cc0c0	FUN_006cc0c0	.text	129		clean	unknown		unanalyzed	
-006cc150	FUN_006cc150	.text	130		clean	unknown		unanalyzed	
+006cc0c0	FUN_006cc0c0	.text	129		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_followPosition; 00c22118 slot 26; slot 2 returns AIUpdateInterface
+006cc150	FUN_006cc150	.text	130		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_followObject; 00c22118 slot 28; slot 2 returns AIUpdateInterface
 006cc1e0	FUN_006cc1e0	.text	124		clean	unknown		unanalyzed	
 006cc260	FUN_006cc260	.text	123		clean	unknown		unanalyzed	
 006cc2e0	FUN_006cc2e0	.text	482		clean	unknown		unanalyzed	
-006cc4d0	FUN_006cc4d0	.text	85		clean	unknown		unanalyzed	
-006cc530	FUN_006cc530	.text	50		clean	unknown		unanalyzed	
-006cc570	FUN_006cc570	.text	50		clean	unknown		unanalyzed	
-006cc5b0	FUN_006cc5b0	.text	178		clean	unknown		unanalyzed	
-006cc670	FUN_006cc670	.text	63		clean	unknown		unanalyzed	
-006cc6b0	FUN_006cc6b0	.text	71		clean	unknown		unanalyzed	
-006cc700	FUN_006cc700	.text	63		clean	unknown		unanalyzed	
-006cc740	FUN_006cc740	.text	63		clean	unknown		unanalyzed	
-006cc780	FUN_006cc780	.text	106		clean	unknown		unanalyzed	
-006cc7f0	FUN_006cc7f0	.text	61		clean	unknown		unanalyzed	
-006cc830	FUN_006cc830	.text	55		clean	unknown		unanalyzed	
-006cc870	FUN_006cc870	.text	55		clean	unknown		unanalyzed	
-006cc8b0	FUN_006cc8b0	.text	61		clean	unknown		unanalyzed	
-006cc8f0	FUN_006cc8f0	.text	63		clean	unknown		unanalyzed	
-006cc930	FUN_006cc930	.text	63		clean	unknown		unanalyzed	
-006cc970	FUN_006cc970	.text	282		clean	unknown		unanalyzed	
-006cca90	FUN_006cca90	.text	76		clean	unknown		unanalyzed	
-006ccae0	FUN_006ccae0	.text	107		clean	unknown		unanalyzed	
-006ccb50	FUN_006ccb50	.text	115		clean	unknown		unanalyzed	
-006ccbd0	FUN_006ccbd0	.text	229		clean	unknown		unanalyzed	
-006cccc0	FUN_006cccc0	.text	127		clean	unknown		unanalyzed	
-006ccd40	FUN_006ccd40	.text	144		clean	unknown		unanalyzed	
-006ccdd0	FUN_006ccdd0	.text	112		clean	unknown		unanalyzed	
-006cce40	FUN_006cce40	.text	63		clean	unknown		unanalyzed	
+006cc4d0	FUN_006cc4d0	.text	85		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_steerState1B; 00c22118 slot 36; slot 2 returns AIUpdateInterface
+006cc530	FUN_006cc530	.text	50		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_tryCommand59; 00c22118 slot 60; slot 2 returns AIUpdateInterface
+006cc570	FUN_006cc570	.text	50		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_tryCommand5A; 00c22118 slot 61; slot 2 returns AIUpdateInterface
+006cc5b0	FUN_006cc5b0	.text	178		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_weaponOrFollow; 00c22118 slot 62; slot 2 returns AIUpdateInterface
+006cc670	FUN_006cc670	.text	63		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_locoState0E; 00c22118 slot 67; slot 2 returns AIUpdateInterface
+006cc6b0	FUN_006cc6b0	.text	71		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_placeState2D; 00c22118 slot 69; slot 2 returns AIUpdateInterface
+006cc700	FUN_006cc700	.text	63		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_locoState2D; 00c22118 slot 68; slot 2 returns AIUpdateInterface
+006cc740	FUN_006cc740	.text	63		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_locoState69; 00c22118 slot 70; slot 2 returns AIUpdateInterface
+006cc780	FUN_006cc780	.text	106		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_notifyPassenger; 00c22118 slot 78; slot 2 returns AIUpdateInterface
+006cc7f0	FUN_006cc7f0	.text	61		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_aimState11; 00c22118 slot 93; slot 2 returns AIUpdateInterface
+006cc830	FUN_006cc830	.text	55		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_tailState29; 00c22118 slot 94; slot 2 returns AIUpdateInterface
+006cc870	FUN_006cc870	.text	55		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_tailState48; 00c22118 slot 95; slot 2 returns AIUpdateInterface
+006cc8b0	FUN_006cc8b0	.text	61		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_aimState12; 00c22118 slot 96; slot 2 returns AIUpdateInterface
+006cc8f0	FUN_006cc8f0	.text	63		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_locoState13; 00c22118 slot 97; slot 2 returns AIUpdateInterface
+006cc930	FUN_006cc930	.text	63		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_locoState14; 00c22118 slot 101; slot 2 returns AIUpdateInterface
+006cc970	FUN_006cc970	.text	282		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_guardRect; 00c22118 slot 81; slot 2 returns AIUpdateInterface
+006cca90	FUN_006cca90	.text	76		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_state18; 00c22118 slot 80; slot 2 returns AIUpdateInterface
+006ccae0	FUN_006ccae0	.text	107		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_followActor50; 00c22118 slot 82; slot 2 returns AIUpdateInterface
+006ccb50	FUN_006ccb50	.text	115		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_followPoint50; 00c22118 slot 83; slot 2 returns AIUpdateInterface
+006ccbd0	FUN_006ccbd0	.text	229		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_guardPoint4F; 00c22118 slot 85; slot 2 returns AIUpdateInterface
+006cccc0	FUN_006cccc0	.text	127		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_weaponMove3C; 00c22118 slot 84; slot 2 returns AIUpdateInterface
+006ccd40	FUN_006ccd40	.text	144		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_matchRoster; 00c22118 slot 90; slot 2 returns AIUpdateInterface
+006ccdd0	FUN_006ccdd0	.text	112		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_walkRoster; 00c22118 slot 91; slot 2 returns AIUpdateInterface
+006cce40	FUN_006cce40	.text	63		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::AIUpdateInterface_locoState38; 00c22118 slot 102; slot 2 returns AIUpdateInterface
 006cce80	FUN_006cce80	.text	130		clean	unknown		unanalyzed	
 006ccf10	FUN_006ccf10	.text	9		inner-patched	unknown		unanalyzed	
 006ccf40	FUN_006ccf40	.text	39		clean	unknown		unanalyzed	
@@ -14548,7 +14548,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006d7c50	FUN_006d7c50	.text	6		clean	unknown		unanalyzed	
 006d7c60	FUN_006d7c60	.text	47		clean	unknown		unanalyzed	
 006d7c90	FUN_006d7c90	.text	30		clean	unknown		unanalyzed	
-006d7cb0	FUN_006d7cb0	.text	269		clean	unknown		unanalyzed	
+006d7cb0	FUN_006d7cb0	.text	269		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::SpawnBehavior_update; 00c11688 slot 9; slot 2 returns SpawnBehavior
 006d7dc0	FUN_006d7dc0	.text	226		clean	unknown		unanalyzed	
 006d7eb0	FUN_006d7eb0	.text	221		clean	unknown		unanalyzed	
 006d7fa0	FUN_006d7fa0	.text	147		clean	unknown		unanalyzed	
@@ -14573,17 +14573,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006d9320	FUN_006d9320	.text	346		clean	unknown		unanalyzed	
 006d9480	FUN_006d9480	.text	88		clean	unknown		unanalyzed	
 006d94e0	FUN_006d94e0	.text	91		clean	unknown		unanalyzed	
-006d9540	FUN_006d9540	.text	30		clean	unknown		unanalyzed	
+006d9540	FUN_006d9540	.text	30		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::UnifiedControlBehavior_relay; 00bfd820 slot 9; slot 2 returns UnifiedControlBehavior
 006d9560	FUN_006d9560	.text	618		clean	unknown		unanalyzed	
 006d97d0	FUN_006d97d0	.text	187		clean	unknown		unanalyzed	
 006d9890	FUN_006d9890	.text	151		clean	unknown		unanalyzed	
 006d99c0	FUN_006d99c0	.text	6		clean	unknown		unanalyzed	
 006d99d0	FUN_006d99d0	.text	47		clean	unknown		unanalyzed	
 006d9a00	FUN_006d9a00	.text	50		clean	unknown		unanalyzed	
-006d9a40	FUN_006d9a40	.text	90		clean	unknown		unanalyzed	
-006d9aa0	FUN_006d9aa0	.text	29		clean	unknown		unanalyzed	
-006d9ac0	FUN_006d9ac0	.text	185		clean	unknown		unanalyzed	
-006d9b80	FUN_006d9b80	.text	155		clean	unknown		unanalyzed	
+006d9a40	FUN_006d9a40	.text	90		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::StancesBehavior_setLinkedFlag; 00c11840 slot 74; slot 2 returns StancesBehavior
+006d9aa0	FUN_006d9aa0	.text	29		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::StancesBehavior_setLinkedByte; 00c11840 slot 24; slot 2 returns StancesBehavior
+006d9ac0	FUN_006d9ac0	.text	185		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::HighlanderBody_noteHit; 00c11d28 slot 26; slot 2 returns HighlanderBody; same body at 00c11fb0 ImmortalBody, 00c12238 ManagedActiveBody, 00c124c8 ManagerBody
+006d9b80	FUN_006d9b80	.text	155		clean	gamelogic	recon/obj6c	reversed	ra3::gamelogic::StancesBehavior_releaseRecord; 00c11840 slot 30; slot 2 returns StancesBehavior
 006d9c20	FUN_006d9c20	.text	50		clean	unknown		unanalyzed	
 006d9c60	FUN_006d9c60	.text	50		clean	unknown		unanalyzed	
 006d9d30	FUN_006d9d30	.text	6		clean	unknown		unanalyzed	
