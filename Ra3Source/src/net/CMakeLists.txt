@@ -3,4 +3,6 @@ ra3_add_module(net
         include/ra3/net/Transport.h
         Transport.cpp
         include/ra3/net/LobbySession.h
-        LobbySession.cpp)
+        LobbySession.cpp
+        include/ra3/net/CommandMessage.h
+        CommandMessage.cpp)
