@@ -22562,7 +22562,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00880ac0	FUN_00880ac0	.text	94		clean	unknown		unanalyzed	
 00880b20	FUN_00880b20	.text	21		clean	unknown		unanalyzed	
 00880b40	FUN_00880b40	.text	1506		clean	unknown		unanalyzed	
-00881130	FUN_00881130	.text	121		clean	unknown		unanalyzed	
+00881130	FUN_00881130	.text	121		clean	gamelogic	recon/skirmishai89	reversed	AIBudgetStateManager::normalizeStateScores; call 00881130 008863b0 00886435
 008811b0	FUN_008811b0	.text	46		clean	unknown		unanalyzed	
 008811e0	FUN_008811e0	.text	84		clean	unknown		unanalyzed	
 00881240	FUN_00881240	.text	77		clean	unknown		unanalyzed	
@@ -22596,11 +22596,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008820b0	FUN_008820b0	.text	13		clean	unknown		unanalyzed	
 008820c0	FUN_008820c0	.text	50		clean	unknown		unanalyzed	
 00882100	FUN_00882100	.text	131		clean	unknown		unanalyzed	
-00882190	FUN_00882190	.text	24		clean	unknown		unanalyzed	
+00882190	FUN_00882190	.text	24		clean	gamelogic	recon/skirmishai89	reversed	AIUpgrade::resetBuildPosition; vt 00882190 00c52d48 19
 008821b0	FUN_008821b0	.text	78		clean	unknown		unanalyzed	
 00882200	FUN_00882200	.text	222		clean	unknown		unanalyzed	
 008822e0	FUN_008822e0	.text	274		clean	gamelogic	recon/skirm87	reversed	ra3::gamelogic::xferSharedBuildRecord; 00c52768 slot 3; slot 2 is 00411440 and does not return a class name
-00882400	FUN_00882400	.text	74		clean	unknown		unanalyzed	
+00882400	FUN_00882400	.text	74		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableStructure::setBuildPosition; vt 00882400 00c527c8 26
 00882450	FUN_00882450	.text	143		clean	unknown		unanalyzed	
 008824e0	FUN_008824e0	.text	186		clean	unknown		unanalyzed	
 008825a0	FUN_008825a0	.text	237		clean	unknown		unanalyzed	
@@ -22610,12 +22610,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00882730	FUN_00882730	.text	758		clean	unknown		unanalyzed	
 00882a30	FUN_00882a30	.text	50		clean	unknown		unanalyzed	
 00882a70	FUN_00882a70	.text	26		clean	unknown		unanalyzed	
-00882a90	FUN_00882a90	.text	77		clean	unknown		unanalyzed	
-00882ae0	FUN_00882ae0	.text	73		clean	unknown		unanalyzed	
+00882a90	FUN_00882a90	.text	77		clean	gamelogic	recon/skirmishai89	reversed	AIBuildPersonalityConfig::findBitmaskFloatOrZero; call 00882a90 008849f0 00884a3b
+00882ae0	FUN_00882ae0	.text	73		clean	gamelogic	recon/skirmishai89	reversed	AIBuildPersonalityConfig::findEntry20ByBit; call 00882ae0 008849f0 00884a2d
 00882b30	FUN_00882b30	.text	73		clean	unknown		unanalyzed	
 00882b80	FUN_00882b80	.text	83		clean	unknown		unanalyzed	
 00882be0	FUN_00882be0	.text	73		clean	unknown		unanalyzed	
-00882c30	FUN_00882c30	.text	77		clean	unknown		unanalyzed	
+00882c30	FUN_00882c30	.text	77		clean	gamelogic	recon/skirmishai89	reversed	AIBuildPersonalityConfig::findBitmaskFloatOrOne; call 00882c30 007f5900 007f595c
 00882c80	FUN_00882c80	.text	23		clean	unknown		unanalyzed	
 00882ca0	FUN_00882ca0	.text	17		clean	unknown		unanalyzed	
 00882cc0	FUN_00882cc0	.text	18		clean	unknown		unanalyzed	
@@ -22669,14 +22669,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00884340	FUN_00884340	.text	121		clean	unknown		unanalyzed	
 008843c0	FUN_008843c0	.text	383		clean	unknown		unanalyzed	
 00884540	FUN_00884540	.text	6		clean	unknown		unanalyzed	
-00884550	FUN_00884550	.text	380		clean	unknown		unanalyzed	
+00884550	FUN_00884550	.text	380		clean	gamelogic	recon/skirmishai89	reversed	AIBaseBuilder::updateBasePriorityFlags; call 00884550 008c6510 008c6534
 008846d0	FUN_008846d0	.text	218		clean	unknown		unanalyzed	
 008847b0	FUN_008847b0	.text	81		clean	unknown		unanalyzed	
 00884810	FUN_00884810	.text	6		clean	unknown		unanalyzed	
 00884820	FUN_00884820	.text	217		clean	unknown		unanalyzed	
 00884900	FUN_00884900	.text	227		clean	unknown		unanalyzed	
 008849f0	FUN_008849f0	.text	585		clean	unknown		unanalyzed	
-00884c40	FUN_00884c40	.text	262		clean	unknown		unanalyzed	
+00884c40	FUN_00884c40	.text	262		clean	gamelogic	recon/skirmishai89	unanalyzed	AIBuilder::hasActiveBuilderAtPosition; owned by call 00884c40 008aacb0 but the builder-slot walk is not in the differential oracle
 00884d50	FUN_00884d50	.text	38		clean	unknown		unanalyzed	
 00884d80	FUN_00884d80	.text	206		clean	unknown		unanalyzed	
 00884e50	FUN_00884e50	.text	10		clean	unknown		unanalyzed	
@@ -22710,7 +22710,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00885d90	FUN_00885d90	.text	19		clean	unknown		unanalyzed	
 00885db0	FUN_00885db0	.text	1270		clean	unknown		unanalyzed	
 008862b0	FUN_008862b0	.text	100		clean	unknown		unanalyzed	
-00886320	FUN_00886320	.text	138		clean	unknown		unanalyzed	
+00886320	FUN_00886320	.text	138		clean	gamelogic	recon/skirmishai89	reversed	AIBudgetState::evaluateHeuristicProduct; call 00886320 008863b0 008863fc
 008863b0	FUN_008863b0	.text	224		clean	unknown		unanalyzed	
 008864a0	FUN_008864a0	.text	101		clean	unknown		unanalyzed	
 00886510	FUN_00886510	.text	153		clean	unknown		unanalyzed	
@@ -22738,12 +22738,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008870b0	FUN_008870b0	.text	98		clean	unknown		unanalyzed	
 00887120	FUN_00887120	.text	6		clean	unknown		unanalyzed	
 00887130	FUN_00887130	.text	53		clean	unknown		unanalyzed	
-00887170	FUN_00887170	.text	65		clean	unknown		unanalyzed	
+00887170	FUN_00887170	.text	65		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableQueue::popNextTemplateId; call 00887170 00893020 008930b8
 008871c0	FUN_008871c0	.text	76		clean	unknown		unanalyzed	
 00887210	FUN_00887210	.text	53		clean	unknown		unanalyzed	
 00887250	FUN_00887250	.text	60		clean	unknown		unanalyzed	
 00887290	FUN_00887290	.text	103		clean	unknown		unanalyzed	
-00887300	FUN_00887300	.text	55		clean	unknown		unanalyzed	
+00887300	FUN_00887300	.text	55		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableRegistry::findEntryByTemplateId; call 00887300 00887860 00887863
 00887340	FUN_00887340	.text	141		clean	unknown		unanalyzed	
 008873d0	FUN_008873d0	.text	38		clean	unknown		unanalyzed	
 00887400	FUN_00887400	.text	124		clean	unknown		unanalyzed	
@@ -22755,7 +22755,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008877d0	FUN_008877d0	.text	141		clean	unknown		unanalyzed	
 00887860	FUN_00887860	.text	8		clean	unknown		unanalyzed	
 00887870	FUN_00887870	.text	73		clean	gamelogic	recon/skirm87	reversed	ra3::gamelogic::xferBuildableUnit; 00c52cd8 slot 3; slot 2 returns AIBuildableUnit
-008878c0	FUN_008878c0	.text	77		clean	unknown		unanalyzed	
+008878c0	FUN_008878c0	.text	77		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableRegistry::lookupNestedValue; call 008878c0 008c4d40 008c4d63
 00887910	FUN_00887910	.text	67		clean	unknown		unanalyzed	
 00887960	FUN_00887960	.text	10		clean	unknown		unanalyzed	
 00887970	FUN_00887970	.text	6		clean	unknown		unanalyzed	
@@ -22782,7 +22782,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00887cd0	FUN_00887cd0	.text	6		clean	unknown		unanalyzed	
 00887ce0	FUN_00887ce0	.text	73		clean	unknown		unanalyzed	
 00887d30	FUN_00887d30	.text	48		clean	unknown		unanalyzed	
-00887d60	FUN_00887d60	.text	127		clean	unknown		unanalyzed	
+00887d60	FUN_00887d60	.text	127		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableEntry::init; call 00887d60 008d2130 008d222b
 00887de0	FUN_00887de0	.text	140		clean	unknown		unanalyzed	
 00887e70	FUN_00887e70	.text	6		clean	unknown		unanalyzed	
 00887e80	FUN_00887e80	.text	49		clean	unknown		unanalyzed	
@@ -22839,7 +22839,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00889ff0	FUN_00889ff0	.text	154		clean	unknown		unanalyzed	
 0088a090	FUN_0088a090	.text	6		clean	unknown		unanalyzed	
 0088a0a0	FUN_0088a0a0	.text	63		clean	unknown		unanalyzed	
-0088a0e0	FUN_0088a0e0	.text	129		clean	unknown		unanalyzed	
+0088a0e0	FUN_0088a0e0	.text	129		clean	gamelogic	recon/skirmishai89	reversed	AIBankAccount::sumWeightedRequestsAbovePriority; call 0088a0e0 008900b0 008900dc
 0088a170	FUN_0088a170	.text	343		clean	unknown		unanalyzed	
 0088a2d0	FUN_0088a2d0	.text	94		clean	unknown		unanalyzed	
 0088a330	FUN_0088a330	.text	53		clean	unknown		unanalyzed	
@@ -22853,11 +22853,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0088a9e0	FUN_0088a9e0	.text	327		clean	unknown		unanalyzed	
 0088ab30	FUN_0088ab30	.text	186		clean	unknown		unanalyzed	
 0088abf0	FUN_0088abf0	.text	397		clean	unknown		unanalyzed	
-0088ad80	FUN_0088ad80	.text	144		clean	unknown		unanalyzed	
-0088ae10	FUN_0088ae10	.text	151		clean	unknown		unanalyzed	
+0088ad80	FUN_0088ad80	.text	144		clean	gamelogic	recon/skirmishai89	reversed	AIBuilder::sumQueuedPowerDelta; call 0088ad80 00892670 0089270f
+0088ae10	FUN_0088ae10	.text	151		clean	gamelogic	recon/skirmishai89	unanalyzed	AIBuilder::countQueuedTemplate; no vt or call chain to a vtable whose slot 2 is a ledger function
 0088aeb0	FUN_0088aeb0	.text	191		clean	unknown		unanalyzed	
 0088af80	FUN_0088af80	.text	49		clean	unknown		unanalyzed	
-0088afc0	FUN_0088afc0	.text	191		clean	unknown		unanalyzed	
+0088afc0	FUN_0088afc0	.text	191		clean	gamelogic	recon/skirmishai89	reversed	AIBuilder::notifyObjectConstructed; call 0088afc0 00743010 00743110
 0088b080	FUN_0088b080	.text	230		clean	unknown		unanalyzed	
 0088b170	FUN_0088b170	.text	34		clean	unknown		unanalyzed	
 0088b1a0	FUN_0088b1a0	.text	377		clean	unknown		unanalyzed	
@@ -22869,11 +22869,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0088b490	FUN_0088b490	.text	650		clean	unknown		unanalyzed	
 0088b720	FUN_0088b720	.text	724		clean	unknown		unanalyzed	
 0088ba00	FUN_0088ba00	.text	524		clean	unknown		unanalyzed	
-0088bc10	FUN_0088bc10	.text	97		clean	unknown		unanalyzed	
+0088bc10	FUN_0088bc10	.text	97		clean	gamelogic	recon/skirmishai89	reversed	AIEconomyStatsSubobject::initWithOwner; call 0088bc10 008b31b0 008b3202
 0088bc80	FUN_0088bc80	.text	151		clean	unknown		unanalyzed	
 0088bd20	FUN_0088bd20	.text	294		clean	unknown		unanalyzed	
-0088be50	FUN_0088be50	.text	60		clean	unknown		unanalyzed	
-0088be90	FUN_0088be90	.text	137		clean	unknown		unanalyzed	
+0088be50	FUN_0088be50	.text	60		clean	gamelogic	recon/skirmishai89	reversed	AIEconomyStats::findStatValueByKey; call 0088be50 00782ec0 00782f93
+0088be90	FUN_0088be90	.text	137		clean	gamelogic	recon/skirmishai89	reversed	AIEconomyStatsSlidingWindow::pruneExpiredSamples; call 0088be90 00897ed0 00897ed6
 0088bf20	FUN_0088bf20	.text	6		clean	unknown		unanalyzed	
 0088bf30	FUN_0088bf30	.text	94		clean	unknown		unanalyzed	
 0088bf90	FUN_0088bf90	.text	30		clean	unknown		unanalyzed	
@@ -22905,8 +22905,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0088ce00	FUN_0088ce00	.text	333		clean	unknown		unanalyzed	
 0088cf50	FUN_0088cf50	.text	264		clean	unknown		unanalyzed	
 0088d060	FUN_0088d060	.text	181		clean	unknown		unanalyzed	
-0088d120	FUN_0088d120	.text	126		clean	unknown		unanalyzed	
-0088d1a0	FUN_0088d1a0	.text	98		clean	unknown		unanalyzed	
+0088d120	FUN_0088d120	.text	126		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableGroup::containsTemplateId; call 0088d120 0088d1a0 0088d1c5
+0088d1a0	FUN_0088d1a0	.text	98		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableCategoryMap::containsTemplateId; call 0088d1a0 008c6590 008c65e2
 0088d210	FUN_0088d210	.text	4		clean	unknown		unanalyzed	
 0088d220	FUN_0088d220	.text	6		clean	unknown		unanalyzed	
 0088d230	FUN_0088d230	.text	8		clean	unknown		unanalyzed	
@@ -22918,8 +22918,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0088dc70	FUN_0088dc70	.text	30		clean	unknown		unanalyzed	
 0088dc90	FUN_0088dc90	.text	130		clean	unknown		unanalyzed	
 0088dd20	FUN_0088dd20	.text	300		clean	unknown		unanalyzed	
-0088de50	FUN_0088de50	.text	103		clean	unknown		unanalyzed	
-0088dec0	FUN_0088dec0	.text	131		clean	unknown		unanalyzed	
+0088de50	FUN_0088de50	.text	103		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableIterator::advanceToNextActive; call 0088de50 008ca380 008ca417
+0088dec0	FUN_0088dec0	.text	131		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableCategoryMap::findFirstActiveForKey; call 0088dec0 008ca380 008ca3a7
 0088df50	FUN_0088df50	.text	156		clean	unknown		unanalyzed	
 0088dff0	FUN_0088dff0	.text	42		clean	unknown		unanalyzed	
 0088e020	FUN_0088e020	.text	8		clean	unknown		unanalyzed	
@@ -22989,20 +22989,20 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00890020	FUN_00890020	.text	43		clean	unknown		unanalyzed	
 00890050	FUN_00890050	.text	43		clean	unknown		unanalyzed	
 00890080	FUN_00890080	.text	43		clean	unknown		unanalyzed	
-008900b0	FUN_008900b0	.text	199		clean	unknown		unanalyzed	
+008900b0	FUN_008900b0	.text	199		clean	gamelogic	recon/skirmishai89	reversed	AIBankAccount::canAffordRequest; call 008900b0 008cf360 008cf48b
 00890180	FUN_00890180	.text	78		clean	unknown		unanalyzed	
 008901d0	FUN_008901d0	.text	211		clean	unknown		unanalyzed	
 008902b0	FUN_008902b0	.text	43		clean	unknown		unanalyzed	
 008902e0	FUN_008902e0	.text	110	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00890350	FUN_00890350	.text	99		clean	unknown		unanalyzed	
 008903c0	FUN_008903c0	.text	54		clean	unknown		unanalyzed	
-00890400	FUN_00890400	.text	112		clean	unknown		unanalyzed	
+00890400	FUN_00890400	.text	112		clean	gamelogic	recon/skirmishai89	reversed	AIBase::getPosition; call 00890400 008a2bd0 008a2dca
 00890470	FUN_00890470	.text	342		clean	unknown		unanalyzed	
 008905d0	FUN_008905d0	.text	10		clean	unknown		unanalyzed	
 008905e0	FUN_008905e0	.text	6		clean	unknown		unanalyzed	
 008905f0	FUN_008905f0	.text	8		clean	unknown		unanalyzed	
-00890600	FUN_00890600	.text	667		clean	unknown		unanalyzed	
-008908c0	FUN_008908c0	.text	222		clean	unknown		unanalyzed	
+00890600	FUN_00890600	.text	667		clean	gamelogic	recon/skirmishai89	reversed	AIBaseQueryCriteria::isCandidateBetterThanBest; call 00890600 008908c0 00890972
+008908c0	FUN_008908c0	.text	222		clean	gamelogic	recon/skirmishai89	reversed	AIBaseBuilder::findBestMatchingBase; call 008908c0 008a2bd0 008a2dbf
 008909a0	FUN_008909a0	.text	777		clean	unknown		unanalyzed	
 00890cc0	FUN_00890cc0	.text	647	SageEngine\source\GameEngine\gamelogic\skirmishai\AIBaseBuilder\AIBaseBuilder.cpp	clean	gamelogic		unanalyzed	
 00890f50	FUN_00890f50	.text	1623		clean	unknown		unanalyzed	
@@ -23016,8 +23016,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008923f0	FUN_008923f0	.text	71		clean	unknown		unanalyzed	
 00892440	FUN_00892440	.text	260	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00892550	FUN_00892550	.text	81		clean	unknown		unanalyzed	
-008925b0	FUN_008925b0	.text	182		clean	unknown		unanalyzed	
-00892670	FUN_00892670	.text	182		clean	unknown		unanalyzed	
+008925b0	FUN_008925b0	.text	182		clean	gamelogic	recon/skirmishai89	unanalyzed	AIBuildState::claimFirstMatchingBuilderSlot; owned, deferred: builder-slot claim is not in the differential oracle
+00892670	FUN_00892670	.text	182		clean	gamelogic	recon/skirmishai89	unanalyzed	AIBaseBuilder::hasEnoughPowerForTemplate; owned, deferred: power check is not in the differential oracle
 00892730	FUN_00892730	.text	214		clean	unknown		unanalyzed	
 00892810	FUN_00892810	.text	224		clean	unknown		unanalyzed	
 008928f0	FUN_008928f0	.text	445		clean	unknown		unanalyzed	
@@ -23026,13 +23026,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00892c60	FUN_00892c60	.text	469		clean	unknown		unanalyzed	
 00892e40	FUN_00892e40	.text	480		clean	unknown		unanalyzed	
 00893020	FUN_00893020	.text	1255		clean	unknown		unanalyzed	
-00893520	FUN_00893520	.text	299		clean	unknown		unanalyzed	
+00893520	FUN_00893520	.text	299		clean	gamelogic	recon/skirmishai89	unanalyzed	AIBuildState::shouldEstablishNewBase; owned, deferred: new-base predicate is not in the differential oracle
 00893650	FUN_00893650	.text	202		clean	unknown		unanalyzed	
 00893720	FUN_00893720	.text	343		clean	unknown		unanalyzed	
-00893880	FUN_00893880	.text	149		clean	unknown		unanalyzed	
-00893920	FUN_00893920	.text	174		clean	unknown		unanalyzed	
+00893880	FUN_00893880	.text	149		clean	gamelogic	recon/skirmishai89	reversed	AIBuildState::findActiveObjectBySlotKey; call 00893880 00896760 0089679f
+00893920	FUN_00893920	.text	174		clean	gamelogic	recon/skirmishai89	reversed	AIBuildState::getSlotAuxiliaryIdIfObjectAlive; call 00893920 008d0550 008d071b
 008939d0	FUN_008939d0	.text	38		clean	unknown		unanalyzed	
-00893a00	FUN_00893a00	.text	171		clean	unknown		unanalyzed	
+00893a00	FUN_00893a00	.text	171		clean	gamelogic	recon/skirmishai89	reversed	AIBuildState::hasAliveTrackedObjectForCandidate; call 00893a00 008a0dc0 008a0dc9
 00893ab0	FUN_00893ab0	.text	412		clean	unknown		unanalyzed	
 00893c4c	FUN_00893c4c	.text	32		clean	unknown		unanalyzed	
 00893c70	FUN_00893c70	.text	56		clean	unknown		unanalyzed	
@@ -23258,7 +23258,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00897b40	FUN_00897b40	.text	28		clean	unknown		unanalyzed	
 00897b5c	FUN_00897b5c	.text	69		clean	unknown		unanalyzed	
 00897ba5	FUN_00897ba5	.text	1		clean	unknown		unanalyzed	
-00897bb0	FUN_00897bb0	.text	87		clean	unknown		unanalyzed	
+00897bb0	FUN_00897bb0	.text	87		clean	gamelogic	recon/skirmishai89	reversed	AIEconomyStatsSubobject::initDefault; call 00897bb0 00897f90 00898019
 00897c10	FUN_00897c10	.text	30		clean	unknown		unanalyzed	
 00897c30	FUN_00897c30	.text	41		clean	unknown		unanalyzed	
 00897c59	FUN_00897c59	.text	60		clean	unknown		unanalyzed	
@@ -23270,7 +23270,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00897e30	FUN_00897e30	.text	38		clean	unknown		unanalyzed	
 00897e56	FUN_00897e56	.text	53		clean	unknown		unanalyzed	
 00897e90	FUN_00897e90	.text	53		clean	unknown		unanalyzed	
-00897ed0	FUN_00897ed0	.text	20		clean	unknown		unanalyzed	
+00897ed0	FUN_00897ed0	.text	20		clean	gamelogic	recon/skirmishai89	reversed	AIEconomyStats::updateSlidingWindow; vt 00897ed0 00c51e0c 4
 00897ef0	FUN_00897ef0	.text	7		clean	unknown		unanalyzed	
 00897ef7	FUN_00897ef7	.text	64		clean	unknown		unanalyzed	
 00897f37	FUN_00897f37	.text	25		clean	unknown		unanalyzed	
@@ -23365,8 +23365,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0089a640	FUN_0089a640	.text	8		clean	unknown		unanalyzed	
 0089a648	FUN_0089a648	.text	84		clean	unknown		unanalyzed	
 0089a69c	FUN_0089a69c	.text	39		clean	unknown		unanalyzed	
-0089a6d0	FUN_0089a6d0	.text	106		clean	unknown		unanalyzed	
-0089a740	FUN_0089a740	.text	129		clean	unknown		unanalyzed	
+0089a6d0	FUN_0089a6d0	.text	106		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableEntry::resolveStructureObject; call 0089a6d0 008a1840 008a1981
+0089a740	FUN_0089a740	.text	129		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableEntry::getStructureOrFallbackPosition; call 0089a740 007e54c0 007e54eb
 0089a7cc	FUN_0089a7cc	.text	1		clean	unknown		unanalyzed	
 0089a7d0	FUN_0089a7d0	.text	129		clean	unknown		unanalyzed	
 0089a851	FUN_0089a851	.text	82		clean	unknown		unanalyzed	
@@ -23383,14 +23383,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0089abf0	FUN_0089abf0	.text	102		clean	unknown		unanalyzed	
 0089ac56	FUN_0089ac56	.text	20		clean	unknown		unanalyzed	
 0089ac70	FUN_0089ac70	.text	30		clean	unknown		unanalyzed	
-0089ac90	FUN_0089ac90	.text	155		clean	unknown		unanalyzed	
+0089ac90	FUN_0089ac90	.text	155		clean	gamelogic	recon/skirmishai89	unanalyzed	AIBuildableStructureTracker::init; no vt or call chain to a vtable whose slot 2 is a ledger function
 0089ad30	FUN_0089ad30	.text	30		clean	unknown		unanalyzed	
 0089ad50	FUN_0089ad50	.text	12		clean	unknown		unanalyzed	
 0089ad5c	FUN_0089ad5c	.text	126		clean	unknown		unanalyzed	
 0089adda	FUN_0089adda	.text	138		clean	unknown		unanalyzed	
 0089ae64	FUN_0089ae64	.text	221		clean	unknown		unanalyzed	
 0089aecd	FUN_0089aecd	.text	11		clean	unknown		unanalyzed	
-0089af50	FUN_0089af50	.text	32		clean	unknown		unanalyzed	
+0089af50	FUN_0089af50	.text	32		clean	gamelogic	recon/skirmishai89	reversed	AIBuildHeuristic::initBase; call 0089af50 007f74d0 007f75f7
 0089af70	FUN_0089af70	.text	55		clean	unknown		unanalyzed	
 0089afa7	FUN_0089afa7	.text	1		clean	unknown		unanalyzed	
 0089afb0	FUN_0089afb0	.text	140		clean	unknown		unanalyzed	
@@ -23491,8 +23491,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0089cba8	FUN_0089cba8	.text	172		clean	unknown		unanalyzed	
 0089cc54	FUN_0089cc54	.text	229		clean	unknown		unanalyzed	
 0089cd40	FUN_0089cd40	.text	785		clean	unknown		unanalyzed	
-0089d070	FUN_0089d070	.text	84		clean	unknown		unanalyzed	
-0089d0d0	FUN_0089d0d0	.text	123		clean	unknown		unanalyzed	
+0089d070	FUN_0089d070	.text	84		clean	gamelogic	recon/skirmishai89	reversed	AIBuilder::hasActiveBuildableEntryForObjectId; call 0089d070 008a2bd0 008a2d8b
+0089d0d0	FUN_0089d0d0	.text	123		clean	gamelogic	recon/skirmishai89	reversed	AIBuilder::hasActiveBuildableEntryAtPosition; call 0089d0d0 008a3fa0 008a4007
 0089d150	FUN_0089d150	.text	1119		clean	unknown		unanalyzed	
 0089d5b0	FUN_0089d5b0	.text	334		clean	unknown		unanalyzed	
 0089d700	FUN_0089d700	.text	39		clean	unknown		unanalyzed	
@@ -23505,7 +23505,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0089dc10	FUN_0089dc10	.text	152		clean	unknown		unanalyzed	
 0089dcb0	FUN_0089dcb0	.text	115		clean	unknown		unanalyzed	
 0089dd30	FUN_0089dd30	.text	85		clean	unknown		unanalyzed	
-0089dd90	FUN_0089dd90	.text	104		clean	unknown		unanalyzed	
+0089dd90	FUN_0089dd90	.text	104		clean	gamelogic	recon/skirmishai89	unanalyzed	rejected: eastl vector<0x44-byte element>::erase(first,last) instantiation; AIBuildableCandidateVector::eraseRange68; port kept for the oracle (controller)
 0089de00	FUN_0089de00	.text	351	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 0089df60	FUN_0089df60	.text	82		clean	unknown		unanalyzed	
 0089dfc0	FUN_0089dfc0	.text	364	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
@@ -23517,8 +23517,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0089e3e0	FUN_0089e3e0	.text	296	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 0089e510	FUN_0089e510	.text	189		clean	unknown		unanalyzed	
 0089e5d0	FUN_0089e5d0	.text	296	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-0089e700	FUN_0089e700	.text	80		clean	unknown		unanalyzed	
-0089e750	FUN_0089e750	.text	92		clean	unknown		unanalyzed	
+0089e700	FUN_0089e700	.text	80		clean	gamelogic	recon/skirmishai89	unanalyzed	rejected: eastl insertion_sort instantiation (comparator 00890600); AIBaseQueryCriteria::insertionSortBounded; port kept for the oracle (controller)
+0089e750	FUN_0089e750	.text	92		clean	gamelogic	recon/skirmishai89	unanalyzed	rejected: eastl unguarded insertion sort instantiation (comparator 00890600); AIBaseQueryCriteria::insertionSortUnguarded; port kept for the oracle (controller)
 0089e7b0	FUN_0089e7b0	.text	227		clean	unknown		unanalyzed	
 0089e8a0	FUN_0089e8a0	.text	88		clean	unknown		unanalyzed	
 0089e900	FUN_0089e900	.text	179		clean	unknown		unanalyzed	
@@ -23530,8 +23530,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0089edf0	FUN_0089edf0	.text	335	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 0089ef40	FUN_0089ef40	.text	144		clean	unknown		unanalyzed	
 0089efd0	FUN_0089efd0	.text	355	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-0089f140	FUN_0089f140	.text	130		clean	unknown		unanalyzed	
-0089f1d0	FUN_0089f1d0	.text	108		clean	unknown		unanalyzed	
+0089f140	FUN_0089f140	.text	130		clean	gamelogic	recon/skirmishai89	unanalyzed	rejected: eastl median-of-three instantiation; AIBaseQueryCriteria::selectMedianOfThree; port kept for the oracle (controller)
+0089f1d0	FUN_0089f1d0	.text	108		clean	gamelogic	recon/skirmishai89	unanalyzed	rejected: eastl partition instantiation; AIBaseQueryCriteria::partitionByPivot; port kept for the oracle (controller)
 0089f240	FUN_0089f240	.text	70		clean	unknown		unanalyzed	
 0089f290	FUN_0089f290	.text	171		clean	unknown		unanalyzed	
 0089f340	FUN_0089f340	.text	58		clean	unknown		unanalyzed	
@@ -23539,7 +23539,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0089f3e0	FUN_0089f3e0	.text	59		clean	unknown		unanalyzed	
 0089f420	FUN_0089f420	.text	43		clean	unknown		unanalyzed	
 0089f450	FUN_0089f450	.text	43		clean	unknown		unanalyzed	
-0089f480	FUN_0089f480	.text	994		clean	unknown		unanalyzed	
+0089f480	FUN_0089f480	.text	994		clean	gamelogic	recon/skirmishai89	unanalyzed	AIBuildHeuristicStore::init; no vt or call chain to a vtable whose slot 2 is a ledger function
 0089f870	FUN_0089f870	.text	6		clean	unknown		unanalyzed	
 0089f880	FUN_0089f880	.text	475		clean	unknown		unanalyzed	
 0089fa60	FUN_0089fa60	.text	30		clean	unknown		unanalyzed	
@@ -23547,8 +23547,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0089fb20	FUN_0089fb20	.text	301		clean	unknown		unanalyzed	
 0089fc50	FUN_0089fc50	.text	59		clean	unknown		unanalyzed	
 0089fc90	FUN_0089fc90	.text	379		clean	unknown		unanalyzed	
-0089fe10	FUN_0089fe10	.text	153		clean	unknown		unanalyzed	
-0089feb0	FUN_0089feb0	.text	152		clean	unknown		unanalyzed	
+0089fe10	FUN_0089fe10	.text	153		clean	gamelogic	recon/skirmishai89	reversed	AIBaseBuilder::pruneAssignedStructures; call 0089fe10 008c62d0 008c62d9
+0089feb0	FUN_0089feb0	.text	152		clean	gamelogic	recon/skirmishai89	unanalyzed	AIBuildStateManager::removeMatchingOrProducedTemplate; owned, deferred: template removal is not in the differential oracle
 0089ff50	FUN_0089ff50	.text	708		clean	unknown		unanalyzed	
 008a0230	FUN_008a0230	.text	974		clean	unknown		unanalyzed	
 008a0600	FUN_008a0600	.text	281		clean	unknown		unanalyzed	
@@ -23716,11 +23716,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008aa810	FUN_008aa810	.text	389		clean	unknown		unanalyzed	
 008aa9a0	FUN_008aa9a0	.text	336		clean	unknown		unanalyzed	
 008aab00	FUN_008aab00	.text	112		clean	unknown		unanalyzed	
-008aab70	FUN_008aab70	.text	57		clean	unknown		unanalyzed	
-008aabb0	FUN_008aabb0	.text	39		clean	unknown		unanalyzed	
-008aabe0	FUN_008aabe0	.text	39		clean	unknown		unanalyzed	
+008aab70	FUN_008aab70	.text	57		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableStructure::getEffectivePriority; vt 008aab70 00c527c8 6
+008aabb0	FUN_008aabb0	.text	39		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableStructure::getValuePerCost; vt 008aabb0 00c527c8 11
+008aabe0	FUN_008aabe0	.text	39		clean	gamelogic	recon/skirmishai89	reversed	AIBuildableUnit::getValuePerCost; vt 008aabe0 00c52cd8 12
 008aac10	FUN_008aac10	.text	5		clean	unknown		unanalyzed	
-008aac20	FUN_008aac20	.text	124		clean	unknown		unanalyzed	
+008aac20	FUN_008aac20	.text	124		clean	gamelogic	recon/skirmishai89	reversed	AIRebuildableStructure::getScaledDelayFrames; vt 008aac20 00c53048 15
 008aaca0	FUN_008aaca0	.text	6		clean	unknown		unanalyzed	
 008aacb0	FUN_008aacb0	.text	144		clean	unknown		unanalyzed	
 008aad40	FUN_008aad40	.text	905		clean	unknown		unanalyzed	
@@ -23770,8 +23770,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 008ae390	FUN_008ae390	.text	177		clean	unknown		unanalyzed	
 008ae450	FUN_008ae450	.text	1368		clean	unknown		unanalyzed	
 008ae9b0	FUN_008ae9b0	.text	1267	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-008aeeb0	FUN_008aeeb0	.text	126		clean	unknown		unanalyzed	
-008aef30	FUN_008aef30	.text	126		clean	unknown		unanalyzed	
+008aeeb0	FUN_008aeeb0	.text	126		clean	gamelogic	recon/skirmishai89	reversed	AIBaseBuilder::moveStructureToUnderConstruction; call 008aeeb0 008af000 008af068
+008aef30	FUN_008aef30	.text	126		clean	gamelogic	recon/skirmishai89	reversed	AIBaseBuilder::moveStructureToCompleted; call 008aef30 008af000 008af04e
 008aefb0	FUN_008aefb0	.text	71		clean	unknown		unanalyzed	
 008af000	FUN_008af000	.text	115		clean	unknown		unanalyzed	
 008af080	FUN_008af080	.text	71		clean	unknown		unanalyzed	
