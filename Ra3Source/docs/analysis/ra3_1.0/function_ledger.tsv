@@ -5758,18 +5758,18 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00561f80	FUN_00561f80	.text	213		clean	unknown		unanalyzed	
 00562060	FUN_00562060	.text	109		clean	unknown		unanalyzed	
 005620e0	FUN_005620e0	.text	9		inner-patched	unknown		unanalyzed	
-00562250	FUN_00562250	.text	10		clean	unknown		unanalyzed	
-00562260	FUN_00562260	.text	7		clean	unknown		unanalyzed	
+00562250	FUN_00562250	.text	10		clean	render	recon/w3dview	reversed	ra3::render::scaledHeight; oracle 500/500 at CW 007f, wider-CW extended product retained for live shadow
+00562260	FUN_00562260	.text	7		clean	render	recon/w3dview	reversed	ra3::render::guardBandBias; oracle 50/50 including EAX hidden pointer result
 00562270	FUN_00562270	.text	17		clean	unknown		unanalyzed	
-00562290	FUN_00562290	.text	13		clean	unknown		unanalyzed	
-005622a0	FUN_005622a0	.text	29		clean	unknown		unanalyzed	
-005622c0	FUN_005622c0	.text	49		clean	unknown		unanalyzed	
+00562290	FUN_00562290	.text	13		clean	render	recon/w3dview	reversed	ra3::render::setWireframePending; oracle 50/50 object bytes and cleanup
+005622a0	FUN_005622a0	.text	29		clean	render	recon/w3dview	reversed	ra3::render::clearFilter; oracle 500/500 object bytes and cleanup
+005622c0	FUN_005622c0	.text	49		clean	render	recon/w3dview	reversed	ra3::render::setFilter; oracle 500/500 object bytes and cleanup
 00562300	FUN_00562300	.text	17		clean	unknown		unanalyzed	
 00562320	FUN_00562320	.text	191		clean	unknown		unanalyzed	
 005623e0	FUN_005623e0	.text	195		clean	unknown		unanalyzed	
 005624b0	FUN_005624b0	.text	182		clean	unknown		unanalyzed	
-00562570	FUN_00562570	.text	75		clean	unknown		unanalyzed	
-005625c0	FUN_005625c0	.text	18		clean	unknown		unanalyzed	
+00562570	FUN_00562570	.text	75		clean	render	recon/w3dview	reversed	ra3::render::cameraMovementFinished; oracle 500/500 return and cleanup
+005625c0	FUN_005625c0	.text	18		clean	render	recon/w3dview	reversed	ra3::render::cameraLockEquals; oracle 500/500 return and cleanup
 005625e0	FUN_005625e0	.text	97		clean	unknown		unanalyzed	
 00562650	FUN_00562650	.text	128		clean	unknown		unanalyzed	
 005626d0	FUN_005626d0	.text	148		clean	unknown		unanalyzed	
@@ -5779,15 +5779,15 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00562890	FUN_00562890	.text	36		clean	unknown		unanalyzed	
 005628c0	FUN_005628c0	.text	55		clean	unknown		unanalyzed	
 00562900	FUN_00562900	.text	13		clean	unknown		unanalyzed	
-00562910	FUN_00562910	.text	7		clean	unknown		unanalyzed	
-00562920	FUN_00562920	.text	7		clean	unknown		unanalyzed	
-00562930	FUN_00562930	.text	7		clean	unknown		unanalyzed	
-00562940	FUN_00562940	.text	7		clean	unknown		unanalyzed	
-00562950	FUN_00562950	.text	60		clean	unknown		unanalyzed	
-00562990	FUN_00562990	.text	13		clean	unknown		unanalyzed	
-005629a0	FUN_005629a0	.text	13		clean	unknown		unanalyzed	
-005629b0	FUN_005629b0	.text	13		clean	unknown		unanalyzed	
-005629c0	FUN_005629c0	.text	13		clean	unknown		unanalyzed	
+00562910	FUN_00562910	.text	7		clean	render	recon/w3dview	reversed	ra3::render::cameraShakeX; oracle 1500/1500 full 80-bit ST0 at CW 007f/027f/037f
+00562920	FUN_00562920	.text	7		clean	render	recon/w3dview	reversed	ra3::render::cameraShakeY; oracle 1500/1500 full 80-bit ST0 at CW 007f/027f/037f
+00562930	FUN_00562930	.text	7		clean	render	recon/w3dview	reversed	ra3::render::cameraShakeIntensity; oracle 1500/1500 full 80-bit ST0 at CW 007f/027f/037f
+00562940	FUN_00562940	.text	7		clean	render	recon/w3dview	reversed	ra3::render::cameraShakeActive; oracle 50/50 raw byte return and cleanup
+00562950	FUN_00562950	.text	60		clean	render	recon/w3dview	reversed	ra3::render::clearCameraShake; oracle 500/500 object bytes and cleanup
+00562990	FUN_00562990	.text	13		clean	render	recon/w3dview	reversed	ra3::render::setCameraShakeFlag0; oracle 50/50 object bytes and cleanup
+005629a0	FUN_005629a0	.text	13		clean	render	recon/w3dview	reversed	ra3::render::setCameraShakeFlag1; oracle 50/50 object bytes and cleanup
+005629b0	FUN_005629b0	.text	13		clean	render	recon/w3dview	reversed	ra3::render::setCameraShakeFlag2; oracle 50/50 object bytes and cleanup
+005629c0	FUN_005629c0	.text	13		clean	render	recon/w3dview	reversed	ra3::render::setCameraShakeFlag3; oracle 50/50 object bytes and cleanup
 005629d0	FUN_005629d0	.text	10		clean	unknown		unanalyzed	
 005629e0	FUN_005629e0	.text	24		clean	unknown		unanalyzed	
 00562a00	FUN_00562a00	.text	17		clean	unknown		unanalyzed	
@@ -5941,9 +5941,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00568730	FUN_00568730	.text	178		clean	unknown		unanalyzed	
 005687f0	FUN_005687f0	.text	127		clean	unknown		unanalyzed	
 00568870	FUN_00568870	.text	729		clean	unknown		unanalyzed	
-00568b60	FUN_00568b60	.text	38		clean	unknown		unanalyzed	
+00568b60	FUN_00568b60	.text	38		clean	render	recon/w3dview	reversed	ra3::render::setRainEnabled; oracle 500/500 random arrays
 00568b90	FUN_00568b90	.text	688	SageEngine\source\GameEngineDevice\W3DDevice\GameClient\W3DRainManager.cpp	clean	render		unanalyzed	
-00568e40	FUN_00568e40	.text	81		clean	unknown		unanalyzed	
+00568e40	FUN_00568e40	.text	81		clean	render	recon/w3dview	reversed	ra3::render::fillRainIndices; oracle full 16000-quad index buffer
 00568ea0	FUN_00568ea0	.text	181		clean	unknown		unanalyzed	
 00568f60	FUN_00568f60	.text	358		clean	unknown		unanalyzed	
 005690d0	FUN_005690d0	.text	101		clean	unknown		unanalyzed	
@@ -6998,7 +6998,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005abbd0	FUN_005abbd0	.text	18		clean	unknown		unanalyzed	
 005abbf0	FUN_005abbf0	.text	40		clean	unknown		unanalyzed	
 005abc20	FUN_005abc20	.text	9		clean	unknown		unanalyzed	
-005abc30	FUN_005abc30	.text	175		clean	unknown		unanalyzed	
+005abc30	FUN_005abc30	.text	175		clean	render	recon/w3dview	reversed	ra3::render::configureEase; oracle 1500/1500 random finite inputs and cleanup
 005abce0	FUN_005abce0	.text	198		clean	unknown		unanalyzed	
 005abdb0	FUN_005abdb0	.text	771		clean	unknown		unanalyzed	
 005ac0c0	FUN_005ac0c0	.text	12		clean	unknown		unanalyzed	
