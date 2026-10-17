@@ -130,6 +130,13 @@
   格式、owner、台账归属、保护类别和与 main/在途分支的重复认领。`RESULT FAIL` 先退回或
   由主控修正再合并。脚本不判断语义与所有权证据，这部分仍由主控抽查。
 - **批次指标**：`docs/analysis/ra3_1.0/batch_metrics.tsv`，合并或退回时追加一行。
+- **补位队列**（任一路完成即补，保持 10 路；数字为未认领 clean 函数数）：
+  `0x006A0000–0x006BFFFF` gamelogic 879（Gemini）→ `0x007E0000–0x0080FFFF` common 464
+  （Grok）→ `0x00720000–0x0075FFFF` gamelogic ~520（Gemini）→ `0x00560000` render 212
+  （Gemini）→ `0x005A0000` common 196（Grok）→ `0x00500000` audio 118（Gemini）→
+  `0x00870000` gamelogic/gameclient 301（Gemini）→ `0x004D0000` GameLogic 核心 261（Gemini）
+  → `0x00990000` render 140（Gemini）→ `0x00820000–0x0083FFFF` gamelogic 250（Grok）。
+  受保护批次合并后，按剩余 body/cave 数量再开下一路。
 - **验收教训**：子 agent 的交付说明可能与提交不符。合并前用脚本从目标表直接核对
   键名、explicitOnly 计数与二进制 expected16，并核对 record 键与注释一致；旧 base 的
   分支可能新建与主分支同名的头文件（WeaponLogic 合并时即需改名为 `UpdateModules.h`）；
