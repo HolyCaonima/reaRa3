@@ -17,6 +17,7 @@ ra3_add_module(gamelogic
         include/ra3/gamelogic/ScriptNamedQueries.h
         include/ra3/gamelogic/SkirmishAI87.h
         include/ra3/gamelogic/AIState79.h
+        include/ra3/gamelogic/AIState7D.h
         include/ra3/gamelogic/SkirmishAI8B.h
         src/AIStateMachine7C.cpp
         src/AITNGuardViews.cpp
@@ -35,6 +36,7 @@ ra3_add_module(gamelogic
         src/ScriptNamedQueries.cpp
         src/SkirmishAI87.cpp
         src/AIState79.cpp
+        src/AIState7D.cpp
         src/SkirmishAI8B.cpp
         include/ra3/gamelogic/ObjectUpdates78.h
         src/ObjectUpdates78.cpp
