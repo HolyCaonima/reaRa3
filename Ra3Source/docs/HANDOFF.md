@@ -194,6 +194,8 @@
   - `recon/render56`：`0x00560000–0x0059FFFF` render 簇，Gemini，base `5e4a7c2`。
   - `recon/audio50`：`0x00500000–0x0050FFFF` SageAudio 设备层，base `d18d88e`；Gemini 断连后主控
     提交快照 `30643c3`（约 42 个草稿入口和 checker，无 oracle/注释/文档），改由 Grok 接手。
+  - `recon/objbehav68`：Gemini 两次中断，主控提交快照 `97a0572`（约 70 个草稿入口和 checker，
+    oracle 原型在该 worktree 的 `work/`），改由 Grok 接手。
   - `recon/skirm87`、`recon/render99`、`recon/thing78`：Grok 新开，见补位队列。
   - `recon/skirmishai89`：`0x00890000–0x0089FFFF` skirmish AI 簇，Gemini，base `5d16a5b`。
   - 14:00 补足 10 路，base 均为 `86baa8d`：`recon/objbehav68`（`0x00680000–0x0068FFFF`
