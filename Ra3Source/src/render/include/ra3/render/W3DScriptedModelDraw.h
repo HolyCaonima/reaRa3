@@ -40,8 +40,9 @@ void* getFirstAnimationName(const void* drawStateSlot, void* outAsciiString) noe
 void* getIndexedAnimationName(
     const void* drawStateSlot, void* outAsciiString, std::uint32_t index) noexcept;
 
-// 0x008E8D50 - Query whether a W3DScriptedModelDraw animation layer has completed
-bool isAnimationLayerComplete(
+// 0x008E8D50 - Query whether a W3DScriptedModelDraw animation layer has completed.
+// Modes 0/1/3/5/7 return the raw completion byte, not a normalized 0/1.
+std::uint8_t isAnimationLayerComplete(
     const void* drawStateSlot, const void* animLayer, std::uint8_t checkCompleteFlag) noexcept;
 
 // 0x008E8DC0 - W3DScriptedModelDraw_pri[5]

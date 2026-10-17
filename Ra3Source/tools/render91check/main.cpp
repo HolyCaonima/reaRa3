@@ -257,9 +257,7 @@ int runCase(
         break;
     case 0x008E8D50:
         ret = isAnimationLayerComplete(
-                  self, ptrAt(blob, a0), static_cast<std::uint8_t>(a1))
-                  ? 1U
-                  : 0U;
+            self, ptrAt(blob, a0), static_cast<std::uint8_t>(a1));
         break;
     case 0x008E8DC0:
         ret = ptrToResult(

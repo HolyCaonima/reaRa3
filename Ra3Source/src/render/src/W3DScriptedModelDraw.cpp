@@ -459,19 +459,19 @@ void* getIndexedAnimationName(
 }
 
 // Original implementation; ra3_1.0.game 0x008E8D50.
-bool isAnimationLayerComplete(
+std::uint8_t isAnimationLayerComplete(
     const void* drawStateSlot, const void* animLayer, std::uint8_t checkCompleteFlag) noexcept
 {
     if (load<std::uint32_t>(drawStateSlot, 0) == 0U) {
-        return true;
+        return 1U;
     }
     const auto* animObj = load<const void*>(animLayer, 0);
     if (animObj == nullptr) {
-        return true;
+        return 1U;
     }
     const auto mode = load<std::uint32_t>(animLayer, 0x10);
     if (mode > 7U) {
-        return true;
+        return 1U;
     }
     switch (mode) {
     case 0U:
@@ -480,22 +480,24 @@ bool isAnimationLayerComplete(
     case 5U:
     case 7U:
         if (checkCompleteFlag == 0U) {
-            return false;
+            return 0U;
         }
-        return load<std::uint8_t>(animLayer, 0x18) != 0U;
+        return load<std::uint8_t>(animLayer, 0x18);
     case 2U: {
         const auto totalFrames = static_cast<float>(load<std::int32_t>(animObj, 0x14)) - 1.0F;
         const auto curFrame = load<float>(animLayer, 4);
-        return !std::isnan(curFrame) && !std::isnan(totalFrames) && curFrame >= totalFrames;
+        return (!std::isnan(curFrame) && !std::isnan(totalFrames) && curFrame >= totalFrames)
+                   ? 1U
+                   : 0U;
     }
     case 4U: {
         const auto curFrame = load<float>(animLayer, 4);
-        return !std::isnan(curFrame) && 0.0F >= curFrame;
+        return (!std::isnan(curFrame) && 0.0F >= curFrame) ? 1U : 0U;
     }
     case 6U:
-        return true;
+        return 1U;
     default:
-        return true;
+        return 1U;
     }
 }
 
@@ -1521,14 +1523,14 @@ void* initializeW3DModelDrawConditionState(void* state) noexcept
     store<void*>(base, 0x50, tree1);
     store<void*>(base, 0x54, tree1);
     store<std::uint32_t>(base, 0x58, 0U);
-    store<std::uint8_t>(base, 0x5C, 0U);
+    store<std::uint32_t>(base, 0x5C, 0U);
     store<std::uint32_t>(base, 0x60, 0U);
 
     auto* tree2 = base + 0x6C;
     store<void*>(base, 0x6C, tree2);
     store<void*>(base, 0x70, tree2);
     store<std::uint32_t>(base, 0x74, 0U);
-    store<std::uint8_t>(base, 0x78, 0U);
+    store<std::uint32_t>(base, 0x78, 0U);
     store<std::uint32_t>(base, 0x7C, 0U);
     store<std::uint8_t>(base, 0x84, 0U);
     return state;
