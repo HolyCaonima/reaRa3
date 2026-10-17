@@ -4,6 +4,7 @@ ra3_add_module(gamelogic
         include/ra3/gamelogic/AITNGuardViews.h
         include/ra3/gamelogic/AIStateViews.h
         include/ra3/gamelogic/Behavior.h
+        include/ra3/gamelogic/GameLogicCore4D.h
         include/ra3/gamelogic/ObjectCore6A.h
         include/ra3/gamelogic/ProtectedCaveLogic.h
         include/ra3/gamelogic/ScriptsCluster.h
@@ -14,6 +15,7 @@ ra3_add_module(gamelogic
         src/AITNGuardViews.cpp
         src/AIStateViews.cpp
         src/Behavior.cpp
+        src/GameLogicCore4D.cpp
         src/ObjectCore6A.cpp
         src/ProtectedCaveLogic.cpp
         src/ScriptsCluster.cpp
