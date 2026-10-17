@@ -12581,7 +12581,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006953e0	FUN_006953e0	.text	167		clean	unknown		unanalyzed	
 00695490	FUN_00695490	.text	93		clean	unknown		unanalyzed	
 006954f0	FUN_006954f0	.text	93		clean	unknown		unanalyzed	
-00695550	FUN_00695550	.text	28		inner-patched	unknown		unanalyzed	
+00695550	FUN_00695550	.text	28		inner-patched	gamelogic	recon/protcave	unanalyzed	dropped: no vtable slot or SageEngine caller; inner-patched site 0x00695566 -> 0x0069556d slot 0x018ed648
 00695600	FUN_00695600	.text	6		clean	unknown		unanalyzed	
 00695610	FUN_00695610	.text	47		clean	unknown		unanalyzed	
 00695640	AptAnimationTarget::GetOnRollOverObject	.text	4		clean	unknown		unanalyzed	
@@ -12701,7 +12701,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006995e0	FUN_006995e0	.text	219		clean	unknown		unanalyzed	
 006996c0	FUN_006996c0	.text	68		clean	unknown		unanalyzed	
 00699710	FUN_00699710	.text	103		clean	unknown		unanalyzed	
-00699780	thunk_FUN_01953f70	.text	6		entry-recoverable	unknown		unanalyzed	
+00699780	thunk_FUN_01953f70	.text	6		entry-recoverable	gamelogic	recon/protcave	reversed	runSubControllerStateActive: entry-recoverable site 0x00699780 -> 0x00699786 slot 0x018f2c84; direct callee of 0x007b24e0 at 0x007b266c; 0x007b24e0 is 0x00c2f718 slot 19; 8 oracle cases
 006997b0	FUN_006997b0	.text	38		clean	unknown		unanalyzed	
 006997e0	FUN_006997e0	.text	94		clean	unknown		unanalyzed	
 00699840	FUN_00699840	.text	27		clean	unknown		unanalyzed	
@@ -12882,7 +12882,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0069e600	FUN_0069e600	.text	94		clean	unknown		unanalyzed	
 0069e660	FUN_0069e660	.text	141		clean	unknown		unanalyzed	
 0069e6f0	FUN_0069e6f0	.text	133		clean	unknown		unanalyzed	
-0069e780	FUN_0069e780	.text	29		inner-patched	unknown		unanalyzed	
+0069e780	FUN_0069e780	.text	29		inner-patched	gamelogic	recon/protcave	reversed	runPartitionModifierCount: inner-patched site 0x0069e78e -> 0x0069e794 slot 0x018f2568; direct callee of 0x006ce860 at 0x006ceb5d; 0x006ce860 is 0x00c19580 slot 9; 6 oracle cases
 0069e820	FUN_0069e820	.text	40		clean	gamelogic	recon/weaponlogic	reversed	PhysicsUpdate overlap count; vtable 00c19580 slot 23; linked-list oracle; explicit hook
 0069e850	FUN_0069e850	.text	44		clean	gamelogic	recon/weaponlogic	reversed	PhysicsUpdate controller/height predicate; direct caller 00763bc0; upper-EAX/float oracle; explicit hook
 0069e880	FUN_0069e880	.text	94		clean	unknown		unanalyzed	
@@ -13133,7 +13133,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a5030	FUN_006a5030	.text	36		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft bit test. No class-name vtable slot.
 006a5060	FUN_006a5060	.text	132		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft status update. Calls 00522880 and 004D5B10; not matched.
 006a50f0	FUN_006a50f0	.text	161		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft status assign. Not matched.
-006a51a0	FUN_006a51a0	.text	16		entry-recoverable	unknown		unanalyzed	
+006a51a0	FUN_006a51a0	.text	16		entry-recoverable	gamelogic	recon/protcave	reversed	runQueryContainedModule: entry-recoverable site 0x006a51a0 -> 0x006a51a6 slot 0x018f2b00; direct callee of 0x00750c70 at 0x0075117c (BeamSpecialAbilityUpdate.cpp); 4 oracle cases
 006a51c0	FUN_006a51c0	.text	44		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft weapon lookup wrapper around deferred 006A1770 and 006A1720.
 006a51f0	FUN_006a51f0	.text	18		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft tail jump into deferred 006A17C0.
 006a5210	FUN_006a5210	.text	44		clean	unknown		unanalyzed	
@@ -13167,7 +13167,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a5c30	FUN_006a5c30	.text	134		clean	unknown		unanalyzed	
 006a5cc0	FUN_006a5cc0	.text	655		clean	unknown		unanalyzed	
 006a5f50	FUN_006a5f50	.text	78		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft selectability predicate. The adjustor 006A78F0 jumps here, but 00C274B0 slot 2 is not a class-name return.
-006a5fa0	FUN_006a5fa0	.text	9		inner-patched	unknown		unanalyzed	
+006a5fa0	FUN_006a5fa0	.text	9		inner-patched	gamelogic	recon/protcave	unanalyzed	dropped: no vtable slot or SageEngine caller; inner-patched site 0x006a5fa3 -> 0x006a5faa slot 0x018f2ea4
 006a6060	FUN_006a6060	.text	10		clean	unknown		unanalyzed	
 006a60a0	FUN_006a60a0	.text	163		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft body-module swap. Not matched.
 006a6150	FUN_006a6150	.text	90		clean	unknown		unanalyzed	
@@ -13176,7 +13176,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a6250	FUN_006a6250	.text	47		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft target clear. Not matched.
 006a6280	FUN_006a6280	.text	52		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft construction predicate. Call site is not inside a ledger function.
 006a62c0	FUN_006a62c0	.text	411		clean	unknown		unanalyzed	
-006a6460	FUN_006a6460	.text	35		inner-patched	unknown		unanalyzed	
+006a6460	FUN_006a6460	.text	35		inner-patched	gamelogic	recon/protcave	reversed	runUnregisterObjectSubsystems: inner-patched site 0x006a6463 -> 0x006a646a slot 0x018ed9ec; direct callee of 0x006b0f80 at 0x006b0fc5; 0x006b0f80 is 0x00c22b88 slot 29; 6 oracle cases
 006a6510	FUN_006a6510	.text	196		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft vision range. x87 altitude formula was not matched.
 006a65e0	FUN_006a65e0	.text	214		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft shroud range. x87 formula was not matched.
 006a66c0	FUN_006a66c0	.text	167		clean	unknown		unanalyzed	
@@ -13192,7 +13192,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a6c10	FUN_006a6c10	.text	99		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. 00C274EC slot 9. Same unanchored vtable as 006A6B10.
 006a6c80	FUN_006a6c80	.text	42		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft transform read. No class-name vtable slot.
 006a6cb0	FUN_006a6cb0	.text	270		clean	unknown		unanalyzed	
-006a6dc0	FUN_006a6dc0	.text	7		inner-patched	unknown		unanalyzed	
+006a6dc0	FUN_006a6dc0	.text	7		inner-patched	gamelogic	recon/protcave	reversed	runObjectPositionStep: inner-patched site 0x006a6dc1 -> 0x006a6dc8 slot 0x018f2560; direct callee of 0x00742940 at 0x00742a40 (NotifyTargetsOfImminentProbableCrushingMux.cpp); 7 oracle cases
 006a6f60	FUN_006a6f60	.text	13		clean	unknown		unanalyzed	
 006a6f70	FUN_006a6f70	.text	84		clean	unknown		unanalyzed	
 006a6fd0	FUN_006a6fd0	.text	94		clean	unknown		unanalyzed	
@@ -13212,7 +13212,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a7540	FUN_006a7540	.text	29		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft status bit test. No class-name vtable slot.
 006a7560	FUN_006a7560	.text	55		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft tri-state validity. No class-name vtable slot.
 006a75a0	FUN_006a75a0	.text	93		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft crush composite. No class-name vtable slot.
-006a7600	thunk_FUN_01956460	.text	6		entry-recoverable	unknown		unanalyzed	
+006a7600	thunk_FUN_01956460	.text	6		entry-recoverable	gamelogic	recon/protcave	reversed	runObjectControllingPlayer: entry-recoverable site 0x006a7600 -> 0x006a7606 slot 0x018f2708; direct callee of 0x007688e0 at 0x0076985c (GenericObjectCreationNugget.cpp); 4 oracle cases
 006a7620	FUN_006a7620	.text	122		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft module search. No class-name vtable slot.
 006a76a0	FUN_006a76a0	.text	216		clean	unknown		unanalyzed	
 006a7780	FUN_006a7780	.text	108		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft dirty-list flush. Not matched.
@@ -13256,7 +13256,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a82d0	FUN_006a82d0	.text	21		clean	unknown		unanalyzed	
 006a82f0	FUN_006a82f0	.text	255		clean	unknown		unanalyzed	
 006a83f0	FUN_006a83f0	.text	6		clean	unknown		unanalyzed	
-006a8400	thunk_FUN_01953ed0	.text	6		entry-recoverable	unknown		unanalyzed	
+006a8400	thunk_FUN_01953ed0	.text	6		entry-recoverable	gamelogic	recon/protcave	unanalyzed	deferred: entry-recoverable site 0x006a8400 -> 0x006a8406 slot 0x018f28c4; body has further calls and was not closed in this batch
 006a8490	FUN_006a8490	.text	156		clean	unknown		unanalyzed	
 006a8530	FUN_006a8530	.text	79		clean	unknown		unanalyzed	
 006a8580	FUN_006a8580	.text	179		clean	unknown		unanalyzed	
@@ -13691,7 +13691,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b6e30	FUN_006b6e30	.text	144		clean	unknown		unanalyzed	
 006b6ec0	FUN_006b6ec0	.text	65		clean	gamelogic	recon/behavior6b	reversed	setSpecialDestination; native EAX/alias/write differential and mutation
 006b6f10	FUN_006b6f10	.text	300		clean	unknown		unanalyzed	
-006b7040	FUN_006b7040	.text	11		inner-patched	unknown		unanalyzed	
+006b7040	FUN_006b7040	.text	11		inner-patched	gamelogic	recon/protcave	reversed	runAssignAiTargetRef: inner-patched site 0x006b7045 -> 0x006b704b slot 0x018f27dc; direct callee of 0x0079ff10 at 0x0079ff61; 0x0079ff10 is 0x00c2ef40 slot 6; 4 oracle cases
 006b7100	FUN_006b7100	.text	547		clean	unknown		unanalyzed	
 006b7340	FUN_006b7340	.text	76		clean	gamelogic	recon/behavior6b	reversed	canSelectAlternateTarget; native empty-container differential and mutation
 006b7390	FUN_006b7390	.text	94		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. AIUpdateInterface 00C22118 slot 89. One path calls through a null pointer. Not matched.
@@ -13802,7 +13802,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006bb2d0	FUN_006bb2d0	.text	6		clean	unknown		unanalyzed	
 006bb2e0	FUN_006bb2e0	.text	47		clean	unknown		unanalyzed	
 006bb310	FUN_006bb310	.text	78		clean	unknown		unanalyzed	
-006bb360	FUN_006bb360	.text	15		inner-patched	unknown		unanalyzed	
+006bb360	FUN_006bb360	.text	15		inner-patched	gamelogic	recon/protcave	reversed	runClassifyObjectKindMask: inner-patched site 0x006bb369 -> 0x006bb36f slot 0x018f2c98; direct callee of 0x00745250 at 0x0074534e (WeaponSlot.cpp); 9 oracle cases
 006bb4f0	FUN_006bb4f0	.text	246		clean	unknown		unanalyzed	
 006bb5f0	FUN_006bb5f0	.text	32		clean	unknown		unanalyzed	
 006bb610	FUN_006bb610	.text	75		clean	unknown		unanalyzed	
@@ -13883,7 +13883,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006bd310	FUN_006bd310	.text	14		clean	unknown		unanalyzed	
 006bd320	FUN_006bd320	.text	100		clean	unknown		unanalyzed	
 006bd390	FUN_006bd390	.text	371		clean	unknown		unanalyzed	
-006bd510	FUN_006bd510	.text	20		inner-patched	unknown		unanalyzed	
+006bd510	FUN_006bd510	.text	20		inner-patched	gamelogic	recon/protcave	reversed	runObjectPassesKindFilter: inner-patched site 0x006bd51e -> 0x006bd526 slot 0x018f2f18; direct callee of 0x00745d40 at 0x00745dc1; 0x00745d40 is 0x00c07788 slot 1; 5 oracle cases
 006bd570	FUN_006bd570	.text	303		clean	unknown		unanalyzed	
 006bd6a0	FUN_006bd6a0	.text	225		clean	unknown		unanalyzed	
 006bd790	FUN_006bd790	.text	85		clean	unknown		unanalyzed	
@@ -13949,7 +13949,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c0460	FUN_006c0460	.text	79		clean	unknown		unanalyzed	
 006c04b0	FUN_006c04b0	.text	96		clean	unknown		unanalyzed	
 006c0510	FUN_006c0510	.text	263		clean	unknown		unanalyzed	
-006c0620	FUN_006c0620	.text	9		inner-patched	unknown		unanalyzed	
+006c0620	FUN_006c0620	.text	9		inner-patched	gamelogic	recon/protcave	unanalyzed	deferred: inner-patched site 0x006c0623 -> 0x006c0629 slot 0x018f2b84; body has further calls and was not closed in this batch
 006c06f0	FUN_006c06f0	.text	194		clean	unknown		unanalyzed	
 006c07c0	FUN_006c07c0	.text	122		clean	unknown		unanalyzed	
 006c0840	FUN_006c0840	.text	86		clean	unknown		unanalyzed	
@@ -13957,7 +13957,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c0900	FUN_006c0900	.text	82		clean	unknown		unanalyzed	
 006c0960	FUN_006c0960	.text	143		clean	unknown		unanalyzed	
 006c09f0	FUN_006c09f0	.text	362		clean	unknown		unanalyzed	
-006c0b60	FUN_006c0b60	.text	9		inner-patched	unknown		unanalyzed	
+006c0b60	FUN_006c0b60	.text	9		inner-patched	gamelogic	recon/protcave	unanalyzed	dropped: no vtable slot or SageEngine caller; inner-patched site 0x006c0b63 -> 0x006c0b69 slot 0x018f2ba4
 006c0be0	FUN_006c0be0	.text	106		clean	unknown		unanalyzed	
 006c0c50	FUN_006c0c50	.text	508		clean	unknown		unanalyzed	
 006c0e50	FUN_006c0e50	.text	125		clean	unknown		unanalyzed	
@@ -13974,7 +13974,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c1400	FUN_006c1400	.text	45		clean	unknown		unanalyzed	
 006c1430	FUN_006c1430	.text	141		clean	unknown		unanalyzed	
 006c14c0	FUN_006c14c0	.text	62		clean	unknown		unanalyzed	
-006c1500	FUN_006c1500	.text	10		inner-patched	unknown		unanalyzed	
+006c1500	FUN_006c1500	.text	10		inner-patched	gamelogic	recon/protcave	reversed	runFindBehaviorModuleByKey: inner-patched site 0x006c1504 -> 0x006c150b slot 0x018edda0; direct callee of 0x006ebea0 at 0x006ebf35; 0x006ebea0 is 0x00c06274 slot 1; 5 oracle cases
 006c1560	thunk_FUN_006c1500	.text	5		clean	unknown		unanalyzed	
 006c1570	FUN_006c1570	.text	51		clean	unknown		unanalyzed	
 006c15b0	FUN_006c15b0	.text	288		clean	unknown		unanalyzed	
@@ -13984,7 +13984,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c1bc0	FUN_006c1bc0	.text	138		clean	unknown		unanalyzed	
 006c1c50	FUN_006c1c50	.text	136		clean	unknown		unanalyzed	
 006c1ce0	FUN_006c1ce0	.text	119		clean	unknown		unanalyzed	
-006c1d60	FUN_006c1d60	.text	9		inner-patched	unknown		unanalyzed	
+006c1d60	FUN_006c1d60	.text	9		inner-patched	gamelogic	recon/protcave	reversed	runReassignControllingPlayer: inner-patched site 0x006c1d63 -> 0x006c1d69 slot 0x018f29f0; direct callee of 0x006c85e0 at 0x006c85ff; 0x006c85e0 is 0x00c11970 slot 98; 4 oracle cases
 006c1de0	FUN_006c1de0	.text	99		clean	unknown		unanalyzed	
 006c1e50	FUN_006c1e50	.text	268		clean	unknown		unanalyzed	
 006c1f60	FUN_006c1f60	.text	175		clean	unknown		unanalyzed	
@@ -13996,7 +13996,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c2410	FUN_006c2410	.text	758		clean	unknown		unanalyzed	
 006c2710	FUN_006c2710	.text	899		clean	unknown		unanalyzed	
 006c2aa0	FUN_006c2aa0	.text	390		clean	unknown		unanalyzed	
-006c2c30	FUN_006c2c30	.text	9		inner-patched	unknown		unanalyzed	
+006c2c30	FUN_006c2c30	.text	9		inner-patched	gamelogic	recon/protcave	unanalyzed	deferred: inner-patched site 0x006c2c33 -> 0x006c2c39 slot 0x018ed5e0; body has further calls and was not closed in this batch
 006c2d40	FUN_006c2d40	.text	8		clean	unknown		unanalyzed	
 006c2d50	FUN_006c2d50	.text	63		clean	unknown		unanalyzed	
 006c2d90	FUN_006c2d90	.text	107		clean	unknown		unanalyzed	
@@ -14055,7 +14055,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c4ca0	FUN_006c4ca0	.text	201		clean	unknown		unanalyzed	
 006c4d70	FUN_006c4d70	.text	201		clean	unknown		unanalyzed	
 006c4e40	FUN_006c4e40	.text	201		clean	unknown		unanalyzed	
-006c4f10	FUN_006c4f10	.text	73		inner-patched	unknown		unanalyzed	
+006c4f10	FUN_006c4f10	.text	73		inner-patched	gamelogic	recon/protcave	unanalyzed	deferred: inner-patched site 0x006c4f53 -> 0x006c4f5b slot 0x018f2c0c; message construction was not closed in this batch
 006c4fa0	FUN_006c4fa0	.text	140		clean	unknown		unanalyzed	
 006c5030	FUN_006c5030	.text	140		clean	unknown		unanalyzed	
 006c50c0	FUN_006c50c0	.text	124		clean	unknown		unanalyzed	
@@ -14065,7 +14065,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c52d0	FUN_006c52d0	.text	140		clean	unknown		unanalyzed	
 006c5360	FUN_006c5360	.text	140		clean	unknown		unanalyzed	
 006c53f0	FUN_006c53f0	.text	140		clean	unknown		unanalyzed	
-006c5480	FUN_006c5480	.text	57		inner-patched	unknown		unanalyzed	
+006c5480	FUN_006c5480	.text	57		inner-patched	gamelogic	recon/protcave	unanalyzed	deferred: inner-patched site 0x006c54b3 -> 0x006c54bb slot 0x018ed740; message construction was not closed in this batch
 006c5500	FUN_006c5500	.text	124		clean	unknown		unanalyzed	
 006c5580	FUN_006c5580	.text	124		clean	unknown		unanalyzed	
 006c5600	FUN_006c5600	.text	124		clean	unknown		unanalyzed	
@@ -14093,7 +14093,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c6210	FUN_006c6210	.text	80		clean	unknown		unanalyzed	
 006c6260	FUN_006c6260	.text	81		clean	unknown		unanalyzed	
 006c62c0	FUN_006c62c0	.text	67		clean	unknown		unanalyzed	
-006c6310	FUN_006c6310	.text	10		inner-patched	unknown		unanalyzed	
+006c6310	FUN_006c6310	.text	10		inner-patched	gamelogic	recon/protcave	unanalyzed	dropped: no vtable slot or SageEngine caller; inner-patched site 0x006c6314 -> 0x006c631a slot 0x018f2dfc
 006c6340	FUN_006c6340	.text	47		clean	unknown		unanalyzed	
 006c6370	FUN_006c6370	.text	121		clean	unknown		unanalyzed	
 006c63f0	FUN_006c63f0	.text	6		clean	unknown		unanalyzed	
@@ -14151,7 +14151,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006c8020	FUN_006c8020	.text	322		clean	unknown		unanalyzed	
 006c8170	FUN_006c8170	.text	182		clean	unknown		unanalyzed	
 006c8230	FUN_006c8230	.text	333		clean	unknown		unanalyzed	
-006c8380	FUN_006c8380	.text	10		inner-patched	unknown		unanalyzed	
+006c8380	FUN_006c8380	.text	10		inner-patched	gamelogic	recon/protcave	unanalyzed	deferred: inner-patched site 0x006c8384 -> 0x006c838a slot 0x018f2b94; continuation walks past a closed body and was not matched
 006c8410	FUN_006c8410	.text	6		clean	unknown		unanalyzed	
 006c8420	FUN_006c8420	.text	47		clean	unknown		unanalyzed	
 006c8450	FUN_006c8450	.text	23		clean	unknown		unanalyzed	
@@ -14237,7 +14237,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006caa90	FUN_006caa90	.text	132		clean	unknown		unanalyzed	
 006cab20	FUN_006cab20	.text	304		clean	unknown		unanalyzed	
 006cac50	FUN_006cac50	.text	134		clean	unknown		unanalyzed	
-006cace0	FUN_006cace0	.text	12		inner-patched	unknown		unanalyzed	
+006cace0	FUN_006cace0	.text	12		inner-patched	gamelogic	recon/protcave	unanalyzed	deferred: inner-patched site 0x006cace6 -> 0x006cacec slot 0x018f28a8; body has further calls and was not closed in this batch
 006cadd0	FUN_006cadd0	.text	59		clean	unknown		unanalyzed	
 006cae10	FUN_006cae10	.text	436		clean	unknown		unanalyzed	
 006cafd0	FUN_006cafd0	.text	62		clean	unknown		unanalyzed	
@@ -14385,7 +14385,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006d0250	FUN_006d0250	.text	49		clean	unknown		unanalyzed	
 006d0290	FUN_006d0290	.text	129		clean	unknown		unanalyzed	
 006d0320	FUN_006d0320	.text	7		clean	unknown		unanalyzed	
-006d0330	FUN_006d0330	.text	16		entry-recoverable	unknown		unanalyzed	
+006d0330	FUN_006d0330	.text	16		entry-recoverable	gamelogic	recon/protcave	unanalyzed	dropped: entry-recoverable site 0x006d0330 -> 0x006d0336 slot 0x018f2e6c; continuation reaches an indirect jump and was not a closed match
 006d0380	FUN_006d0380	.text	30		clean	unknown		unanalyzed	
 006d03a0	FUN_006d03a0	.text	165		clean	unknown		unanalyzed	
 006d0450	FUN_006d0450	.text	577		clean	unknown		unanalyzed	
@@ -14420,7 +14420,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006d1aa0	FUN_006d1aa0	.text	156		clean	unknown		unanalyzed	
 006d1b40	FUN_006d1b40	.text	342		clean	unknown		unanalyzed	
 006d1ca0	FUN_006d1ca0	.text	303		clean	unknown		unanalyzed	
-006d1dd0	FUN_006d1dd0	.text	10		inner-patched	unknown		unanalyzed	
+006d1dd0	FUN_006d1dd0	.text	10		inner-patched	gamelogic	recon/protcave	unanalyzed	deferred: inner-patched site 0x006d1dd4 -> 0x006d1dda slot 0x018eda4c; body has further calls and was not closed in this batch
 006d1ed0	FUN_006d1ed0	.text	120		clean	unknown		unanalyzed	
 006d2020	FUN_006d2020	.text	106		clean	unknown		unanalyzed	
 006d2090	FUN_006d2090	.text	279		clean	unknown		unanalyzed	
@@ -14790,7 +14790,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006e4540	FUN_006e4540	.text	214		clean	unknown		unanalyzed	
 006e4620	FUN_006e4620	.text	190		clean	unknown		unanalyzed	
 006e46e0	FUN_006e46e0	.text	115		clean	unknown		unanalyzed	
-006e4760	FUN_006e4760	.text	217		inner-patched	unknown		unanalyzed	
+006e4760	FUN_006e4760	.text	217		inner-patched	gamelogic	recon/protcave	unanalyzed	deferred: inner-patched site 0x006e476e -> 0x006e4774 slot 0x018ed40c; hash lookup was not closed in this batch
 006e4840	FUN_006e4840	.text	51		clean	unknown		unanalyzed	
 006e4880	FUN_006e4880	.text	51		clean	unknown		unanalyzed	
 006e48c0	FUN_006e48c0	.text	48		clean	unknown		unanalyzed	
@@ -14812,7 +14812,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006e5960	FUN_006e5960	.text	437		clean	unknown		unanalyzed	
 006e5b20	FUN_006e5b20	.text	209		clean	unknown		unanalyzed	
 006e5c00	FUN_006e5c00	.text	213		clean	unknown		unanalyzed	
-006e5ce0	FUN_006e5ce0	.text	8		inner-patched	unknown		unanalyzed	
+006e5ce0	FUN_006e5ce0	.text	8		inner-patched	gamelogic	recon/protcave	reversed	runClearNonZeroStatusWord: inner-patched site 0x006e5ce2 -> 0x006e5ce8 slot 0x018f2aa0; direct callee of 0x0079b720 at 0x0079b72f; 0x0079b720 is 0x00c30160 slot 4; 4 oracle cases
 006e5d00	FUN_006e5d00	.text	468		clean	unknown		unanalyzed	
 006e5ee0	FUN_006e5ee0	.text	271		clean	unknown		unanalyzed	
 006e5ff0	FUN_006e5ff0	.text	129		clean	unknown		unanalyzed	
@@ -14963,7 +14963,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006ee580	FUN_006ee580	.text	349		clean	unknown		unanalyzed	
 006ee6e0	FUN_006ee6e0	.text	62		clean	unknown		unanalyzed	
 006ee720	FUN_006ee720	.text	139		clean	unknown		unanalyzed	
-006ee7b0	FUN_006ee7b0	.text	9		inner-patched	unknown		unanalyzed	
+006ee7b0	FUN_006ee7b0	.text	9		inner-patched	gamelogic	recon/protcave	unanalyzed	dropped: no vtable slot or SageEngine caller; inner-patched site 0x006ee7b3 -> 0x006ee7b9 slot 0x018ed3e4
 006ee820	FUN_006ee820	.text	124		clean	unknown		unanalyzed	
 006ee8a0	FUN_006ee8a0	.text	77		clean	unknown		unanalyzed	
 006ee8f0	FUN_006ee8f0	.text	240		clean	unknown		unanalyzed	
@@ -14983,7 +14983,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006ef8c0	FUN_006ef8c0	.text	208		clean	unknown		unanalyzed	
 006ef990	FUN_006ef990	.text	478		clean	unknown		unanalyzed	
 006efb70	FUN_006efb70	.text	716		clean	unknown		unanalyzed	
-006efe40	FUN_006efe40	.text	9		inner-patched	unknown		unanalyzed	
+006efe40	FUN_006efe40	.text	9		inner-patched	gamelogic	recon/protcave	unanalyzed	deferred: inner-patched site 0x006efe43 -> 0x006efe49 slot 0x018f2654; hash lookup was not closed in this batch
 006efeb0	FUN_006efeb0	.text	327		clean	unknown		unanalyzed	
 006f0000	FUN_006f0000	.text	70		clean	unknown		unanalyzed	
 006f0046	FUN_006f0046	.text	7		clean	unknown		unanalyzed	
@@ -15019,7 +15019,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006f0ec0	FUN_006f0ec0	.text	22		inner-patched	unknown		unanalyzed	
 006f10d0	FUN_006f10d0	.text	437		clean	unknown		unanalyzed	
 006f1290	FUN_006f1290	.text	187		clean	unknown		unanalyzed	
-006f1350	FUN_006f1350	.text	22		inner-patched	unknown		unanalyzed	
+006f1350	FUN_006f1350	.text	22		inner-patched	gamelogic	recon/protcave	unanalyzed	deferred: inner-patched site 0x006f1356 -> 0x006f135c slot 0x018f2574; body has further calls and was not closed in this batch
 006f14e0	FUN_006f14e0	.text	44		clean	unknown		unanalyzed	
 006f1510	FUN_006f1510	.text	282		clean	unknown		unanalyzed	
 006f1630	FUN_006f1630	.text	193		clean	unknown		unanalyzed	
@@ -16066,7 +16066,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0072cd10	FUN_0072cd10	.text	212		clean	unknown		unanalyzed	
 0072cdf0	FUN_0072cdf0	.text	158		clean	unknown		unanalyzed	
 0072ce90	FUN_0072ce90	.text	158		clean	unknown		unanalyzed	
-0072cf30	FUN_0072cf30	.text	13		inner-patched	unknown		unanalyzed	
+0072cf30	FUN_0072cf30	.text	13		inner-patched	gamelogic	recon/protcave	unanalyzed	deferred: inner-patched site 0x0072cf37 -> 0x0072cf3d slot 0x018eda38; drawable tint path was not closed in this batch
 0072cfd0	FUN_0072cfd0	.text	182		clean	unknown		unanalyzed	
 0072d090	FUN_0072d090	.text	264		clean	unknown		unanalyzed	
 0072d1a0	FUN_0072d1a0	.text	179		clean	unknown		unanalyzed	
@@ -16147,7 +16147,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007311d0	FUN_007311d0	.text	339		clean	unknown		unanalyzed	
 00731330	FUN_00731330	.text	150		clean	unknown		unanalyzed	
 00731400	FUN_00731400	.text	302		clean	unknown		unanalyzed	
-00731530	FUN_00731530	.text	10		inner-patched	unknown		unanalyzed	
+00731530	FUN_00731530	.text	10		inner-patched	gamelogic	recon/protcave	reversed	runRegisterActiveModuleListener: inner-patched site 0x00731534 -> 0x0073153b slot 0x018ed904; direct callee of 0x00742e90 at 0x00742f46; 0x00742e90 is 0x00c19580 slot 4; 4 oracle cases
 007315e0	FUN_007315e0	.text	601		clean	unknown		unanalyzed	
 00731840	FUN_00731840	.text	64		clean	unknown		unanalyzed	
 00731880	FUN_00731880	.text	119		clean	unknown		unanalyzed	
@@ -16185,7 +16185,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 007340f0	FUN_007340f0	.text	71		clean	unknown		unanalyzed	
 00734140	FUN_00734140	.text	557	SageEngine\source\GameEngine\gamelogic\object\Weapon\WeaponSlot.cpp	clean	gamelogic		unanalyzed	
 00734380	FUN_00734380	.text	257		clean	unknown		unanalyzed	
-00734490	FUN_00734490	.text	19		inner-patched	unknown		unanalyzed	
+00734490	FUN_00734490	.text	19		inner-patched	gamelogic	recon/protcave	unanalyzed	dropped: no vtable slot or SageEngine caller; inner-patched site 0x00734493 -> 0x0073449a slot 0x018f2a90
 00734500	FUN_00734500	.text	115		clean	unknown		unanalyzed	
 00734580	FUN_00734580	.text	616		clean	unknown		unanalyzed	
 007347f0	thunk_FUN_00734580	.text	5		clean	unknown		unanalyzed	
@@ -16279,7 +16279,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0073c3b0	FUN_0073c3b0	.text	82		clean	unknown		unanalyzed	
 0073c410	FUN_0073c410	.text	621		clean	unknown		unanalyzed	
 0073c680	FUN_0073c680	.text	178		clean	unknown		unanalyzed	
-0073c740	FUN_0073c740	.text	27		inner-patched	unknown		unanalyzed	
+0073c740	FUN_0073c740	.text	27		inner-patched	gamelogic	recon/protcave	unanalyzed	dropped: no vtable slot or SageEngine caller; inner-patched site 0x0073c755 -> 0x0073c75c slot 0x018f2c38
 0073c990	FUN_0073c990	.text	6		clean	unknown		unanalyzed	
 0073c9a0	FUN_0073c9a0	.text	47		clean	unknown		unanalyzed	
 0073c9d0	FUN_0073c9d0	.text	71		clean	unknown		unanalyzed	
@@ -16389,7 +16389,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00740f90	FUN_00740f90	.text	14		clean	unknown		unanalyzed	
 00740fa0	FUN_00740fa0	.text	4		clean	gameclient	recon/grokclean2	reversed	DisplayExtent::loadSecondaryExtent; slot 18; dword load verified
 00740fb0	FUN_00740fb0	.text	394		clean	unknown		unanalyzed	
-00741140	FUN_00741140	.text	20		inner-patched	unknown		unanalyzed	
+00741140	FUN_00741140	.text	20		inner-patched	gamelogic	recon/protcave	unanalyzed	dropped: no vtable slot or SageEngine caller; inner-patched site 0x00741144 -> 0x0074114a slot 0x018ed9dc
 007411c0	FUN_007411c0	.text	697		clean	unknown		unanalyzed	
 00741480	FUN_00741480	.text	276		clean	unknown		unanalyzed	
 007415a0	FUN_007415a0	.text	346		clean	unknown		unanalyzed	
@@ -16448,7 +16448,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00744fe0	FUN_00744fe0	.text	199		clean	unknown		unanalyzed	
 007450b0	FUN_007450b0	.text	163		clean	unknown		unanalyzed	
 00745160	FUN_00745160	.text	114		clean	unknown		unanalyzed	
-007451e0	FUN_007451e0	.text	37		inner-patched	unknown		unanalyzed	
+007451e0	FUN_007451e0	.text	37		inner-patched	gamelogic	recon/protcave	reversed	runNotifySixBucketListeners: inner-patched site 0x007451f5 -> 0x007451fd slot 0x018ed724; direct callee of 0x007564a0 at 0x007564a3; 0x007564a0 is 0x00c143b0 slot 1; 2 oracle cases
 00745250	FUN_00745250	.text	1113	SageEngine\source\GameEngine\gamelogic\object\Weapon\WeaponSlot.cpp	clean	gamelogic		unanalyzed	
 007456aa	FUN_007456aa	.text	80		clean	unknown		unanalyzed	
 00745720	FUN_00745720	.text	63		clean	unknown		unanalyzed	
@@ -16465,7 +16465,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00746040	FUN_00746040	.text	252	SageEngine\source\GameEngine\gamelogic\object\GenericObjectCreationNugget.cpp	clean	gamelogic		unanalyzed	
 00746140	FUN_00746140	.text	19		clean	unknown		unanalyzed	
 00746153	FUN_00746153	.text	95		clean	unknown		unanalyzed	
-007461c0	FUN_007461c0	.text	153		inner-patched	unknown		unanalyzed	
+007461c0	FUN_007461c0	.text	153		inner-patched	gamelogic	recon/protcave	unanalyzed	deferred: inner-patched site 0x007461cd -> 0x007461d4 slot 0x018edd24; body has further calls and was not closed in this batch
 00746280	FUN_00746280	.text	207		clean	unknown		unanalyzed	
 0074634f	FUN_0074634f	.text	776		clean	unknown		unanalyzed	
 00746660	FUN_00746660	.text	656		clean	unknown		unanalyzed	
@@ -16474,10 +16474,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00746e40	FUN_00746e40	.text	58		clean	unknown		unanalyzed	
 00746e80	FUN_00746e80	.text	1924		clean	unknown		unanalyzed	
 00747610	FUN_00747610	.text	778		clean	unknown		unanalyzed	
-00747920	FUN_00747920	.text	24		inner-patched	unknown		unanalyzed	
+00747920	FUN_00747920	.text	24		inner-patched	gamelogic	recon/protcave	unanalyzed	dropped: no vtable slot or SageEngine caller; inner-patched site 0x00747928 -> 0x0074792e slot 0x018ed7a0
 00747a00	FUN_00747a00	.text	519		clean	unknown		unanalyzed	
 00747c10	FUN_00747c10	.text	756		clean	unknown		unanalyzed	
-00747f10	FUN_00747f10	.text	9		inner-patched	unknown		unanalyzed	
+00747f10	FUN_00747f10	.text	9		inner-patched	gamelogic	recon/protcave	reversed	runConsiderObjectIdle: inner-patched site 0x00747f13 -> 0x00747f19 slot 0x018f2e68; direct callee of 0x004f7320 at 0x004f7a59; 0x004f7320 is 0x00bdcc74 slot 13; 9 oracle cases
 00747f80	FUN_00747f80	.text	454		clean	unknown		unanalyzed	
 00748150	FUN_00748150	.text	513		clean	unknown		unanalyzed	
 00748360	thunk_FUN_01956930	.text	6		entry-recoverable	unknown		unanalyzed	

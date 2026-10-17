@@ -41,10 +41,11 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 obj6a 合并）
+## 3. 现状（截至 protcave 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 1,227、unanalyzed 47,698（受保护函数已 reversed：entry-lost 60、inner-patched 2）。`securom` 分类：clean 47,777、entry-lost 653、
+  reversed 1,242、unanalyzed 47,683（受保护函数已 reversed：entry-lost 60、inner-patched 14、
+  entry-recoverable 3）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
 - **hook**：321 个目标（其中 274 个只认显式键）。原有 86 个全部 replace 时，Release
@@ -169,6 +170,14 @@
     Object/WeaponSet 方法无所有权锚点，被整体替换；94 个候选（NameKey 缓存、析构、`0x0076B240`
     无类名 vtable 等）记为延后行。主控核对 16 个槽位与类名、`0x00743F50` 在 `0x00743F66` 写入
     WeaponSetUpdate vtable。产出偏少。集成态 Release 16 函数零差异，`this+0x20` mutation 检出
+  - 受保护 cave 批次（Gemini 三次断连后由 Grok 接手）：15 个入口，12 个 inner-patched、3 个
+    entry-recoverable，均为 gamelogic 对象/AI 小函数；无 hook；代码在
+    `ra3/gamelogic/ProtectedCaveLogic.h`。站点槽位在 run35 里仍指向 SecuROM VM；oracle
+    （`verify_protcave.py`）只在模拟器内存里把槽位改指 `securom_sites.tsv` 记录的原生 cave
+    （被替换指令 + 跳回 continuation），从入口执行到返回。Gemini 草稿把 cave 站点和运行时目标
+    写反，接手方已更正。主控核对 15 行站点/槽位/continuation 与站点表一致、15 条调用边、11 个
+    调用者 vtable 槽位和 4 个带源路径的调用者。10 个无锚点入口剔除，13 个记为延后。集成态
+    81 场景零差异，`!= → ==` mutation 检出
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
@@ -177,14 +186,13 @@
     stringfindlast 等），只有离线证据。
 - **当前并行**（子 agent 随主控会话结束而中断，恢复时先查各 worktree 有无新提交）：
   - `recon/gamelogic7c`、`recon/common7e`、`recon/drawable52`、`recon/gamelogic72`、
-    `recon/particles65`、`recon/render91`、`recon/obj6a`：已合并（`789bcb1`、`f3c87e3`、`c33c919`、
-    `2c9fd80`、`b67d3d3`、`9df37c8`、`760e231`）。合并冲突若只是注册行追加，用
+    `recon/particles65`、`recon/render91`、`recon/obj6a`、`recon/protcave`：已合并（`789bcb1`、
+    `f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`、`9df37c8`、`760e231`、`79a7caa`）。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
     `python work\probe\verify_ownership.py <claims.txt>` 逐条反查（格式见脚本头注释）。
   - `recon/common5a`：`0x005A0000–0x005BFFFF` common 簇，Grok，base `0d099eb`。
   - `recon/render56`：`0x00560000–0x0059FFFF` render 簇，Gemini，base `5e4a7c2`。
   - `recon/skirmishai89`：`0x00890000–0x0089FFFF` skirmish AI 簇，Gemini，base `5d16a5b`。
-  - `recon/protcave`：两次断连后主控提交快照 `31b2124`，Gemini 第三次接手。
   - 14:00 补足 10 路，base 均为 `86baa8d`：`recon/objbehav68`（`0x00680000–0x0068FFFF`
     对象 behavior/update 模块，Gemini）、`recon/protentry`（已合并；由
     `recon/protentry2` 接续剩余 entry-lost 原生体）、`recon/protcave`（全部站点为 cave 的
@@ -210,7 +218,11 @@
   render56，Gemini）→ ~~`0x005A0000`~~（已开 common5a，Grok）→ ~~`0x00500000`~~（已开 audio50，Gemini）→
   ~~`0x00870000`~~（已开 skirm87，Grok，base `179b87b`，派单模板 `work/prompts/skirm87.md`）→
   ~~`0x00990000–0x009AFFFF`~~（已开 render99，SageRender，Grok，base `38a0f6c`）→
-  `0x004D0000` GameLogic 核心 261（Gemini，最难）→ ~~`0x00820000–0x0083FFFF`~~（已开 gamelogic82，Grok）。
+  `0x004D0000` GameLogic 核心 261（Gemini，最难）→ ~~`0x00780000`~~（已开 thing78，Grok）→
+  `0x005D0000` ReliableTransport 等 net 403（锚点 14，Grok）→ `0x008B0000–0x008CFFFF` skirmish AI
+  420（锚点 19，Grok）→ `0x00690000` 对象模块 497（锚点 10）→ `0x00790000` AIStates 591（锚点 10）→
+  `0x00740000–0x0077FFFF` 对象 update/weapon 783（锚点 31）→ protcave 的 13 个延后入口与剩余
+  cave 站点（Grok 已证明能做）→ ~~`0x00820000–0x0083FFFF`~~（已开 gamelogic82，Grok）。
   受保护批次合并后，按剩余 body/cave 数量再开下一路。
 - **验收教训**：子 agent 的交付说明可能与提交不符（protentry 的证据地址、gamelogic7c 的
   vtable 地址与源路径均为编造的）。vtable 所有权声明一律用脚本反查：在 `.rdata` 中找函数
