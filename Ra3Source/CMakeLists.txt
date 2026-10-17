@@ -67,6 +67,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/uicheck)
     add_subdirectory(tools/displaycheck)
     add_subdirectory(tools/aistatecheck)
+    add_subdirectory(tools/behaviormodules68check)
     add_subdirectory(tools/weaponlogiccheck)
 endif()
 

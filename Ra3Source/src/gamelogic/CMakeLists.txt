@@ -2,13 +2,15 @@ ra3_add_module(gamelogic
     SOURCES
         include/ra3/gamelogic/AITNGuardViews.h
         include/ra3/gamelogic/AIStateViews.h
-        include/ra3/gamelogic/Behavior.h
-        include/ra3/gamelogic/ScriptsCluster.h
-        include/ra3/gamelogic/UpdateModules.h
-        include/ra3/gamelogic/WeaponLogic.h
-        src/AITNGuardViews.cpp
-        src/AIStateViews.cpp
-        src/Behavior.cpp
+    include/ra3/gamelogic/Behavior.h
+    include/ra3/gamelogic/BehaviorModules68.h
+    include/ra3/gamelogic/ScriptsCluster.h
+    include/ra3/gamelogic/UpdateModules.h
+    include/ra3/gamelogic/WeaponLogic.h
+    src/AITNGuardViews.cpp
+    src/AIStateViews.cpp
+    src/Behavior.cpp
+    src/BehaviorModules68.cpp
         src/ScriptsCluster.cpp
         src/UpdateModules.cpp
         src/WeaponLogic.cpp)
