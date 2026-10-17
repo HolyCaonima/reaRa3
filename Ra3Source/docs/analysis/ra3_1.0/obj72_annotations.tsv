@@ -1,0 +1,42 @@
+address	status	owner	module	notes
+007216e0	reversed	recon/obj72	gamelogic	ra3::gamelogic::StrafeAreaTargetChooser_xfer; 00c09cd8 slot 3; slot 2 returns StrafeAreaTargetChooser
+00721820	reversed	recon/obj72	gamelogic	ra3::gamelogic::SubStructureStorageBehavior_xfer; 00c09ee0 slot 3; slot 2 returns SubStructureStorageBehavior
+00722660	reversed	recon/obj72	gamelogic	ra3::gamelogic::StancesBehavior_addStanceId; 00c11840 slot 22; slot 2 returns StancesBehavior; body also sits on secondary tables, counted once
+007226c0	reversed	recon/obj72	gamelogic	ra3::gamelogic::StancesBehavior_linkStance; 00c11840 slot 29; slot 2 returns StancesBehavior
+00722970	reversed	recon/obj72	gamelogic	ra3::gamelogic::ManagedActiveBody_xfer; 00c12238 slot 3; slot 2 returns ManagedActiveBody
+007284c0	reversed	recon/obj72	gamelogic	ra3::gamelogic::CompositeStructureInfoModule_xfer; 00c0ae88 slot 3; slot 2 returns CompositeStructureInfoModule
+007287e0	reversed	recon/obj72	gamelogic	ra3::gamelogic::ActivateModuleSpecialAbilityUpdate_xferAndActivate; 00c1b5d8 slot 36; slot 2 returns ActivateModuleSpecialAbilityUpdate
+007289d0	reversed	recon/obj72	gamelogic	ra3::gamelogic::BeamSpecialAbilityUpdate_resetBeam; 00c1ba58 slot 36; slot 2 returns BeamSpecialAbilityUpdate
+007295c0	reversed	recon/obj72	gamelogic	ra3::gamelogic::GiveUpgradeUpdate_clearThenXfer; 00c1cc18 slot 36; slot 2 returns GiveUpgradeUpdate
+0072a580	reversed	recon/obj72	gamelogic	ra3::gamelogic::StoreObjectsSpecialPower_xfer; 00c12ed0 slot 3; slot 2 returns StoreObjectsSpecialPower
+0072a8d0	reversed	recon/obj72	gamelogic	ra3::gamelogic::ToggleMountedSpecialAbilityUpdate_clearMountedBit; 00c1e498 slot 36; slot 2 returns ToggleMountedSpecialAbilityUpdate
+0072cfd0	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_moveWithVector; 00c22118 slot 22; slot 2 returns AIUpdateInterface
+0072d1a0	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_moveToObject; 00c22118 slot 25; slot 2 returns AIUpdateInterface
+0072d260	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_moveClear1C; 00c22118 slot 29; slot 2 returns AIUpdateInterface
+0072d310	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_moveClear1D; 00c22118 slot 30; slot 2 returns AIUpdateInterface
+0072d3c0	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_moveState1E; 00c22118 slot 31; slot 2 returns AIUpdateInterface
+0072d460	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_moveState35; 00c22118 slot 32; slot 2 returns AIUpdateInterface
+0072d500	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_faceObject; 00c22118 slot 34; slot 2 returns AIUpdateInterface
+0072d590	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_command2F; 00c22118 slot 100; slot 2 returns AIUpdateInterface
+0072d620	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_aimState3; 00c22118 slot 37; slot 2 returns AIUpdateInterface
+0072d6d0	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_aimState5; 00c22118 slot 39; slot 2 returns AIUpdateInterface
+0072d740	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_aimState2; 00c22118 slot 38; slot 2 returns AIUpdateInterface
+0072d7a0	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_aimState4; 00c22118 slot 40; slot 2 returns AIUpdateInterface
+0072ddb0	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_order2C; 00c22118 slot 46; slot 2 returns AIUpdateInterface
+0072de40	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_order0B; 00c22118 slot 49; slot 2 returns AIUpdateInterface
+0072dec0	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_order16; 00c22118 slot 50; slot 2 returns AIUpdateInterface
+0072e560	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_aimFlagged; 00c22118 slot 54; slot 2 returns AIUpdateInterface
+0072e600	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_guardPoint; 00c22118 slot 86; slot 2 returns AIUpdateInterface
+0072e680	reversed	recon/obj72	gamelogic	ra3::gamelogic::AIUpdateInterface_attach60; 00c22118 slot 55; slot 2 returns AIUpdateInterface
+0072fa80	reversed	recon/obj72	gamelogic	ra3::gamelogic::BroadcastStealthUpdate_xfer; 00c13840 slot 3; slot 2 returns BroadcastStealthUpdate
+00730d90	reversed	recon/obj72	gamelogic	ra3::gamelogic::OCLMonitorSpecialAbilityUpdate_stopThenXfer; 00c1ee08 slot 36; slot 2 returns OCLMonitorSpecialAbilityUpdate
+00731900	reversed	recon/obj72	gamelogic	ra3::gamelogic::ShieldSphereManager_xfer; 00c05ca4 slot 3; slot 2 returns ShieldSphereManager
+00731b70	reversed	recon/obj72	gamelogic	ra3::gamelogic::SpawnCrateUpdate_xfer; 00c0dbc8 slot 3; slot 2 returns SpawnCrateUpdate
+0073b200	reversed	recon/obj72	gamelogic	ra3::gamelogic::FireWeaponWhenDamagedBehavior_onDamage; 00bf69b8 slot 25; slot 2 returns FireWeaponWhenDamagedBehavior
+0073e780	reversed	recon/obj72	gamelogic	ra3::gamelogic::CaptureSpecialAbilityUpdate_xfer; 00c1bc90 slot 3; slot 2 returns CaptureSpecialAbilityUpdate
+0073ed30	reversed	recon/obj72	gamelogic	ra3::gamelogic::GiveUpgradeUpdate_xfer; 00c1cc18 slot 3; slot 2 returns GiveUpgradeUpdate
+0073ee80	reversed	recon/obj72	gamelogic	ra3::gamelogic::RadarScanMapSpecialAbilityUpdate_xfer; 00c1d078 slot 3; slot 2 returns RadarScanMapSpecialAbilityUpdate
+0073f590	reversed	recon/obj72	gamelogic	ra3::gamelogic::WeaponFireSpecialAbilityUpdate_armAndTrigger; 00c1e918 slot 26; slot 2 returns WeaponFireSpecialAbilityUpdate; same body on DelayedWeaponFire 00c202f0, counted once
+0073f5c0	reversed	recon/obj72	gamelogic	ra3::gamelogic::WeaponFireSpecialAbilityUpdate_templateBit8; 00c1e918 slot 23; slot 2 returns WeaponFireSpecialAbilityUpdate
+0073faa0	reversed	recon/obj72	gamelogic	ra3::gamelogic::DeployStyleAIUpdate_xfer; 00c245b0 slot 3; slot 2 returns DeployStyleAIUpdate
+0073fff0	reversed	recon/obj72	gamelogic	ra3::gamelogic::HordeAIUpdate_xfer; 00c24ee0 slot 3; slot 2 returns HordeAIUpdate; ledger entry starts at 0073fff0 and the ret is at 0074001c
