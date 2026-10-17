@@ -268,6 +268,16 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `fxpsgpumiscword` | `0x0066ABA0` GPU misc word getter | thiscall | 6 | `gpuMiscWord` | offline-verified, live pending；仅显式键启用 |
 | `fxpsgpusoftparticles` | `0x0066ABB0` GPU soft-particles AL getter | thiscall | 6 | `gpuEnableSoftParticles` | offline-verified, live pending；仅显式键启用 |
 | `fxpsgpumiscvalues` | `0x0066ABC0` GPU 四 float 输出 | thiscall（1） | 7 | `gpuMiscValues` | offline-verified, live pending；仅显式键启用 |
+| `uiupdatehitregionbounds` | `0x00A6FFE0` hit-region bounds 缓存 | thiscall | 7 | `updateHitRegionBounds` | offline-verified, live pending；仅显式键启用 |
+| `uicontrollerobject` | `0x00A705A0` controller UI 对象 getter | thiscall | 9 | `controllerUiObject` | offline-verified, live pending；仅显式键启用 |
+| `uicontrollerinputtable` | `0x00A70670` controller 输入表 getter | thiscall | 6 | `controllerInputTable` | offline-verified, live pending；仅显式键启用 |
+| `uicountcontrolflags` | `0x00A70700` 两 dword 位计数 | thiscall | 5 | `countControlFlags` | offline-verified, live pending；仅显式键启用 |
+| `uiinitializehitregion` | `0x00A71B20` hit-region 初始化 | thiscall（EAX=this） | 6 | `initializeHitRegion` | offline-verified, live pending；仅显式键启用 |
+| `uihitregioncontains` | `0x00A71B70` polygon hit-test | cdecl（2，AL） | 6 | `hitRegionContains` | offline-verified, live pending；仅显式键启用 |
+| `uimovetextcaretleft` | `0x00A71E80` UTF-16 caret 左移 | thiscall（1） | 7 | `moveTextCaretLeft` | offline-verified, live pending；仅显式键启用 |
+| `uimaketextslice` | `0x00A73590` 文本 slice | cdecl（hidden output + 3） | 5 | `makeTextSlice` | offline-verified, live pending；仅显式键启用 |
+| `uimaketextprefix` | `0x00A735F0` 文本 prefix slice | cdecl（hidden output + 2） | 5 | `makeTextPrefix` | offline-verified, live pending；仅显式键启用 |
+| `uimaketextsuffix` | `0x00A73640` 文本 suffix slice | cdecl（hidden output + 2） | 5 | `makeTextSuffix` | offline-verified, live pending；仅显式键启用 |
 
 StringBase2 的 6 个目标均为只读或仅写调用方输出缓冲的低风险入口，并且只认显式键。
 shadow 先调用原函数并返回原结果；两个 `copyRange` 目标先快照源区，再只比较原函数实际
@@ -296,6 +306,10 @@ FXPS 的 15 个目标均由 shipped 文件逐个复核 expected16；stolen 前�
 在副本上应用重建变换后比较实际布局，getter 只比较返回值或原函数写出的缓冲，全部要求
 显式键启用。`fxpsgpuspeed` 的 naked 入口分别以 `fstp tbyte` 保存 original/ours，
 逐十字节比较，并在返回前以 `fld tbyte` 重装所选结果，不经过 C++ `float`。
+
+UI 的 10 个目标均不渲染、不发 OS 消息、不分配、不改引用计数或全局 UI 状态；写布局
+的 shadow 先在 clone 上运行重建逻辑，再比较 original 的实际写入。`00A701A0`
+文本测量会重复游戏 vcall，因而即使离线语义已验证也不挂 hook。
 
 这些目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关，且函数内
 后向边均不落入各自前 `stolen` 字节。限长复制/追加的 shadow 只读写原函数会触及的字节

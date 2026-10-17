@@ -24,6 +24,7 @@ ra3_add_shared_library(ra3hook
         dll/targets/BehaviorTargets.cpp
         dll/targets/ObjectLogicTargets.cpp
         dll/targets/GameClient92Targets.cpp
+        dll/targets/UiTargets.cpp
     DEPS
         Ra3::audio
         Ra3::asset
@@ -36,4 +37,5 @@ ra3_add_shared_library(ra3hook
         Ra3::net
         Ra3::render
         Ra3::sim
-        Ra3::text)
+        Ra3::text
+        Ra3::ui)

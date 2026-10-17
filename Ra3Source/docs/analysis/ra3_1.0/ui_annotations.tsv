@@ -1,0 +1,54 @@
+address	status	owner	module	notes
+00a6ffe0	reversed	recon/uicontrols	ui	updateHitRegionBounds; direct dependency of A71B40/A71B70; exact cache writes; explicit hook
+00a70060	reversed	recon/uicontrols	ui	setControlActive; run35 resolved-code differential
+00a700d0	reversed	recon/uicontrols	ui	propagateEnabledState; run35 resolved-code differential
+00a70110	reversed	recon/uicontrols	ui	propagateFocusState; run35 resolved-code differential
+00a701a0	reversed	recon/uicontrols	ui	fitTextIndex; callback output and EAX verified
+00a70220	reversed	recon/uicontrols	ui	tickUiTimer; exact state writes and callback trace verified
+00a70290	reversed	recon/uicontrols	ui	startUiTimer; exact state writes and callback trace verified
+00a704b0	reversed	recon/uicontrols	ui	clearPendingAction; ownership callback trace verified
+00a70500	reversed	recon/uicontrols	ui	setControlPosition; exact flag write and callback trace verified
+00a70520	reversed	recon/uicontrols	ui	setControlExtent; exact flag write and callback trace verified
+00a70540	reversed	recon/uicontrols	ui	setControlClip; exact flag write and callback trace verified
+00a705a0	reversed	recon/uicontrols	ui	controllerUiObject; layout accessor; explicit hook
+00a70670	reversed	recon/uicontrols	ui	controllerInputTable; layout accessor; explicit hook
+00a70700	reversed	recon/uicontrols	ui	countControlFlags; two-word popcount; explicit hook and mutation probe
+00a71200	reversed	recon/uicontrols	ui	dispatchInputRelease; slot state and payload alias verified
+00a712c0	reversed	recon/uicontrols	ui	routeIdleInput; routing trace and payload alias verified
+00a71340	reversed	recon/uicontrols	ui	cancelInputCapture; slot state and dispatch trace verified
+00a71b20	reversed	recon/uicontrols	ui	initializeHitRegion; exact 0x24-byte layout writes; explicit hook
+00a71b40	reversed	recon/uicontrols	ui	copyHitRegionBounds; lazy bounds cache and output verified
+00a71b70	reversed	recon/uicontrols	ui	hitRegionContains; float boundary behavior and cache writes verified; explicit hook
+00a71e80	reversed	recon/uicontrols	ui	moveTextCaretLeft; exact text-edit state writes; explicit hook
+00a72380	reversed	recon/uicontrols	ui	synchronizeControllerState; state and callback ordering verified
+00a72660	reversed	recon/uicontrols	ui	setNamedControlBit; resolver trace and exact bit write verified
+00a72d30	reversed	recon/uicontrols	ui	deactivateEventGate; message alias and gate write verified
+00a72dc0	reversed	recon/uicontrols	ui	dispatchActiveInputSlots; three-slot dispatch ordering verified
+00a72e20	reversed	recon/uicontrols	ui	routeTypedInputEvent; typed-message routing and aliases verified
+00a730b0	reversed	recon/uicontrols	ui	setPrimaryControlBit; exact bit write and notification trace verified
+00a73130	reversed	recon/uicontrols	ui	setSecondaryControlBit; exact bit write and notification trace verified
+00a73590	reversed	recon/uicontrols	ui	makeTextSlice; clamp, source-handle alias and output verified; explicit hook
+00a735f0	reversed	recon/uicontrols	ui	makeTextPrefix; clamp, source-handle alias and output verified; explicit hook
+00a73640	reversed	recon/uicontrols	ui	makeTextSuffix; clamp, source-handle alias and output verified; explicit hook
+00a740a0	reversed	recon/uicontrols	ui	dispatchUiMessage107; message tag 107 and local payload alias verified
+00a740e0	reversed	recon/uicontrols	ui	dispatchUiMessage108; message tag 108 and local payload alias verified
+00a74120	reversed	recon/uicontrols	ui	dispatchUiMessage109; message tag 109 and long payload alias verified
+00a74170	reversed	recon/uicontrols	ui	dispatchUiMessage10A; message tag 10A and local payload alias verified
+00a741b0	reversed	recon/uicontrols	ui	dispatchUiMessage10B; message tag 10B and local payload alias verified
+00a741f0	reversed	recon/uicontrols	ui	dispatchUiMessage10C; message tag 10C and local payload alias verified
+00a74230	reversed	recon/uicontrols	ui	dispatchUiMessage10D; message tag 10D and local payload alias verified
+00a74270	reversed	recon/uicontrols	ui	dispatchUiMessage10E; message tag 10E and long payload alias verified
+00a742c0	reversed	recon/uicontrols	ui	dispatchUiMessage10F; message tag 10F and local payload alias verified
+00a74300	reversed	recon/uicontrols	ui	dispatchUiMessage110; message tag 110 and local payload alias verified
+00a74340	reversed	recon/uicontrols	ui	dispatchUiMessage111; message tag 111 and local payload alias verified
+00a74380	reversed	recon/uicontrols	ui	dispatchUiMessage112; message tag 112 and local payload alias verified
+00a743c0	reversed	recon/uicontrols	ui	dispatchUiMessage113; message tag 113 and long payload alias verified
+00a74410	reversed	recon/uicontrols	ui	dispatchUiMessage114; message tag 114 and local payload alias verified
+00a74450	reversed	recon/uicontrols	ui	dispatchUiMessage115; message tag 115 and local payload alias verified
+00a74700	reversed	recon/uicontrols	ui	routeNearPointerEvent; signed-distance boundary and callback trace verified
+00a748f0	reversed	recon/uicontrols	ui	activateEventGate; message alias and gate write verified
+00a74e70	reversed	recon/uicontrols	ui	beginTextSelection; exact caret/selection state verified
+00a74ec0	reversed	recon/uicontrols	ui	updateTextSelectionFromPoint; exact selection state and hit-test trace verified
+00a75570	reversed	recon/uicontrols	ui	forwardUiMessage106; nested handle traversal and alias verified
+00a759f0	reversed	recon/uicontrols	ui	routePrimaryDoubleClick; timing/position boundary and callback trace verified
+00a75a60	reversed	recon/uicontrols	ui	routeSecondaryDoubleClick; timing/position boundary and callback trace verified

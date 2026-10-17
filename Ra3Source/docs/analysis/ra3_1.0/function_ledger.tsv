@@ -31975,17 +31975,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a6ff20	FUN_00a6ff20	.text	45		clean	unknown		unanalyzed	
 00a6ff50	FUN_00a6ff50	.text	80		clean	unknown		unanalyzed	
 00a6ffa0	FUN_00a6ffa0	.text	59		clean	unknown		unanalyzed	
-00a6ffe0	FUN_00a6ffe0	.text	90		clean	unknown		unanalyzed	
+00a6ffe0	FUN_00a6ffe0	.text	90		clean	ui	recon/uicontrols	reversed	updateHitRegionBounds; direct dependency of A71B40/A71B70; exact cache writes; explicit hook
 00a70040	FUN_00a70040	.text	26		clean	unknown		unanalyzed	
-00a70060	FUN_00a70060	.text	72		clean	unknown		unanalyzed	
+00a70060	FUN_00a70060	.text	72		clean	ui	recon/uicontrols	reversed	setControlActive; run35 resolved-code differential
 00a700b0	FUN_00a700b0	.text	27		clean	unknown		unanalyzed	
-00a700d0	FUN_00a700d0	.text	56		clean	unknown		unanalyzed	
-00a70110	FUN_00a70110	.text	40		clean	unknown		unanalyzed	
+00a700d0	FUN_00a700d0	.text	56		clean	ui	recon/uicontrols	reversed	propagateEnabledState; run35 resolved-code differential
+00a70110	FUN_00a70110	.text	40		clean	ui	recon/uicontrols	reversed	propagateFocusState; run35 resolved-code differential
 00a70140	FUN_00a70140	.text	88		clean	unknown		unanalyzed	
-00a701a0	FUN_00a701a0	.text	41		clean	unknown		unanalyzed	
+00a701a0	FUN_00a701a0	.text	41		clean	ui	recon/uicontrols	reversed	fitTextIndex; callback output and EAX verified
 00a701d0	FUN_00a701d0	.text	65		clean	unknown		unanalyzed	
-00a70220	FUN_00a70220	.text	97		clean	unknown		unanalyzed	
-00a70290	FUN_00a70290	.text	40		clean	unknown		unanalyzed	
+00a70220	FUN_00a70220	.text	97		clean	ui	recon/uicontrols	reversed	tickUiTimer; exact state writes and callback trace verified
+00a70290	FUN_00a70290	.text	40		clean	ui	recon/uicontrols	reversed	startUiTimer; exact state writes and callback trace verified
 00a702c0	FUN_00a702c0	.text	39		clean	unknown		unanalyzed	
 00a702f0	FUN_00a702f0	.text	17		clean	unknown		unanalyzed	
 00a70310	FUN_00a70310	.text	17		clean	unknown		unanalyzed	
@@ -31994,21 +31994,21 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a703d0	FUN_00a703d0	.text	13		clean	unknown		unanalyzed	
 00a703e0	FUN_00a703e0	.text	33		clean	unknown		unanalyzed	
 00a70410	FUN_00a70410	.text	149		clean	unknown		unanalyzed	
-00a704b0	FUN_00a704b0	.text	35		clean	unknown		unanalyzed	
+00a704b0	FUN_00a704b0	.text	35		clean	ui	recon/uicontrols	reversed	clearPendingAction; ownership callback trace verified
 00a704e0	FUN_00a704e0	.text	10		clean	unknown		unanalyzed	
 00a704f0	FUN_00a704f0	.text	10		clean	unknown		unanalyzed	
-00a70500	FUN_00a70500	.text	26		clean	unknown		unanalyzed	
-00a70520	FUN_00a70520	.text	31		clean	unknown		unanalyzed	
-00a70540	FUN_00a70540	.text	26		clean	unknown		unanalyzed	
+00a70500	FUN_00a70500	.text	26		clean	ui	recon/uicontrols	reversed	setControlPosition; exact flag write and callback trace verified
+00a70520	FUN_00a70520	.text	31		clean	ui	recon/uicontrols	reversed	setControlExtent; exact flag write and callback trace verified
+00a70540	FUN_00a70540	.text	26		clean	ui	recon/uicontrols	reversed	setControlClip; exact flag write and callback trace verified
 00a70560	FUN_00a70560	.text	17		clean	unknown		unanalyzed	
 00a70580	FUN_00a70580	.text	17		clean	unknown		unanalyzed	
-00a705a0	FUN_00a705a0	.text	10		clean	unknown		unanalyzed	
-00a70670	FUN_00a70670	.text	12		clean	unknown		unanalyzed	
+00a705a0	FUN_00a705a0	.text	10		clean	ui	recon/uicontrols	reversed	controllerUiObject; layout accessor; explicit hook
+00a70670	FUN_00a70670	.text	12		clean	ui	recon/uicontrols	reversed	controllerInputTable; layout accessor; explicit hook
 00a70680	FUN_00a70680	.text	19		clean	unknown		unanalyzed	
 00a706a0	FUN_00a706a0	.text	19		clean	unknown		unanalyzed	
 00a706c0	FUN_00a706c0	.text	19		clean	unknown		unanalyzed	
 00a706e0	FUN_00a706e0	.text	19		clean	unknown		unanalyzed	
-00a70700	FUN_00a70700	.text	112		clean	unknown		unanalyzed	
+00a70700	FUN_00a70700	.text	112		clean	ui	recon/uicontrols	reversed	countControlFlags; two-word popcount; explicit hook and mutation probe
 00a70770	FUN_00a70770	.text	36		clean	unknown		unanalyzed	
 00a707a0	FUN_00a707a0	.text	36		clean	unknown		unanalyzed	
 00a707d0	FUN_00a707d0	.text	36		clean	unknown		unanalyzed	
@@ -32034,9 +32034,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a71100	FUN_00a71100	.text	33		clean	unknown		unanalyzed	
 00a71130	FUN_00a71130	.text	120		clean	unknown		unanalyzed	
 00a711b0	FUN_00a711b0	.text	80		clean	unknown		unanalyzed	
-00a71200	FUN_00a71200	.text	185		clean	unknown		unanalyzed	
-00a712c0	FUN_00a712c0	.text	114		clean	unknown		unanalyzed	
-00a71340	FUN_00a71340	.text	80		clean	unknown		unanalyzed	
+00a71200	FUN_00a71200	.text	185		clean	ui	recon/uicontrols	reversed	dispatchInputRelease; slot state and payload alias verified
+00a712c0	FUN_00a712c0	.text	114		clean	ui	recon/uicontrols	reversed	routeIdleInput; routing trace and payload alias verified
+00a71340	FUN_00a71340	.text	80		clean	ui	recon/uicontrols	reversed	cancelInputCapture; slot state and dispatch trace verified
 00a713a0	FUN_00a713a0	.text	98		clean	unknown		unanalyzed	
 00a71410	FUN_00a71410	.text	95		clean	unknown		unanalyzed	
 00a71470	FUN_00a71470	.text	75		clean	unknown		unanalyzed	
@@ -32051,9 +32051,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a71870	FUN_00a71870	.text	11		clean	unknown		unanalyzed	
 00a71880	FUN_00a71880	.text	68		clean	unknown		unanalyzed	
 00a718d0	FUN_00a718d0	.text	584		clean	unknown		unanalyzed	
-00a71b20	FUN_00a71b20	.text	31		clean	unknown		unanalyzed	
-00a71b40	FUN_00a71b40	.text	41		clean	unknown		unanalyzed	
-00a71b70	FUN_00a71b70	.text	233		clean	unknown		unanalyzed	
+00a71b20	FUN_00a71b20	.text	31		clean	ui	recon/uicontrols	reversed	initializeHitRegion; exact 0x24-byte layout writes; explicit hook
+00a71b40	FUN_00a71b40	.text	41		clean	ui	recon/uicontrols	reversed	copyHitRegionBounds; lazy bounds cache and output verified
+00a71b70	FUN_00a71b70	.text	233		clean	ui	recon/uicontrols	reversed	hitRegionContains; float boundary behavior and cache writes verified; explicit hook
 00a71c60	FUN_00a71c60	.text	59		clean	unknown		unanalyzed	
 00a71ca0	FUN_00a71ca0	.text	7		clean	unknown		unanalyzed	
 00a71cb0	FUN_00a71cb0	.text	7		clean	unknown		unanalyzed	
@@ -32061,7 +32061,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a71e40	FUN_00a71e40	.text	8		clean	unknown		unanalyzed	
 00a71e50	FUN_00a71e50	.text	8		clean	unknown		unanalyzed	
 00a71e60	FUN_00a71e60	.text	30		clean	unknown		unanalyzed	
-00a71e80	FUN_00a71e80	.text	152		clean	unknown		unanalyzed	
+00a71e80	FUN_00a71e80	.text	152		clean	ui	recon/uicontrols	reversed	moveTextCaretLeft; exact text-edit state writes; explicit hook
 00a72020	FUN_00a72020	.text	136		clean	unknown		unanalyzed	
 00a720b0	FUN_00a720b0	.text	148		clean	unknown		unanalyzed	
 00a72150	FUN_00a72150	.text	61		clean	unknown		unanalyzed	
@@ -32069,7 +32069,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a721e0	FUN_00a721e0	.text	65		clean	unknown		unanalyzed	
 00a72230	FUN_00a72230	.text	143		clean	unknown		unanalyzed	
 00a722c0	FUN_00a722c0	.text	189		clean	unknown		unanalyzed	
-00a72380	FUN_00a72380	.text	137		clean	unknown		unanalyzed	
+00a72380	FUN_00a72380	.text	137		clean	ui	recon/uicontrols	reversed	synchronizeControllerState; state and callback ordering verified
 00a72410	FUN_00a72410	.text	190		clean	unknown		unanalyzed	
 00a724d0	FUN_00a724d0	.text	11		clean	unknown		unanalyzed	
 00a724e0	FUN_00a724e0	.text	7		clean	unknown		unanalyzed	
@@ -32081,7 +32081,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a725d0	FUN_00a725d0	.text	19		clean	unknown		unanalyzed	
 00a725f0	FUN_00a725f0	.text	19		clean	unknown		unanalyzed	
 00a72610	FUN_00a72610	.text	69		clean	unknown		unanalyzed	
-00a72660	FUN_00a72660	.text	74		clean	unknown		unanalyzed	
+00a72660	FUN_00a72660	.text	74		clean	ui	recon/uicontrols	reversed	setNamedControlBit; resolver trace and exact bit write verified
 00a726b0	FUN_00a726b0	.text	47		clean	unknown		unanalyzed	
 00a72770	FUN_00a72770	.text	235		clean	unknown		unanalyzed	
 00a72870	FUN_00a72870	.text	168		clean	unknown		unanalyzed	
@@ -32091,13 +32091,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a72b20	FUN_00a72b20	.text	92		clean	unknown		unanalyzed	
 00a72b80	FUN_00a72b80	.text	224		clean	unknown		unanalyzed	
 00a72c60	FUN_00a72c60	.text	205		clean	unknown		unanalyzed	
-00a72d30	FUN_00a72d30	.text	55		clean	unknown		unanalyzed	
+00a72d30	FUN_00a72d30	.text	55		clean	ui	recon/uicontrols	reversed	deactivateEventGate; message alias and gate write verified
 00a72d70	FUN_00a72d70	.text	70		clean	unknown		unanalyzed	
-00a72dc0	FUN_00a72dc0	.text	87		clean	unknown		unanalyzed	
-00a72e20	FUN_00a72e20	.text	274		clean	unknown		unanalyzed	
+00a72dc0	FUN_00a72dc0	.text	87		clean	ui	recon/uicontrols	reversed	dispatchActiveInputSlots; three-slot dispatch ordering verified
+00a72e20	FUN_00a72e20	.text	274		clean	ui	recon/uicontrols	reversed	routeTypedInputEvent; typed-message routing and aliases verified
 00a72f40	FUN_00a72f40	.text	363		clean	unknown		unanalyzed	
-00a730b0	FUN_00a730b0	.text	118		clean	unknown		unanalyzed	
-00a73130	FUN_00a73130	.text	118		clean	unknown		unanalyzed	
+00a730b0	FUN_00a730b0	.text	118		clean	ui	recon/uicontrols	reversed	setPrimaryControlBit; exact bit write and notification trace verified
+00a73130	FUN_00a73130	.text	118		clean	ui	recon/uicontrols	reversed	setSecondaryControlBit; exact bit write and notification trace verified
 00a731b0	FUN_00a731b0	.text	394		clean	unknown		unanalyzed	
 00a73340	FUN_00a73340	.text	11		clean	unknown		unanalyzed	
 00a73350	FUN_00a73350	.text	8		clean	unknown		unanalyzed	
@@ -32107,9 +32107,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a73480	FUN_00a73480	.text	53		clean	unknown		unanalyzed	
 00a734c0	FUN_00a734c0	.text	93		clean	unknown		unanalyzed	
 00a73520	FUN_00a73520	.text	105		clean	unknown		unanalyzed	
-00a73590	FUN_00a73590	.text	91		clean	unknown		unanalyzed	
-00a735f0	FUN_00a735f0	.text	78		clean	unknown		unanalyzed	
-00a73640	FUN_00a73640	.text	104		clean	unknown		unanalyzed	
+00a73590	FUN_00a73590	.text	91		clean	ui	recon/uicontrols	reversed	makeTextSlice; clamp, source-handle alias and output verified; explicit hook
+00a735f0	FUN_00a735f0	.text	78		clean	ui	recon/uicontrols	reversed	makeTextPrefix; clamp, source-handle alias and output verified; explicit hook
+00a73640	FUN_00a73640	.text	104		clean	ui	recon/uicontrols	reversed	makeTextSuffix; clamp, source-handle alias and output verified; explicit hook
 00a736b0	FUN_00a736b0	.text	159		clean	unknown		unanalyzed	
 00a73750	FUN_00a73750	.text	330		clean	unknown		unanalyzed	
 00a738a0	FUN_00a738a0	.text	343		clean	unknown		unanalyzed	
@@ -32124,29 +32124,29 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a74000	FUN_00a74000	.text	8		clean	unknown		unanalyzed	
 00a74010	FUN_00a74010	.text	39		clean	unknown		unanalyzed	
 00a74040	FUN_00a74040	.text	94		clean	unknown		unanalyzed	
-00a740a0	FUN_00a740a0	.text	62		clean	unknown		unanalyzed	
-00a740e0	FUN_00a740e0	.text	62		clean	unknown		unanalyzed	
-00a74120	FUN_00a74120	.text	79		clean	unknown		unanalyzed	
-00a74170	FUN_00a74170	.text	62		clean	unknown		unanalyzed	
-00a741b0	FUN_00a741b0	.text	62		clean	unknown		unanalyzed	
-00a741f0	FUN_00a741f0	.text	62		clean	unknown		unanalyzed	
-00a74230	FUN_00a74230	.text	62		clean	unknown		unanalyzed	
-00a74270	FUN_00a74270	.text	79		clean	unknown		unanalyzed	
-00a742c0	FUN_00a742c0	.text	62		clean	unknown		unanalyzed	
-00a74300	FUN_00a74300	.text	62		clean	unknown		unanalyzed	
-00a74340	FUN_00a74340	.text	62		clean	unknown		unanalyzed	
-00a74380	FUN_00a74380	.text	62		clean	unknown		unanalyzed	
-00a743c0	FUN_00a743c0	.text	79		clean	unknown		unanalyzed	
-00a74410	FUN_00a74410	.text	62		clean	unknown		unanalyzed	
-00a74450	FUN_00a74450	.text	62		clean	unknown		unanalyzed	
+00a740a0	FUN_00a740a0	.text	62		clean	ui	recon/uicontrols	reversed	dispatchUiMessage107; message tag 107 and local payload alias verified
+00a740e0	FUN_00a740e0	.text	62		clean	ui	recon/uicontrols	reversed	dispatchUiMessage108; message tag 108 and local payload alias verified
+00a74120	FUN_00a74120	.text	79		clean	ui	recon/uicontrols	reversed	dispatchUiMessage109; message tag 109 and long payload alias verified
+00a74170	FUN_00a74170	.text	62		clean	ui	recon/uicontrols	reversed	dispatchUiMessage10A; message tag 10A and local payload alias verified
+00a741b0	FUN_00a741b0	.text	62		clean	ui	recon/uicontrols	reversed	dispatchUiMessage10B; message tag 10B and local payload alias verified
+00a741f0	FUN_00a741f0	.text	62		clean	ui	recon/uicontrols	reversed	dispatchUiMessage10C; message tag 10C and local payload alias verified
+00a74230	FUN_00a74230	.text	62		clean	ui	recon/uicontrols	reversed	dispatchUiMessage10D; message tag 10D and local payload alias verified
+00a74270	FUN_00a74270	.text	79		clean	ui	recon/uicontrols	reversed	dispatchUiMessage10E; message tag 10E and long payload alias verified
+00a742c0	FUN_00a742c0	.text	62		clean	ui	recon/uicontrols	reversed	dispatchUiMessage10F; message tag 10F and local payload alias verified
+00a74300	FUN_00a74300	.text	62		clean	ui	recon/uicontrols	reversed	dispatchUiMessage110; message tag 110 and local payload alias verified
+00a74340	FUN_00a74340	.text	62		clean	ui	recon/uicontrols	reversed	dispatchUiMessage111; message tag 111 and local payload alias verified
+00a74380	FUN_00a74380	.text	62		clean	ui	recon/uicontrols	reversed	dispatchUiMessage112; message tag 112 and local payload alias verified
+00a743c0	FUN_00a743c0	.text	79		clean	ui	recon/uicontrols	reversed	dispatchUiMessage113; message tag 113 and long payload alias verified
+00a74410	FUN_00a74410	.text	62		clean	ui	recon/uicontrols	reversed	dispatchUiMessage114; message tag 114 and local payload alias verified
+00a74450	FUN_00a74450	.text	62		clean	ui	recon/uicontrols	reversed	dispatchUiMessage115; message tag 115 and local payload alias verified
 00a74490	FUN_00a74490	.text	352		clean	unknown		unanalyzed	
 00a74600	FUN_00a74600	.text	84	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00a746a0	FUN_00a746a0	.text	85		clean	unknown		unanalyzed	
-00a74700	FUN_00a74700	.text	119		clean	unknown		unanalyzed	
+00a74700	FUN_00a74700	.text	119		clean	ui	recon/uicontrols	reversed	routeNearPointerEvent; signed-distance boundary and callback trace verified
 00a74780	FUN_00a74780	.text	156		clean	unknown		unanalyzed	
 00a74820	FUN_00a74820	.text	143		clean	unknown		unanalyzed	
 00a748b0	FUN_00a748b0	.text	51		clean	unknown		unanalyzed	
-00a748f0	FUN_00a748f0	.text	56		clean	unknown		unanalyzed	
+00a748f0	FUN_00a748f0	.text	56		clean	ui	recon/uicontrols	reversed	activateEventGate; message alias and gate write verified
 00a74930	FUN_00a74930	.text	87		clean	unknown		unanalyzed	
 00a74990	FUN_00a74990	.text	359		clean	unknown		unanalyzed	
 00a74b00	FUN_00a74b00	.text	62		clean	unknown		unanalyzed	
@@ -32156,8 +32156,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a74c80	FUN_00a74c80	.text	151		clean	unknown		unanalyzed	
 00a74d20	FUN_00a74d20	.text	185		clean	unknown		unanalyzed	
 00a74de0	FUN_00a74de0	.text	141		clean	unknown		unanalyzed	
-00a74e70	FUN_00a74e70	.text	65		clean	unknown		unanalyzed	
-00a74ec0	FUN_00a74ec0	.text	56		clean	unknown		unanalyzed	
+00a74e70	FUN_00a74e70	.text	65		clean	ui	recon/uicontrols	reversed	beginTextSelection; exact caret/selection state verified
+00a74ec0	FUN_00a74ec0	.text	56		clean	ui	recon/uicontrols	reversed	updateTextSelectionFromPoint; exact selection state and hit-test trace verified
 00a74f00	FUN_00a74f00	.text	111		clean	unknown		unanalyzed	
 00a74fa0	FUN_00a74fa0	.text	69		clean	unknown		unanalyzed	
 00a74ff0	FUN_00a74ff0	.text	259		clean	unknown		unanalyzed	
@@ -32168,7 +32168,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a75250	FUN_00a75250	.text	446		clean	unknown		unanalyzed	
 00a75410	FUN_00a75410	.text	57		clean	unknown		unanalyzed	
 00a75450	FUN_00a75450	.text	95		clean	unknown		unanalyzed	
-00a75570	FUN_00a75570	.text	76		clean	unknown		unanalyzed	
+00a75570	FUN_00a75570	.text	76		clean	ui	recon/uicontrols	reversed	forwardUiMessage106; nested handle traversal and alias verified
 00a755e0	FUN_00a755e0	.text	92		clean	unknown		unanalyzed	
 00a75640	FUN_00a75640	.text	48		clean	unknown		unanalyzed	
 00a75670	FUN_00a75670	.text	85		clean	unknown		unanalyzed	
@@ -32178,8 +32178,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00a75830	FUN_00a75830	.text	277		clean	unknown		unanalyzed	
 00a75950	FUN_00a75950	.text	86		clean	unknown		unanalyzed	
 00a759b0	FUN_00a759b0	.text	64		clean	unknown		unanalyzed	
-00a759f0	FUN_00a759f0	.text	101		clean	unknown		unanalyzed	
-00a75a60	FUN_00a75a60	.text	101		clean	unknown		unanalyzed	
+00a759f0	FUN_00a759f0	.text	101		clean	ui	recon/uicontrols	reversed	routePrimaryDoubleClick; timing/position boundary and callback trace verified
+00a75a60	FUN_00a75a60	.text	101		clean	ui	recon/uicontrols	reversed	routeSecondaryDoubleClick; timing/position boundary and callback trace verified
 00a75ad0	FUN_00a75ad0	.text	71		clean	unknown		unanalyzed	
 00a75b20	FUN_00a75b20	.text	45		clean	unknown		unanalyzed	
 00a75b50	FUN_00a75b50	.text	114		clean	unknown		unanalyzed	

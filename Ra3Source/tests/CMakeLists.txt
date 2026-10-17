@@ -19,6 +19,7 @@ ra3_add_executable(ra3_unit_tests
         io/PathCompareTests.cpp
         io/RefPackTests.cpp
         text/CsfTests.cpp
+        ui/UiControlTests.cpp
     DEPS
         Ra3::asset
         Ra3::common
@@ -26,7 +27,8 @@ ra3_add_executable(ra3_unit_tests
         Ra3::gamelogic
         Ra3::hook
         Ra3::io
-        Ra3::text)
+        Ra3::text
+        Ra3::ui)
 target_include_directories(ra3_unit_tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 add_test(NAME unit COMMAND ra3_unit_tests)
 
