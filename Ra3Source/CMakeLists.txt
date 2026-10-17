@@ -97,6 +97,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/skirm8bcheck)
     add_subdirectory(tools/skirmishaibasebuildcheck)
     add_subdirectory(tools/aistate7bcheck)
+    add_subdirectory(tools/client52check)
 endif()
 
 if(RA3_BUILD_TESTS)
