@@ -11,6 +11,7 @@ ra3_add_module(gamelogic
         include/ra3/gamelogic/ModuleIdentity72.h
         include/ra3/gamelogic/WeaponLogic.h
         include/ra3/gamelogic/ScriptNamedQueries.h
+        include/ra3/gamelogic/SkirmishAI87.h
         src/AIStateMachine7C.cpp
         src/AITNGuardViews.cpp
         src/AIStateViews.cpp
@@ -21,7 +22,10 @@ ra3_add_module(gamelogic
         src/UpdateModules.cpp
         src/ModuleIdentity72.cpp
         src/WeaponLogic.cpp
-        src/ScriptNamedQueries.cpp)
+        src/ScriptNamedQueries.cpp
+        src/SkirmishAI87.cpp
+    PUBLIC_DEPS
+        Ra3::sim)
 
 if(MSVC AND CMAKE_SIZEOF_VOID_P EQUAL 4)
     target_compile_options(ra3_gamelogic PRIVATE /arch:SSE2 /fp:precise)
