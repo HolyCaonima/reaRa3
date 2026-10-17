@@ -119,3 +119,5 @@ Debug `ra3_obj69bcheck` both build.
 | key | VA | expected bytes | stolen | explicitOnly |
 | --- | --- | --- | --- | --- |
 | (none) | | | | |
+
+Controller note: the constructor addresses `006955C2` and `006CF197` cited above are not function starts. They are the code right after the SecuROM cave jumps inside the inner-patched constructors `0x00695550` (SpecialPowerModule) and `0x006CF170` (SpecialAbilityUpdate); the vtable stores they contain are real. `0074D2C6` is likewise inside the HordeContain constructor `0x0074D290`, which has no ledger entry.
