@@ -73,10 +73,16 @@ actually establishes one.
 - full 80-bit ST0 for `0x008E6DD0` and `0x008E7000` at control words
   `007F`, `027F`, and `037F`.
 
-The deterministic suite has 88 accepted cases and reports 53/53 entries with
-zero mismatches. A deliberate candidate-output mutation at
-`0x008E4610 + 0x104` is required to be detected before the oracle succeeds.
-The pre-existing W3DView/Rain oracle remains independent.
+The deterministic suite has 3,480 accepted cases and reports 53/53 entries
+with zero mismatches. Every entry has 65–68 distinct cases (minimum 65);
+the 64-case generated phase rotates x87 control words `007F`, `027F`, and
+`037F` and includes branch boundaries, empty/count limits, pointer aliases,
+forward/backward overlap, and permitted floating-point edge values. Two
+deliberate candidate mutations must be detected before the oracle succeeds:
+the exact write at `0x008E4610 + 0x104`, and an omitted angle-wrap branch at
+`0x008E5550`. The unmutated candidate is checked against shipped behavior
+before each mutation probe. The pre-existing W3DView/Rain oracle remains
+independent.
 
 ## Hooks
 

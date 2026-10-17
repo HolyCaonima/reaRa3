@@ -445,9 +445,18 @@ void buildDrawableTransform(
             matrix[base + 1] = cosine * y - sine * x;
         }
     }
-    matrix[3] += matrix[0] * dx + matrix[1] * dy + matrix[2] * dz;
-    matrix[7] += matrix[4] * dx + matrix[5] * dy + matrix[6] * dz;
-    matrix[11] += matrix[8] * dx + matrix[9] * dy + matrix[10] * dz;
+    const auto add = [](float left, float right) noexcept {
+        return _mm_cvtss_f32(_mm_add_ss(_mm_set_ss(left), _mm_set_ss(right)));
+    };
+    const auto multiply = [](float left, float right) noexcept {
+        return _mm_cvtss_f32(_mm_mul_ss(_mm_set_ss(left), _mm_set_ss(right)));
+    };
+    for (const auto base : {std::size_t{0}, std::size_t{4}, std::size_t{8}}) {
+        auto translation = multiply(matrix[base + 2], dz);
+        translation = add(translation, multiply(matrix[base], dx));
+        translation = add(translation, multiply(dy, matrix[base + 1]));
+        matrix[base + 3] = add(translation, matrix[base + 3]);
+    }
 }
 
 // Original implementation; ra3_1.0.game 0x008EFE00.

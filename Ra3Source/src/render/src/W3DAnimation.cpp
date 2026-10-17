@@ -35,6 +35,21 @@ std::int32_t truncate(float value) noexcept
     return _mm_cvtt_ss2si(_mm_set_ss(value));
 }
 
+float addSingle(float left, float right) noexcept
+{
+    return _mm_cvtss_f32(_mm_add_ss(_mm_set_ss(left), _mm_set_ss(right)));
+}
+
+float subtractSingle(float left, float right) noexcept
+{
+    return _mm_cvtss_f32(_mm_sub_ss(_mm_set_ss(left), _mm_set_ss(right)));
+}
+
+float multiplySingle(float left, float right) noexcept
+{
+    return _mm_cvtss_f32(_mm_mul_ss(_mm_set_ss(left), _mm_set_ss(right)));
+}
+
 struct TerrainData {
     std::int32_t width;
     std::int32_t height;
@@ -247,10 +262,12 @@ std::int32_t chooseWeightedModel(
 // Original implementation; ra3_1.0.game 0x008E8B20.
 void* findConditionSubset260(void* state, const std::uint32_t* conditions) noexcept
 {
-    if (auto* selected = pointer<void>(state, 0x210); selected != nullptr) {
-        return selected;
-    }
     const bool requestedAny = anyCondition(conditions);
+    if (!requestedAny) {
+        if (auto* selected = pointer<void>(state, 0x210); selected != nullptr) {
+            return selected;
+        }
+    }
     void* fallback = nullptr;
     auto* current = pointer<std::byte>(state, 0x260);
     const auto* last = pointer<std::byte>(state, 0x264);
@@ -379,24 +396,34 @@ void buildHermiteTangents(float* values) noexcept
 // Generals reference: WWVegas/WWMath/hermitespline.cpp:90-129.
 void evaluateHermite(const float* values, float* output, float fraction) noexcept
 {
-    auto t = (std::max)(0.0F, (std::min)(fraction, 1.0F)) * 2.0F;
+    const auto clamped = fraction < 0.0F ? 0.0F : (
+        fraction <= 1.0F ? fraction : 1.0F);
+    auto t = multiplySingle(clamped, 2.0F);
     const bool second = fraction >= 0.5F;
     if (second) {
-        t -= 1.0F;
+        t = subtractSingle(t, 1.0F);
     }
-    const auto t2 = t * t;
-    const auto t3 = t2 * t;
-    const auto h0 = 2.0F * t3 - 3.0F * t2 + 1.0F;
-    const auto h1 = -2.0F * t3 + 3.0F * t2;
-    const auto h2 = t3 - 2.0F * t2 + t;
-    const auto h3 = t3 - t2;
+    const auto t2 = multiplySingle(t, t);
+    const auto t3 = multiplySingle(t2, t);
+    const auto threeT2 = multiplySingle(t2, 3.0F);
+    const auto h0 = addSingle(
+        subtractSingle(multiplySingle(t3, 2.0F), threeT2), 1.0F);
+    const auto h1 = addSingle(multiplySingle(t3, -2.0F), threeT2);
+    const auto h2 = addSingle(
+        subtractSingle(t3, multiplySingle(t2, 2.0F)), t);
+    const auto h3 = subtractSingle(t3, t2);
     const std::size_t p0 = second ? 3 : 0;
     const std::size_t p1 = second ? 6 : 3;
     const std::size_t outTangent = second ? 12 : 9;
     const std::size_t inTangent = second ? 15 : 12;
     for (std::size_t axis = 0; axis != 3; ++axis) {
-        output[axis] = values[p0 + axis] * h0 + values[p1 + axis] * h1
-            + values[outTangent + axis] * h2 + values[inTangent + axis] * h3;
+        const auto position = addSingle(
+            multiplySingle(values[outTangent + axis], h2),
+            multiplySingle(values[p0 + axis], h0));
+        const auto withIncoming = addSingle(
+            position, multiplySingle(values[inTangent + axis], h3));
+        output[axis] = addSingle(
+            withIncoming, multiplySingle(values[p1 + axis], h1));
     }
 }
 

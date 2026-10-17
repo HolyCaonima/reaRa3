@@ -248,16 +248,36 @@ std::uint32_t run(
     return 0;
 }
 
+void setFpuControlWord(std::uint16_t value)
+{
+#if defined(_MSC_VER) && defined(_M_IX86)
+    __asm {
+        fldcw value
+    }
+#else
+    (void)value;
+#endif
+}
+
 void command(const std::string& line)
 {
     std::istringstream input(line);
     std::string addressText;
-    std::string blobText;
-    std::string fixupText;
-    input >> addressText >> blobText >> fixupText;
+    input >> addressText;
     if (addressText.empty()) {
         return;
     }
+    if (addressText == "fpcw") {
+        std::string value;
+        input >> value;
+        setFpuControlWord(
+            static_cast<std::uint16_t>(std::stoul(value, nullptr, 16)));
+        std::cout << "ok\n";
+        return;
+    }
+    std::string blobText;
+    std::string fixupText;
+    input >> blobText >> fixupText;
     auto blob = decode(blobText);
     const auto fixups = parseFixups(fixupText);
     for (const auto offset : fixups) {
