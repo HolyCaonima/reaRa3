@@ -1,0 +1,39 @@
+address	status	owner	module	notes
+00695550		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x00695566 -> 0x0069556d slot 0x018ed648
+00699780	reversed	recon/protcave	gamelogic	runSubControllerStateActive: entry-recoverable site 0x00699780 -> 0x00699786 slot 0x018f2c84; direct callee of 0x007b24e0 at 0x007b266c; 0x007b24e0 is 0x00c2f718 slot 19; 8 oracle cases
+0069e780	reversed	recon/protcave	gamelogic	runPartitionModifierCount: inner-patched site 0x0069e78e -> 0x0069e794 slot 0x018f2568; direct callee of 0x006ce860 at 0x006ceb5d; 0x006ce860 is 0x00c19580 slot 9; 6 oracle cases
+006a51a0	reversed	recon/protcave	gamelogic	runQueryContainedModule: entry-recoverable site 0x006a51a0 -> 0x006a51a6 slot 0x018f2b00; direct callee of 0x00750c70 at 0x0075117c (BeamSpecialAbilityUpdate.cpp); 4 oracle cases
+006a5fa0		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x006a5fa3 -> 0x006a5faa slot 0x018f2ea4
+006a6460	reversed	recon/protcave	gamelogic	runUnregisterObjectSubsystems: inner-patched site 0x006a6463 -> 0x006a646a slot 0x018ed9ec; direct callee of 0x006b0f80 at 0x006b0fc5; 0x006b0f80 is 0x00c22b88 slot 29; 6 oracle cases
+006a6dc0	reversed	recon/protcave	gamelogic	runObjectPositionStep: inner-patched site 0x006a6dc1 -> 0x006a6dc8 slot 0x018f2560; direct callee of 0x00742940 at 0x00742a40 (NotifyTargetsOfImminentProbableCrushingMux.cpp); 7 oracle cases
+006a7600	reversed	recon/protcave	gamelogic	runObjectControllingPlayer: entry-recoverable site 0x006a7600 -> 0x006a7606 slot 0x018f2708; direct callee of 0x007688e0 at 0x0076985c (GenericObjectCreationNugget.cpp); 4 oracle cases
+006a8400		recon/protcave	gamelogic	deferred: entry-recoverable site 0x006a8400 -> 0x006a8406 slot 0x018f28c4; body has further calls and was not closed in this batch
+006b7040	reversed	recon/protcave	gamelogic	runAssignAiTargetRef: inner-patched site 0x006b7045 -> 0x006b704b slot 0x018f27dc; direct callee of 0x0079ff10 at 0x0079ff61; 0x0079ff10 is 0x00c2ef40 slot 6; 4 oracle cases
+006bb360	reversed	recon/protcave	gamelogic	runClassifyObjectKindMask: inner-patched site 0x006bb369 -> 0x006bb36f slot 0x018f2c98; direct callee of 0x00745250 at 0x0074534e (WeaponSlot.cpp); 9 oracle cases
+006bd510	reversed	recon/protcave	gamelogic	runObjectPassesKindFilter: inner-patched site 0x006bd51e -> 0x006bd526 slot 0x018f2f18; direct callee of 0x00745d40 at 0x00745dc1; 0x00745d40 is 0x00c07788 slot 1; 5 oracle cases
+006c0620		recon/protcave	gamelogic	deferred: inner-patched site 0x006c0623 -> 0x006c0629 slot 0x018f2b84; body has further calls and was not closed in this batch
+006c0b60		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x006c0b63 -> 0x006c0b69 slot 0x018f2ba4
+006c1500	reversed	recon/protcave	gamelogic	runFindBehaviorModuleByKey: inner-patched site 0x006c1504 -> 0x006c150b slot 0x018edda0; direct callee of 0x006ebea0 at 0x006ebf35; 0x006ebea0 is 0x00c06274 slot 1; 5 oracle cases
+006c1d60	reversed	recon/protcave	gamelogic	runReassignControllingPlayer: inner-patched site 0x006c1d63 -> 0x006c1d69 slot 0x018f29f0; direct callee of 0x006c85e0 at 0x006c85ff; 0x006c85e0 is 0x00c11970 slot 98; 4 oracle cases
+006c2c30		recon/protcave	gamelogic	deferred: inner-patched site 0x006c2c33 -> 0x006c2c39 slot 0x018ed5e0; body has further calls and was not closed in this batch
+006c4f10		recon/protcave	gamelogic	deferred: inner-patched site 0x006c4f53 -> 0x006c4f5b slot 0x018f2c0c; message construction was not closed in this batch
+006c5480		recon/protcave	gamelogic	deferred: inner-patched site 0x006c54b3 -> 0x006c54bb slot 0x018ed740; message construction was not closed in this batch
+006c6310		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x006c6314 -> 0x006c631a slot 0x018f2dfc
+006c8380		recon/protcave	gamelogic	deferred: inner-patched site 0x006c8384 -> 0x006c838a slot 0x018f2b94; continuation walks past a closed body and was not matched
+006cace0		recon/protcave	gamelogic	deferred: inner-patched site 0x006cace6 -> 0x006cacec slot 0x018f28a8; body has further calls and was not closed in this batch
+006d0330		recon/protcave	gamelogic	dropped: entry-recoverable site 0x006d0330 -> 0x006d0336 slot 0x018f2e6c; continuation reaches an indirect jump and was not a closed match
+006d1dd0		recon/protcave	gamelogic	deferred: inner-patched site 0x006d1dd4 -> 0x006d1dda slot 0x018eda4c; body has further calls and was not closed in this batch
+006e4760		recon/protcave	gamelogic	deferred: inner-patched site 0x006e476e -> 0x006e4774 slot 0x018ed40c; hash lookup was not closed in this batch
+006e5ce0	reversed	recon/protcave	gamelogic	runClearNonZeroStatusWord: inner-patched site 0x006e5ce2 -> 0x006e5ce8 slot 0x018f2aa0; direct callee of 0x0079b720 at 0x0079b72f; 0x0079b720 is 0x00c30160 slot 4; 4 oracle cases
+006ee7b0		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x006ee7b3 -> 0x006ee7b9 slot 0x018ed3e4
+006efe40		recon/protcave	gamelogic	deferred: inner-patched site 0x006efe43 -> 0x006efe49 slot 0x018f2654; hash lookup was not closed in this batch
+006f1350		recon/protcave	gamelogic	deferred: inner-patched site 0x006f1356 -> 0x006f135c slot 0x018f2574; body has further calls and was not closed in this batch
+0072cf30		recon/protcave	gamelogic	deferred: inner-patched site 0x0072cf37 -> 0x0072cf3d slot 0x018eda38; drawable tint path was not closed in this batch
+00731530	reversed	recon/protcave	gamelogic	runRegisterActiveModuleListener: inner-patched site 0x00731534 -> 0x0073153b slot 0x018ed904; direct callee of 0x00742e90 at 0x00742f46; 0x00742e90 is 0x00c19580 slot 4; 4 oracle cases
+00734490		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x00734493 -> 0x0073449a slot 0x018f2a90
+0073c740		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x0073c755 -> 0x0073c75c slot 0x018f2c38
+00741140		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x00741144 -> 0x0074114a slot 0x018ed9dc
+007451e0	reversed	recon/protcave	gamelogic	runNotifySixBucketListeners: inner-patched site 0x007451f5 -> 0x007451fd slot 0x018ed724; direct callee of 0x007564a0 at 0x007564a3; 0x007564a0 is 0x00c143b0 slot 1; 2 oracle cases
+007461c0		recon/protcave	gamelogic	deferred: inner-patched site 0x007461cd -> 0x007461d4 slot 0x018edd24; body has further calls and was not closed in this batch
+00747920		recon/protcave	gamelogic	dropped: no vtable slot or SageEngine caller; inner-patched site 0x00747928 -> 0x0074792e slot 0x018ed7a0
+00747f10	reversed	recon/protcave	gamelogic	runConsiderObjectIdle: inner-patched site 0x00747f13 -> 0x00747f19 slot 0x018f2e68; direct callee of 0x004f7320 at 0x004f7a59; 0x004f7320 is 0x00bdcc74 slot 13; 9 oracle cases
