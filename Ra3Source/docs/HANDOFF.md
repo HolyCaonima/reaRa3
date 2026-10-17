@@ -81,6 +81,11 @@
   `recon/weaponlogic`、`recon/behavior6b`、`recon/scripts82`、`recon/render8e`、
   `recon/gameclient92`。每支独立 worktree，完成后主控逐支复验合并；构建/oracle 可并行，
   主分支合并仍串行，避免注册表和 CMake 冲突污染。
+- **后续模型分流**（用户 12:10 决定）：复杂 ABI、受保护边界与重型对象簇继续优先
+  Gemini 4 Argon Medium；简单叶函数、访问器与清晰类簇在 Gemini 4 Argon Medium 和
+  Grok 4.7 High Fast 间 1:1 分配。当前已有两个 Gemini 补位，因此接下来两个简单补位
+  先用 Grok，再交替。主控统一记录首轮构建/oracle 通过率、误计数或猜测、返工次数、
+  完成耗时和最终有效重建数；没有账单遥测时不推断精确 token 成本。
 - **git**：本地 `main` 领先 `origin/main` 20 个提交，未 push（用户没要求 push）。
 
 ## 4. 建议的下一步（按优先级）
