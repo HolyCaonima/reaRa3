@@ -17,6 +17,7 @@ ra3_add_shared_library(ra3hook
         dll/targets/NetTargets.cpp
         dll/targets/RenderTargets.cpp
         dll/targets/GameClientTargets.cpp
+        dll/targets/UiTargets.cpp
     DEPS
         Ra3::asset
         Ra3::common
@@ -27,4 +28,5 @@ ra3_add_shared_library(ra3hook
         Ra3::net
         Ra3::render
         Ra3::sim
-        Ra3::text)
+        Ra3::text
+        Ra3::ui)
