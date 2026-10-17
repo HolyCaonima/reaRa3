@@ -12370,14 +12370,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00690150	FUN_00690150	.text	244		clean	unknown		unanalyzed	
 00690200	FUN_00690200	.text	6		clean	unknown		unanalyzed	
 00690210	FUN_00690210	.text	47		clean	unknown		unanalyzed	
-00690240	FUN_00690240	.text	40		clean	unknown		unanalyzed	
-00690270	FUN_00690270	.text	148		clean	unknown		unanalyzed	
+00690240	FUN_00690240	.text	40		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::unitVisionBehaviorStoreRange; 00bfdb88 slot 23; slot 2 returns UnitVisionBehavior
+00690270	FUN_00690270	.text	148		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::unitVisionBehaviorXfer; 00bfdb88 slot 3; slot 2 returns UnitVisionBehavior
 00690310	FUN_00690310	.text	401		clean	unknown		unanalyzed	
 006904c0	FUN_006904c0	.text	359		clean	unknown		unanalyzed	
 00690630	FUN_00690630	.text	41		clean	unknown		unanalyzed	
 00690660	FUN_00690660	.text	42		inner-patched	unknown		unanalyzed	
 006906a0	FUN_006906a0	.text	50		clean	unknown		unanalyzed	
-006906e0	FUN_006906e0	.text	84		clean	unknown		unanalyzed	
+006906e0	FUN_006906e0	.text	84		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::managerBodyCacheTemplate; 00c124c8 slot 25; slot 2 returns ManagerBody
 00690740	FUN_00690740	.text	19		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::stancesBehaviorFirstNodeValue; 00c11840 slot 31; slot 2 returns StancesBehavior
 006907a0	FUN_006907a0	.text	6		clean	unknown		unanalyzed	
 006907b0	FUN_006907b0	.text	47		clean	unknown		unanalyzed	
@@ -12385,8 +12385,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00690860	FUN_00690860	.text	6		clean	unknown		unanalyzed	
 00690870	FUN_00690870	.text	47		clean	unknown		unanalyzed	
 006908a0	FUN_006908a0	.text	51		clean	unknown		unanalyzed	
-006908e0	FUN_006908e0	.text	416		clean	unknown		unanalyzed	
-00690a80	FUN_00690a80	.text	111		clean	unknown		unanalyzed	
+006908e0	FUN_006908e0	.text	416		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::crateCollideAllows; 00c0a598 slot 22; slot 2 returns CrateCollide
+00690a80	FUN_00690a80	.text	111		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::moneyCrateCollideGrant; 00c19e10 slot 23; slot 2 returns MoneyCrateCollide
 00690af0	FUN_00690af0	.text	53		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::salvageCrateCollideAccepts; 00c1a178 slot 22; slot 2 returns SalvageCrateCollide
 00690b30	FUN_00690b30	.text	141	SageEngine\source\GameEngine\gamelogic\object\Collide\CrateCollide\SalvageCrateCollide.cpp	clean	gamelogic		unanalyzed	
 00690bc0	FUN_00690bc0	.text	375		clean	unknown		unanalyzed	
@@ -12405,13 +12405,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006912e0	FUN_006912e0	.text	26		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::hordeContainForwardId; 00c21520 slot 45; same HordeContain constructor store as 00691250
 00691300	FUN_00691300	.text	70		clean	unknown		unanalyzed	
 00691350	FUN_00691350	.text	36		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::hordeContainInvertSlotF4; 00c21784 slot 0; 0073cb72 stores 00c21784 at this+0x38 in the constructor that stores HordeContain at 0073cb3b
-006913d0	FUN_006913d0	.text	219		clean	unknown		unanalyzed	
+006913d0	FUN_006913d0	.text	219		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::hordeContainSharesSide; 00c21520 slot 27; 0073cb30 stores HordeContain 00c21a98 at [esi] and 00c21520 at [esi+0x16c]
 006914b0	FUN_006914b0	.text	45		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::hordeContainFirstPassengerId; 00c21520 slot 8; same HordeContain constructor store as 006911d0
 006914e0	FUN_006914e0	.text	9		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::hordeContainField5cClear; 00c21520 slot 62; same HordeContain constructor store as 006911d0
 006914f0	FUN_006914f0	.text	81		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::hordeContainNotifyPassengerList; 00c21520 slot 121; same HordeContain constructor store as 006911d0
 00691550	FUN_00691550	.text	79		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::hordeContainNotifyPassengerListShort; 00c21520 slot 122; same HordeContain constructor store as 006911d0
 006915a0	FUN_006915a0	.text	120		clean	unknown		unanalyzed	
-00691620	FUN_00691620	.text	64		clean	unknown		unanalyzed	
+00691620	FUN_00691620	.text	64		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::hordeContainPushTimer; 00c21520 slot 126; same HordeContain constructor 0073cb30
 00691660	FUN_00691660	.text	42		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::hordeContainRelayAnchor; 00c21520 slot 135; same HordeContain constructor store as 00691250
 00691690	FUN_00691690	.text	251		clean	unknown		unanalyzed	
 00691790	FUN_00691790	.text	251		clean	unknown		unanalyzed	
@@ -12431,7 +12431,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00691f10	FUN_00691f10	.text	172		clean	unknown		unanalyzed	
 00691fc0	FUN_00691fc0	.text	108		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::garrisonContainCopySlotTriple; 00c21bf0 slot 71; same GarrisonContain constructor store as 00691e20
 00692030	FUN_00692030	.text	116		clean	unknown		unanalyzed	
-006920b0	FUN_006920b0	.text	157		clean	unknown		unanalyzed	
+006920b0	FUN_006920b0	.text	157		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::garrisonContainAccepts; 00c21bf0 slot 37; 0074dfc0 stores GarrisonContain 00c21e90 at [esi] and 00c21bf0 at [esi+0x24]
 00692150	FUN_00692150	.text	83		clean	unknown		unanalyzed	
 006921b0	FUN_006921b0	.text	192		clean	unknown		unanalyzed	
 00692270	FUN_00692270	.text	67		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::garrisonContainReleaseIfCount; 00c21bc8 slot 2; 0074dfff stores 00c21bc8 at this+0x30 in the same GarrisonContain constructor; this slot 2 is the method, not a name getter
@@ -12442,8 +12442,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00692390	FUN_00692390	.text	5		clean	unknown		unanalyzed	
 006923a0	FUN_006923a0	.text	29		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::infiltratorContainZeroSevenDwords; 00bfe530 slot 53; 006922f3 stores primary 00bfe7e8 whose slot 2 returns InfiltratorContain; 0069230e stores 00bfe530 at this+0x18
 006923c0	FUN_006923c0	.text	150		clean	unknown		unanalyzed	
-00692460	FUN_00692460	.text	34		clean	unknown		unanalyzed	
-00692490	FUN_00692490	.text	98		clean	unknown		unanalyzed	
+00692460	FUN_00692460	.text	34		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::garrisonContainAnchorOrSlot; 00c21bf0 slot 82; same GarrisonContain constructor 0074dfc0
+00692490	FUN_00692490	.text	98		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::garrisonContainLocatePoint; 00c21bf0 slot 81; same GarrisonContain constructor 0074dfc0
 00692500	FUN_00692500	.text	55		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::openContainStorePairIds; 00c1f8f0 slot 42; 0072782b stores primary 00c1fb90 whose slot 2 returns OpenContain; 0072783f stores 00c1f8f0 at this+0x24
 00692540	FUN_00692540	.text	48		clean	unknown		unanalyzed	
 00692580	FUN_00692580	.text	112		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::openContainPlaneAccepts; 00c1f8f0 slot 45; same OpenContain constructor store as 00692500
@@ -12461,7 +12461,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00692b10	FUN_00692b10	.text	55		clean	unknown		unanalyzed	
 00692b50	FUN_00692b50	.text	101	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00692b70	FUN_00692b70	.text	140		clean	unknown		unanalyzed	
-00692ba0	FUN_00692ba0	.text	75		clean	unknown		unanalyzed	
+00692ba0	FUN_00692ba0	.text	75		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::tunnelContainOpenIterator; 00c23a98 slot 48; slot 2 returns TunnelContain
 00692bf0	FUN_00692bf0	.text	136		clean	unknown		unanalyzed	
 00692c40	FUN_00692c40	.text	60		clean	unknown		unanalyzed	
 00692c80	FUN_00692c80	.text	111		clean	unknown		unanalyzed	
@@ -12525,7 +12525,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00693eb0	FUN_00693eb0	.text	80		clean	unknown		unanalyzed	
 00693f00	FUN_00693f00	.text	111		clean	unknown		unanalyzed	
 00693f80	FUN_00693f80	.text	36		clean	unknown		unanalyzed	
-00693fb0	FUN_00693fb0	.text	26		clean	unknown		unanalyzed	
+00693fb0	FUN_00693fb0	.text	26		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::detonateStateRequest; 00bf79c0 slot 5; slot 2 returns DetonateState
 00693fd0	FUN_00693fd0	.text	36		clean	unknown		unanalyzed	
 00694000	FUN_00694000	.text	118		clean	unknown		unanalyzed	
 00694080	FUN_00694080	.text	6		clean	unknown		unanalyzed	
@@ -12571,14 +12571,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00694f50	FUN_00694f50	.text	63		clean	unknown		unanalyzed	
 00694f90	FUN_00694f90	.text	94		clean	unknown		unanalyzed	
 00694ff0	FUN_00694ff0	.text	34		clean	unknown		unanalyzed	
-00695020	FUN_00695020	.text	162		clean	unknown		unanalyzed	
-006950d0	FUN_006950d0	.text	152		clean	unknown		unanalyzed	
-00695170	FUN_00695170	.text	151		clean	unknown		unanalyzed	
-00695210	FUN_00695210	.text	124		clean	unknown		unanalyzed	
+00695020	FUN_00695020	.text	162		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::specialPowerDispatchApplyKind1; 00c19058 slot 14; 006e2ab0 stores SpecialPowerDispatchSpecialPower 00c19230 at [esi] and 00c19058 at [esi+0x10]
+006950d0	FUN_006950d0	.text	152		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::specialPowerDispatchApplyKind03; 00c19058 slot 13; same constructor 006e2ab0
+00695170	FUN_00695170	.text	151		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::specialPowerDispatchApplyKind23; 00c19058 slot 12; same constructor 006e2ab0
+00695210	FUN_00695210	.text	124		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::specialPowerDispatchApplyKind4; 00c19058 slot 11; same constructor 006e2ab0
 00695290	FUN_00695290	.text	100		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::specialPowerDispatchAnyReady; 00c19058 slot 1; 006e2a34 stores SpecialPowerDispatchSpecialPower 00c19230; 006e2a41 stores 00c19058 at this+0x10
 00695300	FUN_00695300	.text	106		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::specialPowerDispatchAnyOrPending; 00c19058 slot 4; same SpecialPowerDispatchSpecialPower constructor store as 00695290
 00695370	FUN_00695370	.text	109		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::specialPowerDispatchStoreArg; 00c19058 slot 9; same SpecialPowerDispatchSpecialPower constructor store as 00695290
-006953e0	FUN_006953e0	.text	167		clean	unknown		unanalyzed	
+006953e0	FUN_006953e0	.text	167		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::specialPowerDispatchAdjustCount; 00c19058 slot 10; same constructor 006e2ab0
 00695490	FUN_00695490	.text	93		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::specialPowerDispatchNotifyClear4C; 00c19058 slot 19; same SpecialPowerDispatchSpecialPower constructor store as 00695290
 006954f0	FUN_006954f0	.text	93		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::specialPowerDispatchNotifyClear54; 00c19058 slot 21; same SpecialPowerDispatchSpecialPower constructor store as 00695290
 00695550	FUN_00695550	.text	28		inner-patched	gamelogic	recon/protcave	unanalyzed	dropped: no vtable slot or SageEngine caller; inner-patched site 0x00695566 -> 0x0069556d slot 0x018ed648
@@ -12591,10 +12591,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00695680	FUN_00695680	.text	4		clean	unknown		unanalyzed	
 00695690	FUN_00695690	.text	15		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::table00C00F4CReadField54; 00c00f4c slot 31; slot 2 is 0067e580 and is not a name getter; the image has no store of 00c00f4c
 006956a0	FUN_006956a0	.text	127		clean	unknown		unanalyzed	
-00695720	FUN_00695720	.text	24		clean	unknown		unanalyzed	
+00695720	FUN_00695720	.text	24		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::specialPowerDispatchCopyKind; 00c19058 slot 6; same constructor 006e2ab0
 00695740	FUN_00695740	.text	246		clean	unknown		unanalyzed	
 00695840	FUN_00695840	.text	322		clean	unknown		unanalyzed	
-00695990	FUN_00695990	.text	80		clean	unknown		unanalyzed	
+00695990	FUN_00695990	.text	80		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::specialPowerModuleNoteReady; 00c01108 slot 22; slot 2 returns SpecialPowerModule
 006959e0	FUN_006959e0	.text	107		clean	unknown		unanalyzed	
 00695a50	FUN_00695a50	.text	209		clean	unknown		unanalyzed	
 00695b30	FUN_00695b30	.text	139		clean	unknown		unanalyzed	
@@ -12608,14 +12608,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00696320	FUN_00696320	.text	123		clean	unknown		unanalyzed	
 006963a0	FUN_006963a0	.text	67		clean	unknown		unanalyzed	
 006963f0	FUN_006963f0	.text	57		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::specialPowerModuleScaleIfFlag; 00c00fd8 slot 73; 006955c2 stores SpecialPowerModule 00c01108; 006955c8 stores 00c00fd8 at this+0xc
-00696430	FUN_00696430	.text	212		clean	unknown		unanalyzed	
+00696430	FUN_00696430	.text	212		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::specialPowerModuleTrigger; 00c01108 slot 10; slot 2 returns SpecialPowerModule
 00696510	FUN_00696510	.text	102		clean	unknown		unanalyzed	
 00696580	FUN_00696580	.text	76		clean	unknown		unanalyzed	
 006965d0	FUN_006965d0	.text	214		clean	unknown		unanalyzed	
 006966b0	FUN_006966b0	.text	20		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::specialPowerUpdateIdEquals; 00bf7c68 slot 0; same 006b47bb store as 00694730
 006966d0	FUN_006966d0	.text	98		clean	unknown		unanalyzed	
-00696740	FUN_00696740	.text	183		clean	unknown		unanalyzed	
-00696800	FUN_00696800	.text	108		clean	unknown		unanalyzed	
+00696740	FUN_00696740	.text	183		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::specialPowerUpdateReadiness; 00bf7c68 slot 3; 006b4770 stores SpecialPowerUpdateModule 00c0b860 at [esi] and 00bf7c68 at [edi]
+00696800	FUN_00696800	.text	108		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::specialPowerUpdateNotifyOwner; 00bf7c68 slot 5; same constructor 006b4770
 00696870	FUN_00696870	.text	23		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::specialPowerUpdateReadSlot1; 00bf7c68 slot 6; same 006b47bb store as 00694730
 00696890	FUN_00696890	.text	7		clean	unknown		unanalyzed	
 006968a0	FUN_006968a0	.text	65		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::specialPowerUpdateFirePacked; 00bf7c68 slot 11; 006b479d stores SpecialPowerUpdateModule 00c0b860; 006b47bb stores 00bf7c68
@@ -12624,7 +12624,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00696990	FUN_00696990	.text	66		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::specialPowerUpdateFireFloat; 00bf7c68 slot 14; same SpecialPowerUpdateModule constructor store as 006968a0
 006969e0	FUN_006969e0	.text	71		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::specialPowerUpdateFireSpread; 00bf7c68 slot 15; same SpecialPowerUpdateModule constructor store as 006968a0
 00696a30	FUN_00696a30	.text	390		clean	unknown		unanalyzed	
-00696bc0	FUN_00696bc0	.text	132		clean	unknown		unanalyzed	
+00696bc0	FUN_00696bc0	.text	132		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::specialPowerUpdateModuleXfer; 00c0b860 slot 3; slot 2 returns SpecialPowerUpdateModule
 00696c50	FUN_00696c50	.text	57		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::specialPowerUpdateScaleIfFlag; 00c0b730 slot 73; 006b47a3 stores 00c0b730 at this+0xc in the same SpecialPowerUpdateModule constructor
 00696c90	FUN_00696c90	.text	142		clean	unknown		unanalyzed	
 00696d20	FUN_00696d20	.text	83		clean	unknown		unanalyzed	
@@ -12645,8 +12645,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0069732f	FUN_0069732f	.text	290		clean	unknown		unanalyzed	
 00697460	FUN_00697460	.text	36		clean	unknown		unanalyzed	
 00697490	FUN_00697490	.text	294		clean	unknown		unanalyzed	
-006975c0	FUN_006975c0	.text	109		clean	unknown		unanalyzed	
-00697630	FUN_00697630	.text	78		clean	unknown		unanalyzed	
+006975c0	FUN_006975c0	.text	109		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::dozerAiUpdateAcceptTask; 00c24a50 slot 58; slot 2 returns DozerAIUpdate
+00697630	FUN_00697630	.text	78		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::dozerAiUpdateTerrainScale; 00c24878 slot 3; 00751d20 stores DozerAIUpdate 00c24a50 at [esi] and 00c24878 at [edi]
 00697680	FUN_00697680	.text	45		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::dozerAiUpdateIssueOrder; 00c24878 slot 29; 00751d25 stores DozerAIUpdate 00c24a50; 00751d5b stores 00c24878
 006976b0	FUN_006976b0	.text	99		clean	unknown		unanalyzed	
 00697720	FUN_00697720	.text	26		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::supplyTruckSumDwords; 00c251a8 slot 2; 007522bb stores primary 00c25398 whose slot 2 returns SupplyTruckAIUpdate; 007522eb stores 00c251a8 at this+0x51c; this slot 2 is the sum, not a name getter
@@ -12658,7 +12658,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00697aa0	FUN_00697aa0	.text	72		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::dockUpdateMarkId; 00c0bbb0 slot 8; same DockUpdate constructor store as 006979e0
 00697af0	FUN_00697af0	.text	84		clean	unknown		unanalyzed	
 00697b50	FUN_00697b50	.text	40		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::dockUpdateForwardVisitor; 00c0bbb0 slot 22; 00740541 stores DockUpdate 00c0bd58; 00740555 stores 00c0bbb0 at this+0x24
-00697b80	FUN_00697b80	.text	99		clean	unknown		unanalyzed	
+00697b80	FUN_00697b80	.text	99		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::dockUpdateOccupiedScale; 00c0bbb0 slot 23; 00740520 stores DockUpdate 00c0bd58 at [esi] and 00c0bbb0 at [esi+0x24]
 00697bf0	FUN_00697bf0	.text	17		inner-patched	unknown		unanalyzed	
 00697d70	FUN_00697d70	.text	318		clean	unknown		unanalyzed	
 00697eb0	FUN_00697eb0	.text	179		clean	unknown		unanalyzed	
@@ -12689,7 +12689,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00699010	FUN_00699010	.text	98		clean	unknown		unanalyzed	
 00699080	FUN_00699080	.text	189		clean	unknown		unanalyzed	
 00699140	FUN_00699140	.text	108		clean	unknown		unanalyzed	
-006991b0	FUN_006991b0	.text	54		clean	unknown		unanalyzed	
+006991b0	FUN_006991b0	.text	54		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::aiUpdateTouchLocomotor; 00c22118 slot 172; slot 2 returns AIUpdateInterface
 006991f0	FUN_006991f0	.text	206		clean	unknown		unanalyzed	
 006992c0	FUN_006992c0	.text	22		inner-patched	unknown		unanalyzed	
 00699390	FUN_00699390	.text	34		clean	unknown		unanalyzed	
@@ -12709,17 +12709,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00699ab0	FUN_00699ab0	.text	51		clean	unknown		unanalyzed	
 00699b60	FUN_00699b60	.text	83		clean	unknown		unanalyzed	
 00699bc0	FUN_00699bc0	.text	73		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::aiUpdateStampGoal; 00c22118 slot 23; slot 2 returns AIUpdateInterface
-00699c10	FUN_00699c10	.text	72		clean	unknown		unanalyzed	
-00699c60	FUN_00699c60	.text	51		clean	unknown		unanalyzed	
+00699c10	FUN_00699c10	.text	72		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::aiUpdateIssue61; 00c22118 slot 56; slot 2 returns AIUpdateInterface
+00699c60	FUN_00699c60	.text	51		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::aiUpdateIssue51; 00c22118 slot 65; slot 2 returns AIUpdateInterface
 00699ca0	FUN_00699ca0	.text	36		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::aiUpdatePulseModule3c; 00c22118 slot 66; slot 2 returns AIUpdateInterface
-00699cd0	FUN_00699cd0	.text	76		clean	unknown		unanalyzed	
-00699d20	FUN_00699d20	.text	51		clean	unknown		unanalyzed	
-00699d60	FUN_00699d60	.text	96		clean	unknown		unanalyzed	
-00699dc0	FUN_00699dc0	.text	86		clean	unknown		unanalyzed	
-00699e20	FUN_00699e20	.text	96		clean	unknown		unanalyzed	
-00699e80	FUN_00699e80	.text	86		clean	unknown		unanalyzed	
-00699ee0	FUN_00699ee0	.text	123		clean	unknown		unanalyzed	
-00699f60	FUN_00699f60	.text	67		clean	unknown		unanalyzed	
+00699cd0	FUN_00699cd0	.text	76		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::aiUpdateIssue3A; 00c22118 slot 64; slot 2 returns AIUpdateInterface
+00699d20	FUN_00699d20	.text	51		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::aiUpdateIssue32; 00c22118 slot 63; slot 2 returns AIUpdateInterface
+00699d60	FUN_00699d60	.text	96		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::aiUpdateIssue40; 00c22118 slot 72; slot 2 returns AIUpdateInterface
+00699dc0	FUN_00699dc0	.text	86		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::aiUpdateIssue42; 00c22118 slot 73; slot 2 returns AIUpdateInterface
+00699e20	FUN_00699e20	.text	96		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::aiUpdateIssue3F; 00c22118 slot 75; slot 2 returns AIUpdateInterface
+00699e80	FUN_00699e80	.text	86		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::aiUpdateIssue43; 00c22118 slot 76; slot 2 returns AIUpdateInterface
+00699ee0	FUN_00699ee0	.text	123		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::aiUpdateIssue49; 00c22118 slot 77; slot 2 returns AIUpdateInterface
+00699f60	FUN_00699f60	.text	67		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::aiUpdateIssue2A; 00c22118 slot 98; slot 2 returns AIUpdateInterface
 00699fb0	FUN_00699fb0	.text	127		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::aiUpdateGoalKindAllowed; 00c22118 slot 147; slot 2 returns AIUpdateInterface
 0069a030	FUN_0069a030	.text	9		inner-patched	unknown		unanalyzed	
 0069a040	FUN_0069a040	.text	115		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::aiUpdateApplyFacing; 00c22118 slot 104; slot 2 returns AIUpdateInterface
@@ -12880,7 +12880,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0069e540	FUN_0069e540	.text	106		clean	unknown		unanalyzed	
 0069e5b0	FUN_0069e5b0	.text	75		clean	gamelogic	recon/obj69	reversed	ra3::gamelogic::productionUpdateConsumeMatchingLink; 00c19580 slot 37; 006e8ed7 stores primary 00c19788 whose slot 2 returns ProductionUpdate; 006e8eeb stores 00c19580 at this+0x24
 0069e600	FUN_0069e600	.text	94		clean	unknown		unanalyzed	
-0069e660	FUN_0069e660	.text	141		clean	unknown		unanalyzed	
+0069e660	FUN_0069e660	.text	141		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::productionUpdateCancelOne; 00c19580 slot 10; 006e8ed0 stores ProductionUpdate 00c19788 at [esi] and 00c19580 at [esi+0x24]
 0069e6f0	FUN_0069e6f0	.text	133		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::productionUpdateNextReadyLink; 00c19580 slot 30; 006e8ed7 stores ProductionUpdate 00c19788; 006e8eeb stores 00c19580 at this+0x24
 0069e780	FUN_0069e780	.text	29		inner-patched	gamelogic	recon/protcave	reversed	runPartitionModifierCount: inner-patched site 0x0069e78e -> 0x0069e794 slot 0x018f2568; direct callee of 0x006ce860 at 0x006ceb5d; 0x006ce860 is 0x00c19580 slot 9; 6 oracle cases
 0069e820	FUN_0069e820	.text	40		clean	gamelogic	recon/weaponlogic	reversed	PhysicsUpdate overlap count; vtable 00c19580 slot 23; linked-list oracle; explicit hook
@@ -12906,7 +12906,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0069efe0	FUN_0069efe0	.text	219		clean	unknown		unanalyzed	
 0069f0c0	FUN_0069f0c0	.text	6		clean	unknown		unanalyzed	
 0069f0d0	FUN_0069f0d0	.text	47		clean	unknown		unanalyzed	
-0069f100	FUN_0069f100	.text	126		clean	unknown		unanalyzed	
+0069f100	FUN_0069f100	.text	126		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::secondaryDamageTrackerXfer; 00c05858 slot 3; slot 2 returns SecondaryDamageTracker
 0069f180	FUN_0069f180	.text	235	SageEngine\source\GameEngine\gamelogic\object\Update\SetLocomotorSpeedUpdate.cpp	clean	gamelogic		unanalyzed	
 0069f270	FUN_0069f270	.text	6		clean	gamelogic	recon/weaponlogic	reversed	SetLocomotorSpeedUpdate module name; vtable 00c05a88 and exact pointer oracle
 0069f280	FUN_0069f280	.text	47		clean	gamelogic	recon/weaponlogic	reversed	SetLocomotorSpeedUpdate guarded module key; exact state/resolver oracle
@@ -12925,7 +12925,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0069f8d0	FUN_0069f8d0	.text	125		clean	gamelogic	recon/weaponlogic	reversed	SlavedUpdate guard-point proximity scan; direct caller 00718620; full pointer-residue EAX/SSE oracle; explicit hook
 0069f950	FUN_0069f950	.text	139		clean	unknown		unanalyzed	
 0069f9e0	FUN_0069f9e0	.text	169		clean	gamelogic	recon/weaponlogic	reversed	SlavedUpdate state predicate; direct caller 0069fa90; all upper-EAX paths/cleanup oracle; explicit hook
-0069fa90	FUN_0069fa90	.text	202		clean	unknown		unanalyzed	
+0069fa90	FUN_0069fa90	.text	202		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::specialAbilityUpdateRelay; 00c14184 slot 6; 00701f40 stores SpecialAbilityUpdate 00c142d8 at [esi] and 00c14184 at [esi+0x24]
 0069fb60	FUN_0069fb60	.text	95		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::specialAbilityUpdateKindMatch; 00c14184 slot 3; 006cf1a0 stores SpecialAbilityUpdate 00c142d8; 006cf1ad stores 00c14184 at this+0x24
 0069fbc0	FUN_0069fbc0	.text	73		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::specialAbilityUpdateIsReady; 00c142d8 slot 25; slot 2 returns SpecialAbilityUpdate
 0069fc10	FUN_0069fc10	.text	52		clean	unknown		unanalyzed	
@@ -12940,7 +12940,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0069fe60	FUN_0069fe60	.text	90		clean	unknown		unanalyzed	
 0069fec0	FUN_0069fec0	.text	41		clean	gamelogic	recon/obj69b	reversed	ra3::gamelogic::stealthDetectorUpdateTouch; 00c0dfc0 slot 23; slot 2 returns StealthDetectorUpdate; oracle covers the disarmed return of this; the armed path reads singleton 00deba64
 0069fef0	FUN_0069fef0	.text	42		clean	unknown		unanalyzed	
-0069ff20	FUN_0069ff20	.text	85		clean	unknown		unanalyzed	
+0069ff20	FUN_0069ff20	.text	85		clean	gamelogic	recon/obj69c	reversed	ra3::gamelogic::stealthDetectorUpdateXfer; 00c0dfc0 slot 3; slot 2 returns StealthDetectorUpdate
 0069ff80	FUN_0069ff80	.text	72		clean	unknown		unanalyzed	
 0069ffd0	FUN_0069ffd0	.text	84		clean	unknown		unanalyzed	
 006a0030	FUN_006a0030	.text	50		clean	unknown		unanalyzed	
@@ -28819,7 +28819,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b3890	FUN_009b3890	.text	6		clean	unknown		unanalyzed	
 009b38a0	FUN_009b38a0	.text	50		clean	unknown		unanalyzed	
 009b38e0	FUN_009b38e0	.text	46		clean	unknown		unanalyzed	
-009b3910	FUN_009b3910	.text	185		clean	unknown		unanalyzed	
+009b3910	FUN_009b3910	.text	185		clean	render	recon/render9b2	reversed	ra3::render::dispatchDirtyState; 00c5f4c8 slot 4; slot 2 is 009b38a0 and is not a usage getter, so the class name is inferred
 009b39d0	FUN_009b39d0	.text	56		clean	unknown		unanalyzed	
 009b3a10	FUN_009b3a10	.text	4		clean	unknown		unanalyzed	
 009b3a20	FUN_009b3a20	.text	1282		clean	unknown		unanalyzed	
@@ -28830,8 +28830,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b5330	FUN_009b5330	.text	19		clean	render	recon/render9b	reversed	ra3::render::flushActiveTarget; 00c5db18 slot 11; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
 009b5350	FUN_009b5350	.text	26		clean	unknown		unanalyzed	
 009b5370	FUN_009b5370	.text	7		clean	unknown		unanalyzed	
-009b5380	FUN_009b5380	.text	144		clean	unknown		unanalyzed	
-009b5430	FUN_009b5430	.text	155		clean	unknown		unanalyzed	
+009b5380	FUN_009b5380	.text	144		clean	render	recon/render9b2	reversed	ra3::render::classifyPrimitive; 00c5db18 slot 17; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b5430	FUN_009b5430	.text	155		clean	render	recon/render9b2	reversed	ra3::render::readMatrixOrder; 00c5db18 slot 16; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
 009b54d0	FUN_009b54d0	.text	58		clean	render	recon/render9b	reversed	ra3::render::applyNamedSampler; 00c5db18 slot 7; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
 009b5510	FUN_009b5510	.text	58		clean	render	recon/render9b	reversed	ra3::render::applyNamedState; 00c5db18 slot 6; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
 009b5550	FUN_009b5550	.text	61		clean	render	recon/render9b	reversed	ra3::render::applyNamedStage; 00c5db18 slot 5; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
@@ -28840,12 +28840,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b5860	FUN_009b5860	.text	21		clean	render	recon/render9b	reversed	ra3::render::releasePrimarySurface; 00c5db10 slot 0; the table has two slots and no usage getter, so the class name is inferred
 009b5880	FUN_009b5880	.text	21		clean	render	recon/render9b	reversed	ra3::render::releaseSecondarySurface; 00c5db10 slot 1; the table has two slots and no usage getter, so the class name is inferred
 009b58a0	FUN_009b58a0	.text	29		clean	render	recon/render9b	reversed	ra3::render::resetPassOverrides; 00c600f0 slot 2; slot 2 is this body, not a usage getter, so the class name is inferred
-009b58c0	FUN_009b58c0	.text	156		clean	unknown		unanalyzed	
-009b5960	FUN_009b5960	.text	103		clean	unknown		unanalyzed	
-009b59d0	FUN_009b59d0	.text	106		clean	unknown		unanalyzed	
-009b5a40	FUN_009b5a40	.text	170		clean	unknown		unanalyzed	
-009b5af0	FUN_009b5af0	.text	106		clean	unknown		unanalyzed	
-009b5b60	FUN_009b5b60	.text	106		clean	unknown		unanalyzed	
+009b58c0	FUN_009b58c0	.text	156		clean	render	recon/render9b2	reversed	ra3::render::flushLineList; 00c600f0 slot 3; slot 2 is 009b58a0 and is not a usage getter; named by D3DPRIMITIVETYPE: the body ends in device vtable +0x14C (IDirect3DDevice9::DrawPrimitiveUP) with primitive type 2 and the matching count (renamed by the controller)
+009b5960	FUN_009b5960	.text	103		clean	render	recon/render9b2	reversed	ra3::render::flushPointList; 00c60108 slot 3; slot 2 is 009b58a0 and is not a usage getter; named by D3DPRIMITIVETYPE: the body ends in device vtable +0x14C (IDirect3DDevice9::DrawPrimitiveUP) with primitive type 1 and the matching count (renamed by the controller)
+009b59d0	FUN_009b59d0	.text	106		clean	render	recon/render9b2	reversed	ra3::render::flushLineStrip; 00c60120 slot 3; slot 2 is 009b58a0 and is not a usage getter; named by D3DPRIMITIVETYPE: the body ends in device vtable +0x14C (IDirect3DDevice9::DrawPrimitiveUP) with primitive type 3 and the matching count (renamed by the controller)
+009b5a40	FUN_009b5a40	.text	170		clean	render	recon/render9b2	reversed	ra3::render::flushTriangleList; 00c60138 slot 3; slot 2 is 009b58a0 and is not a usage getter; named by D3DPRIMITIVETYPE: the body ends in device vtable +0x14C (IDirect3DDevice9::DrawPrimitiveUP) with primitive type 4 and the matching count (renamed by the controller)
+009b5af0	FUN_009b5af0	.text	106		clean	render	recon/render9b2	reversed	ra3::render::flushTriangleStrip; 00c60150 slot 3; slot 2 is 009b58a0 and is not a usage getter; named by D3DPRIMITIVETYPE: the body ends in device vtable +0x14C (IDirect3DDevice9::DrawPrimitiveUP) with primitive type 5 and the matching count (renamed by the controller)
+009b5b60	FUN_009b5b60	.text	106		clean	render	recon/render9b2	reversed	ra3::render::flushTriangleFan; 00c60168 slot 3; slot 2 is 009b58a0 and is not a usage getter; named by D3DPRIMITIVETYPE: the body ends in device vtable +0x14C (IDirect3DDevice9::DrawPrimitiveUP) with primitive type 6 and the matching count (renamed by the controller)
 009b5bd0	FUN_009b5bd0	.text	6		clean	unknown		unanalyzed	
 009b5be0	FUN_009b5be0	.text	6		clean	unknown		unanalyzed	
 009b5bf0	FUN_009b5bf0	.text	260		clean	unknown		unanalyzed	
@@ -28861,13 +28861,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b6b80	FUN_009b6b80	.text	38		clean	render	recon/render9b	reversed	ra3::render::assignStreamSource; 00c5ec94 slot 1; slot 2 is 009b2e30 and is not a usage getter, so the class name is inferred
 009b6bb0	FUN_009b6bb0	.text	6		clean	unknown		unanalyzed	
 009b6bc0	FUN_009b6bc0	.text	6		clean	unknown		unanalyzed	
-009b6bd0	FUN_009b6bd0	.text	170		clean	unknown		unanalyzed	
+009b6bd0	FUN_009b6bd0	.text	170		clean	render	recon/render9b2	reversed	ra3::render::execSetViewportCommand; 00c60368 slot 4; slot 2 returns setviewport [value] [value] [value] [value] - sets the extents of render viewport with 4 int values specified (left, top, right, bottom)
 009b6c80	FUN_009b6c80	.text	6		clean	unknown		unanalyzed	
 009b6c90	FUN_009b6c90	.text	6		clean	unknown		unanalyzed	
-009b6ca0	FUN_009b6ca0	.text	170		clean	unknown		unanalyzed	
+009b6ca0	FUN_009b6ca0	.text	170		clean	render	recon/render9b2	reversed	ra3::render::execSetScissorCommand; 00c604e4 slot 4; slot 2 returns setscissor [value] [value] [value] [value] - sets the extents of render scissor with 4 int values specified (left, top, right, bottom)
 009b6d50	FUN_009b6d50	.text	6		clean	unknown		unanalyzed	
 009b6d60	FUN_009b6d60	.text	6		clean	unknown		unanalyzed	
-009b6d70	FUN_009b6d70	.text	93		clean	unknown		unanalyzed	
+009b6d70	FUN_009b6d70	.text	93		clean	render	recon/render9b2	reversed	ra3::render::execSetCameraCommand; 00c6065c slot 4; slot 2 returns setcamera [name] - sets the current camera to use.  Camera will set view and projection matrices on the device.
 009b6dd0	FUN_009b6dd0	.text	6		clean	unknown		unanalyzed	
 009b6de0	FUN_009b6de0	.text	6		clean	unknown		unanalyzed	
 009b6df0	FUN_009b6df0	.text	46		clean	unknown		unanalyzed	
@@ -28982,7 +28982,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b93d0	FUN_009b93d0	.text	182		clean	unknown		unanalyzed	
 009b9490	FUN_009b9490	.text	227		clean	unknown		unanalyzed	
 009b9580	FUN_009b9580	.text	176		clean	unknown		unanalyzed	
-009b9630	FUN_009b9630	.text	150		clean	unknown		unanalyzed	
+009b9630	FUN_009b9630	.text	150		clean	render	recon/render9b2	reversed	ra3::render::bindDynamicStream; 00c60338 slot 1; slot 2 is 009b60d0 and is not a usage getter, so the class name is inferred
 009b96d0	FUN_009b96d0	.text	247		clean	unknown		unanalyzed	
 009b97d0	FUN_009b97d0	.text	120		clean	unknown		unanalyzed	
 009b9850	FUN_009b9850	.text	113		clean	unknown		unanalyzed	
@@ -28993,10 +28993,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009b9a80	FUN_009b9a80	.text	38		clean	unknown		unanalyzed	
 009b9ab0	FUN_009b9ab0	.text	31		clean	unknown		unanalyzed	
 009b9ad0	FUN_009b9ad0	.text	367		clean	unknown		unanalyzed	
-009b9c40	FUN_009b9c40	.text	116		clean	unknown		unanalyzed	
+009b9c40	FUN_009b9c40	.text	116		clean	render	recon/render9b2	reversed	ra3::render::parseSetCameraCommand; 00c6065c slot 3; slot 2 returns setcamera [name] - sets the current camera to use.  Camera will set view and projection matrices on the device.
 009b9cc0	FUN_009b9cc0	.text	35		clean	render	recon/render9b	reversed	ra3::render::parseSetClearColorCommand; 00c60c54 slot 3; slot 2 returns the setclearcolor usage string
 009b9cf0	FUN_009b9cf0	.text	85		clean	render	recon/render9b	reversed	ra3::render::parseSetClearDepthCommand; 00c60cf0 slot 3; slot 2 returns the setcleardepth usage string
-009b9d50	FUN_009b9d50	.text	192		clean	unknown		unanalyzed	
+009b9d50	FUN_009b9d50	.text	192		clean	render	recon/render9b2	reversed	ra3::render::parseSetDepthCommand; 00c60db8 slot 3; slot 2 returns setdepth [name] - sets the current depth buffer to surface specified by name. name can be NULL to unset depth buffer.
 009b9e10	FUN_009b9e10	.text	429		clean	unknown		unanalyzed	
 009b9fc0	FUN_009b9fc0	.text	74		clean	render	recon/render9b	reversed	ra3::render::parseRenderQuadCommand; 00c6136c slot 3, shared with renderfullquad 00c61450 slot 3; slot 2 of 00c6136c returns renderquad [(optional) red]
 009ba010	FUN_009ba010	.text	232		clean	unknown		unanalyzed	
@@ -29011,10 +29011,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009bac40	FUN_009bac40	.text	45		clean	unknown		unanalyzed	
 009bac70	FUN_009bac70	.text	51		clean	unknown		unanalyzed	
 009bacb0	FUN_009bacb0	.text	44		clean	unknown		unanalyzed	
-009bace0	FUN_009bace0	.text	187		clean	unknown		unanalyzed	
+009bace0	FUN_009bace0	.text	187		clean	render	recon/render9b2	reversed	ra3::render::execSetToSizeCommand; 00c5f310 slot 4; slot 2 returns settosize [scopeBlock] [scopeParm] [texture or surface name] - set the size of the texture or surface into the specific Scope Block and Scope Parm
 009bafb0	FUN_009bafb0	.text	43		clean	unknown		unanalyzed	
 009bafe0	FUN_009bafe0	.text	85		clean	unknown		unanalyzed	
-009bb040	FUN_009bb040	.text	206		clean	unknown		unanalyzed	
+009bb040	FUN_009bb040	.text	206		clean	render	recon/render9b2	reversed	ra3::render::selectConstantRoutine; 00c5db18 slot 18; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
 009bb140	FUN_009bb140	.text	59		clean	unknown		unanalyzed	
 009bb420	FUN_009bb420	.text	459		clean	unknown		unanalyzed	
 009bb5f0	FUN_009bb5f0	.text	46		clean	unknown		unanalyzed	
@@ -29027,34 +29027,34 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009bb840	FUN_009bb840	.text	99		clean	unknown		unanalyzed	
 009bb8b0	FUN_009bb8b0	.text	74		clean	unknown		unanalyzed	
 009bb900	FUN_009bb900	.text	46		clean	unknown		unanalyzed	
-009bb930	FUN_009bb930	.text	329		clean	unknown		unanalyzed	
-009bba80	FUN_009bba80	.text	165		clean	unknown		unanalyzed	
-009bbb30	FUN_009bbb30	.text	325		clean	unknown		unanalyzed	
-009bbc80	FUN_009bbc80	.text	169		clean	unknown		unanalyzed	
-009bbd30	FUN_009bbd30	.text	126		clean	unknown		unanalyzed	
-009bbdb0	FUN_009bbdb0	.text	110		clean	unknown		unanalyzed	
-009bbe20	FUN_009bbe20	.text	372		clean	unknown		unanalyzed	
-009bbfa0	FUN_009bbfa0	.text	195		clean	unknown		unanalyzed	
-009bc070	FUN_009bc070	.text	191		clean	unknown		unanalyzed	
+009bb930	FUN_009bb930	.text	329		clean	render	recon/render9b2	reversed	ra3::render::parseIfNotCommand; 00c606f0 slot 3; slot 2 returns ifnot [scopeBlock] [scopeParm] - start of conditional execution block.  Needs matching endif command
+009bba80	FUN_009bba80	.text	165		clean	render	recon/render9b2	reversed	ra3::render::execIfNotCommand; 00c606f0 slot 4; slot 2 returns ifnot [scopeBlock] [scopeParm] - start of conditional execution block.  Needs matching endif command
+009bbb30	FUN_009bbb30	.text	325		clean	render	recon/render9b2	reversed	ra3::render::parseIfCommand; 00c60778 slot 3; slot 2 returns if [scopeBlock] [scopeParm] - start of conditional execution block.  Needs matching endif command
+009bbc80	FUN_009bbc80	.text	169		clean	render	recon/render9b2	reversed	ra3::render::execIfCommand; 00c60778 slot 4; slot 2 returns if [scopeBlock] [scopeParm] - start of conditional execution block.  Needs matching endif command
+009bbd30	FUN_009bbd30	.text	126		clean	render	recon/render9b2	reversed	ra3::render::parseEndIfCommand; 00c607f4 slot 3; slot 2 returns endif - end of conditional execution block.  Needs matching if/ifnot command
+009bbdb0	FUN_009bbdb0	.text	110		clean	render	recon/render9b2	reversed	ra3::render::execEndIfCommand; 00c607f4 slot 4; slot 2 returns endif - end of conditional execution block.  Needs matching if/ifnot command
+009bbe20	FUN_009bbe20	.text	372		clean	render	recon/render9b2	reversed	ra3::render::parseElifCommand; 00c60860 slot 3; slot 2 returns elif [scopeBlock] [scopeParm] - additional conditional execution block.  Needs matching if and endif commands
+009bbfa0	FUN_009bbfa0	.text	195		clean	render	recon/render9b2	reversed	ra3::render::parseGotoCommand; 00c609ec slot 3; slot 2 returns goto [name] - jump to label (set with : Label) and continue execution
+009bc070	FUN_009bc070	.text	191		clean	render	recon/render9b2	reversed	ra3::render::parseBeginEventCommand; 00c61050 slot 3; slot 2 returns beginevent [name] - tags an event for profiling system (PIX)
 009bc130	FUN_009bc130	.text	207		clean	unknown		unanalyzed	
 009bc200	FUN_009bc200	.text	76		clean	render	recon/render9b	reversed	ra3::render::execEndProcCommand; 00c611dc slot 4, shared with return 00c61310 slot 4; slot 2 of 00c611dc returns the endproc usage string
 009bc250	FUN_009bc250	.text	184		clean	unknown		unanalyzed	
-009bc310	FUN_009bc310	.text	190		clean	unknown		unanalyzed	
+009bc310	FUN_009bc310	.text	190		clean	render	recon/render9b2	reversed	ra3::render::parseCallProcCommand; 00c612c4 slot 3; slot 2 returns callproc [name] - calls the named procedure
 009bc3d0	FUN_009bc3d0	.text	78		clean	render	recon/render9b	reversed	ra3::render::execCallProcCommand; 00c612c4 slot 4; slot 2 returns callproc [name] - calls the named procedure
-009bc420	FUN_009bc420	.text	856		clean	unknown		unanalyzed	
-009bc780	FUN_009bc780	.text	901		clean	unknown		unanalyzed	
-009bcb10	FUN_009bcb10	.text	288		clean	unknown		unanalyzed	
-009bcc40	FUN_009bcc40	.text	218		clean	unknown		unanalyzed	
-009bcd20	FUN_009bcd20	.text	231		clean	unknown		unanalyzed	
+009bc420	FUN_009bc420	.text	856		clean	render	recon/render9b2	reversed	ra3::render::execRenderQuadCommand; 00c6136c slot 4; slot 2 returns renderquad [(optional) red] [(optional) green] [(optional) blue] [(optional) alpha] - renders a large triangle to fill current viewport dimensions
+009bc780	FUN_009bc780	.text	901		clean	render	recon/render9b2	reversed	ra3::render::execRenderFullQuadCommand; 00c61450 slot 4; slot 2 returns renderfullquad [(optional) red] [(optional) green] [(optional) blue] [(optional) alpha] - renders a quad based on current viewport dimensions
+009bcb10	FUN_009bcb10	.text	288		clean	render	recon/render9b2	reversed	ra3::render::parseSetFloatCommand; 00c61534 slot 3; slot 2 returns setfloat [scopeblock] [parmName] [value] [(optional) value] [(optional) value] [(optional) value] - sets the values of specified scope parameter
+009bcc40	FUN_009bcc40	.text	218		clean	render	recon/render9b2	reversed	ra3::render::parseSetIntCommand; 00c6162c slot 3; slot 2 returns setint [scopeblock] [parmName] [value] - sets the value of specified scope parameter
+009bcd20	FUN_009bcd20	.text	231		clean	render	recon/render9b2	reversed	ra3::render::parseSetBoolCommand; 00c616a0 slot 3; slot 2 returns setbool [scopeblock] [parmName] [value] - sets the values of specified scope parameter
 009bce10	FUN_009bce10	.text	623		clean	unknown		unanalyzed	
 009bd080	FUN_009bd080	.text	58		clean	unknown		unanalyzed	
 009bd0c0	FUN_009bd0c0	.text	86		clean	unknown		unanalyzed	
 009bd120	FUN_009bd120	.text	167		clean	unknown		unanalyzed	
-009bd1d0	FUN_009bd1d0	.text	423		clean	unknown		unanalyzed	
-009bd380	FUN_009bd380	.text	224		clean	unknown		unanalyzed	
-009bd460	FUN_009bd460	.text	17		clean	unknown		unanalyzed	
+009bd1d0	FUN_009bd1d0	.text	423		clean	render	recon/render9b2	reversed	ra3::render::parseSetShaderCommand; 00c5f010 slot 3; slot 2 returns setshader [name] [(optional) technique]- sets the current shader to use during process
+009bd380	FUN_009bd380	.text	224		clean	render	recon/render9b2	reversed	ra3::render::parseSetShaderOverrideCommand; 00c5f164 slot 3; slot 2 returns setshaderoverride [name] [technique] - sets the technique for the shader to use.
+009bd460	FUN_009bd460	.text	17		clean	render	recon/render9b2	reversed	ra3::render::parseSetTextureCommand; 00c5f26c slot 3; slot 2 returns settexture [scopeBlock] [scopeParm] [name] - set the texture specified by [name] into the specific Scope Block and Scope Parm
 009bd471	FUN_009bd471	.text	230		clean	unknown		unanalyzed	
-009bd560	FUN_009bd560	.text	270		clean	unknown		unanalyzed	
+009bd560	FUN_009bd560	.text	270		clean	render	recon/render9b2	reversed	ra3::render::parseSetToSizeCommand; 00c5f310 slot 3; slot 2 returns settosize [scopeBlock] [scopeParm] [texture or surface name] - set the size of the texture or surface into the specific Scope Block and Scope Parm
 009bd670	FUN_009bd670	.text	209		clean	unknown		unanalyzed	
 009bd750	FUN_009bd750	.text	91		clean	unknown		unanalyzed	
 009bd7b0	FUN_009bd7b0	.text	324		clean	unknown		unanalyzed	

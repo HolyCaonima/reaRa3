@@ -3295,3 +3295,80 @@ address	status	owner	module	notes
 0079fcd0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIMoveToAndDeleteOnEnter; 00c2edf8 slot 4 slot 2 returns UnitAIMoveToAndDeleteState; also 00c2ee68 slot 4 slot 2 returns UnitAIAIMoveToAndEvacuateState; the two tables do not share a slot-2 getter (0079fcb0 and 0079fcc0)
 0079fe80	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIMoveToAttackPositionOnEnter; 00c31770 slot 4; slot 2 returns UnitAIMoveToAttackPositionState
 0079ffa0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIMoveToGoalAndEnterOnEnter; 00c2efa8 slot 4; slot 2 returns UnitAIMoveToGoalAndEnterState; the body continues through the ret at 007a008c
+00690240	reversed	recon/obj69c	gamelogic	ra3::gamelogic::unitVisionBehaviorStoreRange; 00bfdb88 slot 23; slot 2 returns UnitVisionBehavior
+00690270	reversed	recon/obj69c	gamelogic	ra3::gamelogic::unitVisionBehaviorXfer; 00bfdb88 slot 3; slot 2 returns UnitVisionBehavior
+006906e0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::managerBodyCacheTemplate; 00c124c8 slot 25; slot 2 returns ManagerBody
+006908e0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::crateCollideAllows; 00c0a598 slot 22; slot 2 returns CrateCollide
+00690a80	reversed	recon/obj69c	gamelogic	ra3::gamelogic::moneyCrateCollideGrant; 00c19e10 slot 23; slot 2 returns MoneyCrateCollide
+006913d0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::hordeContainSharesSide; 00c21520 slot 27; 0073cb30 stores HordeContain 00c21a98 at [esi] and 00c21520 at [esi+0x16c]
+00691620	reversed	recon/obj69c	gamelogic	ra3::gamelogic::hordeContainPushTimer; 00c21520 slot 126; same HordeContain constructor 0073cb30
+006920b0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::garrisonContainAccepts; 00c21bf0 slot 37; 0074dfc0 stores GarrisonContain 00c21e90 at [esi] and 00c21bf0 at [esi+0x24]
+00692460	reversed	recon/obj69c	gamelogic	ra3::gamelogic::garrisonContainAnchorOrSlot; 00c21bf0 slot 82; same GarrisonContain constructor 0074dfc0
+00692490	reversed	recon/obj69c	gamelogic	ra3::gamelogic::garrisonContainLocatePoint; 00c21bf0 slot 81; same GarrisonContain constructor 0074dfc0
+00692ba0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::tunnelContainOpenIterator; 00c23a98 slot 48; slot 2 returns TunnelContain
+00693fb0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::detonateStateRequest; 00bf79c0 slot 5; slot 2 returns DetonateState
+00695020	reversed	recon/obj69c	gamelogic	ra3::gamelogic::specialPowerDispatchApplyKind1; 00c19058 slot 14; 006e2ab0 stores SpecialPowerDispatchSpecialPower 00c19230 at [esi] and 00c19058 at [esi+0x10]
+006950d0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::specialPowerDispatchApplyKind03; 00c19058 slot 13; same constructor 006e2ab0
+00695170	reversed	recon/obj69c	gamelogic	ra3::gamelogic::specialPowerDispatchApplyKind23; 00c19058 slot 12; same constructor 006e2ab0
+00695210	reversed	recon/obj69c	gamelogic	ra3::gamelogic::specialPowerDispatchApplyKind4; 00c19058 slot 11; same constructor 006e2ab0
+006953e0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::specialPowerDispatchAdjustCount; 00c19058 slot 10; same constructor 006e2ab0
+00695720	reversed	recon/obj69c	gamelogic	ra3::gamelogic::specialPowerDispatchCopyKind; 00c19058 slot 6; same constructor 006e2ab0
+00695990	reversed	recon/obj69c	gamelogic	ra3::gamelogic::specialPowerModuleNoteReady; 00c01108 slot 22; slot 2 returns SpecialPowerModule
+00696430	reversed	recon/obj69c	gamelogic	ra3::gamelogic::specialPowerModuleTrigger; 00c01108 slot 10; slot 2 returns SpecialPowerModule
+00696740	reversed	recon/obj69c	gamelogic	ra3::gamelogic::specialPowerUpdateReadiness; 00bf7c68 slot 3; 006b4770 stores SpecialPowerUpdateModule 00c0b860 at [esi] and 00bf7c68 at [edi]
+00696800	reversed	recon/obj69c	gamelogic	ra3::gamelogic::specialPowerUpdateNotifyOwner; 00bf7c68 slot 5; same constructor 006b4770
+00696bc0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::specialPowerUpdateModuleXfer; 00c0b860 slot 3; slot 2 returns SpecialPowerUpdateModule
+006975c0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::dozerAiUpdateAcceptTask; 00c24a50 slot 58; slot 2 returns DozerAIUpdate
+00697630	reversed	recon/obj69c	gamelogic	ra3::gamelogic::dozerAiUpdateTerrainScale; 00c24878 slot 3; 00751d20 stores DozerAIUpdate 00c24a50 at [esi] and 00c24878 at [edi]
+00697b80	reversed	recon/obj69c	gamelogic	ra3::gamelogic::dockUpdateOccupiedScale; 00c0bbb0 slot 23; 00740520 stores DockUpdate 00c0bd58 at [esi] and 00c0bbb0 at [esi+0x24]
+006991b0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::aiUpdateTouchLocomotor; 00c22118 slot 172; slot 2 returns AIUpdateInterface
+00699c10	reversed	recon/obj69c	gamelogic	ra3::gamelogic::aiUpdateIssue61; 00c22118 slot 56; slot 2 returns AIUpdateInterface
+00699c60	reversed	recon/obj69c	gamelogic	ra3::gamelogic::aiUpdateIssue51; 00c22118 slot 65; slot 2 returns AIUpdateInterface
+00699cd0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::aiUpdateIssue3A; 00c22118 slot 64; slot 2 returns AIUpdateInterface
+00699d20	reversed	recon/obj69c	gamelogic	ra3::gamelogic::aiUpdateIssue32; 00c22118 slot 63; slot 2 returns AIUpdateInterface
+00699d60	reversed	recon/obj69c	gamelogic	ra3::gamelogic::aiUpdateIssue40; 00c22118 slot 72; slot 2 returns AIUpdateInterface
+00699dc0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::aiUpdateIssue42; 00c22118 slot 73; slot 2 returns AIUpdateInterface
+00699e20	reversed	recon/obj69c	gamelogic	ra3::gamelogic::aiUpdateIssue3F; 00c22118 slot 75; slot 2 returns AIUpdateInterface
+00699e80	reversed	recon/obj69c	gamelogic	ra3::gamelogic::aiUpdateIssue43; 00c22118 slot 76; slot 2 returns AIUpdateInterface
+00699ee0	reversed	recon/obj69c	gamelogic	ra3::gamelogic::aiUpdateIssue49; 00c22118 slot 77; slot 2 returns AIUpdateInterface
+00699f60	reversed	recon/obj69c	gamelogic	ra3::gamelogic::aiUpdateIssue2A; 00c22118 slot 98; slot 2 returns AIUpdateInterface
+0069e660	reversed	recon/obj69c	gamelogic	ra3::gamelogic::productionUpdateCancelOne; 00c19580 slot 10; 006e8ed0 stores ProductionUpdate 00c19788 at [esi] and 00c19580 at [esi+0x24]
+0069f100	reversed	recon/obj69c	gamelogic	ra3::gamelogic::secondaryDamageTrackerXfer; 00c05858 slot 3; slot 2 returns SecondaryDamageTracker
+0069fa90	reversed	recon/obj69c	gamelogic	ra3::gamelogic::specialAbilityUpdateRelay; 00c14184 slot 6; 00701f40 stores SpecialAbilityUpdate 00c142d8 at [esi] and 00c14184 at [esi+0x24]
+0069ff20	reversed	recon/obj69c	gamelogic	ra3::gamelogic::stealthDetectorUpdateXfer; 00c0dfc0 slot 3; slot 2 returns StealthDetectorUpdate
+009bcc40	reversed	recon/render9b2	render	ra3::render::parseSetIntCommand; 00c6162c slot 3; slot 2 returns setint [scopeblock] [parmName] [value] - sets the value of specified scope parameter
+009bcd20	reversed	recon/render9b2	render	ra3::render::parseSetBoolCommand; 00c616a0 slot 3; slot 2 returns setbool [scopeblock] [parmName] [value] - sets the values of specified scope parameter
+009bcb10	reversed	recon/render9b2	render	ra3::render::parseSetFloatCommand; 00c61534 slot 3; slot 2 returns setfloat [scopeblock] [parmName] [value] [(optional) value] [(optional) value] [(optional) value] - sets the values of specified scope parameter
+009b9d50	reversed	recon/render9b2	render	ra3::render::parseSetDepthCommand; 00c60db8 slot 3; slot 2 returns setdepth [name] - sets the current depth buffer to surface specified by name. name can be NULL to unset depth buffer.
+009bbfa0	reversed	recon/render9b2	render	ra3::render::parseGotoCommand; 00c609ec slot 3; slot 2 returns goto [name] - jump to label (set with : Label) and continue execution
+009bc070	reversed	recon/render9b2	render	ra3::render::parseBeginEventCommand; 00c61050 slot 3; slot 2 returns beginevent [name] - tags an event for profiling system (PIX)
+009bc310	reversed	recon/render9b2	render	ra3::render::parseCallProcCommand; 00c612c4 slot 3; slot 2 returns callproc [name] - calls the named procedure
+009bd1d0	reversed	recon/render9b2	render	ra3::render::parseSetShaderCommand; 00c5f010 slot 3; slot 2 returns setshader [name] [(optional) technique]- sets the current shader to use during process
+009bd380	reversed	recon/render9b2	render	ra3::render::parseSetShaderOverrideCommand; 00c5f164 slot 3; slot 2 returns setshaderoverride [name] [technique] - sets the technique for the shader to use.
+009bd460	reversed	recon/render9b2	render	ra3::render::parseSetTextureCommand; 00c5f26c slot 3; slot 2 returns settexture [scopeBlock] [scopeParm] [name] - set the texture specified by [name] into the specific Scope Block and Scope Parm
+009bd560	reversed	recon/render9b2	render	ra3::render::parseSetToSizeCommand; 00c5f310 slot 3; slot 2 returns settosize [scopeBlock] [scopeParm] [texture or surface name] - set the size of the texture or surface into the specific Scope Block and Scope Parm
+009bace0	reversed	recon/render9b2	render	ra3::render::execSetToSizeCommand; 00c5f310 slot 4; slot 2 returns settosize [scopeBlock] [scopeParm] [texture or surface name] - set the size of the texture or surface into the specific Scope Block and Scope Parm
+009bbe20	reversed	recon/render9b2	render	ra3::render::parseElifCommand; 00c60860 slot 3; slot 2 returns elif [scopeBlock] [scopeParm] - additional conditional execution block.  Needs matching if and endif commands
+009bb930	reversed	recon/render9b2	render	ra3::render::parseIfNotCommand; 00c606f0 slot 3; slot 2 returns ifnot [scopeBlock] [scopeParm] - start of conditional execution block.  Needs matching endif command
+009bba80	reversed	recon/render9b2	render	ra3::render::execIfNotCommand; 00c606f0 slot 4; slot 2 returns ifnot [scopeBlock] [scopeParm] - start of conditional execution block.  Needs matching endif command
+009bbb30	reversed	recon/render9b2	render	ra3::render::parseIfCommand; 00c60778 slot 3; slot 2 returns if [scopeBlock] [scopeParm] - start of conditional execution block.  Needs matching endif command
+009bbc80	reversed	recon/render9b2	render	ra3::render::execIfCommand; 00c60778 slot 4; slot 2 returns if [scopeBlock] [scopeParm] - start of conditional execution block.  Needs matching endif command
+009bbd30	reversed	recon/render9b2	render	ra3::render::parseEndIfCommand; 00c607f4 slot 3; slot 2 returns endif - end of conditional execution block.  Needs matching if/ifnot command
+009bbdb0	reversed	recon/render9b2	render	ra3::render::execEndIfCommand; 00c607f4 slot 4; slot 2 returns endif - end of conditional execution block.  Needs matching if/ifnot command
+009b9c40	reversed	recon/render9b2	render	ra3::render::parseSetCameraCommand; 00c6065c slot 3; slot 2 returns setcamera [name] - sets the current camera to use.  Camera will set view and projection matrices on the device.
+009b6d70	reversed	recon/render9b2	render	ra3::render::execSetCameraCommand; 00c6065c slot 4; slot 2 returns setcamera [name] - sets the current camera to use.  Camera will set view and projection matrices on the device.
+009b6bd0	reversed	recon/render9b2	render	ra3::render::execSetViewportCommand; 00c60368 slot 4; slot 2 returns setviewport [value] [value] [value] [value] - sets the extents of render viewport with 4 int values specified (left, top, right, bottom)
+009b6ca0	reversed	recon/render9b2	render	ra3::render::execSetScissorCommand; 00c604e4 slot 4; slot 2 returns setscissor [value] [value] [value] [value] - sets the extents of render scissor with 4 int values specified (left, top, right, bottom)
+009b58c0	reversed	recon/render9b2	render	ra3::render::flushLineList; 00c600f0 slot 3; slot 2 is 009b58a0 and is not a usage getter; named by D3DPRIMITIVETYPE: the body ends in device vtable +0x14C (IDirect3DDevice9::DrawPrimitiveUP) with primitive type 2 and the matching count (renamed by the controller)
+009b5960	reversed	recon/render9b2	render	ra3::render::flushPointList; 00c60108 slot 3; slot 2 is 009b58a0 and is not a usage getter; named by D3DPRIMITIVETYPE: the body ends in device vtable +0x14C (IDirect3DDevice9::DrawPrimitiveUP) with primitive type 1 and the matching count (renamed by the controller)
+009b59d0	reversed	recon/render9b2	render	ra3::render::flushLineStrip; 00c60120 slot 3; slot 2 is 009b58a0 and is not a usage getter; named by D3DPRIMITIVETYPE: the body ends in device vtable +0x14C (IDirect3DDevice9::DrawPrimitiveUP) with primitive type 3 and the matching count (renamed by the controller)
+009b5a40	reversed	recon/render9b2	render	ra3::render::flushTriangleList; 00c60138 slot 3; slot 2 is 009b58a0 and is not a usage getter; named by D3DPRIMITIVETYPE: the body ends in device vtable +0x14C (IDirect3DDevice9::DrawPrimitiveUP) with primitive type 4 and the matching count (renamed by the controller)
+009b5af0	reversed	recon/render9b2	render	ra3::render::flushTriangleStrip; 00c60150 slot 3; slot 2 is 009b58a0 and is not a usage getter; named by D3DPRIMITIVETYPE: the body ends in device vtable +0x14C (IDirect3DDevice9::DrawPrimitiveUP) with primitive type 5 and the matching count (renamed by the controller)
+009b5b60	reversed	recon/render9b2	render	ra3::render::flushTriangleFan; 00c60168 slot 3; slot 2 is 009b58a0 and is not a usage getter; named by D3DPRIMITIVETYPE: the body ends in device vtable +0x14C (IDirect3DDevice9::DrawPrimitiveUP) with primitive type 6 and the matching count (renamed by the controller)
+009b3910	reversed	recon/render9b2	render	ra3::render::dispatchDirtyState; 00c5f4c8 slot 4; slot 2 is 009b38a0 and is not a usage getter, so the class name is inferred
+009b5380	reversed	recon/render9b2	render	ra3::render::classifyPrimitive; 00c5db18 slot 17; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b5430	reversed	recon/render9b2	render	ra3::render::readMatrixOrder; 00c5db18 slot 16; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009bb040	reversed	recon/render9b2	render	ra3::render::selectConstantRoutine; 00c5db18 slot 18; slot 2 is 009a8750 and is not a usage getter, so the class name is inferred
+009b9630	reversed	recon/render9b2	render	ra3::render::bindDynamicStream; 00c60338 slot 1; slot 2 is 009b60d0 and is not a usage getter, so the class name is inferred
+009bc420	reversed	recon/render9b2	render	ra3::render::execRenderQuadCommand; 00c6136c slot 4; slot 2 returns renderquad [(optional) red] [(optional) green] [(optional) blue] [(optional) alpha] - renders a large triangle to fill current viewport dimensions
+009bc780	reversed	recon/render9b2	render	ra3::render::execRenderFullQuadCommand; 00c61450 slot 4; slot 2 returns renderfullquad [(optional) red] [(optional) green] [(optional) blue] [(optional) alpha] - renders a quad based on current viewport dimensions

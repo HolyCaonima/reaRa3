@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 obj72b、protcave3、aistate79d 合并；aistate7c 复审降级，aistate7c2 退回）
+## 3. 现状（10-17 收工：在途全部处理完，obj69c、render9b2 为最后合并；aistate7c 复审降级，aistate7c2 退回）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 2,779、unanalyzed 46,146（受保护函数已 reversed：entry-lost 104、inner-patched 65、
+  reversed 2,856、unanalyzed 46,069（受保护函数已 reversed：entry-lost 104、inner-patched 65、
   entry-recoverable 9）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
@@ -392,6 +392,20 @@
     `ra3/gamelogic/AIState79D.h`，设计见 `aistate79d.md`。最短的 11 个体（28–44 字节）都有逻辑，样板 0。
     交付的 109 例 oracle 零差异，但把 `kFreeFallBias` 从 5.0 改成 5.5 也能通过（用例离阈值太远）；控制者补了
     3 个贴近阈值的 `0079D6A0` 用例（共 112 例），突变现已检出。今后验收时对浮点阈值常量做一次突变抽查
+  - 对象模块第三轮（`0x00690000–0x0069FFFF`，Grok）：41 个（UnitVision/Crate/MoneyCrate/Horde/Garrison/Tunnel
+    Contain、SpecialPower 分派与模块、DozerAI、Dock、AIUpdateInterface 的 10 个发令槽、Production、
+    SecondaryDamage、SpecialAbility、StealthDetector），无 hook；次级表经构造函数定名（8 个引用均为真入口）。
+    代码在 `ra3/gamelogic/ObjectUpdate69C.h`。`aiUpdateIssue*` 中有 3 对除状态号外逐字节相同，`00695720` 近似
+    访问器，合计 4/41，未到上限。oracle 119 例零差异；主控突变 `kDockNumerator` 15→16、`1.0F - ratio`→`+` 均检出
+  - 渲染脚本解释器第二轮（`0x009B0000`，Grok）：36 个（render9b 留下的 12 个宽命令体：setint/setbool/setfloat/
+    setdepth/goto/beginevent/callproc/setshader/setshaderoverride/settexture/settosize、if/ifnot/elif/endif、
+    setcamera/setviewport/setscissor、renderquad/renderfullquad 的 exec，以及 6 个顶点批 flush 等），无 hook；
+    代码在 `ra3/render/RenderScript9B2.h`。交付时 6 个 flush 叫 `flushConstants*`，主控据设备 vtable +0x14C
+    （`IDirect3DDevice9::DrawPrimitiveUP`，序号 83）与图元类型 1–6 及对应图元数改名为 `flushPointList`/
+    `flushLineList`/`flushLineStrip`/`flushTriangleList`/`flushTriangleStrip`/`flushTriangleFan`，辅助函数改为
+    `drawPrimitiveUP`（`16283ff`）。交付 oracle 的 flush 只测 0 与 5 个顶点，把三角形表的 `/3` 改成 `/4` 仍通过；
+    主控补了 7、11 个顶点的用例（共 115 例），该突变现已检出。`dispatchDirtyState`、`classifyPrimitive`、
+    `readMatrixOrder`、`selectConstantRoutine`、`bindDynamicStream` 的名字仍是推断（注释已写明）
   - AI states 批次（`0x00790000–0x0079FFFF`，Grok）：48 个方法（Turret/UnitAI/AIDock/AIGuard/AIAttack
     各 state 的 onEnter/update/onExit 与条件槽位、FollowWaypointPath/Turret 状态机），无 hook，样板 0；
     代码在 `ra3/gamelogic/AIState79.h`，设计见 `aistate79.md`。归属全部为单个 split vtable 槽位，主控
@@ -437,10 +451,10 @@
     `recon/particles65`、`recon/render91`、`recon/obj6a`、`recon/protcave`、`recon/protentry2`、
     `recon/gamelogic82`、`recon/skirm87`、`recon/common5a`、`recon/render56`、`recon/objbehav68`、`recon/audio50`、
     `recon/aistate79`、`recon/render99`、`recon/net5d2`、`recon/obj69`、`recon/logic4d`、`recon/skirm8b`、
-    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`、`recon/render9b`、`recon/client52`、`recon/obj72`、`recon/aistate7c`、`recon/protcave2`、`recon/aistate7d`、`recon/obj69b`、`recon/obj70`、`recon/w3d56`、`recon/obj6e`、`recon/aistate79c`、`recon/aistate7a2`、`recon/obj6c`、`recon/fx66`、`recon/aistate7b2`、`recon/obj72b`、`recon/protcave3`、`recon/aistate79d`：已合并（`789bcb1`、
+    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`、`recon/render9b`、`recon/client52`、`recon/obj72`、`recon/aistate7c`、`recon/protcave2`、`recon/aistate7d`、`recon/obj69b`、`recon/obj70`、`recon/w3d56`、`recon/obj6e`、`recon/aistate79c`、`recon/aistate7a2`、`recon/obj6c`、`recon/fx66`、`recon/aistate7b2`、`recon/obj72b`、`recon/protcave3`、`recon/aistate79d`、`recon/obj69c`、`recon/render9b2`：已合并（`789bcb1`、
     `f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`、
     `9df37c8`、`760e231`、`79a7caa`、`9c14506`、`6234602`、`00c9a7a`、`be08241`、`ba97d03`、`bec182d`、
-    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`、`ae7caf5`、`0f0515f`、`989d91b`、`747eae9`、`8ee7d18`、`d8dfd05`、`284c239`、`dacb6b0`、`3b872e2`、`64682bd`、`892e93b`、`45a2d4e`、`1394ce0`、`02c5529`、`442001f`、`a9dad90`、`c364489`、`8881760`）。追加合并脚本在
+    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`、`ae7caf5`、`0f0515f`、`989d91b`、`747eae9`、`8ee7d18`、`d8dfd05`、`284c239`、`dacb6b0`、`3b872e2`、`64682bd`、`892e93b`、`45a2d4e`、`1394ce0`、`02c5529`、`442001f`、`a9dad90`、`c364489`、`8881760`、`9598c6d`、`6750755`）。追加合并脚本在
     冲突块以 `)` 收尾时会报 WARN，需手工检查括号（skirm87 合并时拼坏过一次 CMake）。受保护批次的站点/字符串/伪调用核对脚本见 `work/probe/check_protcave.py`、
     `work/probe/check_protentry2.py`，多快照槽值用 `work/probe/slot_snapshots.py`。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
@@ -451,17 +465,17 @@
     agent（通用规则见 `work/prompts/takeover_common.md`）。另杀掉一个死循环跑了一小时的 python
     one-liner（扫描 run35 快照字符串时循环下标不前进）。
   - **暂停**（18:24 用户指示）：在途 10 路跑完、逐个验收合并后当天暂停，不再补位；下次会话从补位队列继续。
-  - **在途**（18:30 时 10 路，Grok 9、Gemini 1；派单在 `work/prompts/<名>.md`；已交付合并的从下表划掉）：
+    19:20 已全部处理完：**当前无在途批次、无残留 worktree**（`recon/*` 分支保留）。下次会话先做下面"重建形态"
+    里的首项，再按补位队列开 10 路（Grok 9、Gemini 1）。
+  - **在途**（18:30 时 10 路，Grok 9、Gemini 1；派单在 `work/prompts/<名>.md`；现已全部划掉）：
     - ~~`recon/protcave3`~~（已合并 `c364489`；`work/prompts/protcave3_pool.txt` 的 165 个中计数 25 个、丢弃 8 个，
       其余留给下一轮 Gemini 位，做法同上：`--replace-deferred` 折叠、`check_protcave.py` 从注释重建 claims 对照）。
     - ~~`recon/aistate7a2`~~（已合并 `45a2d4e`）、~~`recon/aistate79d`~~（已合并 `8881760`）、~~`recon/aistate7b2`~~（已合并 `442001f`）、~~`recon/aistate7c2`~~（退回，全为模拟代码）：AI states，
       代码进 `src/gamelogic`。
     - ~~`recon/obj6c`~~（已合并 `1394ce0`；次级接口表槽位未做）、
-      `recon/obj69c`（18:30 补位，`0x0069` 第三轮，84 个在 slot 2 为 `0065f220` 的次级表里）、
-      ~~`recon/obj72b`~~（已合并 `a9dad90`）：对象模块。
-    - ~~`recon/fx66`~~（已合并 `02c5529`）、`recon/render9b2`
-      （18:20 补位，`0x009B` 第二轮：render9b 留下的 12 个宽命令体加剩余槽位候选，清单
-      `work/prompts/scope_render9b2.txt`，代码进 `src/render`）。
+      ~~`recon/obj69c`~~（已合并 `9598c6d`）、~~`recon/obj72b`~~（已合并 `a9dad90`）：对象模块。
+    - ~~`recon/fx66`~~（已合并 `02c5529`）、~~`recon/render9b2`~~（已合并 `6750755`；`scope_render9b2.txt` 中
+      settarget、stretchrect、setviewport parse、setfloat exec、proc、label 等十余个留给下一轮）。
     派单由 `work/probe/make_brief.py <名> <base> <类前缀> <scope 文件> [模块]` 从 `obj72.md` 派生；
     AI states 的续轮派单直接改写上一轮的 `aistate*.md`。验收时除 `audit_batch.py` 外，还要核对
     claims 里 `wr` 行引用的构造函数是不是真函数入口（obj69b 引用过 Ghidra 误切点和 cave 之后的续接地址），
@@ -485,6 +499,10 @@
   `aistate7a2.md` 已写明禁止。**下次会话首项**：把 `AIState7C.cpp` 的 41 个与 `AIState7B2Lifted.inc` 的 15 个
   模拟体改写为可读 C++（一批即可，oracle 已有；改写后以 `--replace-deferred` 恢复计数），并删掉模拟辅助代码；
   另重开 `0x007C` 第二轮（aistate7c2 退回，可复用其 claims 与 oracle 用例，但代码必须重写）。
+- **oracle 强度**（19:20 起）：零差异不代表用例够强。aistate79d（free-fall 阈值）与 render9b2（三角形表除数）
+  各有一处常量改错仍通过交付的 oracle，主控补用例后才检出。验收时对每批挑 1–2 个算术/阈值常量在 worktree 里
+  做突变（改、只编该批 check 目标、跑 oracle、`git checkout` 还原），未检出就先补用例再合并。派单模板
+  下次应要求子 agent 对阈值/除数类常量各做一次突变并在报告里列出。
 - **合并前静态验收**：`python Ra3Source\tools\analysis\accept_batch.py recon/<name>`。
   它只经 git 读取分支内容，检查共享文件改动、与 main 内容不同的同名新增文件、新 hook
   的键唯一性/explicitOnly 计数/expected 字节对二进制/stolen 整指令且可搬移/无回跳/
