@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 render91 合并）
+## 3. 现状（截至 obj6a 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 1,211、unanalyzed 47,714（受保护函数已 reversed：entry-lost 60、inner-patched 2）。`securom` 分类：clean 47,777、entry-lost 653、
+  reversed 1,227、unanalyzed 47,698（受保护函数已 reversed：entry-lost 60、inner-patched 2）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
 - **hook**：321 个目标（其中 274 个只认显式键）。原有 86 个全部 replace 时，Release
@@ -162,6 +162,13 @@
     W3DLaserDraw/W3DTankDraw），副表 `0x00C555F0` 由 `0x009108F0` 写在 `+0x14`，调用边都在
     指令边界上，`0x0090CE30` 带 `W3DScriptedModelDraw.cpp` 断言。集成态 Release 108 场景零差异，
     `+0x2FC` 写偏移 mutation 检出
+  - gamelogic 对象模块批次（`0x006A16A0–0x006BC4A0`，Gemini 半成品由 Grok 接手）：16 个 clean
+    入口，主要是 Upgrade/Behavior/SpecialPower/DozerAction state 的 `slot[3]` xfer，另有
+    WeaponSetUpdate slot 1、EncloseBehavior 包含判定、VeterancyCrateCollide 通过判定和
+    SlaughterHordeContain 标志；无 hook；代码在 `ra3/gamelogic/ObjectCore6A.h`。Gemini 草稿里的
+    Object/WeaponSet 方法无所有权锚点，被整体替换；94 个候选（NameKey 缓存、析构、`0x0076B240`
+    无类名 vtable 等）记为延后行。主控核对 16 个槽位与类名、`0x00743F50` 在 `0x00743F66` 写入
+    WeaponSetUpdate vtable。产出偏少。集成态 Release 16 函数零差异，`this+0x20` mutation 检出
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
@@ -170,11 +177,10 @@
     stringfindlast 等），只有离线证据。
 - **当前并行**（子 agent 随主控会话结束而中断，恢复时先查各 worktree 有无新提交）：
   - `recon/gamelogic7c`、`recon/common7e`、`recon/drawable52`、`recon/gamelogic72`、
-    `recon/particles65`、`recon/render91`：已合并（`789bcb1`、`f3c87e3`、`c33c919`、`2c9fd80`、
-    `b67d3d3`、render91 见下一提交）。合并冲突若只是注册行追加，用
+    `recon/particles65`、`recon/render91`、`recon/obj6a`：已合并（`789bcb1`、`f3c87e3`、`c33c919`、
+    `2c9fd80`、`b67d3d3`、`9df37c8`、`760e231`）。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
     `python work\probe\verify_ownership.py <claims.txt>` 逐条反查（格式见脚本头注释）。
-  - `recon/obj6a`：Gemini 因 resource_exhausted 中断，主控提交快照 `cbfd909`，改由 Grok 接手。
   - `recon/common5a`：`0x005A0000–0x005BFFFF` common 簇，Grok，base `0d099eb`。
   - `recon/render56`：`0x00560000–0x0059FFFF` render 簇，Gemini，base `5e4a7c2`。
   - `recon/skirmishai89`：`0x00890000–0x0089FFFF` skirmish AI 簇，Gemini，base `5d16a5b`。
@@ -186,8 +192,6 @@
     （`0x00520000–0x0052FFFF` Drawable 访问器，Grok，逐行所有权证明）、
     `recon/particles65`（`0x00650000–0x0067FFFF` 粒子模块，Gemini）、`recon/net5d`
     （已合并）。
-  - `recon/obj6a`：`0x006A0000–0x006BFFFF` gamelogic 类簇，Gemini，base `77fa914`
-    （补 net5d 的位）。
   - 模型服务连接错误会中断子 agent。resume 续跑会带回长上下文，实测很快再次失败；
     做法是先查 worktree 未提交改动，再派一个新上下文的 agent 接手半成品（说明现有文件、
     缺什么、先提交再完善）。gamelogic7c、objbehav68、protcave 已按此接手。

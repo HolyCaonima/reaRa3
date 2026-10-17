@@ -12956,7 +12956,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a0600	FUN_006a0600	.text	57		clean	unknown		unanalyzed	
 006a0640	FUN_006a0640	.text	56		clean	unknown		unanalyzed	
 006a0710	FUN_006a0710	.text	6		clean	unknown		unanalyzed	
-006a0720	FUN_006a0720	.text	47		clean	unknown		unanalyzed	
+006a0720	FUN_006a0720	.text	47		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. NameKey cache for StructureUnpackUpdate. mov eax, 1 / test byte / call 00986150. Boilerplate, not counted.
 006a0750	FUN_006a0750	.text	8		clean	unknown		unanalyzed	
 006a0760	FUN_006a0760	.text	107		clean	unknown		unanalyzed	
 006a07d0	FUN_006a07d0	.text	452		clean	unknown		unanalyzed	
@@ -12964,8 +12964,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a09ac	FUN_006a09ac	.text	121		clean	unknown		unanalyzed	
 006a0a40	FUN_006a0a40	.text	376		clean	unknown		unanalyzed	
 006a0bc0	FUN_006a0bc0	.text	48		clean	unknown		unanalyzed	
-006a0bf0	FUN_006a0bf0	.text	129		clean	unknown		unanalyzed	
-006a0c80	FUN_006a0c80	.text	86		clean	unknown		unanalyzed	
+006a0bf0	FUN_006a0bf0	.text	129		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft StructureUnpack start. Not a slot of the StructureUnpackUpdate vtable 00C063C8, and the body calls several engine helpers the draft did not match.
+006a0c80	FUN_006a0c80	.text	86		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft unpack pause. Direct callee of 006A70F0, which is not a class-name vtable slot.
 006a0ce0	FUN_006a0ce0	.text	149		clean	unknown		unanalyzed	
 006a0d80	FUN_006a0d80	.text	122		clean	unknown		unanalyzed	
 006a0e00	FUN_006a0e00	.text	137		clean	unknown		unanalyzed	
@@ -12987,24 +12987,24 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a1510	FUN_006a1510	.text	47		clean	unknown		unanalyzed	
 006a1540	FUN_006a1540	.text	57		clean	unknown		unanalyzed	
 006a1580	FUN_006a1580	.text	63		clean	unknown		unanalyzed	
-006a15c0	FUN_006a15c0	.text	128		clean	unknown		unanalyzed	
-006a1640	FUN_006a1640	.text	92		clean	unknown		unanalyzed	
-006a16a0	FUN_006a16a0	.text	35		clean	unknown		unanalyzed	
-006a16d0	FUN_006a16d0	.text	67		clean	unknown		unanalyzed	
-006a1720	FUN_006a1720	.text	80		clean	unknown		unanalyzed	
-006a1770	FUN_006a1770	.text	71		clean	unknown		unanalyzed	
-006a17c0	FUN_006a17c0	.text	47		clean	unknown		unanalyzed	
-006a17f0	FUN_006a17f0	.text	48		clean	unknown		unanalyzed	
-006a1820	FUN_006a1820	.text	45		clean	unknown		unanalyzed	
+006a15c0	FUN_006a15c0	.text	128		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft key search. Two callers, neither is a class-name vtable slot.
+006a1640	FUN_006a1640	.text	92		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. 00C1F1DC slot 0. That vtable's slot 2 is not a class-name return, so the secondary install was not used as an anchor.
+006a16a0	FUN_006a16a0	.text	35		clean	gamelogic	recon/obj6a	reversed	weaponSetCallSlot1C. 00C1F320 slot 1. Slot 2 of 00C1F320 is 007194B0, which returns the class-name string WeaponSetUpdate at 00C1F378. The function at 00743F50 writes this vtable at 00743F66 after call 004D6790.
+006a16d0	FUN_006a16d0	.text	67		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft slot-0x30 dispatch. Its only caller is not a class-name vtable slot.
+006a1720	FUN_006a1720	.text	80		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft tag search. Callers were not reduced to one named class with a matched write set.
+006a1770	FUN_006a1770	.text	71		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft tag search. Same unfinished caller chain as 006A1720.
+006a17c0	FUN_006a17c0	.text	47		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft active-weapon scan. No direct call site; the draft tail-call claim was not oracle-matched.
+006a17f0	FUN_006a17f0	.text	48		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft positive-tag scan. Not given a single named-class anchor.
+006a1820	FUN_006a1820	.text	45		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft tag scan. Callers are outside the named-slot closure used for this batch.
 006a1850	FUN_006a1850	.text	55		inner-patched	unknown		unanalyzed	
-006a18a0	FUN_006a18a0	.text	62		clean	unknown		unanalyzed	
-006a18e0	FUN_006a18e0	.text	73		clean	unknown		unanalyzed	
-006a1930	FUN_006a1930	.text	172		clean	unknown		unanalyzed	
-006a19e0	FUN_006a19e0	.text	46		clean	unknown		unanalyzed	
-006a1a10	FUN_006a1a10	.text	62		clean	unknown		unanalyzed	
-006a1a50	FUN_006a1a50	.text	46		clean	unknown		unanalyzed	
-006a1a80	FUN_006a1a80	.text	30		clean	unknown		unanalyzed	
-006a1aa0	FUN_006a1aa0	.text	77		clean	unknown		unanalyzed	
+006a18a0	FUN_006a18a0	.text	62		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft reload query. Calls 007D2120; the draft result model was not matched.
+006a18e0	FUN_006a18e0	.text	73		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft target-id scan. Single caller is not a class-name vtable slot.
+006a1930	FUN_006a1930	.text	172		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft slot-0x34 dispatch. Not reduced to one named class.
+006a19e0	FUN_006a19e0	.text	46		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft ready-slot scan. Not a class-name vtable slot.
+006a1a10	FUN_006a1a10	.text	62		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft target update. Calls 007DCAA0 and 007DF660; not matched.
+006a1a50	FUN_006a1a50	.text	46		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft field clear. Calls 0079C0F0; not matched.
+006a1a80	FUN_006a1a80	.text	30		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Deleting destructor of AudioLoopUpgrade. Calls 004166B0. Not counted.
+006a1aa0	FUN_006a1aa0	.text	77		clean	gamelogic	recon/obj6a	reversed	audioLoopUpgradeXfer. 00BF9318 slot 3. Slot 2 of 00BF9318 returns the class-name string AudioLoopUpgrade.
 006a1af0	FUN_006a1af0	.text	63		clean	unknown		unanalyzed	
 006a1b30	FUN_006a1b30	.text	32		clean	unknown		unanalyzed	
 006a1b50	FUN_006a1b50	.text	63		clean	unknown		unanalyzed	
@@ -13012,7 +13012,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a1be0	FUN_006a1be0	.text	60		clean	unknown		unanalyzed	
 006a1c20	FUN_006a1c20	.text	35		clean	unknown		unanalyzed	
 006a1c50	FUN_006a1c50	.text	43		clean	unknown		unanalyzed	
-006a1c80	FUN_006a1c80	.text	47		clean	unknown		unanalyzed	
+006a1c80	FUN_006a1c80	.text	47		clean	gamelogic	recon/obj6a	reversed	techUpgradeXfer. 00C10AA0 slot 3. Slot 2 of 00C10AA0 returns the class-name string TechUpgrade.
 006a1cb0	FUN_006a1cb0	.text	85		clean	unknown		unanalyzed	
 006a1d10	FUN_006a1d10	.text	55		clean	unknown		unanalyzed	
 006a1d50	FUN_006a1d50	.text	106		clean	unknown		unanalyzed	
@@ -13029,12 +13029,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a2170	thunk_FUN_0040a901	.text	5		clean	unknown		unanalyzed	
 006a2175	FUN_006a2175	.text	129		clean	unknown		unanalyzed	
 006a2200	FUN_006a2200	.text	30		clean	unknown		unanalyzed	
-006a2220	FUN_006a2220	.text	110		clean	unknown		unanalyzed	
+006a2220	FUN_006a2220	.text	110		clean	gamelogic	recon/obj6a	reversed	techUpgradeReceiverXfer. 00BF9580 slot 3. Slot 2 of 00BF9580 returns the class-name string TechUpgradeReceiver.
 006a2290	FUN_006a2290	.text	106		clean	unknown		unanalyzed	
 006a2300	FUN_006a2300	.text	94		clean	unknown		unanalyzed	
 006a2360	FUN_006a2360	.text	6		clean	unknown		unanalyzed	
 006a2370	FUN_006a2370	.text	47		clean	unknown		unanalyzed	
-006a23a0	FUN_006a23a0	.text	56		clean	unknown		unanalyzed	
+006a23a0	FUN_006a23a0	.text	56		clean	gamelogic	recon/obj6a	reversed	encloseContainsId. 00C08A48 slot 30. Slot 2 of 00C08A48 returns the class-name string EncloseBehavior. The same body is also installed on other named vtables and is counted once.
 006a23e0	FUN_006a23e0	.text	31		clean	unknown		unanalyzed	
 006a2400	FUN_006a2400	.text	46		clean	unknown		unanalyzed	
 006a2430	FUN_006a2430	.text	16		clean	unknown		unanalyzed	
@@ -13054,7 +13054,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a2ab0	FUN_006a2ab0	.text	139	SageEngine\source\GameEngine\gamelogic\object\Weapon\WeaponStateMachine.cpp	clean	gamelogic		unanalyzed	
 006a2b40	FUN_006a2b40	.text	137		clean	unknown		unanalyzed	
 006a2bd0	FUN_006a2bd0	.text	203		clean	unknown		unanalyzed	
-006a2ca0	FUN_006a2ca0	.text	36		clean	unknown		unanalyzed	
+006a2ca0	FUN_006a2ca0	.text	36		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. WeaponFireState slot 0 writes a base vtable and frees. Destructor, not counted.
 006a2cd0	FUN_006a2cd0	.text	31		clean	unknown		unanalyzed	
 006a2cf0	FUN_006a2cf0	.text	49		clean	unknown		unanalyzed	
 006a2d30	FUN_006a2d30	.text	136		clean	unknown		unanalyzed	
@@ -13084,20 +13084,20 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a3a30	FUN_006a3a30	.text	82		clean	unknown		unanalyzed	
 006a3a90	FUN_006a3a90	.text	205		clean	unknown		unanalyzed	
 006a3b60	FUN_006a3b60	.text	31		clean	unknown		unanalyzed	
-006a3b80	FUN_006a3b80	.text	69		clean	unknown		unanalyzed	
-006a3bd0	FUN_006a3bd0	.text	24		clean	unknown		unanalyzed	
-006a3bf0	FUN_006a3bf0	.text	57		clean	unknown		unanalyzed	
-006a3c30	FUN_006a3c30	.text	22		clean	unknown		unanalyzed	
+006a3b80	FUN_006a3b80	.text	69		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft id search. No class-name vtable slot.
+006a3bd0	FUN_006a3bd0	.text	24		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft first-id read. No class-name vtable slot.
+006a3bf0	FUN_006a3bf0	.text	57		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft scale lookup. No class-name vtable slot.
+006a3c30	FUN_006a3c30	.text	22		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft null-tracker wrapper. No class-name vtable slot.
 006a3c50	FUN_006a3c50	.text	186		clean	unknown		unanalyzed	
 006a3d10	FUN_006a3d10	.text	183		clean	unknown		unanalyzed	
 006a3e00	FUN_006a3e00	.text	6		clean	unknown		unanalyzed	
-006a3e10	FUN_006a3e10	.text	59		clean	unknown		unanalyzed	
+006a3e10	FUN_006a3e10	.text	59		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. ExperienceTrackerObject slot 0 writes a vtable and frees. Destructor, not counted.
 006a3e50	FUN_006a3e50	.text	9		inner-patched	unknown		unanalyzed	
-006a3e90	FUN_006a3e90	.text	76		clean	unknown		unanalyzed	
+006a3e90	FUN_006a3e90	.text	76		clean	gamelogic	recon/obj6a	reversed	experienceTrackerObjectXfer. 00C07BA4 slot 3. Slot 2 of 00C07BA4 returns the class-name string ExperienceTrackerObject.
 006a3ee0	FUN_006a3ee0	.text	231		clean	unknown		unanalyzed	
 006a3fd0	FUN_006a3fd0	.text	348		clean	unknown		unanalyzed	
-006a4130	FUN_006a4130	.text	68		clean	unknown		unanalyzed	
-006a4180	FUN_006a4180	.text	65		clean	unknown		unanalyzed	
+006a4130	FUN_006a4130	.text	68		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft contained-state predicate. Caller 00769C00 has no class-name slot.
+006a4180	FUN_006a4180	.text	65		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft vision copy. Same unanchored caller as 006A4130.
 006a41d0	FUN_006a41d0	.text	6		clean	unknown		unanalyzed	
 006a41e0	FUN_006a41e0	.text	108		clean	unknown		unanalyzed	
 006a4250	FUN_006a4250	.text	103		clean	unknown		unanalyzed	
@@ -13107,7 +13107,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a43c0	FUN_006a43c0	.text	25		clean	unknown		unanalyzed	
 006a43e0	FUN_006a43e0	.text	31		clean	unknown		unanalyzed	
 006a4400	FUN_006a4400	.text	163		clean	unknown		unanalyzed	
-006a44b0	FUN_006a44b0	.text	47		clean	unknown		unanalyzed	
+006a44b0	FUN_006a44b0	.text	47		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Locomotor slot 0 writes a base vtable and frees. Destructor, not counted.
 006a44e0	FUN_006a44e0	.text	19		clean	unknown		unanalyzed	
 006a4500	FUN_006a4500	.text	55		clean	unknown		unanalyzed	
 006a4540	FUN_006a4540	.text	467		clean	unknown		unanalyzed	
@@ -13120,77 +13120,77 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a49c0	FUN_006a49c0	.text	271		clean	unknown		unanalyzed	
 006a4ad0	FUN_006a4ad0	.text	282		clean	unknown		unanalyzed	
 006a4bf0	FUN_006a4bf0	.text	245		clean	unknown		unanalyzed	
-006a4cf0	FUN_006a4cf0	.text	44		clean	unknown		unanalyzed	
+006a4cf0	FUN_006a4cf0	.text	44		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft mask scan. No class-name vtable slot.
 006a4d20	FUN_006a4d20	.text	107		clean	unknown		unanalyzed	
 006a4d90	FUN_006a4d90	.text	12		inner-patched	unknown		unanalyzed	
-006a4e70	FUN_006a4e70	.text	43		clean	unknown		unanalyzed	
+006a4e70	FUN_006a4e70	.text	43		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft mobility predicate. No class-name vtable slot.
 006a4ea0	FUN_006a4ea0	.text	38		clean	unknown		unanalyzed	
-006a4ed0	FUN_006a4ed0	.text	77		clean	unknown		unanalyzed	
-006a4f20	FUN_006a4f20	.text	55		clean	unknown		unanalyzed	
-006a4f60	FUN_006a4f60	.text	18		clean	unknown		unanalyzed	
+006a4ed0	FUN_006a4ed0	.text	77		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft crush predicate. No single named-class anchor.
+006a4f20	FUN_006a4f20	.text	55		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft weapon-ignore predicate. Not oracle-matched.
+006a4f60	FUN_006a4f60	.text	18		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft tail jump into 006A19E0. 006A19E0 is deferred.
 006a4f80	FUN_006a4f80	.text	42		clean	unknown	recon/hookcat	reversed	hook candidate: 事件码为 0x16A 时按布尔参数派发 +1/-1
-006a4fb0	FUN_006a4fb0	.text	117		clean	unknown		unanalyzed	
-006a5030	FUN_006a5030	.text	36		clean	unknown		unanalyzed	
-006a5060	FUN_006a5060	.text	132		clean	unknown		unanalyzed	
-006a50f0	FUN_006a50f0	.text	161		clean	unknown		unanalyzed	
+006a4fb0	FUN_006a4fb0	.text	117		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft dirty-list link. Writes a global and was not matched.
+006a5030	FUN_006a5030	.text	36		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft bit test. No class-name vtable slot.
+006a5060	FUN_006a5060	.text	132		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft status update. Calls 00522880 and 004D5B10; not matched.
+006a50f0	FUN_006a50f0	.text	161		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft status assign. Not matched.
 006a51a0	FUN_006a51a0	.text	16		entry-recoverable	unknown		unanalyzed	
-006a51c0	FUN_006a51c0	.text	44		clean	unknown		unanalyzed	
-006a51f0	FUN_006a51f0	.text	18		clean	unknown		unanalyzed	
+006a51c0	FUN_006a51c0	.text	44		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft weapon lookup wrapper around deferred 006A1770 and 006A1720.
+006a51f0	FUN_006a51f0	.text	18		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft tail jump into deferred 006A17C0.
 006a5210	FUN_006a5210	.text	44		clean	unknown		unanalyzed	
-006a5240	FUN_006a5240	.text	41		clean	unknown		unanalyzed	
-006a5270	FUN_006a5270	.text	44		clean	unknown		unanalyzed	
-006a52a0	FUN_006a52a0	.text	31		clean	unknown		unanalyzed	
-006a52c0	FUN_006a52c0	.text	91		clean	unknown		unanalyzed	
-006a5320	FUN_006a5320	.text	69		clean	unknown		unanalyzed	
+006a5240	FUN_006a5240	.text	41		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft interact predicate. No class-name vtable slot.
+006a5270	FUN_006a5270	.text	44		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft airborne predicate. No class-name vtable slot.
+006a52a0	FUN_006a52a0	.text	31		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft falling predicate. No class-name vtable slot.
+006a52c0	FUN_006a52c0	.text	91		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft crushable predicate. No class-name vtable slot.
+006a5320	FUN_006a5320	.text	69		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft id-list scan. No class-name vtable slot.
 006a5370	FUN_006a5370	.text	129		clean	unknown		unanalyzed	
 006a5400	FUN_006a5400	.text	67		clean	unknown		unanalyzed	
-006a5450	FUN_006a5450	.text	114		clean	unknown		unanalyzed	
+006a5450	FUN_006a5450	.text	114		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft producer id store. Not matched.
 006a54d0	FUN_006a54d0	.text	37		clean	unknown	recon/hookcat	reversed	hook candidate: 从状态位或对象身份关系计算状态码
 006a5500	FUN_006a5500	.text	42		clean	unknown		unanalyzed	
-006a5530	FUN_006a5530	.text	93		clean	unknown		unanalyzed	
-006a5590	FUN_006a5590	.text	93		clean	unknown		unanalyzed	
+006a5530	FUN_006a5530	.text	93		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft visibility read. Not matched.
+006a5590	FUN_006a5590	.text	93		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft visibility read. Not matched.
 006a55f0	thunk_FUN_01957ac0	.text	6		entry-recoverable	unknown		unanalyzed	
 006a56a0	FUN_006a56a0	.text	76		clean	unknown		unanalyzed	
-006a56f0	FUN_006a56f0	.text	96		clean	unknown		unanalyzed	
-006a5750	FUN_006a5750	.text	66		clean	unknown		unanalyzed	
+006a56f0	FUN_006a56f0	.text	96		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft disabled-type propagate. No class-name vtable slot.
+006a5750	FUN_006a5750	.text	66		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft disabled-until read. Not matched.
 006a57a0	FUN_006a57a0	.text	87		clean	unknown		unanalyzed	
 006a5800	FUN_006a5800	.text	13		clean	unknown		unanalyzed	
-006a5810	FUN_006a5810	.text	124		clean	unknown		unanalyzed	
-006a5890	FUN_006a5890	.text	110		clean	unknown		unanalyzed	
+006a5810	FUN_006a5810	.text	124		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft slot-table compact. No class-name vtable slot.
+006a5890	FUN_006a5890	.text	110		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft slot-table remove. No class-name vtable slot.
 006a5900	FUN_006a5900	.text	340		clean	unknown		unanalyzed	
-006a5a60	FUN_006a5a60	.text	66		clean	unknown		unanalyzed	
+006a5a60	FUN_006a5a60	.text	66		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft command gate. No class-name vtable slot.
 006a5ab0	thunk_FUN_01953f10	.text	6		entry-lost	unknown		unanalyzed	
-006a5b10	FUN_006a5b10	.text	88		clean	unknown		unanalyzed	
-006a5b70	FUN_006a5b70	.text	66		clean	unknown		unanalyzed	
-006a5bc0	FUN_006a5bc0	.text	48		clean	unknown		unanalyzed	
+006a5b10	FUN_006a5b10	.text	88		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft recent-flag scan. No class-name vtable slot.
+006a5b70	FUN_006a5b70	.text	66		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft active-entry scan. No class-name vtable slot.
+006a5bc0	FUN_006a5bc0	.text	48		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. 00C27558 slot 0 reads terrain through 00DFC190. Slot 2 of 00C27558 is not a class-name return.
 006a5bf0	FUN_006a5bf0	.text	59		clean	unknown		unanalyzed	
 006a5c30	FUN_006a5c30	.text	134		clean	unknown		unanalyzed	
 006a5cc0	FUN_006a5cc0	.text	655		clean	unknown		unanalyzed	
-006a5f50	FUN_006a5f50	.text	78		clean	unknown		unanalyzed	
+006a5f50	FUN_006a5f50	.text	78		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft selectability predicate. The adjustor 006A78F0 jumps here, but 00C274B0 slot 2 is not a class-name return.
 006a5fa0	FUN_006a5fa0	.text	9		inner-patched	unknown		unanalyzed	
 006a6060	FUN_006a6060	.text	10		clean	unknown		unanalyzed	
-006a60a0	FUN_006a60a0	.text	163		clean	unknown		unanalyzed	
+006a60a0	FUN_006a60a0	.text	163		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft body-module swap. Not matched.
 006a6150	FUN_006a6150	.text	90		clean	unknown		unanalyzed	
 006a61b0	FUN_006a61b0	.text	84		clean	unknown		unanalyzed	
-006a6210	FUN_006a6210	.text	64		clean	unknown		unanalyzed	
-006a6250	FUN_006a6250	.text	47		clean	unknown		unanalyzed	
-006a6280	FUN_006a6280	.text	52		clean	unknown		unanalyzed	
+006a6210	FUN_006a6210	.text	64		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft reload wrapper. Not matched.
+006a6250	FUN_006a6250	.text	47		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft target clear. Not matched.
+006a6280	FUN_006a6280	.text	52		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft construction predicate. Call site is not inside a ledger function.
 006a62c0	FUN_006a62c0	.text	411		clean	unknown		unanalyzed	
 006a6460	FUN_006a6460	.text	35		inner-patched	unknown		unanalyzed	
-006a6510	FUN_006a6510	.text	196		clean	unknown		unanalyzed	
-006a65e0	FUN_006a65e0	.text	214		clean	unknown		unanalyzed	
+006a6510	FUN_006a6510	.text	196		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft vision range. x87 altitude formula was not matched.
+006a65e0	FUN_006a65e0	.text	214		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft shroud range. x87 formula was not matched.
 006a66c0	FUN_006a66c0	.text	167		clean	unknown		unanalyzed	
-006a6770	FUN_006a6770	.text	54		clean	unknown		unanalyzed	
+006a6770	FUN_006a6770	.text	54		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft formation value. No class-name vtable slot.
 006a67b0	FUN_006a67b0	.text	57		clean	unknown		unanalyzed	
 006a67f0	FUN_006a67f0	.text	37		clean	unknown		unanalyzed	
 006a6820	FUN_006a6820	.text	187		clean	unknown		unanalyzed	
-006a68e0	FUN_006a68e0	.text	107		clean	unknown		unanalyzed	
+006a68e0	FUN_006a68e0	.text	107		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. 00C27514 slot 6. Slot 2 of 00C27514 is not a class-name return.
 006a6950	FUN_006a6950	.text	220		clean	unknown		unanalyzed	
 006a6a30	FUN_006a6a30	.text	222		clean	unknown		unanalyzed	
-006a6b10	FUN_006a6b10	.text	219		clean	unknown		unanalyzed	
+006a6b10	FUN_006a6b10	.text	219		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. 00C274EC slot 5. Slot 2 of 00C274EC is not a class-name return.
 006a6bf0	FUN_006a6bf0	.text	18		clean	unknown		unanalyzed	
-006a6c10	FUN_006a6c10	.text	99		clean	unknown		unanalyzed	
-006a6c80	FUN_006a6c80	.text	42		clean	unknown		unanalyzed	
+006a6c10	FUN_006a6c10	.text	99		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. 00C274EC slot 9. Same unanchored vtable as 006A6B10.
+006a6c80	FUN_006a6c80	.text	42		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft transform read. No class-name vtable slot.
 006a6cb0	FUN_006a6cb0	.text	270		clean	unknown		unanalyzed	
 006a6dc0	FUN_006a6dc0	.text	7		inner-patched	unknown		unanalyzed	
 006a6f60	FUN_006a6f60	.text	13		clean	unknown		unanalyzed	
@@ -13200,29 +13200,29 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006a70a0	FUN_006a70a0	.text	78		clean	unknown		unanalyzed	
 006a70f0	FUN_006a70f0	.text	83		clean	unknown		unanalyzed	
 006a7150	FUN_006a7150	.text	68		clean	unknown		unanalyzed	
-006a71a0	FUN_006a71a0	.text	29		clean	unknown		unanalyzed	
+006a71a0	FUN_006a71a0	.text	29		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft bit predicate. No class-name vtable slot.
 006a71c0	FUN_006a71c0	.text	9		inner-patched	unknown		unanalyzed	
 006a7280	FUN_006a7280	.text	20		clean	unknown		unanalyzed	
-006a72a0	FUN_006a72a0	.text	246		clean	unknown		unanalyzed	
-006a73a0	FUN_006a73a0	.text	63		clean	unknown		unanalyzed	
+006a72a0	FUN_006a72a0	.text	246		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft matrix multiply. Not matched.
+006a73a0	FUN_006a73a0	.text	63		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft module-id scan. Not matched.
 006a73e0	FUN_006a73e0	.text	58		clean	unknown		unanalyzed	
 006a7420	FUN_006a7420	.text	117		clean	unknown		unanalyzed	
 006a74a0	FUN_006a74a0	.text	100		clean	unknown		unanalyzed	
-006a7510	FUN_006a7510	.text	35		clean	unknown		unanalyzed	
-006a7540	FUN_006a7540	.text	29		clean	unknown		unanalyzed	
-006a7560	FUN_006a7560	.text	55		clean	unknown		unanalyzed	
-006a75a0	FUN_006a75a0	.text	93		clean	unknown		unanalyzed	
+006a7510	FUN_006a7510	.text	35		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft tri-state. Not given a named-class method name beyond the bit test.
+006a7540	FUN_006a7540	.text	29		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft status bit test. No class-name vtable slot.
+006a7560	FUN_006a7560	.text	55		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft tri-state validity. No class-name vtable slot.
+006a75a0	FUN_006a75a0	.text	93		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft crush composite. No class-name vtable slot.
 006a7600	thunk_FUN_01956460	.text	6		entry-recoverable	unknown		unanalyzed	
-006a7620	FUN_006a7620	.text	122		clean	unknown		unanalyzed	
+006a7620	FUN_006a7620	.text	122		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft module search. No class-name vtable slot.
 006a76a0	FUN_006a76a0	.text	216		clean	unknown		unanalyzed	
-006a7780	FUN_006a7780	.text	108		clean	unknown		unanalyzed	
+006a7780	FUN_006a7780	.text	108		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft dirty-list flush. Not matched.
 006a77f0	FUN_006a77f0	.text	183		clean	unknown		unanalyzed	
 006a78b0	FUN_006a78b0	.text	20		clean	unknown		unanalyzed	
-006a78d0	FUN_006a78d0	.text	32		clean	unknown		unanalyzed	
+006a78d0	FUN_006a78d0	.text	32		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. 00C274B0 slot 1. Slot 2 of 00C274B0 is not a class-name return.
 006a78f0	FUN_006a78f0	.text	8		clean	unknown		unanalyzed	
-006a7900	FUN_006a7900	.text	40		clean	unknown		unanalyzed	
-006a7930	FUN_006a7930	.text	61		clean	unknown		unanalyzed	
-006a7970	FUN_006a7970	.text	102		clean	unknown		unanalyzed	
+006a7900	FUN_006a7900	.text	40		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. 00C274B0 slot 13. Same unanchored vtable as 006A78D0.
+006a7930	FUN_006a7930	.text	61		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft global mask test. No class-name vtable slot.
+006a7970	FUN_006a7970	.text	102		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft behind-target test. Calls 0078BFB0 and was not matched.
 006a79e0	FUN_006a79e0	.text	121	SageEngine\source\GameEngine\gamelogic\object\ObjectCreationList.cpp	clean	gamelogic		unanalyzed	
 006a7a60	FUN_006a7a60	.text	82		clean	unknown		unanalyzed	
 006a7a7b	FUN_006a7a7b	.text	36	SageEngine\source\GameEngine\gamelogic\object\ObjectCreationList.cpp	clean	gamelogic		unanalyzed	
@@ -13370,17 +13370,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006abae0	FUN_006abae0	.text	50		clean	unknown		unanalyzed	
 006abb20	FUN_006abb20	.text	7		inner-patched	unknown		unanalyzed	
 006abbb0	FUN_006abbb0	.text	68		clean	unknown		unanalyzed	
-006abc00	FUN_006abc00	.text	173		clean	unknown		unanalyzed	
+006abc00	FUN_006abc00	.text	173		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft status transition. Not matched.
 006abcb0	FUN_006abcb0	.text	42		clean	math	recon/ports2	reversed	squared distance from object Vector3 at +0x38, full 80-bit ST0 under caller CW; ra3::math::squaredDistanceFromOffset38Extended; oracle 2014/2014 at CW 007f/027f/037f Debug+Release; NaN payload emulator-unreliable
-006abce0	FUN_006abce0	.text	37		clean	unknown		unanalyzed	
+006abce0	FUN_006abce0	.text	37		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Draft distance squared. Call sites are not inside ledger functions.
 006abd10	FUN_006abd10	.text	49		clean	unknown		unanalyzed	
 006abd50	FUN_006abd50	.text	866		clean	unknown		unanalyzed	
 006ac0c0	FUN_006ac0c0	.text	68		clean	unknown		unanalyzed	
-006ac110	FUN_006ac110	.text	51		clean	unknown		unanalyzed	
+006ac110	FUN_006ac110	.text	51		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. AreaRestrictSpecialPowerBehavior 00BF64E0 slot 1. Reads global 00DFC190. Not matched.
 006ac190	FUN_006ac190	.text	6		clean	unknown		unanalyzed	
 006ac1a0	FUN_006ac1a0	.text	47		clean	unknown		unanalyzed	
 006ac220	FUN_006ac220	.text	6		clean	unknown		unanalyzed	
-006ac230	FUN_006ac230	.text	47		clean	unknown		unanalyzed	
+006ac230	FUN_006ac230	.text	47		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. NameKey cache for AutoAbilityBehavior. Same 47-byte cache shape, not counted.
 006ac260	FUN_006ac260	.text	16		clean	unknown		unanalyzed	
 006ac270	FUN_006ac270	.text	53		clean	unknown		unanalyzed	
 006ac2b0	FUN_006ac2b0	.text	317		clean	unknown		unanalyzed	
@@ -13389,7 +13389,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006ac5b0	FUN_006ac5b0	.text	29		clean	unknown		unanalyzed	
 006ac5d0	FUN_006ac5d0	.text	64		clean	unknown		unanalyzed	
 006ac670	FUN_006ac670	.text	6		clean	unknown		unanalyzed	
-006ac680	FUN_006ac680	.text	47		clean	unknown		unanalyzed	
+006ac680	FUN_006ac680	.text	47		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. NameKey cache for BeamTargetModule. Not counted.
 006ac6b0	FUN_006ac6b0	.text	88		clean	unknown		unanalyzed	
 006ac710	FUN_006ac710	.text	16		clean	unknown		unanalyzed	
 006ac720	FUN_006ac720	.text	1146	SageEngine\source\GameEngine\gamelogic\object\Behavior\BezierProjectileBehavior.cpp	clean	gamelogic		unanalyzed	
@@ -13417,7 +13417,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006ad8a0	FUN_006ad8a0	.text	16		clean	unknown		unanalyzed	
 006ad8b0	FUN_006ad8b0	.text	272		clean	unknown		unanalyzed	
 006ad9c0	thunk_FUN_006ad8b0	.text	5		clean	unknown		unanalyzed	
-006ada40	FUN_006ada40	.text	30		clean	unknown		unanalyzed	
+006ada40	FUN_006ada40	.text	30		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Deleting destructor of HelicopterSlowDeathBehavior. Calls 004166B0. Not counted.
 006ada60	FUN_006ada60	.text	163		clean	unknown		unanalyzed	
 006adb10	FUN_006adb10	.text	88		clean	unknown		unanalyzed	
 006adb70	FUN_006adb70	.text	25		clean	unknown		unanalyzed	
@@ -13459,7 +13459,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006aecd0	FUN_006aecd0	.text	6		clean	unknown		unanalyzed	
 006aece0	FUN_006aece0	.text	47		clean	unknown		unanalyzed	
 006aed10	FUN_006aed10	.text	64		clean	unknown		unanalyzed	
-006aed50	FUN_006aed50	.text	47		clean	unknown		unanalyzed	
+006aed50	FUN_006aed50	.text	47		clean	gamelogic	recon/obj6a	reversed	clearanceSlowDeathXfer. 00C1AC90 slot 3. Slot 2 of 00C1AC90 returns the class-name string ClearanceTestingSlowDeathBehavior.
 006aed80	FUN_006aed80	.text	220		clean	unknown		unanalyzed	
 006aee60	FUN_006aee60	.text	36		inner-patched	unknown		unanalyzed	
 006aeee0	FUN_006aeee0	.text	115		clean	unknown		unanalyzed	
@@ -13494,7 +13494,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006afc60	FUN_006afc60	.text	6		clean	unknown		unanalyzed	
 006afc70	FUN_006afc70	.text	47		clean	unknown		unanalyzed	
 006afca0	FUN_006afca0	.text	10		clean	unknown		unanalyzed	
-006afcb0	FUN_006afcb0	.text	103		clean	unknown		unanalyzed	
+006afcb0	FUN_006afcb0	.text	103		clean	gamelogic	recon/obj6a	reversed	veterancyCrateCanPass. 00C1A4E0 slot 22. Slot 2 of 00C1A4E0 returns the class-name string VeterancyCrateCollide.
 006afdb0	FUN_006afdb0	.text	19		clean	unknown		unanalyzed	
 006afe70	FUN_006afe70	.text	6		clean	unknown		unanalyzed	
 006afe80	FUN_006afe80	.text	47		clean	unknown		unanalyzed	
@@ -13532,7 +13532,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b1290	FUN_006b1290	.text	23		clean	unknown		unanalyzed	
 006b12b0	FUN_006b12b0	.text	46		clean	unknown		unanalyzed	
 006b12e0	FUN_006b12e0	.text	269		clean	unknown		unanalyzed	
-006b13f0	FUN_006b13f0	.text	26		clean	unknown		unanalyzed	
+006b13f0	FUN_006b13f0	.text	26		clean	gamelogic	recon/obj6a	reversed	slaughterContainedFlag. 00C22E28 slot 32. Slot 2 of 00C22E28 returns the class-name string SlaughterHordeContain.
 006b1480	FUN_006b1480	.text	6		clean	unknown		unanalyzed	
 006b1490	FUN_006b1490	.text	47		clean	unknown		unanalyzed	
 006b14c0	FUN_006b14c0	.text	8		clean	unknown		unanalyzed	
@@ -13570,7 +13570,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b2a30	FUN_006b2a30	.text	9		inner-patched	unknown		unanalyzed	
 006b2ab0	FUN_006b2ab0	.text	72		clean	unknown		unanalyzed	
 006b2b00	FUN_006b2b00	.text	8		clean	unknown		unanalyzed	
-006b2b10	FUN_006b2b10	.text	123		clean	unknown		unanalyzed	
+006b2b10	FUN_006b2b10	.text	123		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. TunnelContain 00C23A98 slot 10. Global and virtual tail were not matched.
 006b2be0	FUN_006b2be0	.text	6		clean	unknown		unanalyzed	
 006b2bf0	FUN_006b2bf0	.text	47		clean	unknown		unanalyzed	
 006b2c80	FUN_006b2c80	.text	6		clean	unknown		unanalyzed	
@@ -13604,7 +13604,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b3600	FUN_006b3600	.text	91		clean	unknown		unanalyzed	
 006b3660	FUN_006b3660	.text	286		clean	gamelogic	recon/behavior6b	reversed	specialAbilityDamageBucket; native event-band callback differential and mutation
 006b3780	FUN_006b3780	.text	52		clean	unknown		unanalyzed	
-006b37c0	FUN_006b37c0	.text	84		clean	unknown		unanalyzed	
+006b37c0	FUN_006b37c0	.text	84		clean	gamelogic	recon/obj6a	reversed	createAndEnterXfer. 00C1A7D8 slot 3. Slot 2 of 00C1A7D8 returns the class-name string CreateAndEnterObjectSpecialPower.
 006b3820	FUN_006b3820	.text	157		clean	gamelogic	recon/behavior6b	reversed	updateDisabledStatus; native inactive-path ABI differential and mutation
 006b38c0	FUN_006b38c0	.text	84		clean	unknown		unanalyzed	
 006b3920	FUN_006b3920	.text	83		clean	unknown		unanalyzed	
@@ -13644,11 +13644,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b4eb0	FUN_006b4eb0	.text	208	SageEngine\source\GameEngine\gamelogic\object\SpecialPower\WeaponFireSpecialAbilityUpdate.cpp	clean	gamelogic	recon/behavior6b	reversed	applyWeaponFireRadius; native output-write differential and mutation
 006b4f80	FUN_006b4f80	.text	19		inner-patched	unknown		unanalyzed	
 006b4fe0	FUN_006b4fe0	.text	110		clean	unknown		unanalyzed	
-006b5050	FUN_006b5050	.text	67		clean	unknown		unanalyzed	
-006b50a0	FUN_006b50a0	.text	54		clean	unknown		unanalyzed	
-006b50e0	FUN_006b50e0	.text	67		clean	unknown		unanalyzed	
-006b5130	FUN_006b5130	.text	57		clean	unknown		unanalyzed	
-006b5170	FUN_006b5170	.text	67		clean	unknown		unanalyzed	
+006b5050	FUN_006b5050	.text	67		clean	gamelogic	recon/obj6a	reversed	dozerPickXfer. 00BF7D60 slot 3. Slot 2 of 00BF7D60 returns the class-name string DozerActionPickActionPosState.
+006b50a0	FUN_006b50a0	.text	54		clean	gamelogic	recon/obj6a	reversed	dozerMoveToXfer. 00BF7DD0 slot 3. Slot 2 of 00BF7DD0 returns the class-name string DozerActionMoveToActionPosState.
+006b50e0	FUN_006b50e0	.text	67		clean	gamelogic	recon/obj6a	reversed	dozerDoXfer. 00BF7E40 slot 3. Slot 2 of 00BF7E40 returns the class-name string DozerActionDoActionState.
+006b5130	FUN_006b5130	.text	57		clean	gamelogic	recon/obj6a	reversed	dozerStateMachineXfer. 00BF7EA8 slot 3. Slot 2 of 00BF7EA8 returns the class-name string DozerActionStateMachine.
+006b5170	FUN_006b5170	.text	67		clean	gamelogic	recon/obj6a	reversed	dozerActionXfer. 00BF7F70 slot 3. Slot 2 of 00BF7F70 returns the class-name string DozerActionState.
 006b51c0	FUN_006b51c0	.text	71		clean	gamelogic	recon/behavior6b	reversed	clearDockObjectStatus; native status-write differential and mutation
 006b5210	FUN_006b5210	.text	66		clean	unknown		unanalyzed	
 006b5260	FUN_006b5260	.text	131		clean	unknown		unanalyzed	
@@ -13694,8 +13694,8 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b7040	FUN_006b7040	.text	11		inner-patched	unknown		unanalyzed	
 006b7100	FUN_006b7100	.text	547		clean	unknown		unanalyzed	
 006b7340	FUN_006b7340	.text	76		clean	gamelogic	recon/behavior6b	reversed	canSelectAlternateTarget; native empty-container differential and mutation
-006b7390	FUN_006b7390	.text	94		clean	unknown		unanalyzed	
-006b73f0	FUN_006b73f0	.text	96		clean	unknown		unanalyzed	
+006b7390	FUN_006b7390	.text	94		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. AIUpdateInterface 00C22118 slot 89. One path calls through a null pointer. Not matched.
+006b73f0	FUN_006b73f0	.text	96		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. AIUpdateInterface 00C22118 slot 164. Calls deferred 006A5060. Not matched.
 006b7450	FUN_006b7450	.text	252		clean	unknown		unanalyzed	
 006b7550	FUN_006b7550	.text	60		clean	unknown		unanalyzed	
 006b7590	FUN_006b7590	.text	257		clean	unknown		unanalyzed	
@@ -13703,7 +13703,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b7760	FUN_006b7760	.text	47		clean	unknown		unanalyzed	
 006b7790	FUN_006b7790	.text	57		clean	unknown		unanalyzed	
 006b77d0	FUN_006b77d0	.text	6		clean	unknown		unanalyzed	
-006b77e0	FUN_006b77e0	.text	47		clean	unknown		unanalyzed	
+006b77e0	FUN_006b77e0	.text	47		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. NameKey cache for AutoDepositUpdate. Not counted.
 006b7810	FUN_006b7810	.text	6		clean	unknown		unanalyzed	
 006b7820	FUN_006b7820	.text	47		clean	unknown		unanalyzed	
 006b7850	FUN_006b7850	.text	112		clean	gamelogic	recon/behavior6b	reversed	bombardRadius; native x87 float differential and mutation
@@ -13715,7 +13715,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b7a70	FUN_006b7a70	.text	47		clean	unknown		unanalyzed	
 006b7aa0	FUN_006b7aa0	.text	6		clean	unknown		unanalyzed	
 006b7ab0	FUN_006b7ab0	.text	47		clean	unknown		unanalyzed	
-006b7ae0	FUN_006b7ae0	.text	30		clean	unknown		unanalyzed	
+006b7ae0	FUN_006b7ae0	.text	30		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Deleting destructor of FlammableUpdate. Calls 004166B0. Not counted.
 006b7b00	FUN_006b7b00	.text	155		clean	gamelogic	recon/behavior6b	reversed	initializeFireWeaponState; native copy/status/write differential and mutation
 006b7ba0	FUN_006b7ba0	.text	462		clean	unknown		unanalyzed	
 006b7d70	FUN_006b7d70	.text	16		clean	gamelogic	recon/behavior6b	reversed	invalidTargetsDeathFlags; native EAX/write differential and explicitOnly hook
@@ -13761,7 +13761,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006b97b0	FUN_006b97b0	.text	6		clean	unknown		unanalyzed	
 006b97c0	FUN_006b97c0	.text	47		clean	unknown		unanalyzed	
 006b97f0	FUN_006b97f0	.text	57		clean	unknown		unanalyzed	
-006b9830	FUN_006b9830	.text	30		clean	unknown		unanalyzed	
+006b9830	FUN_006b9830	.text	30		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Deleting destructor of RepairUpdate. Calls 004166B0. Not counted.
 006b9850	FUN_006b9850	.text	165		clean	unknown		unanalyzed	
 006b9900	FUN_006b9900	.text	54		clean	unknown		unanalyzed	
 006b9980	FUN_006b9980	.text	50		clean	unknown		unanalyzed	
@@ -13786,10 +13786,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006ba840	FUN_006ba840	.text	6		clean	unknown		unanalyzed	
 006ba850	FUN_006ba850	.text	47		clean	unknown		unanalyzed	
 006ba990	FUN_006ba990	.text	154		clean	unknown		unanalyzed	
-006baa30	FUN_006baa30	.text	207		clean	unknown		unanalyzed	
-006bab00	FUN_006bab00	.text	133		clean	unknown		unanalyzed	
+006baa30	FUN_006baa30	.text	207		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. StrafeAreaUpdate 00BF90F0 slot 24. 207-byte body was not reduced to a matched write set.
+006bab00	FUN_006bab00	.text	133		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. StrafeAreaUpdate 00BF90F0 slot 25. Null AI path dereferences EAX. Not matched.
 006bab90	FUN_006bab90	.text	475		clean	unknown		unanalyzed	
-006bad70	FUN_006bad70	.text	30		clean	unknown		unanalyzed	
+006bad70	FUN_006bad70	.text	30		clean	gamelogic	recon/obj6a	unanalyzed	Deferred. Deleting destructor of StructureUnpackUpdate. Calls 004166B0. Not counted.
 006bad90	FUN_006bad90	.text	219		clean	unknown		unanalyzed	
 006bae70	FUN_006bae70	.text	6		clean	unknown		unanalyzed	
 006bae80	FUN_006bae80	.text	47		clean	unknown		unanalyzed	
@@ -13851,7 +13851,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006bc2f0	FUN_006bc2f0	.text	294		clean	unknown		unanalyzed	
 006bc460	FUN_006bc460	.text	6		clean	unknown		unanalyzed	
 006bc470	FUN_006bc470	.text	47		clean	unknown		unanalyzed	
-006bc4a0	FUN_006bc4a0	.text	73		clean	unknown		unanalyzed	
+006bc4a0	FUN_006bc4a0	.text	73		clean	gamelogic	recon/obj6a	reversed	subObjectsUpgradeXfer. 00C1F4E8 slot 3. Slot 2 of 00C1F4E8 returns the class-name string SubObjectsUpgrade.
 006bc570	FUN_006bc570	.text	6		clean	unknown		unanalyzed	
 006bc580	FUN_006bc580	.text	47		clean	unknown		unanalyzed	
 006bc5b0	FUN_006bc5b0	.text	14		clean	unknown		unanalyzed	
