@@ -1,15 +1,15 @@
 # FXParticleSystem 更新、绘制、物理与发射速度模块重建 (`particles65`)
 
-本批次在已合并 `fxps` 批次（45 个函数）的基础上，继续重建 `ra3_1.0.game` 客户端区域 `0x0065E1E0-0x0066CE40` 中 53 个干净（`securom == clean`）的 `FXParticleSystem` 模块模板初始化/复制、粒子级生命周期初始化、每帧关键帧与物理更新、外向发射速度计算以及样条/矩阵几何辅助函数。
+本批次在已合并 `fxps` 批次（45 个函数）的基础上，继续重建 `ra3_1.0.game` 客户端区域 `0x0065E1E0-0x0066CE40` 中 50 个计数的干净（`securom == clean`）的 `FXParticleSystem` 模块模板初始化/复制、粒子级生命周期初始化、每帧关键帧与物理更新、外向发射速度计算以及样条/矩阵几何辅助函数。
 
 ## 归属证据与参考锚点
 
-1. **二进制内建源码路径锚点（Client Random 调试参数）**：
-   - `0x0066CD60`（`WindModule::initialize`）和 `0x0066CDE0`（`WindModule::createParticleModule`）向 `0x005A95A0`（`GetClientRandomValueReal`）传递源码路径常量 `0x00BF4BD4 = "gameclient\\system\\FXParticleSystem\\fxpswindmodule.cpp"`（行号 `96`、`178`、`180`）。
-   - `0x0066ABF0`（`FXParticle::initialize`）向 `0x005A95A0` 传递源码路径常量 `0x00BF4190 = "gameclient\\system\\FXParticleSystem\\FxpsGPUStorageModule.cpp"`（行号 `615`）。
-2. **模块工厂与虚表闭包**：
-   - `0x00673A50`（`FXParticleSystemTemplate::createModuleByTypeId`）按资产 `typeId` 派发各模块的模板构造、复制和运行时实例化入口。
-   - 各模板与运行时模块通过显式虚表指针绑定：`DefaultAlphaParticleModule`（`0x00BF3558`）、`DefaultColorModule`（`0x00BF3D6C`）、`DefaultColorParticleModule`（`0x00BF3588`）、`WindModuleTemplate`（`0x00BF3C20`）、`WindModule`（`0x00BF4BD0`）、`WindParticleModule`（`0x00BF4BFC`）、`UpdateModuleTemplate`（`0x00BF2CD0`）、`DefaultUpdateModuleTemplate`（`0x00BF2DE8`）、`DefaultUpdateParticleModule`（`0x00BF3F9C`）、`RenderObjectUpdateModuleTemplate`（`0x00BF3858`）、`RenderObjectParticleUpdateModule`（`0x00BF4418`）、`SwarmPhysicsParticleModule`（`0x00BF3154`）、`WavefrontEmissionVelocityModuleTemplate`（`0x00BF2A60`）、`TerrainFireEmissionModuleTemplate`（`0x00BF2FD0`）、`OutwardEmissionVelocityModule`（`0x00BF4AB0`）、`LightningDrawModuleTemplate`（`0x00BF38D0`）、`LightningDrawModule`（`0x00BF4240`）、`RenderObjectDrawModuleTemplate`（`0x00BF30E0`）、`LifeEventModule`（`0x00BF4214`）、`FXParticleBase`（`0x00BF3FD4`）、`FXParticle`（`0x00BF4170`）。
+逐函数的所有权证明写在 `particles65_annotations.tsv` 的 `ownership:` 字段，均可由二进制脚本复核：
+
+1. **模块 vtable 槽位（16 个）**：函数指针位于 `vtables_split.tsv` 所列 vtable 的槽位上，且该表 `slot[2]` 返回类名字符串，如 `0x00BF3558` -> `"DefaultAlphaParticleModule"`、`0x00BF3588` -> `"DefaultColorParticleModule"`、`0x00BF3F9C` -> `"DefaultUpdateParticleModule"`、`0x00BF4418` -> `"RenderObjectParticleUpdateModule"`、`0x00BF478C` -> `"WindModule"`、`0x00BF31D4` -> `"WindParticleModule"`、`0x00BF3154` -> `"SwarmPhysicsParticleModule"`、`0x00BF4AB0` -> `"OutwardEmissionVelocityModule"`。`0x00665B60` 是 Box/Sphere/TerrainFire 三种 emission volume 共用的 slot 8。
+2. **直接调用边（34 个）**：函数是上述模块 vtable 方法、模板 vtable 方法（如 `0x00BF3100`、`0x00BF2CFC`、`0x00BF38D0`）或断言 `0x00BF4190`（`...\FXParticleSystem\FxpsGPUStorageModule.cpp`）的 `0x0066ABF0` 的直接被调者，注释给出调用点地址。`0x0065E490` 的唯一调用链来自 `W3DScriptedModelDraw`（vtable `0x00C55668` slot 14），所属类未证实。
+3. **剔除（3 个）**：`0x0065F530`、`0x00662A00`、`0x00662CA0` 的唯一调用者在代码与数据中均无引用，无锚点边，记为延后行（实现保留、不计数）。
+
 3. **参考资料**：
    - `work/references/generals_code/GeneralsMD/Code/GameEngine/Source/GameClient/System/FXParticleSystem/`（EA GPL Generals 粒子系统架构参考）
    - `work/references/modding/` 下 RA3 FXParticleSystem 模块 XSD 定义
@@ -22,7 +22,7 @@
 - `DefaultUpdateParticleModule`（`0x30` 字节）与 `RenderObjectParticleUpdateModule`（`0x4C` 字节）：分别维护标量（`size` 在 `+0x10`）与三维向量（`size.x` 在 `+0x38`）的尺寸、旋转角、角速度及阻尼；`0x00660530`（`FXParticle::getSize`）通过虚表区分两类模块并在 x87 `ST0` 返回当前尺寸。
 - `LightningDrawModuleTemplate`（`0xAC` 字节）与 `LightningDrawModule`（`0x40` 字节）：包含 6 个标量浮点参数与 12 个交错排列的 `RandomVariable`（2 组振幅/频率/相位对）；`0x00662B60` 将粒子状态打包为 `0x28` 字节的 `LightningSwarmVertex` 顶点序列。
 
-## 53 个已验证函数与 15 个 Hook 目标
+## 函数清单（50 个计数，3 个延后）与 15 个 Hook 目标
 
 | 地址 | C++ 函数 (`ra3::gameclient`) | 行为概述 | Hook 键 (`explicitOnly`) |
 |---|---|---|---|
@@ -40,7 +40,7 @@
 | `0x0065F160` | `copyWavefrontVelocityTemplate` | 复制波前发射速度模板 | `fxpswavetmplcopy` (`true`) |
 | `0x0065F1E0` | `sampleWavefrontVelocityDimensions` | 采样波前发射速度 4 个随机参数 | — |
 | `0x0065F460` | `copyRenderObjectDrawTemplate` | 复制 `0x40` 字节 `RenderObjectDrawModuleTemplate` | `fxpsrodrawtmplcopy` (`true`) |
-| `0x0065F530` | `initializeRenderObjectUpdateModuleTemplateFromAsset` | 从资产初始化 `RenderObjectUpdateModuleTemplate` | — |
+| `0x0065F530` | `initializeRenderObjectUpdateModuleTemplateFromAsset` | （延后，不计数）从资产初始化 `RenderObjectUpdateModuleTemplate` | — |
 | `0x0065F690` | `copyRenderObjectUpdateModuleTemplate` | 复制三维模型更新模块模板 | — |
 | `0x0065F900` | `updateRenderObjectUpdateParticle` | 每帧更新三维尺寸、三维旋转角与阻尼 | — |
 | `0x0065FC70` | `initializeWindModuleTemplateFromAsset` | 从资产初始化风场模块模板 | — |
@@ -54,10 +54,10 @@
 | `0x00661590` | `initializeDefaultColorParticle` | 采样颜色缩放并初始化粒子颜色关键帧与步长 | — |
 | `0x00661B20` | `copyDefaultUpdateModuleTemplate` | 复制默认更新模块模板 | — |
 | `0x00662990` | `copyTerrainFireTemplate` | 复制地形火焰发射模板 | — |
-| `0x00662A00` | `initializeTerrainFireTemplateFromAsset` | 从资产初始化地形火焰发射模板 | — |
+| `0x00662A00` | `initializeTerrainFireTemplateFromAsset` | （延后，不计数）从资产初始化地形火焰发射模板 | — |
 | `0x00662A60` | `sampleTerrainFirePoint` | 采样地形火焰三维发射点 | — |
 | `0x00662B60` | `packLightningParticleVertices` | 打包闪电粒子段顶点缓冲 | — |
-| `0x00662CA0` | `initializeLightningDrawTemplateFromAsset` | 从资产初始化闪电绘制模板 | — |
+| `0x00662CA0` | `initializeLightningDrawTemplateFromAsset` | （延后，不计数）从资产初始化闪电绘制模板 | — |
 | `0x00662E10` | `copyLightningDrawTemplate` | 复制 `0xAC` 字节闪电绘制模板 | — |
 | `0x00662F50` | `initializeDefaultLightningDrawTemplate` | 初始化默认闪电绘制模板 | — |
 | `0x00664FA0` | `inverseTransformPointByMatrix34` | 用 `Matrix34` 逆变换三维点 | `fxpsinvmat34pt` (`true`) |
@@ -79,6 +79,26 @@
 | `0x0066BAE0` | `initializeRenderObjectUpdateParticle` | 采样三维模型更新模块初始三维尺寸/旋转/阻尼 | — |
 | `0x0066CD60` | `initializeWindModule` | 初始化风场模块并采样初始 PingPong 角度区间 | — |
 | `0x0066CE40` | `updateWindParticle` | 计算风场距离衰减与余弦湍流对粒子的作用力 | — |
+
+## Hook 表
+
+| Key | VA | Expected 16 Bytes | Stolen | explicitOnly |
+|---|---|---|---:|---|
+| `fxpsalpharate` | `0x0065E1E0` | `83 EC 10 8B 51 50 F3 0F 10 4C D1 0C 0F 57 C0 0F` | 6 | `true` |
+| `fxpscolortint` | `0x0065E490` | `83 EC 0C 80 B9 9C 00 00 00 00 0F 84 F5 01 00 00` | 10 | `true` |
+| `fxpscolorrate` | `0x0065E710` | `83 EC 10 0F 57 C0 56 8B B1 A0 00 00 00 8B C6 C1` | 6 | `true` |
+| `fxpscylstepradius` | `0x0065EF50` | `8B 41 08 F3 0F 10 40 10 F3 0F 58 41 0C F3 0F 10` | 8 | `true` |
+| `fxpsorthotmplcopy` | `0x0065EF80` | `8B C1 8B 4C 24 04 C7 00 60 2A BF 00 8B 51 04 89` | 6 | `true` |
+| `fxpswavetmplcopy` | `0x0065F160` | `8B C1 8B 4C 24 04 C7 00 60 2A BF 00 8B 51 04 89` | 6 | `true` |
+| `fxpsrodrawtmplcopy` | `0x0065F460` | `8B C1 8B 4C 24 04 C7 00 E0 30 BF 00 0F B6 51 04` | 6 | `true` |
+| `fxpsmulmat34` | `0x00660D50` | `8B 44 24 04 8B 54 24 08 F3 0F 10 52 20 F3 0F 10` | 8 | `true` |
+| `fxpsextractrot33` | `0x00660F80` | `83 EC 24 8B 44 24 2C F3 0F 10 40 08 F3 0F 11 44` | 7 | `true` |
+| `fxpsinvmat34pt` | `0x00664FA0` | `8B 54 24 0C 8B 4C 24 08 83 EC 18 3B D1 75 18 8B` | 8 | `true` |
+| `fxpscyloutwardvel` | `0x00665420` | `8B 44 24 08 F3 0F 10 08 F3 0F 10 40 04 0F 28 D1` | 8 | `true` |
+| `fxpssplineoutwardvel` | `0x006657D0` | `83 EC 0C 0F 57 E4 F3 0F 10 59 24 F3 0F 10 49 28` | 6 | `true` |
+| `fxpsradialoutwardvel` | `0x00665B60` | `83 EC 0C 8B 44 24 14 F3 0F 10 48 04 F3 0F 10 50` | 7 | `true` |
+| `fxpseulermat33` | `0x00669060` | `83 EC 14 8B 44 24 1C D9 00 F3 0F 10 25 08 C0 BD` | 7 | `true` |
+| `fxpstransposemat33` | `0x00669150` | `8B 4C 24 08 8B 44 24 04 56 83 C1 18 8D 50 08 BE` | 8 | `true` |
 
 ## 浮点、随机流与推迟项说明
 
