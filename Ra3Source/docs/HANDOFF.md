@@ -79,6 +79,10 @@
      节、分类（`body` 整个函数体 / `cave` 只跑被替换指令再跳回站点后 / `unresolved` 本次没执行
      或仍虚拟化）、cave 的被替换指令与跳回地址。运行 35 里 656 个槽被解析，其中 282 个
      entry-site thunk 恢复出真实函数体（266 entry-lost + entry-recoverable 等）。
+   - **原生 vs 虚拟化**：416 个解析出的 `body` 目标（261 在 `.text`、155 在解密出的
+     `0x0190xxxx` 段）全是可解码的原生 x86，无一是 VM 分派（`push imm; call 0x1132580`）。
+     即：本次采集中被执行到的受保护函数都恢复成了原生体，真正“虚拟化/未执行”的就是那些
+     `unresolved` 槽。扩大采集覆盖面（多跑些玩法）会把更多 `unresolved` 变成 `body`/`cave`。
 2. **扩展离线 oracle**：✅ 已完成。`tools/analysis/emulate.py` 的 `Emulator(capture=快照目录)`
    会把该快照的 `.securom` 原文叠加映射到 `0x01882000`——它同时带着解析后的槽表和解密后的
    函数体，于是 `jmp [slot]` 能正确跳转、`0x0190xxxx` 的体能执行、cave 读的 `.securom` 常量
