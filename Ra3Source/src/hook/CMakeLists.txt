@@ -27,6 +27,7 @@ ra3_add_shared_library(ra3hook
         dll/targets/UiTargets.cpp
         dll/targets/Scripts82Targets.cpp
         dll/targets/AIStateTargets.cpp
+        dll/targets/WeaponLogicTargets.cpp
     DEPS
         Ra3::audio
         Ra3::asset
