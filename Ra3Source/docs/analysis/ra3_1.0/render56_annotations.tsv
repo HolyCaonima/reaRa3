@@ -56,7 +56,6 @@ address	status	owner	module	notes
 005882c0	reversed	recon/render56	render	W3DTerrainVisual::intersectTerrain (0x005882C0; 0x00be38e8 slot 11; builds CastResultStruct, LineSegClass, RayCollisionTestClass and calls renderObj vtable+0x08; verify_render56.py 4/4)
 0058d1b0	reversed	recon/render56	render	W3DPropBuffer::initPropBuffer (0x0058D1B0; direct callee of 0x008ec630 at 0x008ec795, direct callee of 0x005806d0 at 0x005806d9, direct callee of 0x00588410 at 0x00588464, 0x00be38e8 slot 6; verify_render56.py 3/3)
 00562b70		recon/render56	render	Rejected ICF-shared vtable slot 3 body (`xor eax, eax; ret`) shared across 0x00be5cbc (W3DWaterRenderer), 0x00c2bcd8 (AIGuardGoingIdleState), and 0x00c2d168 (AIGoingIdleState)
-00561ec0		recon/render56	render	Deferred W3DTerrainVisual slot 16 (`0x00be38e8` slot 16) wrapper forwarding to global renderer/heightmap methods outside cluster
 00561f00		recon/render56	render	Deferred W3DTerrainVisual slot 17 (`0x00be38e8` slot 17) wrapper calling `0x008e51a0` (`W3DScorchBuffer` wrapper around `0x0056ab00`)
 00563400		recon/render56	render	Deferred W3DTerrainLogic slot 21 (`0x00be39f8` slot 21) wrapper calling `0x008e4c30` -> `0x0056d970`
 00563420		recon/render56	render	Deferred W3DTerrainLogic slot 24 (`0x00be39f8` slot 24) wrapper calling `0x008e4cb0` -> `0x0056d9d0`

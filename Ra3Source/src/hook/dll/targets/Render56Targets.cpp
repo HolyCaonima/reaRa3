@@ -22,6 +22,8 @@ TargetState hmCellFlagD8State;
 TargetState hmCellFlagC8State;
 TargetState hmShouldFlipQuadState;
 
+using CellQueryFn = std::uint32_t(__thiscall*)(const void*, std::int32_t, std::int32_t);
+
 std::int32_t __fastcall tvBorderSizeWrapper(const void* self, void*)
 {
     tvBorderSizeState.calls.fetch_add(1, relaxed);
@@ -43,89 +45,126 @@ std::uint32_t __fastcall tvCellFlagsWrapper(
     if (tvCellFlagsState.mode == Mode::replace) {
         return ours;
     }
-    using Original = std::uint32_t(__thiscall*)(const void*, std::int32_t, std::int32_t);
-    const auto game = reinterpret_cast<Original>(tvCellFlagsState.original)(self, x, y);
+    const auto game = reinterpret_cast<CellQueryFn>(tvCellFlagsState.original)(self, x, y);
     recordScalar("tvcellflags", tvCellFlagsState, game, ours);
-    return game;
-}
-
-template <std::uint32_t (*PortFn)(const void*, std::int32_t, std::int32_t)>
-std::uint32_t runCellQuery(
-    const char* key, TargetState& state,
-    const void* self, std::int32_t x, std::int32_t y)
-{
-    state.calls.fetch_add(1, relaxed);
-    const auto ours = PortFn(self, x, y);
-    if (state.mode == Mode::replace) {
-        return ours;
-    }
-    using Original = std::uint32_t(__thiscall*)(const void*, std::int32_t, std::int32_t);
-    const auto game = reinterpret_cast<Original>(state.original)(self, x, y);
-    recordScalar(key, state, game, ours);
     return game;
 }
 
 std::uint32_t __fastcall hmCellFlag78Wrapper(
     const void* self, void*, std::int32_t x, std::int32_t y)
 {
-    return runCellQuery<&ra3::render::getCellFlagBit78>(
-        "hmcellflag78", hmCellFlag78State, self, x, y);
+    hmCellFlag78State.calls.fetch_add(1, relaxed);
+    const auto ours = ra3::render::getCellFlagBit78(self, x, y);
+    if (hmCellFlag78State.mode == Mode::replace) {
+        return ours;
+    }
+    const auto game = reinterpret_cast<CellQueryFn>(hmCellFlag78State.original)(self, x, y);
+    recordScalar("hmcellflag78", hmCellFlag78State, game, ours);
+    return game;
 }
 
 std::uint32_t __fastcall hmCellFlag88Wrapper(
     const void* self, void*, std::int32_t x, std::int32_t y)
 {
-    return runCellQuery<&ra3::render::getCellFlagBit88>(
-        "hmcellflag88", hmCellFlag88State, self, x, y);
+    hmCellFlag88State.calls.fetch_add(1, relaxed);
+    const auto ours = ra3::render::getCellFlagBit88(self, x, y);
+    if (hmCellFlag88State.mode == Mode::replace) {
+        return ours;
+    }
+    const auto game = reinterpret_cast<CellQueryFn>(hmCellFlag88State.original)(self, x, y);
+    recordScalar("hmcellflag88", hmCellFlag88State, game, ours);
+    return game;
 }
 
 std::uint32_t __fastcall hmCliffStateWrapper(
     const void* self, void*, std::int32_t x, std::int32_t y)
 {
-    return runCellQuery<&ra3::render::getCliffState>(
-        "hmcliffstate", hmCliffStateState, self, x, y);
+    hmCliffStateState.calls.fetch_add(1, relaxed);
+    const auto ours = ra3::render::getCliffState(self, x, y);
+    if (hmCliffStateState.mode == Mode::replace) {
+        return ours;
+    }
+    const auto game = reinterpret_cast<CellQueryFn>(hmCliffStateState.original)(self, x, y);
+    recordScalar("hmcliffstate", hmCliffStateState, game, ours);
+    return game;
 }
 
 std::uint32_t __fastcall hmCellFlag98Wrapper(
     const void* self, void*, std::int32_t x, std::int32_t y)
 {
-    return runCellQuery<&ra3::render::getCellFlagBit98>(
-        "hmcellflag98", hmCellFlag98State, self, x, y);
+    hmCellFlag98State.calls.fetch_add(1, relaxed);
+    const auto ours = ra3::render::getCellFlagBit98(self, x, y);
+    if (hmCellFlag98State.mode == Mode::replace) {
+        return ours;
+    }
+    const auto game = reinterpret_cast<CellQueryFn>(hmCellFlag98State.original)(self, x, y);
+    recordScalar("hmcellflag98", hmCellFlag98State, game, ours);
+    return game;
 }
 
 std::uint32_t __fastcall hmCellFlagB8Wrapper(
     const void* self, void*, std::int32_t x, std::int32_t y)
 {
-    return runCellQuery<&ra3::render::getCellFlagBitB8>(
-        "hmcellflagb8", hmCellFlagB8State, self, x, y);
+    hmCellFlagB8State.calls.fetch_add(1, relaxed);
+    const auto ours = ra3::render::getCellFlagBitB8(self, x, y);
+    if (hmCellFlagB8State.mode == Mode::replace) {
+        return ours;
+    }
+    const auto game = reinterpret_cast<CellQueryFn>(hmCellFlagB8State.original)(self, x, y);
+    recordScalar("hmcellflagb8", hmCellFlagB8State, game, ours);
+    return game;
 }
 
 std::uint32_t __fastcall hmCellFlagA8Wrapper(
     const void* self, void*, std::int32_t x, std::int32_t y)
 {
-    return runCellQuery<&ra3::render::getCellFlagBitA8>(
-        "hmcellflaga8", hmCellFlagA8State, self, x, y);
+    hmCellFlagA8State.calls.fetch_add(1, relaxed);
+    const auto ours = ra3::render::getCellFlagBitA8(self, x, y);
+    if (hmCellFlagA8State.mode == Mode::replace) {
+        return ours;
+    }
+    const auto game = reinterpret_cast<CellQueryFn>(hmCellFlagA8State.original)(self, x, y);
+    recordScalar("hmcellflaga8", hmCellFlagA8State, game, ours);
+    return game;
 }
 
 std::uint32_t __fastcall hmCellFlagD8Wrapper(
     const void* self, void*, std::int32_t x, std::int32_t y)
 {
-    return runCellQuery<&ra3::render::getCellFlagBitD8>(
-        "hmcellflagd8", hmCellFlagD8State, self, x, y);
+    hmCellFlagD8State.calls.fetch_add(1, relaxed);
+    const auto ours = ra3::render::getCellFlagBitD8(self, x, y);
+    if (hmCellFlagD8State.mode == Mode::replace) {
+        return ours;
+    }
+    const auto game = reinterpret_cast<CellQueryFn>(hmCellFlagD8State.original)(self, x, y);
+    recordScalar("hmcellflagd8", hmCellFlagD8State, game, ours);
+    return game;
 }
 
 std::uint32_t __fastcall hmCellFlagC8Wrapper(
     const void* self, void*, std::int32_t x, std::int32_t y)
 {
-    return runCellQuery<&ra3::render::getCellFlagBitC8>(
-        "hmcellflagc8", hmCellFlagC8State, self, x, y);
+    hmCellFlagC8State.calls.fetch_add(1, relaxed);
+    const auto ours = ra3::render::getCellFlagBitC8(self, x, y);
+    if (hmCellFlagC8State.mode == Mode::replace) {
+        return ours;
+    }
+    const auto game = reinterpret_cast<CellQueryFn>(hmCellFlagC8State.original)(self, x, y);
+    recordScalar("hmcellflagc8", hmCellFlagC8State, game, ours);
+    return game;
 }
 
 std::uint32_t __fastcall hmShouldFlipQuadWrapper(
     const void* self, void*, std::int32_t x, std::int32_t y)
 {
-    return runCellQuery<&ra3::render::shouldFlipCellQuad>(
-        "hmshouldflipquad", hmShouldFlipQuadState, self, x, y);
+    hmShouldFlipQuadState.calls.fetch_add(1, relaxed);
+    const auto ours = ra3::render::shouldFlipCellQuad(self, x, y);
+    if (hmShouldFlipQuadState.mode == Mode::replace) {
+        return ours;
+    }
+    const auto game = reinterpret_cast<CellQueryFn>(hmShouldFlipQuadState.original)(self, x, y);
+    recordScalar("hmshouldflipquad", hmShouldFlipQuadState, game, ours);
+    return game;
 }
 
 }  // namespace

@@ -87,7 +87,7 @@ Generals / Zero Hour reference files used for structural comparison only (all C+
 ## Rejected & Deferred Candidates
 
 - **Rejected (`0x00562b70`, 1 candidate)**: `0x00562b70` (`33 C0 C3`, `xor eax, eax; ret`) is an ICF-folded vtable slot body shared across `0x00be5cbc` slot 3 (`W3DWaterRenderer`), `0x00c2bcd8` slot 3 (`AIGuardGoingIdleState`), and `0x00c2d168` slot 3 (`AIGoingIdleState`). Excluded from the counted set per the ICF/identity-stub policy.
-- **Deferred (`0x00561ec0`, `0x00561f00`, `0x00563400`, `0x00563420`, `0x00563440`, `0x00563460`, `0x00563480`, `0x005634a0`, 8 candidates)**: Thin forwarding thunks on `W3DTerrainVisual` (`0x00be38e8` slots 16–17) and `W3DTerrainLogic` (`0x00be39f8` slots 21–26) that jump through `0x008e4c30–0x008e51a0` into the underlying `WorldHeightMap` / `W3DScorchBuffer` methods already reconstructed in this batch.
+- **Deferred (`0x00561f00`, `0x00563400`, `0x00563420`, `0x00563440`, `0x00563460`, `0x00563480`, `0x005634a0`, 7 candidates)**: Thin forwarding thunks on `W3DTerrainVisual` (`0x00be38e8` slot 17) and `W3DTerrainLogic` (`0x00be39f8` slots 21–26) that jump through `0x008e4c30–0x008e51a0` into the underlying `WorldHeightMap` / `W3DScorchBuffer` methods already reconstructed in this batch.
 
 ## Optional Hook Targets (`Render56Targets.cpp`)
 
