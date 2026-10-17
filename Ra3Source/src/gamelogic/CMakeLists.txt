@@ -1,7 +1,9 @@
 ra3_add_module(gamelogic
     SOURCES
+        include/ra3/gamelogic/AIStateMachine7C.h
         include/ra3/gamelogic/AITNGuardViews.h
         include/ra3/gamelogic/Behavior.h
+        src/AIStateMachine7C.cpp
         src/AITNGuardViews.cpp
         src/Behavior.cpp)
 

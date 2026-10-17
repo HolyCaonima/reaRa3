@@ -12,6 +12,7 @@ void appendStringBase2Targets(std::vector<Target>& table);
 void appendSkirmishTargets(std::vector<Target>& table);
 void appendAudioTargets(std::vector<Target>& table);
 void appendBehaviorTargets(std::vector<Target>& table);
+void appendGameLogic7CTargets(std::vector<Target>& table);
 
 void appendModuleTargets(std::vector<Target>& table)
 {
@@ -23,6 +24,7 @@ void appendModuleTargets(std::vector<Target>& table)
     appendSkirmishTargets(table);
     appendAudioTargets(table);
     appendBehaviorTargets(table);
+    appendGameLogic7CTargets(table);
 }
 
 }  // namespace ra3hook

@@ -21,6 +21,7 @@ ra3_add_shared_library(ra3hook
         dll/targets/SkirmishTargets.cpp
         dll/targets/AudioTargets.cpp
         dll/targets/BehaviorTargets.cpp
+        dll/targets/GameLogic7CTargets.cpp
     DEPS
         Ra3::audio
         Ra3::asset
