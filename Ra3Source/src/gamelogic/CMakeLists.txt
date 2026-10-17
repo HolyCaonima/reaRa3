@@ -60,11 +60,13 @@ ra3_add_module(gamelogic
         include/ra3/gamelogic/ObjectUpdates78.h
         include/ra3/gamelogic/ObjectModules72.h
         include/ra3/gamelogic/ObjectModules6C.h
+        include/ra3/gamelogic/ObjectModules72B.h
         src/ObjectUpdates78.cpp
         src/AIState7B.cpp
         src/AIState7B2.cpp
         src/AIState79B.cpp
         src/ObjectModules72.cpp
+        src/ObjectModules72B.cpp
         src/AIState7C.cpp
         src/AIState79C.cpp
         src/ObjectModules6C.cpp
