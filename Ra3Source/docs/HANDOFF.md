@@ -41,15 +41,15 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 AITNGuard 合并）
+## 3. 现状（截至 AudioEvent 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,986 行，其中 verified 66、
-  reversed 317、unanalyzed 48,603。`securom` 分类：clean 47,772、entry-lost 653、
+  reversed 366、unanalyzed 48,554。`securom` 分类：clean 47,772、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
-- **hook**：149 个目标（其中 105 个只认显式键）。原有 86 个全部 replace 时，Release
+- **hook**：164 个目标（其中 120 个只认显式键）。原有 86 个全部 replace 时，Release
   遭遇战带 Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34）；新加的
-  Player/Net/W3DView/FXPS/StringBase2/AITNGuard 共 63 个目标只有离线证据，尚未做合并实机
-  shadow/replace。
+  Player/Net/W3DView/FXPS/StringBase2/AITNGuard/AudioEvent 共 78 个目标只有离线证据，
+  尚未做合并实机 shadow/replace。
 - **已完成模块**：
   - core（配置/INI/SkuDef）
   - io（BIG 档案、RefPack、BigHandler 四层：查找/打开/读取/seek/枚举）
@@ -70,6 +70,9 @@
     对抗场景；受保护六字节站点只按已观察的指针清零效果建模
   - gamelogic AITNGuard 批次：50 个 clean body 仅作类族库存，其中 8 个叶入口完成
     C++ 重建与显式 hook；两配置原生行为 oracle 各 4,000 例零差异，语义突变成功检出
+  - audio AudioEvent 批次：50 个语义重建入口（其中 49 个对应当前 Ghidra 台账函数，
+    `0x00559C30` 待刷新导出），15 个显式 hook；两配置 oracle 各 3,200 例零差异，
+    完整核对 x87 ST0，并成功检出语义突变
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
@@ -77,7 +80,7 @@
   - 少数 hook 在遭遇战里未被调用（logicrandomvariable、几个 BIG 枚举入口、
     stringfindlast 等），只有离线证据。
 - **当前十路并行**（用户 11:14 明确允许扩到 10 路）：`recon/terrainlogic`、
-  `recon/aistates`、`recon/audioevent`、`recon/objectlogic`、`recon/uicontrols`、
+  `recon/aistates`、`recon/grokclean1`、`recon/objectlogic`、`recon/uicontrols`、
   `recon/weaponlogic`、`recon/behavior6b`、`recon/scripts82`、`recon/render8e`、
   `recon/gameclient92`。每支独立 worktree，完成后主控逐支复验合并；构建/oracle 可并行，
   主分支合并仍串行，避免注册表和 CMake 冲突污染。
@@ -106,7 +109,7 @@
   - 既有模块 oracle 仅在共享实现或依赖被修改时回归，不因单纯注册新模块而全跑。
   - 身份指纹只算 inventory，不算语义重建；实机 shadow/replace 继续按多批累计执行，
     不为每个小批次单独启动游戏。
-- **git**：本地 `main` 领先 `origin/main` 20 个提交，未 push（用户没要求 push）。
+- **git**：主控不主动 push；提交差距以当前 `git status` 为准。
 
 ## 4. 建议的下一步（按优先级）
 
@@ -133,12 +136,13 @@
    返回 `thunk VA → 真实体 VA`：移植 entry-lost 函数时要 oracle 真实体，而不是那 6 字节 thunk。
    `.text/.rdata/.data` 仍取磁盘（运行时 `.text` 与磁盘逐字节相同；`.data` 保持装载期值）；
    SecuROM 自己的节（`Stext` 等）永不映射。
-3. **大批量并行移植**：🚧 持续进行。保持 10 个 `gemini-4-argon-medium` 子 agent，
-   每个负责一个成块子系统，每批
+3. **大批量并行移植**：🚧 持续进行。保持 10 路，复杂批次用
+   `gemini-4-argon-medium`，简单 clean 批次在 Gemini 与 `grok-4.7-high-fast` 间
+   1:1 分流。每路负责一个成块子系统，每批
    50–200 个函数，每批带 oracle 脚本。优先成块的 gamelogic/gameclient 簇，例如
    `0x0065xxxx–0x0066xxxx` 粒子/特效（大量调用 client RandomVariable），用 Generals 源码
-   命名，不要挑零散的匿名字段访问器。已合并四批共 126 个新 reversed；主控每次合并均跑
-   零警告 Debug/Release、两套 ctest、该批 oracle 和所有已合并模块的 Release oracle。
+   命名，不要挑零散的匿名字段访问器。当前七批共新增 231 个台账 reversed；按风险分级
+   验收，并在集成态集中跑构建、CTest 与新批 oracle。
 4. **攒到几百个函数后**，按 §6 跑一次合并的实机 shadow，再跑一次 replace。
 5. 结构性整理（可选）：`src/hook/dll/Targets.cpp` 已 3,479 行，宜按模块拆分；
    `work/probe` 里的实机脚本不在 git 中，宜挑必要的移进 `tools/`。

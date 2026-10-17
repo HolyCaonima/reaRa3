@@ -419,3 +419,53 @@ address	status	owner	module	notes
 0079c2a0	reversed	recon/skirmish79	gamelogic	AITNGuard candidate-near predicate; native behavior oracle
 0079c340	reversed	recon/skirmish79	gamelogic	AITNGuard guard-point predicate; native behavior oracle
 0079c3d0	reversed	recon/skirmish79	gamelogic	AITNGuard return-point predicate; native behavior oracle
+00502fc0	reversed	recon/audioevent	audio	consumeAudioResetFlag; explicit global boundary; oracle 64
+00502fe0	reversed	recon/audioevent	audio	markAudioSettingsDirty; explicit global boundary; oracle 64
+00503170	reversed	recon/audioevent	audio	SageAudioManagerView::allocateRequestSerial; oracle 64; hook audiomanagerserial
+00503180	reversed	recon/audioevent	audio	SageAudioManagerView::isOn; oracle 64; hook audiomanagerison
+005031d0	reversed	recon/audioevent	audio	SageAudioManagerView::setOn; oracle 64; hook audiomanagerseton
+00503220	reversed	recon/audioevent	audio	SageAudioManagerView::listenerPosition; non-owning listener view; oracle 64
+00503280	reversed	recon/audioevent	audio	SageAudioManagerView::eventInfoRegistry; oracle 64
+005032a0	reversed	recon/audioevent	audio	indexedVolume; explicit global-array boundary; x87 oracle 64
+005032d0	reversed	recon/audioevent	audio	playerVolume; explicit player-state/current-player boundary; x87 oracle 64
+005032f0	reversed	recon/audioevent	audio	SageAudioManagerView::playerHandle; oracle 64
+00504bb0	reversed	recon/audioevent	audio	selectCacheWeightedIndex; RNG boundary; oracle 64
+00504c40	reversed	recon/audioevent	audio	recentChannelUsed; oracle 64
+00504dc0	reversed	recon/audioevent	audio	initializeAudioChannelGrid; callback boundary; oracle 64
+00505300	reversed	recon/audioevent	audio	resetAudioCategoryForPlayers; callback/global boundary; oracle 64
+00506410	reversed	recon/audioevent	audio	requestUsesAudioEvent; oracle 64; hook audiorequestusesevent
+00506490	reversed	recon/audioevent	audio	SageAudioManagerView::allocatePlayingHandle; oracle 64; hook audiomanagerplayinghandle
+005065c0	reversed	recon/audioevent	audio	configureEnvelope; backend refresh stubbed; oracle 64
+00506690	reversed	recon/audioevent	audio	setPlayerEnvelope; player-state callback boundary; oracle 64
+00559c10	reversed	recon/audioevent	audio	AudioEventView::setPlayerIndex; oracle 64; hook audioeventsetplayer
+00559c20	reversed	recon/audioevent	audio	AudioEventView::minimumRange; x87 oracle 64
+00559c30	reversed	recon/audioevent	audio	AudioEventView::decrementDelay; oracle 64; hook audioeventdecrementdelay
+00559c50	reversed	recon/audioevent	audio	AudioEventView::setPosition; oracle 64; hook audioeventsetposition
+00559c90	reversed	recon/audioevent	audio	AudioEventView::setObjectId; oracle 64; hook audioeventsetobject
+00559cb0	reversed	recon/audioevent	audio	AudioEventView::objectId; oracle 64
+00559cc0	reversed	recon/audioevent	audio	AudioEventView::setDrawableId; oracle 64; hook audioeventsetdrawable
+00559ce0	reversed	recon/audioevent	audio	AudioEventView::drawableId; oracle 64
+00559cf0	reversed	recon/audioevent	audio	AudioEventView::setShouldFade; oracle 64; hook audioeventsetfade
+00559d00	reversed	recon/audioevent	audio	AudioEventView::shouldFade; oracle 64; hook audioeventshouldfade
+00559d10	reversed	recon/audioevent	audio	AudioEventView::setMinimumRangeOverride; oracle 64; hook audioeventsetminimum
+00559d20	reversed	recon/audioevent	audio	AudioEventView::setMaximumRangeOverride; oracle 64; hook audioeventsetmaximum
+00559d30	reversed	recon/audioevent	audio	AudioEventView::setVolume; oracle 64; hook audioeventsetvolume
+00559e40	reversed	recon/audioevent	audio	AudioEventInfoView::hasOverrideSlots; oracle 64
+00559e60	reversed	recon/audioevent	audio	AudioEventInfoView::isPlayable; recursive group layout; oracle 64
+00559ed0	reversed	recon/audioevent	audio	AudioEventInfoView::hasAnySamples; oracle 64
+00559f20	reversed	recon/audioevent	audio	AudioEventInfoView::resolvedPriority; cache write; oracle 64
+00559fa0	reversed	recon/audioevent	audio	AudioEventInfoView::matchesCategory; recursive group layout; oracle 64
+0055a020	reversed	recon/audioevent	audio	AudioEventInfoView::sampleIndex; non-owning range; oracle 64
+0055a060	reversed	recon/audioevent	audio	audioKeysDiffer; oracle 64
+0055a170	reversed	recon/audioevent	audio	selectWeightedIndex; AudioEventRTS vector and RNG boundary; oracle 64
+0055a5d0	reversed	recon/audioevent	audio	AudioEventView::randomizePitchAndVolume; RNG stub; oracle 64
+0055a990	reversed	recon/audioevent	audio	AudioEventView::effectivePitch; x87 oracle 64
+0055a9e0	reversed	recon/audioevent	audio	AudioEventView::canContinue; oracle 64
+0055b060	reversed	recon/audioevent	audio	incrementPlaybackCount; map lookup stub; oracle 64
+0055b0a0	reversed	recon/audioevent	audio	decrementPlaybackCount; map lookup stub; oracle 64
+0055b0e0	reversed	recon/audioevent	audio	playbackCount; map lookup stub; oracle 64
+0055b110	reversed	recon/audioevent	audio	playbackLimitReached; map lookup stub; oracle 64
+0055b5e0	reversed	recon/audioevent	audio	AudioEventView::randomizeDelay; RNG stub; oracle 64
+0055b630	reversed	recon/audioevent	audio	AudioEventView::randomizePostDelay; RNG stub; oracle 64
+0055b6f0	reversed	recon/audioevent	audio	AudioEventView::regenerate; generation/RNG boundaries stubbed; oracle 64
+0055b760	reversed	recon/audioevent	audio	AudioEventView::advancePlayPortion; oracle 64

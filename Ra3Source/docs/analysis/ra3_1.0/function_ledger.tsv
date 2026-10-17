@@ -3460,23 +3460,23 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00502f30	FUN_00502f30	.text	18		clean	unknown		unanalyzed	
 00502f50	FUN_00502f50	.text	89		clean	unknown		unanalyzed	
 00502fb0	FUN_00502fb0	.text	6		clean	unknown		unanalyzed	
-00502fc0	FUN_00502fc0	.text	22		clean	unknown		unanalyzed	
-00502fe0	FUN_00502fe0	.text	8		clean	unknown		unanalyzed	
+00502fc0	FUN_00502fc0	.text	22		clean	audio	recon/audioevent	reversed	consumeAudioResetFlag; explicit global boundary; oracle 64
+00502fe0	FUN_00502fe0	.text	8		clean	audio	recon/audioevent	reversed	markAudioSettingsDirty; explicit global boundary; oracle 64
 00502ff0	FUN_00502ff0	.text	10		clean	unknown		unanalyzed	
 00503000	FUN_00503000	.text	154		clean	unknown		unanalyzed	
 005030a0	FUN_005030a0	.text	80		clean	unknown		unanalyzed	
 005030f0	FUN_005030f0	.text	118		clean	unknown		unanalyzed	
-00503170	FUN_00503170	.text	8		clean	unknown		unanalyzed	
-00503180	FUN_00503180	.text	65		clean	unknown		unanalyzed	
-005031d0	FUN_005031d0	.text	66		clean	unknown		unanalyzed	
-00503220	FUN_00503220	.text	57		clean	unknown		unanalyzed	
+00503170	FUN_00503170	.text	8		clean	audio	recon/audioevent	reversed	SageAudioManagerView::allocateRequestSerial; oracle 64; hook audiomanagerserial
+00503180	FUN_00503180	.text	65		clean	audio	recon/audioevent	reversed	SageAudioManagerView::isOn; oracle 64; hook audiomanagerison
+005031d0	FUN_005031d0	.text	66		clean	audio	recon/audioevent	reversed	SageAudioManagerView::setOn; oracle 64; hook audiomanagerseton
+00503220	FUN_00503220	.text	57		clean	audio	recon/audioevent	reversed	SageAudioManagerView::listenerPosition; non-owning listener view; oracle 64
 00503260	FUN_00503260	.text	13		clean	unknown		unanalyzed	
 00503270	FUN_00503270	.text	13		clean	unknown		unanalyzed	
-00503280	FUN_00503280	.text	7		clean	unknown		unanalyzed	
+00503280	FUN_00503280	.text	7		clean	audio	recon/audioevent	reversed	SageAudioManagerView::eventInfoRegistry; oracle 64
 00503290	FUN_00503290	.text	6		clean	unknown		unanalyzed	
-005032a0	FUN_005032a0	.text	47		clean	unknown		unanalyzed	
-005032d0	FUN_005032d0	.text	18		clean	unknown		unanalyzed	
-005032f0	FUN_005032f0	.text	14		clean	unknown		unanalyzed	
+005032a0	FUN_005032a0	.text	47		clean	audio	recon/audioevent	reversed	indexedVolume; explicit global-array boundary; x87 oracle 64
+005032d0	FUN_005032d0	.text	18		clean	audio	recon/audioevent	reversed	playerVolume; explicit player-state/current-player boundary; x87 oracle 64
+005032f0	FUN_005032f0	.text	14		clean	audio	recon/audioevent	reversed	SageAudioManagerView::playerHandle; oracle 64
 00503300	FUN_00503300	.text	6		clean	unknown		unanalyzed	
 00503310	FUN_00503310	.text	35		inner-patched	unknown		unanalyzed	
 00503350	FUN_00503350	.text	19		clean	unknown		unanalyzed	
@@ -3551,17 +3551,17 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00504af0	FUN_00504af0	.text	46		clean	unknown		unanalyzed	
 00504b20	FUN_00504b20	.text	55		clean	unknown		unanalyzed	
 00504b60	FUN_00504b60	.text	73		clean	unknown		unanalyzed	
-00504bb0	FUN_00504bb0	.text	140	SageEngine\source\GameEngineDevice\sageaudiodevice\AudioCache\SageAudioCache.cpp	clean	audio		unanalyzed	
-00504c40	FUN_00504c40	.text	51		clean	unknown		unanalyzed	
+00504bb0	FUN_00504bb0	.text	140	SageEngine\source\GameEngineDevice\sageaudiodevice\AudioCache\SageAudioCache.cpp	clean	audio	recon/audioevent	reversed	selectCacheWeightedIndex; RNG boundary; oracle 64
+00504c40	FUN_00504c40	.text	51		clean	audio	recon/audioevent	reversed	recentChannelUsed; oracle 64
 00504c80	FUN_00504c80	.text	298		clean	unknown		unanalyzed	
-00504dc0	FUN_00504dc0	.text	45		clean	unknown		unanalyzed	
+00504dc0	FUN_00504dc0	.text	45		clean	audio	recon/audioevent	reversed	initializeAudioChannelGrid; callback boundary; oracle 64
 00504df0	FUN_00504df0	.text	197		clean	unknown		unanalyzed	
 00504ec0	FUN_00504ec0	.text	86		clean	unknown		unanalyzed	
 00504f20	FUN_00504f20	.text	81		clean	unknown		unanalyzed	
 00504f80	FUN_00504f80	.text	221		clean	unknown		unanalyzed	
 00505060	thunk_FUN_01955920	.text	6		entry-recoverable	unknown		unanalyzed	
 00505150	FUN_00505150	.text	423		clean	unknown		unanalyzed	
-00505300	FUN_00505300	.text	53		clean	unknown		unanalyzed	
+00505300	FUN_00505300	.text	53		clean	audio	recon/audioevent	reversed	resetAudioCategoryForPlayers; callback/global boundary; oracle 64
 00505340	FUN_00505340	.text	105		clean	unknown		unanalyzed	
 005053b0	FUN_005053b0	.text	90		clean	unknown		unanalyzed	
 00505410	FUN_00505410	.text	69		clean	unknown		unanalyzed	
@@ -3587,15 +3587,15 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00505f50	FUN_00505f50	.text	539		clean	unknown		unanalyzed	
 00506170	FUN_00506170	.text	392		clean	unknown		unanalyzed	
 00506300	FUN_00506300	.text	264		clean	unknown		unanalyzed	
-00506410	FUN_00506410	.text	26		clean	unknown		unanalyzed	
+00506410	FUN_00506410	.text	26		clean	audio	recon/audioevent	reversed	requestUsesAudioEvent; oracle 64; hook audiorequestusesevent
 00506430	FUN_00506430	.text	96		clean	unknown		unanalyzed	
-00506490	FUN_00506490	.text	16		clean	unknown		unanalyzed	
+00506490	FUN_00506490	.text	16		clean	audio	recon/audioevent	reversed	SageAudioManagerView::allocatePlayingHandle; oracle 64; hook audiomanagerplayinghandle
 005064a0	FUN_005064a0	.text	23		clean	unknown		unanalyzed	
 005064c0	FUN_005064c0	.text	245		clean	unknown		unanalyzed	
-005065c0	FUN_005065c0	.text	164		clean	unknown		unanalyzed	
+005065c0	FUN_005065c0	.text	164		clean	audio	recon/audioevent	reversed	configureEnvelope; backend refresh stubbed; oracle 64
 00506670	FUN_00506670	.text	14		clean	unknown		unanalyzed	
 00506680	FUN_00506680	.text	14		clean	unknown		unanalyzed	
-00506690	FUN_00506690	.text	37		clean	unknown		unanalyzed	
+00506690	FUN_00506690	.text	37		clean	audio	recon/audioevent	reversed	setPlayerEnvelope; player-state callback boundary; oracle 64
 005066c0	FUN_005066c0	.text	19		clean	unknown		unanalyzed	
 005066e0	FUN_005066e0	.text	8		clean	unknown		unanalyzed	
 005066f0	FUN_005066f0	.text	8		clean	unknown		unanalyzed	
@@ -5458,48 +5458,48 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00559bd0	FUN_00559bd0	.text	7		clean	unknown		unanalyzed	
 00559be0	FUN_00559be0	.text	7		clean	unknown		unanalyzed	
 00559bf0	FUN_00559bf0	.text	27		clean	unknown		unanalyzed	
-00559c10	FUN_00559c10	.text	15		clean	unknown		unanalyzed	
-00559c20	FUN_00559c20	.text	4		clean	unknown		unanalyzed	
-00559c50	FUN_00559c50	.text	51		clean	unknown		unanalyzed	
-00559c90	FUN_00559c90	.text	30		clean	unknown		unanalyzed	
-00559cb0	FUN_00559cb0	.text	13		clean	unknown		unanalyzed	
-00559cc0	FUN_00559cc0	.text	30		clean	unknown		unanalyzed	
-00559ce0	FUN_00559ce0	.text	13		clean	unknown		unanalyzed	
-00559cf0	FUN_00559cf0	.text	10		clean	unknown		unanalyzed	
-00559d00	FUN_00559d00	.text	4		clean	unknown		unanalyzed	
-00559d10	FUN_00559d10	.text	14		clean	unknown		unanalyzed	
-00559d20	FUN_00559d20	.text	14		clean	unknown		unanalyzed	
-00559d30	FUN_00559d30	.text	14		clean	unknown		unanalyzed	
+00559c10	FUN_00559c10	.text	15		clean	audio	recon/audioevent	reversed	AudioEventView::setPlayerIndex; oracle 64; hook audioeventsetplayer
+00559c20	FUN_00559c20	.text	4		clean	audio	recon/audioevent	reversed	AudioEventView::minimumRange; x87 oracle 64
+00559c50	FUN_00559c50	.text	51		clean	audio	recon/audioevent	reversed	AudioEventView::setPosition; oracle 64; hook audioeventsetposition
+00559c90	FUN_00559c90	.text	30		clean	audio	recon/audioevent	reversed	AudioEventView::setObjectId; oracle 64; hook audioeventsetobject
+00559cb0	FUN_00559cb0	.text	13		clean	audio	recon/audioevent	reversed	AudioEventView::objectId; oracle 64
+00559cc0	FUN_00559cc0	.text	30		clean	audio	recon/audioevent	reversed	AudioEventView::setDrawableId; oracle 64; hook audioeventsetdrawable
+00559ce0	FUN_00559ce0	.text	13		clean	audio	recon/audioevent	reversed	AudioEventView::drawableId; oracle 64
+00559cf0	FUN_00559cf0	.text	10		clean	audio	recon/audioevent	reversed	AudioEventView::setShouldFade; oracle 64; hook audioeventsetfade
+00559d00	FUN_00559d00	.text	4		clean	audio	recon/audioevent	reversed	AudioEventView::shouldFade; oracle 64; hook audioeventshouldfade
+00559d10	FUN_00559d10	.text	14		clean	audio	recon/audioevent	reversed	AudioEventView::setMinimumRangeOverride; oracle 64; hook audioeventsetminimum
+00559d20	FUN_00559d20	.text	14		clean	audio	recon/audioevent	reversed	AudioEventView::setMaximumRangeOverride; oracle 64; hook audioeventsetmaximum
+00559d30	FUN_00559d30	.text	14		clean	audio	recon/audioevent	reversed	AudioEventView::setVolume; oracle 64; hook audioeventsetvolume
 00559d40	FUN_00559d40	.text	30		clean	unknown		unanalyzed	
 00559d60	FUN_00559d60	.text	6		clean	unknown		unanalyzed	
 00559d70	FUN_00559d70	.text	52		clean	unknown		unanalyzed	
 00559db0	FUN_00559db0	.text	6		clean	unknown		unanalyzed	
 00559dc0	FUN_00559dc0	.text	96		clean	unknown		unanalyzed	
-00559e40	FUN_00559e40	.text	27		clean	unknown		unanalyzed	
-00559e60	FUN_00559e60	.text	104		clean	unknown		unanalyzed	
-00559ed0	FUN_00559ed0	.text	75		clean	unknown		unanalyzed	
-00559f20	FUN_00559f20	.text	102		clean	unknown		unanalyzed	
-00559fa0	FUN_00559fa0	.text	89		clean	unknown		unanalyzed	
+00559e40	FUN_00559e40	.text	27		clean	audio	recon/audioevent	reversed	AudioEventInfoView::hasOverrideSlots; oracle 64
+00559e60	FUN_00559e60	.text	104		clean	audio	recon/audioevent	reversed	AudioEventInfoView::isPlayable; recursive group layout; oracle 64
+00559ed0	FUN_00559ed0	.text	75		clean	audio	recon/audioevent	reversed	AudioEventInfoView::hasAnySamples; oracle 64
+00559f20	FUN_00559f20	.text	102		clean	audio	recon/audioevent	reversed	AudioEventInfoView::resolvedPriority; cache write; oracle 64
+00559fa0	FUN_00559fa0	.text	89		clean	audio	recon/audioevent	reversed	AudioEventInfoView::matchesCategory; recursive group layout; oracle 64
 0055a000	FUN_0055a000	.text	12		clean	unknown		unanalyzed	
 0055a010	thunk_FUN_019571a0	.text	6		entry-lost	unknown		unanalyzed	
-0055a020	FUN_0055a020	.text	54		clean	unknown		unanalyzed	
-0055a060	FUN_0055a060	.text	31		clean	unknown		unanalyzed	
+0055a020	FUN_0055a020	.text	54		clean	audio	recon/audioevent	reversed	AudioEventInfoView::sampleIndex; non-owning range; oracle 64
+0055a060	FUN_0055a060	.text	31		clean	audio	recon/audioevent	reversed	audioKeysDiffer; oracle 64
 0055a080	FUN_0055a080	.text	40		clean	unknown		unanalyzed	
 0055a0b0	FUN_0055a0b0	.text	27		clean	unknown		unanalyzed	
 0055a0d0	FUN_0055a0d0	.text	29		clean	unknown		unanalyzed	
 0055a0f0	FUN_0055a0f0	.text	74		clean	unknown		unanalyzed	
 0055a140	FUN_0055a140	.text	34		clean	unknown		unanalyzed	
-0055a170	FUN_0055a170	.text	158	SageEngine\source\GameEngine\common\audio\AudioEventRTS.cpp	clean	common		unanalyzed	
+0055a170	FUN_0055a170	.text	158	SageEngine\source\GameEngine\common\audio\AudioEventRTS.cpp	clean	audio	recon/audioevent	reversed	selectWeightedIndex; AudioEventRTS vector and RNG boundary; oracle 64
 0055a210	FUN_0055a210	.text	722		clean	unknown		unanalyzed	
 0055a4f0	FUN_0055a4f0	.text	35		clean	unknown		unanalyzed	
 0055a550	FUN_0055a550	.text	43		clean	unknown		unanalyzed	
 0055a580	FUN_0055a580	.text	70		inner-patched	unknown		unanalyzed	
-0055a5d0	FUN_0055a5d0	.text	128	SageEngine\source\GameEngine\common\audio\AudioEventRTS.cpp	clean	common		unanalyzed	
+0055a5d0	FUN_0055a5d0	.text	128	SageEngine\source\GameEngine\common\audio\AudioEventRTS.cpp	clean	audio	recon/audioevent	reversed	AudioEventView::randomizePitchAndVolume; RNG stub; oracle 64
 0055a650	FUN_0055a650	.text	376		clean	unknown		unanalyzed	
 0055a7a0	FUN_0055a7a0	.text	489	SageEngine\source\GameEngine\common\audio\AudioEventRTS.cpp	clean	common		unanalyzed	
-0055a990	FUN_0055a990	.text	26		clean	unknown		unanalyzed	
+0055a990	FUN_0055a990	.text	26		clean	audio	recon/audioevent	reversed	AudioEventView::effectivePitch; x87 oracle 64
 0055a9b0	FUN_0055a9b0	.text	38		clean	math	recon/ports2	verified	clamp object float at +0x68; ra3::math::clampFloatAtOffset68; oracle 2031/2031 Debug+Release; live shadow 31/31, replace 30 calls in a skirmish (运行 20/21)
-0055a9e0	FUN_0055a9e0	.text	67		clean	unknown		unanalyzed	
+0055a9e0	FUN_0055a9e0	.text	67		clean	audio	recon/audioevent	reversed	AudioEventView::canContinue; oracle 64
 0055aa30	FUN_0055aa30	.text	73		clean	unknown		unanalyzed	
 0055aa80	FUN_0055aa80	.text	120		clean	unknown		unanalyzed	
 0055ab00	FUN_0055ab00	.text	43		inner-patched	unknown		unanalyzed	
@@ -5526,21 +5526,21 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0055afc0	FUN_0055afc0	.text	50		clean	unknown		unanalyzed	
 0055b000	FUN_0055b000	.text	50		clean	unknown		unanalyzed	
 0055b040	FUN_0055b040	.text	25		clean	unknown		unanalyzed	
-0055b060	FUN_0055b060	.text	51		clean	unknown		unanalyzed	
-0055b0a0	FUN_0055b0a0	.text	51		clean	unknown		unanalyzed	
-0055b0e0	FUN_0055b0e0	.text	47		clean	unknown		unanalyzed	
-0055b110	FUN_0055b110	.text	58		clean	unknown		unanalyzed	
+0055b060	FUN_0055b060	.text	51		clean	audio	recon/audioevent	reversed	incrementPlaybackCount; map lookup stub; oracle 64
+0055b0a0	FUN_0055b0a0	.text	51		clean	audio	recon/audioevent	reversed	decrementPlaybackCount; map lookup stub; oracle 64
+0055b0e0	FUN_0055b0e0	.text	47		clean	audio	recon/audioevent	reversed	playbackCount; map lookup stub; oracle 64
+0055b110	FUN_0055b110	.text	58		clean	audio	recon/audioevent	reversed	playbackLimitReached; map lookup stub; oracle 64
 0055b150	FUN_0055b150	.text	466		clean	unknown		unanalyzed	
 0055b330	FUN_0055b330	.text	68		clean	unknown		unanalyzed	
 0055b380	FUN_0055b380	.text	98		clean	unknown		unanalyzed	
 0055b3f0	FUN_0055b3f0	.text	159		clean	unknown		unanalyzed	
 0055b490	FUN_0055b490	.text	157		clean	unknown		unanalyzed	
 0055b530	FUN_0055b530	.text	10		inner-patched	unknown		unanalyzed	
-0055b5e0	FUN_0055b5e0	.text	69	SageEngine\source\GameEngine\common\audio\AudioEventRTS.cpp	clean	common		unanalyzed	
-0055b630	FUN_0055b630	.text	69	SageEngine\source\GameEngine\common\audio\AudioEventRTS.cpp	clean	common		unanalyzed	
+0055b5e0	FUN_0055b5e0	.text	69	SageEngine\source\GameEngine\common\audio\AudioEventRTS.cpp	clean	audio	recon/audioevent	reversed	AudioEventView::randomizeDelay; RNG stub; oracle 64
+0055b630	FUN_0055b630	.text	69	SageEngine\source\GameEngine\common\audio\AudioEventRTS.cpp	clean	audio	recon/audioevent	reversed	AudioEventView::randomizePostDelay; RNG stub; oracle 64
 0055b680	FUN_0055b680	.text	102		clean	unknown		unanalyzed	
-0055b6f0	FUN_0055b6f0	.text	99	SageEngine\source\GameEngine\common\audio\AudioEventRTS.cpp	clean	common		unanalyzed	
-0055b760	FUN_0055b760	.text	85		clean	unknown		unanalyzed	
+0055b6f0	FUN_0055b6f0	.text	99	SageEngine\source\GameEngine\common\audio\AudioEventRTS.cpp	clean	audio	recon/audioevent	reversed	AudioEventView::regenerate; generation/RNG boundaries stubbed; oracle 64
+0055b760	FUN_0055b760	.text	85		clean	audio	recon/audioevent	reversed	AudioEventView::advancePlayPortion; oracle 64
 0055b7c0	FUN_0055b7c0	.text	63		clean	unknown		unanalyzed	
 0055b800	FUN_0055b800	.text	38		clean	unknown		unanalyzed	
 0055b830	FUN_0055b830	.text	175		clean	unknown		unanalyzed	

@@ -181,6 +181,21 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `skirmishguardcandidatenear` | `0x0079C2A0` 候选二维距离谓词 | cdecl（2） | 6 | `candidateNearResult` | offline-verified, live pending；仅显式键启用 |
 | `skirmishguardpointnear` | `0x0079C340` 守卫点二维距离谓词 | thiscall（1） | 8 | `isNear2D` | offline-verified, live pending；仅显式键启用 |
 | `skirmishguardreturnnear` | `0x0079C3D0` 返回点二维距离谓词 | thiscall（1） | 8 | `isNear2D` | offline-verified, live pending；仅显式键启用 |
+| `audioeventsetplayer` | `0x00559C10` AudioEvent player 索引 | thiscall（1） | 7 | `AudioEventView::setPlayerIndex` | offline-verified, live pending；仅显式键启用 |
+| `audioeventdecrementdelay` | `0x00559C30` AudioEvent 延时递减 | thiscall（1） | 5 | `AudioEventView::decrementDelay` | offline-verified, live pending；仅显式键启用 |
+| `audioeventsetposition` | `0x00559C50` AudioEvent 三维位置 | thiscall（1） | 6 | `AudioEventView::setPosition` | offline-verified, live pending；仅显式键启用 |
+| `audioeventsetobject` | `0x00559C90` AudioEvent ObjectId | thiscall（1） | 6 | `AudioEventView::setObjectId` | offline-verified, live pending；仅显式键启用 |
+| `audioeventsetdrawable` | `0x00559CC0` AudioEvent DrawableId | thiscall（1） | 6 | `AudioEventView::setDrawableId` | offline-verified, live pending；仅显式键启用 |
+| `audioeventsetfade` | `0x00559CF0` AudioEvent fade 标志 | thiscall（1） | 7 | `AudioEventView::setShouldFade` | offline-verified, live pending；仅显式键启用 |
+| `audioeventshouldfade` | `0x00559D00` AudioEvent fade 查询 | thiscall | 5 | `AudioEventView::shouldFade` | offline-verified, live pending；仅显式键启用 |
+| `audioeventsetminimum` | `0x00559D10` AudioEvent 最小范围覆盖 | thiscall（1） | 6 | `AudioEventView::setMinimumRangeOverride` | offline-verified, live pending；仅显式键启用 |
+| `audioeventsetmaximum` | `0x00559D20` AudioEvent 最大范围覆盖 | thiscall（1） | 6 | `AudioEventView::setMaximumRangeOverride` | offline-verified, live pending；仅显式键启用 |
+| `audioeventsetvolume` | `0x00559D30` AudioEvent 音量 | thiscall（1） | 6 | `AudioEventView::setVolume` | offline-verified, live pending；仅显式键启用 |
+| `audiomanagerserial` | `0x00503170` 音频请求序列号递增 | thiscall | 7 | `SageAudioManagerView::allocateRequestSerial` | offline-verified, live pending；仅显式键启用 |
+| `audiomanagerison` | `0x00503180` 音频分类开关查询 | thiscall（1） | 6 | `SageAudioManagerView::isOn` | offline-verified, live pending；仅显式键启用 |
+| `audiomanagerseton` | `0x005031D0` 音频分类开关设置 | thiscall（2） | 7 | `SageAudioManagerView::setOn` | offline-verified, live pending；仅显式键启用 |
+| `audiorequestusesevent` | `0x00506410` 请求含 AudioEvent 谓词 | thiscall（1） | 6 | `requestUsesAudioEvent` | offline-verified, live pending；仅显式键启用 |
+| `audiomanagerplayinghandle` | `0x00506490` 播放 handle 分配 | thiscall | 6 | `SageAudioManagerView::allocatePlayingHandle` | offline-verified, live pending；仅显式键启用 |
 | `playeradjustcounter` | `0x007E1530` Player `+0x125c` 饱和计数 | thiscall（1） | 10 | `Player::adjustCounter125c` | offline-verified, live pending；仅显式键启用 |
 | `playeractive` | `0x007E1BA0` Player 活跃状态 | thiscall | 7 | `Player::isPlayerActive` | offline-verified, live pending；仅显式键启用 |
 | `scoreaddd0` | `0x007E2600` ScoreKeeper 增量 | thiscall（1） | 5 | `ScoreKeeper::addD0` | offline-verified, live pending；仅显式键启用 |
@@ -239,6 +254,10 @@ shadow 先调用原函数并返回原结果；两个 `copyRange` 目标先快照
 AITNGuard 的 8 个目标均有 shipped 原生行为差分，Debug/Release 各 4,000 个场景
 0 不一致。50 个 clean body 指纹仅用于类族库存，不计作重建。三个谓词保留原函数只写
 `AL` 时 EAX 高 24 位的行为；tracked-target shadow 只比较原函数实际写入的 8 字节。
+全部目标仅显式启用，尚未实机验证。
+
+AudioEvent 的 15 个目标均逐项复核 expected16、完整指令边界和 shadow 写集。两配置
+50 个入口各 3,200 个场景 0 不一致；x87 返回比较完整 ST0，语义突变可被 oracle 检出。
 全部目标仅显式启用，尚未实机验证。
 
 FXPS 的 15 个目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关。构造函数
