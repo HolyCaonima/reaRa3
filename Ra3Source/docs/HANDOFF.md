@@ -41,14 +41,14 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 WeaponLogic 合并）
+## 3. 现状（截至 TerrainLogic 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,987 行，其中 verified 66、
-  reversed 823、unanalyzed 48,098。`securom` 分类：clean 47,773、entry-lost 653、
+  reversed 866、unanalyzed 48,055。`securom` 分类：clean 47,773、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
-- **hook**：257 个目标（其中 213 个只认显式键）。原有 86 个全部 replace 时，Release
+- **hook**：277 个目标（其中 230 个只认显式键）。原有 86 个全部 replace 时，Release
   遭遇战带 Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34）；新加的
-  155 个目标只有离线证据，尚未做合并实机 shadow/replace。
+  175 个目标只有离线证据，尚未做合并实机 shadow/replace。
 - **已完成模块**：
   - core（配置/INI/SkuDef）
   - io（BIG 档案、RefPack、BigHandler 四层：查找/打开/读取/seek/枚举）
@@ -95,15 +95,24 @@
     入口（30 对模块名/键解析 + 30 个 Lifetime/Physics/Shield/Slaved 等行为），11 个显式
     hook；代码在 `ra3/gamelogic/UpdateModules.h`（与 ObjectLogic 的 `WeaponLogic.h`
     区分）。集成态 Release 1,890 次比较零差异，`lifetimeResume` 语义 mutation 检出
+  - sim TerrainLogic 批次（`0x0085C5E0–0x008684C0`，锚点 `TerrainLogic.cpp:3158`）：
+    43 个入口（几何/裁剪、Bridge 格子与高度、Waypoint、水面高度、findPositionAround），
+    20 个 hook，其中 17 个 explicitOnly，仅 `pointintriangle2d`、`lineinregion2d`、
+    `aligntonormalmatrix` 三个纯函数跟随默认模式。首轮交付的 hook 配置和文档字节与代码
+    不符，主控修正后合并（`c76dae9`）。集成态 Release 2,868 场景零差异，`kSideOffset`
+    语义 mutation 检出
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
   - 类型化资源访问（recon/typed）未合并。
   - 少数 hook 在遭遇战里未被调用（logicrandomvariable、几个 BIG 枚举入口、
     stringfindlast 等），只有离线证据。
-- **当前并行**：`recon/terrainlogic`（首轮 hook 配置与交付说明不符，已退回修正：应为
-  20 个 hook、17 个 explicitOnly，仅 3 个纯函数自动启用；修正完成前不合并），以及因模型
-  服务临时失败后重新启动的 `recon/gamelogic7c`。每支独立 worktree，完成后主控逐支
+- **当前并行**：`recon/gamelogic7c`（`0x007C0000–0x007CFFFF` GameLogic 簇，前两次
+  worker 均在产出前中断，已从 base `0a72cc8` 重新启动）。
+- **验收教训**：子 agent 的交付说明可能与提交不符。合并前用脚本从目标表直接核对
+  键名、explicitOnly 计数与二进制 expected16，并核对 record 键与注释一致；旧 base 的
+  分支可能新建与主分支同名的头文件（WeaponLogic 合并时即需改名为 `UpdateModules.h`）；
+  批次自带的 `--mutated` 若只是事后翻转输出，主控需另做一次实现层语义 mutation。每支独立 worktree，完成后主控逐支
   复验合并；构建/oracle 可并行，主分支合并仍串行，避免注册表和 CMake 冲突污染。
 - **后续模型分流**（用户 12:10 决定）：复杂 ABI、受保护边界与重型对象簇继续优先
   Gemini 4 Argon Medium；简单叶函数、访问器与清晰类簇在 Gemini 4 Argon Medium 和
