@@ -236,7 +236,7 @@
   render56，Gemini）→ ~~`0x005A0000`~~（已开 common5a，Grok）→ ~~`0x00500000`~~（已开 audio50，Gemini）→
   ~~`0x00870000`~~（已开 skirm87，Grok，base `179b87b`，派单模板 `work/prompts/skirm87.md`）→
   ~~`0x00990000–0x009AFFFF`~~（已开 render99，SageRender，Grok，base `38a0f6c`）→
-  `0x004D0000` GameLogic 核心 261（Gemini，最难）→ ~~`0x00780000`~~（已开 thing78，Grok，base `4ead699`）→
+  ~~`0x004D0000`~~（已开 logic4d，GameLogic 核心 clean 部分，Gemini，base `a721bfd`）→ ~~`0x00780000`~~（已开 thing78，Grok，base `4ead699`）→
   `0x005D0000` ReliableTransport 等 net 403（锚点 14，Grok）→ `0x008B0000–0x008CFFFF` skirmish AI
   420（锚点 19，Grok）→ `0x00690000` 对象模块 497（锚点 10）→ `0x00790000` AIStates 591（锚点 10）→
   `0x00740000–0x0077FFFF` 对象 update/weapon 783（锚点 31）→ protcave 的 13 个延后入口与剩余
