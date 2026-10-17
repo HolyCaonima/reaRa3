@@ -84,5 +84,12 @@ was restored and a subsequent run reported `cases 77 mismatches 0`.
 All thirteen functions deferred in `recon/protcave` (`0x006A8400`, `0x006C0620`,
 `0x006C2C30`, `0x006C4F10`, `0x006C5480`, `0x006C8380`, `0x006CACE0`,
 `0x006D1DD0`, `0x006E4760`, `0x006EFE40`, `0x006F1350`, `0x0072CF30`,
-`0x007461C0`) are closed and counted in this batch. No functions from the
-selected thirty were deferred or dropped.
+`0x007461C0`) were ported in this batch, and twelve of them are counted.
+
+Controller review: `0x007461C0` stays deferred (empty status; the port, checker
+cases and oracle cases remain). Its cited caller `0x0074634F` is a Ghidra
+mis-split that starts on a `comiss` inside a loop of `0x00746280`, which is the
+real function containing call site `0x007465A4` (its ledger size is truncated
+at the mis-split). The "vtable" `0x00C8CA1C` is a one-slot `data_pointer` table,
+not a constructor-stored vtable. `0x00746280` is reached only from `0x007571D0`
+and `0x00780ED0`, neither of which is anchored, so the batch counts 29.
