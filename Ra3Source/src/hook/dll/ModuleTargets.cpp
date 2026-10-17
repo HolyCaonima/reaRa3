@@ -23,6 +23,7 @@ void appendTerrainLogicTargets(std::vector<Target>& table);
 void appendThingTemplateTargets(std::vector<Target>& table);
 void appendGameLogic7CTargets(std::vector<Target>& table);
 void appendCommonSubsystemTargets(std::vector<Target>& table);
+void appendRender56Targets(std::vector<Target>& table);
 
 void appendModuleTargets(std::vector<Target>& table)
 {
@@ -45,6 +46,7 @@ void appendModuleTargets(std::vector<Target>& table)
     appendThingTemplateTargets(table);
     appendGameLogic7CTargets(table);
     appendCommonSubsystemTargets(table);
+    appendRender56Targets(table);
 }
 
 }  // namespace ra3hook
