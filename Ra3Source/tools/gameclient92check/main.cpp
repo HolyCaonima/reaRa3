@@ -32,6 +32,14 @@ struct TrackInput {
 struct ScoreInput {
     std::size_t clearCalls;
     std::size_t refreshCalls;
+    std::size_t rangeCalls;
+    const std::vector<std::int32_t>* active;
+    const std::vector<std::int32_t>* replacement;
+};
+
+struct ConstructionActions {
+    std::size_t clearCalls;
+    std::size_t refreshCalls;
 };
 
 bool indexedPredicate(void* context, std::size_t index) noexcept
@@ -61,6 +69,16 @@ void refreshTrack(void* context) noexcept
     ++static_cast<TrackInput*>(context)->refreshCalls;
 }
 
+void clearConstruction(void* context) noexcept
+{
+    ++static_cast<ConstructionActions*>(context)->clearCalls;
+}
+
+void refreshConstruction(void* context) noexcept
+{
+    ++static_cast<ConstructionActions*>(context)->refreshCalls;
+}
+
 void clearScores(void* context) noexcept
 {
     ++static_cast<ScoreInput*>(context)->clearCalls;
@@ -68,12 +86,34 @@ void clearScores(void* context) noexcept
 
 void refreshScores(void* context) noexcept
 {
-    ++static_cast<ScoreInput*>(context)->refreshCalls;
+    auto& input = *static_cast<ScoreInput*>(context);
+    ++input.refreshCalls;
+    input.active = input.replacement;
+}
+
+ra3::gameclient::MusicScoreRange scoreRange(void* context) noexcept
+{
+    auto& input = *static_cast<ScoreInput*>(context);
+    ++input.rangeCalls;
+    return {input.active->data(), input.active->size()};
 }
 
 std::uint32_t number(const std::string& text)
 {
     return static_cast<std::uint32_t>(std::stoul(text, nullptr, 0));
+}
+
+std::vector<std::int32_t> scoreList(const std::string& text)
+{
+    std::vector<std::int32_t> result;
+    if (text == "-") {
+        return result;
+    }
+    std::istringstream input(text);
+    for (std::string value; std::getline(input, value, ',');) {
+        result.push_back(static_cast<std::int32_t>(number(value)));
+    }
+    return result;
 }
 
 float floatValue(const std::string& text)
@@ -160,10 +200,12 @@ void construct(const std::vector<std::string>& words)
     }
     MusicConditionObject object{};
     std::memcpy(object.bytes.data(), seed.data(), seed.size());
+    ConstructionActions actions{0, 0};
     const MusicConditionConstructionContext context{
         number(words.at(3)), number(words.at(4)), number(words.at(5)),
         number(words.at(6)), number(words.at(7)), number(words.at(8)) != 0,
-        number(words.at(9)) != 0, number(words.at(10)) != 0};
+        number(words.at(9)) != 0, number(words.at(10)) != 0,
+        &clearConstruction, &refreshConstruction, &actions};
     switch (address) {
     case 0x00924BD0: constructAnyTrackPlaying(object, context); break;
     case 0x00924C00: constructEvaEventPlayedRecently(object, context); break;
@@ -180,14 +222,13 @@ void construct(const std::vector<std::string>& words)
     case 0x009256D0: constructObjectsNearEvaEvent(object, context); break;
     case 0x00925700: constructObjectsOfTypeExist(object, context); break;
     case 0x00925810: constructUnitsFarFromBase(object, context); break;
-    case 0x00925990: constructAndCondition(object, context); break;
-    case 0x00925D70: constructOrCondition(object, context); break;
     case 0x00926130: constructLocalPlayerKillRatio(object, context); break;
     case 0x00926380: constructScoredKillCount(object, context); break;
     default: throw std::runtime_error("unknown constructor");
     }
     printBytes(object.bytes.data(), object.bytes.size());
-    std::cout << '\n';
+    std::cout << ' ' << actions.clearCalls << ' '
+              << actions.refreshCalls << '\n';
 }
 
 void run(const std::vector<std::string>& words)
@@ -282,18 +323,15 @@ void run(const std::vector<std::string>& words)
         const std::uint32_t currentVersion = number(words.at(4));
         const std::int32_t required =
             static_cast<std::int32_t>(number(words.at(5)));
-        std::vector<std::int32_t> scores;
-        for (std::size_t index = 6; index < words.size(); ++index) {
-            scores.push_back(static_cast<std::int32_t>(number(words[index])));
-        }
-        ScoreInput input{0, 0};
+        const std::vector<std::int32_t> initial = scoreList(words.at(6));
+        const std::vector<std::int32_t> replacement = scoreList(words.at(7));
+        ScoreInput input{0, 0, 0, &initial, &replacement};
         const bool result = scoredKillCountSatisfied(
             cachedPlayer, cachedVersion, localPlayer, currentVersion,
-            scores.data(), scores.size(), required,
-            &clearScores, &refreshScores, &input);
+            required, &scoreRange, &clearScores, &refreshScores, &input);
         std::cout << (result ? 1 : 0) << ' ' << cachedPlayer << ' '
                   << cachedVersion << ' ' << input.clearCalls << ' '
-                  << input.refreshCalls << '\n';
+                  << input.refreshCalls << ' ' << input.rangeCalls << '\n';
         return;
     }
     if (words[0] == "cached") {
@@ -346,7 +384,7 @@ int selfCheck()
     using namespace ra3::gameclient;
     std::size_t count = 0;
     const auto* entries = musicReconstructionEntries(count);
-    std::size_t mismatches = count == 53 ? 0 : 1;
+    std::size_t mismatches = count == 51 ? 0 : 1;
     for (std::size_t index = 0; index < count; ++index) {
         const auto& entry = entries[index];
         if (*entry.name == '\0' || *entry.registers == '\0'

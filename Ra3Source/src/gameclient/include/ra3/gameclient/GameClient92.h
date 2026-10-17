@@ -59,6 +59,8 @@ struct MusicConditionObject {
 
 static_assert(sizeof(MusicConditionObject) == 0x70);
 
+using MusicConditionAction = void (*)(void* context) noexcept;
+
 struct MusicConditionConstructionContext {
     std::uint32_t objectAddress;
     std::uint32_t resourceAddress;
@@ -68,6 +70,9 @@ struct MusicConditionConstructionContext {
     bool hasGameClock;
     bool indexedTrackedState;
     bool objectFilterPresent;
+    MusicConditionAction clear;
+    MusicConditionAction refresh;
+    void* actionContext;
 };
 
 void constructAnyTrackPlaying(
@@ -110,12 +115,6 @@ void constructObjectsOfTypeExist(
 void constructUnitsFarFromBase(
     MusicConditionObject& object,
     const MusicConditionConstructionContext& context) noexcept;         // 0x00925810
-void constructAndCondition(
-    MusicConditionObject& object,
-    const MusicConditionConstructionContext& context) noexcept;         // 0x00925990
-void constructOrCondition(
-    MusicConditionObject& object,
-    const MusicConditionConstructionContext& context) noexcept;         // 0x00925D70
 void constructLocalPlayerKillRatio(
     MusicConditionObject& object,
     const MusicConditionConstructionContext& context) noexcept;         // 0x00926130
@@ -126,7 +125,13 @@ void constructScoredKillCount(
 using MusicConditionPredicate = bool (*)(void* context, std::size_t index) noexcept;
 using MusicFrameProvider = std::uint32_t (*)(void* context) noexcept;
 using MusicCountProvider = std::int32_t (*)(void* context) noexcept;
-using MusicConditionAction = void (*)(void* context) noexcept;
+
+struct MusicScoreRange {
+    const std::int32_t* scores;
+    std::size_t count;
+};
+
+using MusicScoreRangeProvider = MusicScoreRange (*)(void* context) noexcept;
 
 enum class MusicComparison : std::uint32_t {
     less = 0,
@@ -168,9 +173,9 @@ bool lastMusicStateSatisfied(
 bool scoredKillCountSatisfied(
     std::uint32_t& cachedPlayer, std::uint32_t& cachedVersion,
     std::uint32_t localPlayer, std::uint32_t currentVersion,
-    const std::int32_t* scores, std::size_t count,
-    std::int32_t required, MusicConditionAction clear,
-    MusicConditionAction refresh, void* context) noexcept;              // 0x00926470
+    std::int32_t required, MusicScoreRangeProvider scores,
+    MusicConditionAction clear, MusicConditionAction refresh,
+    void* context) noexcept;                                            // 0x00926470
 
 bool cachedMusicCondition(
     std::uint32_t& nextCheck, bool& cached,

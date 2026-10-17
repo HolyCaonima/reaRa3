@@ -25838,7 +25838,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009250d0	FUN_009250d0	.text	92		clean	unknown		unanalyzed	
 00925130	FUN_00925130	.text	317	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 00925270	FUN_00925270	.text	30		clean	unknown		unanalyzed	
-00925290	FUN_00925290	.text	94		clean	gameclient	recon/gameclient92	verified	EngagementCount runtime constructor; player-cache and complete seeded write set checked
+00925290	FUN_00925290	.text	94		clean	gameclient	recon/gameclient92	verified	EngagementCount runtime constructor; complete embedded 0x4C record, player cache, write set and refresh callback checked
 009252f0	FUN_009252f0	.text	8		clean	unknown		unanalyzed	
 00925300	FUN_00925300	.text	81		clean	unknown		unanalyzed	
 00925360	FUN_00925360	.text	267		clean	gameclient	recon/gameclient92	verified	HitBySuperWeapon listener constructor; x87 truncate-to-zero duration ticks and embedded self-anchor checked
@@ -25854,25 +25854,25 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009257d0	FUN_009257d0	.text	60		clean	unknown		unanalyzed	
 00925810	FUN_00925810	.text	43		clean	gameclient	recon/gameclient92	verified	UnitsFarFromBase runtime constructor; full seeded write-set/ret 4/EAX differential
 00925840	FUN_00925840	.text	327		clean	unknown		unanalyzed	
-00925990	FUN_00925990	.text	191		clean	gameclient	recon/gameclient92	verified	And runtime constructor empty-list path; vector triplet and complete seeded writes checked
+00925990	FUN_00925990	.text	191		clean	gameclient		reversed	And runtime constructor ownership/layout established; non-empty child allocation and intrusive-refcount path deferred
 00925a60	FUN_00925a60	.text	8		clean	unknown		unanalyzed	
 00925a70	FUN_00925a70	.text	95		clean	unknown		unanalyzed	
 00925ad0	FUN_00925ad0	.text	30		clean	unknown		unanalyzed	
 00925af0	FUN_00925af0	.text	402		clean	unknown		unanalyzed	
 00925c90	FUN_00925c90	.text	218		clean	unknown		unanalyzed	
-00925d70	FUN_00925d70	.text	191		clean	gameclient	recon/gameclient92	verified	Or runtime constructor empty-list path; vector triplet and complete seeded writes checked
+00925d70	FUN_00925d70	.text	191		clean	gameclient		reversed	Or runtime constructor ownership/layout established; non-empty child allocation and intrusive-refcount path deferred
 00925e40	FUN_00925e40	.text	517		clean	unknown		unanalyzed	
 00926050	FUN_00926050	.text	210		clean	unknown		unanalyzed	
-00926130	FUN_00926130	.text	113		clean	gameclient	recon/gameclient92	verified	LocalPlayerKillRatio constructor; embedded 0x34 record/self-anchor and cache writes checked
+00926130	FUN_00926130	.text	113		clean	gameclient	recon/gameclient92	verified	LocalPlayerKillRatio constructor; embedded 0x34 record/self-anchor, cache writes and clear-refresh callbacks checked
 009261b0	FUN_009261b0	.text	8		clean	unknown		unanalyzed	
 009261c0	FUN_009261c0	.text	95		clean	unknown		unanalyzed	
 00926220	FUN_00926220	.text	30		clean	unknown		unanalyzed	
 00926240	FUN_00926240	.text	318		clean	unknown		unanalyzed	
-00926380	FUN_00926380	.text	94		clean	gameclient	recon/gameclient92	verified	ScoredKillCount constructor; vector/player-cache fields and complete seeded writes checked
+00926380	FUN_00926380	.text	94		clean	gameclient	recon/gameclient92	verified	ScoredKillCount constructor; vector/player-cache writes and clear-refresh callbacks checked
 009263e0	FUN_009263e0	.text	8		clean	unknown		unanalyzed	
 009263f0	FUN_009263f0	.text	88		clean	unknown		unanalyzed	
 00926450	FUN_00926450	.text	30		clean	unknown		unanalyzed	
-00926470	FUN_00926470	.text	125		clean	gameclient	recon/gameclient92	verified	ScoredKillCount weighted-record evaluator; cache-valid/stale/invalid clear-refresh branches and signed-wrap vector differential
+00926470	FUN_00926470	.text	125		clean	gameclient	recon/gameclient92	verified	ScoredKillCount weighted-record evaluator; cache-valid/stale/invalid clear-refresh branches, post-refresh range replacement and signed-wrap differential
 009264f0	FUN_009264f0	.text	931		clean	unknown		unanalyzed	
 009268a0	FUN_009268a0	.text	23		clean	unknown		unanalyzed	
 009268c0	FUN_009268c0	.text	13		clean	unknown		unanalyzed	

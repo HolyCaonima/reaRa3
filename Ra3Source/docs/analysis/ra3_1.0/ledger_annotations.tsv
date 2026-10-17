@@ -404,13 +404,13 @@ address	status	owner	module	notes
 00924e20	verified	recon/gameclient92	gameclient	SpecificTrackTypePlaying runtime constructor; full seeded write-set/ret 4/EAX differential
 00924e50	verified	recon/gameclient92	gameclient	TimeFromStartOfLevel runtime constructor; full seeded write-set/ret 4/EAX differential
 00924e90	verified	recon/gameclient92	gameclient	TrackPlayedCount runtime constructor; full seeded write-set/ret 4/EAX differential
-00925290	verified	recon/gameclient92	gameclient	EngagementCount runtime constructor; player-cache and complete seeded write set checked
+00925290	verified	recon/gameclient92	gameclient	EngagementCount runtime constructor; complete embedded 0x4C record, player cache, write set and refresh callback checked
 00925360	verified	recon/gameclient92	gameclient	HitBySuperWeapon listener constructor; x87 truncate-to-zero duration ticks and embedded self-anchor checked
 009256d0	verified	recon/gameclient92	gameclient	ObjectsNearEvaEvent runtime constructor; full seeded write-set/ret 4/EAX differential
 00925700	verified	recon/gameclient92	gameclient	ObjectsOfTypeExist constructor; both 15-slot filter arrays represented and presence byte checked
 00925810	verified	recon/gameclient92	gameclient	UnitsFarFromBase runtime constructor; full seeded write-set/ret 4/EAX differential
-00925990	verified	recon/gameclient92	gameclient	And runtime constructor empty-list path; vector triplet and complete seeded writes checked
-00925d70	verified	recon/gameclient92	gameclient	Or runtime constructor empty-list path; vector triplet and complete seeded writes checked
-00926130	verified	recon/gameclient92	gameclient	LocalPlayerKillRatio constructor; embedded 0x34 record/self-anchor and cache writes checked
-00926380	verified	recon/gameclient92	gameclient	ScoredKillCount constructor; vector/player-cache fields and complete seeded writes checked
-00926470	verified	recon/gameclient92	gameclient	ScoredKillCount weighted-record evaluator; cache-valid/stale/invalid clear-refresh branches and signed-wrap vector differential
+00925990	reversed		gameclient	And runtime constructor ownership/layout established; non-empty child allocation and intrusive-refcount path deferred
+00925d70	reversed		gameclient	Or runtime constructor ownership/layout established; non-empty child allocation and intrusive-refcount path deferred
+00926130	verified	recon/gameclient92	gameclient	LocalPlayerKillRatio constructor; embedded 0x34 record/self-anchor, cache writes and clear-refresh callbacks checked
+00926380	verified	recon/gameclient92	gameclient	ScoredKillCount constructor; vector/player-cache writes and clear-refresh callbacks checked
+00926470	verified	recon/gameclient92	gameclient	ScoredKillCount weighted-record evaluator; cache-valid/stale/invalid clear-refresh branches, post-refresh range replacement and signed-wrap differential

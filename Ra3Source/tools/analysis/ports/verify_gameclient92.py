@@ -24,8 +24,8 @@ TYPE_NAMES = (
 CONSTRUCTORS = (
     0x00924BD0, 0x00924C00, 0x00924C30, 0x00924D10,
     0x00924D90, 0x00924E20, 0x00924E50, 0x00924E90, 0x00925290,
-    0x00925360, 0x009256D0, 0x00925700, 0x00925810, 0x00925990,
-    0x00925D70, 0x00926130, 0x00926380,
+    0x00925360, 0x009256D0, 0x00925700, 0x00925810, 0x00926130,
+    0x00926380,
 )
 BEHAVIOR = (
     0x009236C0, 0x00923970, 0x00923A20, 0x00923A30, 0x00923A50,
@@ -34,7 +34,7 @@ BEHAVIOR = (
     0x00923F80, 0x009241F0, 0x00926470,
 )
 ALL_ENTRIES = frozenset(TYPE_NAMES + CONSTRUCTORS + BEHAVIOR)
-EXPECTED_METADATA_DIGEST = 2955873173
+EXPECTED_METADATA_DIGEST = 2951366512
 
 GAME_CLOCK = 0x00DEBA64
 CHECKS_PER_SECOND = 0x00DEEEE0
@@ -116,7 +116,8 @@ def verify(
     resource = emu.alloc(bytes(0x200))
     event = emu.alloc(bytes(0x100))
     holder = emu.alloc(bytes(0x20))
-    child_storage = emu.alloc(bytes(0x100))
+    child_storage = emu.alloc(bytes(0x400))
+    replacement_storage = emu.alloc(bytes(0x400))
     world = emu.alloc(bytes(0x300))
     client = emu.alloc(bytes(0x100))
     player = emu.alloc(bytes(0x200))
@@ -139,11 +140,23 @@ def verify(
 
     emu.bind_function(0x00929FD0, bind_self_list)
     emu.bind_function(0x0086E260, bind_listener_list)
-    emu.bind_function(0x007E9CB0, lambda _: 0, stack_cleanup=20)
-    emu.bind_function(0x00923780, lambda _: 0)
     emu.bind_function(0x00590200, lambda _: 0, stack_cleanup=4)
-    emu.bind_function(0x00925AF0, lambda _: 0)
-    emu.bind_function(0x00925E40, lambda _: 0)
+    constructor_actions = {"clear": 0, "refresh": 0}
+
+    def clear_constructor_records(_: Emulator) -> int:
+        constructor_actions["clear"] += 1
+        return 0
+
+    def refresh_constructor_records(_: Emulator) -> int:
+        constructor_actions["refresh"] += 1
+        return 0
+
+    emu.bind_function(
+        0x009250D0, clear_constructor_records, stack_cleanup=8)
+    emu.bind_function(0x00923780, refresh_constructor_records)
+    emu.bind_function(0x00925AF0, refresh_constructor_records)
+    emu.bind_function(0x00925E40, refresh_constructor_records)
+
     def copy_typed_state(machine: Emulator) -> int:
         destination = machine.register(x86_const.UC_X86_REG_ECX)
         stack = machine.register(x86_const.UC_X86_REG_ESP)
@@ -221,6 +234,8 @@ def verify(
                 emu.write(
                     GAME_CLOCK,
                     struct.pack("<I", world if has_game_clock else 0))
+                constructor_actions["clear"] = 0
+                constructor_actions["refresh"] = 0
                 try:
                     result = emu.call(
                         address, [resource], eax=0x11223344,
@@ -235,7 +250,8 @@ def verify(
                     f"{local_player} {bits(15.0)} {bits(1.0)} "
                     f"{int(has_game_clock)} {int(indexed)} "
                     f"{int(filter_present)} {duration_bits}")
-                ours = bytes.fromhex(cpp.call(command))
+                output = cpp.call(command).split()
+                ours = bytes.fromhex(output[0])
                 actual = emu.read(obj, 0x70)
                 if mutate_address == address and iteration == 0:
                     ours = bytes((ours[0] ^ 1,)) + ours[1:]
@@ -246,6 +262,12 @@ def verify(
                     raise AssertionError(
                         f"0x{address:08X} constructor writes differ at {differing} "
                         f"game={actual.hex()} ours={ours.hex()}")
+                if constructor_actions["clear"] != int(output[1]):
+                    raise AssertionError(
+                        f"0x{address:08X} constructor clear count")
+                if constructor_actions["refresh"] != int(output[2]):
+                    raise AssertionError(
+                        f"0x{address:08X} constructor refresh count")
             covered.add(address)
         totals["constructors"] = len(CONSTRUCTORS) * constructor_cases
 
@@ -583,8 +605,13 @@ def verify(
              rng.randrange(0, 30))
             for _ in range(score_cases)
         ]
+        score_inputs.insert(1, ([0], 5))
         score_inputs.append(([0x7FFFFFFE, 10, 1], 0x7FFFFFFF))
-        score_actions = {"clear": 0, "refresh": 0}
+        score_actions = {
+            "clear": 0, "refresh": 0,
+            "replacement_begin": replacement_storage,
+            "replacement_end": replacement_storage,
+        }
 
         def clear_scores(_: Emulator) -> int:
             score_actions["clear"] += 1
@@ -592,11 +619,18 @@ def verify(
 
         def refresh_scores(_: Emulator) -> int:
             score_actions["refresh"] += 1
+            emu.write(
+                obj + 0x10,
+                struct.pack(
+                    "<II",
+                    score_actions["replacement_begin"],
+                    score_actions["replacement_end"]))
             return 0
 
         emu.bind_function(0x009250D0, clear_scores, stack_cleanup=8)
         emu.bind_function(0x00925E40, refresh_scores)
         for case_index, (scores, required) in enumerate(score_inputs):
+            replacement_scores = [required] if required > 0 else []
             mode = case_index % 3
             cached_player = player if mode != 2 else 0
             cached_version = 1 if mode == 0 else (0 if mode == 1 else 2)
@@ -613,15 +647,26 @@ def verify(
             records = bytearray(len(scores) * 0x34)
             for index, score in enumerate(scores):
                 struct.pack_into("<I", records, index * 0x34 + 0x24, score)
+            replacement_records = bytearray(len(replacement_scores) * 0x34)
+            for index, score in enumerate(replacement_scores):
+                struct.pack_into(
+                    "<I", replacement_records, index * 0x34 + 0x24, score)
             emu.write(child_storage, bytes(records))
+            emu.write(replacement_storage, bytes(replacement_records))
+            score_actions["replacement_begin"] = replacement_storage
+            score_actions["replacement_end"] = (
+                replacement_storage + len(replacement_records))
             emu.write(
                 obj + 0x10,
                 struct.pack("<II", child_storage, child_storage + len(records)))
             result = emu.call(0x00926470, eax=0x44556600, ecx=obj)
+            encoded_scores = ",".join(str(value) for value in scores) or "-"
+            encoded_replacement = (
+                ",".join(str(value) for value in replacement_scores) or "-")
             command = " ".join((
                 "score", str(cached_player), str(cached_version),
                 str(player), str(current_version), str(required),
-                *(str(value) for value in scores)))
+                encoded_scores, encoded_replacement))
             output = cpp.call(command).split()
             assert_abi(
                 emu, 0x00926470, 0, result, low_byte=int(output[0]))
@@ -632,6 +677,9 @@ def verify(
                 raise AssertionError("score clear count")
             if score_actions["refresh"] != int(output[4]):
                 raise AssertionError("score refresh count")
+            expected_range_calls = 0 if mode == 2 else 1
+            if expected_range_calls != int(output[5]):
+                raise AssertionError("score range provider count")
         covered.add(0x00926470)
         totals["scored-kills"] = len(score_inputs)
 

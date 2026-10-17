@@ -2,7 +2,7 @@
 
 本批重建 `ra3_1.0.game` 的 `MusicScriptingSystem`、
 `MusicScriptConditionFactory` 和 18 种 `MusicScriptConditionNugget_*`
-运行时条件。共 53 个原生入口：20 个运行时类型名、17 个构造入口和 16
+运行时条件。共 51 个原生入口：20 个运行时类型名、15 个构造入口和 16
 个比较、缓存、组合、事件及计数入口。
 
 ## 归属证据
@@ -46,11 +46,11 @@ Generals 仅有基础 `GameMusic` 播放代码：
 00923A70, 00923B70, 00923BE0, 00923BF0, 00923C50, 00923C60,
 00923C70, 00923D30`。
 
-构造入口（17）：
+构造入口（15）：
 
 `00924BD0, 00924C00, 00924C30, 00924D10, 00924D90,
 00924E20, 00924E50, 00924E90, 00925290, 00925360, 009256D0,
-00925700, 00925810, 00925990, 00925D70, 00926130, 00926380`。
+00925700, 00925810, 00926130, 00926380`。
 
 行为与框架辅助（16）：
 
@@ -75,15 +75,15 @@ PathMusic 和 HitBySuperWeapon 的 secondary listener 自锚位于
 - 五种比较操作、精确 epsilon `0x3A83126F` 和浮点位输入；
 - 玩家缓存、事件状态、阈值和 weighted-score 结果。
 
-`musicReconstructionEntries()` 为 53 个入口逐项记录 registers、cleanup、
+`musicReconstructionEntries()` 为 51 个入口逐项记录 registers、cleanup、
 writes、aliases 和 float policy。`--mutation-probe` 翻转一个预期字节并要求
 oracle 拒绝，防止只跑通而未实际比较。
 Ghidra 批量导出漏掉带内联 jump table 的 `00923C80`；它的精确范围为
 `00923C80..00923D27`（168 字节），由 `function_additions.tsv` 补入 ledger，
-因此 canonical ledger 与批次 annotation 均为 53 行。
+因此 canonical ledger 与批次 annotation 均为 51 行。
 
-Debug 和 Release 各执行 3,454 个差分用例，均为零差异；两配置 checker
-也均报告 `53 entries, 0 mismatches`，CTest 均为 3/3。三项 mutation probe
+Debug 和 Release 各执行 3,403 个差分用例，均为零差异；两配置 checker
+也均报告 `51 entries, 0 mismatches`，CTest 均为 3/3。三项 mutation probe
 分别破坏类型名、构造写集和比较结果，三项均被 oracle 拒绝。
 
 ## Hooks
@@ -105,5 +105,6 @@ Debug 和 Release 各执行 3,454 个差分用例，均为零差异；两配置 
 - `00924220` UnitsFarFromBase 和 `009247F0/009248A0` EVA 附近对象查询的
   成功对象图尚未验证；`00925510` superweapon 事件过滤也延后。
 - `00925AF0/00925E40/00926240` 的跨玩家缓存填充及全局音乐状态更新。
-- And/Or 非空资产解析和 allocator/refcount 生命周期保留为框架输入，不挂钩。
+- `00925990/00925D70` And/Or 构造的非空资产解析和
+  allocator/refcount 生命周期整体延后，不把已验证的空列表路径单独计数。
 - 已合并的 `0092A0A0/0092A0D0` CRC、FXPS 和 W3DView 均未触碰。

@@ -253,19 +253,17 @@ constexpr MusicReconstructionEntry kEntries[] = {
     {0x00924E20, "constructSpecificTrackTypePlaying", 4, "EAX", "+0x00..+0x0F selective", "this/resource", MusicEntryFloatPolicy::none},
     {0x00924E50, "constructTimeFromStartOfLevel", 4, "EAX", "+0x00..+0x0F selective", "this/resource", MusicEntryFloatPolicy::none},
     {0x00924E90, "constructTrackPlayedCount", 4, "EAX", "+0x00..+0x0F selective", "this/resource", MusicEntryFloatPolicy::none},
-    {0x00925290, "constructEngagementCount", 4, "EAX", "+0x00..+0x67 selective", "this/resource", MusicEntryFloatPolicy::none},
+    {0x00925290, "constructEngagementCount", 4, "EAX", "+0x00..+0x67 selective; refresh callback", "this/resource/embedded record", MusicEntryFloatPolicy::none},
     {0x00925360, "constructHitBySuperWeapon", 4, "EAX", "+0x00..+0x3F selective", "self anchor", MusicEntryFloatPolicy::x87Intermediate},
     {0x009256D0, "constructObjectsNearEvaEvent", 4, "EAX", "+0x00..+0x14 selective", "this/resource", MusicEntryFloatPolicy::none},
     {0x00925700, "constructObjectsOfTypeExist", 4, "EAX", "+0x00..+0x18 selective", "this/resource", MusicEntryFloatPolicy::none},
     {0x00925810, "constructUnitsFarFromBase", 4, "EAX", "+0x00..+0x14 selective", "this/resource", MusicEntryFloatPolicy::none},
-    {0x00925990, "constructAndCondition", 4, "EAX", "+0x00..+0x18 selective", "this/resource/list", MusicEntryFloatPolicy::none},
-    {0x00925D70, "constructOrCondition", 4, "EAX", "+0x00..+0x18 selective", "this/resource/list", MusicEntryFloatPolicy::none},
-    {0x00926130, "constructLocalPlayerKillRatio", 4, "EAX", "+0x00..+0x58 selective", "this/resource/vector", MusicEntryFloatPolicy::none},
-    {0x00926380, "constructScoredKillCount", 4, "EAX", "+0x00..+0x24 selective", "this/resource/vector", MusicEntryFloatPolicy::none},
+    {0x00926130, "constructLocalPlayerKillRatio", 4, "EAX", "+0x00..+0x58 selective; clear/refresh callbacks", "this/resource/vector/embedded record", MusicEntryFloatPolicy::none},
+    {0x00926380, "constructScoredKillCount", 4, "EAX", "+0x00..+0x24 selective; clear/refresh callbacks", "this/resource/vector", MusicEntryFloatPolicy::none},
     {0x00926470, "scoredKillCountSatisfied", 0, "AL", "+0x20,+0x24 and clear/refresh conditional", "this/resource/vector/callback", MusicEntryFloatPolicy::none},
 };
 
-static_assert(sizeof(kEntries) / sizeof(kEntries[0]) == 53);
+static_assert(sizeof(kEntries) / sizeof(kEntries[0]) == 51);
 
 }  // namespace
 
@@ -439,8 +437,28 @@ void constructEngagementCount(
     constructSimple(object, context, 0x00C56B38, 0x00C56B28);
     write32(object, 0x10, 0);
     write8(object, 0x14, 0);
+    write32(object, 0x18, 0x00C35008);
+    write32(object, 0x1C, 0x00C35000);
+    write32(object, 0x20, context.objectAddress + 0x20);
+    write32(object, 0x24, context.objectAddress + 0x20);
+    write32(object, 0x28, 1);
+    write32(object, 0x2C, 0);
+    write32(object, 0x30, 0x000FFFFF);
+    write32(object, 0x34, 0x000FFFFF);
+    write32(object, 0x38, 2);
+    write32(object, 0x40, context.objectAddress + 0x40);
+    write32(object, 0x44, context.objectAddress + 0x40);
+    write32(object, 0x48, 0);
+    write32(object, 0x4C, 0);
+    write32(object, 0x50, 0);
+    write32(object, 0x58, 0);
+    write32(object, 0x5C, 0);
+    write32(object, 0x60, 0);
     write32(object, 0x64, 0);
     write32(object, 0x64, context.localPlayer);
+    if (context.refresh != nullptr) {
+        context.refresh(context.actionContext);
+    }
 }
 
 void constructHitBySuperWeapon(
@@ -503,26 +521,6 @@ void constructUnitsFarFromBase(
     write8(object, 0x14, 0);
 }
 
-void constructAndCondition(
-    MusicConditionObject& object,
-    const MusicConditionConstructionContext& context) noexcept
-{
-    constructSimple(object, context, 0x00C56BE0, 0x00C56BD0);
-    write32(object, 0x10, 0);
-    write32(object, 0x14, 0);
-    write32(object, 0x18, 0);
-}
-
-void constructOrCondition(
-    MusicConditionObject& object,
-    const MusicConditionConstructionContext& context) noexcept
-{
-    constructSimple(object, context, 0x00C56C00, 0x00C56BF0);
-    write32(object, 0x10, 0);
-    write32(object, 0x14, 0);
-    write32(object, 0x18, 0);
-}
-
 void constructLocalPlayerKillRatio(
     MusicConditionObject& object,
     const MusicConditionConstructionContext& context) noexcept
@@ -545,8 +543,14 @@ void constructLocalPlayerKillRatio(
     write32(object, 0x50, 0);
     write32(object, 0x54, 0);
     write32(object, 0x58, 0);
+    if (context.clear != nullptr) {
+        context.clear(context.actionContext);
+    }
     write32(object, 0x54, context.localPlayer);
     write32(object, 0x58, 0);
+    if (context.refresh != nullptr) {
+        context.refresh(context.actionContext);
+    }
 }
 
 void constructScoredKillCount(
@@ -559,8 +563,14 @@ void constructScoredKillCount(
     write32(object, 0x18, 0);
     write32(object, 0x20, 0);
     write32(object, 0x24, 0);
+    if (context.clear != nullptr) {
+        context.clear(context.actionContext);
+    }
     write32(object, 0x20, context.localPlayer);
     write32(object, 0x24, 0);
+    if (context.refresh != nullptr) {
+        context.refresh(context.actionContext);
+    }
 }
 
 bool compareMusicValue(
@@ -669,9 +679,9 @@ bool lastMusicStateSatisfied(
 bool scoredKillCountSatisfied(
     std::uint32_t& cachedPlayer, std::uint32_t& cachedVersion,
     std::uint32_t localPlayer, std::uint32_t currentVersion,
-    const std::int32_t* scores, std::size_t count,
-    std::int32_t required, MusicConditionAction clear,
-    MusicConditionAction refresh, void* context) noexcept
+    std::int32_t required, MusicScoreRangeProvider scores,
+    MusicConditionAction clear, MusicConditionAction refresh,
+    void* context) noexcept
 {
     if (cachedPlayer != localPlayer || currentVersion < cachedVersion) {
         clear(context);
@@ -683,10 +693,11 @@ bool scoredKillCountSatisfied(
     if (cachedVersion < currentVersion) {
         refresh(context);
     }
+    const MusicScoreRange range = scores(context);
     std::uint32_t totalBits = 0;
     std::int32_t total = 0;
-    for (std::size_t index = 0; index < count && total < required; ++index) {
-        totalBits += static_cast<std::uint32_t>(scores[index]);
+    for (std::size_t index = 0; index < range.count && total < required; ++index) {
+        totalBits += static_cast<std::uint32_t>(range.scores[index]);
         std::memcpy(&total, &totalBits, sizeof(total));
     }
     return required <= total;
