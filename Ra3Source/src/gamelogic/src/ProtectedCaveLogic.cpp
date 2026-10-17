@@ -3,1099 +3,632 @@
 #include <cstring>
 
 namespace ra3::gamelogic {
-
 namespace {
 
-std::uint32_t floatToBits(float v) {
-    std::uint32_t bits = 0U;
-    std::memcpy(&bits, &v, sizeof(bits));
-    return bits;
+std::uint32_t load32(const std::uint8_t* p) {
+    std::uint32_t v = 0;
+    std::memcpy(&v, p, 4);
+    return v;
+}
+
+void store32(std::uint8_t* p, std::uint32_t v) {
+    std::memcpy(p, &v, 4);
+}
+
+float loadF(const std::uint8_t* p) {
+    float v = 0.0f;
+    std::memcpy(&v, p, 4);
+    return v;
+}
+
+void storeF(std::uint8_t* p, float v) {
+    std::memcpy(p, &v, 4);
+}
+
+std::uint8_t* slot(CaveState& st, std::uint32_t addr) {
+    return st.image + (addr - kCaveImageBase);
+}
+
+bool inImage(std::uint32_t addr) {
+    return addr >= kCaveImageBase && addr + 4 <= kCaveImageBase + kCaveImageSize;
+}
+
+// x87 reciprocal of a 32-bit magnitude, matching fild / optional +2^32 / fld1 / fdivrp / fstp.
+float recipX87(std::uint32_t magnitude) {
+    float recip = 0.0f;
+#if defined(_M_IX86)
+    const float two32 = 4294967296.0f;
+    __asm {
+        fild dword ptr magnitude
+        test dword ptr magnitude, 0x80000000
+        jns positive
+        fadd dword ptr two32
+    positive:
+        fld1
+        fdivrp st(1), st(0)
+        fstp dword ptr recip
+    }
+#else
+    const float adjusted = (magnitude & 0x80000000u) != 0u
+                               ? static_cast<float>(static_cast<double>(static_cast<std::int32_t>(magnitude)) + 4294967296.0)
+                               : static_cast<float>(static_cast<std::int32_t>(magnitude));
+    recip = 1.0f / adjusted;
+#endif
+    return recip;
+}
+
+bool releaseRef(CaveState& st, std::uint32_t obj) {
+    if (obj == 0u) {
+        return false;
+    }
+    const std::uint32_t next = caveRead32(st, obj + 4u) - 1u;
+    caveWrite32(st, obj + 4u, next);
+    if (static_cast<std::int32_t>(next) > 0) {
+        return false;
+    }
+    const std::uint32_t vt = caveRead32(st, obj);
+    const std::uint32_t dtor = caveRead32(st, vt);
+    st.eax = caveCall(st, dtor, obj, 1u, 0u, 0u, 1);
+    st.edx = vt;
+    return true;
+}
+
+std::uint32_t classifyMask(CaveState& st, std::uint32_t target) {
+    const std::uint32_t tmpl = caveRead32(st, target + 4u);
+    st.eax = tmpl;
+    st.edx = target;
+    const std::uint32_t c4 = caveRead32(st, tmpl + 0xC4u);
+    if (((c4 >> 24) & 1u) != 0u) {
+        return 0x201u;
+    }
+    if (((c4 >> 21) & 1u) != 0u) {
+        return 0x20u;
+    }
+    const std::uint32_t c8 = caveRead32(st, tmpl + 0xC8u);
+    if (((c8 >> 11) & 1u) != 0u) {
+        return 0x100u;
+    }
+    const std::uint32_t c0 = caveRead32(st, tmpl + 0xC0u);
+    if (((c0 >> 26) & 1u) != 0u) {
+        st.eax = c0 >> 26;
+        return 0x10u;
+    }
+    std::uint32_t mask = 0u;
+    const std::uint32_t flags80 = caveRead32(st, target + 0x80u);
+    if (((flags80 >> 7) & 1u) != 0u) {
+        const std::uint32_t flags98 = caveRead32(st, target + 0x98u);
+        st.eax = flags98 >> 19;
+        st.edx = tmpl;
+        if (((flags98 >> 19) & 1u) != 0u) {
+            mask |= 0x800u;
+        }
+        const std::uint32_t d8 = caveRead32(st, tmpl + 0xD8u);
+        const std::uint32_t c0b = caveRead32(st, tmpl + 0xC0u);
+        if (((d8 >> 12) & 1u) != 0u || ((c0b >> 11) & 1u) != 0u || ((c0b >> 14) & 1u) != 0u) {
+            return mask | 0x2040u;
+        }
+        st.eax = c0b >> 10;
+        if ((st.eax & 1u) != 0u) {
+            return mask | 0x1080u;
+        }
+        const std::uint32_t c8b = caveRead32(st, tmpl + 0xC8u);
+        st.edx = c8b >> 14;
+        if ((st.edx & 1u) != 0u) {
+            return mask | 0x400u;
+        }
+        return mask;
+    }
+    const std::uint8_t byte98 = caveRead8(st, target + 0x98u);
+    if ((byte98 & 1u) != 0u) {
+        mask |= 4u;
+    } else {
+        const std::uint32_t air = caveCall(st, 0x006A6070u, target, 0u, 0u, 0u, 0);
+        if ((air & 0xFFu) != 0u) {
+            mask |= 2u;
+        } else {
+            const std::uint32_t water = caveCall(st, 0x006875D0u, target, 0u, 0u, 0u, 0);
+            if ((water & 0xFFu) != 0u) {
+                mask |= 2u;
+            } else if (((c0 >> 9) & 1u) != 0u) {
+                mask |= 8u;
+                const float x = caveReadF32(st, target + 0x38u);
+                const float y = caveReadF32(st, target + 0x3Cu);
+                const float z = caveReadF32(st, target + 0x40u);
+                std::uint32_t xb = 0u;
+                std::uint32_t yb = 0u;
+                std::uint32_t zb = 0u;
+                std::memcpy(&xb, &x, 4);
+                std::memcpy(&yb, &y, 4);
+                std::memcpy(&zb, &z, 4);
+                const std::uint32_t over = caveCall(st, 0x0085CBC0u, caveRead32(st, 0x00DFC198u), xb, yb, zb, 3);
+                st.eax = over;
+                mask |= ((over & 0xFFu) != 0u) ? 2u : 1u;
+                return mask;
+            } else {
+                mask |= 1u;
+            }
+        }
+    }
+    st.edx = tmpl;
+    const std::uint32_t tailC0 = caveRead32(st, tmpl + 0xC0u);
+    st.eax = tailC0 >> 10;
+    if ((st.eax & 1u) != 0u) {
+        return mask | 0x1000u;
+    }
+    const std::uint32_t tailD8 = caveRead32(st, tmpl + 0xD8u);
+    if (((tailD8 >> 12) & 1u) != 0u) {
+        return mask | 0x2000u;
+    }
+    return mask;
 }
 
 }  // namespace
 
-// 0x00695550
-std::uint32_t constructBehaviorModule00C01108(
-    std::uint32_t selfPtr,
-    std::uint32_t thingPtr,
-    std::uint32_t resolvedOwnerPtr,
-    std::uint32_t moduleDataPtr,
-    BehaviorModule00C01108Layout& out) {
-    out.words[0] = 0x00C01108U;
-    out.words[1] = moduleDataPtr;
-    out.words[2] = (thingPtr != 0U) ? resolvedOwnerPtr : 0U;
-    // Cave 0x004037D6 writes [esi+0x0C] = 0x00BDB9A8, then 0x006955A4 overwrites with 0x00C00FD8.
-    out.words[3] = 0x00C00FD8U;
-    out.words[4] = 0x00C00F30U;
-    out.words[5] = 0x00C00F18U;
-    out.words[6] = 0x00C00F10U;
-    out.words[7] = 0x00C01168U;
-    out.words[8] = selfPtr + 0x20U;
-    out.words[9] = selfPtr + 0x20U;
-    out.words[10] = 0x00C00F0CU;
-    out.words[11] = 0U;
-    out.words[12] = 0x7FFFFFFFU;
-    out.words[13] = 0U;
-    out.words[14] = 0U;
-    out.words[15] = 0U;
-    out.words[16] &= 0xFFFFFF00U;
-    out.words[17] = 0U;
-    out.words[18] &= 0xFFFF0000U;
-    return selfPtr;
+std::uint32_t caveRead32(CaveState& st, std::uint32_t addr) {
+    if (inImage(addr)) {
+        return load32(slot(st, addr));
+    }
+    for (int i = 0; i < st.globalCount; ++i) {
+        if (st.globalAddr[i] == addr) {
+            return st.globalVal[i];
+        }
+    }
+    return 0u;
 }
 
-// 0x00699780
-bool hasActiveSubController(
-    std::uint32_t state21C,
-    bool hasSubController,
-    std::uint32_t ptr10,
-    std::uint32_t ptr24,
-    std::int32_t& cachedState38,
-    std::uint32_t firstNodeTag20) {
-    if (state21C != 1U && state21C != 4U) {
-        return false;
+void caveWrite32(CaveState& st, std::uint32_t addr, std::uint32_t value) {
+    if (inImage(addr)) {
+        store32(slot(st, addr), value);
+        return;
     }
-    if (!hasSubController || ptr10 == 0U || ptr24 == 0U) {
-        return false;
+    for (int i = 0; i < st.globalCount; ++i) {
+        if (st.globalAddr[i] == addr) {
+            st.globalVal[i] = value;
+            return;
+        }
     }
-    if (cachedState38 >= 0) {
-        return cachedState38 > 0;
-    }
-    cachedState38 = (firstNodeTag20 != 0x7FFFFFFFU) ? 1 : 0;
-    return cachedState38 > 0;
 }
 
-// 0x0069E780
-std::int32_t computePartitionModifierCount(
-    bool hasOwner,
-    bool hasControllingPlayer,
-    bool hasSpec,
-    std::uint32_t specMode,
-    std::int32_t mode1Count,
-    std::int32_t mode2Count,
-    bool hasModifierList,
-    bool modifierApplied,
-    float modifierDivisor) {
-    if (!hasOwner || !hasControllingPlayer || !hasSpec) {
-        return 1;
+std::uint8_t caveRead8(CaveState& st, std::uint32_t addr) {
+    if (addr >= kCaveImageBase && addr < kCaveImageBase + kCaveImageSize) {
+        return st.image[addr - kCaveImageBase];
     }
-    std::int32_t result = 1;
-    if (specMode == 1U) {
-        result = mode1Count;
-    } else if (specMode == 2U) {
-        result = mode2Count;
+    return static_cast<std::uint8_t>(caveRead32(st, addr & ~3u) >> ((addr & 3u) * 8u));
+}
+
+void caveWrite8(CaveState& st, std::uint32_t addr, std::uint8_t value) {
+    if (addr >= kCaveImageBase && addr < kCaveImageBase + kCaveImageSize) {
+        st.image[addr - kCaveImageBase] = value;
     }
-    if (hasModifierList && modifierApplied) {
-        result = static_cast<std::int32_t>(static_cast<float>(result) / modifierDivisor);
+}
+
+float caveReadF32(CaveState& st, std::uint32_t addr) {
+    const std::uint32_t bits = caveRead32(st, addr);
+    float v = 0.0f;
+    std::memcpy(&v, &bits, 4);
+    return v;
+}
+
+void caveWriteF32(CaveState& st, std::uint32_t addr, float value) {
+    std::uint32_t bits = 0u;
+    std::memcpy(&bits, &value, 4);
+    caveWrite32(st, addr, bits);
+}
+
+std::uint32_t caveCall(CaveState& st, std::uint32_t target, std::uint32_t ecx,
+                       std::uint32_t a0, std::uint32_t a1, std::uint32_t a2, int nstack) {
+    const std::uint32_t result = st.retPos < st.retCount ? st.rets[st.retPos++] : 0u;
+    if (st.callCount < static_cast<int>(sizeof(st.calls) / sizeof(st.calls[0]))) {
+        CaveCall& row = st.calls[st.callCount++];
+        row.target = target;
+        row.ecx = ecx;
+        row.a0 = a0;
+        row.a1 = a1;
+        row.a2 = a2;
+        row.nstack = static_cast<std::uint32_t>(nstack);
+        row.result = result;
     }
     return result;
 }
 
-// 0x006A51A0
-std::uint32_t queryObjectSubModule(
-    bool hasContainer37C,
-    const SubModuleEntry* entries,
-    std::size_t entryCount,
-    std::int32_t targetTag) {
-    if (!hasContainer37C || entries == nullptr) {
-        return 0U;
-    }
-    for (std::size_t i = 0; i < entryCount; ++i) {
-        const SubModuleEntry& e = entries[i];
-        bool matched = (e.tag == targetTag);
-        if (!matched && targetTag == -1) {
-            matched = (e.wildcardPredicateResult != 0U);
-        }
-        if (matched && e.interfaceResult != 0U) {
-            return e.interfaceResult;
-        }
-    }
-    return 0U;
-}
-
-// 0x006A5FA0
-bool isObjectEligibleForStatusQuery(
-    std::uint8_t flags471,
-    std::uint32_t flags80,
-    std::uint8_t tmplFlagsC7,
-    std::uint32_t tmplFlagsC0,
-    std::uint32_t flagsB4,
-    std::uint32_t statusWord26C,
-    std::uint32_t flags84,
-    std::uint8_t filterByte0,
-    std::uint8_t filterByte1,
-    std::uint8_t filterByte2,
-    std::uint8_t modeFlag) {
-    if ((flags471 & 0x01U) != 0U) {
-        return false;
-    }
-    if ((flags80 & 0x01U) != 0U) {
-        return false;
-    }
-    if ((tmplFlagsC7 & 0x01U) != 0U) {
-        return false;
-    }
-    if (filterByte0 != 0U && ((tmplFlagsC0 >> 9U) & 1U) != 0U) {
-        if (((flagsB4 >> 7U) & 1U) != 0U || ((flagsB4 >> 8U) & 1U) != 0U) {
-            return false;
-        }
-    }
-    if (modeFlag != 0U) {
-        if (filterByte1 != 0U && ((statusWord26C >> 6U) & 1U) != 0U) {
-            return false;
-        }
-    } else {
-        if (filterByte1 != 0U &&
-            (((statusWord26C >> 2U) & 1U) != 0U || ((statusWord26C >> 6U) & 1U) != 0U)) {
-            return false;
-        }
-    }
-    if (filterByte2 != 0U && ((flags84 >> 23U) & 1U) != 0U) {
-        return false;
-    }
-    return true;
-}
-
-// 0x006A6460
-void unregisterObjectFromSubsystems(
-    std::uint8_t& flag4D8,
-    std::uint8_t& flag4D7,
-    std::uint8_t skip4D8Arg,
-    bool hasSub9C,
-    std::uint32_t tmplFlagsC8,
-    bool hasSub4E4,
-    bool hasSub4E8,
-    bool hasGlobalDFC044,
-    bool hasControllingPlayer418,
-    std::uint32_t& outCallMask) {
-    outCallMask = 0U;
-    if (flag4D8 != 0U && skip4D8Arg != 1U) {
-        outCallMask |= 0x01U;
-        flag4D8 = 0U;
-    }
-    if (flag4D7 != 0U) {
-        if (hasSub9C) {
-            outCallMask |= 0x02U;
-        }
-        if (((tmplFlagsC8 >> 25U) & 1U) == 0U) {
-            if (hasSub4E4) {
-                outCallMask |= 0x04U;
-            }
-            if (hasSub4E8) {
-                outCallMask |= 0x08U;
-            }
-            if (hasGlobalDFC044) {
-                outCallMask |= 0x10U;
-            }
-        }
-        if (hasControllingPlayer418) {
-            outCallMask |= 0x20U;
-        }
-        flag4D7 = 0U;
+void runClearNonZeroStatusWord(CaveState& st) {
+    const std::uint32_t self = kCaveImageBase;
+    st.eax = 0u;
+    st.edx = 0u;
+    st.cleanup = 0;
+    if (caveRead32(st, self + 0x26Cu) != 0u) {
+        caveWrite32(st, self + 0x26Cu, 0u);
     }
 }
 
-// 0x006A6DC0
-void updateObjectPositionDelta(
-    std::uint8_t flag236,
-    std::uint8_t flag234,
-    std::uint8_t flag235,
-    std::uint32_t lastFrame218,
-    std::uint32_t currentFrame,
-    const float pos38[3],
-    const float vel1F4_204_214[3],
-    const float prevPos21C[3],
-    const float targetPos228[3],
-    float outDelta[3]) {
-    if (flag236 != 0U) {
-        outDelta[0] = targetPos228[0] - pos38[0];
-        outDelta[1] = targetPos228[1] - pos38[1];
-        outDelta[2] = targetPos228[2] - pos38[2];
+void runObjectControllingPlayer(CaveState& st) {
+    const std::uint32_t self = kCaveImageBase;
+    st.edx = 0u;
+    st.cleanup = 0;
+    const std::uint32_t direct = caveRead32(st, self + 0x328u);
+    if (direct != 0u) {
+        st.eax = direct;
         return;
     }
-    if (flag234 != 0U && lastFrame218 < currentFrame) {
-        const std::uint32_t dt = currentFrame - lastFrame218;
-        const float invDt = static_cast<float>(1.0 / static_cast<double>(dt));
-        outDelta[0] = (pos38[0] + vel1F4_204_214[0] * (-1.0f)) * invDt;
-        outDelta[1] = (pos38[1] + vel1F4_204_214[1] * (-1.0f)) * invDt;
-        outDelta[2] = (pos38[2] + vel1F4_204_214[2] * (-1.0f)) * invDt;
-        return;
-    }
-    if (flag235 != 0U && lastFrame218 <= currentFrame) {
-        const std::uint32_t dt = (currentFrame - lastFrame218) + 1U;
-        const float invDt = static_cast<float>(1.0 / static_cast<double>(dt));
-        outDelta[0] = (pos38[0] - prevPos21C[0]) * invDt;
-        outDelta[1] = (pos38[1] - prevPos21C[1]) * invDt;
-        outDelta[2] = (pos38[2] - prevPos21C[2]) * invDt;
-        return;
-    }
-    outDelta[0] = 0.0f;
-    outDelta[1] = 0.0f;
-    outDelta[2] = 0.0f;
+    const std::uint32_t begin = caveRead32(st, self + 0x32Cu);
+    const std::uint32_t end = caveRead32(st, self + 0x330u);
+    st.eax = (begin != end) ? caveRead32(st, begin) : 0u;
 }
 
-// 0x006A7600
-std::uint32_t getObjectControllingPlayer(
-    std::uint32_t directPtr328,
-    std::uint32_t listBegin32C,
-    std::uint32_t listEnd330,
-    std::uint32_t firstListElem) {
-    if (directPtr328 != 0U) {
-        return directPtr328;
+void runQueryContainedModule(CaveState& st, std::uint32_t tag) {
+    const std::uint32_t self = kCaveImageBase;
+    st.edx = 0u;
+    st.cleanup = 4;
+    const std::uint32_t container = caveRead32(st, self + 0x37Cu);
+    if (container == 0u) {
+        st.eax = 0u;
+        return;
     }
-    return (listBegin32C != listEnd330) ? firstListElem : 0U;
+    st.eax = caveCall(st, 0x006A1720u, container, 0u, tag, 0u, 2);
 }
 
-// 0x006A8400
-void notifyActiveBodyMaxHealthChanged(
-    std::uint32_t state1C,
-    std::uint32_t threshold70,
-    std::uint32_t eventBC,
-    std::uint32_t eventC0,
-    std::uint32_t ownerId0C,
-    std::uint32_t& outSelectedEvent,
-    std::uint32_t& outBoundOwnerId,
-    bool& outDispatched) {
-    outSelectedEvent = (state1C < threshold70) ? eventBC : eventC0;
-    outBoundOwnerId = ownerId0C;
-    outDispatched = true;
-}
-
-// 0x006B7040
-void assignAIUpdateTargetRef(
-    std::uint32_t& currentTargetPtr,
-    std::int32_t& oldTargetRefCount,
-    bool& oldTargetDestroyed,
-    std::uint8_t& flag428,
-    std::uint8_t& flag432,
-    std::uint32_t newTargetPtr,
-    std::int32_t& newTargetRefCount,
-    bool& newTargetDestroyed,
-    bool& vtable270Called,
-    bool& helper6B6900Called) {
-    oldTargetDestroyed = false;
-    newTargetDestroyed = false;
-    if (currentTargetPtr != 0U) {
-        --oldTargetRefCount;
-        if (oldTargetRefCount <= 0) {
-            oldTargetDestroyed = true;
-        }
-        currentTargetPtr = 0U;
-    }
-    flag428 = 0U;
-    flag432 = 0U;
-    vtable270Called = true;
-    currentTargetPtr = newTargetPtr;
-    if (newTargetPtr != 0U) {
-        ++newTargetRefCount;
-        ++newTargetRefCount;
-    }
-    helper6B6900Called = true;
-    if (newTargetPtr != 0U) {
-        --newTargetRefCount;
-        if (newTargetRefCount <= 0) {
-            newTargetDestroyed = true;
-        }
-    }
-}
-
-// 0x006BB360
-void classifyObjectSurfaceAndKindMask(
-    std::uint32_t kindOfC0,
-    std::uint32_t kindOfC4,
-    std::uint32_t kindOfC8,
-    std::uint32_t kindOfD8,
-    std::uint32_t status80,
-    std::uint32_t status94,
-    std::uint32_t status98,
-    bool aiAirborne6875D0,
-    bool isOverWater85CBC0,
-    std::uint32_t& outMask) {
-    outMask = 0U;
-    if (((kindOfC4 >> 24U) & 1U) != 0U) {
-        outMask |= 0x0201U;
-        return;
-    }
-    if (((kindOfC4 >> 21U) & 1U) != 0U) {
-        outMask |= 0x0020U;
-        return;
-    }
-    if (((kindOfC8 >> 11U) & 1U) != 0U) {
-        outMask |= 0x0100U;
-        return;
-    }
-    if (((kindOfC0 >> 26U) & 1U) != 0U) {
-        outMask |= 0x0010U;
-        return;
-    }
-    if (((status80 >> 7U) & 1U) != 0U) {
-        if (((status98 >> 19U) & 1U) != 0U) {
-            outMask |= 0x0800U;
-        }
-        if (((kindOfD8 >> 12U) & 1U) != 0U ||
-            ((kindOfC0 >> 11U) & 1U) != 0U ||
-            ((kindOfC0 >> 14U) & 1U) != 0U) {
-            outMask |= 0x2040U;
+void runSubControllerStateActive(CaveState& st) {
+    const std::uint32_t self = kCaveImageBase;
+    st.edx = 0u;
+    st.cleanup = 0;
+    std::uint32_t eax = caveRead32(st, self + 0x21Cu);
+    eax -= 1u;
+    if (eax != 0u) {
+        eax -= 3u;
+        if (eax != 0u) {
+            st.eax = eax & 0xFFFFFF00u;
             return;
         }
-        if (((kindOfC0 >> 10U) & 1U) != 0U) {
-            outMask |= 0x1080U;
+    }
+    const std::uint32_t sub = caveRead32(st, self + 0x150u);
+    if (sub == 0u) {
+        st.eax = eax & 0xFFFFFF00u;
+        return;
+    }
+    const std::uint32_t helper = caveCall(st, 0x00631C20u, sub, 0u, 0u, 0u, 0);
+    if ((helper & 0xFFu) == 0u) {
+        st.eax = helper & 0xFFFFFF00u;
+        return;
+    }
+    st.eax = (helper & 0xFFFFFF00u) | 1u;
+}
+
+void runClassifyObjectKindMask(CaveState& st, std::uint32_t target, std::uint32_t outMask) {
+    st.cleanup = 0;
+    const std::uint32_t mask = classifyMask(st, target);
+    caveWrite32(st, outMask, mask);
+}
+
+void runObjectPassesKindFilter(CaveState& st, std::uint32_t target) {
+    const std::uint32_t self = kCaveImageBase;
+    st.edx = 0u;
+    st.cleanup = 4;
+    const std::uint32_t mask = classifyMask(st, target);
+    const std::uint32_t module = caveRead32(st, self + 4u);
+    const std::uint32_t helper = caveCall(st, 0x00688B40u, module + 0xD0u, mask, 0u, 0u, 1);
+    if ((helper & 0xFFu) != 0u) {
+        st.eax = helper & 0xFFFFFF00u;
+        st.edx = 0u;
+        return;
+    }
+    st.edx = mask;
+    const std::uint32_t forbidden = caveRead32(st, module + 0xD4u);
+    if ((forbidden & mask) != 0u) {
+        st.eax = 0u;
+        return;
+    }
+    st.eax = 1u;
+}
+
+void runFindBehaviorModuleByKey(CaveState& st, std::uint32_t key) {
+    const std::uint32_t self = kCaveImageBase;
+    st.edx = 0u;
+    st.cleanup = 4;
+    if (caveRead32(st, self + 0x310u) == 0u || caveRead32(st, self + 0x3C0u) == 0u) {
+        st.eax = 0u;
+        return;
+    }
+    if (key == 0xFFFFFFFFu) {
+        const std::uint32_t node = caveRead32(st, self + 0x3B4u);
+        st.eax = caveRead32(st, node + 0x14u);
+        return;
+    }
+    const std::uint32_t iter = caveCall(st, 0x00AAFE10u, self + 0x3ACu, key, 0u, 0u, 2);
+    st.eax = (iter != self + 0x3B0u) ? caveRead32(st, iter + 0x14u) : 0u;
+}
+
+void runUnregisterObjectSubsystems(CaveState& st, std::uint32_t skipFlag) {
+    const std::uint32_t self = kCaveImageBase;
+    st.edx = 0u;
+    st.cleanup = 4;
+    st.eax = 0u;
+    if (caveRead8(st, self + 0x4D8u) != 0u && skipFlag != 1u) {
+        st.eax = caveCall(st, 0x004F9950u, caveRead32(st, 0x00DEBA88u), self, 0u, 0u, 1);
+        caveWrite8(st, self + 0x4D8u, 0u);
+    }
+    if (caveRead8(st, self + 0x4D7u) == 0u) {
+        return;
+    }
+    const std::uint32_t sub9c = caveRead32(st, self + 0x9Cu);
+    if (sub9c != 0u) {
+        st.eax = caveCall(st, 0x0098C370u, sub9c, 0u, 0u, 0u, 0);
+    }
+    const std::uint32_t tmpl = caveRead32(st, self + 4u);
+    const std::uint32_t flags = caveRead32(st, tmpl + 0xC8u);
+    if (((flags >> 25) & 1u) == 0u) {
+        if (caveRead32(st, self + 0x4E4u) != 0u) {
+            st.edx = self + 0x6Cu;
+            st.eax = caveCall(st, 0x00990690u, caveRead32(st, 0x00DF609Cu), self + 0x6Cu, 0u, 0u, 1);
+        }
+        if (caveRead32(st, self + 0x4E8u) != 0u) {
+            st.eax = caveCall(st, 0x009939C0u, caveRead32(st, 0x00DF60A4u), self + 0x74u, 0u, 0u, 1);
+        }
+        const std::uint32_t global = caveRead32(st, 0x00DFC044u);
+        if (global != 0u) {
+            st.eax = caveCall(st, 0x0081B300u, global, self, 0u, 0u, 1);
+        }
+    }
+    const std::uint32_t player = caveRead32(st, self + 0x418u);
+    if (player != 0u) {
+        st.eax = caveCall(st, 0x007E16A0u, player, self, 0u, 0u, 1);
+    }
+    caveWrite8(st, self + 0x4D7u, 0u);
+}
+
+void runObjectPositionStep(CaveState& st, std::uint32_t outPtr) {
+    const std::uint32_t self = kCaveImageBase;
+    st.cleanup = 4;
+    st.eax = outPtr;
+    st.edx = 0u;
+    auto writeOut = [&](float x, float y, float z) {
+        caveWriteF32(st, outPtr, x);
+        caveWriteF32(st, outPtr + 4u, y);
+        caveWriteF32(st, outPtr + 8u, z);
+    };
+    if (caveRead8(st, self + 0x236u) != 0u) {
+        writeOut(caveReadF32(st, self + 0x228u) - caveReadF32(st, self + 0x38u),
+                 caveReadF32(st, self + 0x22Cu) - caveReadF32(st, self + 0x3Cu),
+                 caveReadF32(st, self + 0x230u) - caveReadF32(st, self + 0x40u));
+        return;
+    }
+    const std::uint32_t glob = caveRead32(st, 0x00DEBA64u);
+    if (caveRead8(st, self + 0x234u) != 0u) {
+        const std::uint32_t last = caveRead32(st, self + 0x218u);
+        const std::uint32_t current = caveRead32(st, glob + 0x58u);
+        st.edx = last;
+        if (last < current) {
+            const float inv = recipX87(current - last);
+            const float x = (caveReadF32(st, self + 0x38u) + caveReadF32(st, self + 0x1F4u) * -1.0f) * inv;
+            const float y = (caveReadF32(st, self + 0x3Cu) + caveReadF32(st, self + 0x204u) * -1.0f) * inv;
+            const float z = (caveReadF32(st, self + 0x40u) + caveReadF32(st, self + 0x214u) * -1.0f) * inv;
+            writeOut(x, y, z);
             return;
         }
-        if (((kindOfC8 >> 14U) & 1U) != 0U) {
-            outMask |= 0x0400U;
+    }
+    if (caveRead8(st, self + 0x235u) != 0u) {
+        const std::uint32_t last = caveRead32(st, self + 0x218u);
+        const std::uint32_t current = caveRead32(st, glob + 0x58u);
+        st.edx = last;
+        if (last <= current) {
+            const float inv = recipX87((current - last) + 1u);
+            writeOut((caveReadF32(st, self + 0x38u) - caveReadF32(st, self + 0x21Cu)) * inv,
+                     (caveReadF32(st, self + 0x3Cu) - caveReadF32(st, self + 0x220u)) * inv,
+                     (caveReadF32(st, self + 0x40u) - caveReadF32(st, self + 0x224u)) * inv);
             return;
         }
+    }
+    writeOut(0.0f, 0.0f, 0.0f);
+}
+
+void runConsiderObjectIdle(CaveState& st, std::uint32_t allowBusy) {
+    const std::uint32_t self = kCaveImageBase;
+    st.eax = 0u;
+    st.edx = 0u;
+    st.cleanup = 4;
+    const std::uint32_t ai = caveRead32(st, self + 0x374u);
+    if (ai != 0u) {
+        const std::uint32_t vt = caveRead32(st, ai);
+        const std::uint32_t fn = caveRead32(st, vt + 0x214u);
+        st.edx = fn;
+        const std::uint32_t busy = caveCall(st, fn, ai, 0u, 0u, 0u, 0);
+        st.eax = busy;
+        if ((busy & 0xFFu) != 0u) {
+            return;
+        }
+    }
+    if ((caveRead8(st, self + 0x471u) & 1u) != 0u) {
         return;
     }
-    if ((status98 & 1U) != 0U) {
-        outMask |= 0x0004U;
-    } else if (((status94 >> 31U) & 1U) != 0U ||
-               ((status98 >> 21U) & 1U) != 0U ||
-               aiAirborne6875D0) {
-        outMask |= 0x0002U;
-    } else if (((kindOfC0 >> 9U) & 1U) != 0U) {
-        outMask |= 0x0008U;
-        outMask |= isOverWater85CBC0 ? 0x0002U : 0x0001U;
+    if (((caveRead32(st, self + 0x80u) >> 30) & 1u) != 0u && (allowBusy & 0xFFu) == 0u) {
+        st.eax = caveRead32(st, self + 0x80u) >> 30;
         return;
+    }
+    const std::uint32_t sub = caveRead32(st, self + 0x378u);
+    if (sub != 0u && caveRead8(st, sub + 0xE0u) != 0u) {
+        st.eax = sub;
+        return;
+    }
+    const std::uint32_t ok = caveCall(st, 0x00638B70u, ai, self, 0u, 0u, 1);
+    st.eax = ok;
+    if ((ok & 0xFFu) == 0u) {
+        return;
+    }
+    st.eax = caveCall(st, 0x00747C10u, self, 0u, 0u, 0u, 0);
+}
+
+void runReassignControllingPlayer(CaveState& st, std::uint32_t player) {
+    const std::uint32_t self = kCaveImageBase;
+    st.eax = 0u;
+    st.edx = 0u;
+    st.cleanup = 4;
+    std::uint32_t ecx = caveRead32(st, self + 0x328u);
+    std::uint32_t eax = ecx;
+    if (ecx == 0u) {
+        const std::uint32_t begin = caveRead32(st, self + 0x32Cu);
+        const std::uint32_t end = caveRead32(st, self + 0x330u);
+        if (begin == end) {
+            st.eax = caveCall(st, 0x00687B80u, self, player, 0u, 0u, 1);
+            return;
+        }
+        eax = caveRead32(st, begin);
+    }
+    if (eax == 0u) {
+        st.eax = caveCall(st, 0x00687B80u, self, player, 0u, 0u, 1);
+        return;
+    }
+    if (ecx == 0u) {
+        const std::uint32_t begin = caveRead32(st, self + 0x32Cu);
+        const std::uint32_t end = caveRead32(st, self + 0x330u);
+        if (begin != end) {
+            ecx = caveRead32(st, begin);
+        }
+    }
+    const std::uint32_t vt = caveRead32(st, ecx);
+    const std::uint32_t fn = caveRead32(st, vt + 0x84u);
+    st.edx = vt;
+    const std::uint32_t child = caveCall(st, fn, ecx, 0u, 0u, 0u, 0);
+    st.eax = child;
+    if (child == 0u) {
+        st.eax = caveCall(st, 0x00687B80u, self, player, 0u, 0u, 1);
+        return;
+    }
+    const std::uint32_t childVt = caveRead32(st, child);
+    const std::uint32_t slot = caveRead32(st, childVt + 0x1D8u);
+    st.edx = slot;
+    st.eax = caveCall(st, slot, child, player, 0u, 0u, 2);
+}
+
+void runRegisterActiveModuleListener(CaveState& st, std::uint32_t listener) {
+    const std::uint32_t self = kCaveImageBase;
+    st.edx = 0u;
+    st.cleanup = 4;
+    st.eax = 0u;
+    if (caveRead8(st, self + 0x138u) == 0u) {
+        const std::uint32_t end = caveRead32(st, 0x00DF8A54u);
+        const std::uint32_t cap = caveRead32(st, 0x00DF8A58u);
+        if (end < cap) {
+            caveWrite32(st, 0x00DF8A54u, end + 4u);
+            if (end != 0u) {
+                caveWrite32(st, end, self);
+            }
+        } else {
+            caveCall(st, 0x008ADD50u, 0x00DF8A50u, end, self, 0u, 2);
+        }
+        caveWrite8(st, self + 0x138u, 1u);
+    }
+    const std::uint32_t localEnd = caveRead32(st, self + 0x140u);
+    const std::uint32_t localCap = caveRead32(st, self + 0x144u);
+    st.eax = localEnd;
+    if (localEnd < localCap) {
+        st.edx = localEnd + 4u;
+        caveWrite32(st, self + 0x140u, localEnd + 4u);
+        if (localEnd != 0u) {
+            caveWrite32(st, localEnd, listener);
+        }
     } else {
-        outMask |= 0x0001U;
+        st.eax = caveCall(st, 0x008ADD50u, self + 0x13Cu, localEnd, listener, 0u, 2);
     }
-    if (((kindOfC0 >> 10U) & 1U) != 0U) {
-        outMask |= 0x1000U;
+    caveWrite8(st, listener + 0x65u, 1u);
+    if (caveRead32(st, listener + 0x0Cu) != 1u) {
         return;
     }
-    if (((kindOfD8 >> 12U) & 1U) != 0U) {
-        outMask |= 0x2000U;
+    const std::uint32_t tmpl = caveRead32(st, listener + 0x10u);
+    if (tmpl == 0u || ((caveRead32(st, tmpl + 0xE0u) >> 10) & 1u) == 0u) {
         return;
     }
+    const std::uint32_t owner = caveRead32(st, self + 8u);
+    const std::uint32_t player = caveRead32(st, owner + 0x418u);
+    st.eax = player;
+    caveWrite32(st, player + 0x1318u, caveRead32(st, player + 0x1318u) - 1u);
 }
 
-// 0x006BD510
-bool matchesObjectClassificationFilter(
-    std::uint32_t kindOfC0,
-    std::uint32_t kindOfC4,
-    std::uint32_t kindOfC8,
-    std::uint32_t kindOfD8,
-    std::uint32_t status80,
-    std::uint32_t status94,
-    std::uint32_t status98,
-    bool aiAirborne6875D0,
-    bool isOverWater85CBC0,
-    std::uint32_t forbiddenMaskD0,
-    std::uint32_t forbiddenMaskD4) {
-    std::uint32_t mask = 0U;
-    classifyObjectSurfaceAndKindMask(
-        kindOfC0, kindOfC4, kindOfC8, kindOfD8,
-        status80, status94, status98,
-        aiAirborne6875D0, isOverWater85CBC0, mask);
-    if ((forbiddenMaskD0 & mask) != 0U) {
-        return false;
+void runNotifySixBucketListeners(CaveState& st) {
+    const std::uint32_t self = kCaveImageBase;
+    st.edx = 0u;
+    st.cleanup = 0;
+    st.eax = caveCall(st, 0x00734380u, self, 0u, 0u, 0u, 0);
+    const std::uint32_t vt = caveRead32(st, self);
+    const std::uint32_t virt = vt == 0u ? 0u : caveRead32(st, vt + 0x48u);
+    const std::uint32_t arg = caveRead32(st, self + 0x10u);
+    for (int bucket = 0; bucket < 6; ++bucket) {
+        const std::uint32_t base = self + 0x34u + static_cast<std::uint32_t>(bucket) * 0x10u;
+        const std::uint32_t begin = caveRead32(st, base);
+        const std::uint32_t end = caveRead32(st, base + 4u);
+        for (std::uint32_t cursor = begin; cursor != end; cursor += 4u) {
+            const std::uint32_t elem = caveRead32(st, cursor);
+            caveCall(st, 0x006A8490u, elem, arg, 0u, 0u, 1);
+            st.edx = vt;
+            caveCall(st, virt, self, elem, 0u, 0u, 1);
+        }
     }
-    if ((forbiddenMaskD4 & mask) != 0U) {
-        return false;
-    }
-    return true;
+    st.eax = self + 0x94u;
 }
 
-// 0x006C0620
-std::uint32_t getObjectIndicatorColor(
-    std::uint32_t overrideColor424,
-    std::uint32_t team414,
-    std::uint32_t teamField1F8,
-    std::uint32_t fallbackTeamAC,
-    std::uint8_t tmplFlagsCB,
-    std::uint32_t flagsC8,
-    std::uint32_t shroudState,
-    std::uint32_t disguisePlayerPtr,
-    std::uint32_t disguisePlayerColor80,
-    std::uint32_t teamPlayerPtr,
-    std::uint32_t teamPlayerColor80) {
-    if (overrideColor424 != 0U) {
-        return overrideColor424;
-    }
-    const std::uint32_t resolvedTeam =
-        (team414 != 0U && teamField1F8 == 0U) ? fallbackTeamAC : team414;
-    if ((tmplFlagsCB & 0x01U) != 0U &&
-        ((flagsC8 >> 9U) & 1U) != 0U &&
-        shroudState != 2U) {
-        return (disguisePlayerPtr != 0U) ? disguisePlayerColor80 : 0xFF000000U;
-    }
-    return (resolvedTeam != 0U && teamPlayerPtr != 0U) ? teamPlayerColor80 : 0xFF000000U;
-}
-
-// 0x006C0B60
-void setObjectBit31AndNotifyModules(
-    std::uint32_t& flagsC0,
-    std::uint8_t flagsB3,
-    std::uint32_t argPlayer,
-    std::uint32_t ownerPlayer418,
-    const std::uint32_t* moduleListenerFlags,
-    std::size_t moduleCount,
-    bool& markedDirty,
-    std::uint32_t& notifiedCount) {
-    markedDirty = false;
-    notifiedCount = 0U;
-    if (((flagsC0 >> 10U) & 1U) != 0U || (flagsB3 & 0x01U) != 0U) {
+void runPartitionModifierCount(CaveState& st, std::uint32_t spec) {
+    const std::uint32_t self = kCaveImageBase;
+    st.edx = 0u;
+    st.cleanup = 4;
+    const std::uint32_t owner = caveRead32(st, self + 8u);
+    if (owner == 0u) {
+        st.eax = 1u;
         return;
     }
-    if (argPlayer == ownerPlayer418 && (flagsC0 & 0x01U) == 0U) {
-        flagsC0 |= 0x01U;
-        markedDirty = true;
-    }
-    if (moduleListenerFlags != nullptr) {
-        for (std::size_t i = 0; i < moduleCount; ++i) {
-            if (moduleListenerFlags[i] != 0U) {
-                ++notifiedCount;
-            }
-        }
-    }
-}
-
-// 0x006C1500
-std::uint32_t findObjectModuleByKey(
-    bool hasModuleArray310,
-    std::uint32_t treeCount3C0,
-    std::uint32_t defaultModulePtr,
-    const ModuleTreeEntry* entries,
-    std::size_t entryCount,
-    std::int32_t searchKey) {
-    if (!hasModuleArray310 || treeCount3C0 == 0U) {
-        return 0U;
-    }
-    if (searchKey == -1) {
-        return defaultModulePtr;
-    }
-    if (entries == nullptr) {
-        return 0U;
-    }
-    std::size_t bestIdx = entryCount;
-    for (std::size_t i = 0; i < entryCount; ++i) {
-        if (entries[i].key >= searchKey) {
-            if (bestIdx == entryCount || entries[i].key < entries[bestIdx].key) {
-                bestIdx = i;
-            }
-        }
-    }
-    if (bestIdx == entryCount || searchKey < entries[bestIdx].key) {
-        return 0U;
-    }
-    return entries[bestIdx].modulePtr;
-}
-
-// 0x006C1D60
-void reassignObjectControllingPlayer(
-    std::uint32_t directPtr328,
-    std::uint32_t listBegin32C,
-    std::uint32_t listEnd330,
-    std::uint32_t firstListElem,
-    bool subObjHasAI84,
-    std::uint32_t& outActionMask) {
-    const std::uint32_t subObj =
-        (directPtr328 != 0U) ? directPtr328 : ((listBegin32C != listEnd330) ? firstListElem : 0U);
-    if (subObj != 0U) {
-        outActionMask = subObjHasAI84 ? 1U : 0U;
-    } else {
-        outActionMask = 2U;
-    }
-}
-
-// 0x006C2C30
-std::uint32_t updateObjectVisionShroudRegistration(
-    bool hasPlayer418,
-    bool hasShroud74,
-    std::uint8_t checkActiveArg,
-    std::uint32_t status26C,
-    std::int32_t sightRange8C,
-    std::uint32_t flags80,
-    std::uint32_t flags88,
-    std::uint32_t flags8C,
-    std::uint32_t flags94,
-    std::uint32_t tmplFlagsD0,
-    std::uint8_t flag301,
-    std::uint8_t& flags471) {
-    if (!hasPlayer418 || !hasShroud74) {
-        return 0U;
-    }
-    const bool statusMaskedNonZero = ((status26C & 0xFFFFFEBFU) != 0U);
-    bool shouldRegister = false;
-    if (checkActiveArg != 0U &&
-        sightRange8C != 0 &&
-        ((flags80 >> 2U) & 1U) == 0U &&
-        ((flags88 >> 26U) & 1U) == 0U &&
-        ((flags8C >> 11U) & 1U) == 0U &&
-        ((flags94 >> 2U) & 1U) == 0U &&
-        (((tmplFlagsD0 >> 21U) & 1U) == 0U || flag301 != 0U) &&
-        (flags471 & 0x01U) == 0U &&
-        (!statusMaskedNonZero || sightRange8C <= 0)) {
-        shouldRegister = true;
-    }
-    const bool wasRegistered = ((flags471 & 0x20U) != 0U);
-    if (wasRegistered == shouldRegister) {
-        return 0U;
-    }
-    if (shouldRegister) {
-        flags471 = static_cast<std::uint8_t>(flags471 | 0x20U);
-        return 1U;
-    }
-    flags471 = static_cast<std::uint8_t>(flags471 & ~0x20U);
-    return 2U;
-}
-
-// 0x006C4F10
-void dispatchModuleCommandMessage16(
-    const float targetPos[3],
-    std::int32_t& refCount50,
-    bool& refDestroyed,
-    bool hasBuffer2C,
-    bool hasBuffer1C,
-    float outDispatchedPos[3],
-    std::uint32_t& outFinalVtable,
-    std::uint32_t& outFreedMask) {
-    outDispatchedPos[0] = targetPos[0];
-    outDispatchedPos[1] = targetPos[1];
-    outDispatchedPos[2] = targetPos[2];
-    outFinalVtable = 0x00BDB8E8U;
-    refDestroyed = false;
-    if (refCount50 > 0) {
-        --refCount50;
-        if (refCount50 <= 0) {
-            refDestroyed = true;
-        }
-    }
-    outFreedMask = 0U;
-    if (hasBuffer2C) {
-        outFreedMask |= 0x01U;
-    }
-    if (hasBuffer1C) {
-        outFreedMask |= 0x02U;
-    }
-}
-
-// 0x006C5480
-void dispatchModuleCommandMessage3D(
-    std::uint32_t commandArg,
-    std::int32_t& refCount50,
-    bool& refDestroyed,
-    bool hasBuffer2C,
-    bool hasBuffer1C,
-    std::uint32_t& outDispatchedType,
-    std::uint32_t& outDispatchedArg,
-    std::uint32_t& outFinalVtable,
-    std::uint32_t& outFreedMask) {
-    outDispatchedType = 0x3DU;
-    outDispatchedArg = commandArg;
-    outFinalVtable = 0x00BDB8E8U;
-    refDestroyed = false;
-    if (refCount50 > 0) {
-        --refCount50;
-        if (refCount50 <= 0) {
-            refDestroyed = true;
-        }
-    }
-    outFreedMask = 0U;
-    if (hasBuffer2C) {
-        outFreedMask |= 0x01U;
-    }
-    if (hasBuffer1C) {
-        outFreedMask |= 0x02U;
-    }
-}
-
-// 0x006C6310
-bool clearObjectStatusBit15AndMarkDirty(
-    std::uint32_t& flagsB0,
-    bool& markedDirty) {
-    if ((flagsB0 & 0x00008000U) != 0U) {
-        flagsB0 &= ~0x00008000U;
-        markedDirty = true;
-    } else {
-        markedDirty = false;
-    }
-    return false;
-}
-
-// 0x0073C740
-std::uint32_t constructUpdateModule00C11AA0(
-    std::uint32_t selfPtr,
-    std::uint32_t thingPtr,
-    std::uint32_t resolvedOwnerPtr,
-    std::uint32_t moduleDataPtr,
-    float moduleDataFloat08,
-    float moduleDataFloat14,
-    UpdateModule00C11AA0Layout& out,
-    bool& helper6906E0Called,
-    bool& helper7221C0Called) {
-    out.words[0] = 0x00C11AA0U;
-    out.words[1] = moduleDataPtr;
-    out.words[2] = (thingPtr != 0U) ? resolvedOwnerPtr : 0U;
-    out.words[3] = 0x00C11970U;
-    out.words[4] = 0x00C11898U;
-
-    const float chosen = (moduleDataFloat14 == -1.0f) ? moduleDataFloat08 : moduleDataFloat14;
-    out.words[5] = floatToBits(chosen);
-    out.words[6] = floatToBits(moduleDataFloat14);
-    out.words[7] = floatToBits(moduleDataFloat08);
-    out.words[8] = floatToBits(chosen);
-    out.words[9] = 0U;
-    out.words[10] = 0U;
-    out.words[11] = 0xFFFFFFFFU;
-    out.words[12] = 0xFFFFFFFFU;
-    out.words[13] = 0U;
-    out.words[14] = 0U;
-    out.words[15] = 0U;
-    out.words[16] = 0x00000070U;
-    out.words[17] = 0U;
-    out.words[18] = 0x00BDC368U;
-    out.words[19] = 0x00BDC178U;
-    for (int i = 20; i <= 24; ++i) {
-        out.words[i] = 0U;
-    }
-    out.words[25] = 0x0000000EU;
-    out.words[26] = 0x00000070U;
-    for (int i = 27; i <= 30; ++i) {
-        out.words[i] = 0U;
-    }
-    out.words[31] = 0x00000001U;
-    for (int i = 32; i <= 42; ++i) {
-        out.words[i] = 0U;
-    }
-    out.words[43] = 0x3F800000U;
-    out.words[44] = 0x3F800000U;
-    out.words[45] = 0x42C80000U;
-    for (int i = 46; i <= 50; ++i) {
-        out.words[i] = 0U;
-    }
-    out.words[51] &= 0xFF000000U;
-    out.words[52] = 0x00BDB99CU;
-    out.words[53] = 0U;
-    out.words[54] = 0U;
-    out.words[55] &= 0xFFFFFF00U;
-    out.words[56] = 0U;
-    out.words[57] = selfPtr + 0xE4U;
-    out.words[58] = selfPtr + 0xE4U;
-    out.words[60] = 0U;
-    out.words[61] = 0U;
-    out.words[62] = 0U;
-    out.words[64] = 0U;
-    out.words[65] = 0U;
-    out.words[66] = 0U;
-    out.words[68] = 0U;
-    out.words[69] = 0U;
-    out.words[70] = 0U;
-    out.words[71] = 0U;
-    out.words[72] &= 0xFF000000U;
-    helper6906E0Called = true;
-    helper7221C0Called = true;
-    return selfPtr;
-}
-
-// 0x006C8380
-void destroyUpdateModule00C11AA0(
-    std::uint32_t selfPtr,
-    UpdateModule00C11AA0Layout& out,
-    std::uint32_t& freedMask,
-    bool& unlinkedIntrusiveNode) {
-    freedMask = 0U;
-    if (out.words[64] != 0U) {
-        freedMask |= 0x01U;
-    }
-    if (out.words[60] != 0U) {
-        freedMask |= 0x02U;
-    }
-    const std::uint32_t listSelf = selfPtr + 0xE4U;
-    unlinkedIntrusiveNode = (out.words[57] != listSelf);
-    out.words[57] = listSelf;
-    out.words[58] = listSelf;
-    out.words[4] = 0x00BF62D0U;
-    out.words[3] = 0x00BDBAD8U;
-    out.words[0] = 0x00BDB8E8U;
-}
-
-// 0x006CACE0
-bool evaluateBehaviorEligibility00C00F4C(
-    bool vtable9COk,
-    bool helper6B4220Ok,
-    std::uint32_t targetPtr,
-    std::uint8_t flag1BB,
-    bool helper6B44E0Ok,
-    std::uint32_t vtable1CVal,
-    bool disallow7F03B0,
-    std::uint32_t ownerFlags88,
-    std::uint32_t ownerFlags84,
-    bool disallow6A4F20,
-    bool hasSubMod687780,
-    bool subModVtable18Ok) {
-    if (!vtable9COk || !helper6B4220Ok) {
-        return false;
-    }
-    if (targetPtr != 0U && flag1BB != 0U && !helper6B44E0Ok) {
-        return false;
-    }
-    if (vtable1CVal != 0U && targetPtr != 0U && disallow7F03B0) {
-        return false;
-    }
-    if (((ownerFlags88 >> 12U) & 1U) != 0U || ((ownerFlags84 >> 17U) & 1U) != 0U) {
-        return false;
-    }
-    if (disallow6A4F20) {
-        return false;
-    }
-    if (hasSubMod687780) {
-        return subModVtable18Ok;
-    }
-    return true;
-}
-
-// 0x006D0330
-std::uint32_t dispatchActiveBodyMaxHealthUpdate(
-    std::int32_t limit70,
-    std::int32_t& val1C) {
-    if (limit70 <= 0) {
-        const std::uint32_t oldVal = static_cast<std::uint32_t>(val1C);
-        const std::uint32_t newVal =
-            (limit70 != 0) ? static_cast<std::uint32_t>(limit70) : 0x7FFFFFFFU;
-        val1C = static_cast<std::int32_t>(newVal);
-        return (newVal > oldVal) ? 1U : 0U;
-    }
-    return (val1C < limit70) ? 2U : 0U;
-}
-
-// 0x006D1DD0
-void broadcastObjectVisibilityState(
-    std::uint32_t module310Count,
-    bool skipShroud9C,
-    bool hasDrawableF4,
-    std::uint32_t drawable180Count,
-    std::uint32_t drawable17CCount,
-    std::uint32_t flags90,
-    std::uint32_t tmplFlagsC0,
-    std::uint32_t flags94,
-    std::uint32_t& outNotifiedModules,
-    bool& outUpdatedShroud,
-    std::uint32_t& outNotifiedDrawable180,
-    std::uint32_t& outNotifiedDrawable17C,
-    bool& outCalledTail6A4D20) {
-    outNotifiedModules = module310Count;
-    outUpdatedShroud = !skipShroud9C;
-    if (hasDrawableF4) {
-        outNotifiedDrawable180 = drawable180Count;
-        outNotifiedDrawable17C = drawable17CCount;
-    } else {
-        outNotifiedDrawable180 = 0U;
-        outNotifiedDrawable17C = 0U;
-    }
-    if (((flags90 >> 6U) & 1U) == 0U &&
-        ((tmplFlagsC0 >> 9U) & 1U) != 0U &&
-        ((flags94 >> 5U) & 1U) != 0U) {
-        outCalledTail6A4D20 = false;
-    } else {
-        outCalledTail6A4D20 = true;
-    }
-}
-
-// 0x006E4760
-std::uint32_t lookupObjectModuleInterface44ById(
-    std::uint32_t objectId,
-    std::uint32_t foundObjectPtr,
-    std::uint8_t flags471,
-    std::uint32_t tmplFlagsC4,
-    std::uint32_t flags80,
-    const std::uint32_t* moduleInterface44Results,
-    std::size_t moduleCount,
-    std::uint32_t& outObjectPtr) {
-    outObjectPtr = 0U;
-    if (objectId == 0U || foundObjectPtr == 0U) {
-        return 0U;
-    }
-    if ((flags471 & 0x01U) != 0U ||
-        ((tmplFlagsC4 >> 4U) & 1U) == 0U ||
-        ((flags80 >> 21U) & 1U) != 0U) {
-        return 0U;
-    }
-    outObjectPtr = foundObjectPtr;
-    if (moduleInterface44Results != nullptr) {
-        for (std::size_t i = 0; i < moduleCount; ++i) {
-            if (moduleInterface44Results[i] != 0U) {
-                return moduleInterface44Results[i];
-            }
-        }
-    }
-    return 0U;
-}
-
-// 0x006E5CE0
-void clearObjectStatusWord0(std::uint32_t& statusWord26C) {
-    if (statusWord26C != 0U) {
-        statusWord26C = 0U;
-    }
-}
-
-// 0x006EE7B0
-void refreshObjectTemplateRegistration(
-    std::uint32_t handle4E20E0,
-    std::uint32_t obj4F13B0,
-    std::int32_t intVal8D6970,
-    std::uint32_t newValA7C770,
-    float& outFloat0C,
-    std::uint32_t& ioField24,
-    bool& outVtable10Called,
-    bool& outHelper6D17F0Called) {
-    outVtable10Called = false;
-    outHelper6D17F0Called = false;
-    if (handle4E20E0 == 0U || obj4F13B0 == 0U) {
+    const std::uint32_t player = caveRead32(st, owner + 0x418u);
+    st.edx = player;
+    if (player == 0u || spec == 0u) {
+        st.eax = 1u;
         return;
     }
-    outVtable10Called = true;
-    outFloat0C = static_cast<float>(intVal8D6970);
-    if (newValA7C770 != 0U && ioField24 != newValA7C770) {
-        ioField24 = newValA7C770;
-        outHelper6D17F0Called = true;
+    std::uint32_t count = 1u;
+    const std::uint32_t mode = caveRead32(st, spec + 0x0Cu);
+    if (mode == 1u) {
+        count = caveCall(st, 0x0078BDA0u, caveRead32(st, spec + 0x10u), player, owner, 0xFFFFFFFFu, 4);
+    } else if (mode == 2u) {
+        count = caveCall(st, 0x0054B680u, caveRead32(st, spec + 0x14u), player, owner, 0u, 3);
     }
-}
-
-// 0x006EFE40
-std::uint32_t lookupObjectProducerById(
-    std::uint32_t producerId3EC,
-    std::uint32_t hashLookupResultPtr) {
-    if (producerId3EC == 0U) {
-        return 0U;
-    }
-    return hashLookupResultPtr;
-}
-
-// 0x006F1350
-bool isObjectSelectableByLocalPlayer(
-    std::uint32_t flags80,
-    std::uint32_t flags84,
-    std::uint32_t tmplFlagsC0,
-    std::uint8_t globalFlagAC,
-    bool hasProducer,
-    bool hasProducerTeam,
-    std::uint32_t producerTeamFlagsAC,
-    bool hasAI374,
-    bool hasHelper6A6210,
-    bool producerTeamB8Disallows,
-    bool hasControllingPlayer,
-    bool ctrlPlayerB0,
-    std::int32_t ctrlPlayer10CCount,
-    bool hasSub37C,
-    bool sub37CHelper6A19E0,
-    bool hasMod687880,
-    bool mod687880Vtable1C) {
-    if (((flags80 >> 5U) & 1U) != 0U) {
-        return false;
-    }
-    if (hasProducer && hasProducerTeam && ((flags84 >> 7U) & 1U) == 0U) {
-        if (((producerTeamFlagsAC >> 1U) & 1U) == 0U) {
-            return false;
-        }
-        if (hasAI374 && hasHelper6A6210 && producerTeamB8Disallows) {
-            return false;
+    const std::uint32_t mod = caveRead32(st, owner + 0x36Cu);
+    if (mod != 0u) {
+        const std::uint32_t applied = caveCall(st, 0x004D9CE0u, mod, 0xDu, 0u, 0u, 3);
+        if ((applied & 0xFFu) != 0u) {
+            const float divisor = caveReadF32(st, 0x00BD90A4u);
+            const float scaled = static_cast<float>(static_cast<std::int32_t>(count)) / divisor;
+            count = static_cast<std::uint32_t>(static_cast<std::int32_t>(scaled));
         }
     }
-    if (((flags80 >> 2U) & 1U) != 0U || ((flags80 >> 21U) & 1U) != 0U) {
-        return false;
-    }
-    if (((tmplFlagsC0 >> 14U) & 1U) != 0U &&
-        ((tmplFlagsC0 >> 1U) & 1U) != 0U &&
-        globalFlagAC == 0U) {
-        return false;
-    }
-    if (((tmplFlagsC0 >> 5U) & 1U) != 0U || ((flags80 >> 1U) & 1U) != 0U) {
-        return true;
-    }
-    if (hasControllingPlayer && ctrlPlayerB0 && ctrlPlayer10CCount > 0) {
-        return true;
-    }
-    if (hasSub37C && hasAI374 && sub37CHelper6A19E0) {
-        return true;
-    }
-    return hasMod687880 && mod687880Vtable1C;
+    st.eax = count;
 }
 
-// 0x0072CF30
-bool applyBehaviorDrawableTintEffect(
-    bool hasOwner,
-    bool hasDrawableF4,
-    const float tintVec[3],
-    float outAppliedTint[3],
-    std::uint32_t& outCommandId) {
-    if (!hasOwner || !hasDrawableF4) {
-        outAppliedTint[0] = 0.0f;
-        outAppliedTint[1] = 0.0f;
-        outAppliedTint[2] = 0.0f;
-        outCommandId = 0U;
-        return false;
+void runAssignAiTargetRef(CaveState& st, std::uint32_t /*unused*/, std::uint32_t newTarget) {
+    const std::uint32_t self = kCaveImageBase;
+    st.eax = 0u;
+    st.edx = 0u;
+    st.cleanup = 8;
+    const std::uint32_t old = caveRead32(st, self + 0x150u);
+    if (old != 0u) {
+        releaseRef(st, old);
+        caveWrite32(st, self + 0x150u, 0u);
     }
-    outAppliedTint[0] = tintVec[0];
-    outAppliedTint[1] = tintVec[1];
-    outAppliedTint[2] = tintVec[2];
-    outCommandId = 0x1BU;
-    return true;
-}
-
-// 0x00731530
-void registerActiveModuleAndAppendListener(
-    std::uint8_t& isRegistered138,
-    std::uint32_t& globalActiveCount,
-    std::uint32_t* listenerArray,
-    std::uint32_t& listenerCount,
-    std::uint32_t listenerCapacity,
-    std::uint32_t listenerPtr,
-    std::uint8_t& listenerFlag65,
-    std::uint32_t listenerType0C,
-    std::uint32_t listenerSubFlagsE0,
-    std::int32_t& playerCounter1318) {
-    if (isRegistered138 == 0U) {
-        ++globalActiveCount;
-        isRegistered138 = 1U;
+    const std::uint32_t vt = caveRead32(st, self);
+    const std::uint32_t fn = caveRead32(st, vt + 0x270u);
+    caveWrite8(st, self + 0x428u, 0u);
+    caveWrite8(st, self + 0x432u, 0u);
+    st.edx = fn;
+    st.eax = caveCall(st, fn, self, 0u, 0u, 0u, 0);
+    if (newTarget != 0u) {
+        caveWrite32(st, newTarget + 4u, caveRead32(st, newTarget + 4u) + 1u);
     }
-    if (listenerArray != nullptr && listenerCount < listenerCapacity) {
-        listenerArray[listenerCount] = listenerPtr;
-        ++listenerCount;
+    const std::uint32_t current = caveRead32(st, self + 0x150u);
+    if (current != 0u) {
+        releaseRef(st, current);
     }
-    listenerFlag65 = 1U;
-    if (listenerType0C == 1U && ((listenerSubFlagsE0 >> 10U) & 1U) != 0U) {
-        --playerCounter1318;
+    caveWrite32(st, self + 0x150u, newTarget);
+    if (newTarget != 0u) {
+        caveWrite32(st, newTarget + 4u, caveRead32(st, newTarget + 4u) + 1u);
     }
-}
-
-// 0x00734490
-bool gatherActiveWeaponSlots(
-    std::int8_t activeCountA4,
-    const std::uint32_t slotPtrs[6],
-    std::uint32_t* outVector,
-    std::uint32_t& outCount,
-    std::uint32_t maxCapacity) {
-    if (activeCountA4 <= 0) {
-        return false;
+    st.eax = caveCall(st, 0x006B6900u, self, 0x00BF21D8u, newTarget, 0u, 3);
+    if (newTarget != 0u) {
+        releaseRef(st, newTarget);
     }
-    for (std::size_t i = 0; i < 6; ++i) {
-        if (slotPtrs[i] != 0U && outVector != nullptr && outCount < maxCapacity) {
-            outVector[outCount] = slotPtrs[i];
-            ++outCount;
-        }
-    }
-    return true;
-}
-
-// 0x00741140
-std::uint32_t ensureObjectWeaponModifierCache(
-    std::uint32_t selfPtr,
-    const WeaponModifierPair* incomingPairs,
-    std::size_t incomingCount,
-    WeaponModifierPair* cacheBuffer,
-    std::uint32_t& cacheCount,
-    std::uint32_t cacheCapacity) {
-    if (cacheCount == 0U && incomingPairs != nullptr && cacheBuffer != nullptr) {
-        for (std::size_t i = 0; i < incomingCount; ++i) {
-            if (incomingPairs[i].itemPtr != 0U && cacheCount < cacheCapacity) {
-                cacheBuffer[cacheCount] = incomingPairs[i];
-                ++cacheCount;
-            }
-        }
-    }
-    return selfPtr + 0x230U;
-}
-
-// 0x007451E0
-void notifySixBucketObjectListeners(
-    const std::uint32_t* const bucketArrays[6],
-    const std::size_t bucketCounts[6],
-    std::uint32_t* outNotifiedObjects,
-    std::uint32_t& outNotifiedCount,
-    std::uint32_t maxOutput) {
-    outNotifiedCount = 0U;
-    for (std::size_t b = 0; b < 6; ++b) {
-        const std::uint32_t* arr = bucketArrays[b];
-        const std::size_t cnt = bucketCounts[b];
-        if (arr == nullptr) {
-            continue;
-        }
-        for (std::size_t i = 0; i < cnt; ++i) {
-            if (outNotifiedObjects != nullptr && outNotifiedCount < maxOutput) {
-                outNotifiedObjects[outNotifiedCount] = arr[i];
-            }
-            ++outNotifiedCount;
-        }
-    }
-}
-
-// 0x007461C0
-bool updateBehaviorTransformMatrix(
-    std::uint32_t flags40,
-    std::uint8_t flagA2,
-    float float38,
-    const float srcMatrix[12],
-    float dstMatrix[12]) {
-    if (((flags40 >> 7U) & 1U) == 0U && flagA2 != 0U && float38 != 0.0f) {
-        return false;
-    }
-    for (std::size_t i = 0; i < 12; ++i) {
-        dstMatrix[i] = srcMatrix[i];
-    }
-    return true;
-}
-
-// 0x00747920
-void transferObjectTeamListMembership(
-    std::uint32_t oldTeamPtr,
-    std::uint32_t newTeamPtr,
-    std::uint32_t tmplFlagsE0,
-    std::uint32_t oldPlayerPtr,
-    std::uint32_t newPlayerPtr,
-    bool oldPlayerHasList20,
-    bool oldPlayerContainsObj,
-    bool newPlayerHasList20,
-    bool newPlayerContainsObj,
-    std::int32_t& oldPlayerCounter1318,
-    std::int32_t& newPlayerCounter1318,
-    bool& outRemovedFromOld,
-    bool& outAddedToNew,
-    bool& outCalled736890) {
-    outRemovedFromOld = false;
-    outAddedToNew = false;
-    if (oldTeamPtr != newTeamPtr && ((tmplFlagsE0 >> 10U) & 1U) != 0U) {
-        const bool samePlayer =
-            (oldTeamPtr != 0U && newTeamPtr != 0U && oldPlayerPtr == newPlayerPtr);
-        if (!samePlayer) {
-            if (oldTeamPtr != 0U && oldPlayerHasList20 && oldPlayerContainsObj) {
-                --oldPlayerCounter1318;
-                outRemovedFromOld = true;
-            }
-            if (newTeamPtr != 0U && newPlayerHasList20 && !newPlayerContainsObj) {
-                ++newPlayerCounter1318;
-                outAddedToNew = true;
-            }
-        }
-    }
-    outCalled736890 = true;
-}
-
-// 0x00747F10
-bool checkAndHandleObjectAIIdleState(
-    bool hasAI374,
-    bool aiVtable214Busy,
-    std::uint8_t flags471,
-    std::uint32_t flags80,
-    std::uint8_t allowBit30,
-    bool hasSub378,
-    std::uint8_t sub378FlagE0,
-    bool helper638B70Ok) {
-    if (hasAI374 && aiVtable214Busy) {
-        return false;
-    }
-    if ((flags471 & 0x01U) != 0U) {
-        return false;
-    }
-    if (((flags80 >> 30U) & 1U) != 0U && allowBit30 == 0U) {
-        return false;
-    }
-    if (hasSub378 && sub378FlagE0 != 0U) {
-        return false;
-    }
-    return helper638B70Ok;
 }
 
 }  // namespace ra3::gamelogic
