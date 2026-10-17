@@ -10478,50 +10478,50 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00660d50	FUN_00660d50	.text	552		clean	unknown		unanalyzed	
 00660f80	FUN_00660f80	.text	173		clean	unknown		unanalyzed	
 00661030	FUN_00661030	.text	300		clean	unknown		unanalyzed	
-00661160	FUN_00661160	.text	92		clean	unknown		unanalyzed	
-006611c0	FUN_006611c0	.text	6		clean	unknown		unanalyzed	
+00661160	FUN_00661160	.text	92		clean	gameclient	recon/fxps	reversed	initializeDefaultAlphaTemplate; oracle 500 cases
+006611c0	FUN_006611c0	.text	6		clean	gameclient	recon/fxps	reversed	defaultAlphaTemplateTypeName; oracle 50 cases
 006611d0	FUN_006611d0	.text	47		clean	unknown		unanalyzed	
-00661200	FUN_00661200	.text	6		clean	unknown		unanalyzed	
+00661200	FUN_00661200	.text	6		clean	gameclient	recon/fxps	reversed	windTemplateTypeName; oracle 50 cases
 00661210	FUN_00661210	.text	167		clean	unknown		unanalyzed	
 006612c0	FUN_006612c0	.text	31		clean	unknown		unanalyzed	
 006612e0	FUN_006612e0	.text	144		clean	asset	recon/layout3	reversed	FXParticleAlpha runtime constructor; consumes 20-byte keyframes from serialized count/pointer and distributes entries by 1-based slot
 00661370	FUN_00661370	.text	169		clean	unknown		unanalyzed	
-00661420	FUN_00661420	.text	6		clean	unknown		unanalyzed	
+00661420	FUN_00661420	.text	6		clean	gameclient	recon/fxps	reversed	defaultAlphaParticleTypeName; oracle 50 cases
 00661430	FUN_00661430	.text	346		clean	asset	recon/layout3	reversed	FXParticleColor runtime constructor; reads reordered root fields and consumes 20-byte color keyframes from serialized count/pointer
 00661590	FUN_00661590	.text	1101		clean	unknown		unanalyzed	
-006619e0	FUN_006619e0	.text	6		clean	unknown		unanalyzed	
-006619f0	FUN_006619f0	.text	71		clean	unknown		unanalyzed	
+006619e0	FUN_006619e0	.text	6		clean	gameclient	recon/fxps	reversed	defaultColorParticleTypeName; oracle 50 cases
+006619f0	FUN_006619f0	.text	71		clean	gameclient	recon/fxps	reversed	colorWithinRange; oracle 1500 cases across three x87 control words
 00661a40	FUN_00661a40	.text	94		clean	unknown		unanalyzed	
 00661aa0	FUN_00661aa0	.text	12		clean	unknown		unanalyzed	
-00661ab0	FUN_00661ab0	.text	69		clean	unknown		unanalyzed	
-00661b00	FUN_00661b00	.text	21		clean	unknown		unanalyzed	
+00661ab0	FUN_00661ab0	.text	69		clean	gameclient	recon/fxps	reversed	initializeBoxVolumeRuntime; oracle 500 cases
+00661b00	FUN_00661b00	.text	21		clean	gameclient	recon/fxps	reversed	boxVolumeDebugDimensions; oracle 500 cases
 00661b20	FUN_00661b20	.text	83		clean	unknown		unanalyzed	
-00661b80	FUN_00661b80	.text	6		clean	unknown		unanalyzed	
+00661b80	FUN_00661b80	.text	6		clean	gameclient	recon/fxps	reversed	boxVolumeTypeName; oracle 50 cases
 00661b90	FUN_00661b90	.text	347		clean	unknown		unanalyzed	
-00661cf0	FUN_00661cf0	.text	806	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemitterboxvolumemodule.cpp	clean	gameclient		unanalyzed	
-00662020	FUN_00662020	.text	6		clean	unknown		unanalyzed	
-00662030	FUN_00662030	.text	105	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemittercylindervelocitymodule.cpp	clean	gameclient		unanalyzed	
-006620a0	FUN_006620a0	.text	70		clean	unknown		unanalyzed	
+00661cf0	FUN_00661cf0	.text	806	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemitterboxvolumemodule.cpp	clean	gameclient	recon/fxps	reversed	emitBoxPoint; oracle 1500 cases across three x87 control words
+00662020	FUN_00662020	.text	6		clean	gameclient	recon/fxps	reversed	cylindricalVelocityTypeName; oracle 50 cases
+00662030	FUN_00662030	.text	105	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemittercylindervelocitymodule.cpp	clean	gameclient	recon/fxps	reversed	cylindricalVelocity; oracle 1500 cases across three x87 control words
+006620a0	FUN_006620a0	.text	70		clean	gameclient	recon/fxps	reversed	initializeCylindricalVelocityRuntime; oracle 500 cases
 006620f0	FUN_006620f0	.text	166		clean	unknown		unanalyzed	
-006621a0	FUN_006621a0	.text	227	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemittercylindervolumemodule.cpp	clean	gameclient		unanalyzed	
+006621a0	FUN_006621a0	.text	227	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemittercylindervolumemodule.cpp	clean	gameclient	recon/fxps	reversed	emitCylinderPoint; oracle 1500 cases across three x87 control words
 00662290	FUN_00662290	.text	61		clean	unknown		unanalyzed	
 006622d0	FUN_006622d0	.text	6		clean	unknown		unanalyzed	
 006622e0	FUN_006622e0	.text	67		clean	unknown		unanalyzed	
-00662330	FUN_00662330	.text	70		clean	unknown		unanalyzed	
-00662380	FUN_00662380	.text	6		clean	unknown		unanalyzed	
+00662330	FUN_00662330	.text	70		clean	gameclient	recon/fxps	reversed	initializeLineVolumeRuntime; oracle 500 cases
+00662380	FUN_00662380	.text	6		clean	gameclient	recon/fxps	reversed	lineVolumeTypeName; oracle 50 cases
 00662390	FUN_00662390	.text	201		clean	unknown		unanalyzed	
-00662460	FUN_00662460	.text	234	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemitterlinevolumemodule.cpp	clean	gameclient		unanalyzed	
+00662460	FUN_00662460	.text	234	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemitterlinevolumemodule.cpp	clean	gameclient	recon/fxps	reversed	emitLinePoint; oracle 1500 cases across three x87 control words
 00662550	FUN_00662550	.text	31		clean	unknown		unanalyzed	
-00662570	FUN_00662570	.text	64		clean	unknown		unanalyzed	
-006625b0	FUN_006625b0	.text	66		clean	unknown		unanalyzed	
+00662570	FUN_00662570	.text	64		clean	gameclient	recon/fxps	reversed	initializePointVelocityTemplate; oracle 500 cases
+006625b0	FUN_006625b0	.text	66		clean	gameclient	recon/fxps	reversed	pointVelocity; oracle 1500 cases across three x87 control words
 00662600	FUN_00662600	.text	79		clean	unknown		unanalyzed	
 00662650	FUN_00662650	.text	31		clean	unknown		unanalyzed	
-00662670	FUN_00662670	.text	6		clean	unknown		unanalyzed	
+00662670	FUN_00662670	.text	6		clean	gameclient	recon/fxps	reversed	pointVolumeTypeName; oracle 50 cases
 00662680	FUN_00662680	.text	105		clean	unknown		unanalyzed	
-006626f0	FUN_006626f0	.text	24		clean	unknown		unanalyzed	
+006626f0	FUN_006626f0	.text	24		clean	gameclient	recon/fxps	reversed	zeroVector3; oracle 100 cases
 00662710	FUN_00662710	.text	169		clean	unknown		unanalyzed	
-006627c0	FUN_006627c0	.text	70		clean	unknown		unanalyzed	
-00662810	FUN_00662810	.text	6		clean	unknown		unanalyzed	
+006627c0	FUN_006627c0	.text	70		clean	gameclient	recon/fxps	reversed	initializeSplineVolumeRuntime; oracle 500 cases
+00662810	FUN_00662810	.text	6		clean	gameclient	recon/fxps	reversed	splineVolumeTypeName; oracle 50 cases
 00662820	FUN_00662820	.text	307		clean	unknown		unanalyzed	
 00662960	FUN_00662960	.text	24		clean	unknown		unanalyzed	
 00662980	FUN_00662980	.text	6		clean	unknown		unanalyzed	
@@ -10675,7 +10675,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 006658a0	FUN_006658a0	.text	672	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemittersplinevolumemodule.cpp	clean	gameclient		unanalyzed	
 00665b40	FUN_00665b40	.text	31		clean	unknown		unanalyzed	
 00665b60	FUN_00665b60	.text	212		clean	unknown		unanalyzed	
-00665c40	FUN_00665c40	.text	316	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemittervolumemodule.cpp	clean	gameclient		unanalyzed	
+00665c40	FUN_00665c40	.text	316	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemittervolumemodule.cpp	clean	gameclient	recon/fxps	reversed	randomUnitVector; oracle 1500 cases across three x87 control words
 00665d90	FUN_00665d90	.text	120		clean	unknown		unanalyzed	
 00665e10	FUN_00665e10	.text	120		clean	unknown		unanalyzed	
 00665e90	FUN_00665e90	.text	6		clean	unknown		unanalyzed	
@@ -10764,7 +10764,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00669010	FUN_00669010	.text	72		clean	unknown		unanalyzed	
 00669060	FUN_00669060	.text	236		clean	unknown		unanalyzed	
 00669150	FUN_00669150	.text	51		clean	unknown		unanalyzed	
-00669190	FUN_00669190	.text	73	SageEngine\source\GameEngine\gameclient\system\EngagingContent.cpp	clean	gameclient		unanalyzed	
+00669190	FUN_00669190	.text	73	SageEngine\source\GameEngine\gameclient\system\EngagingContent.cpp	clean	gameclient	recon/fxps	reversed	shuffleDwords; oracle 1500 cases
 006691e0	FUN_006691e0	.text	89		inner-patched	unknown		unanalyzed	
 00669260	FUN_00669260	.text	65		clean	unknown		unanalyzed	
 006692b0	FUN_006692b0	.text	64		clean	unknown		unanalyzed	
@@ -10799,31 +10799,31 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0066a480	FUN_0066a480	.text	6		clean	unknown		unanalyzed	
 0066a490	FUN_0066a490	.text	79		clean	unknown		unanalyzed	
 0066a4e0	FUN_0066a4e0	.text	537		clean	unknown		unanalyzed	
-0066a700	FUN_0066a700	.text	6		clean	unknown		unanalyzed	
-0066a710	FUN_0066a710	.text	7		clean	unknown		unanalyzed	
-0066a720	FUN_0066a720	.text	7		clean	unknown		unanalyzed	
-0066a730	FUN_0066a730	.text	7		clean	unknown		unanalyzed	
+0066a700	FUN_0066a700	.text	6		clean	gameclient	recon/fxps	reversed	defaultUpdateTypeName; oracle 50 cases
+0066a710	FUN_0066a710	.text	7		clean	gameclient	recon/fxps	reversed	defaultUpdateLifetimeData; oracle 50 cases
+0066a720	FUN_0066a720	.text	7		clean	gameclient	recon/fxps	reversed	defaultUpdateSizeData; oracle 50 cases
+0066a730	FUN_0066a730	.text	7		clean	gameclient	recon/fxps	reversed	defaultUpdateRotationData; oracle 50 cases
 0066a740	FUN_0066a740	.text	256		clean	unknown		unanalyzed	
-0066a840	FUN_0066a840	.text	6		clean	unknown		unanalyzed	
-0066a850	FUN_0066a850	.text	3		clean	unknown		unanalyzed	
-0066a860	FUN_0066a860	.text	29		clean	unknown		unanalyzed	
+0066a840	FUN_0066a840	.text	6		clean	gameclient	recon/fxps	reversed	defaultUpdateParticleTypeName; oracle 50 cases
+0066a850	FUN_0066a850	.text	3		clean	gameclient	recon/fxps	reversed	one; oracle 100 cases
+0066a860	FUN_0066a860	.text	29		clean	gameclient	recon/fxps	reversed	zeroVector4; oracle 100 cases
 0066a880	FUN_0066a880	.text	71		clean	unknown		unanalyzed	
-0066a8d0	FUN_0066a8d0	.text	97		clean	unknown		unanalyzed	
-0066a940	FUN_0066a940	.text	91		clean	unknown		unanalyzed	
-0066a9a0	FUN_0066a9a0	.text	140	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemitterspherevolumemodule.cpp	clean	gameclient		unanalyzed	
+0066a8d0	FUN_0066a8d0	.text	97		clean	gameclient	recon/fxps	reversed	scaleRandomUnitVector; oracle 1500 cases across three x87 control words
+0066a940	FUN_0066a940	.text	91		clean	gameclient	recon/fxps	reversed	randomVariableUnitVector; oracle 1500 cases across three x87 control words
+0066a9a0	FUN_0066a9a0	.text	140	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpsemitterspherevolumemodule.cpp	clean	gameclient	recon/fxps	reversed	emitSpherePoint; oracle 1500 cases across three x87 control words
 0066aa30	FUN_0066aa30	.text	7		clean	unknown		unanalyzed	
 0066aa40	FUN_0066aa40	.text	6		clean	unknown		unanalyzed	
 0066aa50	FUN_0066aa50	.text	26		clean	unknown		unanalyzed	
 0066aa6a	FUN_0066aa6a	.text	214		clean	unknown		unanalyzed	
-0066ab40	FUN_0066ab40	.text	6		clean	unknown		unanalyzed	
-0066ab50	FUN_0066ab50	.text	7		clean	unknown		unanalyzed	
-0066ab60	FUN_0066ab60	.text	7		clean	unknown		unanalyzed	
-0066ab70	FUN_0066ab70	.text	7		clean	unknown		unanalyzed	
-0066ab80	FUN_0066ab80	.text	7		clean	unknown		unanalyzed	
-0066ab90	FUN_0066ab90	.text	7		clean	unknown		unanalyzed	
-0066aba0	FUN_0066aba0	.text	7		clean	unknown		unanalyzed	
-0066abb0	FUN_0066abb0	.text	7		clean	unknown		unanalyzed	
-0066abc0	FUN_0066abc0	.text	33		clean	unknown		unanalyzed	
+0066ab40	FUN_0066ab40	.text	6		clean	gameclient	recon/fxps	reversed	gpuDrawTypeName; oracle 50 cases
+0066ab50	FUN_0066ab50	.text	7		clean	gameclient	recon/fxps	reversed	gpuFramesPerRow; oracle 500 cases
+0066ab60	FUN_0066ab60	.text	7		clean	gameclient	recon/fxps	reversed	gpuTotalFrames; oracle 500 cases
+0066ab70	FUN_0066ab70	.text	7		clean	gameclient	recon/fxps	reversed	gpuSpeedMultiplier; oracle 500 cases
+0066ab80	FUN_0066ab80	.text	7		clean	gameclient	recon/fxps	reversed	gpuSingleRow; oracle 500 cases
+0066ab90	FUN_0066ab90	.text	7		clean	gameclient	recon/fxps	reversed	gpuSortParticles; oracle 500 cases
+0066aba0	FUN_0066aba0	.text	7		clean	gameclient	recon/fxps	reversed	gpuMiscWord; oracle 500 cases
+0066abb0	FUN_0066abb0	.text	7		clean	gameclient	recon/fxps	reversed	gpuEnableSoftParticles; oracle 500 cases
+0066abc0	FUN_0066abc0	.text	33		clean	gameclient	recon/fxps	reversed	gpuMiscValues; oracle 500 cases
 0066abf0	FUN_0066abf0	.text	136	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\FxpsGPUStorageModule.cpp	clean	gameclient		unanalyzed	
 0066ac80	FUN_0066ac80	.text	477		clean	unknown		unanalyzed	
 0066ae60	FUN_0066ae60	.text	104		clean	unknown		unanalyzed	
@@ -10870,7 +10870,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0066ca40	FUN_0066ca40	.text	6		clean	unknown		unanalyzed	
 0066ca50	FUN_0066ca50	.text	770		clean	unknown		unanalyzed	
 0066cd60	FUN_0066cd60	.text	108	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpswindmodule.cpp	clean	gameclient		unanalyzed	
-0066cdd0	FUN_0066cdd0	.text	6		clean	unknown		unanalyzed	
+0066cdd0	FUN_0066cdd0	.text	6		clean	gameclient	recon/fxps	reversed	windTypeName; oracle 50 cases
 0066cde0	FUN_0066cde0	.text	85	SageEngine\source\GameEngine\gameclient\system\FXParticleSystem\fxpswindmodule.cpp	clean	gameclient		unanalyzed	
 0066ce40	FUN_0066ce40	.text	594		clean	unknown		unanalyzed	
 0066d0a0	thunk_FUN_01956310	.text	6		entry-recoverable	unknown		unanalyzed	

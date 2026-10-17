@@ -316,3 +316,48 @@ address	status	owner	module	notes
 00568b60	reversed	recon/w3dview	render	ra3::render::setRainEnabled; oracle 500/500 random arrays
 00568e40	reversed	recon/w3dview	render	ra3::render::fillRainIndices; oracle full 16000-quad index buffer
 005abc30	reversed	recon/w3dview	render	ra3::render::configureEase; oracle 1500/1500 random finite inputs and cleanup
+00661160	reversed	recon/fxps	gameclient	initializeDefaultAlphaTemplate; oracle 500 cases
+006611c0	reversed	recon/fxps	gameclient	defaultAlphaTemplateTypeName; oracle 50 cases
+00661200	reversed	recon/fxps	gameclient	windTemplateTypeName; oracle 50 cases
+00661420	reversed	recon/fxps	gameclient	defaultAlphaParticleTypeName; oracle 50 cases
+006619e0	reversed	recon/fxps	gameclient	defaultColorParticleTypeName; oracle 50 cases
+006619f0	reversed	recon/fxps	gameclient	colorWithinRange; oracle 1500 cases across three x87 control words
+00661ab0	reversed	recon/fxps	gameclient	initializeBoxVolumeRuntime; oracle 500 cases
+00661b00	reversed	recon/fxps	gameclient	boxVolumeDebugDimensions; oracle 500 cases
+00661b80	reversed	recon/fxps	gameclient	boxVolumeTypeName; oracle 50 cases
+00661cf0	reversed	recon/fxps	gameclient	emitBoxPoint; oracle 1500 cases across three x87 control words
+00662020	reversed	recon/fxps	gameclient	cylindricalVelocityTypeName; oracle 50 cases
+00662030	reversed	recon/fxps	gameclient	cylindricalVelocity; oracle 1500 cases across three x87 control words
+006620a0	reversed	recon/fxps	gameclient	initializeCylindricalVelocityRuntime; oracle 500 cases
+006621a0	reversed	recon/fxps	gameclient	emitCylinderPoint; oracle 1500 cases across three x87 control words
+00662330	reversed	recon/fxps	gameclient	initializeLineVolumeRuntime; oracle 500 cases
+00662380	reversed	recon/fxps	gameclient	lineVolumeTypeName; oracle 50 cases
+00662460	reversed	recon/fxps	gameclient	emitLinePoint; oracle 1500 cases across three x87 control words
+00662570	reversed	recon/fxps	gameclient	initializePointVelocityTemplate; oracle 500 cases
+006625b0	reversed	recon/fxps	gameclient	pointVelocity; oracle 1500 cases across three x87 control words
+00662670	reversed	recon/fxps	gameclient	pointVolumeTypeName; oracle 50 cases
+006626f0	reversed	recon/fxps	gameclient	zeroVector3; oracle 100 cases
+006627c0	reversed	recon/fxps	gameclient	initializeSplineVolumeRuntime; oracle 500 cases
+00662810	reversed	recon/fxps	gameclient	splineVolumeTypeName; oracle 50 cases
+00665c40	reversed	recon/fxps	gameclient	randomUnitVector; oracle 1500 cases across three x87 control words
+00669190	reversed	recon/fxps	gameclient	shuffleDwords; oracle 1500 cases
+0066a700	reversed	recon/fxps	gameclient	defaultUpdateTypeName; oracle 50 cases
+0066a710	reversed	recon/fxps	gameclient	defaultUpdateLifetimeData; oracle 50 cases
+0066a720	reversed	recon/fxps	gameclient	defaultUpdateSizeData; oracle 50 cases
+0066a730	reversed	recon/fxps	gameclient	defaultUpdateRotationData; oracle 50 cases
+0066a840	reversed	recon/fxps	gameclient	defaultUpdateParticleTypeName; oracle 50 cases
+0066a850	reversed	recon/fxps	gameclient	one; oracle 100 cases
+0066a860	reversed	recon/fxps	gameclient	zeroVector4; oracle 100 cases
+0066a8d0	reversed	recon/fxps	gameclient	scaleRandomUnitVector; oracle 1500 cases across three x87 control words
+0066a940	reversed	recon/fxps	gameclient	randomVariableUnitVector; oracle 1500 cases across three x87 control words
+0066a9a0	reversed	recon/fxps	gameclient	emitSpherePoint; oracle 1500 cases across three x87 control words
+0066ab40	reversed	recon/fxps	gameclient	gpuDrawTypeName; oracle 50 cases
+0066ab50	reversed	recon/fxps	gameclient	gpuFramesPerRow; oracle 500 cases
+0066ab60	reversed	recon/fxps	gameclient	gpuTotalFrames; oracle 500 cases
+0066ab70	reversed	recon/fxps	gameclient	gpuSpeedMultiplier; oracle 500 cases
+0066ab80	reversed	recon/fxps	gameclient	gpuSingleRow; oracle 500 cases
+0066ab90	reversed	recon/fxps	gameclient	gpuSortParticles; oracle 500 cases
+0066aba0	reversed	recon/fxps	gameclient	gpuMiscWord; oracle 500 cases
+0066abb0	reversed	recon/fxps	gameclient	gpuEnableSoftParticles; oracle 500 cases
+0066abc0	reversed	recon/fxps	gameclient	gpuMiscValues; oracle 500 cases
+0066cdd0	reversed	recon/fxps	gameclient	windTypeName; oracle 50 cases
