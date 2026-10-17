@@ -1,0 +1,51 @@
+address	status	owner	module	notes
+004c9f80	reversed	recon/stringbase2	common	fixed UTF-16 no-case comparison; run35 body 004a9570; oracle 64
+004ca010	reversed	recon/stringbase2	common	ASCII abstract-source deleting destructor; oracle 64
+004ca030	reversed	recon/stringbase2	common	ASCII isEmpty from recorded header length; oracle 64
+004ca050	reversed	recon/stringbase2	common	ASCII recorded-length character search; oracle 64; hook stringbase2asciifind
+004ca0d0	reversed	recon/stringbase2	common	ASCII starts-with explicit range; run35 body 0047b550; oracle 64
+004ca170	reversed	recon/stringbase2	common	ASCII ends-with explicit range; run35 body 00440bf0; oracle 64
+004ca1d0	reversed	recon/stringbase2	common	ASCII ends-with-no-case explicit range; run35 body 00451bd0; oracle 64
+004ca250	reversed	recon/stringbase2	common	Unicode data pointer with static-empty fallback; oracle 64
+004ca260	reversed	recon/stringbase2	common	Unicode recorded-length character search; oracle 64; hook stringbase2unicodefind
+004ca330	reversed	recon/stringbase2	common	Unicode starts-with-no-case explicit range; run35 body 0047f7c0; oracle 64
+004ca380	reversed	recon/stringbase2	common	Unicode ends-with explicit range; run35 body 00489cc0; oracle 64
+004ca4e0	reversed	recon/stringbase2	common	skip leading UTF-16 CRT whitespace; oracle 64
+004ca510	reversed	recon/stringbase2	common	length-aware UTF-16 arithmetic comparison; oracle 64; hook stringbase2widecompare
+004ca930	reversed	recon/stringbase2	common	ASCII release; unresolved replaced site constrained to observed pointer clear; oracle 64
+004caad0	reversed	recon/stringbase2	common	ASCII remove-last with release at empty; oracle 64
+004cab10	reversed	recon/stringbase2	common	ASCII remove-first with overlapping shift; oracle 64
+004cadd0	reversed	recon/stringbase2	common	Unicode writable-buffer preparation; run35 body 0044a780; oracle 64
+004cae10	reversed	recon/stringbase2	common	Unicode assignment; captured cave instruction clears old pointer; oracle 64
+004cae90	reversed	recon/stringbase2	common	Unicode set from abstract source; oracle 64
+004caf00	reversed	recon/stringbase2	common	Unicode append abstract source; oracle 64
+004cb020	reversed	recon/stringbase2	common	ASCII text-source copyRange; oracle 64; hook stringbase2asciisourcecopyrange
+004cb060	reversed	recon/stringbase2	common	ASCII skip separators register helper; oracle 64
+004cb0a0	reversed	recon/stringbase2	common	ASCII skip non-separators register helper; oracle 64
+004cb0e0	reversed	recon/stringbase2	common	Unicode text-source copyRange; oracle 64; hook stringbase2unicodesourcecopyrange
+004cb140	reversed	recon/stringbase2	common	Unicode abstract-source deleting destructor; oracle 64
+004cb160	reversed	recon/stringbase2	common	Unicode skip separators register helper; oracle 64
+004cb1b0	reversed	recon/stringbase2	common	Unicode skip non-separators register helper; oracle 64
+004cb200	reversed	recon/stringbase2	common	Unicode-object to ASCII translation through opaque converter; oracle 64
+004cb2a0	reversed	recon/stringbase2	common	ASCII-text to Unicode translation through opaque converter; oracle 64
+004cb460	reversed	recon/stringbase2	common	ASCII no-case compare to C string; run35 body 0045bb30; oracle 64
+004cb4c0	reversed	recon/stringbase2	common	ASCII no-case compare to object; run35 body 00494440; oracle 64
+004cb520	reversed	recon/stringbase2	common	Unicode compare to C string; run35 body 00494da0; oracle 64
+004cb630	reversed	recon/stringbase2	common	Unicode no-case compare to object; run35 body 0045f8f0; oracle 64
+004cb730	reversed	recon/stringbase2	common	ASCII trim using CRT whitespace and copy-on-write removals; oracle 64
+004cb8e0	reversed	recon/stringbase2	common	ASCII nextToken; unresolved buffer/set dependencies bound opaquely; oracle 64
+004cb990	reversed	recon/stringbase2	common	ASCII case-insensitive None predicate; oracle 64; hook stringbase2asciiisnone
+004cba50	reversed	recon/stringbase2	common	Unicode trim using CRT wide whitespace; oracle 64
+004cbb40	reversed	recon/stringbase2	common	Unicode format_va with 0x2000-unit stack buffer; run35 body 01900970; oracle 64
+004cbbe0	reversed	recon/stringbase2	common	Unicode nextToken with explicit separators; run35 body 01930820; oracle 64
+004cbce0	reversed	recon/stringbase2	common	Unicode translation wrapper unwrapping ASCII object; oracle 64
+004cbd00	reversed	recon/stringbase2	common	Unicode constructor translating ASCII object; oracle 64
+004cbe80	reversed	recon/stringbase2	common	Unicode append null-terminated text; run35 body 004db160; oracle 64
+004cc010	reversed	recon/stringbase2	common	ASCII substring from C string with signed bounds; oracle 64
+004cc0b0	reversed	recon/stringbase2	common	ASCII substring from object with signed bounds; oracle 64
+004cc160	reversed	recon/stringbase2	common	ASCII iterative replace-all; oracle 64
+004cc3b0	reversed	recon/stringbase2	common	Unicode one-unit constructor; oracle 64
+004cc3f0	reversed	recon/stringbase2	common	Unicode pointer-length constructor; oracle 64
+004cc460	reversed	recon/stringbase2	common	Unicode substring from C string with signed bounds; oracle 64
+004cc5b0	reversed	recon/stringbase2	common	Unicode iterative replace-all; oracle 64
+004cc820	reversed	recon/stringbase2	common	Unicode replace-all object wrapper; oracle 64
