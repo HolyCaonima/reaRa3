@@ -1,5 +1,5 @@
 address	status	owner	module	notes
-007b0d50	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::moveOntoWallMachineCtor; call 007B0E20 @007B0E89 and 007B0F30 @007B0F52; writes 00C2C400 MoveOntoWallStateMachine
+007b0d50		recon/aistate7b2	gamelogic	ra3::gamelogic::moveOntoWallMachineCtor; call 007B0E20 @007B0E89 and 007B0F30 @007B0F52; writes 00C2C400 MoveOntoWallStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007b0e20	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::aiMoveOntoWallXfer; 00C2C468 slot 3; slot 2 returns AIMoveOntoWallState
 007b0f30	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::aiMoveOntoWallOnEnter; 00C2C468 slot 4; slot 2 returns AIMoveOntoWallState
 007b1090	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::aiDeadOnEnter; 00C2C578 slot 4; slot 2 returns AIDeadState
@@ -12,33 +12,33 @@ address	status	owner	module	notes
 007b5d20	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::aiAttackOnExit; 00C2CCE0 slot 6; slot 2 returns AIAttackState
 007b6380	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::aiMoveForBoardingUpdate; 00C30310 slot 5; slot 2 returns AIMoveForBoarding
 007b6840	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::squadCtor; call 007BC050 @007BC0C8; writes 00C32318 Squad
-007b8e70	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::aiStateMachine30480Slot18; 00C30480 slot 18; slot 2 getter 00799570 is shared with 00C30530, 00C30638 and 00C32808 and returns AIStateMachine
-007b9710	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::aiStateMachine30530Slot18; 00C30530 slot 18; slot 2 getter 00799570 is shared with 00C30480, 00C30638 and 00C32808 and returns AIStateMachine
-007b98d0	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::aiStateMachine30638Slot18; 00C30638 slot 18 and 00C32808 slot 18; both tables share slot-2 getter 00799570 (AIStateMachine), also shared with 00C30480 and 00C30530
-007ba190	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::disguiseAggressiveMachineCtor; call 007BA230 @007BA24D; writes 00C32B20 DisguiseAggressiveStateMachine
+007b8e70		recon/aistate7b2	gamelogic	ra3::gamelogic::aiStateMachine30480Slot18; 00C30480 slot 18; slot 2 getter 00799570 is shared with 00C30530, 00C30638 and 00C32808 and returns AIStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007b9710		recon/aistate7b2	gamelogic	ra3::gamelogic::aiStateMachine30530Slot18; 00C30530 slot 18; slot 2 getter 00799570 is shared with 00C30480, 00C30638 and 00C32808 and returns AIStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007b98d0		recon/aistate7b2	gamelogic	ra3::gamelogic::aiStateMachine30638Slot18; 00C30638 slot 18 and 00C32808 slot 18; both tables share slot-2 getter 00799570 (AIStateMachine), also shared with 00C30480 and 00C30530; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
+007ba190		recon/aistate7b2	gamelogic	ra3::gamelogic::disguiseAggressiveMachineCtor; call 007BA230 @007BA24D; writes 00C32B20 DisguiseAggressiveStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ba230	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::unitAIDisguiseAggressiveSlot19; 00C30690 slot 19; slot 2 returns UnitAIDisguiseAggressiveState
-007ba260	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::heliEvacuateMachineCtor; call 007BA3E0 @007BA3FD; writes 00C32B88 HeliEvacuateStateMachine
+007ba260		recon/aistate7b2	gamelogic	ra3::gamelogic::heliEvacuateMachineCtor; call 007BA3E0 @007BA3FD; writes 00C32B88 HeliEvacuateStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ba3e0	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::unitAIHeliEvacuateSlot19; 00C2D9A8 slot 19; slot 2 returns UnitAIHeliEvacuateState
-007ba7f0	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::jetAttackMoveFollowPathMachineCtor; call 007BA940 @007BA95D; writes 00C32D30 JetAttackMoveFollowPathAsTeamStateMachine
+007ba7f0		recon/aistate7b2	gamelogic	ra3::gamelogic::jetAttackMoveFollowPathMachineCtor; call 007BA940 @007BA95D; writes 00C32D30 JetAttackMoveFollowPathAsTeamStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007ba940	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::jetAIAttackMoveFollowPathSlot19; 00C30A10 slot 19; slot 2 returns JetAIAttackMoveFollowPathAsTeamState
-007ba970	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::jetAttackMoveFollowWaypointMachineCtor; call 007BAAF0 @007BAB0D; writes 00C32DE0 JetAttackMoveFollowWaypointPathStateMachine
+007ba970		recon/aistate7b2	gamelogic	ra3::gamelogic::jetAttackMoveFollowWaypointMachineCtor; call 007BAAF0 @007BAB0D; writes 00C32DE0 JetAttackMoveFollowWaypointPathStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007baaf0	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::jetAIAttackMoveFollowWaypointSlot19; 00C30A88 slot 19; slot 2 returns JetAIAttackMoveFollowWaypointPathState
-007bab20	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::jetAttackMoveToGoalMachineCtor; call 007BAC70 @007BAC8D; writes 00C32E80 JetAttackMoveToGoalStateMachine
+007bab20		recon/aistate7b2	gamelogic	ra3::gamelogic::jetAttackMoveToGoalMachineCtor; call 007BAC70 @007BAC8D; writes 00C32E80 JetAttackMoveToGoalStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bac70	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::jetAIAttackMoveToGoalSlot19; 00C2DBD0 slot 19; slot 2 returns JetAIAttackMoveToGoalState
-007bb2b0	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::jetMoveToGoalMachineCtor; call 007BB470 @007BB48D; writes 00C33208 JetMoveToGoalStateMachine
+007bb2b0		recon/aistate7b2	gamelogic	ra3::gamelogic::jetMoveToGoalMachineCtor; call 007BB470 @007BB48D; writes 00C33208 JetMoveToGoalStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bb470	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::jetAIMoveToGoalSlot19; 00C2DCB0 slot 19; slot 2 returns JetAIMoveToGoalState
-007bb500	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::moveToRallyPointMachineCtor; call 007BB610 @007BB62D; writes 00C33270 MoveToRallyPointStateMachine
+007bb500		recon/aistate7b2	gamelogic	ra3::gamelogic::moveToRallyPointMachineCtor; call 007BB610 @007BB62D; writes 00C33270 MoveToRallyPointStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bb610	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::unitAIMoveToRallyPointSlot19; 00C2DD18 slot 19; slot 2 returns UnitAIMoveToRallyPointState
 007bbbd0	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::turretAIIdleScanUpdate; 00C29B80 slot 5; slot 2 returns TurretAIIdleScanState
 007bbc80	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::turretAIRecenterUpdate; 00C29BE8 slot 5; slot 2 returns TurretAIRecenterTurretState
-007bbd20	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::attackMoveFollowPathMachineCtor; call 007BBE10 @007BBE2D; writes 00C333D0 AttackMoveFollowPathAsTeamStateMachine
+007bbd20		recon/aistate7b2	gamelogic	ra3::gamelogic::attackMoveFollowPathMachineCtor; call 007BBE10 @007BBE2D; writes 00C333D0 AttackMoveFollowPathAsTeamStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bbe10	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::unitAIAttackMoveFollowPathSlot19; 00C30F50 slot 19; slot 2 returns UnitAIAttackMoveFollowPathAsTeamState
-007bbe40	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::attackMoveFollowWaypointMachineCtor; call 007BBF00 @007BBF1D; writes 00C33478 AttackMoveFollowWaypointPathStateMachine
+007bbe40		recon/aistate7b2	gamelogic	ra3::gamelogic::attackMoveFollowWaypointMachineCtor; call 007BBF00 @007BBF1D; writes 00C33478 AttackMoveFollowWaypointPathStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bbf00	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::unitAIAttackMoveFollowWaypointSlot19; 00C30FC8 slot 19; slot 2 returns UnitAIAttackMoveFollowWaypointPathState
-007bbf30	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::attackMoveToGoalMachineCtor; call 007BC020 @007BC03D; writes 00C33518 AttackMoveToGoalStateMachine
+007bbf30		recon/aistate7b2	gamelogic	ra3::gamelogic::attackMoveToGoalMachineCtor; call 007BC020 @007BC03D; writes 00C33518 AttackMoveToGoalStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bc020	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::unitAIAttackMoveToGoalSlot19; 00C2E2F8 slot 19; slot 2 returns UnitAIAttackMoveToGoalState
 007bc050	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::attackSquadMachineXfer; 00C2E440 slot 3; slot 2 returns AttackSquadStateMachine
-007bc100	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::combinedUnitMachineCtor; call 007BC1C0 @007BC1DD; writes 00C33580 AICombinedUnitStateMachine
+007bc100		recon/aistate7b2	gamelogic	ra3::gamelogic::combinedUnitMachineCtor; call 007BC1C0 @007BC1DD; writes 00C33580 AICombinedUnitStateMachine; deferred by the controller: the body in AIState7B2Lifted.inc is register/stack-emulating lifted code, not a readable reconstruction; rewrite pending (controller)
 007bc1c0	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::unitAICombinedUnitSlot19; 00C2E508 slot 19; slot 2 returns UnitAICombinedUnitState
 007bd6b0	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::aiDockApproachUpdate; 00C31AA8 slot 5; slot 2 returns AIDockApproachState
 007bd980	reversed	recon/aistate7b2	gamelogic	ra3::gamelogic::aiInternalMoveTo31BB0OnExit; 00C31BB0 slot 6; slot 2 returns AIInternalMoveToState
