@@ -406,6 +406,7 @@
     skirmishai89 `0793c38`），按"原 brief + `work/prompts/<批次>_resume.md` 现状说明"重派接手
     agent（通用规则见 `work/prompts/takeover_common.md`）。另杀掉一个死循环跑了一小时的 python
     one-liner（扫描 run35 快照字符串时循环下标不前进）。
+  - **暂停**（18:24 用户指示）：在途 10 路跑完、逐个验收合并后当天暂停，不再补位；下次会话从补位队列继续。
   - **在途 10 路**（18:30，Grok 9、Gemini 1；派单在 `work/prompts/<名>.md`）：
     - `recon/protcave3`（唯一的 Gemini 位）：剩余 165 个只有 cave 站点、无注释行的 inner-patched/
       entry-recoverable 函数（清单 `work/prompts/protcave3_pool.txt`），外加 5 个空状态延后行 `007461c0`
