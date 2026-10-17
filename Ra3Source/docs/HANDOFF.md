@@ -40,13 +40,14 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至提交 `dfec2d1`）
+## 3. 现状（截至提交 `de59349`）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,986 行，其中 verified 66、
-  reversed 135、unanalyzed 48,785。`securom` 分类：clean 47,772、entry-lost 653、
+  reversed 261、unanalyzed 48,659。`securom` 分类：clean 47,772、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
-- **hook**：86 个目标（其中 43 个只认显式键）。86 个全部 replace 时，Release 遭遇战带
-  Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34，共 34 次实机运行记录）。
+- **hook**：135 个目标（其中 91 个只认显式键）。原有 86 个全部 replace 时，Release
+  遭遇战带 Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34）；新加的
+  Player/Net/W3DView/FXPS 共 49 个目标只有离线证据，尚未做合并实机 shadow/replace。
 - **已完成模块**：
   - core（配置/INI/SkuDef）
   - io（BIG 档案、RefPack、BigHandler 四层：查找/打开/读取/seek/枚举）
@@ -55,6 +56,13 @@
   - common（字节串函数、引擎字符串类 StringBase、CRC）
   - math（SSE/x87 原语）
   - sim（随机数模块全部 clean 函数：三条流、整数/实数区间、RandomVariable、种子 CRC）
+  - Player/ScoreKeeper 批次：35 个接口，其中 34 个新台账 reversed，14 个显式 hook；
+    Debug/Release oracle 各 13,000 例零差异
+  - net transport 批次：28 个 clean 函数，9 个 hook；两配置 oracle 各 14,000 例零差异
+  - render 批次：W3DView/Rain 37 个接口，其中 19 个逐入口 reversed，11 个 hook；
+    两配置 oracle 各 25,850 例零差异
+  - gameclient FXPS 批次：45 个 clean 函数，15 个显式 hook；两配置 oracle 各
+    25,100 例零差异；`fxpsgpuspeed` 用 naked + 十字节缓冲保持完整 x87 ST0
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
@@ -62,8 +70,10 @@
   - 少数 hook 在遭遇战里未被调用（logicrandomvariable、几个 BIG 枚举入口、
     stringfindlast 等），只有离线证据。
   - StringBase 余下的函数（trim、nextToken、translate、ASCII release `0x004CA930` 等）
-    依赖 inner-patched/entry-lost 代码，适合放进第一批受保护代码工作。
-- **git**：本地 `main` 领先 `origin/main` 84 个提交，未 push（用户没要求 push）。
+    依赖 inner-patched/entry-lost；`recon/stringbase2` 正用运行 35 转储离线处理。
+- **当前五路并行**：`recon/stringbase2`、`recon/aistates`、`recon/audioevent`、
+  `recon/objectlogic`、`recon/uicontrols`。每支独立 worktree，完成后主控逐支复验合并。
+- **git**：本地 `main` 领先 `origin/main` 20 个提交，未 push（用户没要求 push）。
 
 ## 4. 建议的下一步（按优先级）
 
@@ -90,10 +100,11 @@
    返回 `thunk VA → 真实体 VA`：移植 entry-lost 函数时要 oracle 真实体，而不是那 6 字节 thunk。
    `.text/.rdata/.data` 仍取磁盘（运行时 `.text` 与磁盘逐字节相同；`.data` 保持装载期值）；
    SecuROM 自己的节（`Stext` 等）永不映射。
-3. **大批量并行移植**：3–5 个 gpt-5.6-sol 子 agent，每个负责一个成块子系统，每批
+3. **大批量并行移植**：🚧 持续进行。保持 5 个 gpt-5.6-sol 子 agent，每个负责一个成块子系统，每批
    50–200 个函数，每批带 oracle 脚本。优先成块的 gamelogic/gameclient 簇，例如
    `0x0065xxxx–0x0066xxxx` 粒子/特效（大量调用 client RandomVariable），用 Generals 源码
-   命名，不要挑零散的匿名字段访问器。主控合并：零警告构建、ctest、全部 oracle。
+   命名，不要挑零散的匿名字段访问器。已合并四批共 126 个新 reversed；主控每次合并均跑
+   零警告 Debug/Release、两套 ctest、该批 oracle 和所有已合并模块的 Release oracle。
 4. **攒到几百个函数后**，按 §6 跑一次合并的实机 shadow，再跑一次 replace。
 5. 结构性整理（可选）：`src/hook/dll/Targets.cpp` 已 3,479 行，宜按模块拆分；
    `work/probe` 里的实机脚本不在 git 中，宜挑必要的移进 `tools/`。
