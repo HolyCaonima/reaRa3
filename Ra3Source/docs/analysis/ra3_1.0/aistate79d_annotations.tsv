@@ -1,0 +1,49 @@
+address	status	owner	module	notes
+007970d0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIReloadAmmoUpdate; 00c29ed8 slot 5; slot 2 returns UnitAIReloadAmmoState
+00797510	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIDriftSlot6; 00c2a478 slot 6; slot 2 returns UnitAIDriftState
+00797890	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::turretAIAimTurretWhenBusySlot19; 00c2a7f0 slot 19; slot 2 returns TurretAIAimTurretStateWhenBusy
+00797a10	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::turretAIIdleScanOnEnter; 00c29b80 slot 4; slot 2 returns TurretAIIdleScanState; pushes 00c2a938 (TurretStates\IdleScan.cpp) at 00797a4c and 00797a6c
+007985d0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::saAIFaceTargetApplyHeading; no vtable; E9 at 0079d928 inside 0079d8f0 jumps here; 0079d8f0 is SA_AIFaceTargetState 00c2e138 slot 5
+007986e0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIRotateToPathSlot6; 00c2b778 slot 6; slot 2 returns UnitAIRotateToPathState
+00798700	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIRotateToPathXfer; 00c2b778 slot 3; slot 2 returns UnitAIRotateToPathState
+00798860	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::moveInStraightLineSlot6; 00c00cf0 slot 6; slot 2 returns MoveInStraightLineState; the same body is slot 6 of 26 other tables and each has its own slot-2 getter: MoveToGroundState 00c00d58, BalloonMoveToGroundState 00c0b578, UnitAISuperState 00c2b9f8, AIAttackAreaState 00c2d298, UnitAIHeliEvacuateState 00c2d9a8, AIMoveToFollowThroughState 00c2da88, AIMoveToInitialRunState 00c2db68, JetAILandingApproachState 00c2dc40, JetAIMoveToGoalState 00c2dcb0, UnitAIMoveToRallyPointState 00c2dd18, AIAggressiveState 00c2e1a0, UnitAIAttackSquadState 00c2e4a0, UnitAIDisguiseWhenIdleState 00c2e640, UnitAIGuardAreaState 00c2ea90, UnitAIGuardPositionState 00c2eaf8, UnitAIHoldGroundState 00c2eb68, UnitAIHordeExitGoalState 00c2ec38, UnitAIHordeMoveToGoalAndEnterState 00c2eca8, UnitAIMoveToAndDeleteState 00c2edf8, UnitAIAIMoveToAndEvacuateState 00c2ee68, UnitAIMoveToCoverState 00c2eed8, UnitAIReturnToSourceAndEnterState 00c2f1d0, UnitAIDisguiseAggressiveState 00c30690, UnitAIDisguiseHoldFireState 00c30700, UnitAIDisguiseHoldGroundState 00c30770, UnitAIDisguiseGuardPositionState 00c310b8
+007989a0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIWaitForOccupantsOnEnter; 00c2bac8 slot 4; slot 2 returns UnitAIWaitForOccupantsState
+00798d70	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiDockProcessDockXfer; 00c2bc10 slot 3; slot 2 returns AIDockProcessDockState
+00799100	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiHarvestWorkSiteXfer; 00c2bec8 slot 3; slot 2 returns AIHarvestWorkSiteState
+00799410	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiGarrisonedIdleOnEnter; 00c2c140 slot 4; slot 2 returns AIGarrisonedIdleState; pushes 00c2c1a8 (AIStates.cpp) at 00799419
+00799820	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiIdleXfer; 00c2c520 slot 3; slot 2 returns AIIdleState
+00799ae0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiBackAwayAndCowerSlot6; 00c2c638 slot 6; slot 2 returns AIBackAwayAndCowerState
+00799ca0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiUncontrollableCowerXfer; 00c2c768 slot 3; slot 2 returns AIUncontrollableCower
+00799ec0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiFollowPathAsTeamSlot9; 00c2fb78 slot 9; slot 2 returns AIFollowPathAsTeamState
+00799ef0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiAttackMoveToSlot9; 00c32180 slot 9; slot 2 returns AIAttackMoveToState
+00799f80	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiAttackAimAtTargetXfer; 00c2c8a8 slot 3; slot 2 returns AIAttackAimAtTargetState
+0079a1d0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiAttackFireWeaponSlot6; 00c2c9e0 slot 6 slot 2 returns AIAttackFireWeaponState; also 00c2ca48 slot 6 slot 2 returns AIAttackPositionFireWeaponState; the two tables do not share a slot-2 getter (0079a1b0 and 0079a200)
+0079a480	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiAttackSlot8; 00c2cce0 slot 8; slot 2 returns AIAttackState
+0079af30	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiGarrisonedSlot8; 00c2c268 slot 8 slot 2 returns AIGarrisonedState; also slot 8 of AIGuardState 00c2d030, AIGuardAreaState 00c2d0a8 and AIGuardObjectState 00c2d108; each table has its own slot-2 getter (007994d0, 0079ac40, 0079ade0, 0079af20)
+0079b1c0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiAttackAreaOnEnter; 00c2d298 slot 4; slot 2 returns AIAttackAreaState; pushes 00c2c1a8 (AIStates.cpp) at 0079b201
+0079b280	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiFaceOnEnter; 00c2d950 slot 4; slot 2 returns AIFaceState
+0079b690	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiTNGuardIdleOnEnter; 00c30100 slot 4; slot 2 returns AITNGuardIdleState; pushes 00c2d5a8 (AITNGuard.cpp) at 0079b6cc
+0079c5d0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIGetBoardingLocationOnEnter; 00c29cb0 slot 4; slot 2 returns UnitAIGetBoardingLocationState
+0079c6e0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIHeliEvacuateOnEnter; 00c2d9a8 slot 4; slot 2 returns UnitAIHeliEvacuateState
+0079c960	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiMoveToFollowThroughOnEnter; 00c2da88 slot 4 slot 2 returns AIMoveToFollowThroughState; also 00c2e640 slot 4 slot 2 returns UnitAIDisguiseWhenIdleState; the two tables do not share a slot-2 getter (0079c950 and 0079e910)
+0079c990	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiMoveToGoalDiveBombOnEnter; 00c2daf8 slot 4; slot 2 returns AIMoveToGoalDiveBombState
+0079ca30	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiMoveToInitialRunOnEnter; 00c2db68 slot 4 slot 2 returns AIMoveToInitialRunState; also 00c2eed8 slot 4 slot 2 returns UnitAIMoveToCoverState; the two tables do not share a slot-2 getter (0079ca20 and 0079fec0)
+0079ca70	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::jetAttackMoveFollowPathXfer; 00c32d30 slot 3 slot 2 returns JetAttackMoveFollowPathAsTeamStateMachine; also 00c333d0 slot 3 slot 2 returns AttackMoveFollowPathAsTeamStateMachine; the two tables do not share a slot-2 getter (007ba930 and 007bbdd0)
+0079cb00	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::jetAIMoveToGoalOnEnter; 00c2dcb0 slot 4; slot 2 returns JetAIMoveToGoalState
+0079ce60	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAILandXfer; 00c30b70 slot 3 slot 2 returns UnitAILandState; also 00c30bd0 slot 3 slot 2 returns UnitAITakeOffState; the two tables do not share a slot-2 getter (007a94d0 and 007a9750)
+0079d030	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIDeliverToRefineryUpdate; 00c29fa8 slot 5; slot 2 returns UnitAIDeliverToRefineryState
+0079d260	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIDeliverOreOnEnter; 00c2df98 slot 4 slot 2 returns UnitAIDeliverOreState; also 00c2e000 slot 4 slot 2 returns UnitAIDockWithNodeState; the two tables do not share a slot-2 getter (0079cfc0 and 0079d250)
+0079d320	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIGetBestBoneUpdate; 00c2a080 slot 5; slot 2 returns UnitAIGetBestBoneState
+0079d5c0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIDriftUpdate; 00c2a478 slot 5; slot 2 returns UnitAIDriftState
+0079d6a0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIFreeFallUpdate; 00c2a4d8 slot 5; slot 2 returns UnitAIFreeFallState
+0079d8f0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::saAIFaceTargetUpdate; 00c2e138 slot 5; slot 2 returns SA_AIFaceTargetState; tail-jumps to 007985d0 at 0079d928
+0079da20	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::aiAggressiveOnEnter; 00c2e1a0 slot 4 slot 2 returns AIAggressiveState; also 00c30690 slot 4 slot 2 returns UnitAIDisguiseAggressiveState; the two tables do not share a slot-2 getter (0079da10 and 007a85c0)
+0079dac0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIAimFireAtObjectXfer; 00c2e208 slot 3; slot 2 returns UnitAIAimFireAtObjectState
+0079ee10	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIFollowPathOnEnter; 00c2e7e8 slot 4 slot 2 returns UnitAIFollowPathState; also slot 4 of JetAIAttackMoveFollowPathAsTeamState 00c30a10 and UnitAIAttackMoveFollowPathAsTeamState 00c30f50; each table has its own slot-2 getter (0079ecd0, 007a91d0, 007aaa20)
+0079f110	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIFollowWaypointPathAsTeamOnEnter; 00c2e8c8 slot 4; slot 2 returns UnitAIFollowWaypointPathAsTeamState
+0079f400	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIGuardAreaOnEnter; 00c2ea90 slot 4; slot 2 returns UnitAIGuardAreaState
+0079f4c0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIGuardPositionOnEnter; 00c2eaf8 slot 4 slot 2 returns UnitAIGuardPositionState; also 00c310b8 slot 4 slot 2 returns UnitAIDisguiseGuardPositionState; the two tables do not share a slot-2 getter (0079f4b0 and 007ab040)
+0079f580	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIHoldGroundOnEnter; 00c2eb68 slot 4 slot 2 returns UnitAIHoldGroundState; also 00c30770 slot 4 slot 2 returns UnitAIDisguiseHoldGroundState; the two tables do not share a slot-2 getter (0079f570 and 007a8620)
+0079fcd0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIMoveToAndDeleteOnEnter; 00c2edf8 slot 4 slot 2 returns UnitAIMoveToAndDeleteState; also 00c2ee68 slot 4 slot 2 returns UnitAIAIMoveToAndEvacuateState; the two tables do not share a slot-2 getter (0079fcb0 and 0079fcc0)
+0079fe80	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIMoveToAttackPositionOnEnter; 00c31770 slot 4; slot 2 returns UnitAIMoveToAttackPositionState
+0079ffa0	reversed	recon/aistate79d	gamelogic	ra3::gamelogic::unitAIMoveToGoalAndEnterOnEnter; 00c2efa8 slot 4; slot 2 returns UnitAIMoveToGoalAndEnterState; the body continues through the ret at 007a008c
