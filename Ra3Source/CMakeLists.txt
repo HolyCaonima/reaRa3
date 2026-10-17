@@ -55,6 +55,7 @@ if(RA3_BUILD_TOOLS)
     add_subdirectory(tools/stringbase2check)
     add_subdirectory(tools/textcheck)
     add_subdirectory(tools/netcheck)
+    add_subdirectory(tools/lobbysessioncheck)
     add_subdirectory(tools/audioeventcheck)
 endif()
 

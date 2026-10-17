@@ -1,4 +1,6 @@
 ra3_add_module(net
     SOURCES
         include/ra3/net/Transport.h
-        Transport.cpp)
+        Transport.cpp
+        include/ra3/net/LobbySession.h
+        LobbySession.cpp)
