@@ -1,0 +1,47 @@
+address	status	owner	module	notes
+005a82e0	reversed	recon/common5a	common	currentStateId; direct callee of 006ffc00 at 006ffc56; 006ffc00 is vtable 00c22118 slot 99; slot 2 00740f10 returns AIUpdateInterface at 00c223cc
+005a9fa0	reversed	recon/common5a	common	failureStateExit; vtable 00be6cb0 slot 16; slot 2 005aa2e0 returns FailureState at 00be6cfc
+005a9fe0	reversed	recon/common5a	common	applyTransitionId; direct callee of 005aa0c0 at 005aa115; 005aa0c0 is direct callee of 005ac420 at 005ac492; 005ac420 is vtable 00be8178 slot 4; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa040	reversed	recon/common5a	common	scanConditions; direct callee of 005aa140 at 005aa16e; 005aa140 is direct callee of 005ac420 at 005ac455; 005ac420 is vtable 00be8178 slot 4; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa0c0	reversed	recon/common5a	common	checkTransitions; direct callee of 005ac420 at 005ac492; 005ac420 is vtable 00be8178 slot 4; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa140	reversed	recon/common5a	common	checkSleepTransitions; direct callee of 005ac420 at 005ac455; 005ac420 is vtable 00be8178 slot 4; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa1a0	reversed	recon/common5a	common	isInIdleState; vtable 00be8178 slot 10; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa1e0	reversed	recon/common5a	common	notifyStateThenMachine; direct callee of 006d8040 at 006d80d1; 006d8040 is vtable 00c114e8 slot 15; vtable installed by mov dword ptr [esi+0x18], 0x00C114E8 at 006c7840
+005aa220	reversed	recon/common5a	common	forwardStateSlot48; vtable 00be8178 slot 11; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa240	reversed	recon/common5a	common	lockMachine; direct callee of 00683080 at 006830c5; 00683080 is vtable 00c22118 slot 136; slot 2 00740f10 returns AIUpdateInterface at 00c223cc
+005aa250	reversed	recon/common5a	common	unlockMachine; direct callee of 00683080 at 0068308a; 00683080 is vtable 00c22118 slot 136; slot 2 00740f10 returns AIUpdateInterface at 00c223cc
+005aa260	reversed	recon/common5a	common	callWhileUnlocked; vtable 00be8178 slot 12; slot 2 005b2440 returns StateMachine at 00be81c0
+005aa280	reversed	recon/common5a	common	storeGoalScalar; direct callee of 006cc1e0 at 006cc244; 006cc1e0 is vtable 00c22118 slot 87; slot 2 00740f10 returns AIUpdateInterface at 00c223cc
+005aa2a0	reversed	recon/common5a	common	storeGoalDword; direct callee of 00699c10 at 00699c3c; 00699c10 is vtable 00c22118 slot 56; slot 2 00740f10 returns AIUpdateInterface at 00c223cc
+005ac420	reversed	recon/common5a	common	updateStateMachine; vtable 00be8178 slot 4; slot 2 005b2440 returns StateMachine at 00be81c0
+005ac4c0	reversed	recon/common5a	common	setGoalObject; vtable 00be8178 slot 14; slot 2 005b2440 returns StateMachine at 00be81c0
+005ac4f0	reversed	recon/common5a	common	setGoalPosition; direct callee of 006831d0 at 006831fe; 006831d0 is vtable 00c22118 slot 103; slot 2 00740f10 returns AIUpdateInterface at 00c223cc
+005ac540	reversed	recon/common5a	common	pathPointAt; direct callee of 007c98e0 at 007c98fd; 007c98e0 is vtable 00c2b920 slot 4; slot 2 007987f0 returns UnitAIStartPathMoveState at 00c2b96c
+005ad150	reversed	recon/common5a	common	resetGoalPosition; direct callee of 007a0f30 at 007a1002; 007a0f30 is vtable 00c2bc78 slot 5; slot 2 007a1050 returns AIGuardIdleState at 00c2bcc4
+005b2450	reversed	recon/common5a	common	copyGoalFields; direct callee of 0079fee0 at 0079fef3; 0079fee0 is vtable 00c2ef40 slot 4; slot 2 0079fed0 returns UnitAIMoveToGoalState at 00c2ef90
+005b24d0	reversed	recon/common5a	common	internalGetState; direct callee of 005c0a6a at 005c0ae9; 005c0a6a references assertion string 00be95d8 StateMachine.cpp:1379
+005b2500	reversed	recon/common5a	common	internalSetState; direct callee of 005b25c0 at 005b25d4; 005b25c0 is vtable 00be8178 slot 5; slot 2 005b2440 returns StateMachine at 00be81c0
+005b25c0	reversed	recon/common5a	common	initDefaultState; vtable 00be8178 slot 5; slot 2 005b2440 returns StateMachine at 00be81c0
+005b6230	reversed	recon/common5a	common	setState; vtable 00be8178 slot 7; slot 2 005b2440 returns StateMachine at 00be81c0
+005b6240	reversed	recon/common5a	common	stateMapContains; direct callee of 007db090 at 007db13b; 007db090 is vtable 00c2c520 slot 5; slot 2 00799810 returns AIIdleState at 00c2c56c
+005ba020	reversed	recon/common5a	common	goalQuery; assertion string 00be90a8 StateMachine.cpp:1075 referenced at 005ba037
+005ba110	reversed	recon/common5a	common	publishGoalPosition; calls 005ba020 at 005ba122 with the same this; 005ba020 is anchored by assertion string 00be90a8
+005bdca0	reversed	recon/common5a	common	goalObjectLive; calls 005ba020 at 005bdca9 with the same this; 005ba020 is anchored by assertion string 00be90a8
+005bdcc0	reversed	recon/common5a	common	assignGoalPath; direct callee of 00683080 at 0068309f; 00683080 is vtable 00c22118 slot 136; slot 2 00740f10 returns AIUpdateInterface at 00c223cc; adds 0x58 to this then jumps to 005ba670
+005bdf30	reversed	recon/common5a	common	xferGoalPath; direct callee of 005c0a6a at 005c0cbf; 005c0a6a references assertion string 00be95d8 StateMachine.cpp:1379
+005aa190		recon/common5a	common	rejected: vtable 00be8178 slot 15 is fld dword ptr [0x00be68e8]; ret, an x87 constant with no distinct object behavior
+005aa1c0		recon/common5a	common	rejected: forwards to the current state's vtable +0x38, but neither caller is a vtable slot or an anchored callee
+005aa200		recon/common5a	common	rejected: forwards to the current state's vtable +0x44; its only caller is not a vtable slot
+005aa2b0		recon/common5a	common	rejected: writes FailureState vtable 00be6cb0 at 005aa2d4, but the body is not a vtable slot, assertion site, or direct callee of an anchored function
+005aa2e0		recon/common5a	common	rejected: vtable 00be6cb0 slot 2 identity fingerprint, mov eax, 0x00be6cfc; ret
+005a9f90		recon/common5a	common	rejected: three-byte empty body shared across FailureState slots, not a distinct method
+005ad1b0		recon/common5a	common	rejected: vtable 00be7124 slot 8 calls virtual slot 0 with argument 1, a delete path
+005ad810		recon/common5a	common	rejected: ledger securom=patched, GameStart.cpp, not a clean StateMachine body
+005b2370		recon/common5a	common	rejected: destructor called from StateMachine vtable slot 0; writes 00be8178 then frees nodes through 0x004166b0
+005b2440		recon/common5a	common	rejected: vtable 00be8178 slot 2 identity fingerprint, mov eax, 0x00be81c0; ret
+005b25e0		recon/common5a	common	rejected: jmp 0x004ca930 destructor thunk
+005b6200		recon/common5a	common	rejected: map lookup sibling of 005b24d0 with no vtable-slot caller
+005b9f30		recon/common5a	common	rejected: ledger extent overlaps 005b9f4b and jumps outside its own body
+005ba1f0		recon/common5a	common	rejected: destructor tail that calls 0x004166b0
+005bdb90		recon/common5a	common	rejected: register setup then jmp 0x00411ca2, a thunk into a shared body
+005bdc20		recon/common5a	common	rejected: erases a map node and calls 0x004166b0
