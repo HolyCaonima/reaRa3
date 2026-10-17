@@ -41,16 +41,16 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 common5a 合并）
+## 3. 现状（截至 render56 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 1,408、unanalyzed 47,517（受保护函数已 reversed：entry-lost 104、inner-patched 14、
+  reversed 1,464、unanalyzed 47,461（受保护函数已 reversed：entry-lost 104、inner-patched 14、
   entry-recoverable 3）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
-- **hook**：324 个目标（其中 277 个只认显式键）。原有 86 个全部 replace 时，Release
+- **hook**：335 个目标（其中 288 个只认显式键）。原有 86 个全部 replace 时，Release
   遭遇战带 Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34）；新加的
-  222 个目标只有离线证据，尚未做合并实机 shadow/replace。
+  233 个目标只有离线证据，尚未做合并实机 shadow/replace。
 - **已完成模块**：
   - core（配置/INI/SkuDef）
   - io（BIG 档案、RefPack、BigHandler 四层：查找/打开/读取/seek/枚举）
@@ -201,6 +201,13 @@
     `ra3/gamelogic/SkirmishAI87.h` 和 `ra3/gameclient/SkirmishClient87.h`，gamelogic 新增对
     `Ra3::sim` 的依赖。首个由子 agent 自己跑 `verify_ownership.py` 交付的批次（50 条声明全部成立），
     主控确认声明覆盖全部 41 行。集成态 151 场景零差异，`+0x210` 写偏移 mutation 检出
+  - render W3D 地形簇批次（`0x0056xxxx–0x0058xxxx`，Gemini）：56 个 clean 函数
+    （W3DTerrainVisual/W3DTerrainLogic/WorldHeightMap/BaseHeightMapRenderObjClass、scorch/road/prop
+    buffer、LineSeg/RayCollision），11 个 explicitOnly hook（cell-flag/cliff/flip 读取叶子）；
+    代码在 `src/render/.../W3DTerrainCluster56.*`，设计见 `render56.md`。render 系 vtable 没有 slot-2
+    类名 getter，类名按 vtable 附近源路径串推断；归属靠 vtable 槽位成员 + 调用边链，主控用脚本
+    把全部 30 个 vt + 62 条调用边复算到 fails=0（本批无伪造）。集成态 oracle 290 例零差异、
+    2 处 mutation 检出；1 个 ICF `xor eax` 桩拒收、7 个转发 thunk 延后；hook_integration 通过
   - common StateMachine 批次（`0x005A82E0–0x005BDF30`，Grok）：30 个 clean 入口（状态机 update、
     转移/睡眠条件扫描、当前状态、加解锁、goal 对象/位置/路径、内部 get/set state、xfer），3 个
     explicitOnly hook（`smgetid`、`smgoaldword`、`smpathat`）；代码在 `ra3/common/StateMachine.h`，
@@ -217,13 +224,13 @@
 - **当前并行**（子 agent 随主控会话结束而中断，恢复时先查各 worktree 有无新提交）：
   - `recon/gamelogic7c`、`recon/common7e`、`recon/drawable52`、`recon/gamelogic72`、
     `recon/particles65`、`recon/render91`、`recon/obj6a`、`recon/protcave`、`recon/protentry2`、
-    `recon/gamelogic82`、`recon/skirm87`、`recon/common5a`：已合并（`789bcb1`、`f3c87e3`、`c33c919`、
-    `2c9fd80`、`b67d3d3`、`9df37c8`、`760e231`、`79a7caa`、`9c14506`、`6234602`、`00c9a7a`、`be08241`）。追加合并脚本在
+    `recon/gamelogic82`、`recon/skirm87`、`recon/common5a`、`recon/render56`：已合并（`789bcb1`、`f3c87e3`、
+    `c33c919`、`2c9fd80`、`b67d3d3`、`9df37c8`、`760e231`、`79a7caa`、`9c14506`、`6234602`、`00c9a7a`、
+    `be08241`、`ba97d03`）。追加合并脚本在
     冲突块以 `)` 收尾时会报 WARN，需手工检查括号（skirm87 合并时拼坏过一次 CMake）。受保护批次的站点/字符串/伪调用核对脚本见 `work/probe/check_protcave.py`、
     `work/probe/check_protentry2.py`，多快照槽值用 `work/probe/slot_snapshots.py`。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
     `python work\probe\verify_ownership.py <claims.txt>` 逐条反查（格式见脚本头注释）。
-  - `recon/render56`：`0x00560000–0x0059FFFF` render 簇，Gemini，base `5e4a7c2`。
   - `recon/audio50`：`0x00500000–0x0050FFFF` SageAudio 设备层，base `d18d88e`；Gemini 断连后主控
     提交快照 `30643c3`（约 42 个草稿入口和 checker，无 oracle/注释/文档），改由 Grok 接手。
   - `recon/objbehav68`：Gemini 两次中断，主控提交快照 `97a0572`（约 70 个草稿入口和 checker，
@@ -257,7 +264,7 @@
   ~~`0x00990000–0x009AFFFF`~~（已开 render99，SageRender，Grok，base `38a0f6c`）→
   ~~`0x004D0000`~~（已开 logic4d，GameLogic 核心 clean 部分，Gemini，base `a721bfd`）→ ~~`0x00780000`~~（已开 thing78，Grok，base `4ead699`）→
   ~~`0x005D0000`~~（已开 net5d2，ReliableTransport 等，Grok）→ ~~`0x008B0000–0x008CFFFF`~~（已开
-  skirm8b，skirmish AI，Grok）→ ~~`0x00690000`~~（已开 obj69，对象模块，Grok）→ `0x00790000` AIStates 591（锚点 10）→
+  skirm8b，skirmish AI，Grok）→ ~~`0x00690000`~~（已开 obj69，对象模块，Grok）→ ~~`0x00790000`~~（已开 aistate79，AIStates，Grok）→
   `0x00740000–0x0077FFFF` 对象 update/weapon 783（锚点 31）→ protcave 的 13 个延后入口与剩余
   cave 站点（Grok 已证明能做）→ ~~`0x00820000–0x0083FFFF`~~（已开 gamelogic82，Grok）。
   受保护批次合并后，按剩余 body/cave 数量再开下一路。

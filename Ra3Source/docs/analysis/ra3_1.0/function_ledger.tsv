@@ -5729,10 +5729,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005611d0	FUN_005611d0	.text	69		clean	unknown		unanalyzed	
 00561220	FUN_00561220	.text	181		clean	unknown		unanalyzed	
 005612e0	FUN_005612e0	.text	5		clean	unknown		unanalyzed	
-005612f0	FUN_005612f0	.text	68		clean	unknown		unanalyzed	
-00561340	FUN_00561340	.text	175		clean	unknown		unanalyzed	
+005612f0	FUN_005612f0	.text	68		clean	render	recon/render56	reversed	W3DRoadBuffer::clearRoadTypeLinks (0x005612F0; direct callee of 0x00569570 at 0x00569571; clears m_roads[i]+0x44 and m_roadTypes[j]+0x04; verify_render56.py 3/3)
+00561340	FUN_00561340	.text	175		clean	render	recon/render56	reversed	W3DRoadBuffer::adjustRoadStacking (0x00561340; direct callee of 0x00585900 at 0x00585e6b, direct callee of 0x005a7a60 at 0x005a7a93, direct callee of 0x00908ed0 at 0x00908f1b, 0x00be4290 slot 1; verify_render56.py 5/5)
 005613f0	FUN_005613f0	.text	210		clean	unknown		unanalyzed	
-005615a0	FUN_005615a0	.text	21		clean	unknown		unanalyzed	
+005615a0	FUN_005615a0	.text	21		clean	render	recon/render56	reversed	W3DScorchBuffer::clearAllScorches (0x005615A0; direct callee of 0x008fd1e0 at 0x008fd206, 0x00c54618 slot 11; zeros +0x4660..+0x4668; verify_render56.py 3/3)
 005615c0	FUN_005615c0	.text	128		clean	unknown		unanalyzed	
 00561640	FUN_00561640	.text	51		clean	unknown		unanalyzed	
 00561680	FUN_00561680	.text	30		clean	unknown		unanalyzed	
@@ -5748,14 +5748,14 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00561c30	FUN_00561c30	.text	280		clean	unknown		unanalyzed	
 00561d50	FUN_00561d50	.text	6		clean	unknown		unanalyzed	
 00561d60	FUN_00561d60	.text	10		clean	unknown		unanalyzed	
-00561d70	FUN_00561d70	.text	49		clean	unknown		unanalyzed	
-00561db0	FUN_00561db0	.text	86		clean	unknown		unanalyzed	
-00561e10	FUN_00561e10	.text	87		clean	unknown		unanalyzed	
-00561e70	FUN_00561e70	.text	14		clean	unknown		unanalyzed	
-00561e80	FUN_00561e80	.text	17		clean	unknown		unanalyzed	
+00561d70	FUN_00561d70	.text	49		clean	render	recon/render56	reversed	W3DTerrainVisual::queryTerrainVisualSubobjectSlot6 (0x00561D70; 0x00be38e8 slot 9; calls this->vtable[10](x,y) and returns subobject->vtable[6] via 0x00917a50; verify_render56.py 3/3)
+00561db0	FUN_00561db0	.text	86		clean	render	recon/render56	reversed	W3DTerrainVisual::getRawMapHeight (0x00561DB0; 0x00be38e8 slot 20; reads heightmap uint16 at (x+border,y+border) and scales by 0.0390625f+0.5f; verify_render56.py 10/10)
+00561e10	FUN_00561e10	.text	87		clean	render	recon/render56	reversed	W3DTerrainVisual::partialMapUpdate (0x00561E10; 0x00be38e8 slot 21; expands IRegion2D by 1 cell and forwards to m_terrainRenderObject vtable+0x28; verify_render56.py 4/4)
+00561e70	FUN_00561e70	.text	14		clean	render	recon/render56	reversed	W3DTerrainVisual::getTerrainVisualBorderSize (0x00561E70; 0x00be38e8 slot 23; returns m_worldHeightMap (+0x30) border size at +0x2c; verify_render56.py 4/4; hook tvbordersize explicitOnly)
+00561e80	FUN_00561e80	.text	17		clean	render	recon/render56	reversed	W3DTerrainVisual::removeAllBibs (0x00561E80; 0x00be38e8 slot 18; forwards to m_terrainRenderObject (+0x28) vtable+0x4c; verify_render56.py 3/3)
 00561ea0	FUN_00561ea0	.text	33		clean	unknown		unanalyzed	
 00561ed0	FUN_00561ed0	.text	33		clean	unknown		unanalyzed	
-00561f00	FUN_00561f00	.text	28		clean	unknown		unanalyzed	
+00561f00	FUN_00561f00	.text	28		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainVisual slot 17 (`0x00be38e8` slot 17) wrapper calling `0x008e51a0` (`W3DScorchBuffer` wrapper around `0x0056ab00`)
 00561f20	FUN_00561f20	.text	8		clean	unknown		unanalyzed	
 00561f30	FUN_00561f30	.text	68		clean	unknown		unanalyzed	
 00561f80	FUN_00561f80	.text	213		clean	unknown		unanalyzed	
@@ -5799,13 +5799,13 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00562b30	FUN_00562b30	.text	7		clean	unknown		unanalyzed	
 00562b40	FUN_00562b40	.text	7		clean	unknown		unanalyzed	
 00562b50	FUN_00562b50	.text	27		clean	unknown		unanalyzed	
-00562b70	FUN_00562b70	.text	39		clean	unknown		unanalyzed	
+00562b70	FUN_00562b70	.text	39		clean	render	recon/render56	unanalyzed	Rejected ICF-shared vtable slot 3 body (`xor eax, eax; ret`) shared across 0x00be5cbc (W3DWaterRenderer), 0x00c2bcd8 (AIGuardGoingIdleState), and 0x00c2d168 (AIGoingIdleState)
 00562ba0	FUN_00562ba0	.text	10		clean	unknown		unanalyzed	
-00562bb0	FUN_00562bb0	.text	80		clean	unknown		unanalyzed	
+00562bb0	FUN_00562bb0	.text	80		clean	render	recon/render56	reversed	WorldHeightMap::setFlipState (0x00562BB0; direct callee of 0x00580a90 at 0x00580c72, callee of 0x0058bbc0 at 0x0058bc13, direct callee of 0x00591e00 at 0x00591f6d, 0x00be4290 slot 9; verify_render56.py 8/8)
 00562c70	FUN_00562c70	.text	187		clean	unknown		unanalyzed	
-00562d30	FUN_00562d30	.text	192		clean	unknown		unanalyzed	
-00562df0	FUN_00562df0	.text	287		clean	unknown		unanalyzed	
-00562f10	FUN_00562f10	.text	423		clean	unknown		unanalyzed	
+00562d30	FUN_00562d30	.text	192		clean	render	recon/render56	reversed	WorldHeightMap::countTilesFromTgaHeader (0x00562D30; direct callee of 0x0058a460 at 0x0058a613, direct callee of 0x005a1700 at 0x005a1e1e, 0x00be4e2c slot 2; verify_render56.py 9/9)
+00562df0	FUN_00562df0	.text	287		clean	render	recon/render56	reversed	WorldHeightMap::getTerrainColorAt (0x00562DF0; direct callee of 0x0056b290 at 0x0056b2ae, 0x00be38e8 slot 8; unpacks 15-bit tile color at +0x2ab0; verify_render56.py 4/4)
+00562f10	FUN_00562f10	.text	423		clean	render	recon/render56	reversed	WorldHeightMap::evaluateBlendTileCoeffs (0x00562F10; direct callee of 0x0056e0a0 at 0x0056e1ea; computes 4 float blend coefficients from 16-byte blend descriptor; verify_render56.py 14/14)
 005630c0	FUN_005630c0	.text	220		clean	unknown		unanalyzed	
 005631a0	FUN_005631a0	.text	85		clean	unknown		unanalyzed	
 00563200	FUN_00563200	.text	181		clean	unknown		unanalyzed	
@@ -5816,20 +5816,20 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 005633a0	FUN_005633a0	.text	33		clean	unknown		unanalyzed	
 005633d0	AptFrameStack::GetHashSize	.text	5		clean	unknown		unanalyzed	
 005633e0	FUN_005633e0	.text	31		clean	unknown		unanalyzed	
-00563400	FUN_00563400	.text	32		clean	unknown		unanalyzed	
-00563420	FUN_00563420	.text	32		clean	unknown		unanalyzed	
-00563440	FUN_00563440	.text	32		clean	unknown		unanalyzed	
-00563460	FUN_00563460	.text	32		clean	unknown		unanalyzed	
-00563480	FUN_00563480	.text	32		clean	unknown		unanalyzed	
-005634a0	FUN_005634a0	.text	32		clean	unknown		unanalyzed	
+00563400	FUN_00563400	.text	32		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainLogic slot 21 (`0x00be39f8` slot 21) wrapper calling `0x008e4c30` -> `0x0056d970`
+00563420	FUN_00563420	.text	32		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainLogic slot 24 (`0x00be39f8` slot 24) wrapper calling `0x008e4cb0` -> `0x0056d9d0`
+00563440	FUN_00563440	.text	32		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainLogic slot 25 (`0x00be39f8` slot 25) wrapper calling `0x008e4d30` -> `0x0056da40`
+00563460	FUN_00563460	.text	32		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainLogic slot 26 (`0x00be39f8` slot 26) wrapper calling `0x008e4db0` -> `0x0056dab0`
+00563480	FUN_00563480	.text	32		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainLogic slot 22 (`0x00be39f8` slot 22) wrapper calling `0x008e4e30` -> `0x0056db20`
+005634a0	FUN_005634a0	.text	32		clean	render	recon/render56	unanalyzed	Deferred W3DTerrainLogic slot 23 (`0x00be39f8` slot 23) wrapper calling `0x008e4eb0` -> `0x0056db80`
 005634c0	FUN_005634c0	.text	47		clean	unknown		unanalyzed	
 005634f0	thunk_FUN_008623d0	.text	5		clean	unknown		unanalyzed	
 00563500	FUN_00563500	.text	18		clean	unknown		unanalyzed	
-00563520	FUN_00563520	.text	30		clean	unknown		unanalyzed	
+00563520	FUN_00563520	.text	30		clean	render	recon/render56	reversed	BaseHeightMapRenderObjClass::initStreamLockHelper (0x00563520; direct callee of 0x00580a90 at 0x00580bbd, callee of 0x0058bbc0 at 0x0058bc13, direct callee of 0x00591e00 at 0x00591f6d, 0x00be4290 slot 9; verify_render56.py 3/3)
 00563540	FUN_00563540	.text	110		clean	unknown		unanalyzed	
 005635b0	FUN_005635b0	.text	60		clean	unknown		unanalyzed	
-005635f0	FUN_005635f0	.text	227		clean	unknown		unanalyzed	
-005636e0	FUN_005636e0	.text	227		clean	unknown		unanalyzed	
+005635f0	FUN_005635f0	.text	227		clean	render	recon/render56	reversed	MinMaxAABox::vec3SignMaskMin (0x005635F0; direct callee of 0x00564f80 at 0x00564ff6; SSE sign-bit component-wise Vector3 min; verify_render56.py 3/3)
+005636e0	FUN_005636e0	.text	227		clean	render	recon/render56	reversed	MinMaxAABox::vec3SignMaskMax (0x005636E0; direct callee of 0x00564f80 at 0x00565048; SSE sign-bit component-wise Vector3 max; verify_render56.py 3/3)
 005637d0	FUN_005637d0	.text	66		clean	unknown		unanalyzed	
 00563820	FUN_00563820	.text	57		inner-patched	unknown		unanalyzed	
 00563870	FUN_00563870	.text	73		clean	unknown		unanalyzed	
@@ -5837,7 +5837,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00563910	FUN_00563910	.text	73		clean	unknown		unanalyzed	
 00563960	FUN_00563960	.text	10		clean	unknown		unanalyzed	
 00563970	FUN_00563970	.text	13		clean	unknown		unanalyzed	
-00563980	FUN_00563980	.text	137		clean	unknown		unanalyzed	
+00563980	FUN_00563980	.text	137		clean	render	recon/render56	reversed	orderCoord3DPair (0x00563980; direct callee of 0x0056ef10 at 0x0056ef57, 0x00be39f8 slot 18; orders two Coord3D points lexicographically by X then Y; verify_render56.py 5/5)
 00563a10	FUN_00563a10	.text	52		clean	unknown		unanalyzed	
 00563a50	FUN_00563a50	.text	399		clean	unknown		unanalyzed	
 00563be0	FUN_00563be0	.text	47		clean	unknown		unanalyzed	
@@ -5866,23 +5866,23 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00564180	FUN_00564180	.text	147		clean	unknown		unanalyzed	
 00564213	FUN_00564213	.text	98		clean	unknown		unanalyzed	
 00564280	FUN_00564280	.text	47		clean	unknown		unanalyzed	
-005642b0	FUN_005642b0	.text	76		clean	unknown		unanalyzed	
-00564300	FUN_00564300	.text	85		clean	unknown		unanalyzed	
+005642b0	FUN_005642b0	.text	76		clean	render	recon/render56	reversed	WorldHeightMap::getCellFlagBit78 (0x005642B0; direct callee of 0x00580a90 at 0x00580c9b, callee of 0x0058bbc0 at 0x0058bc13, direct callee of 0x00591e00 at 0x00591f6d, 0x00be4290 slot 9; verify_render56.py 8/8; hook hmcellflag78 explicitOnly)
+00564300	FUN_00564300	.text	85		clean	render	recon/render56	reversed	WorldHeightMap::getCellFlagBit88 (0x00564300; direct callee of 0x0056f180 at 0x0056f209, 0x00be39f8 slot 27; queries bit-array span at +0x88..+0x8c; verify_render56.py 8/8; hook hmcellflag88 explicitOnly)
 00564360	FUN_00564360	.text	2082		clean	unknown		unanalyzed	
 00564b90	FUN_00564b90	.text	46		clean	unknown		unanalyzed	
 00564bc0	FUN_00564bc0	.text	683		clean	unknown		unanalyzed	
-00564e70	FUN_00564e70	.text	176		clean	unknown		unanalyzed	
-00564f20	FUN_00564f20	.text	81		clean	unknown		unanalyzed	
-00564f80	FUN_00564f80	.text	232		clean	unknown		unanalyzed	
+00564e70	FUN_00564e70	.text	176		clean	render	recon/render56	reversed	AABoxClass::aaboxFromMinMax (0x00564E70; direct callee of 0x00580a90 at 0x00580f12, callee of 0x0058bbc0 at 0x0058bc13, direct callee of 0x00591e00 at 0x00591f6d, 0x00be4290 slot 9; verify_render56.py 3/3)
+00564f20	FUN_00564f20	.text	81		clean	render	recon/render56	reversed	MinMaxAABox::minMaxAABoxMergePoint (0x00564F20; direct callee of 0x00580a90 at 0x00580d23, callee of 0x0058bbc0 at 0x0058bc13, direct callee of 0x00591e00 at 0x00591f6d, 0x00be4290 slot 9; verify_render56.py 3/3)
+00564f80	FUN_00564f80	.text	232		clean	render	recon/render56	reversed	MinMaxAABox::minMaxAABoxMergeCenterExtentBox (0x00564F80; direct callee of 0x00570e60 at 0x00570f20, 0x00be4290 slot 15; verify_render56.py 3/3)
 00565070	FUN_00565070	.text	192		clean	unknown		unanalyzed	
-00565130	FUN_00565130	.text	282		clean	unknown		unanalyzed	
-00565250	FUN_00565250	.text	197		clean	unknown		unanalyzed	
+00565130	FUN_00565130	.text	282		clean	render	recon/render56	reversed	BaseHeightMapRenderObjClass::packCompressedTerrainVertex (0x00565130; direct callee of 0x00580a90 at 0x00580d12, callee of 0x0058bbc0 at 0x0058bc13, direct callee of 0x00591e00 at 0x00591f6d, 0x00be4290 slot 9; verify_render56.py 3/3)
+00565250	FUN_00565250	.text	197		clean	render	recon/render56	reversed	BaseHeightMapRenderObjClass::clearPatchVisibilityAndBounds (0x00565250; 0x00be4290 slot 14; clears patch visibility byte at stride 0x40 and zeros +0xc8..+0xec; verify_render56.py 3/3)
 00565320	FUN_00565320	.text	294		clean	unknown		unanalyzed	
 00565450	FUN_00565450	.text	81		clean	unknown		unanalyzed	
 005654b0	FUN_005654b0	.text	107		clean	unknown		unanalyzed	
 00565520	FUN_00565520	.text	42		inner-patched	unknown		unanalyzed	
 005656d0	FUN_005656d0	.text	42		clean	unknown		unanalyzed	
-00565700	FUN_00565700	.text	85		clean	unknown		unanalyzed	
+00565700	FUN_00565700	.text	85		clean	render	recon/render56	reversed	BaseHeightMapRenderObjClass::copyTerrainRenderState52 (0x00565700; direct callee of 0x008f17e0 at 0x008f18f3, 0x00be4290 slot 2; copies 13 floats via x87; verify_render56.py 3/3)
 005658b0	FUN_005658b0	.text	189		clean	unknown		unanalyzed	
 00565970	FUN_00565970	.text	139		clean	unknown		unanalyzed	
 00565a00	FUN_00565a00	.text	242		clean	unknown		unanalyzed	
@@ -5947,34 +5947,34 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00568b60	FUN_00568b60	.text	38		clean	render	recon/w3dview	reversed	ra3::render::setRainEnabled; oracle 500/500 random arrays
 00568b90	FUN_00568b90	.text	688	SageEngine\source\GameEngineDevice\W3DDevice\GameClient\W3DRainManager.cpp	clean	render		unanalyzed	
 00568e40	FUN_00568e40	.text	81		clean	render	recon/w3dview	reversed	ra3::render::fillRainIndices; oracle full 16000-quad index buffer
-00568ea0	FUN_00568ea0	.text	181		clean	unknown		unanalyzed	
+00568ea0	FUN_00568ea0	.text	181		clean	render	recon/render56	reversed	RoadSegment::initRoadSegment (0x00568EA0; direct callee of 0x00578150 at 0x00578219, direct callee of 0x005a7a60 at 0x005a7a77, 0x00be4290 slot 1; verify_render56.py 3/3)
 00568f60	FUN_00568f60	.text	358		clean	unknown		unanalyzed	
 005690d0	FUN_005690d0	.text	101		clean	unknown		unanalyzed	
 00569140	FUN_00569140	.text	382		clean	unknown		unanalyzed	
 005692c0	FUN_005692c0	.text	442		clean	unknown		unanalyzed	
-00569480	FUN_00569480	.text	238		clean	unknown		unanalyzed	
-00569570	FUN_00569570	.text	95		clean	unknown		unanalyzed	
-005695e0	FUN_005695e0	.text	359		clean	unknown		unanalyzed	
-00569750	FUN_00569750	.text	449		clean	unknown		unanalyzed	
+00569480	FUN_00569480	.text	238		clean	render	recon/render56	reversed	RoadSegment::copyRoadSegment (0x00569480; direct callee of 0x00578150 at 0x0057834c, direct callee of 0x005a7a60 at 0x005a7a77, 0x00be4290 slot 1; verify_render56.py 3/3)
+00569570	FUN_00569570	.text	95		clean	render	recon/render56	reversed	W3DRoadBuffer::linkRoadsToRoadTypes (0x00569570; direct callee of 0x005a7a60 at 0x005a7aa1, direct callee of 0x00908ed0 at 0x00908f1b, 0x00be4290 slot 1; verify_render56.py 3/3)
+005695e0	FUN_005695e0	.text	359		clean	render	recon/render56	reversed	W3DRoadBuffer::updateRoadSegmentCounts (0x005695E0; direct callee of 0x00577cc0 at 0x00577e6d, direct callee of 0x00578150 at 0x00578315, direct callee of 0x005a7a60 at 0x005a7a77, 0x00be4290 slot 1; verify_render56.py 6/6)
+00569750	FUN_00569750	.text	449		clean	render	recon/render56	reversed	W3DRoadBuffer::updateAllRoadCountsAndFlags (0x00569750; direct callee of 0x005a7a60 at 0x005a7a7e, direct callee of 0x00908ed0 at 0x00908f1b, 0x00be4290 slot 1; verify_render56.py 6/6)
 00569920	FUN_00569920	.text	735		clean	unknown		unanalyzed	
 00569c00	FUN_00569c00	.text	1196		clean	unknown		unanalyzed	
 0056a0b0	FUN_0056a0b0	.text	855		clean	unknown		unanalyzed	
 0056a410	FUN_0056a410	.text	1163		clean	unknown		unanalyzed	
-0056a8a0	FUN_0056a8a0	.text	181		clean	unknown		unanalyzed	
+0056a8a0	FUN_0056a8a0	.text	181		clean	render	recon/render56	reversed	W3DRoadBuffer::rotateRoadPointAbout (0x0056A8A0; direct callee of 0x005861e0 at 0x00586a19, direct callee of 0x0058d810 at 0x0058d888, direct callee of 0x005a7a60 at 0x005a7a8c, 0x00be4290 slot 1; verify_render56.py 3/3)
 0056a960	FUN_0056a960	.text	6		clean	unknown		unanalyzed	
 0056a970	FUN_0056a970	.text	41		clean	unknown		unanalyzed	
 0056a9a0	FUN_0056a9a0	.text	341		clean	unknown		unanalyzed	
-0056ab00	FUN_0056ab00	.text	109		clean	unknown		unanalyzed	
+0056ab00	FUN_0056ab00	.text	109		clean	render	recon/render56	reversed	W3DScorchBuffer::invalidateScorchesInRadius (0x0056AB00; direct callee of 0x008e51a0 at 0x008e51b4, direct callee of 0x00561f00 at 0x00561f14, 0x00be38e8 slot 17; verify_render56.py 3/3)
 0056ab70	FUN_0056ab70	.text	300		clean	unknown		unanalyzed	
 0056af30	FUN_0056af30	.text	9		inner-patched	unknown		unanalyzed	
 0056b030	FUN_0056b030	.text	177		clean	unknown		unanalyzed	
 0056b0f0	FUN_0056b0f0	.text	50		clean	unknown		unanalyzed	
 0056b130	FUN_0056b130	.text	50		clean	unknown		unanalyzed	
 0056b170	FUN_0056b170	.text	275		clean	unknown		unanalyzed	
-0056b290	FUN_0056b290	.text	38		clean	unknown		unanalyzed	
+0056b290	FUN_0056b290	.text	38		clean	render	recon/render56	reversed	W3DTerrainVisual::getTerrainVisualColorAt (0x0056B290; 0x00be38e8 slot 8; forwards to m_worldHeightMap->getTerrainColorAt (0x00562df0); verify_render56.py 4/4)
 0056b2c0	FUN_0056b2c0	.text	47		clean	unknown		unanalyzed	
-0056b2f0	FUN_0056b2f0	.text	143		clean	unknown		unanalyzed	
-0056b380	FUN_0056b380	.text	45		clean	unknown		unanalyzed	
+0056b2f0	FUN_0056b2f0	.text	143		clean	render	recon/render56	reversed	W3DTerrainVisual::setRawMapHeightAndFlags (0x0056B2F0; 0x00be38e8 slot 19; updates heightmap sample and cell flag byte; verify_render56.py 8/8)
+0056b380	FUN_0056b380	.text	45		clean	render	recon/render56	reversed	W3DTerrainVisual::getCellFlags (0x0056B380; 0x00be38e8 slot 22; reads cell flag byte at (x+border,y+border); verify_render56.py 7/7; hook tvcellflags explicitOnly)
 0056b3b0	FUN_0056b3b0	.text	304		clean	unknown		unanalyzed	
 0056b4e0	FUN_0056b4e0	.text	294		clean	unknown		unanalyzed	
 0056b610	FUN_0056b610	.text	91		clean	unknown		unanalyzed	
@@ -6011,19 +6011,19 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0056d570	FUN_0056d570	.text	199		clean	unknown		unanalyzed	
 0056d640	FUN_0056d640	.text	603		clean	unknown		unanalyzed	
 0056d8a0	FUN_0056d8a0	.text	161		clean	unknown		unanalyzed	
-0056d970	FUN_0056d970	.text	88		clean	unknown		unanalyzed	
-0056d9d0	FUN_0056d9d0	.text	97		clean	unknown		unanalyzed	
-0056da40	FUN_0056da40	.text	97		clean	unknown		unanalyzed	
-0056dab0	FUN_0056dab0	.text	97		clean	unknown		unanalyzed	
-0056db20	FUN_0056db20	.text	90		clean	unknown		unanalyzed	
-0056db80	FUN_0056db80	.text	90		clean	unknown		unanalyzed	
+0056d970	FUN_0056d970	.text	88		clean	render	recon/render56	reversed	WorldHeightMap::getCliffState (0x0056D970; direct callee of 0x008e4c30 at 0x008e4c9f, direct callee of 0x00563400 at 0x00563418, 0x00be39f8 slot 21; verify_render56.py 8/8; hook hmcliffstate explicitOnly)
+0056d9d0	FUN_0056d9d0	.text	97		clean	render	recon/render56	reversed	WorldHeightMap::getCellFlagBit98 (0x0056D9D0; direct callee of 0x008e4cb0 at 0x008e4d1f, direct callee of 0x00563420 at 0x00563438, 0x00be39f8 slot 24; verify_render56.py 8/8; hook hmcellflag98 explicitOnly)
+0056da40	FUN_0056da40	.text	97		clean	render	recon/render56	reversed	WorldHeightMap::getCellFlagBitB8 (0x0056DA40; direct callee of 0x008e4d30 at 0x008e4d9f, direct callee of 0x00563440 at 0x00563458, 0x00be39f8 slot 25; verify_render56.py 8/8; hook hmcellflagb8 explicitOnly)
+0056dab0	FUN_0056dab0	.text	97		clean	render	recon/render56	reversed	WorldHeightMap::getCellFlagBitA8 (0x0056DAB0; direct callee of 0x008e4db0 at 0x008e4e1f, direct callee of 0x00563460 at 0x00563478, 0x00be39f8 slot 26; verify_render56.py 8/8; hook hmcellflaga8 explicitOnly)
+0056db20	FUN_0056db20	.text	90		clean	render	recon/render56	reversed	WorldHeightMap::getCellFlagBitD8 (0x0056DB20; direct callee of 0x008e4e30 at 0x008e4e98, direct callee of 0x00563480 at 0x00563498, 0x00be39f8 slot 22; verify_render56.py 8/8; hook hmcellflagd8 explicitOnly)
+0056db80	FUN_0056db80	.text	90		clean	render	recon/render56	reversed	WorldHeightMap::getCellFlagBitC8 (0x0056DB80; direct callee of 0x008e4eb0 at 0x008e4f18, direct callee of 0x005634a0 at 0x005634b8, 0x00be39f8 slot 23; verify_render56.py 8/8; hook hmcellflagc8 explicitOnly)
 0056dbe0	FUN_0056dbe0	.text	69		clean	unknown		unanalyzed	
-0056dc30	FUN_0056dc30	.text	95		clean	unknown		unanalyzed	
+0056dc30	FUN_0056dc30	.text	95		clean	render	recon/render56	reversed	WorldHeightMap::setCliffState (0x0056DC30; direct callee of 0x0056dfb0 at 0x0056e086; sets or clears bit in +0x58..+0x5c span; verify_render56.py 8/8)
 0056dc90	FUN_0056dc90	.text	216		clean	unknown		unanalyzed	
-0056dd70	FUN_0056dd70	.text	248		clean	unknown		unanalyzed	
-0056de70	FUN_0056de70	.text	318		clean	unknown		unanalyzed	
-0056dfb0	FUN_0056dfb0	.text	226		clean	unknown		unanalyzed	
-0056e0a0	FUN_0056e0a0	.text	367		clean	unknown		unanalyzed	
+0056dd70	FUN_0056dd70	.text	248		clean	render	recon/render56	reversed	WorldHeightMap::isCliffMappedTextureCheck (0x0056DD70; direct callee of 0x0057db70 at 0x0057dbb1; compares base and cliff texture class ranges; verify_render56.py 8/8)
+0056de70	FUN_0056de70	.text	318		clean	render	recon/render56	reversed	WorldHeightMap::getBlendVertexAlphaMask (0x0056DE70; direct callee of 0x00580fb0 at 0x00581286, callee of 0x0058bbc0 at 0x0058bc1c, direct callee of 0x00591e00 at 0x00591f6d, 0x00be4290 slot 9; verify_render56.py 7/7)
+0056dfb0	FUN_0056dfb0	.text	226		clean	render	recon/render56	reversed	WorldHeightMap::setCellCliffFlagFromHeights (0x0056DFB0; direct callee of 0x0057e4e0 at 0x0057e504; compares 2x2 cell height range against 250.88f at 0x00be3d48; verify_render56.py 3/3)
+0056e0a0	FUN_0056e0a0	.text	367		clean	render	recon/render56	reversed	WorldHeightMap::getCellBlendClassesAndCoeffs (0x0056E0A0; direct callee of 0x00580a90 at 0x00580c55, callee of 0x0058bbc0 at 0x0058bc13, direct callee of 0x00591e00 at 0x00591f6d, 0x00be4290 slot 9; verify_render56.py 8/8)
 0056e210	FUN_0056e210	.text	246		clean	unknown		unanalyzed	
 0056e310	FUN_0056e310	.text	573		clean	unknown		unanalyzed	
 0056e580	FUN_0056e580	.text	658		clean	unknown		unanalyzed	
@@ -6036,9 +6036,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0056ebd0	FUN_0056ebd0	.text	36		clean	unknown		unanalyzed	
 0056ebe0	FUN_0056ebe0	.text	21		clean	unknown		unanalyzed	
 0056ec00	FUN_0056ec00	.text	11		clean	unknown		unanalyzed	
-0056ec10	FUN_0056ec10	.text	162		clean	unknown		unanalyzed	
-0056ecc0	FUN_0056ecc0	.text	225		clean	unknown		unanalyzed	
-0056edb0	FUN_0056edb0	.text	200		clean	unknown		unanalyzed	
+0056ec10	FUN_0056ec10	.text	162		clean	render	recon/render56	reversed	W3DTerrainLogic::getTerrainLogicExtent (0x0056EC10; 0x00be39f8 slot 10; reads active boundary entry at +0x54/+0x64 and scales by 10.0f; verify_render56.py 4/4)
+0056ecc0	FUN_0056ecc0	.text	225		clean	render	recon/render56	reversed	W3DTerrainLogic::getMaximumPathfindExtent (0x0056ECC0; 0x00be39f8 slot 11; computes min/max across boundary entries in +0x54..+0x58 and scales by 10.0f; verify_render56.py 4/4)
+0056edb0	FUN_0056edb0	.text	200		clean	render	recon/render56	reversed	W3DTerrainLogic::getSmallestTerrainExtent (0x0056EDB0; 0x00be39f8 slot 14; merges scaled boundary entries into zero-initialized extent; verify_render56.py 4/4)
 0056ee80	FUN_0056ee80	.text	129		clean	unknown		unanalyzed	
 0056ef10	FUN_0056ef10	.text	113		clean	unknown		unanalyzed	
 0056ef90	FUN_0056ef90	.text	77		clean	unknown		unanalyzed	
@@ -6080,7 +6080,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00570aa0	FUN_00570aa0	.text	194		clean	unknown		unanalyzed	
 00570b70	FUN_00570b70	.text	115		clean	unknown		unanalyzed	
 00570bf0	FUN_00570bf0	.text	342		clean	unknown		unanalyzed	
-00570d50	FUN_00570d50	.text	271		clean	unknown		unanalyzed	
+00570d50	FUN_00570d50	.text	271		clean	render	recon/render56	reversed	LineSegClass::recalculateLineSeg (0x00570D50; direct callee of 0x005882c0 at 0x00588364, 0x00be38e8 slot 11; computes DP, Length, and normalized Dir; verify_render56.py 4/4)
 00570e60	FUN_00570e60	.text	544		clean	unknown		unanalyzed	
 00571090	FUN_00571090	.text	283		clean	unknown		unanalyzed	
 00571210	FUN_00571210	.text	130		clean	unknown		unanalyzed	
@@ -6090,7 +6090,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00571f70	FUN_00571f70	.text	69		clean	unknown		unanalyzed	
 00571fc0	FUN_00571fc0	.text	30		clean	unknown		unanalyzed	
 00571fe0	FUN_00571fe0	.text	134		clean	unknown		unanalyzed	
-00572070	FUN_00572070	.text	121		clean	unknown		unanalyzed	
+00572070	FUN_00572070	.text	121		clean	render	recon/render56	reversed	RayCollisionTestClass::initRayCollisionTest (0x00572070; direct callee of 0x005882c0 at 0x0058837d, 0x00be38e8 slot 11; copies LineSegClass via x87 and initializes flags; verify_render56.py 3/3)
 005720f0	AptFloat::GetFloat	.text	4		clean	unknown		unanalyzed	
 00572100	FUN_00572100	.text	4		clean	unknown		unanalyzed	
 00572110	AptCharacterTextInst::GetTextWidth	.text	4		clean	unknown		unanalyzed	
@@ -6172,7 +6172,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0057a030	FUN_0057a030	.text	99		clean	unknown		unanalyzed	
 0057a0a0	FUN_0057a0a0	.text	44		inner-patched	unknown		unanalyzed	
 0057a130	FUN_0057a130	.text	8		clean	unknown		unanalyzed	
-0057a140	FUN_0057a140	.text	232		clean	unknown		unanalyzed	
+0057a140	FUN_0057a140	.text	232		clean	render	recon/render56	reversed	W3DWaterRenderer::initWaterWaveGridState (0x0057A140; direct callee of 0x00587ff0 at 0x00588039, direct callee of 0x005883c0 at 0x00588408, 0x00be38e8 slot 12; verify_render56.py 3/3)
 0057a230	FUN_0057a230	.text	898		clean	unknown		unanalyzed	
 0057a5c0	FUN_0057a5c0	.text	1741		clean	unknown		unanalyzed	
 0057ac90	FUN_0057ac90	.text	735		clean	unknown		unanalyzed	
@@ -6207,10 +6207,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0057da40	FUN_0057da40	.text	33		clean	unknown		unanalyzed	
 0057da61	FUN_0057da61	.text	57		clean	unknown		unanalyzed	
 0057daa0	FUN_0057daa0	.text	207		clean	unknown		unanalyzed	
-0057db70	FUN_0057db70	.text	240		clean	unknown		unanalyzed	
+0057db70	FUN_0057db70	.text	240		clean	render	recon/render56	reversed	WorldHeightMap::shouldFlipCellQuad (0x0057DB70; direct callee of 0x00580a90 at 0x00580c5f, callee of 0x0058bbc0 at 0x0058bc13, direct callee of 0x00591e00 at 0x00591f6d, 0x00be4290 slot 9; verify_render56.py 8/8; hook hmshouldflipquad explicitOnly)
 0057dc60	FUN_0057dc60	.text	996		clean	unknown		unanalyzed	
 0057e050	FUN_0057e050	.text	1159		clean	unknown		unanalyzed	
-0057e4e0	FUN_0057e4e0	.text	71		clean	unknown		unanalyzed	
+0057e4e0	FUN_0057e4e0	.text	71		clean	render	recon/render56	reversed	WorldHeightMap::initCliffFlagsFromHeights (0x0057E4E0; direct callee of 0x005a1700 at 0x005a1c15, 0x00be4e2c slot 2; loops over (width-1)*(height-1) cells calling 0x0056dfb0; verify_render56.py 3/3)
 0057e530	FUN_0057e530	.text	10		clean	unknown		unanalyzed	
 0057e540	FUN_0057e540	.text	375		clean	unknown		unanalyzed	
 0057e6c0	FUN_0057e6c0	.text	1008		clean	unknown		unanalyzed	
@@ -6260,7 +6260,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00580380	FUN_00580380	.text	217		clean	unknown		unanalyzed	
 00580460	FUN_00580460	.text	219		clean	unknown		unanalyzed	
 00580540	FUN_00580540	.text	280		clean	unknown		unanalyzed	
-00580690	FUN_00580690	.text	55		clean	unknown		unanalyzed	
+00580690	FUN_00580690	.text	55		clean	render	recon/render56	reversed	LineSegClass::setLineSegPoints (0x00580690; direct callee of 0x005861e0 at 0x00586653; copies P0/P1 via x87 and calls 0x00570d50 at 0x005806bc; verify_render56.py 4/4)
 005806d0	FUN_005806d0	.text	478		clean	unknown		unanalyzed	
 005808b0	FUN_005808b0	.text	6		clean	unknown		unanalyzed	
 005808c0	FUN_005808c0	.text	8		clean	unknown		unanalyzed	
@@ -6335,7 +6335,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00587f10	FUN_00587f10	.text	209		clean	unknown		unanalyzed	
 00587ff0	FUN_00587ff0	.text	437		clean	unknown		unanalyzed	
 005881b0	FUN_005881b0	.text	257		clean	unknown		unanalyzed	
-005882c0	FUN_005882c0	.text	255		clean	unknown		unanalyzed	
+005882c0	FUN_005882c0	.text	255		clean	render	recon/render56	reversed	W3DTerrainVisual::intersectTerrain (0x005882C0; 0x00be38e8 slot 11; builds CastResultStruct, LineSegClass, RayCollisionTestClass and calls renderObj vtable+0x08; verify_render56.py 4/4)
 005883c0	FUN_005883c0	.text	78		clean	unknown		unanalyzed	
 00588410	FUN_00588410	.text	118		clean	unknown		unanalyzed	
 00588490	FUN_00588490	.text	598		clean	unknown		unanalyzed	
@@ -6416,7 +6416,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0058d000	thunk_FUN_005838f0	.text	5		clean	unknown		unanalyzed	
 0058d010	FUN_0058d010	.text	219		clean	unknown		unanalyzed	
 0058d0f0	FUN_0058d0f0	.text	178		clean	unknown		unanalyzed	
-0058d1b0	FUN_0058d1b0	.text	50		clean	unknown		unanalyzed	
+0058d1b0	FUN_0058d1b0	.text	50		clean	render	recon/render56	reversed	W3DPropBuffer::initPropBuffer (0x0058D1B0; direct callee of 0x008ec630 at 0x008ec795, direct callee of 0x005806d0 at 0x005806d9, direct callee of 0x00588410 at 0x00588464, 0x00be38e8 slot 6; verify_render56.py 3/3)
 0058d1f0	FUN_0058d1f0	.text	6		clean	unknown		unanalyzed	
 0058d200	FUN_0058d200	.text	660		clean	unknown		unanalyzed	
 0058d4a0	FUN_0058d4a0	.text	177		inner-patched	unknown		unanalyzed	
