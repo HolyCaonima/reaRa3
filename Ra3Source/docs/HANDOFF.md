@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 aistate79c、aistate7a2、obj6c 合并）
+## 3. 现状（截至 aistate7a2、obj6c、fx66 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 2,635、unanalyzed 46,290（受保护函数已 reversed：entry-lost 104、inner-patched 14、
+  reversed 2,673、unanalyzed 46,252（受保护函数已 reversed：entry-lost 104、inner-patched 14、
   entry-recoverable 3）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
@@ -358,6 +358,13 @@
     ToggleDeploy、SpawnBehavior update），无 hook；代码在 `ra3/gamelogic/ObjectModules6C.h`，设计见 `obj6c.md`。
     AIUpdateInterface 的守卫式 set-state 包装按形状分 6/2/2 组，超过 5 的同形与 1 个条件字段读取按样板计约 6/42。
     约 250 个次级接口表槽位本批没做，留给下一轮。集成态 oracle 156 例零差异，`kStanceFlagShift` mutation 检出
+  - FX 粒子模块批次（`0x00660000–0x0067FFFF`，Grok）：38 个计数、3 个延后（FXParticle xfer、7 个发射体积
+    debugDraw、模板名字键缓存/clone/create、DrawModule/GpuDraw/SwarmDraw/TrailDraw 绘制、SwarmStorage 积分），
+    无 hook；代码在 `src/gameclient` 的 `ParticleModules66.*`，设计见 `fx66.md`。这批模板表的类名 getter 在
+    **slot 3**（slot 2 是 create 工厂），14 张表主控逐一复核。报告样板 12/41 卡在 29.3%，但 `00662960`（一个
+    Coord3D 成员）与 `00665350`（一个双 dword 成员）按派单口径也是单成员访问器，实为 14/41；主控把
+    `00663580`/`006635B0`/`00663670` 三个名字键缓存改为空状态延后（代码保留），样板 11/38。`006604B0` 漏写
+    claims，主控补上。集成态 oracle 零差异，box 半径偏移 mutation 检出
   - AI states 批次（`0x00790000–0x0079FFFF`，Grok）：48 个方法（Turret/UnitAI/AIDock/AIGuard/AIAttack
     各 state 的 onEnter/update/onExit 与条件槽位、FollowWaypointPath/Turret 状态机），无 hook，样板 0；
     代码在 `ra3/gamelogic/AIState79.h`，设计见 `aistate79.md`。归属全部为单个 split vtable 槽位，主控
@@ -403,10 +410,10 @@
     `recon/particles65`、`recon/render91`、`recon/obj6a`、`recon/protcave`、`recon/protentry2`、
     `recon/gamelogic82`、`recon/skirm87`、`recon/common5a`、`recon/render56`、`recon/objbehav68`、`recon/audio50`、
     `recon/aistate79`、`recon/render99`、`recon/net5d2`、`recon/obj69`、`recon/logic4d`、`recon/skirm8b`、
-    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`、`recon/render9b`、`recon/client52`、`recon/obj72`、`recon/aistate7c`、`recon/protcave2`、`recon/aistate7d`、`recon/obj69b`、`recon/obj70`、`recon/w3d56`、`recon/obj6e`、`recon/aistate79c`、`recon/aistate7a2`、`recon/obj6c`：已合并（`789bcb1`、
+    `recon/thing78`、`recon/skirmishai89`、`recon/obj74`、`recon/aistate7a`、`recon/aistate7b`、`recon/aistate79b`、`recon/render9b`、`recon/client52`、`recon/obj72`、`recon/aistate7c`、`recon/protcave2`、`recon/aistate7d`、`recon/obj69b`、`recon/obj70`、`recon/w3d56`、`recon/obj6e`、`recon/aistate79c`、`recon/aistate7a2`、`recon/obj6c`、`recon/fx66`：已合并（`789bcb1`、
     `f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`、
     `9df37c8`、`760e231`、`79a7caa`、`9c14506`、`6234602`、`00c9a7a`、`be08241`、`ba97d03`、`bec182d`、
-    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`、`ae7caf5`、`0f0515f`、`989d91b`、`747eae9`、`8ee7d18`、`d8dfd05`、`284c239`、`dacb6b0`、`3b872e2`、`64682bd`、`892e93b`、`45a2d4e`、`1394ce0`）。追加合并脚本在
+    `5952343`、`3ed6fbe`、`40bc62c`、`16670ad`、`d7b4a9f`、`9b31437`、`893aae7`、`f4ac25a`、`3b05cf9`、`a8e3f43`、`8f5c755`、`57d7406`、`bdd6d5c`、`ae7caf5`、`0f0515f`、`989d91b`、`747eae9`、`8ee7d18`、`d8dfd05`、`284c239`、`dacb6b0`、`3b872e2`、`64682bd`、`892e93b`、`45a2d4e`、`1394ce0`、`02c5529`）。追加合并脚本在
     冲突块以 `)` 收尾时会报 WARN，需手工检查括号（skirm87 合并时拼坏过一次 CMake）。受保护批次的站点/字符串/伪调用核对脚本见 `work/probe/check_protcave.py`、
     `work/probe/check_protentry2.py`，多快照槽值用 `work/probe/slot_snapshots.py`。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
@@ -429,7 +436,7 @@
     - ~~`recon/obj6c`~~（已合并 `1394ce0`；次级接口表槽位未做）、
       `recon/obj69c`（18:30 补位，`0x0069` 第三轮，84 个在 slot 2 为 `0065f220` 的次级表里）、
       `recon/obj72b`（`0x0072–0x0073` 第二轮）：对象模块。
-    - `recon/fx66`（`0x0066–0x0067` FX 粒子系统类，代码进 `src/gameclient`）、`recon/render9b2`
+    - ~~`recon/fx66`~~（已合并 `02c5529`）、`recon/render9b2`
       （18:20 补位，`0x009B` 第二轮：render9b 留下的 12 个宽命令体加剩余槽位候选，清单
       `work/prompts/scope_render9b2.txt`，代码进 `src/render`）。
     派单由 `work/probe/make_brief.py <名> <base> <类前缀> <scope 文件> [模块]` 从 `obj72.md` 派生；
