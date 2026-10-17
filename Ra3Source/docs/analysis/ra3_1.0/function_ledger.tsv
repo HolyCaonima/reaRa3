@@ -28131,9 +28131,9 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0098fd30	FUN_0098fd30	.text	253		clean	unknown		unanalyzed	
 0098fe30	FUN_0098fe30	.text	395		clean	unknown		unanalyzed	
 0098ffc0	FUN_0098ffc0	.text	184		clean	unknown		unanalyzed	
-00990080	FUN_00990080	.text	122		clean	unknown		unanalyzed	
-00990100	FUN_00990100	.text	219		clean	unknown		unanalyzed	
-009901e0	FUN_009901e0	.text	124		clean	unknown		unanalyzed	
+00990080	FUN_00990080	.text	122		clean	render	recon/render99	reversed	ra3::render::removePartitionObject; callee of 00990260 at 009902d9; 00990260 is the callee of 00c5d6d0 slot 5, and 00990f20 stores that vtable; 00990f20 is the callee of PartitionManager 00c5d6c0 slot 0
+00990100	FUN_00990100	.text	219		clean	render	recon/render99	reversed	ra3::render::clearPartitionBuckets; callee of 009906e0 at 009906e4; 009906e0 is the callee of 00990f20 at 00990f3a; 00990f20 is the callee of PartitionManager 00c5d6c0 slot 0
+009901e0	FUN_009901e0	.text	124		clean	render	recon/render99	reversed	ra3::render::setPartitionWorldBounds; callee of 00990620 at 00990651; 00990620 is 00c5d6d0 slot 1, stored by 00990f20; 00990f20 is the callee of PartitionManager 00c5d6c0 slot 0
 00990260	FUN_00990260	.text	150		clean	unknown		unanalyzed	
 00990300	FUN_00990300	.text	86		clean	unknown		unanalyzed	
 00990360	FUN_00990360	.text	122		clean	unknown		unanalyzed	
@@ -28141,7 +28141,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00990430	FUN_00990430	.text	226		clean	unknown		unanalyzed	
 00990520	FUN_00990520	.text	117		clean	unknown		unanalyzed	
 009905a0	FUN_009905a0	.text	117		clean	unknown		unanalyzed	
-00990620	FUN_00990620	.text	58		clean	unknown		unanalyzed	
+00990620	FUN_00990620	.text	58		clean	render	recon/render99	reversed	ra3::render::resetPartitionBounds; 00c5d6d0 slot 1; 00990f20 stores 00c5d6d0; 00990f20 is the callee of PartitionManager 00c5d6c0 slot 0
 00990660	FUN_00990660	.text	8		clean	unknown		unanalyzed	
 00990670	FUN_00990670	.text	8		clean	unknown		unanalyzed	
 00990680	FUN_00990680	.text	8		clean	unknown		unanalyzed	
@@ -28194,23 +28194,23 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00992ce0	FUN_00992ce0	.text	34		clean	unknown		unanalyzed	
 00992d10	FUN_00992d10	.text	450		clean	unknown		unanalyzed	
 00992ee0	FUN_00992ee0	.text	133		clean	unknown		unanalyzed	
-00992f70	FUN_00992f70	.text	61		clean	unknown		unanalyzed	
+00992f70	FUN_00992f70	.text	61		clean	render	recon/render99	reversed	ra3::render::findWideCollisionNode; callee of 009939d0 at 00993a4d; 009939d0 is the callee of 00993bd0 at 00993f0a; 00993bd0 is the callee of 00c5d774 slot 5; 00994300 stores 00c5d774 and is the callee of CollisionManager 00c5d764 slot 0
 00992fb0	FUN_00992fb0	.text	104		clean	unknown		unanalyzed	
 00993020	FUN_00993020	.text	58		clean	unknown		unanalyzed	
 00993060	FUN_00993060	.text	71		clean	unknown		unanalyzed	
 009930b0	FUN_009930b0	.text	58		clean	unknown		unanalyzed	
 009930f0	FUN_009930f0	.text	30		clean	unknown		unanalyzed	
 00993110	FUN_00993110	.text	8		clean	unknown		unanalyzed	
-00993120	FUN_00993120	.text	134		clean	unknown		unanalyzed	
+00993120	FUN_00993120	.text	134		clean	render	recon/render99	reversed	ra3::render::unlinkCollisionEntry; callee of 00993b80 at 00993ba5; 00993b80 is the callee of 00994300 at 0099431a; 00994300 is the callee of CollisionManager 00c5d764 slot 0
 009931b0	FUN_009931b0	.text	418		clean	unknown		unanalyzed	
-00993360	FUN_00993360	.text	193		clean	unknown		unanalyzed	
+00993360	FUN_00993360	.text	193		clean	render	recon/render99	reversed	ra3::render::sweepIdleCollisionNodes; callee of 00994350 at 00994362; 00994350 is 00c5d774 slot 5; 00994300 stores 00c5d774 and is the callee of CollisionManager 00c5d764 slot 0
 00993430	FUN_00993430	.text	356		clean	unknown		unanalyzed	
 009935a0	FUN_009935a0	.text	96		clean	unknown		unanalyzed	
-00993600	FUN_00993600	.text	127		clean	unknown		unanalyzed	
+00993600	FUN_00993600	.text	127		clean	render	recon/render99	reversed	ra3::render::retireCollisionHashNode; callee of 009937e0 at 0099384a; 009937e0 is the callee of 009938a0 at 009938f8; 009938a0 is the callee of 00993b80 at 00993b9a; CollisionManager 00c5d764 slot 0
 00993680	FUN_00993680	.text	96		clean	unknown		unanalyzed	
 009936e0	FUN_009936e0	.text	247		clean	unknown		unanalyzed	
-009937e0	FUN_009937e0	.text	190		clean	unknown		unanalyzed	
-009938a0	FUN_009938a0	.text	129		clean	unknown		unanalyzed	
+009937e0	FUN_009937e0	.text	190		clean	render	recon/render99	reversed	ra3::render::retireCollisionObjectList; callee of 009938a0 at 009938f8; 009938a0 is the callee of 00993b80 at 00993b9a; CollisionManager 00c5d764 slot 0
+009938a0	FUN_009938a0	.text	129		clean	render	recon/render99	reversed	ra3::render::updateCollisionRegistration; callee of 00993b80 at 00993b9a; 00993b80 is the callee of 00994300 at 0099431a; CollisionManager 00c5d764 slot 0
 00993930	FUN_00993930	.text	104		clean	unknown		unanalyzed	
 009939a0	FUN_009939a0	.text	24		clean	unknown		unanalyzed	
 009939c0	FUN_009939c0	.text	8		clean	unknown		unanalyzed	
@@ -28241,7 +28241,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00995970	FUN_00995970	.text	360		clean	unknown		unanalyzed	
 00995ae0	FUN_00995ae0	.text	362		clean	unknown		unanalyzed	
 00995c50	FUN_00995c50	.text	167		clean	unknown		unanalyzed	
-00995d00	FUN_00995d00	.text	800		clean	unknown		unanalyzed	
+00995d00	FUN_00995d00	.text	800		clean	render	recon/render99	reversed	ra3::render::matrix3x3ToQuaternion; callee of 009a2df0 at 009a2e01; 009a2df0 is the callee of 009a82b0 at 009a82c0; 009a82b0 is the callee of 009af530 at 009af8fe; 009af530 pushes RenderObject.cpp string 00c5e498
 00996020	FUN_00996020	.text	15		clean	unknown		unanalyzed	
 00996030	FUN_00996030	.text	15		clean	unknown		unanalyzed	
 00996040	FUN_00996040	.text	15		clean	unknown		unanalyzed	
@@ -28309,7 +28309,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009976e0	FUN_009976e0	.text	27		clean	unknown		unanalyzed	
 00997700	FUN_00997700	.text	6		clean	unknown		unanalyzed	
 00997710	FUN_00997710	.text	6		clean	unknown		unanalyzed	
-00997720	FUN_00997720	.text	34		clean	unknown		unanalyzed	
+00997720	FUN_00997720	.text	34		clean	render	recon/render99	reversed	ra3::render::runVisibleObjectsCommand; 00c5da5c slot 4; slot 2 returns visibleobjects - sets objects to be visible
 00997750	FUN_00997750	.text	6		clean	unknown		unanalyzed	
 00997760	FUN_00997760	.text	6		clean	unknown		unanalyzed	
 00997770	FUN_00997770	.text	351		clean	unknown		unanalyzed	
@@ -28331,11 +28331,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00997dc0	FUN_00997dc0	.text	76		clean	unknown		unanalyzed	
 00997e10	FUN_00997e10	.text	67		clean	unknown		unanalyzed	
 00997e60	FUN_00997e60	.text	129		clean	unknown		unanalyzed	
-00997ef0	FUN_00997ef0	.text	139		clean	unknown		unanalyzed	
+00997ef0	FUN_00997ef0	.text	139		clean	render	recon/render99	unanalyzed	rejected: EASTL uninitialized_fill over 0x48-byte ShaderParam elements; fillShaderParamRange; kept only as a helper of counted ports (controller)
 00997f80	FUN_00997f80	.text	75		clean	unknown		unanalyzed	
-00997fd0	FUN_00997fd0	.text	156		clean	unknown		unanalyzed	
+00997fd0	FUN_00997fd0	.text	156		clean	render	recon/render99	unanalyzed	rejected: EASTL copy over 0x48-byte ShaderParam elements; copyShaderParamsForward; kept only as a helper of counted ports (controller)
 00998070	FUN_00998070	.text	88		clean	unknown		unanalyzed	
-009980d0	FUN_009980d0	.text	158		clean	unknown		unanalyzed	
+009980d0	FUN_009980d0	.text	158		clean	render	recon/render99	unanalyzed	rejected: EASTL copy_backward over 0x48-byte ShaderParam elements; copyShaderParamsBackward; kept only as a helper of counted ports (controller)
 00998170	FUN_00998170	.text	47		clean	unknown		unanalyzed	
 009981a0	FUN_009981a0	.text	203		clean	unknown		unanalyzed	
 00998270	FUN_00998270	.text	126		clean	unknown		unanalyzed	
@@ -28344,7 +28344,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00998410	FUN_00998410	.text	39		clean	unknown		unanalyzed	
 00998440	FUN_00998440	.text	62		clean	unknown		unanalyzed	
 00998480	FUN_00998480	.text	106		clean	unknown		unanalyzed	
-009984f0	FUN_009984f0	.text	208		clean	unknown		unanalyzed	
+009984f0	FUN_009984f0	.text	208		clean	render	recon/render99	reversed	ra3::render::defaultShaderParam; callee of 009ab8e0 at 009ab90f; 009ab8e0 is the callee of 009acb60 at 009acba8; 009acb60 is the callee of 009af530 at 009af659; 009af530 pushes 00c5e498
 009985c0	FUN_009985c0	.text	379		clean	unknown		unanalyzed	
 00998760	FUN_00998760	.text	28		clean	unknown		unanalyzed	
 00998780	FUN_00998780	.text	102		clean	unknown		unanalyzed	
@@ -28355,7 +28355,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 00998990	FUN_00998990	.text	554		clean	unknown		unanalyzed	
 00998c4c	FUN_00998c4c	.text	405		clean	unknown		unanalyzed	
 00998df0	FUN_00998df0	.text	325		clean	unknown		unanalyzed	
-00998f40	FUN_00998f40	.text	117		clean	unknown		unanalyzed	
+00998f40	FUN_00998f40	.text	117		clean	render	recon/render99	unanalyzed	rejected: compiler-generated element copy assignment (0x3c-byte record); assignShaderParamRelaxed; kept only as a helper of counted ports (controller)
 00998fc0	FUN_00998fc0	.text	79		clean	unknown		unanalyzed	
 00999010	FUN_00999010	.text	60		clean	unknown		unanalyzed	
 00999050	FUN_00999050	.text	92		clean	unknown		unanalyzed	
@@ -28392,10 +28392,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0099a5b0	FUN_0099a5b0	.text	365		clean	unknown		unanalyzed	
 0099a720	FUN_0099a720	.text	58		clean	unknown		unanalyzed	
 0099a760	FUN_0099a760	.text	36		clean	unknown		unanalyzed	
-0099a790	FUN_0099a790	.text	144		clean	unknown		unanalyzed	
+0099a790	FUN_0099a790	.text	144		clean	render	recon/render99	reversed	ra3::render::parseVisibleObjectsCommand; 00c5da5c slot 3; slot 2 returns visibleobjects - sets objects to be visible
 0099a820	FUN_0099a820	.text	36		clean	unknown		unanalyzed	
-0099a850	FUN_0099a850	.text	132		clean	unknown		unanalyzed	
-0099a8e0	FUN_0099a8e0	.text	60		clean	unknown		unanalyzed	
+0099a850	FUN_0099a850	.text	132		clean	render	recon/render99	reversed	ra3::render::runRenderBinCommand; 00c5daac slot 4; slot 2 returns renderbin [name] - renders all objects in the named bin
+0099a8e0	FUN_0099a8e0	.text	60		clean	render	recon/render99	reversed	ra3::render::readNestedNameWord; callee of 009a2660 at 009a2942; 009a2660 pushes ShaderFactory.cpp string 00c5e0e8
 0099a920	FUN_0099a920	.text	101		clean	unknown		unanalyzed	
 0099a990	FUN_0099a990	.text	15		clean	unknown		unanalyzed	
 0099a9a0	FUN_0099a9a0	.text	22		clean	unknown		unanalyzed	
@@ -28414,7 +28414,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0099ad70	FUN_0099ad70	.text	104		clean	unknown		unanalyzed	
 0099ade0	FUN_0099ade0	.text	401		clean	unknown		unanalyzed	
 0099af80	FUN_0099af80	.text	141		clean	unknown		unanalyzed	
-0099b010	FUN_0099b010	.text	61		clean	unknown		unanalyzed	
+0099b010	FUN_0099b010	.text	61		clean	render	recon/render99	reversed	ra3::render::assignRefCountedPointer; callee of 009a2660 at 009a29e3; 009a2660 pushes ShaderFactory.cpp string 00c5e0e8
 0099b050	FUN_0099b050	.text	279		clean	unknown		unanalyzed	
 0099b170	FUN_0099b170	.text	411		clean	unknown		unanalyzed	
 0099b310	FUN_0099b310	.text	429		clean	unknown		unanalyzed	
@@ -28427,21 +28427,21 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0099bb20	FUN_0099bb20	.text	345		clean	unknown		unanalyzed	
 0099bc90	FUN_0099bc90	.text	54		clean	unknown		unanalyzed	
 0099bcd0	FUN_0099bcd0	.text	61		clean	unknown		unanalyzed	
-0099bd10	FUN_0099bd10	.text	96		clean	unknown		unanalyzed	
-0099bd70	FUN_0099bd70	.text	67		clean	unknown		unanalyzed	
+0099bd10	FUN_0099bd10	.text	96		clean	render	recon/render99	unanalyzed	rejected: EASTL uninitialized_copy over 0x14-byte sub-object records; copySubObjectRecords; kept only as a helper of counted ports (controller)
+0099bd70	FUN_0099bd70	.text	67		clean	render	recon/render99	unanalyzed	rejected: EASTL uninitialized_copy over extended records; copyExtendedRecords; kept only as a helper of counted ports (controller)
 0099bdc0	FUN_0099bdc0	.text	71		clean	unknown		unanalyzed	
-0099be10	FUN_0099be10	.text	115		clean	unknown		unanalyzed	
+0099be10	FUN_0099be10	.text	115		clean	render	recon/render99	unanalyzed	rejected: compiler-generated ShaderParam copy assignment (member-wise copy); assignShaderParam; kept only as a helper of counted ports (controller)
 0099be90	FUN_0099be90	.text	91		clean	unknown		unanalyzed	
 0099bef0	FUN_0099bef0	.text	103		clean	unknown		unanalyzed	
 0099bf60	FUN_0099bf60	.text	69		clean	unknown		unanalyzed	
 0099bfb0	FUN_0099bfb0	.text	235		clean	unknown		unanalyzed	
-0099c0a0	FUN_0099c0a0	.text	60		clean	unknown		unanalyzed	
+0099c0a0	FUN_0099c0a0	.text	60		clean	render	recon/render99	unanalyzed	rejected: EASTL uninitialized_copy calling the ShaderParam copy assignment; constructShaderParamRange; kept only as a helper of counted ports (controller)
 0099c0e0	FUN_0099c0e0	.text	112		clean	unknown		unanalyzed	
-0099c160	FUN_0099c160	.text	174		clean	unknown		unanalyzed	
+0099c160	FUN_0099c160	.text	174		clean	render	recon/render99	unanalyzed	rejected: EASTL copy_backward over extended records; copyExtendedRecordsBackward; kept only as a helper of counted ports (controller)
 0099c210	FUN_0099c210	.text	55		clean	unknown		unanalyzed	
 0099c250	FUN_0099c250	.text	61		clean	unknown		unanalyzed	
-0099c290	FUN_0099c290	.text	420		clean	unknown		unanalyzed	
-0099c440	FUN_0099c440	.text	392		clean	unknown		unanalyzed	
+0099c290	FUN_0099c290	.text	420		clean	render	recon/render99	reversed	ra3::render::composeShaderTransform; callee of 009a2df0 at 009a2ef1; 009a2df0 is the callee of 009a82b0 at 009a82c0; 009a82b0 is the callee of 009af530 at 009af8fe; 009af530 pushes 00c5e498
+0099c440	FUN_0099c440	.text	392		clean	render	recon/render99	reversed	ra3::render::composeShaderTransformInPlace; callee of 009a2df0 at 009a2f03; 009a2df0 is the callee of 009a82b0 at 009a82c0; 009af530 pushes RenderObject.cpp string 00c5e498
 0099c5d0	FUN_0099c5d0	.text	468		clean	unknown		unanalyzed	
 0099c7b0	FUN_0099c7b0	.text	285		clean	unknown		unanalyzed	
 0099c8d0	FUN_0099c8d0	.text	143		clean	unknown		unanalyzed	
@@ -28502,10 +28502,10 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 0099f0b0	FUN_0099f0b0	.text	60		clean	unknown		unanalyzed	
 0099f0f0	FUN_0099f0f0	.text	96		clean	unknown		unanalyzed	
 0099f150	FUN_0099f150	.text	105		clean	unknown		unanalyzed	
-0099f1c0	FUN_0099f1c0	.text	217		clean	unknown		unanalyzed	
+0099f1c0	FUN_0099f1c0	.text	217		clean	render	recon/render99	reversed	ra3::render::resolveRegisteredShader; callee of 009a8fd0 at 009a8ff1; 009a8fd0 pushes MaterialFactory.cpp string 00c5e270
 0099f2a0	FUN_0099f2a0	.text	39		clean	unknown		unanalyzed	
 0099f2d0	FUN_0099f2d0	.text	62		clean	unknown		unanalyzed	
-0099f310	FUN_0099f310	.text	184		clean	unknown		unanalyzed	
+0099f310	FUN_0099f310	.text	184		clean	render	recon/render99	reversed	ra3::render::bindShaderConstantIds; callee of 009a2660 at 009a2a03; 009a2660 pushes ShaderFactory.cpp string 00c5e0e8
 0099f3d0	FUN_0099f3d0	.text	82		clean	unknown		unanalyzed	
 0099f430	FUN_0099f430	.text	584		clean	unknown		unanalyzed	
 0099f680	FUN_0099f680	.text	745		clean	unknown		unanalyzed	
@@ -28523,11 +28523,11 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009a0400	FUN_009a0400	.text	65		clean	unknown		unanalyzed	
 009a0450	FUN_009a0450	.text	70		clean	unknown		unanalyzed	
 009a04a0	FUN_009a04a0	.text	91		clean	unknown		unanalyzed	
-009a0500	FUN_009a0500	.text	45		clean	unknown		unanalyzed	
+009a0500	FUN_009a0500	.text	45		clean	render	recon/render99	unanalyzed	rejected: EASTL uninitialized_fill_n calling the ShaderParam copy assignment; replicateShaderParam; kept only as a helper of counted ports (controller)
 009a0530	FUN_009a0530	.text	105		clean	unknown		unanalyzed	
 009a05a0	FUN_009a05a0	.text	64		clean	unknown		unanalyzed	
 009a05e0	FUN_009a05e0	.text	82		clean	unknown		unanalyzed	
-009a0640	FUN_009a0640	.text	150		clean	unknown		unanalyzed	
+009a0640	FUN_009a0640	.text	150		clean	render	recon/render99	unanalyzed	rejected: EASTL copy_backward over 0x14-byte sub-object records; moveSubObjectRecordsBackward; kept only as a helper of counted ports (controller)
 009a06e0	FUN_009a06e0	.text	96		clean	unknown		unanalyzed	
 009a0740	FUN_009a0740	.text	113		clean	unknown		unanalyzed	
 009a07c0	FUN_009a07c0	.text	123		clean	unknown		unanalyzed	
@@ -28555,7 +28555,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009a1830	FUN_009a1830	.text	137		clean	unknown		unanalyzed	
 009a18c0	FUN_009a18c0	.text	119		clean	unknown		unanalyzed	
 009a1940	FUN_009a1940	.text	79		clean	unknown		unanalyzed	
-009a1990	FUN_009a1990	.text	219		clean	unknown		unanalyzed	
+009a1990	FUN_009a1990	.text	219		clean	render	recon/render99	reversed	ra3::render::parseRenderBinCommand; 00c5daac slot 3; slot 2 returns renderbin [name] - renders all objects in the named bin
 009a1a70	FUN_009a1a70	.text	87		clean	unknown		unanalyzed	
 009a1ad0	FUN_009a1ad0	.text	81		clean	unknown		unanalyzed	
 009a1b30	FUN_009a1b30	.text	266		clean	unknown		unanalyzed	
@@ -28577,12 +28577,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009a2400	FUN_009a2400	.text	166		clean	unknown		unanalyzed	
 009a24b0	FUN_009a24b0	.text	97		clean	unknown		unanalyzed	
 009a2520	FUN_009a2520	.text	17		clean	unknown		unanalyzed	
-009a2540	FUN_009a2540	.text	281		clean	unknown		unanalyzed	
+009a2540	FUN_009a2540	.text	281		clean	render	recon/render99	reversed	ra3::render::shaderSemanticNames; callee of 009a2660 at 009a28a7; 009a2660 pushes ShaderFactory.cpp string 00c5e0e8
 009a2660	FUN_009a2660	.text	989	SageRender\source\Sage\Render\ShaderFactory.cpp	clean	render		unanalyzed	
 009a2a40	FUN_009a2a40	.text	389		clean	unknown		unanalyzed	
 009a2bd0	FUN_009a2bd0	.text	6		clean	unknown		unanalyzed	
 009a2be0	FUN_009a2be0	.text	520		clean	unknown		unanalyzed	
-009a2df0	FUN_009a2df0	.text	308		clean	unknown		unanalyzed	
+009a2df0	FUN_009a2df0	.text	308		clean	render	recon/render99	reversed	ra3::render::refreshShaderParamChain; callee of 009a82b0 at 009a82c0; 009a82b0 is the callee of 009af530 at 009af8fe; 009af530 pushes RenderObject.cpp string 00c5e498
 009a2f30	FUN_009a2f30	.text	559		clean	unknown		unanalyzed	
 009a3160	FUN_009a3160	.text	90		clean	unknown		unanalyzed	
 009a31c0	FUN_009a31c0	.text	116		clean	unknown		unanalyzed	
@@ -28612,7 +28612,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009a7d60	FUN_009a7d60	.text	114		clean	unknown		unanalyzed	
 009a7de0	FUN_009a7de0	.text	1153		clean	unknown		unanalyzed	
 009a8270	FUN_009a8270	.text	63		clean	unknown		unanalyzed	
-009a82b0	FUN_009a82b0	.text	626		clean	unknown		unanalyzed	
+009a82b0	FUN_009a82b0	.text	626		clean	render	recon/render99	reversed	ra3::render::skinShaderInstances; callee of 009af530 at 009af8fe; 009af530 pushes RenderObject.cpp string 00c5e498
 009a8530	FUN_009a8530	.text	80		clean	unknown		unanalyzed	
 009a8580	FUN_009a8580	.text	23		clean	unknown		unanalyzed	
 009a85a0	FUN_009a85a0	.text	30		clean	unknown		unanalyzed	
@@ -28629,7 +28629,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009a8d40	FUN_009a8d40	.text	139		clean	unknown		unanalyzed	
 009a8dd0	FUN_009a8dd0	.text	86		clean	unknown		unanalyzed	
 009a8e30	FUN_009a8e30	.text	111		clean	unknown		unanalyzed	
-009a8ea0	FUN_009a8ea0	.text	290		clean	unknown		unanalyzed	
+009a8ea0	FUN_009a8ea0	.text	290		clean	render	recon/render99	reversed	ra3::render::bindShaderAsset; callee of 009a8fd0 at 009a90bf; 009a8fd0 pushes MaterialFactory.cpp string 00c5e270
 009a8fd0	FUN_009a8fd0	.text	1104	SageRender\source\Sage\Render\MaterialFactory.cpp	clean	render		unanalyzed	
 009a9420	FUN_009a9420	.text	122		clean	unknown		unanalyzed	
 009a94a0	FUN_009a94a0	.text	137		clean	unknown		unanalyzed	
@@ -28664,7 +28664,7 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009ab7d0	FUN_009ab7d0	.text	161		clean	unknown		unanalyzed	
 009ab880	FUN_009ab880	.text	36		clean	unknown		unanalyzed	
 009ab8b0	FUN_009ab8b0	.text	37		clean	unknown		unanalyzed	
-009ab8e0	FUN_009ab8e0	.text	157		clean	unknown		unanalyzed	
+009ab8e0	FUN_009ab8e0	.text	157		clean	render	recon/render99	unanalyzed	rejected: EASTL vector<ShaderParam>::resize (divides by the 72-byte element size); resizeShaderParamVector; kept only as a helper of counted ports (controller)
 009ab980	FUN_009ab980	.text	412	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 009abb20	FUN_009abb20	.text	318	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
 009abc60	FUN_009abc60	.text	286	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
@@ -28679,12 +28679,12 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 009aca70	FUN_009aca70	.text	30		clean	unknown		unanalyzed	
 009aca90	FUN_009aca90	.text	109		clean	unknown		unanalyzed	
 009acb00	FUN_009acb00	.text	95		clean	unknown		unanalyzed	
-009acb60	FUN_009acb60	.text	243		clean	unknown		unanalyzed	
+009acb60	FUN_009acb60	.text	243		clean	render	recon/render99	reversed	ra3::render::importShaderParamBlock; callee of 009af530 at 009af659; 009af530 pushes RenderObject.cpp string 00c5e498
 009acc60	FUN_009acc60	.text	423		clean	unknown		unanalyzed	
 009ace10	FUN_009ace10	.text	78		clean	unknown		unanalyzed	
 009ace60	FUN_009ace60	.text	277		clean	unknown		unanalyzed	
 009acf80	FUN_009acf80	.text	84	external\EASTL\1.06.01\include\EASTL\allocator.h	clean	thirdparty		unanalyzed	
-009acfe0	FUN_009acfe0	.text	85		clean	unknown		unanalyzed	
+009acfe0	FUN_009acfe0	.text	85		clean	render	recon/render99	unanalyzed	rejected: EASTL vector<SubObjectRecord>::push_back with refcount increment; appendSubObjectRecord; kept only as a helper of counted ports (controller)
 009ad040	FUN_009ad040	.text	443		clean	unknown		unanalyzed	
 009ad200	FUN_009ad200	.text	504		clean	unknown		unanalyzed	
 009ad400	FUN_009ad400	.text	187		clean	unknown		unanalyzed	

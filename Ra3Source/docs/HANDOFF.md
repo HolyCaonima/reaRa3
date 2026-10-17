@@ -41,10 +41,10 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至 aistate79 合并）
+## 3. 现状（截至 render99 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,991 行，其中 verified 66、
-  reversed 1,585、unanalyzed 47,340（受保护函数已 reversed：entry-lost 104、inner-patched 14、
+  reversed 1,612、unanalyzed 47,313（受保护函数已 reversed：entry-lost 104、inner-patched 14、
   entry-recoverable 3）。`securom` 分类：clean 47,777、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
   Ghidra 漏建、但已被认领的函数登记在 `function_additions.tsv`（目前 5 个）。
@@ -201,6 +201,14 @@
     `ra3/gamelogic/SkirmishAI87.h` 和 `ra3/gameclient/SkirmishClient87.h`，gamelogic 新增对
     `Ra3::sim` 的依赖。首个由子 agent 自己跑 `verify_ownership.py` 交付的批次（50 条声明全部成立），
     主控确认声明覆盖全部 41 行。集成态 151 场景零差异，`+0x210` 写偏移 mutation 检出
+  - SageRender 批次（`0x00990000–0x009AFFFF`，Grok，重启后接手）：移植 40 个、计数 27 个（分区管理、
+    碰撞哈希、四元数/变换数学、`visibleobjects`/`renderbin` 控制台命令、shader 工厂与材质绑定），
+    无 hook；代码在 `src/render/.../RenderCore99.*`，设计见 `render99.md`。主控复核时发现 13 个计数
+    入口是经 EASTL 增长函数才到达的 vector/算法实例化或编译器生成的逐成员复制（resize、push_back、
+    uninitialized_copy/fill、copy_backward 等），按 brief 排除 EASTL 改为 rejected 行（`95b10dc`），
+    C++ 作为已计数移植的辅助保留。分区/碰撞 vtable 无 slot-2 类名 getter，类名为推断；归属链
+    `fails=0`。集成态 oracle 40 个入口 85 例零差异，碰撞链偏移 `+0x30→+0x34` mutation 检出。
+    **教训**：派单里写明"经 EASTL 增长函数到达的元素复制/构造/resize/push_back 不计数"
   - AI states 批次（`0x00790000–0x0079FFFF`，Grok）：48 个方法（Turret/UnitAI/AIDock/AIGuard/AIAttack
     各 state 的 onEnter/update/onExit 与条件槽位、FollowWaypointPath/Turret 状态机），无 hook，样板 0；
     代码在 `ra3/gamelogic/AIState79.h`，设计见 `aistate79.md`。归属全部为单个 split vtable 槽位，主控
@@ -245,8 +253,9 @@
   - `recon/gamelogic7c`、`recon/common7e`、`recon/drawable52`、`recon/gamelogic72`、
     `recon/particles65`、`recon/render91`、`recon/obj6a`、`recon/protcave`、`recon/protentry2`、
     `recon/gamelogic82`、`recon/skirm87`、`recon/common5a`、`recon/render56`、`recon/objbehav68`、`recon/audio50`、
-    `recon/aistate79`：已合并（`789bcb1`、`f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`、`9df37c8`、`760e231`、
-    `79a7caa`、`9c14506`、`6234602`、`00c9a7a`、`be08241`、`ba97d03`、`bec182d`、`5952343`、`3ed6fbe`）。追加合并脚本在
+    `recon/aistate79`、`recon/render99`：已合并（`789bcb1`、`f3c87e3`、`c33c919`、`2c9fd80`、`b67d3d3`、
+    `9df37c8`、`760e231`、`79a7caa`、`9c14506`、`6234602`、`00c9a7a`、`be08241`、`ba97d03`、`bec182d`、
+    `5952343`、`3ed6fbe`、`40bc62c`）。追加合并脚本在
     冲突块以 `)` 收尾时会报 WARN，需手工检查括号（skirm87 合并时拼坏过一次 CMake）。受保护批次的站点/字符串/伪调用核对脚本见 `work/probe/check_protcave.py`、
     `work/probe/check_protentry2.py`，多快照槽值用 `work/probe/slot_snapshots.py`。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
@@ -256,15 +265,16 @@
     skirmishai89 `0793c38`），按"原 brief + `work/prompts/<批次>_resume.md` 现状说明"重派接手
     agent（通用规则见 `work/prompts/takeover_common.md`）。另杀掉一个死循环跑了一小时的 python
     one-liner（扫描 run35 快照字符串时循环下标不前进）。
-  - `recon/render99`、`recon/thing78`、`recon/net5d2`、`recon/skirm8b`：Grok，重启后重派。render99
-    已有草稿代码但缺 claims；thing78 claims 有 1 条错（`0078e980` 不在 `00c354f0` slot 3）。
+  - `recon/thing78`、`recon/net5d2`、`recon/skirm8b`：Grok，重启后重派。thing78 claims 有 1 条错
+    （`0078e980` 不在 `00c354f0` slot 3）。
   - `recon/skirmishai89`：`0x00890000–0x0089FFFF` skirmish AI 簇，base `5d16a5b`。两个 Gemini
     worker 先后中断（断连、重启），按惯例第三次改由 Grok 接手，并补 verify_ownership 声明。
   - `recon/logic4d`（Gemini，claims 121 条 fails=0、尚无代码）、`recon/obj69`（Grok，尚在分析）：
     重启后重派。当前 Grok 9 路、Gemini 1 路，正好符合 16:28 定下的 9:1。
   - `recon/obj74`（`0x00740000–0x0077FFFF`，Grok，base `ae1793b`）、`recon/aistate7a`
-    （`0x007A0000–0x007AFFFF`，Grok，base `a9e701e`）、`recon/aistate79b`（`0x0079` 第二轮，Grok）：
-    objbehav68、audio50、aistate79 合并后补位。
+    （`0x007A0000–0x007AFFFF`，Grok，base `a9e701e`）、`recon/aistate79b`（`0x0079` 第二轮，Grok，
+    base `c58f149`）、`recon/aistate7b`（`0x007B0000–0x007BFFFF`，Grok）：objbehav68、audio50、
+    aistate79、render99 合并后补位。
   - 14:00 补足 10 路，base 均为 `86baa8d`：`recon/objbehav68`（`0x00680000–0x0068FFFF`
     对象 behavior/update 模块，Gemini）、`recon/protentry`（已合并；由
     `recon/protentry2` 接续剩余 entry-lost 原生体）、`recon/protcave`（全部站点为 cave 的
@@ -297,7 +307,7 @@
   （已开 aistate7a，AI states 513，其中 314 个直接在具名 vtable 槽位，Grok）→ ~~`0x00820000–0x0083FFFF`~~
   （已开 gamelogic82，Grok）。受保护的 protcave 13 个延后入口与剩余 cave 站点留给唯一的 Gemini 位，
   等 logic4d 交付后开。按"直接在具名 vtable 非 getter 槽位的未认领 clean 函数数"排序的后续块
-  （16:55 统计）：~~`0x00790000` 218~~（已开 aistate79b）→ `0x007B0000` 141 → `0x007C0000` 116 →
+  （16:55 统计）：~~`0x00790000` 218~~（已开 aistate79b）→ ~~`0x007B0000` 141~~（已开 aistate7b）→ `0x007C0000` 116 →
   `0x00660000` 109 → `0x009B0000` 106 → `0x006C0000` 103 → `0x00720000` 95。`0x00A0`–`0x00BA` 区段数量
   大但没有源路径锚点、具名 vtable 比例低，暂不开。
   受保护批次合并后，按剩余 body/cave 数量再开下一路。
