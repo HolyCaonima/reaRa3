@@ -1,0 +1,21 @@
+address	status	owner	module	notes
+005d6000	reversed	recon/net	net	ra3::net::clearPairPointers; Unicorn/netcheck 500 cases
+005d6a00	reversed	recon/net	net	ra3::net::resetConnectionMatrix; Unicorn/netcheck 500 cases
+005d6a70	reversed	recon/net	net	ra3::net::rowHasConnectedPeer; Unicorn/netcheck 500 cases
+005d6c00	reversed	recon/net	net	ra3::net::connectionValue; Unicorn/netcheck 500 cases
+005d6e50	reversed	recon/net	net	ra3::net::elapsedPastTimeout(peer); Unicorn/netcheck 500 cases
+005d6ea0	reversed	recon/net	net	ra3::net::addLatencySample; Unicorn/netcheck 500 cases
+005d7020	reversed	recon/net	net	ra3::net::popFramed; Unicorn/netcheck 500 cases
+005d7250	reversed	recon/net	net	ra3::net::elapsedPastTimeout(session); Unicorn/netcheck 500 cases
+005d72a0	reversed	recon/net	net	ra3::net::packetHeaderSize; Unicorn/netcheck 500 cases
+005d7500	reversed	recon/net	net	ra3::net::activePeerPendingTotal; Unicorn/netcheck 500 cases
+005d75e0	reversed	recon/net	net	ra3::net::copyTransportRecord; Unicorn/netcheck 500 cases
+005d7640	reversed	recon/net	net	ra3::net::makeConnectionCode; Unicorn/netcheck 500 cases
+005d77d0	reversed	recon/net	net	ra3::net::setOpaqueValue; Unicorn/netcheck 500 cases
+005d7850	reversed	recon/net	net	ra3::net::resetTimeBuckets; Unicorn/netcheck 500 cases
+005d7880	reversed	recon/net	net	ra3::net::addTimeBucketValue; Unicorn/netcheck 500 cases
+005d78f0	reversed	recon/net	net	ra3::net::sumTimeBuckets; Unicorn/netcheck 500 cases
+005d7ea0	reversed	recon/net	net	ra3::net::clearEndpointSlot; Unicorn/netcheck 500 cases
+005d7f20	reversed	recon/net	net	ra3::net::setEndpointSlot; Unicorn/netcheck 500 cases
+005d7f70	reversed	recon/net	net	ra3::net::takeEndpointSlot; Unicorn/netcheck 500 cases
+005d7fc0	reversed	recon/net	net	ra3::net::updateEndpointSlot; Unicorn/netcheck 500 cases
