@@ -1,5 +1,6 @@
 #include "ra3/render/RenderCore99.h"
 
+#include <cstddef>
 #include <cstring>
 #include <intrin.h>
 
@@ -36,53 +37,53 @@ void fldFstp(void* destination, const void* source) noexcept {
 }
 
 float mulss(float left, float right) noexcept {
-    float out;
+    float bits;
     __asm {
         movss xmm0, dword ptr left
         mulss xmm0, dword ptr right
-        movss dword ptr out, xmm0
+        movss dword ptr bits, xmm0
     }
-    return out;
+    return bits;
 }
 
 float addss(float left, float right) noexcept {
-    float out;
+    float bits;
     __asm {
         movss xmm0, dword ptr left
         addss xmm0, dword ptr right
-        movss dword ptr out, xmm0
+        movss dword ptr bits, xmm0
     }
-    return out;
+    return bits;
 }
 
 float subss(float left, float right) noexcept {
-    float out;
+    float bits;
     __asm {
         movss xmm0, dword ptr left
         subss xmm0, dword ptr right
-        movss dword ptr out, xmm0
+        movss dword ptr bits, xmm0
     }
-    return out;
+    return bits;
 }
 
 float divss(float left, float right) noexcept {
-    float out;
+    float bits;
     __asm {
         movss xmm0, dword ptr left
         divss xmm0, dword ptr right
-        movss dword ptr out, xmm0
+        movss dword ptr bits, xmm0
     }
-    return out;
+    return bits;
 }
 
 float x87sqrt(float value) noexcept {
-    float out;
+    float bits;
     __asm {
         fld dword ptr value
         fsqrt
-        fstp dword ptr out
+        fstp dword ptr bits
     }
-    return out;
+    return bits;
 }
 
 bool comissJbe(float left, float right) noexcept {
@@ -286,7 +287,7 @@ void expandSphere(std::uint8_t* sphere, const std::uint8_t* incoming) noexcept {
         fld dword ptr distance
         fldz
         fxch st(1)
-        fucomip st(1)
+        fucomip st(0), st(1)
         fstp st(0)
         lahf
         test ah, 0x44
@@ -1071,6 +1072,9 @@ void bindShaderConstantIds(void* shader) noexcept {
 
 // 0x009A0500
 void* replicateShaderParam(void* destination, std::uint32_t count, const void* source) noexcept {
+    if (count == 0) {
+        return nullptr;
+    }
     auto* cursor = reinterpret_cast<std::uint8_t*>(destination);
     while (count != 0) {
         if (cursor != nullptr) {
@@ -1079,11 +1083,11 @@ void* replicateShaderParam(void* destination, std::uint32_t count, const void* s
         --count;
         cursor += 0x48;
     }
-    return cursor;
+    return cursor - 0x48;
 }
 
 // 0x009A0640. Refcount at +8 moves with the record; the other four dwords are plain copies.
-void moveSubObjectRecordsBackward(const void* first, const void* last, void* destinationEnd) noexcept {
+void* moveSubObjectRecordsBackward(const void* first, const void* last, void* destinationEnd) noexcept {
     auto* src = reinterpret_cast<const std::uint8_t*>(last);
     const auto* begin = reinterpret_cast<const std::uint8_t*>(first);
     auto* dst = reinterpret_cast<std::uint8_t*>(destinationEnd);
@@ -1106,6 +1110,24 @@ void moveSubObjectRecordsBackward(const void* first, const void* last, void* des
         storeU32(dst + 0x0C, loadU32(src + 0x0C));
         storeU32(dst + 0x10, loadU32(src + 0x10));
     }
+    return dst;
+}
+
+// 0x00992F70. Wide collision hash, modulus 0x2B7B. A miss returns null.
+void* findWideCollisionNode(void* table, const std::uint32_t* key) noexcept {
+    auto* self = reinterpret_cast<std::uint8_t*>(table);
+    const std::uint32_t low = key[2];
+    const std::uint32_t high = key[3];
+    const std::uint32_t bucket = ((low << 16) + high) % 0x2B7BU;
+    auto node = loadU32(self + bucket * 4U);
+    while (node != 0) {
+        auto* entry = reinterpret_cast<std::uint8_t*>(node);
+        if (loadU32(entry + 8) == low && loadU32(entry + 0x0C) == high) {
+            return entry;
+        }
+        node = loadU32(entry + 0x30);
+    }
+    return nullptr;
 }
 
 // 0x009A2540. Fast path only: ready bit at 0x00E1B320 and the cached string at 0x00E1B31C.
@@ -1250,21 +1272,23 @@ bool bindShaderAsset(void* asset, const std::uint32_t* key) noexcept {
 }
 
 // 0x009AB8E0. Grow calls EASTL 0x009A8AB0 and is not tested. Truncate is the covered path.
-void resizeShaderParamVector(void* vec, std::uint32_t count) noexcept {
+std::uint32_t resizeShaderParamVector(void* vec, std::uint32_t count) noexcept {
     auto* self = reinterpret_cast<std::uint8_t*>(vec);
     auto* begin = reinterpret_cast<std::uint8_t*>(loadU32(self));
     auto* end = reinterpret_cast<std::uint8_t*>(loadU32(self + 4));
     const auto sizeBytes = static_cast<std::uint32_t>(end - begin);
-    // 0x38E38E39 is the signed divide-by-72 magic. The truncate path only needs the count.
+    // 0x38E38E39 divides the byte span by 72. The grow path calls EASTL 0x009A8AB0.
     const auto exact = sizeBytes / 0x48U;
     if (count > exact) {
-        return;
+        return 0U;
     }
     auto* trimmed = begin + static_cast<std::ptrdiff_t>(count) * 0x48;
     copyShaderParamsForward(end, end, end);
-    const auto tail = static_cast<std::uint32_t>(end - trimmed);
-    const auto tailCount = tail / 0x48U;
-    storeU32(self + 4, loadU32(self + 4) - tailCount * 0x48U);
+    const auto tailCount = static_cast<std::uint32_t>(end - trimmed) / 0x48U;
+    // 0xC71C71C7 turns the removed byte count into a negative multiple of 72, left in eax.
+    const auto delta = static_cast<std::uint32_t>(0U - tailCount * 0x48U);
+    storeU32(self + 4, loadU32(self + 4) + delta);
+    return delta;
 }
 
 // 0x009ACB60. 0x00417080 copies eight bytes from *[descriptor]. Resize stays on the truncate path.
@@ -1332,22 +1356,6 @@ void* appendSubObjectRecord(void* vec, const void* record) noexcept {
     storeU32(end + 0x0C, loadU32(src + 0x0C));
     storeU32(end + 0x10, loadU32(src + 0x10));
     return end;
-}
-
-// 0x009AE110. Pushes a 0x14 record onto [this+8] and stores this at (*nameSlot)+8.
-void attachSubObjectRecord(void* block, void* const* nameSlot, std::uint32_t first, std::uint32_t second) noexcept {
-    auto* self = reinterpret_cast<std::uint8_t*>(block);
-    std::uint32_t record[5] = {};
-    auto* object = reinterpret_cast<std::uint8_t*>(loadU32(nameSlot));
-    if (object != nullptr) {
-        addRefInline(object);
-        record[2] = reinterpret_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(object));
-    }
-    record[0] = first;
-    record[1] = second;
-    appendSubObjectRecord(self + 8, record);
-    storeU32(object + 8, reinterpret_cast<std::uintptr_t>(self));
-    releaseInline(object);
 }
 
 // 0x00997720 slot 4 of 0x00C5DA5C. Virtual +0x6C is thiscall with three stack arguments.
@@ -1461,7 +1469,8 @@ bool parseRenderBinCommand(void* console, void* parsed, void* tokens) noexcept {
     storeU32(command + 0x10, 0);
     storeU32(command + 0x0C, 0);
     if (gServices.submit != nullptr) {
-        gServices.submit(console, 2, 2, reinterpret_cast<std::uintptr_t>(tokens), 0);
+        gServices.submit(console, 2, reinterpret_cast<void*>(static_cast<std::uintptr_t>(2)),
+                         static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(tokens)), 0);
     }
     return true;
 }

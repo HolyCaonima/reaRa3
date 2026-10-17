@@ -256,6 +256,10 @@ int runCase(
         break;
     case 0x00990100:
         clearPartitionBuckets(self);
+        if (self != nullptr &&
+            ((load<std::uint32_t>(self, 0x1C) - load<std::uint32_t>(self, 0x18)) & 0xFFFFFFF8U) == 0U) {
+            ret = selfOffset + 0x18;
+        }
         break;
     case 0x009901E0:
         setPartitionWorldBounds(self, reinterpret_cast<const float*>(ptrAt(blob, a0)));
@@ -264,11 +268,16 @@ int runCase(
     case 0x00990620:
         resetPartitionBounds(self);
         break;
-    case 0x00993120:
+    case 0x00993120: {
+        const auto link = self == nullptr ? 0U : load<std::uint32_t>(self, 0x14);
+        const auto prev = self == nullptr ? 0U : load<std::uint32_t>(self, 0x0C);
         unlinkCollisionEntry(self);
+        ret = ptrToResult(blob, reinterpret_cast<void*>(link != 0U ? link : prev));
         break;
+    }
     case 0x00993360:
         sweepIdleCollisionNodes(self);
+        ret = 0x493;
         break;
     case 0x00993600:
         retireCollisionHashNode(self, reinterpret_cast<const std::uint32_t*>(ptrAt(blob, a0)));
@@ -325,9 +334,13 @@ int runCase(
             reinterpret_cast<const float*>(ptrAt(blob, a0)),
             reinterpret_cast<const float*>(ptrAt(blob, a1)),
             reinterpret_cast<float*>(ptrAt(blob, a2)));
+        ret = ptrToResult(blob, ptrAt(blob, a2));
         break;
     case 0x0099C440:
         composeShaderTransformInPlace(self, reinterpret_cast<const float*>(ptrAt(blob, a0)));
+        if (self != nullptr) {
+            ret = load<std::uint32_t>(self, 0x0C);
+        }
         break;
     case 0x0099F1C0:
         applyRegistry(blob, a2, 0);
@@ -336,12 +349,15 @@ int runCase(
     case 0x0099F310:
         applyRegistry(blob, a0, a1);
         bindShaderConstantIds(self);
+        if (self != nullptr) {
+            ret = ptrToResult(blob, reinterpret_cast<void*>(load<std::uint32_t>(self, 0)));
+        }
         break;
     case 0x009A0500:
         ret = ptrToResult(blob, replicateShaderParam(ptrAt(blob, a0), a1, ptrAt(blob, a2)));
         break;
     case 0x009A0640:
-        moveSubObjectRecordsBackward(ptrAt(blob, a0), ptrAt(blob, a1), ptrAt(blob, a2));
+        ret = ptrToResult(blob, moveSubObjectRecordsBackward(ptrAt(blob, a0), ptrAt(blob, a1), ptrAt(blob, a2)));
         break;
     case 0x009A2540: {
         SemanticNameCache cache{};
@@ -354,6 +370,10 @@ int runCase(
     }
     case 0x009A2DF0:
         refreshShaderParamChain(self, reinterpret_cast<const float*>(ptrAt(blob, a0)));
+        if (self != nullptr) {
+            const auto first = load<std::uint32_t>(self, 8);
+            ret = ptrToResult(blob, reinterpret_cast<void*>(static_cast<std::uintptr_t>(first) + 0x24U));
+        }
         break;
     case 0x009A82B0:
         skinShaderInstances(self);
@@ -363,7 +383,7 @@ int runCase(
         ret = bindShaderAsset(ptrAt(blob, a0), reinterpret_cast<const std::uint32_t*>(ptrAt(blob, a1))) ? 1U : 0U;
         break;
     case 0x009AB8E0:
-        resizeShaderParamVector(self, a0);
+        ret = resizeShaderParamVector(self, a0);
         break;
     case 0x009ACB60:
         ret = ptrToResult(blob, importShaderParamBlock(self, ptrAt(blob, a0)));
@@ -371,8 +391,8 @@ int runCase(
     case 0x009ACFE0:
         ret = ptrToResult(blob, appendSubObjectRecord(self, ptrAt(blob, a0)));
         break;
-    case 0x009AE110:
-        attachSubObjectRecord(self, reinterpret_cast<void* const*>(ptrAt(blob, a0)), a1, a2);
+    case 0x00992F70:
+        ret = ptrToResult(blob, findWideCollisionNode(self, reinterpret_cast<const std::uint32_t*>(ptrAt(blob, a0))));
         break;
     case 0x00997720:
         ret = runVisibleObjectsCommand(ptrAt(blob, a0), ptrAt(blob, a1), 0, 0) ? 1U : 0U;
@@ -386,7 +406,7 @@ int runCase(
     case 0x009A1990: {
         gEngineService = ptrAt(blob, load<std::uint32_t>(blob.data(), 0));
         services.reserve = [](void*, std::uint32_t, std::uint32_t) {};
-        services.submit = [](void* console, std::uint32_t, std::uint32_t, std::uint32_t, std::uint32_t) {
+        services.submit = [](void* console, std::uint32_t, void*, std::uint32_t, std::uint32_t) {
             auto* bytes = reinterpret_cast<std::uint8_t*>(console);
             store<std::uint32_t>(bytes, 0x90, load<std::uint32_t>(bytes, 0x90) + 1U);
         };

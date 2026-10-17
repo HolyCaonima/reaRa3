@@ -50,7 +50,8 @@ void* resolveRegisteredShader(std::uint32_t* out, const std::uint32_t* key) noex
 void bindShaderConstantIds(void* shader) noexcept;
 
 void* replicateShaderParam(void* dest, std::uint32_t count, const void* source) noexcept;
-void moveSubObjectRecordsBackward(const void* first, const void* last, void* destEnd) noexcept;
+void* moveSubObjectRecordsBackward(const void* first, const void* last, void* destEnd) noexcept;
+void* findWideCollisionNode(void* table, const std::uint32_t* key) noexcept;
 
 // 0x00E1B320 ready bit and 0x00E1B31C cached semantic-string pointer.
 struct SemanticNameCache {
@@ -63,10 +64,9 @@ std::uint32_t shaderSemanticNames() noexcept;
 void refreshShaderParamChain(void* block, const float* matrix) noexcept;
 void skinShaderInstances(void* block) noexcept;
 bool bindShaderAsset(void* asset, const std::uint32_t* key) noexcept;
-void resizeShaderParamVector(void* vec, std::uint32_t count) noexcept;
+std::uint32_t resizeShaderParamVector(void* vec, std::uint32_t count) noexcept;
 void* importShaderParamBlock(void* block, const void* descriptor) noexcept;
 void* appendSubObjectRecord(void* vec, const void* record) noexcept;
-void attachSubObjectRecord(void* block, void* const* nameSlot, std::uint32_t a, std::uint32_t b) noexcept;
 
 // Console commands. Slot 2 of 0x00C5DA5C / 0x00C5DAAC is the command description.
 bool runVisibleObjectsCommand(void* console, void* parsed, std::uint32_t, std::uint32_t) noexcept;
