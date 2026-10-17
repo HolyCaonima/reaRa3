@@ -231,12 +231,21 @@
     `work/probe/check_protentry2.py`，多快照槽值用 `work/probe/slot_snapshots.py`。合并冲突若只是注册行追加，用
     `python work\probe\union_conflicts.py <文件...>`。所有权声明用
     `python work\probe\verify_ownership.py <claims.txt>` 逐条反查（格式见脚本头注释）。
+  - 16:17 IDE 重启杀掉了全部 10 路子 agent，且会话状态丢失、无法 resume。主控把各 worktree 未提交的
+    文件提交为快照（objbehav68 `b58f2a3`、audio50 `3c08fd0`、render99 `9923960`、thing78 `c1d1eff`、
+    skirmishai89 `0793c38`），按"原 brief + `work/prompts/<批次>_resume.md` 现状说明"重派接手
+    agent（通用规则见 `work/prompts/takeover_common.md`）。另杀掉一个死循环跑了一小时的 python
+    one-liner（扫描 run35 快照字符串时循环下标不前进）。
   - `recon/audio50`：`0x00500000–0x0050FFFF` SageAudio 设备层，base `d18d88e`；Gemini 断连后主控
-    提交快照 `30643c3`（约 42 个草稿入口和 checker，无 oracle/注释/文档），改由 Grok 接手。
-  - `recon/objbehav68`：Gemini 两次中断，主控提交快照 `97a0572`（约 70 个草稿入口和 checker，
-    oracle 原型在该 worktree 的 `work/`），改由 Grok 接手。
-  - `recon/render99`、`recon/thing78`、`recon/net5d2`、`recon/skirm8b`：Grok 新开，见补位队列。
-  - `recon/skirmishai89`：`0x00890000–0x0089FFFF` skirmish AI 簇，Gemini，base `5d16a5b`。
+    提交快照 `30643c3`，Grok 接手重写（ownership 37 条 fails=0），重启后由 Grok 第二次接手。
+  - `recon/objbehav68`：Gemini 两次中断，主控提交快照 `97a0572`；Grok 接手后 `b1c8940` 用差分 oracle
+    核对 43 个有归属的方法并写好注释，重启后由 Grok 第二次接手（剩 mutation、设计文档、验收）。
+  - `recon/render99`、`recon/thing78`、`recon/net5d2`、`recon/skirm8b`：Grok，重启后重派。render99
+    已有草稿代码但缺 claims；thing78 claims 有 1 条错（`0078e980` 不在 `00c354f0` slot 3）。
+  - `recon/skirmishai89`：`0x00890000–0x0089FFFF` skirmish AI 簇，base `5d16a5b`。两个 Gemini
+    worker 先后中断（断连、重启），按惯例第三次改由 Grok 接手，并补 verify_ownership 声明。
+  - `recon/logic4d`（Gemini，claims 121 条 fails=0、尚无代码）、`recon/obj69`、`recon/aistate79`
+    （Grok，尚在分析）：重启后重派。当前 Grok 9 路、Gemini 1 路，下次补位优先开 Gemini 以回到约 7:3。
   - 14:00 补足 10 路，base 均为 `86baa8d`：`recon/objbehav68`（`0x00680000–0x0068FFFF`
     对象 behavior/update 模块，Gemini）、`recon/protentry`（已合并；由
     `recon/protentry2` 接续剩余 entry-lost 原生体）、`recon/protcave`（全部站点为 cave 的
