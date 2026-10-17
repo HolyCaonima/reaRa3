@@ -1,515 +1,427 @@
-#include <ra3/audio/SageAudioManager50.h>
+#include "ra3/audio/SageAudioManager50.h"
 
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN
-#endif
 #include <windows.h>
 
-#include <array>
-#include <cstddef>
 #include <cstdint>
+#include <cstdlib>
 #include <cstring>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-#include <stdexcept>
 #include <string>
 #include <vector>
 
 namespace {
 
-using Bytes = std::vector<std::byte>;
+constexpr std::uint32_t kNull = 0xFFFFFFFFu;
+constexpr std::uint32_t kVtableMarker = 0xF1000000u;
+constexpr std::uintptr_t kVtablePage = 0x20000000u;
 
-constexpr std::size_t kArenaSize = 0x10000;
-std::byte* g_arena = nullptr;
-bool g_mutate = false;
+std::uint32_t g_releaseStub = 0;
+std::uint32_t g_stopStub = 0;
+std::uint32_t g_headStub = 0;
+std::uint32_t g_bodyStub = 0;
+std::uintptr_t g_vtable = 0;
 
-std::byte* allocateArena() {
-    for (std::uintptr_t addr = 0x30000000u; addr <= 0x50000000u; addr += 0x01000000u) {
-        void* mem = VirtualAlloc(reinterpret_cast<void*>(addr), kArenaSize,
-                                 MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
-        if (mem != nullptr) {
-            return static_cast<std::byte*>(mem);
+std::uint8_t* g_dee = nullptr;
+std::uint8_t* g_ca7 = nullptr;
+std::uint8_t* g_ca9 = nullptr;
+std::uint8_t* g_bd9 = nullptr;
+std::uint8_t* g_df0 = nullptr;
+std::uint8_t* g_df6 = nullptr;
+
+std::uint32_t __fastcall releaseStub(void* self, void*, int flag) {
+    *reinterpret_cast<std::uint32_t*>(static_cast<std::uint8_t*>(self) + 8) =
+        static_cast<std::uint32_t>(flag);
+    return 0x42u;
+}
+
+std::uint32_t __fastcall stopStub(void* self, void*, int flag) {
+    *reinterpret_cast<std::uint32_t*>(static_cast<std::uint8_t*>(self) + 4) =
+        static_cast<std::uint32_t>(flag);
+    return 0x55u;
+}
+
+std::uint32_t __fastcall transferHeadStub(void* self, void*, void* slot) {
+    const auto* bytes = static_cast<const std::uint8_t*>(slot);
+    *reinterpret_cast<std::uint32_t*>(static_cast<std::uint8_t*>(self) + 0x10) =
+        bytes[0] | (static_cast<std::uint32_t>(bytes[1]) << 8);
+    return 0x11u;
+}
+
+std::uint32_t __fastcall transferBodyStub(void* self, void*, void* arg) {
+    *reinterpret_cast<void**>(static_cast<std::uint8_t*>(self) + 0x14) = arg;
+    return 0x77u;
+}
+
+std::uint8_t* mapPage(std::uintptr_t address) {
+    void* page = VirtualAlloc(reinterpret_cast<void*>(address), 0x1000, MEM_COMMIT | MEM_RESERVE,
+                              PAGE_READWRITE);
+    if (page == nullptr) {
+        std::cerr << "VirtualAlloc failed at 0x" << std::hex << address << " err " << std::dec
+                  << GetLastError() << "\n";
+        std::exit(1);
+    }
+    return static_cast<std::uint8_t*>(page);
+}
+
+void installRuntime() {
+    g_dee = mapPage(0x00DEE000u);
+    g_ca7 = mapPage(0x00CA7000u);
+    g_ca9 = mapPage(0x00CA9000u);
+    g_bd9 = mapPage(0x00BD9000u);
+    g_df0 = mapPage(0x00DF0000u);
+    g_df6 = mapPage(0x00DF6000u);
+    auto* vtPage = mapPage(kVtablePage);
+    g_vtable = reinterpret_cast<std::uintptr_t>(vtPage);
+    auto* slots = reinterpret_cast<std::uintptr_t*>(vtPage);
+    g_releaseStub = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(&releaseStub));
+    g_stopStub = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(&stopStub));
+    g_headStub = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(&transferHeadStub));
+    g_bodyStub = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(&transferBodyStub));
+    slots[0] = g_releaseStub;
+    slots[6] = g_headStub;
+    slots[14] = g_stopStub;
+    slots[27] = g_bodyStub;
+}
+
+void baselineGlobals() {
+    std::memset(g_dee, 0, 0x1000);
+    std::memset(g_ca7, 0, 0x1000);
+    std::memset(g_df0, 0, 0x1000);
+    std::memset(g_df6, 0, 0x1000);
+    *reinterpret_cast<float*>(g_bd9 + 0xA4) = 1.f;
+    for (int i = 0; i < 8; ++i) {
+        *reinterpret_cast<float*>(g_ca9 + 0xF04 + i * 4) = 1.f;
+    }
+}
+
+int hexValue(char ch) {
+    if (ch >= '0' && ch <= '9') {
+        return ch - '0';
+    }
+    if (ch >= 'a' && ch <= 'f') {
+        return ch - 'a' + 10;
+    }
+    if (ch >= 'A' && ch <= 'F') {
+        return ch - 'A' + 10;
+    }
+    return -1;
+}
+
+std::vector<std::uint8_t> parseHex(const std::string& text) {
+    std::vector<std::uint8_t> out;
+    if (text == "-" || text == ".") {
+        return out;
+    }
+    if ((text.size() % 2) != 0) {
+        std::cerr << "odd hex length\n";
+        std::exit(1);
+    }
+    out.reserve(text.size() / 2);
+    for (std::size_t i = 0; i < text.size(); i += 2) {
+        const int hi = hexValue(text[i]);
+        const int lo = hexValue(text[i + 1]);
+        if (hi < 0 || lo < 0) {
+            std::cerr << "bad hex\n";
+            std::exit(1);
         }
+        out.push_back(static_cast<std::uint8_t>((hi << 4) | lo));
     }
-    throw std::runtime_error("failed to allocate deterministic arena");
+    return out;
 }
 
-std::uint32_t parseWord(const std::string& text) {
-    return static_cast<std::uint32_t>(std::stoul(text, nullptr, 16));
+std::string toHex(const std::uint8_t* data, std::size_t size) {
+    std::ostringstream out;
+    out << std::hex << std::setfill('0');
+    for (std::size_t i = 0; i < size; ++i) {
+        out << std::setw(2) << static_cast<unsigned>(data[i]);
+    }
+    return out.str();
 }
 
-std::uint32_t argument(std::istringstream& input) {
-    std::string text;
-    input >> text;
-    if (text.empty()) {
-        throw std::runtime_error("missing argument");
-    }
-    return parseWord(text);
+std::uint32_t parseU32(const std::string& text) {
+    return static_cast<std::uint32_t>(std::strtoul(text.c_str(), nullptr, 0));
 }
 
-Bytes decode(const std::string& text) {
-    if (text == ".") {
-        return {};
-    }
-    if ((text.size() & 1u) != 0) {
-        throw std::runtime_error("odd hex input");
-    }
-    Bytes result(text.size() / 2);
-    for (std::size_t index = 0; index != result.size(); ++index) {
-        result[index] =
-            static_cast<std::byte>(parseWord(text.substr(index * 2, 2)));
-    }
-    return result;
-}
-
-void encode(const void* storage, std::size_t size) {
-    if (size == 0) {
-        std::cout << ".";
+void applyPatches(const std::string& text) {
+    if (text == "-" || text == ".") {
         return;
     }
-    const auto* raw = static_cast<const std::byte*>(storage);
-    std::cout << std::hex << std::setfill('0');
-    for (std::size_t index = 0; index != size; ++index) {
-        std::cout << std::setw(2) << std::to_integer<unsigned>(raw[index]);
+    std::size_t start = 0;
+    while (start < text.size()) {
+        const auto comma = text.find(',', start);
+        const auto item = text.substr(start, comma == std::string::npos ? std::string::npos : comma - start);
+        const auto eq = item.find('=');
+        if (eq == std::string::npos) {
+            std::cerr << "bad patch\n";
+            std::exit(1);
+        }
+        const auto address = parseU32(item.substr(0, eq));
+        const auto bytes = parseHex(item.substr(eq + 1));
+        std::memcpy(reinterpret_cast<void*>(address), bytes.data(), bytes.size());
+        if (comma == std::string::npos) {
+            break;
+        }
+        start = comma + 1;
     }
-    std::cout << std::dec;
 }
 
-float asFloat(std::uint32_t bits) {
-    float value = 0.0f;
-    std::memcpy(&value, &bits, sizeof(value));
+struct Fixup {
+    enum Kind { Rel, Vtable, GlobalPtr } kind;
+    std::uint32_t offset;
+    std::uint32_t global;
+};
+
+std::vector<Fixup> parseFixups(const std::string& text) {
+    std::vector<Fixup> out;
+    if (text == "-" || text == ".") {
+        return out;
+    }
+    std::size_t start = 0;
+    while (start < text.size()) {
+        const auto comma = text.find(',', start);
+        const auto item = text.substr(start, comma == std::string::npos ? std::string::npos : comma - start);
+        Fixup fix{};
+        if (item.size() > 2 && item[0] == 't' && item[1] == '@') {
+            fix.kind = Fixup::Vtable;
+            fix.offset = parseU32(item.substr(2));
+        } else if (!item.empty() && item[0] == 'g') {
+            const auto at = item.find('@');
+            fix.kind = Fixup::GlobalPtr;
+            fix.global = parseU32(item.substr(1, at - 1));
+            fix.offset = parseU32(item.substr(at + 1));
+        } else {
+            fix.kind = Fixup::Rel;
+            fix.offset = parseU32(item);
+        }
+        out.push_back(fix);
+        if (comma == std::string::npos) {
+            break;
+        }
+        start = comma + 1;
+    }
+    return out;
+}
+
+void* blobPtr(std::vector<std::uint8_t>& blob, std::uint32_t offset) {
+    if (offset == kNull) {
+        return nullptr;
+    }
+    return blob.data() + offset;
+}
+
+std::uint32_t stubMarker(std::uint32_t value) {
+    if (value == g_releaseStub) {
+        return 0xF0000000u;
+    }
+    if (value == g_stopStub) {
+        return 0xF0000001u;
+    }
+    if (value == g_headStub) {
+        return 0xF0000002u;
+    }
+    if (value == g_bodyStub) {
+        return 0xF0000003u;
+    }
+    return 0u;
+}
+
+std::uint32_t normalize(std::uint32_t value, std::uintptr_t base, std::size_t size) {
+    if (size != 0 && value >= base && value < base + size) {
+        return static_cast<std::uint32_t>(value - base);
+    }
+    if (value == static_cast<std::uint32_t>(g_vtable)) {
+        return kVtableMarker;
+    }
+    if (const auto marker = stubMarker(value)) {
+        return marker;
+    }
+    if (size == 0) {
+        return value;
+    }
+    const auto high = value & 0xFFFFFF00u;
+    const auto lo = static_cast<std::uint32_t>(base) & 0xFFFFFF00u;
+    const auto hi = static_cast<std::uint32_t>(base + size - 1) & 0xFFFFFF00u;
+    if (high >= lo && high <= hi) {
+        return value - lo;
+    }
     return value;
 }
 
-std::uint32_t floatBits(float value) {
-    std::uint32_t bits = 0;
-    std::memcpy(&bits, &value, sizeof(bits));
-    return bits;
-}
-
-void captureFloatSt0(float value, std::uint16_t controlWord, Bytes& aux) {
-    aux.resize(14);
-#if defined(_MSC_VER) && defined(_M_IX86)
-    float rounded = 0.0f;
-    std::array<std::byte, 10> ext{};
-    unsigned short savedCw = 0;
-    unsigned short gameCw = controlWord;
-    __asm {
-        fnstcw savedCw
-        fldcw gameCw
-        fld dword ptr [value]
-        fst dword ptr [rounded]
-        fstp tbyte ptr [ext]
-        fldcw savedCw
+void normalizeDwords(std::uint8_t* data, std::size_t size, std::uintptr_t base, std::size_t span) {
+    for (std::size_t off = 0; off + 4 <= size; off += 4) {
+        std::uint32_t cur = 0;
+        std::memcpy(&cur, data + off, 4);
+        const auto next = normalize(cur, base, span);
+        if (next != cur) {
+            std::memcpy(data + off, &next, 4);
+        }
     }
-    const std::uint32_t rbits = floatBits(rounded);
-    std::memcpy(aux.data(), &rbits, 4);
-    std::memcpy(aux.data() + 4, ext.data(), 10);
-#else
-    (void)controlWord;
-    const std::uint32_t rbits = floatBits(value);
-    std::memcpy(aux.data(), &rbits, 4);
-#endif
 }
 
-void captureDoubleSt0(double value, std::uint16_t controlWord, Bytes& aux) {
-    aux.resize(14);
-#if defined(_MSC_VER) && defined(_M_IX86)
-    float rounded = 0.0f;
-    std::array<std::byte, 10> ext{};
-    unsigned short savedCw = 0;
-    unsigned short gameCw = controlWord;
-    __asm {
-        fnstcw savedCw
-        fldcw gameCw
-        fld qword ptr [value]
-        fst dword ptr [rounded]
-        fstp tbyte ptr [ext]
-        fldcw savedCw
+std::vector<std::uint8_t> captureGlobals(std::uintptr_t blobBase, std::size_t blobSize) {
+    std::vector<std::uint8_t> out(4u * 5u + 0x5F4u);
+    std::memcpy(out.data() + 0, reinterpret_cast<void*>(0x00DEE1C8u), 4);
+    std::memcpy(out.data() + 4, reinterpret_cast<void*>(0x00CA7D7Cu), 4);
+    std::memcpy(out.data() + 8, reinterpret_cast<void*>(0x00CA7E7Cu), 4);
+    std::memcpy(out.data() + 12, reinterpret_cast<void*>(0x00DF03F8u), 4);
+    std::memcpy(out.data() + 16, reinterpret_cast<void*>(0x00DF6098u), 4);
+    std::memcpy(out.data() + 20, reinterpret_cast<void*>(0x00DEE290u), 0x5F4);
+    normalizeDwords(out.data(), out.size(), blobBase, blobSize);
+    return out;
+}
+
+std::uint32_t run(std::uint32_t va, void* self, std::vector<std::uint8_t>& blob, std::uint32_t a0,
+                  std::uint32_t a1, std::uint32_t a2, std::uint32_t a3, std::uint32_t eax) {
+    using namespace ra3::audio;
+    switch (va) {
+    case 0x00502270:
+        return resolveSpeakerCenterChannel();
+    case 0x00502FB0:
+        return sageAudioManagerEmptyEventAddress();
+    case 0x00502FF0:
+        return sageAudioManagerStopAllImmediately(self);
+    case 0x00503290:
+        return sageAudioManagerListenerOrientationCount();
+    case 0x00503300:
+        return sageAudioManagerSubsystemNameAddress();
+    case 0x00503400:
+        return sagePathMusicManagerSubsystemNameAddress();
+    case 0x005044F0:
+        return static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
+            initAudioEventHandle(self, blobPtr(blob, a0))));
+    case 0x00504560:
+        return releaseAudioEventHandle(self);
+    case 0x005045C0:
+        return releasePlayingAudioHandle(self, eax);
+    case 0x005045E0:
+        return unlinkPlayingAudioNode(self);
+    case 0x00504AC0:
+        return testAudioEventCategoryBit(self, a0);
+    case 0x00504AF0:
+        return intersectsAudioEventCategoryMask(self, reinterpret_cast<std::uint32_t*>(blobPtr(blob, a0)));
+    case 0x00504C80:
+        recomputePlayerCategoryVolume(self, a0, a1);
+        return 0;
+    case 0x00504DF0:
+        return recomputePlayerCategoryProduct(self, a0);
+    case 0x00504EC0:
+        return decrementPlayerVolumeCounters(self);
+    case 0x00505340:
+        return acquireVolumeModifierLock(blobPtr(blob, a0));
+    case 0x005053B0:
+        return releaseVolumeModifierLock(blobPtr(blob, a0));
+    case 0x00506670:
+        return sageAudioManagerOnAcquireVolumeModifierLock(blobPtr(blob, a0));
+    case 0x00506680:
+        return sageAudioManagerOnReleaseVolumeModifierLock(blobPtr(blob, a0));
+    case 0x00506430:
+        return sageAudioManagerQuerySuppressed(blobPtr(blob, a0), eax);
+    case 0x00506C20:
+        return static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
+            initCategoryBitsFour(self, a0, a1, a2, a3)));
+    case 0x00506C90:
+        return static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
+            initCategoryBitsTwo(self, a0, a1)));
+    case 0x00502540:
+        return bindSoundProvider(self, blobPtr(blob, a0));
+    case 0x00507720:
+        return hasActiveRenderCursor(self);
+    case 0x00508640:
+        return static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
+            appendPlayingAudioNode(self, blobPtr(blob, a0))));
+    case 0x0050B090:
+        return sagePathMusicManagerTransferState(self, blobPtr(blob, a0));
+    case 0x0050DF80:
+        return eraseListenerRecord(self, a0);
+    case 0x0050E510:
+        return sageAudioManagerRemoveListenerEntry(self, a0, eax);
+    case 0x0050FA80:
+        return applyListedVolumeModifiers(self, blobPtr(blob, a0), a1);
+    case 0x0050FD50:
+        return refreshRenderingPlayerVolumes(self);
+    default:
+        std::cerr << "unknown va\n";
+        std::exit(1);
     }
-    const std::uint32_t rbits = floatBits(rounded);
-    std::memcpy(aux.data(), &rbits, 4);
-    std::memcpy(aux.data() + 4, ext.data(), 10);
-#else
-    (void)controlWord;
-    const std::uint32_t rbits = floatBits(static_cast<float>(value));
-    std::memcpy(aux.data(), &rbits, 4);
-#endif
 }
 
-void* ptrFromAddr(std::uint32_t addr) {
-    return reinterpret_cast<void*>(static_cast<std::uintptr_t>(addr));
+void runLine(const std::string& line) {
+    std::istringstream iss(line);
+    std::string vaStr;
+    std::string selfStr;
+    std::string blobHex;
+    std::string fixStr;
+    std::string a0Str;
+    std::string a1Str;
+    std::string a2Str;
+    std::string a3Str;
+    std::string eaxStr;
+    std::string fpcwStr;
+    std::string patchStr;
+    if (!(iss >> vaStr >> selfStr >> blobHex >> fixStr >> a0Str >> a1Str >> a2Str >> a3Str >>
+          eaxStr >> fpcwStr >> patchStr)) {
+        std::cerr << "bad line\n";
+        std::exit(1);
+    }
+    baselineGlobals();
+    applyPatches(patchStr);
+    auto blob = parseHex(blobHex);
+    const auto base = reinterpret_cast<std::uintptr_t>(blob.data());
+    for (const auto& fix : parseFixups(fixStr)) {
+        if (fix.kind == Fixup::Vtable) {
+            std::memcpy(blob.data() + fix.offset, &g_vtable, 4);
+        } else if (fix.kind == Fixup::GlobalPtr) {
+            const auto target = static_cast<std::uint32_t>(base + fix.offset);
+            std::memcpy(reinterpret_cast<void*>(fix.global), &target, 4);
+        } else {
+            std::uint32_t rel = 0;
+            std::memcpy(&rel, blob.data() + fix.offset, 4);
+            const auto abs = static_cast<std::uint32_t>(base + rel);
+            std::memcpy(blob.data() + fix.offset, &abs, 4);
+        }
+    }
+    const bool absolute = !selfStr.empty() && (selfStr[0] == 'A' || selfStr[0] == 'a');
+    const auto selfOff = parseU32(absolute ? selfStr.substr(1) : selfStr);
+    void* self = nullptr;
+    if (absolute) {
+        self = reinterpret_cast<void*>(selfOff);
+    } else if (selfOff != kNull && selfOff < blob.size()) {
+        self = blob.data() + selfOff;
+    }
+    const auto fpcw = static_cast<std::uint16_t>(parseU32(fpcwStr));
+    unsigned short saved = 0;
+    __asm {
+        fnstcw saved
+        fldcw fpcw
+    }
+    auto ret = run(parseU32(vaStr), self, blob, parseU32(a0Str), parseU32(a1Str), parseU32(a2Str),
+                   parseU32(a3Str), parseU32(eaxStr));
+    __asm { fldcw saved }
+    if (!blob.empty()) {
+        normalizeDwords(blob.data(), blob.size(), base, blob.size());
+        ret = normalize(ret, base, blob.size());
+    }
+    const auto globals = captureGlobals(base, blob.size());
+    std::cout << "ret=0x" << std::hex << std::setw(8) << std::setfill('0') << ret
+              << " blob=" << toHex(blob.data(), blob.size())
+              << " g=" << toHex(globals.data(), globals.size()) << std::endl;
 }
 
 }  // namespace
 
 int main(int argc, char** argv) {
-    for (int i = 1; i < argc; ++i) {
-        if (std::string(argv[i]) == "--mutate") {
-            g_mutate = true;
+    installRuntime();
+    if (argc == 2 && std::string(argv[1]) == "--batch") {
+        std::string line;
+        while (std::getline(std::cin, line)) {
+            if (!line.empty()) {
+                runLine(line);
+            }
         }
+        return 0;
     }
-
-    g_arena = allocateArena();
-    const auto arenaBase =
-        static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(g_arena));
-
-    std::string line;
-    while (std::getline(std::cin, line)) {
-        if (line.empty()) {
-            continue;
-        }
-        std::istringstream input(line);
-        std::string op;
-        input >> op;
-        if (op == "quit") {
-            return 0;
-        }
-        if (op == "base") {
-            std::cout << std::hex << arenaBase << std::dec << "\n";
-            std::cout.flush();
-            continue;
-        }
-        if (op == "mutate") {
-            g_mutate = argument(input) != 0;
-            std::cout << "0 . .\n";
-            std::cout.flush();
-            continue;
-        }
-
-        std::string blobText;
-        input >> blobText;
-        Bytes slice = decode(blobText);
-        if (slice.size() > kArenaSize) {
-            std::cout << "error\n";
-            std::cout.flush();
-            return 1;
-        }
-        if (!slice.empty()) {
-            std::memcpy(g_arena, slice.data(), slice.size());
-        }
-
-        std::uint32_t result = 0;
-        Bytes aux;
-
-        if (op == "502270") {
-            const auto modeOverride = static_cast<std::int32_t>(argument(input));
-            const auto sysAddr = argument(input);
-            const auto initialEax = argument(input);
-            result = ra3::audio::resolveSpeakerCenterChannelEnabled(
-                modeOverride, ptrFromAddr(sysAddr), initialEax);
-            if (g_mutate) {
-                result ^= 1u;
-            }
-        } else if (op == "502f00") {
-            const auto soundAddr = argument(input);
-            const auto durBits = argument(input);
-            const auto initialEax = argument(input);
-            result = ra3::audio::pushRenderingSoundSampleDuration(
-                ptrFromAddr(soundAddr), asFloat(durBits), initialEax);
-        } else if (op == "502fb0") {
-            result = ra3::audio::sageAudioManagerEmptyEventAddress();
-        } else if (op == "502ff0") {
-            const auto mgrAddr = argument(input);
-            result = ra3::audio::sageAudioManagerStopAllImmediately(
-                ptrFromAddr(mgrAddr));
-        } else if (op == "503000") {
-            const auto mgrAddr = argument(input);
-            const auto listenerCount = argument(input);
-            const auto pausedFlag = static_cast<std::uint8_t>(argument(input));
-            const auto timerAddr = argument(input);
-            const auto stepBits = argument(input);
-            const auto initialEax = argument(input);
-            const auto cw = static_cast<std::uint16_t>(argument(input));
-#if defined(_MSC_VER) && defined(_M_IX86)
-            unsigned short savedCw = 0;
-            unsigned short gameCw = cw;
-            __asm {
-                fnstcw savedCw
-                fldcw gameCw
-            }
-#endif
-            const float val = ra3::audio::sageAudioManagerUpdateFrameDeltaSeconds(
-                ptrFromAddr(mgrAddr), listenerCount, pausedFlag,
-                ptrFromAddr(timerAddr), asFloat(stepBits), &result, initialEax);
-#if defined(_MSC_VER) && defined(_M_IX86)
-            __asm {
-                fldcw savedCw
-            }
-#endif
-            captureFloatSt0(val, cw, aux);
-        } else if (op == "503290") {
-            const auto ptrAddr = argument(input);
-            result = ra3::audio::sageAudioManagerListenerOrientationCount(
-                 static_cast<const std::uint32_t*>(ptrFromAddr(ptrAddr)));
-        } else if (op == "503300") {
-            result = ra3::audio::sageAudioManagerSubsystemNameAddress();
-            const char* lit = ra3::audio::sageAudioManagerSubsystemNameLiteral();
-            const std::size_t len = std::strlen(lit) + 1;
-            aux.resize(len);
-            std::memcpy(aux.data(), lit, len);
-        } else if (op == "503400") {
-            result = ra3::audio::sagePathMusicManagerSubsystemNameAddress();
-            const char* lit = ra3::audio::sagePathMusicManagerSubsystemNameLiteral();
-            const std::size_t len = std::strlen(lit) + 1;
-            aux.resize(len);
-            std::memcpy(aux.data(), lit, len);
-        } else if (op == "5044f0") {
-            const auto handleAddr = argument(input);
-            const auto eventAddr = argument(input);
-            result = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
-                ra3::audio::initAudioEventRtsHandle(ptrFromAddr(handleAddr),
-                                                    ptrFromAddr(eventAddr))));
-        } else if (op == "504560") {
-            const auto handleAddr = argument(input);
-            result = ra3::audio::releaseAudioEventRtsHandle(ptrFromAddr(handleAddr));
-        } else if (op == "504590") {
-            const auto handleAddr = argument(input);
-            const auto initialEax = argument(input);
-            result = ra3::audio::releaseAndClearPlayingAudioHandle(
-                ptrFromAddr(handleAddr), initialEax);
-        } else if (op == "5045c0") {
-            const auto handleAddr = argument(input);
-            const auto initialEax = argument(input);
-            result = ra3::audio::releasePlayingAudioHandle(ptrFromAddr(handleAddr),
-                                                           initialEax);
-        } else if (op == "5045e0") {
-            const auto nodeAddr = argument(input);
-            result = ra3::audio::unlinkPlayingAudioNode(ptrFromAddr(nodeAddr));
-        } else if (op == "504ac0") {
-            const auto infoAddr = argument(input);
-            const auto bitIndex = argument(input);
-            result = ra3::audio::testAudioEventCategoryBit(ptrFromAddr(infoAddr),
-                                                           bitIndex);
-        } else if (op == "504af0") {
-            const auto infoAddr = argument(input);
-            const auto maskAddr = argument(input);
-            result = ra3::audio::intersectsAudioEventCategoryMask(
-                ptrFromAddr(infoAddr),
-                static_cast<const std::uint32_t*>(ptrFromAddr(maskAddr)));
-        } else if (op == "504b20") {
-            const auto nodeAddr = argument(input);
-            const auto nextAddr = argument(input);
-            const auto prevAddr = argument(input);
-            const auto payloadAddr = argument(input);
-            result = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
-                ra3::audio::initPlayingAudioPoolNode(
-                    ptrFromAddr(nodeAddr), ptrFromAddr(nextAddr),
-                    ptrFromAddr(prevAddr), ptrFromAddr(payloadAddr))));
-        } else if (op == "504c80") {
-            const auto playerAddr = argument(input);
-            const auto category = argument(input);
-            const auto subchannel = argument(input);
-            const auto globalSettingsAddr = argument(input);
-            const auto scaleTableAddr = argument(input);
-            result = ra3::audio::recomputePlayerCategoryFinalVolume(
-                ptrFromAddr(playerAddr), category, subchannel,
-                ptrFromAddr(globalSettingsAddr),
-                static_cast<const float*>(ptrFromAddr(scaleTableAddr)));
-        } else if (op == "504df0") {
-            const auto playerAddr = argument(input);
-            const auto category = argument(input);
-            const auto lockCount = static_cast<std::int32_t>(argument(input));
-            const auto globalSettingsAddr = argument(input);
-            result = ra3::audio::recomputePlayerCategoryModifierProduct(
-                ptrFromAddr(playerAddr), category, lockCount,
-                ptrFromAddr(globalSettingsAddr));
-        } else if (op == "504ec0") {
-            const auto playerAddr = argument(input);
-            result = ra3::audio::decrementPlayerVolumeChangeCounters(
-                ptrFromAddr(playerAddr));
-        } else if (op == "504f20") {
-            const auto playerAddr = argument(input);
-            const auto infoPtrAddr = argument(input);
-            const auto subchannel = argument(input);
-            result = ra3::audio::hasPendingVolumeChangeForEvent(
-                ptrFromAddr(playerAddr),
-                static_cast<void* const*>(ptrFromAddr(infoPtrAddr)), subchannel);
-        } else if (op == "504f80") {
-            const auto playerAddr = argument(input);
-            const auto duckParamsAddr = argument(input);
-            const auto deltaVecAddr = argument(input);
-            const auto globalSettingsAddr = argument(input);
-            const auto scaleTableAddr = argument(input);
-            result = ra3::audio::updatePlayerDuckingMultiplierFromDistance(
-                ptrFromAddr(playerAddr), ptrFromAddr(duckParamsAddr),
-                static_cast<const float*>(ptrFromAddr(deltaVecAddr)),
-                ptrFromAddr(globalSettingsAddr),
-                static_cast<const float*>(ptrFromAddr(scaleTableAddr)));
-        } else if (op == "505150") {
-            const auto playerAddr = argument(input);
-            const auto valBits = argument(input);
-            const auto flags = static_cast<std::uint8_t>(argument(input));
-            const auto globalSettingsAddr = argument(input);
-            const auto scaleTableAddr = argument(input);
-            result = ra3::audio::applyPlayerVolumeSettingsByFlags(
-                ptrFromAddr(playerAddr), asFloat(valBits), flags,
-                ptrFromAddr(globalSettingsAddr),
-                static_cast<const float*>(ptrFromAddr(scaleTableAddr)));
-        } else if (op == "505340" || op == "506670") {
-            const auto guardAddr = argument(input);
-            const auto lockCountAddr = argument(input);
-            const auto playersAddr = argument(input);
-            const auto globalSettingsAddr = argument(input);
-            const auto scaleTableAddr = argument(input);
-            auto& lockRef =
-                *static_cast<std::int32_t*>(ptrFromAddr(lockCountAddr));
-            if (op == "505340") {
-                result = ra3::audio::acquireGlobalVolumeModifierLock(
-                    ptrFromAddr(guardAddr), lockRef, ptrFromAddr(playersAddr),
-                    ptrFromAddr(globalSettingsAddr),
-                    static_cast<const float*>(ptrFromAddr(scaleTableAddr)));
-            } else {
-                result = ra3::audio::sageAudioManagerOnAcquireVolumeModifierLock(
-                    ptrFromAddr(guardAddr), lockRef, ptrFromAddr(playersAddr),
-                    ptrFromAddr(globalSettingsAddr),
-                    static_cast<const float*>(ptrFromAddr(scaleTableAddr)));
-            }
-        } else if (op == "5053b0" || op == "506680") {
-            const auto guardAddr = argument(input);
-            const auto lockCountAddr = argument(input);
-            const auto playersAddr = argument(input);
-            const auto globalSettingsAddr = argument(input);
-            const auto scaleTableAddr = argument(input);
-            auto& lockRef =
-                *static_cast<std::int32_t*>(ptrFromAddr(lockCountAddr));
-            if (op == "5053b0") {
-                result = ra3::audio::releaseGlobalVolumeModifierLock(
-                    ptrFromAddr(guardAddr), lockRef, ptrFromAddr(playersAddr),
-                    ptrFromAddr(globalSettingsAddr),
-                    static_cast<const float*>(ptrFromAddr(scaleTableAddr)));
-            } else {
-                result = ra3::audio::sageAudioManagerOnReleaseVolumeModifierLock(
-                    ptrFromAddr(guardAddr), lockRef, ptrFromAddr(playersAddr),
-                    ptrFromAddr(globalSettingsAddr),
-                    static_cast<const float*>(ptrFromAddr(scaleTableAddr)));
-            }
-        } else if (op == "506c20") {
-            const auto bitsetAddr = argument(input);
-            const auto b0 = argument(input);
-            const auto b1 = argument(input);
-            const auto b2 = argument(input);
-            const auto b3 = argument(input);
-            result = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
-                ra3::audio::initCategoryBitsetFromFourBits(ptrFromAddr(bitsetAddr),
-                                                           b0, b1, b2, b3)));
-        } else if (op == "506c90") {
-            const auto bitsetAddr = argument(input);
-            const auto b0 = argument(input);
-            const auto b1 = argument(input);
-            result = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
-                ra3::audio::initCategoryBitsetFromTwoBits(ptrFromAddr(bitsetAddr),
-                                                          b0, b1)));
-        } else if (op == "506cd0") {
-            const auto nodeAddr = argument(input);
-            const auto initialEax = argument(input);
-            result = ra3::audio::unlinkPlayingAudioNodeIfOwned(
-                ptrFromAddr(nodeAddr), initialEax);
-        } else if (op == "507720") {
-            const auto slotAddr = argument(input);
-            result = ra3::audio::hasActiveRenderCursor(ptrFromAddr(slotAddr));
-        } else if (op == "508330") {
-            const auto soundAddr = argument(input);
-            const auto cw = static_cast<std::uint16_t>(argument(input));
-            const double val = ra3::audio::sumWindowSamplePlayheadRatios(
-                ptrFromAddr(soundAddr), &result);
-            captureDoubleSt0(val, cw, aux);
-        } else if (op == "5084b0") {
-            const auto soundAddr = argument(input);
-            const auto cw = static_cast<std::uint16_t>(argument(input));
-            const double val = ra3::audio::sumAllChannelSamplePlayheadRatios(
-                ptrFromAddr(soundAddr), &result);
-            captureDoubleSt0(val, cw, aux);
-        } else if (op == "508640") {
-            const auto nodeAddr = argument(input);
-            const auto ownerAddr = argument(input);
-            result = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
-                ra3::audio::appendPlayingAudioNodeToOwnerList(
-                    ptrFromAddr(nodeAddr), ptrFromAddr(ownerAddr))));
-        } else if (op == "508af0") {
-            const auto mgrAddr = argument(input);
-            const auto outHandleAddr = argument(input);
-            const auto targetIdAddr = argument(input);
-            result = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
-                ra3::audio::findPlayingAudioByHandle(
-                    ptrFromAddr(mgrAddr),
-                    static_cast<void**>(ptrFromAddr(outHandleAddr)),
-                    static_cast<const std::uint32_t*>(ptrFromAddr(targetIdAddr)))));
-        } else if (op == "508d50") {
-            const auto mgrAddr = argument(input);
-            const auto objectId = argument(input);
-            const auto drawableId = argument(input);
-            const auto initialEax = argument(input);
-            result = ra3::audio::hasActiveEventForObjectOrDrawable(
-                ptrFromAddr(mgrAddr), objectId, drawableId, initialEax);
-        } else if (op == "50a220") {
-            const auto playerAddr = argument(input);
-            const auto baseAddr = argument(input);
-            const auto globalSettingsAddr = argument(input);
-            const auto scaleTableAddr = argument(input);
-            result = static_cast<std::uint32_t>(reinterpret_cast<std::uintptr_t>(
-                ra3::audio::initializePlayerAudioSettingsDefaults(
-                    ptrFromAddr(playerAddr), ptrFromAddr(baseAddr),
-                    ptrFromAddr(globalSettingsAddr),
-                    static_cast<const float*>(ptrFromAddr(scaleTableAddr)))));
-        } else if (op == "50ad80") {
-            const auto mgrAddr = argument(input);
-            const auto drawableId = argument(input);
-            const auto lookupAddr = argument(input);
-            const auto initialEax = argument(input);
-            result = ra3::audio::isObjectOrDrawablePlayingAudio(
-                ptrFromAddr(mgrAddr), drawableId, ptrFromAddr(lookupAddr),
-                initialEax);
-        } else if (op == "50be70") {
-            const auto cacheAddr = argument(input);
-            result = ra3::audio::sageAudioCacheTotalEntryCount(
-                ptrFromAddr(cacheAddr));
-        } else if (op == "50de20") {
-            const auto playerAddr = argument(input);
-            const auto infoPtrAddr = argument(input);
-            const auto srcPlayer = argument(input);
-            const auto lockCount = static_cast<std::int32_t>(argument(input));
-            const auto globalSettingsAddr = argument(input);
-            const auto scaleTableAddr = argument(input);
-            result = ra3::audio::removePlayerEventVolumeModifiers(
-                ptrFromAddr(playerAddr),
-                static_cast<void* const*>(ptrFromAddr(infoPtrAddr)), srcPlayer,
-                lockCount, ptrFromAddr(globalSettingsAddr),
-                static_cast<const float*>(ptrFromAddr(scaleTableAddr)));
-        } else if (op == "50df80") {
-            const auto cacheAddr = argument(input);
-            const auto key = argument(input);
-            result = ra3::audio::removeAudioCacheListenerEntry(
-                ptrFromAddr(cacheAddr), key);
-        } else if (op == "50e040") {
-            const auto playingAddr = argument(input);
-            const auto playersAddr = argument(input);
-            const auto lockCount = static_cast<std::int32_t>(argument(input));
-            const auto globalSettingsAddr = argument(input);
-            const auto scaleTableAddr = argument(input);
-            result = ra3::audio::detachPlayingAudioVolumeModifiers(
-                ptrFromAddr(playingAddr), ptrFromAddr(playersAddr), lockCount,
-                ptrFromAddr(globalSettingsAddr),
-                static_cast<const float*>(ptrFromAddr(scaleTableAddr)));
-        } else if (op == "50e510") {
-            const auto mgrAddr = argument(input);
-            const auto key = argument(input);
-            const auto initialEax = argument(input);
-            result = ra3::audio::sageAudioManagerRemoveListenerEntry(
-                ptrFromAddr(mgrAddr), key, initialEax);
-        } else {
-            std::cout << "error\n";
-            std::cout.flush();
-            return 1;
-        }
-
-        std::cout << std::hex << result << std::dec << " ";
-        encode(g_arena, slice.size());
-        std::cout << " ";
-        encode(aux.data(), aux.size());
-        std::cout << "\n";
-        std::cout.flush();
-    }
-    return 0;
+    std::cerr << "usage: ra3_audio50check --batch\n";
+    return 1;
 }
