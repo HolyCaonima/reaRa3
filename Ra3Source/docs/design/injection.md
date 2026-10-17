@@ -167,6 +167,12 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `unicodestringremovelast` | `0x004CAF90` `StringBase<wchar_t>` 删除末字符 | thiscall | 5 | `ra3::common::removeLastGameCharacter` | live verified；仅显式键启用 |
 | `unicodestringset` | `0x004CB9B0` `StringBase<wchar_t>` 设置 (text, length) | thiscall（2） | 6 | `ra3::common::setGameString` | live verified；仅显式键启用 |
 | `unicodestringconcat` | `0x004CBA00` `StringBase<wchar_t>` 追加 (text, length) | thiscall（2） | 7 | `ra3::common::concatGameString` | live verified；仅显式键启用 |
+| `stringbase2asciifind` | `0x004CA050` ASCII 按记录长度查找字符 | thiscall（1） | 6 | `ra3::common::findGameCharacter` | offline-verified, live pending；仅显式键启用 |
+| `stringbase2unicodefind` | `0x004CA260` Unicode 按记录长度查找字符 | thiscall（1） | 6 | `ra3::common::findGameCharacter` | offline-verified, live pending；仅显式键启用 |
+| `stringbase2widecompare` | `0x004CA510` UTF-16 显式长度比较 | cdecl（4） | 5 | `ra3::common::compareWide` | offline-verified, live pending；仅显式键启用 |
+| `stringbase2asciisourcecopyrange` | `0x004CB020` ASCII copy source 区间复制 | thiscall（3） | 7 | `ra3::common::copyGameStringSourceRange` | offline-verified, live pending；仅显式键启用 |
+| `stringbase2unicodesourcecopyrange` | `0x004CB0E0` Unicode copy source 区间复制 | thiscall（3） | 7 | `ra3::common::copyGameStringSourceRange` | offline-verified, live pending；仅显式键启用 |
+| `stringbase2asciiisnone` | `0x004CB990` ASCII 不区分大小写 `None` 判断 | thiscall | 5 | `ra3::common::isNoneGameString` | offline-verified, live pending；仅显式键启用 |
 | `playeradjustcounter` | `0x007E1530` Player `+0x125c` 饱和计数 | thiscall（1） | 10 | `Player::adjustCounter125c` | offline-verified, live pending；仅显式键启用 |
 | `playeractive` | `0x007E1BA0` Player 活跃状态 | thiscall | 7 | `Player::isPlayerActive` | offline-verified, live pending；仅显式键启用 |
 | `scoreaddd0` | `0x007E2600` ScoreKeeper 增量 | thiscall（1） | 5 | `ScoreKeeper::addD0` | offline-verified, live pending；仅显式键启用 |
@@ -216,6 +222,11 @@ shadow 不一致另写明参数和两边结果。`target=绝对地址` 只用于
 | `fxpsgpumiscword` | `0x0066ABA0` GPU misc word getter | thiscall | 6 | `gpuMiscWord` | offline-verified, live pending；仅显式键启用 |
 | `fxpsgpusoftparticles` | `0x0066ABB0` GPU soft-particles AL getter | thiscall | 6 | `gpuEnableSoftParticles` | offline-verified, live pending；仅显式键启用 |
 | `fxpsgpumiscvalues` | `0x0066ABC0` GPU 四 float 输出 | thiscall（1） | 7 | `gpuMiscValues` | offline-verified, live pending；仅显式键启用 |
+
+StringBase2 的 6 个目标均为只读或仅写调用方输出缓冲的低风险入口，并且只认显式键。
+shadow 先调用原函数并返回原结果；两个 `copyRange` 目标先快照源区，再只比较原函数实际
+要求写出的 `count * sizeof(Char)` 字节。完整 50 入口在 Debug/Release 各 4,000 个场景
+（含 112 个嵌入 NUL 与非零容量尾部对抗场景）中 0 不一致，尚未做实机验证。
 
 FXPS 的 15 个目标均由 shipped 文件逐个复核 expected16；stolen 前缀位置无关。构造函数
 在副本上应用重建变换后比较实际布局，getter 只比较返回值或原函数写出的缓冲，全部要求

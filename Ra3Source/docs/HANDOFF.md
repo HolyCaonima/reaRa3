@@ -41,14 +41,15 @@
 - 已获用户同意使用 EA 以 GPL v3 公开的 Generals 源码与 RA3 modding 材料
   （`work/references/`）作参照。写原创实现，注释注明参照文件。
 
-## 3. 现状（截至提交 `de59349`）
+## 3. 现状（截至 StringBase2 合并）
 
 - **台账** `docs/analysis/ra3_1.0/function_ledger.tsv`：48,986 行，其中 verified 66、
-  reversed 261、unanalyzed 48,659。`securom` 分类：clean 47,772、entry-lost 653、
+  reversed 309、unanalyzed 48,611。`securom` 分类：clean 47,772、entry-lost 653、
   inner-patched 432、entry-recoverable 121、patched 8。扣掉第三方后约 4 万个函数要重建。
-- **hook**：135 个目标（其中 91 个只认显式键）。原有 86 个全部 replace 时，Release
+- **hook**：141 个目标（其中 97 个只认显式键）。原有 86 个全部 replace 时，Release
   遭遇战带 Easy AI 正常运行 2 分钟、无崩溃（injection.md §5.4 运行 34）；新加的
-  Player/Net/W3DView/FXPS 共 49 个目标只有离线证据，尚未做合并实机 shadow/replace。
+  Player/Net/W3DView/FXPS/StringBase2 共 55 个目标只有离线证据，尚未做合并实机
+  shadow/replace。
 - **已完成模块**：
   - core（配置/INI/SkuDef）
   - io（BIG 档案、RefPack、BigHandler 四层：查找/打开/读取/seek/枚举）
@@ -64,15 +65,16 @@
     两配置 oracle 各 25,850 例零差异
   - gameclient FXPS 批次：45 个 clean 函数，15 个显式 hook；两配置 oracle 各
     25,100 例零差异；`fxpsgpuspeed` 用 naked + 十字节缓冲保持完整 x87 ST0
+  - common StringBase2 批次：50 个重建入口（其中 48 个对应 Ghidra 台账函数），6 个
+    显式 hook；两配置 oracle 各 4,000 例零差异，含 112 个嵌入 NUL 与非零容量尾部
+    对抗场景；受保护六字节站点只按已观察的指针清零效果建模
 - **未完成或卡住**：
   - 对局状态 CRC：种子 CRC `0x005A9390` 的唯一调用者 `0x004D7490` 是 entry-lost，按
     Generals 推断即每帧 `GameLogic::getCRC`。按新规则可用运行时证据重新处理。
   - 类型化资源访问（recon/typed）未合并。
   - 少数 hook 在遭遇战里未被调用（logicrandomvariable、几个 BIG 枚举入口、
     stringfindlast 等），只有离线证据。
-  - StringBase 余下的函数（trim、nextToken、translate、ASCII release `0x004CA930` 等）
-    依赖 inner-patched/entry-lost；`recon/stringbase2` 正用运行 35 转储离线处理。
-- **当前十路并行**（用户 11:14 明确允许扩到 10 路）：`recon/stringbase2`、
+- **当前十路并行**（用户 11:14 明确允许扩到 10 路）：`recon/terrainlogic`、
   `recon/aistates`、`recon/audioevent`、`recon/objectlogic`、`recon/uicontrols`、
   `recon/weaponlogic`、`recon/behavior6b`、`recon/skirmish79`、`recon/render8e`、
   `recon/gameclient92`。每支独立 worktree，完成后主控逐支复验合并；构建/oracle 可并行，

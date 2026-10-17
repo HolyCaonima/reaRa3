@@ -2200,25 +2200,25 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004c9e60	thunk_FUN_019754a0	.text	6		entry-lost	unknown		unanalyzed	
 004c9e80	thunk_FUN_01979eb0	.text	6		entry-lost	unknown		unanalyzed	
 004c9ea0	FUN_004c9ea0	.text	146		clean	common	recon/ports1	verified	fixed-length unsigned byte comparison returning -1/0/1; ra3::common::compareBytes; emulator 2006/2006 (earlier: hook candidate: 定长字节序列三路比较（-1/0/1）); live shadow 269853/269853, replace 257685 calls in a skirmish (injection.md 5.4 runs 12-13)
-004c9f80	thunk_FUN_01982b40	.text	6		entry-lost	unknown		unanalyzed	
+004c9f80	thunk_FUN_01982b40	.text	6		entry-lost	common	recon/stringbase2	reversed	fixed UTF-16 no-case comparison; run35 body 004a9570; oracle 80
 004c9fe0	thunk_FUN_028b0000	.text	6		entry-lost	unknown		unanalyzed	
-004ca010	FUN_004ca010	.text	31		clean	unknown		unanalyzed	
-004ca030	FUN_004ca030	.text	22		clean	unknown		unanalyzed	
-004ca050	FUN_004ca050	.text	54		clean	unknown		unanalyzed	
-004ca0d0	thunk_FUN_01975b80	.text	6		entry-lost	unknown		unanalyzed	
+004ca010	FUN_004ca010	.text	31		clean	common	recon/stringbase2	reversed	ASCII abstract-source deleting destructor; oracle 80
+004ca030	FUN_004ca030	.text	22		clean	common	recon/stringbase2	reversed	ASCII isEmpty from recorded header length; oracle 80
+004ca050	FUN_004ca050	.text	54		clean	common	recon/stringbase2	reversed	ASCII recorded-length character search; oracle 80; hook stringbase2asciifind
+004ca0d0	thunk_FUN_01975b80	.text	6		entry-lost	common	recon/stringbase2	reversed	ASCII starts-with explicit range; run35 body 0047b550; oracle 80
 004ca120	thunk_FUN_02650000	.text	6		entry-lost	unknown		unanalyzed	
-004ca170	thunk_FUN_0197e500	.text	6		entry-lost	unknown		unanalyzed	
-004ca1d0	thunk_FUN_019831b0	.text	6		entry-lost	unknown		unanalyzed	
-004ca250	FUN_004ca250	.text	12		clean	unknown		unanalyzed	
-004ca260	FUN_004ca260	.text	52		clean	unknown		unanalyzed	
+004ca170	thunk_FUN_0197e500	.text	6		entry-lost	common	recon/stringbase2	reversed	ASCII ends-with explicit range; run35 body 00440bf0; oracle 80
+004ca1d0	thunk_FUN_019831b0	.text	6		entry-lost	common	recon/stringbase2	reversed	ASCII ends-with-no-case explicit range; run35 body 00451bd0; oracle 80
+004ca250	FUN_004ca250	.text	12		clean	common	recon/stringbase2	reversed	Unicode data pointer with static-empty fallback; oracle 80
+004ca260	FUN_004ca260	.text	52		clean	common	recon/stringbase2	reversed	Unicode recorded-length character search; oracle 80; hook stringbase2unicodefind
 004ca2a0	thunk_FUN_0197e4e0	.text	6		entry-lost	unknown		unanalyzed	
-004ca330	FUN_004ca330	.text	17		entry-lost	unknown		unanalyzed	
-004ca380	thunk_FUN_01975b30	.text	6		entry-lost	unknown		unanalyzed	
+004ca330	FUN_004ca330	.text	17		entry-lost	common	recon/stringbase2	reversed	Unicode starts-with-no-case explicit range; run35 body 0047f7c0; oracle 80
+004ca380	thunk_FUN_01975b30	.text	6		entry-lost	common	recon/stringbase2	reversed	Unicode ends-with explicit range; run35 body 00489cc0; oracle 80
 004ca3e0	thunk_FUN_01dbb000	.text	6		entry-lost	unknown		unanalyzed	
 004ca440	FUN_004ca440	.text	76		clean	common	recon/strings	reversed	StringBase<char> class lock getter: lazily creates a 0x28-byte lock (vtable 0x00BD9004, critical section at +8 via InitializeCriticalSection) cached at 0x00DEACF0; slot 0 enters with timeout -1, users leave via LeaveCriticalSection(lock+8); bound by the GameString hook ops (docs/design/game_string.md)
 004ca490	FUN_004ca490	.text	76		clean	common	recon/strings	reversed	StringBase<wchar_t> class lock getter, same shape as 0x004CA440 cached at 0x00DEACF8
-004ca4e0	FUN_004ca4e0	.text	48		clean	unknown		unanalyzed	
-004ca510	FUN_004ca510	.text	79		clean	unknown		unanalyzed	
+004ca4e0	FUN_004ca4e0	.text	48		clean	common	recon/stringbase2	reversed	skip leading UTF-16 CRT whitespace; oracle 80
+004ca510	FUN_004ca510	.text	79		clean	common	recon/stringbase2	reversed	length-aware UTF-16 arithmetic comparison; oracle 80; hook stringbase2widecompare
 004ca560	thunk_FUN_0197e4c0	.text	6		entry-lost	unknown		unanalyzed	
 004ca5c0	thunk_FUN_01983150	.text	6		entry-lost	unknown		unanalyzed	
 004ca620	thunk_FUN_01975b00	.text	6		entry-lost	unknown		unanalyzed	
@@ -2227,75 +2227,75 @@ address	name	section	size	source_file	securom	module	owner	status	notes
 004ca6d0	FUN_004ca6d0	.text	17		entry-lost	unknown		unanalyzed	
 004ca710	FUN_004ca710	.text	472	Libraries\Source\string\StringBase.cpp	clean	common	recon/strings	verified	StringBase<char>::ensureUniqueBufferOfSize(needed, preserve, copySource, catSource): reuses an unshared block with capacity > needed, else grows by half for concatenation, allocates ((needed+9+3)&~3) via 0x004165A0, copies/concatenates through source vtable slot 3 and swaps under the lock; requests over 0x7FFF report through inner-patched code and are deferred to the original; ra3::common::ensureUniqueGameString; emulator 1004/1004 incl. boundary cases; live shadow 645065/645065, replace 625688 calls in a skirmish (injection.md 5.4 runs 29-30)
 004ca8f0	FUN_004ca8f0	.text	54		clean	common	recon/strings	verified	StringBase<char> copy constructor: shares other's block (++refCount) under the class lock, returns this; ra3::common::copyGameString; emulator oracle verify_game_string.py 1000/1000; hook relocates the lock-getter call (rel32 at stolen offset 4); live shadow 3094060/3094060, replace 3092434 calls in a skirmish (injection.md 5.4 runs 29-30)
-004ca930	FUN_004ca930	.text	63		inner-patched	unknown		unanalyzed	
+004ca930	FUN_004ca930	.text	63		inner-patched	common	recon/stringbase2	reversed	ASCII release; unresolved replaced site constrained to observed pointer clear; oracle 80
 004ca970	thunk_FUN_02aa0000	.text	6		entry-lost	unknown		unanalyzed	
 004ca9b0	FUN_004ca9b0	.text	117		clean	common	recon/strings	verified	StringBase<char>::operator=: under the class lock releases own block (free at refCount 0 via 0x004166B0) and shares other's unless self-assignment; ra3::common::assignGameString; emulator 1000/1000; live shadow 461287/461287, replace 460862 calls in a skirmish (injection.md 5.4 runs 29-30)
 004caa30	FUN_004caa30	.text	70		clean	common	recon/strings	verified	StringBase<char>::toLower: ensureUnique(length, preserve) then CRT tolower (IAT 0x00BBA4D4) on each sign-extended byte; ra3::common::mapGameString; emulator 1000/1000; live shadow 8632/8632, replace 8722 calls in a skirmish (injection.md 5.4 runs 29-30)
 004caa80	FUN_004caa80	.text	70		clean	common	recon/strings	verified	StringBase<char>::toUpper: as 0x004CAA30 with toupper (IAT 0x00BBA4C0); emulator 1000/1000; live shadow 225/225, replace 225 calls in a skirmish (injection.md 5.4 runs 29-30)
-004caad0	FUN_004caad0	.text	58		clean	unknown		unanalyzed	
-004cab10	FUN_004cab10	.text	74		clean	unknown		unanalyzed	
+004caad0	FUN_004caad0	.text	58		clean	common	recon/stringbase2	reversed	ASCII remove-last with release at empty; oracle 80
+004cab10	FUN_004cab10	.text	74		clean	common	recon/stringbase2	reversed	ASCII remove-first with overlapping shift; oracle 80
 004cab60	FUN_004cab60	.text	63		clean	common	recon/strings	verified	StringBase<wchar_t>::release: under the class lock drops the reference (free at 0) and clears data; ra3::common::releaseGameString; emulator 1000/1000; hook relocates rel32 at stolen offset 4; live shadow 33658/33658, replace 33144 calls in a skirmish (injection.md 5.4 runs 29-30)
 004caba0	FUN_004caba0	.text	487	Libraries\Source\string\StringBase.cpp	clean	common	recon/strings	verified	StringBase<wchar_t>::ensureUniqueBufferOfSize: as 0x004CA710 with request 2*needed+10 and capacity (size-8)/2; emulator 1004/1004 incl. boundary cases; live shadow 7678/7678, replace 3454 calls in a skirmish (injection.md 5.4 runs 29-30)
 004cad90	FUN_004cad90	.text	54		clean	common	recon/strings	verified	StringBase<wchar_t> copy constructor, as 0x004CA8F0; emulator 1000/1000; hook relocates rel32 at stolen offset 4; live shadow 9320/9320, replace 9324 calls in a skirmish (injection.md 5.4 runs 29-30)
-004cadd0	thunk_FUN_0197e490	.text	6		entry-lost	unknown		unanalyzed	
-004cae10	FUN_004cae10	.text	117		inner-patched	unknown		unanalyzed	
-004cae90	FUN_004cae90	.text	100		clean	unknown		unanalyzed	
-004caf00	FUN_004caf00	.text	63		clean	unknown		unanalyzed	
+004cadd0	thunk_FUN_0197e490	.text	6		entry-lost	common	recon/stringbase2	reversed	Unicode writable-buffer preparation; run35 body 0044a780; oracle 80
+004cae10	FUN_004cae10	.text	117		inner-patched	common	recon/stringbase2	reversed	Unicode assignment; captured cave instruction clears old pointer; oracle 80
+004cae90	FUN_004cae90	.text	100		clean	common	recon/stringbase2	reversed	Unicode set from abstract source; oracle 80
+004caf00	FUN_004caf00	.text	63		clean	common	recon/stringbase2	reversed	Unicode append abstract source; oracle 80
 004caf40	FUN_004caf40	.text	71		clean	common	recon/strings	verified	StringBase<wchar_t>::toLower with towlower (IAT 0x00BBA4C8) on zero-extended units; emulator 1000/1000; live shadow 1906/1906, replace 1906 calls in a skirmish (injection.md 5.4 runs 29-30)
 004caf90	FUN_004caf90	.text	60		clean	common	recon/strings	verified	StringBase<wchar_t>::removeLastChar: ensureUnique then truncates by one, releasing (tail jump to 0x004CAB60) when nothing would remain; ra3::common::removeLastGameCharacter; emulator 1000/1000; live shadow 132/132, replace 132 calls in a skirmish (injection.md 5.4 runs 29-30)
 004cafd0	FUN_004cafd0	.text	32		entry-lost	unknown		unanalyzed	
-004cb020	FUN_004cb020	.text	29		clean	unknown		unanalyzed	
+004cb020	FUN_004cb020	.text	29		clean	common	recon/stringbase2	reversed	ASCII text-source copyRange; oracle 80; hook stringbase2asciisourcecopyrange
 004cb040	FUN_004cb040	.text	31		clean	common	recon/strings	reversed	ASCII {text,length} copy source (vtable 0x00BDAB6C) slot 3 copyTo: memcpy(dest, text, length), returns length, ret 4
-004cb060	FUN_004cb060	.text	58		clean	unknown		unanalyzed	
-004cb0a0	FUN_004cb0a0	.text	53		clean	unknown		unanalyzed	
-004cb0e0	FUN_004cb0e0	.text	35		clean	unknown		unanalyzed	
+004cb060	FUN_004cb060	.text	58		clean	common	recon/stringbase2	reversed	ASCII skip separators register helper; oracle 80
+004cb0a0	FUN_004cb0a0	.text	53		clean	common	recon/stringbase2	reversed	ASCII skip non-separators register helper; oracle 80
+004cb0e0	FUN_004cb0e0	.text	35		clean	common	recon/stringbase2	reversed	Unicode text-source copyRange; oracle 80; hook stringbase2unicodesourcecopyrange
 004cb110	FUN_004cb110	.text	33		clean	common	recon/strings	reversed	Unicode {text,length} copy source (vtable 0x00BDAB7C) slot 3 copyTo: memcpy(dest, text, 2*length), returns length, ret 4
-004cb140	FUN_004cb140	.text	31		clean	unknown		unanalyzed	
-004cb200	FUN_004cb200	.text	92		clean	unknown		unanalyzed	
+004cb140	FUN_004cb140	.text	31		clean	common	recon/stringbase2	reversed	Unicode abstract-source deleting destructor; oracle 80
+004cb200	FUN_004cb200	.text	92		clean	common	recon/stringbase2	reversed	Unicode-object to ASCII translation through opaque converter; oracle 80
 004cb260	FUN_004cb260	.text	14		inner-patched	unknown		unanalyzed	
 004cb280	thunk_FUN_0197e460	.text	6		entry-lost	unknown		unanalyzed	
-004cb2a0	FUN_004cb2a0	.text	246	Libraries\Source\string\UnicodeString.cpp	clean	core		unanalyzed	
+004cb2a0	FUN_004cb2a0	.text	246	Libraries\Source\string\UnicodeString.cpp	clean	common	recon/stringbase2	reversed	ASCII-text to Unicode translation through opaque converter; oracle 80
 004cb3a0	FUN_004cb3a0	.text	90		clean	common	recon/ports1	verified	compare uint16-length-prefixed bytes to a C string; ra3::common::compareLengthPrefixedToCString; emulator 2006/2006; live shadow 3434/3434, replace 3434 calls in a skirmish (injection.md 5.4 runs 12-13)
 004cb400	FUN_004cb400	.text	85		clean	common	recon/ports1	verified	compare two uint16-length-prefixed byte strings; ra3::common::compareLengthPrefixed; emulator 2006/2006 (earlier: hook candidate: 比较两个带 16 位长度前缀的字节串); live shadow 9022/9022, replace 9341 calls in a skirmish (injection.md 5.4 runs 12-13)
-004cb460	thunk_FUN_019830e0	.text	6		entry-lost	unknown		unanalyzed	
-004cb4c0	thunk_FUN_01975ab0	.text	6		entry-lost	unknown		unanalyzed	
-004cb520	thunk_FUN_01975a90	.text	6		entry-lost	unknown		unanalyzed	
+004cb460	thunk_FUN_019830e0	.text	6		entry-lost	common	recon/stringbase2	reversed	ASCII no-case compare to C string; run35 body 0045bb30; oracle 80
+004cb4c0	thunk_FUN_01975ab0	.text	6		entry-lost	common	recon/stringbase2	reversed	ASCII no-case compare to object; run35 body 00494440; oracle 80
+004cb520	thunk_FUN_01975a90	.text	6		entry-lost	common	recon/stringbase2	reversed	Unicode compare to C string; run35 body 00494da0; oracle 80
 004cb580	thunk_FUN_01dd0000	.text	6		entry-lost	unknown		unanalyzed	
 004cb5d0	thunk_FUN_0197e440	.text	6		entry-lost	unknown		unanalyzed	
-004cb630	thunk_FUN_019830c0	.text	6		entry-lost	unknown		unanalyzed	
+004cb630	thunk_FUN_019830c0	.text	6		entry-lost	common	recon/stringbase2	reversed	Unicode no-case compare to object; run35 body 0045f8f0; oracle 80
 004cb690	FUN_004cb690	.text	56		inner-patched	unknown		unanalyzed	
 004cb6e0	FUN_004cb6e0	.text	78		clean	common	recon/strings	verified	StringBase<char>::concat(text, length): builds a {text,length} source and ensureUnique(length+n, preserve, 0, source); an empty target goes to the inner-patched setter 0x004CB690 and is deferred to the original; ra3::common::concatGameString; emulator 1005/1005; live shadow 11952/11952 compared (8528 empty-target calls deferred to the original), replace 19148 calls in a skirmish (injection.md 5.4 runs 29-30)
-004cb730	FUN_004cb730	.text	260		clean	unknown		unanalyzed	
+004cb730	FUN_004cb730	.text	260		clean	common	recon/stringbase2	reversed	ASCII trim hybrid NUL/recorded-length semantics; oracle 80 incl embedded-NUL slack
 004cb840	thunk_FUN_01d51000	.text	6		entry-lost	unknown		unanalyzed	
-004cb8e0	FUN_004cb8e0	.text	176		clean	unknown		unanalyzed	
-004cb990	FUN_004cb990	.text	18		clean	unknown		unanalyzed	
+004cb8e0	FUN_004cb8e0	.text	176		clean	common	recon/stringbase2	reversed	ASCII nextToken hybrid NUL/recorded-length semantics; oracle 80 incl embedded-NUL slack
+004cb990	FUN_004cb990	.text	18		clean	common	recon/stringbase2	reversed	ASCII case-insensitive None predicate; oracle 80; hook stringbase2asciiisnone
 004cb9b0	FUN_004cb9b0	.text	73		clean	common	recon/strings	verified	StringBase<wchar_t>::set(text, length): no-op for its own buffer, release for length 0, else ensureUnique(length, discard, source, 0); ra3::common::setGameString; emulator 1000/1000; live shadow 970/970, replace 961 calls in a skirmish (injection.md 5.4 runs 29-30)
 004cba00	FUN_004cba00	.text	78		clean	common	recon/strings	verified	StringBase<wchar_t>::concat(text, length): set() for an empty target, else as 0x004CB6E0; ra3::common::concatGameString; emulator 1005/1005; live shadow 1225/1225, replace 1225 calls in a skirmish (injection.md 5.4 runs 29-30)
-004cba50	FUN_004cba50	.text	231		clean	unknown		unanalyzed	
-004cbb40	thunk_FUN_0197a2e0	.text	6		entry-lost	unknown		unanalyzed	
-004cbbe0	thunk_FUN_019834f0	.text	6		entry-lost	unknown		unanalyzed	
+004cba50	FUN_004cba50	.text	231		clean	common	recon/stringbase2	reversed	Unicode trim hybrid NUL/recorded-length semantics; oracle 80 incl embedded-NUL slack
+004cbb40	thunk_FUN_0197a2e0	.text	6		entry-lost	common	recon/stringbase2	reversed	Unicode format_va with 0x2000-unit stack buffer; run35 body 01900970; oracle 80
+004cbbe0	thunk_FUN_019834f0	.text	6		entry-lost	common	recon/stringbase2	reversed	Unicode nextToken explicit separators; hybrid NUL/recorded-length; run35 body 01930820; oracle 80 incl embedded-NUL slack
 004cbca0	FUN_004cbca0	.text	20		clean	unknown		unanalyzed	
 004cbcc0	FUN_004cbcc0	.text	20		clean	unknown		unanalyzed	
-004cbce0	FUN_004cbce0	.text	15		clean	unknown		unanalyzed	
+004cbce0	FUN_004cbce0	.text	15		clean	common	recon/stringbase2	reversed	Unicode translation wrapper unwrapping ASCII object; oracle 80
 004cbcef	FUN_004cbcef	.text	9		clean	unknown		unanalyzed	
-004cbd00	FUN_004cbd00	.text	36		clean	unknown		unanalyzed	
+004cbd00	FUN_004cbd00	.text	36		clean	common	recon/stringbase2	reversed	Unicode constructor translating ASCII object; oracle 80
 004cbd30	thunk_FUN_02810000	.text	6		entry-lost	unknown		unanalyzed	
 004cbda0	thunk_FUN_0197a650	.text	6		entry-lost	unknown		unanalyzed	
 004cbe10	thunk_FUN_0197e710	.text	6		entry-lost	unknown		unanalyzed	
-004cbe80	thunk_FUN_019834c0	.text	6		entry-lost	unknown		unanalyzed	
+004cbe80	thunk_FUN_019834c0	.text	6		entry-lost	common	recon/stringbase2	reversed	Unicode append null-terminated text; run35 body 004db160; oracle 80
 004cbef0	thunk_FUN_01dd4000	.text	6		entry-lost	unknown		unanalyzed	
 004cbf60	thunk_FUN_0197a620	.text	6		entry-lost	unknown		unanalyzed	
 004cbfa0	thunk_FUN_0197e6f0	.text	6		entry-lost	unknown		unanalyzed	
 004cbff0	FUN_004cbff0	.text	25		clean	unknown		unanalyzed	
-004cc010	FUN_004cc010	.text	150		clean	unknown		unanalyzed	
-004cc0b0	FUN_004cc0b0	.text	171		clean	unknown		unanalyzed	
-004cc160	FUN_004cc160	.text	591		clean	unknown		unanalyzed	
-004cc3b0	FUN_004cc3b0	.text	63		clean	unknown		unanalyzed	
-004cc3f0	FUN_004cc3f0	.text	80		clean	unknown		unanalyzed	
+004cc010	FUN_004cc010	.text	150		clean	common	recon/stringbase2	reversed	ASCII substring from C string with signed bounds; oracle 80
+004cc0b0	FUN_004cc0b0	.text	171		clean	common	recon/stringbase2	reversed	ASCII substring from object with signed bounds; oracle 80
+004cc160	FUN_004cc160	.text	591		clean	common	recon/stringbase2	reversed	ASCII iterative replace-all stops search at embedded NUL; oracle 80 incl adversarial slack
+004cc3b0	FUN_004cc3b0	.text	63		clean	common	recon/stringbase2	reversed	Unicode one-unit constructor; oracle 80
+004cc3f0	FUN_004cc3f0	.text	80		clean	common	recon/stringbase2	reversed	Unicode pointer-length constructor; oracle 80
 004cc440	FUN_004cc440	.text	14		inner-patched	unknown		unanalyzed	
-004cc460	FUN_004cc460	.text	155		clean	unknown		unanalyzed	
-004cc5b0	FUN_004cc5b0	.text	617		clean	unknown		unanalyzed	
-004cc820	FUN_004cc820	.text	43		clean	unknown		unanalyzed	
+004cc460	FUN_004cc460	.text	155		clean	common	recon/stringbase2	reversed	Unicode substring from C string with signed bounds; oracle 80
+004cc5b0	FUN_004cc5b0	.text	617		clean	common	recon/stringbase2	reversed	Unicode iterative replace-all stops search at embedded NUL; oracle 80 incl adversarial slack
+004cc820	FUN_004cc820	.text	43		clean	common	recon/stringbase2	reversed	Unicode replace-all object wrapper stops search at embedded NUL; oracle 80 incl adversarial slack
 004cc850	thunk_FUN_019834a0	.text	6		entry-lost	unknown		unanalyzed	
 004cc870	thunk_FUN_01d57000	.text	6		entry-lost	unknown		unanalyzed	
 004cc890	thunk_FUN_01975e40	.text	6		entry-lost	unknown		unanalyzed	
